@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DREAM XI — Block Kickers</title>
+<link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Barlow+Condensed:wght@400;600;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.7.0/ethers.umd.min.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;font-size:16px;min-height:100vh;}
+.page{max-width:900px;margin:0 auto;padding:0 0 60px;}
+
+/* NAV */
+.topnav{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;border-bottom:1px solid #1c2028;background:rgba(6,8,10,0.97);position:sticky;top:0;z-index:100;backdrop-filter:blur(10px);}
+.topnav-logo{font-family:'Black Ops One',sans-serif;font-size:13px;letter-spacing:2px;color:#dde4f0;}
+.topnav-logo span{color:#00ff87;}
+.btn-connect{background:rgba(0,255,135,0.1);border:1px solid rgba(0,255,135,0.3);color:#00ff87;padding:8px 16px;border-radius:6px;font-family:'Black Ops One',sans-serif;font-size:11px;letter-spacing:1px;cursor:pointer;}
+.btn-connect.connected{background:rgba(0,255,135,0.15);border-color:#00ff87;}
+
+/* HERO */
+.hero{padding:48px 24px 40px;text-align:center;border-bottom:1px solid #1c2028;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 0%,rgba(99,102,241,0.15),transparent);pointer-events:none;}
+.badge{display:inline-flex;align-items:center;gap:8px;background:rgba(99,102,241,0.1);border:1px solid rgba(99,102,241,0.3);border-radius:4px;padding:5px 14px;font-size:11px;letter-spacing:3px;color:#818cf8;margin-bottom:20px;}
+.dot{width:6px;height:6px;border-radius:50%;background:#818cf8;animation:blink 1.5s infinite;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.2}}
+.trophy{font-size:64px;margin-bottom:16px;display:block;filter:drop-shadow(0 0 20px rgba(255,201,64,0.4));}
+.hero-title{font-family:'Black Ops One',sans-serif;font-size:clamp(36px,8vw,72px);line-height:0.9;margin-bottom:8px;position:relative;z-index:1;}
+.hero-title .acc{color:#818cf8;}
+.hero-title .gold{color:#ffc940;}
+.hero-sub{font-size:18px;color:#7a8899;margin-bottom:28px;position:relative;z-index:1;}
+
+/* PRIZE */
+.prize-row{display:flex;gap:12px;justify-content:center;margin-bottom:32px;flex-wrap:wrap;}
+.prize-box{background:rgba(255,201,64,0.07);border:1px solid rgba(255,201,64,0.3);border-radius:10px;padding:16px 28px;text-align:center;}
+.prize-num{font-family:'Black Ops One',sans-serif;font-size:40px;color:#ffc940;line-height:1;}
+.prize-chz{font-family:'Black Ops One',sans-serif;font-size:16px;color:#ffc940;}
+.prize-lbl{font-size:11px;letter-spacing:2px;color:#5a6a7a;margin-top:4px;}
+.prize-box.s{background:rgba(156,163,175,0.07);border-color:rgba(156,163,175,0.3);}
+.prize-box.s .prize-num{color:#9ca3af;}
+.prize-box.s .prize-chz{color:#9ca3af;}
+.prize-box.b{background:rgba(180,120,60,0.07);border-color:rgba(180,120,60,0.3);}
+.prize-box.b .prize-num{color:#cd7f32;}
+.prize-box.b .prize-chz{color:#cd7f32;}
+
+/* COUNTDOWN */
+.countdown-wrap{background:#0f1318;border:1px solid rgba(99,102,241,0.3);border-radius:10px;padding:16px 24px;display:inline-flex;flex-direction:column;align-items:center;gap:6px;position:relative;z-index:1;}
+.countdown-label{font-size:10px;letter-spacing:3px;color:#5a6a7a;}
+.countdown-timer{display:flex;gap:16px;align-items:baseline;}
+.countdown-unit{text-align:center;}
+.countdown-num{font-family:'Black Ops One',sans-serif;font-size:32px;color:#818cf8;line-height:1;}
+.countdown-sub{font-size:9px;letter-spacing:2px;color:#5a6a7a;}
+.countdown-block{font-size:11px;color:#3d4a5a;font-family:'Share Tech Mono',monospace;margin-top:4px;}
+
+/* ARGENTINA FLAG */
+.arg-flag{display:flex;height:6px;border-radius:3px;overflow:hidden;width:120px;margin:0 auto 24px;}
+.arg-flag div:nth-child(1){flex:1;background:#74ACDF;}
+.arg-flag div:nth-child(2){flex:1;background:#fff;}
+.arg-flag div:nth-child(3){flex:1;background:#74ACDF;}
+
+/* CONNECT PROMPT */
+.connect-prompt{padding:40px 24px;text-align:center;}
+.connect-prompt p{font-size:16px;color:#7a8899;margin-bottom:20px;}
+.btn-connect-big{background:linear-gradient(135deg,rgba(0,255,135,0.15),rgba(0,255,135,0.05));border:1px solid rgba(0,255,135,0.4);color:#00ff87;padding:14px 32px;border-radius:8px;font-family:'Black Ops One',sans-serif;font-size:14px;letter-spacing:2px;cursor:pointer;width:100%;max-width:300px;}
+
+/* PITCH */
+.pitch-section{padding:24px;}
+.pitch-title{font-family:'Black Ops One',sans-serif;font-size:11px;letter-spacing:3px;color:#3d4a5a;margin-bottom:16px;}
+.pitch-wrap{background:#0a0e14;border:1px solid #1c2028;border-radius:12px;padding:24px;position:relative;}
+
+/* Formation rows */
+.formation{display:flex;flex-direction:column;gap:20px;}
+.form-row{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;}
+.pos-card{background:#0f1318;border:1px solid #1c2028;border-radius:8px;padding:10px 8px;text-align:center;width:100px;cursor:pointer;transition:all 0.2s;position:relative;}
+.pos-card:hover{border-color:rgba(99,102,241,0.5);}
+.pos-card.owned{border-color:rgba(0,255,135,0.4);background:rgba(0,255,135,0.05);}
+.pos-card.owned-past{border-color:rgba(99,102,241,0.5);background:rgba(99,102,241,0.08);}
+.pos-card.market{border-color:rgba(255,201,64,0.4);background:rgba(255,201,64,0.05);cursor:pointer;}
+.pos-card.empty{opacity:0.4;}
+.pos-name{font-family:'Black Ops One',sans-serif;font-size:10px;letter-spacing:1px;color:#5a6a7a;margin-bottom:6px;}
+.pos-weight{font-family:'Black Ops One',sans-serif;font-size:20px;line-height:1;margin-bottom:2px;}
+.pos-weight.green{color:#00ff87;}
+.pos-weight.purple{color:#818cf8;}
+.pos-weight.gold{color:#ffc940;}
+.pos-weight.empty{color:#1c2028;}
+.pos-rarity{font-size:9px;color:#5a6a7a;font-family:'Share Tech Mono',monospace;}
+.pos-market-price{font-size:9px;color:#ffc940;font-family:'Share Tech Mono',monospace;margin-top:2px;}
+.pos-badge{position:absolute;top:4px;right:4px;width:8px;height:8px;border-radius:50%;}
+
+/* SCORE BOX */
+.score-box{background:#0f1318;border:1px solid rgba(99,102,241,0.3);border-radius:10px;padding:16px 20px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+.score-left{}
+.score-label{font-size:10px;letter-spacing:3px;color:#5a6a7a;margin-bottom:4px;}
+.score-num{font-family:'Black Ops One',sans-serif;font-size:40px;color:#818cf8;line-height:1;}
+.score-max{font-size:14px;color:#3d4a5a;}
+.score-right{display:flex;flex-direction:column;gap:8px;align-items:flex-end;}
+
+/* LEADERBOARD */
+.lb-section{padding:0 24px 24px;}
+.lb-row{display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:8px;margin-bottom:6px;background:#0f1318;border:1px solid #1c2028;}
+.lb-row.me{border-color:rgba(0,255,135,0.3);background:rgba(0,255,135,0.04);}
+.lb-pos{font-family:'Black Ops One',sans-serif;font-size:18px;color:#3d4a5a;width:28px;flex-shrink:0;}
+.lb-pos.gold{color:#ffc940;}
+.lb-pos.silver{color:#9ca3af;}
+.lb-pos.bronze{color:#cd7f32;}
+.lb-addr{font-family:'Share Tech Mono',monospace;font-size:13px;color:#7a8899;flex:1;}
+.lb-score{font-family:'Black Ops One',sans-serif;font-size:18px;color:#818cf8;}
+.lb-you{font-size:10px;color:#00ff87;letter-spacing:1px;}
+
+/* SHARE BTN */
+.btn-share{background:#000;border:1px solid #333;color:#fff;padding:12px 24px;border-radius:8px;font-family:'Black Ops One',sans-serif;font-size:13px;letter-spacing:1px;cursor:pointer;display:flex;align-items:center;gap:8px;}
+.btn-share:hover{background:#111;}
+.btn-mint{background:linear-gradient(135deg,#00ff87,#00c96a);color:#000;border:none;padding:12px 24px;border-radius:8px;font-family:'Black Ops One',sans-serif;font-size:13px;letter-spacing:1px;cursor:pointer;}
+
+/* HOW IT WORKS */
+.how-section{padding:0 24px 24px;}
+.how-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;}
+.how-card{background:#0f1318;border:1px solid #1c2028;border-radius:10px;padding:18px;}
+.how-n{font-family:'Black Ops One',sans-serif;font-size:32px;color:#1c2028;line-height:1;margin-bottom:8px;}
+.how-title{font-family:'Black Ops One',sans-serif;font-size:13px;color:#dde4f0;margin-bottom:6px;}
+.how-desc{font-size:14px;color:#7a8899;line-height:1.5;}
+.how-desc .g{color:#00ff87;font-weight:700;}
+.how-desc .p{color:#818cf8;font-weight:700;}
+.how-desc .a{color:#ffc940;font-weight:700;}
+
+/* LEGEND */
+.legend{display:flex;gap:12px;flex-wrap:wrap;font-size:12px;color:#7a8899;padding:12px 0;}
+.legend-item{display:flex;align-items:center;gap:6px;}
+.legend-dot{width:10px;height:10px;border-radius:2px;}
+
+/* LOADING */
+.spin{display:inline-block;width:16px;height:16px;border:2px solid rgba(99,102,241,0.3);border-top-color:#818cf8;border-radius:50%;animation:spin 0.8s linear infinite;vertical-align:middle;}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+@media(max-width:600px){
+  .form-row{gap:8px;}
+  .pos-card{width:80px;padding:8px 6px;}
+  .prize-row{gap:8px;}
+  .prize-box{padding:12px 16px;}
+  .prize-num{font-size:28px;}
+}
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <div class="topnav-logo">⚽ BLOCK <span>KICKERS</span></div>
+  <button class="btn-connect" id="connectBtn" onclick="connectWallet()">CONNECT WALLET</button>
+</nav>
+
+<div class="page">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="badge"><span class="dot"></span>QUEST · DREAM XI</div>
+    <span class="trophy">🏆</span>
+    <div class="arg-flag"><div></div><div></div><div></div></div>
+    <div class="hero-title"><span class="acc">DREAM XI</span><br><span class="gold">ARGENTINA</span></div>
+    <div class="hero-sub">Build the heaviest Argentina squad ever assembled.<br>Cards only need to pass through your wallet — buy, score, sell.</div>
+
+    <div class="prize-row">
+      <div class="prize-box">
+        <div style="font-size:11px;letter-spacing:2px;color:#ffc940;margin-bottom:4px;">🥇 1ST PLACE</div>
+        <div class="prize-num">6,000</div>
+        <div class="prize-chz">CHZ</div>
+      </div>
+      <div class="prize-box s">
+        <div style="font-size:11px;letter-spacing:2px;color:#9ca3af;margin-bottom:4px;">🥈 2ND PLACE</div>
+        <div class="prize-num">3,000</div>
+        <div class="prize-chz">CHZ</div>
+      </div>
+      <div class="prize-box b">
+        <div style="font-size:11px;letter-spacing:2px;color:#cd7f32;margin-bottom:4px;">🥉 3RD PLACE</div>
+        <div class="prize-num">1,000</div>
+        <div class="prize-chz">CHZ</div>
+      </div>
+    </div>
+
+    <div class="countdown-wrap">
+      <div class="countdown-label">QUEST ENDS AT BLOCK</div>
+      <div class="countdown-timer">
+        <div class="countdown-unit"><div class="countdown-num" id="cdH">--</div><div class="countdown-sub">HRS</div></div>
+        <div style="font-family:'Black Ops One',sans-serif;font-size:28px;color:#3d4a5a;padding-bottom:4px;">:</div>
+        <div class="countdown-unit"><div class="countdown-num" id="cdM">--</div><div class="countdown-sub">MIN</div></div>
+        <div style="font-family:'Black Ops One',sans-serif;font-size:28px;color:#3d4a5a;padding-bottom:4px;">:</div>
+        <div class="countdown-unit"><div class="countdown-num" id="cdS">--</div><div class="countdown-sub">SEC</div></div>
+      </div>
+      <div class="countdown-block" id="cdBlock">Target block: 34,157,280</div>
+    </div>
+  </div>
+
+  <!-- HOW IT WORKS -->
+  <div class="how-section" style="padding-top:24px;">
+    <div class="pitch-title">HOW IT WORKS</div>
+    <div class="how-grid">
+      <div class="how-card">
+        <div class="how-n">01</div>
+        <div class="how-title">MINT OR BUY</div>
+        <div class="how-desc">Get Argentina cards by minting for <span class="g">10 CHZ</span> or buying from the market. Any Argentina position counts.</div>
+      </div>
+      <div class="how-card">
+        <div class="how-n">02</div>
+        <div class="how-title">SCORE & SELL</div>
+        <div class="how-desc">Card passes through your wallet = <span class="p">position scored</span>. Buy a heavier card for the same position — score updates. Sell the old one.</div>
+      </div>
+      <div class="how-card">
+        <div class="how-n">03</div>
+        <div class="how-title">MAX YOUR WEIGHT</div>
+        <div class="how-desc">Each position keeps your <span class="p">best weight ever</span>. Find Legendary + Golden Boots = <span class="a">+90 pts</span> for that slot.</div>
+      </div>
+      <div class="how-card" style="border-color:rgba(255,201,64,0.3);background:rgba(255,201,64,0.04);">
+        <div class="how-n" style="color:rgba(255,201,64,0.2);">04</div>
+        <div class="how-title" style="color:#ffc940;">WIN 10,000 CHZ</div>
+        <div class="how-desc">Highest total weight when the block hits wins <span class="a">6,000 CHZ</span>. Top 3 share <span class="a">10,000 CHZ</span> total.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONNECT / PITCH -->
+  <div id="connectSection" class="connect-prompt">
+    <p>Connect your wallet to see your Argentina squad and start scoring</p>
+    <button class="btn-connect-big" onclick="connectWallet()">CONNECT WALLET</button>
+  </div>
+
+  <div id="gameSection" style="display:none;">
+
+    <!-- SCORE + ACTIONS -->
+    <div class="pitch-section" style="padding-bottom:0;">
+      <div class="score-box">
+        <div class="score-left">
+          <div class="score-label">YOUR DREAM XI SCORE</div>
+          <div><span class="score-num" id="myScore">0</span> <span class="score-max">/ 1,122 pts max</span></div>
+        </div>
+        <div class="score-right">
+          <button class="btn-share" onclick="shareOnX()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            SHARE PROGRESS
+          </button>
+          <button class="btn-mint" onclick="window.open('https://block-kickers.vercel.app','_blank')">MINT NOW →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- PITCH / FORMATION -->
+    <div class="pitch-section">
+      <div class="pitch-title">YOUR ARGENTINA DREAM XI</div>
+      <div class="pitch-wrap">
+        <!-- Grass effect -->
+        <div style="position:absolute;inset:0;background:repeating-linear-gradient(90deg,rgba(255,255,255,0.015) 0px,rgba(255,255,255,0.015) 1px,transparent 1px,transparent 40px);border-radius:12px;pointer-events:none;"></div>
+
+        <div class="legend" style="position:relative;z-index:1;">
+          <div class="legend-item"><div class="legend-dot" style="background:rgba(0,255,135,0.4);border:1px solid rgba(0,255,135,0.6);"></div>You own now</div>
+          <div class="legend-item"><div class="legend-dot" style="background:rgba(99,102,241,0.4);border:1px solid rgba(99,102,241,0.6);"></div>Best score (past)</div>
+          <div class="legend-item"><div class="legend-dot" style="background:rgba(255,201,64,0.4);border:1px solid rgba(255,201,64,0.6);"></div>On market — click to buy</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#1c2028;border:1px solid #2a3040;"></div>Empty</div>
+        </div>
+
+        <div class="formation" id="pitchFormation" style="position:relative;z-index:1;">
+          <div style="text-align:center;color:#3d4a5a;font-family:Share Tech Mono,monospace;font-size:11px;padding:20px 0;"><span class="spin"></span> Loading your squad...</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LEADERBOARD -->
+    <div class="lb-section">
+      <div class="pitch-title">LEADERBOARD</div>
+      <div id="leaderboard">
+        <div style="text-align:center;color:#3d4a5a;padding:20px;font-size:13px;"><span class="spin"></span> Loading...</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+const CONTRACT_ADDRESS = "0xAAdc8D56e25a223B6cf4b88ba0889975560f21aB";
+const MARKET_ADDRESS   = "0xA18f7Bade67Eda41FD7D2B3A204d39b543977DaE";
+const CHAIN_ID = 88888;
+const DEADLINE_BLOCK = 34157280;
+const ARGENTINA_TEAM_ID = 25; // Argentina index in TEAMS array
+
+const ABI = [
+  "event FigureMinted(address indexed owner,uint256 indexed tokenId,uint256 dna,uint256 teamId,uint256 position,uint8 rarity,uint256 weight)",
+  "function totalMinted() external view returns (uint256)"
+];
+const MARKET_ABI = [
+  "event Listed(uint256 indexed listingId,address indexed seller,uint256 tokenId,uint256 price)",
+  "event Sold(uint256 indexed listingId,address indexed buyer,uint256 price)",
+  "function nextListingId() external view returns (uint256)",
+  "function getListing(uint256) external view returns (address,uint256,uint256,bool)"
+];
+
+const POSITION_NAMES = {1:'Goalkeeper',2:'Right Back',3:'Left Back',4:'Centre Back',5:'Centre Back',6:'Def. Mid',7:'Right Wing',8:'Mid',9:'Striker',10:'Playmaker',11:'Left Wing'};
+const POSITION_SHORT = {1:'GK',2:'RB',3:'LB',4:'CB',5:'CB2',6:'DM',7:'RW',8:'MID',9:'ST',10:'#10',11:'LW'};
+const RARITY_NAMES = {0:'Common',1:'Rare',2:'Epic',3:'Legendary'};
+const FORMATION = [
+  [1],        // GK
+  [2,4,5,3],  // DEF
+  [6,8,10],   // MID
+  [7,11],     // WING
+  [9]         // ST
+];
+
+const PUBLIC_RPCS = ['https://chiliz-rpc.publicnode.com','https://rpc.chiliz.com'];
+
+let provider, signer, address;
+let contract, marketContract;
+let allMints = [], allSales = [], allListings = [];
+// dreamScores[wallet][position] = {weight, tid, rarity}
+let dreamScores = {};
+let marketByPos = {}; // position -> cheapest listing for Argentina
+
+async function getReadProvider(){
+  for(const url of PUBLIC_RPCS){
+    try{ const p = new ethers.JsonRpcProvider(url); await p.getBlockNumber(); return p; }
+    catch(e){}
+  }
+}
+
+async function connectWallet(){
+  if(!window.ethereum){ alert('Install MetaMask'); return; }
+  try{
+    await window.ethereum.request({method:'eth_requestAccounts'});
+    const cid = await window.ethereum.request({method:'eth_chainId'});
+    if(parseInt(cid,16) !== CHAIN_ID){ alert('Switch to Chiliz Chain'); return; }
+    provider = new ethers.BrowserProvider(window.ethereum);
+    signer = await provider.getSigner();
+    address = await signer.getAddress();
+    contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
+    marketContract = new ethers.Contract(MARKET_ADDRESS, MARKET_ABI, signer);
+    document.getElementById('connectBtn').textContent = address.slice(0,6)+'...'+address.slice(-4);
+    document.getElementById('connectBtn').classList.add('connected');
+    document.getElementById('connectSection').style.display = 'none';
+    document.getElementById('gameSection').style.display = 'block';
+    await loadData();
+  }catch(e){ console.error(e); }
+}
+
+function parseDNA(dna){
+  const n = typeof dna === 'bigint' ? dna : BigInt(dna.toString());
+  const teamId = Number(n % 48n);
+  const position = Number((n >> 6n) % 11n) + 1;
+  const rarRand = Number((n >> 10n) % 10000n);
+  const rarity = rarRand < 100 ? 3 : rarRand < 1000 ? 2 : rarRand < 3000 ? 1 : 0;
+  const hasGoldenBoots = Number((n >> 24n) % 100n) < 5;
+  const hasEarring = Number((n >> 27n) % 100n) < 25;
+  const hasBand = Number((n >> 28n) % 100n) < 25;
+  const hasGloves = Number((n >> 29n) % 100n) < 20;
+  const hasTattoo = Number((n >> 30n) % 100n) < 15;
+  let weight = [10,18,36,82][rarity];
+  if(hasGoldenBoots) weight += 8;
+  if(hasTattoo) weight += 5;
+  if(hasEarring) weight += 3;
+  if(hasBand) weight += 2;
+  if(hasGloves && position === 1) weight += 2;
+  return {teamId, position, rarity, weight, hasGoldenBoots, hasTattoo, hasEarring, hasBand, hasGloves};
+}
+
+async function fetchEvents(){
+  const rp = await getReadProvider();
+  const rc = new ethers.Contract(CONTRACT_ADDRESS, ABI, rp);
+  const rmk = new ethers.Contract(MARKET_ADDRESS, MARKET_ABI, rp);
+  const current = await rp.getBlockNumber();
+  const DEPLOY = 34086621;
+  const CHUNK = 20000;
+  let mints=[], listed=[], sold=[];
+  for(let b=DEPLOY; b<=current; b+=CHUNK){
+    const to = Math.min(b+CHUNK-1, current);
+    try{ const c = await rc.queryFilter(rc.filters.FigureMinted(),b,to); mints=[...mints,...c]; }catch(e){}
+    try{ const c = await rmk.queryFilter(rmk.filters.Listed(),b,to); listed=[...listed,...c]; }catch(e){}
+    try{ const c = await rmk.queryFilter(rmk.filters.Sold(),b,to); sold=[...sold,...c]; }catch(e){}
+  }
+  // Map listingId -> tokenId
+  const lMap = {};
+  listed.forEach(ev => { lMap[Number(ev.args.listingId)] = Number(ev.args.tokenId); });
+  const salesWithToken = sold.map(ev => ({
+    listingId: Number(ev.args.listingId),
+    tokenId: lMap[Number(ev.args.listingId)] ?? null,
+    buyer: ev.args.buyer.toLowerCase()
+  })).filter(s => s.tokenId !== null);
+  return {mints, sales: salesWithToken, listed};
+}
+
+async function loadData(){
+  document.getElementById('pitchFormation').innerHTML = '<div style="text-align:center;color:#3d4a5a;padding:40px;"><span class="spin"></span> Loading blockchain data...</div>';
+
+  // Try Vercel API first
+  let mints=[], sales=[], listed=[];
+  try{
+    const res = await fetch('/api/events');
+    if(res.ok){
+      const api = await res.json();
+      mints = api.mints.map(m => ({owner: m.owner, tokenId: m.tokenId, dna: BigInt(m.dna)}));
+      sales = api.sales;
+      listed = api.listings || [];
+    }
+  }catch(e){
+    const ev = await fetchEvents();
+    mints = ev.mints.map(m => ({owner: m.args.owner.toLowerCase(), tokenId: Number(m.args.tokenId), dna: m.args.dna}));
+    sales = ev.sales;
+    listed = ev.listed;
+  }
+
+  // Build ownerMap (current owner)
+  const ownerMap = {};
+  mints.forEach(m => {
+    try{
+      const t = parseDNA(m.dna);
+      ownerMap[m.tokenId] = {owner: m.owner.toLowerCase(), dna: m.dna, ...t};
+    }catch(e){}
+  });
+  sales.forEach(s => {
+    if(ownerMap[s.tokenId]) ownerMap[s.tokenId].owner = s.buyer.toLowerCase();
+  });
+
+  // Build dream scores — per wallet, per position: best weight that passed through
+  // A card "passes through" if: minted by wallet OR bought by wallet (in sales)
+  dreamScores = {};
+
+  const score = (wallet, tokenId, dna) => {
+    try{
+      const t = parseDNA(dna);
+      if(t.teamId !== ARGENTINA_TEAM_ID) return;
+      if(!dreamScores[wallet]) dreamScores[wallet] = {};
+      const cur = dreamScores[wallet][t.position];
+      if(!cur || t.weight > cur.weight){
+        dreamScores[wallet][t.position] = {weight: t.weight, tid: tokenId, rarity: t.rarity, dna};
+      }
+    }catch(e){}
+  };
+
+  // Original mints
+  mints.forEach(m => score(m.owner.toLowerCase(), m.tokenId, m.dna));
+  // Sales (buyer scored)
+  sales.forEach(s => {
+    const fig = ownerMap[s.tokenId];
+    if(fig && fig.teamId === ARGENTINA_TEAM_ID){
+      score(s.buyer, s.tokenId, fig.dna);
+    }
+  });
+
+  // Market listings for Argentina — z API (nie getListing w pętli)
+  marketByPos = {};
+  try{
+    const rp = await getReadProvider();
+    const rmk = new ethers.Contract(MARKET_ADDRESS, MARKET_ABI, rp);
+    // Użyj listed eventów które już mamy
+    const listedArr = Array.isArray(listed) ? listed : [];
+    // Sprawdź które są aktywne (nie sprzedane)
+    const soldTokenIds = new Set(sales.map(s => s.tokenId));
+    listedArr.forEach(l => {
+      const tokenId = l.tokenId || Number(l.args?.tokenId);
+      const listingId = l.listingId ?? Number(l.args?.listingId);
+      const priceWei = l.price || l.args?.price;
+      if(!tokenId || soldTokenIds.has(tokenId)) return;
+      const fig = ownerMap[tokenId];
+      if(!fig || fig.teamId !== ARGENTINA_TEAM_ID) return;
+      const price = parseFloat(ethers.formatEther(priceWei));
+      if(!marketByPos[fig.position] || price < marketByPos[fig.position].price){
+        marketByPos[fig.position] = {listingId, price, priceWei, weight: fig.weight, rarity: fig.rarity};
+      }
+    });
+  }catch(e){ console.warn('market load error:', e); }
+
+  renderPitch();
+  renderLeaderboard();
+}
+
+function getMyScore(){
+  const my = dreamScores[address?.toLowerCase()] || {};
+  return Object.values(my).reduce((s,v) => s+v.weight, 0);
+}
+
+function renderPitch(){
+  const myAddr = address?.toLowerCase();
+  const myDream = dreamScores[myAddr] || {};
+  const currentOwned = {};
+  // Check what I currently own
+  Object.values(dreamScores).forEach(() => {});
+
+  document.getElementById('myScore').textContent = getMyScore();
+
+  const formation = document.getElementById('pitchFormation');
+  formation.innerHTML = '';
+
+  const legend = document.createElement('div');
+  legend.className = 'legend';
+  legend.innerHTML =
+    '<div class="legend-item"><div class="legend-dot" style="background:rgba(0,255,135,0.3);border:1px solid rgba(0,255,135,0.5);"></div>You own now</div>' +
+    '<div class="legend-item"><div class="legend-dot" style="background:rgba(99,102,241,0.3);border:1px solid rgba(99,102,241,0.5);"></div>Best scored</div>' +
+    '<div class="legend-item"><div class="legend-dot" style="background:rgba(255,201,64,0.3);border:1px solid rgba(255,201,64,0.5);"></div>On market — click to buy</div>';
+  formation.appendChild(legend);
+
+  FORMATION.forEach(row => {
+    const rowEl = document.createElement('div');
+    rowEl.className = 'form-row';
+    row.forEach(pos => {
+      const scored = myDream[pos];
+      const mkt = marketByPos[pos];
+      const card = document.createElement('div');
+
+      if(scored){
+        const rarColor = ['#7a8899','#3b82f6','#c084fc','#ffc940'][scored.rarity];
+        card.className = 'pos-card owned-past';
+        card.innerHTML =
+          '<div class="pos-name">'+(POSITION_SHORT[pos]||pos)+'</div>' +
+          '<div class="pos-weight purple">'+scored.weight+'</div>' +
+          '<div class="pos-rarity" style="color:'+rarColor+'">'+RARITY_NAMES[scored.rarity]+'</div>' +
+          (mkt && mkt.weight > scored.weight
+            ? '<div class="pos-market-price" onclick="buyFromMarket('+mkt.listingId+',\''+ethers.formatEther(mkt.priceWei)+'\')">▲'+mkt.weight+' for '+mkt.price+' CHZ</div>'
+            : '');
+      } else if(mkt){
+        card.className = 'pos-card market';
+        card.onclick = () => buyFromMarket(mkt.listingId, ethers.formatEther(mkt.priceWei));
+        card.innerHTML =
+          '<div class="pos-name">'+(POSITION_SHORT[pos]||pos)+'</div>' +
+          '<div class="pos-weight gold">'+mkt.weight+'</div>' +
+          '<div class="pos-rarity">'+RARITY_NAMES[mkt.rarity]+'</div>' +
+          '<div class="pos-market-price">'+mkt.price+' CHZ →</div>';
+      } else {
+        card.className = 'pos-card empty';
+        card.innerHTML =
+          '<div class="pos-name">'+(POSITION_SHORT[pos]||pos)+'</div>' +
+          '<div class="pos-weight empty">—</div>' +
+          '<div class="pos-rarity">not scored</div>';
+      }
+      rowEl.appendChild(card);
+    });
+    formation.appendChild(rowEl);
+  });
+}
+
+function renderLeaderboard(){
+  const lb = document.getElementById('leaderboard');
+  const myAddr = address?.toLowerCase();
+
+  const scores = Object.entries(dreamScores).map(([wallet, positions]) => ({
+    wallet,
+    score: Object.values(positions).reduce((s,v) => s+v.weight, 0),
+    filled: Object.keys(positions).length
+  })).sort((a,b) => b.score - a.score).slice(0, 10);
+
+  if(scores.length === 0){
+    lb.innerHTML = '<div style="text-align:center;color:#3d4a5a;padding:20px;">No Argentina figures scored yet</div>';
+    return;
+  }
+
+  lb.innerHTML = scores.map((s, i) => {
+    const isMe = s.wallet === myAddr;
+    const posClass = i===0?'gold':i===1?'silver':i===2?'bronze':'';
+    const medal = i===0?'🥇':i===1?'🥈':i===2?'🥉':'';
+    return `<div class="lb-row ${isMe?'me':''}">
+      <div class="lb-pos ${posClass}">${medal||'#'+(i+1)}</div>
+      <div class="lb-addr">${s.wallet.slice(0,6)}…${s.wallet.slice(-4)} ${isMe?'<span class="lb-you">YOU</span>':''}</div>
+      <div style="font-size:12px;color:#5a6a7a;font-family:Share Tech Mono,monospace;margin-right:8px;">${s.filled}/11</div>
+      <div class="lb-score">${s.score} pts</div>
+    </div>`;
+  }).join('');
+}
+
+async function buyFromMarket(listingId, priceEth){
+  if(!marketContract){ alert('Connect wallet'); return; }
+  try{
+    const tx = await marketContract.buyFigure(listingId, {value: ethers.parseEther(priceEth), gasLimit: 250000});
+    alert('Buying...');
+    await tx.wait();
+    alert('Purchased! Refreshing...');
+    await loadData();
+  }catch(e){ alert('Error: '+(e.reason||e.message)); }
+}
+
+function shareOnX(){
+  const score = getMyScore();
+  const myDream = dreamScores[address?.toLowerCase()] || {};
+  const filled = Object.keys(myDream).length;
+  const text = `🏆 My Argentina DREAM XI score on @fan_tokens Block Kickers: ${score} pts (${filled}/11 positions scored)\n\nRacing for 6,000 CHZ — can you beat me?\n\nblock-kickers.vercel.app/dream-xi\n\n#WC2026 #Chiliz #BlockKickers #ArgentinaVs`;
+  window.open('https://twitter.com/intent/tweet?text='+encodeURIComponent(text),'_blank');
+}
+
+// COUNTDOWN
+const DEADLINE = DEADLINE_BLOCK;
+let currentBlock = 34140000;
+
+async function updateBlock(){
+  try{
+    const rp = await getReadProvider();
+    currentBlock = await rp.getBlockNumber();
+  }catch(e){}
+}
+
+function updateCountdown(){
+  const blocksLeft = Math.max(0, DEADLINE - currentBlock);
+  const secsLeft = blocksLeft * 5;
+  const h = Math.floor(secsLeft / 3600);
+  const m = Math.floor((secsLeft % 3600) / 60);
+  const s = secsLeft % 60;
+  document.getElementById('cdH').textContent = String(h).padStart(2,'0');
+  document.getElementById('cdM').textContent = String(m).padStart(2,'0');
+  document.getElementById('cdS').textContent = String(s).padStart(2,'0');
+  document.getElementById('cdBlock').textContent = 'Target: #'+DEADLINE.toLocaleString()+' · Current: #'+currentBlock.toLocaleString()+' · '+blocksLeft.toLocaleString()+' blocks left';
+}
+
+updateBlock().then(updateCountdown);
+setInterval(() => { currentBlock++; updateCountdown(); }, 5000);
+setInterval(updateBlock, 60000);
+</script>
+</body>
+</html>
