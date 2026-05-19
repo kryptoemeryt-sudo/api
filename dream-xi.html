@@ -428,10 +428,11 @@ async function loadData(){
       if(t.teamId !== ARGENTINA_TEAM_ID) return;
       if(!dreamScores[wallet]) dreamScores[wallet] = {};
       const cur = dreamScores[wallet][t.position];
+      console.log('SCORE', wallet?.slice(0,8), 'pos:', t.position, 'w:', t.weight, 'cur:', cur?.weight||'none');
       if(!cur || t.weight > cur.weight){
         dreamScores[wallet][t.position] = {weight: t.weight, tid: tokenId, rarity: t.rarity, dna};
       }
-    }catch(e){}
+    }catch(e){ console.error('score err:', e); }
   };
 
   // Original mints
