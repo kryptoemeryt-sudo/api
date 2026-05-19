@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BLOCK KICKERS — Nation Quest</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Barlow+Condensed:wght@400;600;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;font-size:16px;}
+.bk-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(0,255,135,0.1);border:1px solid rgba(0,255,135,0.3);border-radius:4px;padding:5px 14px;font-size:11px;letter-spacing:3px;color:#00ff87;margin-bottom:24px;}
+.dot{width:6px;height:6px;border-radius:50%;background:#00ff87;animation:blink 2s infinite;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.2}}
+.hero{padding:56px 48px 48px;text-align:center;border-bottom:1px solid #1c2028;}
+.title{font-family:'Black Ops One',sans-serif;font-size:72px;line-height:0.9;letter-spacing:-1px;margin-bottom:4px;}
+.title2{font-family:'Black Ops One',sans-serif;font-size:52px;line-height:1;letter-spacing:-1px;margin-bottom:16px;}
+.acc{color:#00ff87;}
+.gold{color:#ffc940;}
+.sub{font-size:22px;color:#7a8899;margin-bottom:32px;}
+.prize-box{display:inline-flex;flex-direction:column;align-items:center;background:rgba(255,201,64,0.07);border:1px solid rgba(255,201,64,0.3);border-radius:12px;padding:20px 48px;margin-bottom:40px;}
+.prize-num{font-family:'Black Ops One',sans-serif;font-size:64px;color:#ffc940;line-height:1;}
+.prize-chz{font-family:'Black Ops One',sans-serif;font-size:24px;color:#ffc940;margin-top:-4px;}
+.prize-lbl{font-size:12px;letter-spacing:3px;color:#5a6a7a;margin-top:6px;}
+.positions{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-bottom:16px;}
+.pos{width:56px;height:56px;border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:'Black Ops One',sans-serif;font-size:11px;}
+.pos.empty{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);color:#3d4a5a;}
+.pos.done{background:rgba(0,255,135,0.1);border:1px solid rgba(0,255,135,0.3);color:#00ff87;}
+.pos-sub{font-size:9px;font-family:'Barlow Condensed',sans-serif;margin-top:2px;opacity:0.5;}
+.status{font-size:13px;letter-spacing:3px;color:#3d4a5a;}
+.section{padding:40px 48px;border-bottom:1px solid #1c2028;}
+.sec-label{font-size:11px;letter-spacing:4px;color:#3d4a5a;margin-bottom:22px;}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+.step{background:#0f1318;border:1px solid #1c2028;border-radius:10px;padding:22px;}
+.step.hl{border-color:rgba(255,201,64,0.3);background:rgba(255,201,64,0.04);}
+.step-n{font-family:'Black Ops One',sans-serif;font-size:36px;color:#1c2028;line-height:1;margin-bottom:12px;}
+.step-title{font-family:'Black Ops One',sans-serif;font-size:13px;color:#dde4f0;margin-bottom:8px;letter-spacing:0.5px;}
+.step-desc{font-size:15px;color:#7a8899;line-height:1.5;}
+.g{color:#00ff87;font-weight:700;}
+.a{color:#ffc940;font-weight:700;}
+.example{background:#0f1318;border:1px solid rgba(0,255,135,0.2);border-radius:10px;overflow:hidden;}
+.ex-row{display:flex;align-items:flex-start;gap:16px;padding:18px 22px;border-bottom:1px solid #1c2028;}
+.ex-row:last-child{border-bottom:none;}
+.ex-n{font-family:'Black Ops One',sans-serif;font-size:24px;color:#00ff87;width:32px;flex-shrink:0;line-height:1.2;}
+.ex-text{font-size:16px;color:#7a8899;line-height:1.5;}
+.ex-text strong{color:#dde4f0;}
+.cta{padding:48px;text-align:center;}
+.cta-label{font-size:11px;letter-spacing:4px;color:#3d4a5a;margin-bottom:20px;}
+.url{font-family:'Share Tech Mono',monospace;font-size:18px;color:#3d4a5a;letter-spacing:2px;margin-bottom:28px;}
+.rules{background:#0a0d10;border:1px solid #1c2028;border-radius:10px;padding:22px;text-align:left;max-width:560px;margin:0 auto;}
+.rules-title{font-size:10px;letter-spacing:4px;color:#3d4a5a;margin-bottom:14px;}
+.rule{display:flex;gap:10px;font-size:14px;color:#5a6a7a;margin-bottom:8px;line-height:1.4;}
+.rule::before{content:'›';color:#00ff87;flex-shrink:0;}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="bk-badge"><span class="dot"></span>NATION QUEST · BLOCK KICKERS 2026</div>
+  <div class="title">COMPLETE <span class="acc">THE SQUAD</span></div>
+  <div class="title2">WIN <span class="gold">1000 CHZ</span></div>
+  <div class="sub">Collect all 11 positions of United States · First wallet wins</div>
+
+  <svg width="64" height="46" viewBox="0 0 56 40" style="border-radius:4px;margin-bottom:32px;">
+    <rect width="56" height="40" fill="#B22234"/>
+    <rect y="3.08" width="56" height="3.08" fill="#fff"/>
+    <rect y="9.23" width="56" height="3.08" fill="#fff"/>
+    <rect y="15.38" width="56" height="3.08" fill="#fff"/>
+    <rect y="21.54" width="56" height="3.08" fill="#fff"/>
+    <rect y="27.69" width="56" height="3.08" fill="#fff"/>
+    <rect y="33.85" width="56" height="3.08" fill="#fff"/>
+    <rect width="24" height="21.54" fill="#3C3B6E"/>
+  </svg>
+
+  <div class="positions">
+    <div class="pos done"><span>GK</span><span class="pos-sub">minted</span></div>
+    <div class="pos done"><span>CB</span><span class="pos-sub">minted</span></div>
+    <div class="pos done"><span>CB</span><span class="pos-sub">minted</span></div>
+    <div class="pos done"><span>MID</span><span class="pos-sub">minted</span></div>
+    <div class="pos empty"><span>RB</span><span class="pos-sub">open</span></div>
+    <div class="pos empty"><span>LB</span><span class="pos-sub">open</span></div>
+    <div class="pos empty"><span>DM</span><span class="pos-sub">open</span></div>
+    <div class="pos empty"><span>RW</span><span class="pos-sub">open</span></div>
+    <div class="pos empty"><span>LW</span><span class="pos-sub">open</span></div>
+    <div class="pos empty"><span>ST</span><span class="pos-sub">open</span></div>
+    <div class="pos empty"><span>#10</span><span class="pos-sub">open</span></div>
+  </div>
+  <div class="status">4 / 11 POSITIONS MINTED · 7 STILL OPEN</div>
+
+  <div class="prize-box" style="margin-top:32px;">
+    <div class="prize-num">1000</div>
+    <div class="prize-chz">CHZ</div>
+    <div class="prize-lbl">PRIZE · PAID ON COMPLETION</div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="sec-label">HOW TO WIN</div>
+  <div class="steps">
+    <div class="step">
+      <div class="step-n">01</div>
+      <div class="step-title">MINT A FIGURE</div>
+      <div class="step-desc">Pay <span class="g">10 CHZ</span> to mint a random football figure. You might land a USA position nobody has yet.</div>
+    </div>
+    <div class="step">
+      <div class="step-n">02</div>
+      <div class="step-title">BUY MISSING POSITIONS</div>
+      <div class="step-desc">Check the album. Buy missing USA positions from the market. Prices rise as the race heats up.</div>
+    </div>
+    <div class="step">
+      <div class="step-n">03</div>
+      <div class="step-title">HOLD ALL 11</div>
+      <div class="step-desc">GK · RB · LB · CB · CB · DM · RW · MID · LW · ST · #10 — all in your wallet simultaneously.</div>
+    </div>
+    <div class="step hl">
+      <div class="step-n" style="color:rgba(255,201,64,0.15);">04</div>
+      <div class="step-title" style="color:#ffc940;">CLAIM 1000 CHZ</div>
+      <div class="step-desc">First wallet verified on-chain wins. Prize paid within <span class="a">24 hours</span>. Blockchain timestamp decides.</div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="sec-label">THE OPPORTUNITY — WHY THIS IS SMART</div>
+  <div class="example">
+    <div class="ex-row">
+      <div class="ex-n">A</div>
+      <div class="ex-text">You mint for <strong>10 CHZ</strong> and land <strong>USA Striker</strong>. Nobody else has it. The person racing to complete needs it badly.</div>
+    </div>
+    <div class="ex-row">
+      <div class="ex-n">B</div>
+      <div class="ex-text">You list it for <span class="a">500 CHZ</span>. They need it to win 1000 CHZ — for them, it's worth every CHZ.</div>
+    </div>
+    <div class="ex-row">
+      <div class="ex-n">C</div>
+      <div class="ex-text">You turned <span class="g">10 CHZ → 475 CHZ</span>. They win <span class="a">1000 CHZ</span>. <span class="g">Both win. That's Block Kickers.</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="cta">
+  <div class="cta-label">JOIN THE RACE</div>
+  <div style="font-size:20px;color:#7a8899;margin-bottom:10px;">Mint · Trade · Complete · Win</div>
+  <div class="url">block-kickers.vercel.app</div>
+  <div class="rules">
+    <div class="rules-title">OFFICIAL RULES</div>
+    <div class="rule">First wallet holding all 11 USA positions simultaneously wins 1000 CHZ</div>
+    <div class="rule">Verified by blockchain — earliest timestamp of full completion wins</div>
+    <div class="rule">All figures must be in wallet, not listed on market, at time of claim</div>
+    <div class="rule">Prize paid within 24 hours of verified completion</div>
+    <div class="rule">Track live progress in the album at block-kickers.vercel.app</div>
+  </div>
+</div>
+
+</body>
+</html>
