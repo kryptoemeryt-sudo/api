@@ -2386,8 +2386,9 @@ function buildSquadFilters(){
     try{ return TEAMS[parseDNA(f.dna).teamId % TEAMS.length]; }catch(e){ return null; }
   }).filter(Boolean))].sort();
   if(teams.length <= 1){ div.innerHTML=''; return; }
-  const s1='padding:4px 10px;border-radius:20px;border:1px solid var(--border);background:rgba(255,255,255,0.03);color:var(--text2);font-size:10px;cursor:pointer;margin:2px;';
-  const s2='padding:4px 10px;border-radius:20px;border:1px solid rgba(0,255,135,0.3);background:var(--green-dim);color:var(--green);font-size:10px;cursor:pointer;margin:2px;';
+  const s1='padding:3px 8px;border-radius:12px;border:1px solid var(--border);background:rgba(255,255,255,0.03);color:var(--text3);font-size:9px;cursor:pointer;white-space:nowrap;flex-shrink:0;';
+  const s2='padding:3px 8px;border-radius:12px;border:1px solid rgba(0,255,135,0.3);background:var(--green-dim);color:var(--green);font-size:9px;cursor:pointer;white-space:nowrap;flex-shrink:0;';
+  div.style.cssText='display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;padding-bottom:4px;margin-bottom:8px;';
   div.innerHTML='<button onclick="setSquadFilter(null,this)" style="'+s2+'">ALL</button>';
   teams.forEach(team=>{
     const b=document.createElement('button');
@@ -2401,8 +2402,8 @@ function buildSquadFilters(){
 function setSquadFilter(team,btn){
   _squadTeamFilter=team;
   squadPage=0;
-  const s1='padding:4px 10px;border-radius:20px;border:1px solid var(--border);background:rgba(255,255,255,0.03);color:var(--text2);font-size:10px;cursor:pointer;margin:2px;';
-  const s2='padding:4px 10px;border-radius:20px;border:1px solid rgba(0,255,135,0.3);background:var(--green-dim);color:var(--green);font-size:10px;cursor:pointer;margin:2px;';
+  const s1='padding:3px 8px;border-radius:12px;border:1px solid var(--border);background:rgba(255,255,255,0.03);color:var(--text3);font-size:9px;cursor:pointer;white-space:nowrap;flex-shrink:0;';
+  const s2='padding:3px 8px;border-radius:12px;border:1px solid rgba(0,255,135,0.3);background:var(--green-dim);color:var(--green);font-size:9px;cursor:pointer;white-space:nowrap;flex-shrink:0;';
   document.querySelectorAll('#squadFilters button').forEach(b=>b.style.cssText=s1);
   if(btn) btn.style.cssText=s2;
   renderCollection();
@@ -3974,7 +3975,7 @@ async function loadCountryLb(){
       grid.appendChild(groupHeader);
 
       const groupRow = document.createElement('div');
-      groupRow.style.cssText = 'display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px;';
+      groupRow.style.cssText = 'display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:6px;';
       grid.appendChild(groupRow);
 
       tids.forEach(tid => {
@@ -3983,35 +3984,26 @@ async function loadCountryLb(){
         const best = countryBest[tid];
         const isMe = best && address && best.owner.toLowerCase() === address.toLowerCase();
         const card = document.createElement('div');
-        card.style.cssText = `background:var(--card);border:1px solid ${best ? (isMe?'rgba(0,255,135,0.4)':'var(--border)') : 'rgba(255,255,255,0.03)'};border-radius:8px;padding:10px 12px;position:relative;`;
+        card.style.cssText = `background:var(--card);border:1px solid ${best?(isMe?'rgba(0,255,135,0.4)':'var(--border)'):'rgba(255,255,255,0.03)'};border-radius:8px;padding:8px;position:relative;min-width:0;`;
         if(best){
-          card.innerHTML = `
-            <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
-              <div style="width:10px;height:10px;border-radius:50%;background:${shirt};flex-shrink:0;"></div>
-              <div style="font-size:13px;font-weight:700;color:var(--text1);flex:1;">${team}</div>
-              ${isMe?'<span style="font-size:9px;color:var(--green);font-family:Black Ops One,sans-serif;">YOU</span>':''}
-            </div>
-            <div style="display:flex;align-items:center;justify-content:space-between;">
-              <div>
-                <span style="display:inline-block;padding:2px 6px;border-radius:4px;font-size:10px;background:${best.rarColor}22;color:${best.rarColor};border:1px solid ${best.rarColor}44;margin-bottom:4px;">${best.rarity}</span>
-                <div style="font-size:12px;color:var(--green);font-weight:700;">⚡ W:${best.weight}/100</div>
-              </div>
-              <div style="text-align:right;">
-                <div style="font-size:10px;color:var(--text3);">EST. PRIZE</div>
-                <div style="font-size:13px;color:var(--gold);font-weight:700;">~${perCountry.toFixed(0)} CHZ</div>
-              </div>
-            </div>
-            <div style="font-size:10px;color:var(--text3);margin-top:4px;">by ${best.owner.slice(0,6)}...${best.owner.slice(-4)}</div>
-          `;
+          card.innerHTML =
+            '<div style="display:flex;align-items:center;gap:4px;margin-bottom:4px;">' +
+              '<div style="width:7px;height:7px;border-radius:50%;background:'+shirt+';flex-shrink:0;"></div>' +
+              '<div style="font-size:10px;font-weight:700;color:var(--text1);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+team+'</div>' +
+              (isMe?'<span style="font-size:8px;color:var(--green);">YOU</span>':'') +
+            '</div>' +
+            '<div style="display:inline-block;padding:1px 5px;border-radius:3px;font-size:9px;background:'+best.rarColor+'22;color:'+best.rarColor+';border:1px solid '+best.rarColor+'44;margin-bottom:3px;">'+best.rarity+'</div>' +
+            '<div style="font-size:11px;color:var(--green);font-weight:700;">W:'+best.weight+'</div>' +
+            '<div style="font-size:9px;color:var(--gold);">~'+perCountry.toFixed(0)+' CHZ</div>' +
+            '<div style="font-size:8px;color:var(--text3);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+best.owner.slice(0,6)+'…'+best.owner.slice(-3)+'</div>';
         } else {
-          card.innerHTML = `
-            <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
-              <div style="width:10px;height:10px;border-radius:50%;background:${shirt};flex-shrink:0;opacity:0.4;"></div>
-              <div style="font-size:13px;font-weight:700;color:var(--text3);">${team}</div>
-            </div>
-            <div style="font-size:11px;color:var(--text3);margin-bottom:4px;">No figure yet</div>
-            <div style="font-size:10px;color:var(--green);opacity:0.6;">~${perCountry.toFixed(0)} CHZ unclaimed</div>
-          `;
+          card.innerHTML =
+            '<div style="display:flex;align-items:center;gap:4px;margin-bottom:4px;">' +
+              '<div style="width:7px;height:7px;border-radius:50%;background:'+shirt+';flex-shrink:0;opacity:0.3;"></div>' +
+              '<div style="font-size:10px;color:var(--text3);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+team+'</div>' +
+            '</div>' +
+            '<div style="font-size:9px;color:var(--text3);">no figures</div>' +
+            '<div style="font-size:9px;color:var(--gold);">~'+perCountry.toFixed(0)+' CHZ</div>';
         }
         groupRow.appendChild(card);
       });
