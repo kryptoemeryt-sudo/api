@@ -512,12 +512,13 @@ function renderPitch(){
             : '');
       } else if(mkt){
         card.className = 'pos-card market';
-        card.onclick = () => buyFromMarket(mkt.listingId, ethers.formatEther(mkt.priceWei));
+        card.onclick = () => buyFromMarket(mkt.listingId, mkt.price);
+        card.title = 'Click to buy on market';
         card.innerHTML =
           '<div class="pos-name">'+(POSITION_SHORT[pos]||pos)+'</div>' +
           '<div class="pos-weight gold">'+mkt.weight+'</div>' +
           '<div class="pos-rarity">'+RARITY_NAMES[mkt.rarity]+'</div>' +
-          '<div class="pos-market-price">'+mkt.price+' CHZ →</div>';
+          '<div class="pos-market-price">'+mkt.price+' CHZ<br>→ BUY ON MARKET</div>';
       } else {
         card.className = 'pos-card empty';
         card.innerHTML =
@@ -559,20 +560,8 @@ function renderLeaderboard(){
   }).join('');
 }
 
-async function buyFromMarket(listingId, priceEth){
-  if(!window.ethereum){ alert('Connect wallet first'); return; }
-  try{
-    if(!marketContract){
-      provider = new ethers.BrowserProvider(window.ethereum);
-      signer = await provider.getSigner();
-      marketContract = new ethers.Contract(MARKET_ADDRESS, MARKET_ABI, signer);
-    }
-    const tx = await marketContract.buyFigure(listingId, {value: ethers.parseEther(String(priceEth)), gasLimit: 250000});
-    alert('Transaction sent — waiting for confirmation...');
-    await tx.wait();
-    alert('Purchased! Refreshing...');
-    await loadData();
-  }catch(e){ alert('Error: '+(e.reason||e.message||String(e))); }
+function buyFromMarket(listingId, priceEth){
+  window.location.href = 'https://block-kickers.vercel.app/#market';
 }
 
 function shareOnX(){
@@ -585,49 +574,21 @@ function shareOnX(){
 
 // COUNTDOWN
 const DEADLINE = DEADLINE_BLOCK;
-let currentBlock = 0;
-
-async function updateBlock(){
-  // Pobierz aktualny blok z Vercel API (omija CORS)
-  try{
-    const res = await fetch('/api/events');
-    if(res.ok){
-      const data = await res.json();
-      if(data.currentBlock){ currentBlock = data.currentBlock; updateCountdown(); return; }
-    }
-  }catch(e){}
-  // Fallback — bezpośredni RPC
-  for(const url of PUBLIC_RPCS){
-    try{
-      const p = new ethers.JsonRpcProvider(url);
-      const b = await p.getBlockNumber();
-      if(b > 0){ currentBlock = b; updateCountdown(); return; }
-    }catch(e){}
-  }
-}
+// COUNTDOWN — 24h od załadowania strony
+const DEADLINE_TIME = Date.now() + 24 * 60 * 60 * 1000;
 
 function updateCountdown(){
-  if(currentBlock === 0){ 
-    document.getElementById('cdH').textContent = '--';
-    document.getElementById('cdM').textContent = '--';
-    document.getElementById('cdS').textContent = '--';
-    document.getElementById('cdBlock').textContent = 'Target: #'+DEADLINE.toLocaleString()+' · Connecting...';
-    return;
-  }
-  const blocksLeft = Math.max(0, DEADLINE - currentBlock);
-  const secsLeft = blocksLeft * 5;
-  const h = Math.floor(secsLeft / 3600);
-  const m = Math.floor((secsLeft % 3600) / 60);
-  const s = secsLeft % 60;
+  const left = Math.max(0, DEADLINE_TIME - Date.now());
+  const h = Math.floor(left / 3600000);
+  const m = Math.floor((left % 3600000) / 60000);
+  const s = Math.floor((left % 60000) / 1000);
   document.getElementById('cdH').textContent = String(h).padStart(2,'0');
   document.getElementById('cdM').textContent = String(m).padStart(2,'0');
   document.getElementById('cdS').textContent = String(s).padStart(2,'0');
-  document.getElementById('cdBlock').textContent = 'Target: #'+DEADLINE.toLocaleString()+' · Current: #'+currentBlock.toLocaleString()+' · '+blocksLeft.toLocaleString()+' blocks left';
+  document.getElementById('cdBlock').textContent = 'Quest ends in: '+h+'h '+m+'m '+s+'s';
 }
-
-updateBlock();
-setInterval(() => { if(currentBlock > 0){ currentBlock++; updateCountdown(); } }, 5000);
-setInterval(updateBlock, 30000);
+updateCountdown();
+setInterval(updateCountdown, 1000);
 </script>
 </body>
 </html>
