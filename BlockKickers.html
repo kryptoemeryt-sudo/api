@@ -2972,17 +2972,30 @@ async function loadAlbum(){
       }catch(e){ console.warn('album: could not load market listings', e); }
     }
 
-    // Per teamId: top holder (most positions)
+    // Per teamId: unia wszystkich pozycji (ktokolwiek ma) + top holder
     const teamEntries = {};
+    const teamAllPos = {}; // unia pozycji ze wszystkich graczy
+
     Object.entries(wallets).forEach(([wallet, countries]) => {
       Object.entries(countries).forEach(([teamId, positions]) => {
         const tid = Number(teamId);
+        // Unia pozycji
+        if(!teamAllPos[tid]) teamAllPos[tid] = new Set();
+        positions.forEach(p => teamAllPos[tid].add(p));
+        // Top holder (najwięcej unikalnych pozycji)
         if(!teamEntries[tid] || positions.size > teamEntries[tid].count){
           const missing = [];
-          for(let p=1; p<=11; p++) if(!positions.has(p)) missing.push(p);
-          teamEntries[tid] = { wallet, count: positions.size, posSet: positions, missing };
+          for(let p=1; p<=11; p++) if(!teamAllPos[tid]?.has(p)) missing.push(p);
+          teamEntries[tid] = { wallet, count: positions.size, posSet: positions, missing, myCount: 0 };
         }
       });
+    });
+
+    // Przelicz missing na podstawie pełnej unii
+    Object.keys(teamEntries).forEach(tid => {
+      const allPos = teamAllPos[Number(tid)] || new Set();
+      teamEntries[tid].missing = [];
+      for(let p=1; p<=11; p++) if(!allPos.has(p)) teamEntries[tid].missing.push(p);
     });
 
     const myAddr = address ? address.toLowerCase() : '';
@@ -2992,7 +3005,9 @@ async function loadAlbum(){
     if(NATION_QUEST.active){
       const nqTeam = TEAMS[NATION_QUEST.teamId];
       const nqEntry = teamEntries[NATION_QUEST.teamId];
-      const nqMyCount = nqEntry && nqEntry.wallet === myAddr ? nqEntry.count : 0;
+      const nqMyPositions = myAddr && wallets[myAddr] && wallets[myAddr][NATION_QUEST.teamId]
+        ? wallets[myAddr][NATION_QUEST.teamId] : new Set();
+      const nqMyCount = nqMyPositions.size;
       const nqLeader = nqEntry ? `${nqEntry.count}/11 — ${nqEntry.wallet.slice(0,6)}…${nqEntry.wallet.slice(-4)}` : 'No one yet';
       const banner = document.createElement('div');
       banner.style.cssText = 'background:linear-gradient(135deg,rgba(178,34,52,0.15),rgba(0,40,104,0.15));border:1px solid rgba(178,34,52,0.4);border-radius:12px;padding:16px 20px;margin-bottom:20px;';
@@ -3049,8 +3064,13 @@ async function loadAlbum(){
             '<div style="font-size:9px;color:var(--text3);font-family:Share Tech Mono,monospace;">0/11</div>';
         } else {
           const { count, posSet, missing, wallet } = entry;
-          const pct = Math.round(count/11*100);
-          const color = count>=11?'var(--gold)':count>=9?'#c084fc':count>=6?'var(--blue)':'var(--green)';
+          const allPos = teamAllPos[teamId] || posSet;
+          const myPositions = myAddr && wallets[myAddr] && wallets[myAddr][teamId]
+            ? wallets[myAddr][teamId] : new Set();
+          const myCount = myPositions.size;
+          const globalCount = allPos.size;
+          const pct = Math.round(globalCount/11*100);
+          const color = globalCount>=11?'var(--gold)':globalCount>=9?'#c084fc':globalCount>=6?'var(--blue)':'var(--green)';
 
           // Najtańszy listing per pozycja (buy)
           const marketByPos = {};
@@ -3082,7 +3102,7 @@ async function loadAlbum(){
           }
 
           const posHtml = [1,2,3,4,5,6,7,8,9,10,11].map(p => {
-            const has = posSet.has(p);
+            const has = allPos.has(p);
             if(has){
               const mine = myByPos[p];
               if(mine)
@@ -3107,14 +3127,15 @@ async function loadAlbum(){
           card.innerHTML=
             '<div style="display:flex;align-items:center;gap:4px;margin-bottom:4px;">' +
               '<div style="width:7px;height:7px;border-radius:50%;background:'+teamColor+';flex-shrink:0;"></div>' +
-              '<div style="font-family:Black Ops One,sans-serif;font-size:10px;flex:1;line-height:1.2;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + (isNQ ? '<svg width="14" height="10" viewBox="0 0 28 20" style="border-radius:1px;margin-right:3px;vertical-align:middle;"><rect width="28" height="20" fill="#B22234"/><rect y="1.54" width="28" height="1.54" fill="#fff"/><rect y="4.62" width="28" height="1.54" fill="#fff"/><rect y="7.69" width="28" height="1.54" fill="#fff"/><rect y="10.77" width="28" height="1.54" fill="#fff"/><rect y="13.85" width="28" height="1.54" fill="#fff"/><rect y="16.92" width="28" height="1.54" fill="#fff"/><rect width="12" height="10.77" fill="#3C3B6E"/></svg>' : '') + team+(isMe?' <span style="color:var(--green);font-size:8px;">YOU</span>':'')+'</div>' +
-              '<div style="font-family:Black Ops One,sans-serif;font-size:11px;color:'+color+';flex-shrink:0;">'+count+'<span style="font-size:8px;color:var(--text3);">/11</span></div>' +
+              '<div style="font-family:Black Ops One,sans-serif;font-size:10px;flex:1;line-height:1.2;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + (isNQ ? '<svg width="14" height="10" viewBox="0 0 28 20" style="border-radius:1px;margin-right:3px;vertical-align:middle;"><rect width="28" height="20" fill="#B22234"/><rect y="1.54" width="28" height="1.54" fill="#fff"/><rect y="4.62" width="28" height="1.54" fill="#fff"/><rect y="7.69" width="28" height="1.54" fill="#fff"/><rect y="10.77" width="28" height="1.54" fill="#fff"/><rect y="13.85" width="28" height="1.54" fill="#fff"/><rect y="16.92" width="28" height="1.54" fill="#fff"/><rect width="12" height="10.77" fill="#3C3B6E"/></svg>' : '') + team + '</div>' +
+              '<div style="font-family:Black Ops One,sans-serif;font-size:11px;color:'+color+';flex-shrink:0;">' + globalCount + '<span style="font-size:8px;color:var(--text3);">/11</span></div>' +
             '</div>' +
+            (myCount > 0 ? '<div style="font-size:8px;color:var(--green);font-family:Share Tech Mono,monospace;margin-bottom:3px;">YOU: ' + myCount + '/11</div>' : '') +
             '<div style="height:2px;background:rgba(255,255,255,0.05);border-radius:2px;margin-bottom:5px;overflow:hidden;">' +
               '<div style="height:100%;width:'+pct+'%;background:'+color+';border-radius:2px;"></div>' +
             '</div>' +
             '<div style="margin-bottom:3px;line-height:1.3;">'+posHtml+'</div>' +
-            '<div style="font-size:8px;color:var(--text3);font-family:Share Tech Mono,monospace;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+wallet.slice(0,5)+'\u2026'+wallet.slice(-3)+(count>=11?' \ud83c\udfc6':'')+'</div>';
+            '<div style="font-size:8px;color:var(--text3);font-family:Share Tech Mono,monospace;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">Leader: '+wallet.slice(0,5)+'\u2026'+wallet.slice(-3)+' ('+count+') '+(globalCount>=11?'\ud83c\udfc6':'')+'</div>';
         }
         row.appendChild(card);
       });
