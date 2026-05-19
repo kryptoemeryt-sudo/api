@@ -589,28 +589,47 @@ function shareOnX(){
 
 // COUNTDOWN
 const DEADLINE = DEADLINE_BLOCK;
-// DEADLINE — stały timestamp (20 maja 2026, 20:00 UTC)
-const DEADLINE_TIME = new Date('2026-05-20T20:00:00Z').getTime();
+// DEADLINE — blok #34187689 (~24h od startu questu)
+const DEADLINE_BLOCK = 34187689;
+const BLOCK_TIME_MS = 3000; // 3 sekundy per blok na Chiliz
+let currentBlock = 34158889; // aktualny blok przy starcie questu
+let lastBlockTime = Date.now();
+
+async function fetchCurrentBlock(){
+  try{
+    const res = await fetch('/api/events');
+    if(res.ok){ const d = await res.json(); if(d.currentBlock) { currentBlock = d.currentBlock; lastBlockTime = Date.now(); } }
+  }catch(e){}
+}
+
+function getEstimatedBlock(){
+  const elapsed = Date.now() - lastBlockTime;
+  return currentBlock + Math.floor(elapsed / BLOCK_TIME_MS);
+}
 
 function updateCountdown(){
-  const left = Math.max(0, DEADLINE_TIME - Date.now());
-  if(left === 0){
+  const estimated = getEstimatedBlock();
+  const blocksLeft = Math.max(0, DEADLINE_BLOCK - estimated);
+  if(blocksLeft === 0){
     document.getElementById('cdH').textContent = '00';
     document.getElementById('cdM').textContent = '00';
     document.getElementById('cdS').textContent = '00';
-    document.getElementById('cdBlock').textContent = 'QUEST ENDED';
+    document.getElementById('cdBlock').textContent = 'QUEST ENDED AT BLOCK #'+DEADLINE_BLOCK.toLocaleString();
     return;
   }
-  const h = Math.floor(left / 3600000);
-  const m = Math.floor((left % 3600000) / 60000);
-  const s = Math.floor((left % 60000) / 1000);
+  const secsLeft = blocksLeft * 3;
+  const h = Math.floor(secsLeft / 3600);
+  const m = Math.floor((secsLeft % 3600) / 60);
+  const s = secsLeft % 60;
   document.getElementById('cdH').textContent = String(h).padStart(2,'0');
   document.getElementById('cdM').textContent = String(m).padStart(2,'0');
   document.getElementById('cdS').textContent = String(s).padStart(2,'0');
-  document.getElementById('cdBlock').textContent = 'Deadline: May 20, 2026 · 20:00 UTC';
+  document.getElementById('cdBlock').innerHTML = 'Deadline: block <a href="https://scan.chiliz.com/block/'+DEADLINE_BLOCK+'" target="_blank" style="color:#818cf8;text-decoration:none;">#'+DEADLINE_BLOCK.toLocaleString()+'</a> · current: ~#'+estimated.toLocaleString()+' · '+blocksLeft.toLocaleString()+' blocks left';
 }
-updateCountdown();
+
+fetchCurrentBlock();
 setInterval(updateCountdown, 1000);
+setInterval(fetchCurrentBlock, 30000);
 
 // Auto-reconnect jeśli MetaMask już połączony
 window.addEventListener('load', async () => {
