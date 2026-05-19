@@ -2994,7 +2994,16 @@ async function loadAlbum(){
       banner.style.cssText = 'background:linear-gradient(135deg,rgba(178,34,52,0.15),rgba(0,40,104,0.15));border:1px solid rgba(178,34,52,0.4);border-radius:12px;padding:16px 20px;margin-bottom:20px;';
       banner.innerHTML =
         '<div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">' +
-          '<div style="font-size:20px;">🇺🇸</div>' +
+          '<svg width="28" height="20" viewBox="0 0 28 20" style="border-radius:2px;flex-shrink:0;">' +
+            '<rect width="28" height="20" fill="#B22234"/>' +
+            '<rect y="1.54" width="28" height="1.54" fill="#fff"/>' +
+            '<rect y="4.62" width="28" height="1.54" fill="#fff"/>' +
+            '<rect y="7.69" width="28" height="1.54" fill="#fff"/>' +
+            '<rect y="10.77" width="28" height="1.54" fill="#fff"/>' +
+            '<rect y="13.85" width="28" height="1.54" fill="#fff"/>' +
+            '<rect y="16.92" width="28" height="1.54" fill="#fff"/>' +
+            '<rect width="12" height="10.77" fill="#3C3B6E"/>' +
+          '</svg>' +
           '<div style="font-family:\'Black Ops One\',sans-serif;font-size:16px;flex:1;">NATION QUEST — <span style="color:#ffc940;">UNITED STATES</span></div>' +
           '<div style="font-family:\'Black Ops One\',sans-serif;font-size:18px;color:#ffc940;">1000 CHZ</div>' +
         '</div>' +
@@ -3094,7 +3103,7 @@ async function loadAlbum(){
           card.innerHTML=
             '<div style="display:flex;align-items:center;gap:4px;margin-bottom:4px;">' +
               '<div style="width:7px;height:7px;border-radius:50%;background:'+teamColor+';flex-shrink:0;"></div>' +
-              '<div style="font-family:Black Ops One,sans-serif;font-size:10px;flex:1;line-height:1.2;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + (isNQ ? '🇺🇸 ' : '') + team+(isMe?' <span style="color:var(--green);font-size:8px;">YOU</span>':'')+'</div>' +
+              '<div style="font-family:Black Ops One,sans-serif;font-size:10px;flex:1;line-height:1.2;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + (isNQ ? '<svg width="14" height="10" viewBox="0 0 28 20" style="border-radius:1px;margin-right:3px;vertical-align:middle;"><rect width="28" height="20" fill="#B22234"/><rect y="1.54" width="28" height="1.54" fill="#fff"/><rect y="4.62" width="28" height="1.54" fill="#fff"/><rect y="7.69" width="28" height="1.54" fill="#fff"/><rect y="10.77" width="28" height="1.54" fill="#fff"/><rect y="13.85" width="28" height="1.54" fill="#fff"/><rect y="16.92" width="28" height="1.54" fill="#fff"/><rect width="12" height="10.77" fill="#3C3B6E"/></svg>' : '') + team+(isMe?' <span style="color:var(--green);font-size:8px;">YOU</span>':'')+'</div>' +
               '<div style="font-family:Black Ops One,sans-serif;font-size:11px;color:'+color+';flex-shrink:0;">'+count+'<span style="font-size:8px;color:var(--text3);">/11</span></div>' +
             '</div>' +
             '<div style="height:2px;background:rgba(255,255,255,0.05);border-radius:2px;margin-bottom:5px;overflow:hidden;">' +
@@ -3565,9 +3574,6 @@ Knowledge beats luck — pick the right nation!
       <div class="sec-sub">Public progress · Who is closest to completing a nation?</div>
     </div>
     <button onclick="loadAlbum()" style="background:var(--green-dim);border:1px solid rgba(0,255,135,0.3);color:var(--green);padding:8px 18px;border-radius:6px;font-family:'Black Ops One',sans-serif;font-size:11px;letter-spacing:1px;cursor:pointer;">REFRESH</button>
-  </div>
-  <div style="background:linear-gradient(135deg,rgba(168,85,247,0.1),rgba(168,85,247,0.05));border:1px solid rgba(168,85,247,0.3);border-radius:12px;padding:14px 18px;margin-bottom:16px;">
-    <div style="font-family:'Black Ops One',sans-serif;font-size:15px;color:#c084fc;">🏆 NATION QUEST — COMING SOON</div>
   </div>
   <div id="albumGrid" style="display:flex;flex-direction:column;gap:4px;">
     <div style="text-align:center;color:var(--text3);padding:32px;font-size:12px;letter-spacing:2px;">CONNECT WALLET TO SEE ALBUM</div>
