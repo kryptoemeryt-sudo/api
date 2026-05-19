@@ -1417,10 +1417,15 @@ async function connectWalletSilent(){
     document.getElementById('refLinkWrap').style.display = 'block';
     await updateStats();
     initMarket();
-    await loadCollection();
+    // Ładuj wszystko równolegle — nie czekaj sekwencyjnie
+    loadCollection();
     loadTicker();
-    initMarket(); loadMarket(); initMarketEvents(); loadCountryLb(); loadAlbum();
-    loadLeaderboard(); loadClaimSection();
+    loadMarket();
+    initMarketEvents();
+    loadCountryLb();
+    loadAlbum();
+    loadLeaderboard();
+    loadClaimSection();
   }catch(e){ console.warn('Silent connect failed:', e); }
 }
 
@@ -1466,10 +1471,12 @@ async function connectWallet(){
 
     await updateStats();
     initMarket();
-    await loadCollection();
+    loadCollection();
     loadTicker();
     loadActivityFeed();
     loadMarket();
+    loadCountryLb();
+    loadAlbum();
     loadLeaderboard();
     loadClaimSection();
 
