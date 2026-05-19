@@ -440,28 +440,28 @@ async function loadData(){
     }
   });
 
-  // Market listings for Argentina — z API (nie getListing w pętli)
+  // Market listings dla Argentyny — live check przez getListing (dokładne ceny)
   marketByPos = {};
   try{
     const rp = await getReadProvider();
     const rmk = new ethers.Contract(MARKET_ADDRESS, MARKET_ABI, rp);
-    // Użyj listed eventów które już mamy
-    const listedArr = Array.isArray(listed) ? listed : [];
-    // Sprawdź które są aktywne (nie sprzedane)
-    const soldTokenIds = new Set(sales.map(s => s.tokenId));
-    listedArr.forEach(l => {
-      const tokenId = l.tokenId || Number(l.args?.tokenId);
-      const listingId = l.listingId ?? Number(l.args?.listingId);
-      const priceWei = l.price || l.args?.price;
-      if(!tokenId || soldTokenIds.has(tokenId)) return;
-      const fig = ownerMap[tokenId];
-      if(!fig || fig.teamId !== ARGENTINA_TEAM_ID) return;
-      const price = parseFloat(ethers.formatEther(priceWei));
-      if(!marketByPos[fig.position] || price < marketByPos[fig.position].price){
-        marketByPos[fig.position] = {listingId, price, priceWei, weight: fig.weight, rarity: fig.rarity};
-      }
-    });
-  }catch(e){ console.warn('market load error:', e); }
+    const nextId = Number(await rmk.nextListingId());
+    const from = Math.max(0, nextId - 100);
+    for(let i = from; i < nextId; i++){
+      try{
+        const l = await rmk.getListing(i);
+        if(!Boolean(l[3])) continue;
+        const tokenId = Number(l[1]);
+        const priceWei = l[2];
+        const fig = ownerMap[tokenId];
+        if(!fig || fig.teamId !== ARGENTINA_TEAM_ID) continue;
+        const price = parseFloat(ethers.formatEther(priceWei));
+        if(!marketByPos[fig.position] || price < marketByPos[fig.position].price){
+          marketByPos[fig.position] = {listingId: i, price, priceWei, weight: fig.weight, rarity: fig.rarity};
+        }
+      }catch(e){}
+    }
+  }catch(e){ console.warn('market check error:', e); }
 
   renderPitch();
   renderLeaderboard();
