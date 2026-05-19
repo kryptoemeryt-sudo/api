@@ -1255,6 +1255,7 @@ async function fetchFromAPI(){
   }
 }
 let _fetchMintEventsQueue = [];
+let _fetchingMintEvents = false;
 
 // Pobierz wszystkie FigureMinted eventy — najpierw z /api/events, fallback RPC
 async function getAllMintEvents(c, p){
