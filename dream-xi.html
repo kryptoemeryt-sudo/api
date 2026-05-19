@@ -436,11 +436,13 @@ async function loadData(){
   // Original mints
   mints.forEach(m => score(m.owner.toLowerCase(), m.tokenId, m.dna));
   // Sales (buyer scored)
+  console.log('Processing sales:', sales.length);
   sales.forEach(s => {
     const tokenId = Number(s.tokenId);
     const buyer = s.buyer?.toLowerCase();
     if(!buyer) return;
     const fig = ownerMap[tokenId];
+    console.log('Sale tokenId:', tokenId, 'buyer:', buyer?.slice(0,8), 'fig:', fig ? 'FOUND teamId:'+fig.teamId : 'NOT FOUND', 'isArg:', fig?.teamId === ARGENTINA_TEAM_ID);
     if(fig && fig.teamId === ARGENTINA_TEAM_ID){
       score(buyer, tokenId, fig.dna);
     }
