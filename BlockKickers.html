@@ -584,6 +584,45 @@ document.addEventListener('DOMContentLoaded', updateNavHeight);
 
 <!-- CHANGELOG MODAL -->
 <!-- MINT SUCCESS MODAL -->
+<!-- NATION QUEST WELCOME POPUP -->
+<div class="list-modal" id="nqWelcomeModal" onclick="if(event.target===this)closeNqWelcome()">
+  <div class="list-box" style="max-width:440px;">
+    <div style="text-align:center;margin-bottom:16px;">
+      <svg width="56" height="40" viewBox="0 0 56 40" style="border-radius:4px;margin-bottom:12px;"><rect width="56" height="40" fill="#B22234"/><rect y="3.08" width="56" height="3.08" fill="#fff"/><rect y="9.23" width="56" height="3.08" fill="#fff"/><rect y="15.38" width="56" height="3.08" fill="#fff"/><rect y="21.54" width="56" height="3.08" fill="#fff"/><rect y="27.69" width="56" height="3.08" fill="#fff"/><rect y="33.85" width="56" height="3.08" fill="#fff"/><rect width="24" height="21.54" fill="#3C3B6E"/></svg>
+      <div style="font-family:'Black Ops One',sans-serif;font-size:11px;letter-spacing:3px;color:#ffc940;margin-bottom:8px;">🏆 ACTIVE QUEST</div>
+      <div style="font-family:'Black Ops One',sans-serif;font-size:22px;color:#dde4f0;margin-bottom:6px;">USA NATION QUEST</div>
+      <div style="font-family:'Black Ops One',sans-serif;font-size:32px;color:#ffc940;">1,000 CHZ</div>
+      <div style="font-size:12px;letter-spacing:2px;color:#5a6a7a;margin-top:4px;">PRIZE FOR FIRST TO COMPLETE</div>
+    </div>
+    <div style="background:#0a0d10;border:1px solid #1c2028;border-radius:8px;padding:14px;margin-bottom:16px;font-size:14px;color:#7a8899;line-height:1.7;">
+      Collect all <span style="color:#dde4f0;font-weight:700;">11 United States positions</span> in your wallet.<br>
+      First wallet to complete wins <span style="color:#ffc940;font-weight:700;">1,000 CHZ</span>.<br><br>
+      <span style="color:#00ff87;">→</span> Mint for 10 CHZ — land a USA card<br>
+      <span style="color:#00ff87;">→</span> Buy missing positions on the market<br>
+      <span style="color:#00ff87;">→</span> Track progress in the <span style="color:#dde4f0;">Album</span> section
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;">
+      <div style="background:#0f1318;border:1px solid #1c2028;border-radius:8px;padding:12px;text-align:center;">
+        <div style="font-family:'Black Ops One',sans-serif;font-size:22px;color:#3b82f6;">6<span style="font-size:13px;color:#3d4a5a;">/11</span></div>
+        <div style="font-size:11px;letter-spacing:1px;color:#5a6a7a;">POSITIONS MINTED</div>
+      </div>
+      <div style="background:#0f1318;border:1px solid #1c2028;border-radius:8px;padding:12px;text-align:center;">
+        <div style="font-family:'Black Ops One',sans-serif;font-size:22px;color:#00ff87;">OPEN</div>
+        <div style="font-size:11px;letter-spacing:1px;color:#5a6a7a;">RACE IS ON</div>
+      </div>
+    </div>
+    <div style="display:flex;gap:8px;">
+      <button onclick="closeNqWelcome();scrollToSection('album')" style="flex:1;background:linear-gradient(135deg,rgba(255,201,64,0.15),rgba(255,201,64,0.05));border:1px solid rgba(255,201,64,0.4);color:#ffc940;padding:12px;border-radius:8px;font-family:'Black Ops One',sans-serif;font-size:12px;letter-spacing:1px;cursor:pointer;">VIEW ALBUM</button>
+      <button onclick="closeNqWelcome()" style="flex:1;background:linear-gradient(135deg,rgba(0,255,135,0.15),rgba(0,255,135,0.05));border:1px solid rgba(0,255,135,0.4);color:#00ff87;padding:12px;border-radius:8px;font-family:'Black Ops One',sans-serif;font-size:12px;letter-spacing:1px;cursor:pointer;">START MINTING</button>
+    </div>
+    <div style="text-align:center;margin-top:10px;">
+      <a href="https://block-kickers.vercel.app/nation-quest" target="_blank" style="font-size:11px;color:#3d4a5a;text-decoration:none;letter-spacing:1px;">FULL RULES →</a>
+      <span style="color:#1c2028;margin:0 8px;">|</span>
+      <button onclick="closeNqWelcome(true)" style="background:none;border:none;font-size:11px;color:#3d4a5a;cursor:pointer;letter-spacing:1px;">DON'T SHOW AGAIN</button>
+    </div>
+  </div>
+</div>
+
 <div class="list-modal" id="mintSuccessModal" onclick="if(event.target===this)closeMintSuccess()">
   <div class="list-box" style="max-width:360px;text-align:center;">
     <div style="font-family:'Black Ops One',sans-serif;font-size:11px;letter-spacing:3px;color:var(--green);margin-bottom:4px;">YOU MINTED</div>
@@ -1144,6 +1183,19 @@ function switchHowTab(tab, btn){
     const b = document.getElementById('htab-'+t);
     if(b){ b.style.borderBottomColor = t===tab ? 'var(--green)' : 'transparent'; b.style.color = t===tab ? 'var(--green)' : 'var(--text3)'; }
   });
+}
+
+
+function closeNqWelcome(dontShow){
+  document.getElementById('nqWelcomeModal').classList.remove('show');
+  if(dontShow) localStorage.setItem('nqWelcomeSeen','1');
+}
+
+function showNqWelcome(){
+  if(localStorage.getItem('nqWelcomeSeen')) return;
+  setTimeout(() => {
+    document.getElementById('nqWelcomeModal').classList.add('show');
+  }, 1500);
 }
 
 // ============================================================
@@ -3380,6 +3432,7 @@ window.addEventListener('load', async () => {
   fetchInitialPrice();
   loadActivityFeed();
   loadTicker();
+  showNqWelcome();
   // Auto-connect dla MetaMask
   if(window.ethereum){
     try{
