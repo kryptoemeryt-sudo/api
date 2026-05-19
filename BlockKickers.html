@@ -1391,6 +1391,7 @@ async function connectWalletSilent(){
 
     // Wyczyść cache — stare dane mogą mieć błędnych właścicieli
     eventsCache = null;
+    _apiCache = null;
     salesCache = null;
     _readProvider = null;
     document.getElementById('navAddr').textContent = address.slice(0,6)+'...'+address.slice(-4);
@@ -1437,6 +1438,7 @@ async function connectWallet(){
 
     // Wyczyść cache — stare dane mogą mieć błędnych właścicieli
     eventsCache = null;
+    _apiCache = null;
     salesCache = null;
     _readProvider = null;
 
@@ -1579,17 +1581,17 @@ async function loadTicker(){
     events.forEach(ev => {
       const addr = ev.args.owner.toLowerCase();
       holderMap[addr] = (holderMap[addr]||0) + 1;
-      const w = Number(ev.args.weight);
-      const teamId = Number(ev.args.teamId);
-      const rarity = Number(ev.args.rarity);
-      if(!topCard || w > topCard.weight){
-        topCard = {
-          weight: w,
-          team: TEAMS[teamId % TEAMS.length],
-          rarity: ['Common','Rare','Epic','Legendary'][rarity]||'?',
-          owner: ev.args.owner
-        };
-      }
+      try{
+        const t = parseDNA(ev.args.dna);
+        if(!topCard || t.weight > topCard.weight){
+          topCard = {
+            weight: t.weight,
+            team: TEAMS[t.teamId % TEAMS.length],
+            rarity: RARITY_NAMES[t.rarity] || '?',
+            owner: ev.args.owner
+          };
+        }
+      }catch(e){}
     });
 
     const sorted = Object.entries(holderMap).sort((a,b)=>b[1]-a[1]);
@@ -1678,6 +1680,7 @@ async function doMint(){
           const dna=p.args.dna;
           showToast(`Figure #${tid} minted!`,'ok');
           eventsCache = null; // odśwież eventy przy następnym loadCollection
+          _apiCache = null;
           addToCollection(tid,dna);
           break;
         }
@@ -1704,6 +1707,7 @@ async function loadCollection(){
     if(events.length < totalMinted){
       console.warn(`loadCollection: got ${events.length} events but totalMinted=${totalMinted}, retrying...`);
       eventsCache = null;
+      _apiCache = null;
       salesCache = null;
       events = await getAllMintEvents(contract, provider);
     }
