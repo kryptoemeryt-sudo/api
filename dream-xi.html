@@ -384,6 +384,7 @@ async function fetchEvents(){
 }
 
 async function loadData(){
+  console.log('loadData START');
   document.getElementById('pitchFormation').innerHTML = '<div style="text-align:center;color:#3d4a5a;padding:40px;"><span class="spin"></span> Loading blockchain data...</div>';
 
   // Try Vercel API first
