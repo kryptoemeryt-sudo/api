@@ -53,7 +53,7 @@ async function fetchAllEvents(contract, filter, fromBlock, toBlock) {
 
 export default async function handler(req, res) {
   // Vercel Edge Cache — wszyscy userzy dostają ten sam wynik przez 5 minut
-  res.setHeader("Cache-Control", "s-maxage=300, stale-while-revalidate=60");
+  res.setHeader("Cache-Control", "s-maxage=60, stale-while-revalidate=30");
   res.setHeader("Access-Control-Allow-Origin", "*");
 
   try {
