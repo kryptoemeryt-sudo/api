@@ -3069,8 +3069,9 @@ async function loadAlbum(){
             ? wallets[myAddr][teamId] : new Set();
           const myCount = myPositions.size;
           const globalCount = allPos.size;
-          const pct = Math.round(globalCount/11*100);
-          const color = globalCount>=11?'var(--gold)':globalCount>=9?'#c084fc':globalCount>=6?'var(--blue)':'var(--green)';
+          const leaderCount = posSet.size; // ile unikalnych pozycji ma lider
+          const pct = Math.round(leaderCount/11*100);
+          const color = leaderCount>=11?'var(--gold)':leaderCount>=9?'#c084fc':leaderCount>=6?'var(--blue)':'var(--green)';
 
           // Najtańszy listing per pozycja (buy)
           const marketByPos = {};
@@ -3126,15 +3127,15 @@ async function loadAlbum(){
             ';border-radius:8px;padding:8px;min-width:0;' +
             (isNQ ? 'box-shadow:0 0 12px rgba(178,34,52,0.15);' : '');
           card.innerHTML=
-            '<div style="display:flex;align-items:center;gap:4px;margin-bottom:4px;">' +
+            '<div style="display:flex;align-items:center;gap:4px;margin-bottom:2px;">' +
               '<div style="width:7px;height:7px;border-radius:50%;background:'+teamColor+';flex-shrink:0;"></div>' +
               '<div style="font-family:Black Ops One,sans-serif;font-size:10px;flex:1;line-height:1.2;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + (isNQ ? '<svg width="14" height="10" viewBox="0 0 28 20" style="border-radius:1px;margin-right:3px;vertical-align:middle;"><rect width="28" height="20" fill="#B22234"/><rect y="1.54" width="28" height="1.54" fill="#fff"/><rect y="4.62" width="28" height="1.54" fill="#fff"/><rect y="7.69" width="28" height="1.54" fill="#fff"/><rect y="10.77" width="28" height="1.54" fill="#fff"/><rect y="13.85" width="28" height="1.54" fill="#fff"/><rect y="16.92" width="28" height="1.54" fill="#fff"/><rect width="12" height="10.77" fill="#3C3B6E"/></svg>' : '') + team + '</div>' +
-              '<div style="display:flex;align-items:center;gap:4px;flex-shrink:0;">' +
-                (myCount > 0 ? '<span style="font-size:8px;color:var(--green);font-family:Share Tech Mono,monospace;">YOU '+myCount+'</span><span style="color:var(--border);font-size:8px;">|</span>' : '') +
-                '<span style="font-family:Black Ops One,sans-serif;font-size:11px;color:'+color+';">'+globalCount+'<span style="font-size:8px;color:var(--text3);">/11</span></span>' +
-                (isComplete ? ' <span style="font-size:10px;">\ud83c\udfc6</span>' : '') +
+              '<div style="text-align:right;flex-shrink:0;">' +
+                '<div style="font-family:Black Ops One,sans-serif;font-size:12px;color:'+color+';line-height:1;">' + leaderCount + '<span style="font-size:8px;color:var(--text3);">/11</span>' + (isComplete?' \ud83c\udfc6':'') + '</div>' +
+                '<div style="font-size:8px;color:var(--text3);line-height:1;margin-top:1px;">' + globalCount + ' minted</div>' +
               '</div>' +
             '</div>' +
+            (myCount > 0 ? '<div style="font-size:8px;color:var(--green);font-family:Share Tech Mono,monospace;margin-bottom:2px;">YOU: '+myCount+'/11</div>' : '') +
             '<div style="height:2px;background:rgba(255,255,255,0.05);border-radius:2px;margin-bottom:5px;overflow:hidden;">' +
               '<div style="height:100%;width:'+pct+'%;background:'+color+';border-radius:2px;"></div>' +
             '</div>' +
