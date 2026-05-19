@@ -3394,15 +3394,21 @@ window.addEventListener('load', async () => {
   if(location.hash){
     const targetId = location.hash.slice(1);
     if(targetId === 'album'){
-      // Czekaj na załadowanie albumu
       document.addEventListener('albumLoaded', () => {
-        setTimeout(() => scrollToSection('album'), 100);
+        setTimeout(() => {
+          scrollToSection('album');
+          history.replaceState(null, '', ' '); // wyczyść hash z URL
+        }, 100);
       }, { once: true });
-      // Fallback po 10s
-      setTimeout(() => scrollToSection('album'), 10000);
+      setTimeout(() => {
+        scrollToSection('album');
+        history.replaceState(null, '', ' ');
+      }, 10000);
     } else {
-      // Inne sekcje — scroll po małym opóźnieniu
-      setTimeout(() => scrollToSection(targetId), 800);
+      setTimeout(() => {
+        scrollToSection(targetId);
+        history.replaceState(null, '', ' ');
+      }, 800);
     }
   }
 });
