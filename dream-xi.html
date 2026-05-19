@@ -287,7 +287,8 @@ const MARKET_ABI = [
   "event Listed(uint256 indexed listingId,address indexed seller,uint256 tokenId,uint256 price)",
   "event Sold(uint256 indexed listingId,address indexed buyer,uint256 price)",
   "function nextListingId() external view returns (uint256)",
-  "function getListing(uint256) external view returns (address,uint256,uint256,bool)"
+  "function getListing(uint256) external view returns (address,uint256,uint256,bool)",
+  "function buyFigure(uint256 listingId) external payable"
 ];
 
 const POSITION_NAMES = {1:'Goalkeeper',2:'Right Back',3:'Left Back',4:'Centre Back',5:'Centre Back',6:'Def. Mid',7:'Right Wing',8:'Mid',9:'Striker',10:'Playmaker',11:'Left Wing'};
@@ -587,6 +588,15 @@ const DEADLINE = DEADLINE_BLOCK;
 let currentBlock = 0;
 
 async function updateBlock(){
+  // Pobierz aktualny blok z Vercel API (omija CORS)
+  try{
+    const res = await fetch('/api/events');
+    if(res.ok){
+      const data = await res.json();
+      if(data.currentBlock){ currentBlock = data.currentBlock; updateCountdown(); return; }
+    }
+  }catch(e){}
+  // Fallback — bezpośredni RPC
   for(const url of PUBLIC_RPCS){
     try{
       const p = new ethers.JsonRpcProvider(url);
@@ -594,8 +604,6 @@ async function updateBlock(){
       if(b > 0){ currentBlock = b; updateCountdown(); return; }
     }catch(e){}
   }
-  // Fallback — szacuj na podstawie czasu (blok co 5s)
-  if(currentBlock === 0) currentBlock = DEADLINE_BLOCK - 17280; // ~24h temu
 }
 
 function updateCountdown(){
