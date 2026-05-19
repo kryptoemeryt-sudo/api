@@ -583,6 +583,19 @@ document.addEventListener('DOMContentLoaded', updateNavHeight);
 </div>
 
 <!-- CHANGELOG MODAL -->
+<!-- MINT SUCCESS MODAL -->
+<div class="list-modal" id="mintSuccessModal" onclick="if(event.target===this)closeMintSuccess()">
+  <div class="list-box" style="max-width:360px;text-align:center;">
+    <div style="font-family:'Black Ops One',sans-serif;font-size:11px;letter-spacing:3px;color:var(--green);margin-bottom:4px;">YOU MINTED</div>
+    <div style="font-family:'Black Ops One',sans-serif;font-size:20px;color:var(--text);margin-bottom:16px;" id="mintPopupName">—</div>
+    <div id="mintPopupSvg" style="display:flex;justify-content:center;margin-bottom:16px;"></div>
+    <div id="mintPopupStats" style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px;"></div>
+    <div id="mintPopupExtras" style="display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-bottom:16px;"></div>
+    <button onclick="shareMintOnX()" style="width:100%;background:#000;border:1px solid #333;color:#fff;padding:10px;border-radius:8px;font-family:'Black Ops One',sans-serif;font-size:12px;letter-spacing:1px;cursor:pointer;margin-bottom:8px;">𝕏 SHARE ON X</button>
+    <button onclick="closeMintSuccess()" style="width:100%;background:none;border:1px solid var(--border);color:var(--text3);padding:8px;border-radius:8px;font-family:'Black Ops One',sans-serif;font-size:11px;letter-spacing:1px;cursor:pointer;">CLOSE</button>
+  </div>
+</div>
+
 <div class="list-modal" id="changelogModal" onclick="if(event.target===this)closeChangelog()">
   <div class="list-box" style="max-width:480px;max-height:80vh;overflow-y:auto;">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;">
@@ -1678,10 +1691,11 @@ async function doMint(){
         if(p&&p.name==='FigureMinted'){
           const tid=Number(p.args.tokenId);
           const dna=p.args.dna;
-          showToast(`Figure #${tid} minted!`,'ok');
+          showToast(`Figure #${tid} minted! 🎉`,'ok');
           eventsCache = null; // odśwież eventy przy następnym loadCollection
           _apiCache = null;
           addToCollection(tid,dna);
+          openMintSuccess(tid, dna);
           break;
         }
       }catch(e){}
@@ -3227,7 +3241,58 @@ async function confirmAlbumSell(){
   }
 }
 
-let _albumBuyListing = null;
+let _mintPopupDna = null;
+let _mintPopupTid = null;
+
+function openMintSuccess(tid, dna){
+  _mintPopupTid = tid;
+  _mintPopupDna = dna;
+  const t = parseDNA(dna);
+  const team = TEAMS[t.teamId % TEAMS.length];
+  const pos = POSITION_NAMES[t.position] || '#'+t.position;
+  const rarName = RARITY_NAMES[t.rarity];
+  const rarColor = ['var(--text2)','var(--blue)','#c084fc','var(--gold)'][t.rarity];
+
+  document.getElementById('mintPopupName').textContent = team + ' · ' + pos;
+  document.getElementById('mintPopupSvg').innerHTML = makeFigureSVG(dna, 100);
+
+  const stats = [
+    ['RARITY', `<span style="color:${rarColor}">${rarName}</span>`],
+    ['WEIGHT', `<span style="color:var(--green)">${t.weight}</span>`],
+    ['TOKEN', `<span style="color:var(--text2)">#${tid}</span>`],
+    ['NATION', `<span style="color:var(--text2)">${team}</span>`],
+  ];
+  document.getElementById('mintPopupStats').innerHTML = stats.map(([k,v]) =>
+    `<div style="background:var(--card2);border:1px solid var(--border);border-radius:6px;padding:8px;">
+      <div style="font-size:9px;letter-spacing:2px;color:var(--text3);margin-bottom:3px;">${k}</div>
+      <div style="font-family:'Black Ops One',sans-serif;font-size:13px;">${v}</div>
+    </div>`
+  ).join('');
+
+  const extras = [];
+  if(t.hasGoldenBoots) extras.push('<span style="background:rgba(255,201,64,0.15);border:1px solid rgba(255,201,64,0.4);color:var(--gold);padding:3px 8px;border-radius:4px;font-size:11px;">👟 Golden Boots +8</span>');
+  if(t.hasTattoo) extras.push('<span style="background:rgba(255,255,255,0.05);border:1px solid var(--border);color:var(--text2);padding:3px 8px;border-radius:4px;font-size:11px;">🎨 Tattoo +5</span>');
+  if(t.hasEarring) extras.push('<span style="background:rgba(255,255,255,0.05);border:1px solid var(--border);color:var(--text2);padding:3px 8px;border-radius:4px;font-size:11px;">👂 Earring +3</span>');
+  if(t.hasBand) extras.push('<span style="background:rgba(255,255,255,0.05);border:1px solid var(--border);color:var(--text2);padding:3px 8px;border-radius:4px;font-size:11px;">🎀 Headband +2</span>');
+  if(t.hasGloves) extras.push('<span style="background:rgba(255,255,255,0.05);border:1px solid var(--border);color:var(--text2);padding:3px 8px;border-radius:4px;font-size:11px;">🧤 Gloves +2</span>');
+  document.getElementById('mintPopupExtras').innerHTML = extras.join('') || '<span style="font-size:12px;color:var(--text3);">No accessories</span>';
+
+  document.getElementById('mintSuccessModal').classList.add('show');
+}
+
+function closeMintSuccess(){
+  document.getElementById('mintSuccessModal').classList.remove('show');
+}
+
+function shareMintOnX(){
+  if(!_mintPopupDna) return;
+  const t = parseDNA(_mintPopupDna);
+  const team = TEAMS[t.teamId % TEAMS.length];
+  const pos = POSITION_NAMES[t.position] || '#'+t.position;
+  const rar = RARITY_NAMES[t.rarity];
+  const text = `Just minted ${team} ${pos} — ${rar} (W:${t.weight}) on @BlockKickers2026! ⚽\n\nMint yours before price goes up:\nblock-kickers.vercel.app\n\n#BlockKickers #Chiliz #CHZ #WC2026`;
+  window.open('https://twitter.com/intent/tweet?text='+encodeURIComponent(text), '_blank');
+}
 
 async function albumBuy(listingId, priceEth){
   if(!marketContract){ showToast('Connect wallet first','err'); return; }
