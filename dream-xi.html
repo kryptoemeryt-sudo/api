@@ -384,7 +384,6 @@ async function fetchEvents(){
 }
 
 async function loadData(){
-  console.log('loadData START');
   document.getElementById('pitchFormation').innerHTML = '<div style="text-align:center;color:#3d4a5a;padding:40px;"><span class="spin"></span> Loading blockchain data...</div>';
 
   // Try Vercel API first
@@ -424,27 +423,25 @@ async function loadData(){
 
   const score = (wallet, tokenId, dna) => {
     try{
-      const t = parseDNA(dna);
+      const dnaBig = typeof dna === 'bigint' ? dna : BigInt(String(dna));
+      const t = parseDNA(dnaBig);
       if(t.teamId !== ARGENTINA_TEAM_ID) return;
       if(!dreamScores[wallet]) dreamScores[wallet] = {};
       const cur = dreamScores[wallet][t.position];
-      console.log('SCORE', wallet?.slice(0,8), 'pos:', t.position, 'w:', t.weight, 'cur:', cur?.weight||'none');
       if(!cur || t.weight > cur.weight){
         dreamScores[wallet][t.position] = {weight: t.weight, tid: tokenId, rarity: t.rarity, dna};
       }
-    }catch(e){ console.error('score err:', e); }
+    }catch(e){}
   };
 
   // Original mints
   mints.forEach(m => score(m.owner.toLowerCase(), m.tokenId, m.dna));
   // Sales (buyer scored)
-  console.log('Processing sales:', sales.length);
   sales.forEach(s => {
     const tokenId = Number(s.tokenId);
     const buyer = s.buyer?.toLowerCase();
     if(!buyer) return;
     const fig = ownerMap[tokenId];
-    console.log('Sale tokenId:', tokenId, 'buyer:', buyer?.slice(0,8), 'fig:', fig ? 'FOUND teamId:'+fig.teamId : 'NOT FOUND', 'isArg:', fig?.teamId === ARGENTINA_TEAM_ID);
     if(fig && fig.teamId === ARGENTINA_TEAM_ID){
       score(buyer, tokenId, fig.dna);
     }
@@ -513,13 +510,18 @@ function renderPitch(){
       if(scored){
         const rarColor = ['#7a8899','#3b82f6','#c084fc','#ffc940'][scored.rarity];
         card.className = 'pos-card owned-past';
+        let upgradeHtml = '';
+        if(mkt && mkt.weight > scored.weight){
+          upgradeHtml = '<div onclick="buyFromMarket('+mkt.listingId+',\''+mkt.price+'\')" style="margin-top:4px;background:rgba(0,255,135,0.1);border:1px solid rgba(0,255,135,0.3);border-radius:4px;padding:3px 6px;cursor:pointer;font-size:9px;color:#00ff87;font-family:Share Tech Mono,monospace;">▲ UPGRADE W:'+mkt.weight+'<br>'+mkt.price+' CHZ →</div>';
+        } else if(mkt && mkt.weight <= scored.weight){
+          upgradeHtml = '<div style="margin-top:3px;font-size:9px;color:#3d4a5a;font-family:Share Tech Mono,monospace;">market W:'+mkt.weight+' — weaker</div>';
+        }
+        card.className = 'pos-card owned-past';
         card.innerHTML =
           '<div class="pos-name">'+(POSITION_SHORT[pos]||pos)+'</div>' +
           '<div class="pos-weight purple">'+scored.weight+'</div>' +
           '<div class="pos-rarity" style="color:'+rarColor+'">'+RARITY_NAMES[scored.rarity]+'</div>' +
-          (mkt && mkt.weight > scored.weight
-            ? '<div class="pos-market-price" onclick="buyFromMarket('+mkt.listingId+',\''+ethers.formatEther(mkt.priceWei)+'\')">▲'+mkt.weight+' for '+mkt.price+' CHZ</div>'
-            : '');
+          upgradeHtml;
       } else if(mkt){
         card.className = 'pos-card market';
         card.onclick = () => buyFromMarket(mkt.listingId, mkt.price);
