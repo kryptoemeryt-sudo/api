@@ -2924,6 +2924,12 @@ const WC_GROUPS = [
   { label:'GROUP L', teams:[44,45,46,47] }
 ];
 
+const NATION_QUEST = {
+  teamId: 24, // United States
+  prize: '1000 CHZ',
+  active: true,
+};
+
 async function loadAlbum(){
   const grid = document.getElementById('albumGrid');
   if(!grid) return;
@@ -2977,6 +2983,29 @@ async function loadAlbum(){
 
     const myAddr = address ? address.toLowerCase() : '';
     grid.innerHTML = '';
+
+    // Nation Quest banner
+    if(NATION_QUEST.active){
+      const nqTeam = TEAMS[NATION_QUEST.teamId];
+      const nqEntry = teamEntries[NATION_QUEST.teamId];
+      const nqMyCount = nqEntry && nqEntry.wallet === myAddr ? nqEntry.count : 0;
+      const nqLeader = nqEntry ? `${nqEntry.count}/11 — ${nqEntry.wallet.slice(0,6)}…${nqEntry.wallet.slice(-4)}` : 'No one yet';
+      const banner = document.createElement('div');
+      banner.style.cssText = 'background:linear-gradient(135deg,rgba(178,34,52,0.15),rgba(0,40,104,0.15));border:1px solid rgba(178,34,52,0.4);border-radius:12px;padding:16px 20px;margin-bottom:20px;';
+      banner.innerHTML =
+        '<div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">' +
+          '<div style="font-size:20px;">🇺🇸</div>' +
+          '<div style="font-family:\'Black Ops One\',sans-serif;font-size:16px;flex:1;">NATION QUEST — <span style="color:#ffc940;">UNITED STATES</span></div>' +
+          '<div style="font-family:\'Black Ops One\',sans-serif;font-size:18px;color:#ffc940;">1000 CHZ</div>' +
+        '</div>' +
+        '<div style="font-size:13px;color:var(--text2);margin-bottom:10px;line-height:1.5;">First wallet to collect all <strong style="color:#dde4f0;">11 USA positions</strong> wins 1000 CHZ. Mint for 10 CHZ — if you land a rare position, list it for 500 CHZ. The collector racing to win will buy it.</div>' +
+        '<div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">' +
+          '<div style="font-size:12px;color:var(--text3);">🏆 Leader: <span style="color:var(--text2);">' + nqLeader + '</span></div>' +
+          (nqMyCount > 0 ? '<div style="font-size:12px;color:var(--green);">You: ' + nqMyCount + '/11</div>' : '') +
+          '<a href="block-kickers.vercel.app" style="font-size:11px;color:var(--text3);margin-left:auto;letter-spacing:1px;text-decoration:none;">RULES ↗</a>' +
+        '</div>';
+      grid.appendChild(banner);
+    }
 
     WC_GROUPS.forEach(group => {
       const groupDiv = document.createElement('div');
@@ -3057,11 +3086,15 @@ async function loadAlbum(){
             return '<span style="'+s+'" title="'+(POSITION_NAMES[p]||p)+'">'+(POSITION_SHORT[p]||p)+'</span>';
           }).join('');
 
-          card.style.cssText='background:var(--card);border:1px solid '+(isMe?'rgba(0,255,135,0.4)':'var(--border)')+';border-radius:8px;padding:8px;min-width:0;';
+          const isNQ = NATION_QUEST.active && teamId === NATION_QUEST.teamId;
+          card.style.cssText = 'background:var(--card);border:1px solid ' +
+            (isNQ ? 'rgba(178,34,52,0.6)' : isMe ? 'rgba(0,255,135,0.4)' : 'var(--border)') +
+            ';border-radius:8px;padding:8px;min-width:0;' +
+            (isNQ ? 'box-shadow:0 0 12px rgba(178,34,52,0.15);' : '');
           card.innerHTML=
             '<div style="display:flex;align-items:center;gap:4px;margin-bottom:4px;">' +
               '<div style="width:7px;height:7px;border-radius:50%;background:'+teamColor+';flex-shrink:0;"></div>' +
-              '<div style="font-family:Black Ops One,sans-serif;font-size:10px;flex:1;line-height:1.2;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+team+(isMe?' <span style="color:var(--green);font-size:8px;">YOU</span>':'')+'</div>' +
+              '<div style="font-family:Black Ops One,sans-serif;font-size:10px;flex:1;line-height:1.2;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + (isNQ ? '🇺🇸 ' : '') + team+(isMe?' <span style="color:var(--green);font-size:8px;">YOU</span>':'')+'</div>' +
               '<div style="font-family:Black Ops One,sans-serif;font-size:11px;color:'+color+';flex-shrink:0;">'+count+'<span style="font-size:8px;color:var(--text3);">/11</span></div>' +
             '</div>' +
             '<div style="height:2px;background:rgba(255,255,255,0.05);border-radius:2px;margin-bottom:5px;overflow:hidden;">' +
