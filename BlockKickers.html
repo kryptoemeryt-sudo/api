@@ -3132,6 +3132,8 @@ async function loadAlbum(){
     '<span style="display:flex;align-items:center;gap:4px;"><span style="display:inline-block;width:14px;height:14px;border-radius:2px;background:rgba(255,201,64,0.12);border:1px solid rgba(255,201,64,0.4);"></span> on market — click to buy</span>' +
     '<span style="display:flex;align-items:center;gap:4px;"><span style="display:inline-block;width:14px;height:14px;border-radius:2px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.04);opacity:0.4;"></span> missing</span>';
   grid.appendChild(legend);
+  // Powiadom że album się załadował
+  document.dispatchEvent(new CustomEvent('albumLoaded'));
 }
 
 let _albumSellToken = null;
@@ -3279,6 +3281,21 @@ window.addEventListener('load', async () => {
         if(parseInt(cid,16) === CHAIN_ID) connectWalletSilent();
       }
     }catch(e){}
+  }
+  // Obsługa #hash w URL — scrolluj po załadowaniu danych
+  if(location.hash){
+    const targetId = location.hash.slice(1);
+    if(targetId === 'album'){
+      // Czekaj na załadowanie albumu
+      document.addEventListener('albumLoaded', () => {
+        setTimeout(() => scrollToSection('album'), 100);
+      }, { once: true });
+      // Fallback po 10s
+      setTimeout(() => scrollToSection('album'), 10000);
+    } else {
+      // Inne sekcje — scroll po małym opóźnieniu
+      setTimeout(() => scrollToSection(targetId), 800);
+    }
   }
 });
 </script>
