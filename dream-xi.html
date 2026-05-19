@@ -307,9 +307,10 @@ const PUBLIC_RPCS = ['https://chiliz-rpc.publicnode.com','https://rpc.chiliz.com
 let provider, signer, address;
 let contract, marketContract;
 let allMints = [], allSales = [], allListings = [];
-// dreamScores[wallet][position] = {weight, tid, rarity}
-let dreamScores = {};
-let marketByPos = {}; // position -> cheapest listing for Argentina
+window.dreamScores = {};
+let dreamScores = window.dreamScores;
+let marketByPos = {};
+window.marketByPos = marketByPos;
 
 async function getReadProvider(){
   for(const url of PUBLIC_RPCS){
@@ -416,7 +417,8 @@ async function loadData(){
 
   // Build dream scores — per wallet, per position: best weight that passed through
   // A card "passes through" if: minted by wallet OR bought by wallet (in sales)
-  dreamScores = {};
+  window.dreamScores = {};
+  dreamScores = window.dreamScores;
 
   const score = (wallet, tokenId, dna) => {
     try{
@@ -574,18 +576,25 @@ function shareOnX(){
 
 // COUNTDOWN
 const DEADLINE = DEADLINE_BLOCK;
-// COUNTDOWN — 24h od załadowania strony
-const DEADLINE_TIME = Date.now() + 24 * 60 * 60 * 1000;
+// DEADLINE — stały timestamp (20 maja 2026, 20:00 UTC)
+const DEADLINE_TIME = new Date('2026-05-20T20:00:00Z').getTime();
 
 function updateCountdown(){
   const left = Math.max(0, DEADLINE_TIME - Date.now());
+  if(left === 0){
+    document.getElementById('cdH').textContent = '00';
+    document.getElementById('cdM').textContent = '00';
+    document.getElementById('cdS').textContent = '00';
+    document.getElementById('cdBlock').textContent = 'QUEST ENDED';
+    return;
+  }
   const h = Math.floor(left / 3600000);
   const m = Math.floor((left % 3600000) / 60000);
   const s = Math.floor((left % 60000) / 1000);
   document.getElementById('cdH').textContent = String(h).padStart(2,'0');
   document.getElementById('cdM').textContent = String(m).padStart(2,'0');
   document.getElementById('cdS').textContent = String(s).padStart(2,'0');
-  document.getElementById('cdBlock').textContent = 'Quest ends in: '+h+'h '+m+'m '+s+'s';
+  document.getElementById('cdBlock').textContent = 'Deadline: May 20, 2026 · 20:00 UTC';
 }
 updateCountdown();
 setInterval(updateCountdown, 1000);
