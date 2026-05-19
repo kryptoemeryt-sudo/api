@@ -603,7 +603,7 @@ document.addEventListener('DOMContentLoaded', updateNavHeight);
     </div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;">
       <div style="background:#0f1318;border:1px solid #1c2028;border-radius:8px;padding:12px;text-align:center;">
-        <div style="font-family:'Black Ops One',sans-serif;font-size:22px;color:#3b82f6;">6<span style="font-size:13px;color:#3d4a5a;">/11</span></div>
+        <div style="font-family:'Black Ops One',sans-serif;font-size:22px;color:#3b82f6;" id="nqWelcomeCount">—<span style="font-size:13px;color:#3d4a5a;">/11</span></div>
         <div style="font-size:11px;letter-spacing:1px;color:#5a6a7a;">POSITIONS MINTED</div>
       </div>
       <div style="background:#0f1318;border:1px solid #1c2028;border-radius:8px;padding:12px;text-align:center;">
@@ -1193,7 +1193,25 @@ function closeNqWelcome(dontShow){
 
 function showNqWelcome(){
   if(localStorage.getItem('nqWelcomeSeen')) return;
-  setTimeout(() => {
+  setTimeout(async () => {
+    // Pobierz aktualną liczbę wymintowanych pozycji USA
+    try{
+      const res = await fetch('/api/events');
+      if(res.ok){
+        const data = await res.json();
+        const usaPositions = new Set();
+        data.mints.forEach(m => {
+          try{
+            const n = BigInt(m.dna);
+            const teamId = Number(n % 48n);
+            const pos = Number((n >> 6n) % 11n) + 1;
+            if(teamId === 24) usaPositions.add(pos); // USA = teamId 24
+          }catch(e){}
+        });
+        const el = document.getElementById('nqWelcomeCount');
+        if(el) el.innerHTML = usaPositions.size + '<span style="font-size:13px;color:#3d4a5a;">/11</span>';
+      }
+    }catch(e){}
     document.getElementById('nqWelcomeModal').classList.add('show');
   }, 1500);
 }
