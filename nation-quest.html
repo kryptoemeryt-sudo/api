@@ -6,6 +6,8 @@
 <title>BLOCK KICKERS — Nation Quest</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Barlow+Condensed:wght@400;600;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<!-- Dodajemy Ethers.js do odpytywania blockchaina -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.7.0/ethers.umd.min.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
 body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;font-size:16px;}
@@ -23,11 +25,13 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
 .prize-chz{font-family:'Black Ops One',sans-serif;font-size:24px;color:#ffc940;margin-top:-4px;}
 .prize-lbl{font-size:12px;letter-spacing:3px;color:#5a6a7a;margin-top:6px;}
 .positions{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-bottom:16px;}
-.pos{width:56px;height:56px;border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:'Black Ops One',sans-serif;font-size:11px;}
+.pos{width:56px;height:56px;border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:'Black Ops One',sans-serif;font-size:11px;transition:all 0.3s;}
 .pos.empty{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);color:#3d4a5a;}
-.pos.done{background:rgba(0,255,135,0.1);border:1px solid rgba(0,255,135,0.3);color:#00ff87;}
+.pos.done{background:rgba(0,255,135,0.1);border:1px solid rgba(0,255,135,0.3);color:#00ff87;box-shadow:0 0 15px rgba(0,255,135,0.15);}
 .pos-sub{font-size:9px;font-family:'Barlow Condensed',sans-serif;margin-top:2px;opacity:0.5;}
 .status{font-size:13px;letter-spacing:3px;color:#3d4a5a;}
+.spin{display:inline-block;width:14px;height:14px;border:2px solid rgba(0,255,135,0.2);border-top-color:#00ff87;border-radius:50%;animation:rot 0.8s linear infinite;margin-right:8px;vertical-align:middle;}
+@keyframes rot{to{transform:rotate(360deg)}}
 .section{padding:40px 48px;border-bottom:1px solid #1c2028;}
 .sec-label{font-size:11px;letter-spacing:4px;color:#3d4a5a;margin-bottom:22px;}
 .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
@@ -51,6 +55,16 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
 .rules-title{font-size:10px;letter-spacing:4px;color:#3d4a5a;margin-bottom:14px;}
 .rule{display:flex;gap:10px;font-size:14px;color:#5a6a7a;margin-bottom:8px;line-height:1.4;}
 .rule::before{content:'›';color:#00ff87;flex-shrink:0;}
+
+@media (max-width: 768px) {
+  .hero{padding:32px 16px;}
+  .title{font-size:42px;}
+  .title2{font-size:32px;}
+  .sub{font-size:16px;}
+  .steps{grid-template-columns:1fr;}
+  .section, .cta{padding:32px 16px;}
+  .ex-row{flex-direction:column;gap:8px;}
+}
 </style>
 </head>
 <body>
@@ -72,20 +86,11 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
     <rect width="24" height="21.54" fill="#3C3B6E"/>
   </svg>
 
-  <div class="positions">
-    <div class="pos done"><span>GK</span><span class="pos-sub">minted</span></div>
-    <div class="pos done"><span>CB</span><span class="pos-sub">minted</span></div>
-    <div class="pos done"><span>CB</span><span class="pos-sub">minted</span></div>
-    <div class="pos done"><span>MID</span><span class="pos-sub">minted</span></div>
-    <div class="pos empty"><span>RB</span><span class="pos-sub">open</span></div>
-    <div class="pos empty"><span>LB</span><span class="pos-sub">open</span></div>
-    <div class="pos empty"><span>DM</span><span class="pos-sub">open</span></div>
-    <div class="pos empty"><span>RW</span><span class="pos-sub">open</span></div>
-    <div class="pos empty"><span>LW</span><span class="pos-sub">open</span></div>
-    <div class="pos empty"><span>ST</span><span class="pos-sub">open</span></div>
-    <div class="pos empty"><span>#10</span><span class="pos-sub">open</span></div>
+  <!-- Kontener na dynamicznie generowane pozycje -->
+  <div class="positions" id="positions-container">
+    <div style="font-size:12px;color:#7a8899;padding:20px;"><span class="spin"></span>LOADING LIVE ON-CHAIN DATA...</div>
   </div>
-  <div class="status">4 / 11 POSITIONS MINTED · 7 STILL OPEN</div>
+  <div class="status" id="quest-status">CONNECTING TO CHILIZ CHAIN...</div>
 
   <div class="prize-box" style="margin-top:32px;">
     <div class="prize-num">1000</div>
@@ -138,31 +143,6 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
   </div>
 </div>
 
-<div class="section">
-  <div class="sec-label">THE ALBUM — TRACK THE RACE LIVE</div>
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px;">
-    <div style="background:#0f1318;border:1px solid rgba(0,255,135,0.15);border-radius:10px;padding:20px;">
-      <div style="font-family:'Black Ops One',sans-serif;font-size:13px;color:#dde4f0;margin-bottom:10px;letter-spacing:0.5px;">WHAT YOU SEE IN THE ALBUM</div>
-      <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px;">
-        <div style="display:flex;align-items:center;gap:6px;font-size:13px;color:#7a8899;width:100%;"><span style="display:inline-block;width:20px;height:20px;border-radius:3px;background:rgba(0,255,135,0.15);border:1px solid rgba(0,255,135,0.5);flex-shrink:0;"></span>YOU own this position — click to sell</div>
-        <div style="display:flex;align-items:center;gap:6px;font-size:13px;color:#7a8899;width:100%;"><span style="display:inline-block;width:20px;height:20px;border-radius:3px;background:rgba(0,255,135,0.08);border:1px solid rgba(0,255,135,0.2);flex-shrink:0;"></span>Someone holds this position</div>
-        <div style="display:flex;align-items:center;gap:6px;font-size:13px;color:#7a8899;width:100%;"><span style="display:inline-block;width:20px;height:20px;border-radius:3px;background:rgba(255,201,64,0.12);border:1px solid rgba(255,201,64,0.4);flex-shrink:0;"></span>Available on market — click to buy</div>
-        <div style="display:flex;align-items:center;gap:6px;font-size:13px;color:#7a8899;width:100%;"><span style="display:inline-block;width:20px;height:20px;border-radius:3px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);opacity:0.5;flex-shrink:0;"></span>Not minted yet — mint to get it</div>
-      </div>
-    </div>
-    <div style="background:#0f1318;border:1px solid #1c2028;border-radius:10px;padding:20px;">
-      <div style="font-family:'Black Ops One',sans-serif;font-size:13px;color:#dde4f0;margin-bottom:10px;letter-spacing:0.5px;">HOW TO BUY / SELL IN ALBUM</div>
-      <div style="font-size:14px;color:#7a8899;line-height:1.7;">
-        <span style="color:#ffc940;font-weight:700;">Buy</span> — click a golden badge on a missing position. A popup shows the figure, price and BUY NOW button. One click, done.<br><br>
-        <span style="color:#00ff87;font-weight:700;">Sell</span> — click a bright green badge on a position you own. Set your price, click LIST FOR SALE. It appears on the market instantly.
-      </div>
-    </div>
-  </div>
-  <a href="https://block-kickers.vercel.app/#album" style="display:flex;align-items:center;justify-content:center;gap:12px;background:rgba(0,255,135,0.08);border:1px solid rgba(0,255,135,0.3);border-radius:10px;padding:18px 32px;text-decoration:none;color:#00ff87;font-family:'Black Ops One',sans-serif;font-size:16px;letter-spacing:2px;">
-    OPEN ALBUM &amp; TRACK LIVE PROGRESS →
-  </a>
-</div>
-
 <div class="cta">
   <div class="cta-label">JOIN THE RACE</div>
   <div style="font-size:20px;color:#7a8899;margin-bottom:10px;">Mint · Trade · Complete · Win</div>
@@ -177,5 +157,115 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
   </div>
 </div>
 
+<script>
+// --- KONFIGURACJA LIVE DATA ---
+const CONTRACT_ADDRESS = "0xAAdc8D56e25a223B6cf4b88ba0889975560f21aB";
+const USA_TEAM_ID = 24;
+
+// Zdefiniowane wszystkie 11 pozycji piłkarskich w ładnej kolejności
+const POSITIONS = [
+  { id: 1, label: 'GK' },
+  { id: 2, label: 'RB' },
+  { id: 3, label: 'LB' },
+  { id: 4, label: 'CB' },
+  { id: 5, label: 'CB' },
+  { id: 6, label: 'DM' },
+  { id: 8, label: 'MID' },
+  { id: 10, label: '#10' },
+  { id: 7, label: 'RW' },
+  { id: 11, label: 'LW' },
+  { id: 9, label: 'ST' }
+];
+
+// Dekodowanie DNA (identycznie jak w głównej apce)
+function parseDNA(dna) {
+  const n = typeof dna === 'bigint' ? dna : BigInt(dna.toString());
+  const teamId = Number(n % 48n);
+  const position = Number((n >> 6n) % 11n) + 1;
+  return { teamId, position };
+}
+
+// Główna funkcja ładująca stan z sieci
+async function loadLiveQuestData() {
+  const container = document.getElementById('positions-container');
+  const statusEl = document.getElementById('quest-status');
+  let mintedPositions = new Set();
+
+  try {
+    let fetched = false;
+
+    // Krok 1: Próbujemy pobrać dane z szybkiego API (Vercel)
+    try {
+      const res = await fetch('/api/events');
+      if (res.ok) {
+        const data = await res.json();
+        if (data.mints) {
+          data.mints.forEach(m => {
+            const t = parseDNA(m.dna);
+            if (t.teamId === USA_TEAM_ID) {
+              mintedPositions.add(t.position);
+            }
+          });
+          fetched = true;
+        }
+      }
+    } catch (e) {
+      console.warn("API fallback triggered...");
+    }
+
+    // Krok 2: Jeśli API nie działa, odpytujemy bezpośrednio RPC (Chiliz Chain)
+    if (!fetched) {
+      const provider = new ethers.JsonRpcProvider('https://chiliz-rpc.publicnode.com');
+      const ABI = ["event FigureMinted(address indexed owner, uint256 indexed tokenId, uint256 dna, uint256 teamId, uint256 position, uint8 rarity, uint256 weight)"];
+      const contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, provider);
+      
+      const DEPLOY_BLOCK = 34086621;
+      const currentBlock = await provider.getBlockNumber();
+      const CHUNK = 20000; // Pobrani paczkami, by ominąć limit RPC
+      
+      for(let b = DEPLOY_BLOCK; b <= currentBlock; b += CHUNK) {
+        const toBlock = Math.min(b + CHUNK - 1, currentBlock);
+        try {
+          const events = await contract.queryFilter(contract.filters.FigureMinted(), b, toBlock);
+          events.forEach(ev => {
+            const t = parseDNA(ev.args.dna);
+            if (t.teamId === USA_TEAM_ID) {
+              mintedPositions.add(t.position);
+            }
+          });
+        } catch(e) {
+          console.warn('RPC chunk failed', e);
+        }
+      }
+    }
+
+    // Odświeżenie widoku HTML
+    container.innerHTML = '';
+    POSITIONS.forEach(p => {
+      const isMinted = mintedPositions.has(p.id);
+      const div = document.createElement('div');
+      div.className = `pos ${isMinted ? 'done' : 'empty'}`;
+      div.innerHTML = `<span>${p.label}</span><span class="pos-sub">${isMinted ? 'minted' : 'open'}</span>`;
+      container.appendChild(div);
+    });
+
+    const count = mintedPositions.size;
+    statusEl.textContent = `${count} / 11 POSITIONS MINTED · ${11 - count} STILL OPEN`;
+    
+    // Jeśli wyścig skończony - mocny komunikat
+    if (count === 11) {
+      statusEl.style.color = '#ffc940';
+      statusEl.textContent = "🏆 11 / 11 POSITIONS MINTED — RACE COMPLETE!";
+    }
+
+  } catch (error) {
+    console.error("Error loading quest data:", error);
+    statusEl.textContent = "ERROR LOADING LIVE DATA. REFRESH PAGE.";
+  }
+}
+
+// Uruchomienie po załadowaniu
+window.addEventListener('load', loadLiveQuestData);
+</script>
 </body>
 </html>
