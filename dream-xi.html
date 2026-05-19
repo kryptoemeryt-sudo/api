@@ -236,7 +236,10 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
             SHARE PROGRESS
           </button>
-          <button class="btn-mint" onclick="window.open('https://block-kickers.vercel.app','_blank')">MINT NOW →</button>
+          <div style="display:flex;gap:8px;">
+            <button class="btn-mint" onclick="loadData()" style="background:rgba(99,102,241,0.15);border:1px solid rgba(99,102,241,0.4);color:#818cf8;">↻ REFRESH</button>
+            <button class="btn-mint" onclick="window.open('https://block-kickers.vercel.app','_blank')">MINT NOW →</button>
+          </div>
         </div>
       </div>
     </div>
@@ -608,6 +611,21 @@ function updateCountdown(){
 }
 updateCountdown();
 setInterval(updateCountdown, 1000);
+
+// Auto-reconnect jeśli MetaMask już połączony
+window.addEventListener('load', async () => {
+  if(window.ethereum){
+    try{
+      const accounts = await window.ethereum.request({method:'eth_accounts'});
+      if(accounts.length > 0){
+        const cid = await window.ethereum.request({method:'eth_chainId'});
+        if(parseInt(cid,16) === CHAIN_ID){
+          await connectWallet();
+        }
+      }
+    }catch(e){}
+  }
+});
 </script>
 </body>
 </html>
