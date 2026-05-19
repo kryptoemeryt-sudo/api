@@ -559,14 +559,19 @@ function renderLeaderboard(){
 }
 
 async function buyFromMarket(listingId, priceEth){
-  if(!marketContract){ alert('Connect wallet'); return; }
+  if(!window.ethereum){ alert('Connect wallet first'); return; }
   try{
-    const tx = await marketContract.buyFigure(listingId, {value: ethers.parseEther(priceEth), gasLimit: 250000});
-    alert('Buying...');
+    if(!marketContract){
+      provider = new ethers.BrowserProvider(window.ethereum);
+      signer = await provider.getSigner();
+      marketContract = new ethers.Contract(MARKET_ADDRESS, MARKET_ABI, signer);
+    }
+    const tx = await marketContract.buyFigure(listingId, {value: ethers.parseEther(String(priceEth)), gasLimit: 250000});
+    alert('Transaction sent — waiting for confirmation...');
     await tx.wait();
     alert('Purchased! Refreshing...');
     await loadData();
-  }catch(e){ alert('Error: '+(e.reason||e.message)); }
+  }catch(e){ alert('Error: '+(e.reason||e.message||String(e))); }
 }
 
 function shareOnX(){
@@ -579,16 +584,28 @@ function shareOnX(){
 
 // COUNTDOWN
 const DEADLINE = DEADLINE_BLOCK;
-let currentBlock = 34140000;
+let currentBlock = 0;
 
 async function updateBlock(){
-  try{
-    const rp = await getReadProvider();
-    currentBlock = await rp.getBlockNumber();
-  }catch(e){}
+  for(const url of PUBLIC_RPCS){
+    try{
+      const p = new ethers.JsonRpcProvider(url);
+      const b = await p.getBlockNumber();
+      if(b > 0){ currentBlock = b; updateCountdown(); return; }
+    }catch(e){}
+  }
+  // Fallback — szacuj na podstawie czasu (blok co 5s)
+  if(currentBlock === 0) currentBlock = DEADLINE_BLOCK - 17280; // ~24h temu
 }
 
 function updateCountdown(){
+  if(currentBlock === 0){ 
+    document.getElementById('cdH').textContent = '--';
+    document.getElementById('cdM').textContent = '--';
+    document.getElementById('cdS').textContent = '--';
+    document.getElementById('cdBlock').textContent = 'Target: #'+DEADLINE.toLocaleString()+' · Connecting...';
+    return;
+  }
   const blocksLeft = Math.max(0, DEADLINE - currentBlock);
   const secsLeft = blocksLeft * 5;
   const h = Math.floor(secsLeft / 3600);
@@ -600,9 +617,9 @@ function updateCountdown(){
   document.getElementById('cdBlock').textContent = 'Target: #'+DEADLINE.toLocaleString()+' · Current: #'+currentBlock.toLocaleString()+' · '+blocksLeft.toLocaleString()+' blocks left';
 }
 
-updateBlock().then(updateCountdown);
-setInterval(() => { currentBlock++; updateCountdown(); }, 5000);
-setInterval(updateBlock, 60000);
+updateBlock();
+setInterval(() => { if(currentBlock > 0){ currentBlock++; updateCountdown(); } }, 5000);
+setInterval(updateBlock, 30000);
 </script>
 </body>
 </html>
