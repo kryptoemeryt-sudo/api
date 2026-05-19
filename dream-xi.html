@@ -408,11 +408,12 @@ async function loadData(){
   mints.forEach(m => {
     try{
       const t = parseDNA(m.dna);
-      ownerMap[m.tokenId] = {owner: m.owner.toLowerCase(), dna: m.dna, ...t};
+      ownerMap[Number(m.tokenId)] = {owner: m.owner.toLowerCase(), dna: m.dna, ...t};
     }catch(e){}
   });
   sales.forEach(s => {
-    if(ownerMap[s.tokenId]) ownerMap[s.tokenId].owner = s.buyer.toLowerCase();
+    const tid = Number(s.tokenId);
+    if(ownerMap[tid]) ownerMap[tid].owner = s.buyer?.toLowerCase();
   });
 
   // Build dream scores — per wallet, per position: best weight that passed through
@@ -436,9 +437,12 @@ async function loadData(){
   mints.forEach(m => score(m.owner.toLowerCase(), m.tokenId, m.dna));
   // Sales (buyer scored)
   sales.forEach(s => {
-    const fig = ownerMap[s.tokenId];
+    const tokenId = Number(s.tokenId);
+    const buyer = s.buyer?.toLowerCase();
+    if(!buyer) return;
+    const fig = ownerMap[tokenId];
     if(fig && fig.teamId === ARGENTINA_TEAM_ID){
-      score(s.buyer, s.tokenId, fig.dna);
+      score(buyer, tokenId, fig.dna);
     }
   });
 
