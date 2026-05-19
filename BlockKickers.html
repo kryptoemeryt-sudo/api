@@ -1236,11 +1236,27 @@ async function rpcWithRetry(fn, retries=3, delay=500){
   }
 }
 
-let _fetchingMintEvents = false;
+// Cache z Vercel API — jeden fetch dla wszystkich userów
+let _apiCache = null;
+let _apiCacheTime = 0;
+const API_CACHE_MS = 5 * 60 * 1000; // 5 minut
+
+async function fetchFromAPI(){
+  if(_apiCache && Date.now() - _apiCacheTime < API_CACHE_MS) return _apiCache;
+  try{
+    const res = await fetch('/api/events');
+    if(!res.ok) throw new Error('API ' + res.status);
+    _apiCache = await res.json();
+    _apiCacheTime = Date.now();
+    return _apiCache;
+  }catch(e){
+    console.warn('API fetch failed, falling back to RPC:', e.message);
+    return null;
+  }
+}
 let _fetchMintEventsQueue = [];
 
-// Pobierz wszystkie FigureMinted eventy z cache lub RPC
-// WAŻNE: używa JsonRpcProvider bezpośrednio — omija limit 50k bloków MetaMask
+// Pobierz wszystkie FigureMinted eventy — najpierw z /api/events, fallback RPC
 async function getAllMintEvents(c, p){
   const rp = await getReadProvider();
   const current = await rp.getBlockNumber();
@@ -1249,115 +1265,106 @@ async function getAllMintEvents(c, p){
     return eventsCache;
   }
 
-  // Lock — jeśli już trwa fetch, czekaj na wynik
   if(_fetchingMintEvents){
-    return new Promise(resolve => {
-      _fetchMintEventsQueue.push(resolve);
-    });
+    return new Promise(resolve => { _fetchMintEventsQueue.push(resolve); });
   }
   _fetchingMintEvents = true;
 
-  try{
-
-  const rc = new ethers.Contract(CONTRACT_ADDRESS, ABI, rp);
-  const CHUNK = 20000;
-  let events = [];
-
-  for(let b = DEPLOY_BLOCK; b <= current; b += CHUNK){
-    const toBlock = Math.min(b + CHUNK - 1, current);
-    // Próbuj z malejącym zakresem zamiast cichego pomijania
-    let fetched = false;
-    for(const size of [CHUNK, 10000, 5000]){
-      const to2 = Math.min(b + size - 1, toBlock);
-      try{
-        const chunk = await rpcWithRetry(() => rc.queryFilter(rc.filters.FigureMinted(), b, to2));
-        events = [...events, ...chunk];
-        // Jeśli użyliśmy mniejszego size, dobierz resztę rekurencyjnie
-        if(to2 < toBlock){
-          for(let b2 = to2 + 1; b2 <= toBlock; b2 += size){
-            try{
-              const c2 = await rpcWithRetry(() => rc.queryFilter(rc.filters.FigureMinted(), b2, Math.min(b2 + size - 1, toBlock)));
-              events = [...events, ...c2];
-            }catch(e){ console.warn('sub-chunk fail', b2, e.message); }
-          }
-        }
-        fetched = true;
-        break;
-      }catch(e){ console.warn('mint chunk fail at', b, 'size', size, e.message); }
-    }
-    if(!fetched) console.error('FAILED mint events block range', b, '-', toBlock);
-  }
-
-  if(events.length > 0 || !eventsCache){
-    eventsCache = events;
-    eventsCacheBlock = current;
-  }
-
-  // Weryfikacja — sprawdź czy liczba eventów zgadza się z totalMinted
-  try{
-    const rc2 = new ethers.Contract(CONTRACT_ADDRESS, ABI, rp);
-    const total = Number(await rc2.totalMinted());
-    if(eventsCache && eventsCache.length < total){
-      console.warn(`Event count mismatch: got ${eventsCache.length}, contract says ${total}. Clearing cache.`);
-      eventsCache = null;
-      eventsCacheBlock = 0;
-    }
-  }catch(e){}
-
-  // Zwolnij lock i powiadom oczekujących
-  _fetchingMintEvents = false;
-  const result = eventsCache || [];
-  _fetchMintEventsQueue.forEach(resolve => resolve(result));
-  _fetchMintEventsQueue = [];
-
-  return result;
-  }catch(e){
+  const release = (result) => {
     _fetchingMintEvents = false;
-    _fetchMintEventsQueue.forEach(resolve => resolve(eventsCache || []));
+    _fetchMintEventsQueue.forEach(r => r(result));
     _fetchMintEventsQueue = [];
+    return result;
+  };
+
+  try{
+    // Próbuj API najpierw (Vercel cache — 1 request dla wszystkich userów)
+    const api = await fetchFromAPI();
+    if(api && api.mints && api.mints.length > 0){
+      let events = api.mints.map(m => ({
+        args: { tokenId: BigInt(m.tokenId), owner: m.owner, dna: BigInt(m.dna) },
+        blockNumber: api.currentBlock,
+      }));
+      // Dobierz świeże eventy od snapshotu API do teraz
+      if(api.currentBlock < current){
+        try{
+          const rc = new ethers.Contract(CONTRACT_ADDRESS, ABI, rp);
+          const fresh = await rpcWithRetry(() =>
+            rc.queryFilter(rc.filters.FigureMinted(), api.currentBlock + 1, current)
+          );
+          events = [...events, ...fresh];
+        }catch(e){ console.warn('fresh events fail:', e.message); }
+      }
+      eventsCache = events;
+      eventsCacheBlock = current;
+      return release(eventsCache);
+    }
+
+    // Fallback — bezpośrednie RPC chunkami
+    const rc = new ethers.Contract(CONTRACT_ADDRESS, ABI, rp);
+    const CHUNK = 20000;
+    let events = [];
+    for(let b = DEPLOY_BLOCK; b <= current; b += CHUNK){
+      const toBlock = Math.min(b + CHUNK - 1, current);
+      let fetched = false;
+      for(const size of [CHUNK, 10000, 5000]){
+        const to2 = Math.min(b + size - 1, toBlock);
+        try{
+          const chunk = await rpcWithRetry(() => rc.queryFilter(rc.filters.FigureMinted(), b, to2));
+          events = [...events, ...chunk];
+          if(to2 < toBlock){
+            for(let b2 = to2+1; b2 <= toBlock; b2 += size){
+              try{ const c2 = await rpcWithRetry(() => rc.queryFilter(rc.filters.FigureMinted(), b2, Math.min(b2+size-1,toBlock))); events=[...events,...c2]; }catch(e){}
+            }
+          }
+          fetched = true; break;
+        }catch(e){ console.warn('chunk fail', b, size, e.message); }
+      }
+      if(!fetched) console.error('FAILED block range', b, toBlock);
+    }
+
+    if(events.length > 0 || !eventsCache){ eventsCache = events; eventsCacheBlock = current; }
+    return release(eventsCache || []);
+
+  }catch(e){
+    release(eventsCache || []);
     throw e;
   }
 }
 
-// Pobierz Sold eventy z cache — używa read-only provider
+
+// Pobierz Sold eventy z cache — najpierw /api/events, fallback RPC
 async function getSoldEvents(mk, p){
   if(salesCache) return salesCache;
+
+  // Próbuj API
+  const api = await fetchFromAPI();
+  if(api && api.sales){
+    // Konwertuj do formatu kompatybilnego z resztą kodu
+    salesCache = api.sales.map(s => ({
+      args: { tokenId: s.tokenId, buyer: s.buyer, listingId: s.listingId }
+    }));
+    setTimeout(() => { salesCache = null; }, 180000);
+    return salesCache;
+  }
+
+  // Fallback RPC
   const rp = await getReadProvider();
   const current = await rp.getBlockNumber();
   const rmk = new ethers.Contract(MARKET_ADDRESS, MARKET_ABI, rp);
   const CHUNK = 20000;
-
-  // Pobierz Listed i Sold osobno (sekwencyjnie) — bezpieczniej przy niestabilnym RPC
   let listedEvs = [], soldEvs = [];
   for(let b = DEPLOY_BLOCK; b <= current; b += CHUNK){
     const toBlock = Math.min(b + CHUNK - 1, current);
-    try{
-      const lChunk = await rpcWithRetry(() => rmk.queryFilter(rmk.filters.Listed(), b, toBlock));
-      listedEvs = [...listedEvs, ...lChunk];
-    }catch(e){ console.warn('listed chunk fail at', b, e.message); }
-    try{
-      const sChunk = await rpcWithRetry(() => rmk.queryFilter(rmk.filters.Sold(), b, toBlock));
-      soldEvs = [...soldEvs, ...sChunk];
-    }catch(e){ console.warn('sold chunk fail at', b, e.message); }
+    try{ const l = await rpcWithRetry(() => rmk.queryFilter(rmk.filters.Listed(), b, toBlock)); listedEvs=[...listedEvs,...l]; }catch(e){}
+    try{ const s = await rpcWithRetry(() => rmk.queryFilter(rmk.filters.Sold(),   b, toBlock)); soldEvs=[...soldEvs,...s]; }catch(e){}
   }
-
-  // Zbuduj mapę listingId → tokenId z eventów Listed
   const listingToToken = {};
-  listedEvs.forEach(ev => {
-    listingToToken[Number(ev.args.listingId)] = Number(ev.args.tokenId);
-  });
-
-  // Dołącz tokenId do każdego Sold eventu
-  const sales = soldEvs.map(ev => ({
+  listedEvs.forEach(ev => { listingToToken[Number(ev.args.listingId)] = Number(ev.args.tokenId); });
+  salesCache = soldEvs.map(ev => ({
     ...ev,
-    args: {
-      ...ev.args,
-      tokenId: listingToToken[Number(ev.args.listingId)] ?? null,
-      buyer:   ev.args.buyer,
-    }
+    args: { ...ev.args, tokenId: listingToToken[Number(ev.args.listingId)] ?? null, buyer: ev.args.buyer }
   })).filter(ev => ev.args.tokenId !== null);
-
-  salesCache = sales;
   setTimeout(() => { salesCache = null; }, 180000);
   return salesCache;
 }
