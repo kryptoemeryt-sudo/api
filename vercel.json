@@ -1,5 +1,6 @@
 {
   "rewrites": [
+    { "source": "/promo", "destination": "/nation-quest.html" },
     { "source": "/", "destination": "/BlockKickers.html" }
   ]
 }
