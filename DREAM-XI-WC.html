@@ -118,6 +118,9 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
 .spin{display:inline-block;width:16px;height:16px;border:2px solid rgba(0,255,135,0.3);border-top-color:#00ff87;border-radius:50%;animation:spin 0.8s linear infinite;vertical-align:middle;}
 @keyframes spin{to{transform:rotate(360deg)}}
 
+/* SYSTEM TOAST / POWIADOMIENIA */
+#toast{position:fixed;bottom:24px;right:24px;background:#0f1318;border:1px solid #00ff87;padding:16px 24px;border-radius:8px;display:none;z-index:10000;font-family:'Share Tech Mono',monospace;color:#00ff87;box-shadow:0 10px 30px rgba(0,0,0,0.5);max-width:320px;line-height:1.4;}
+
 @media(max-width:600px){
   .stats-container{grid-template-columns:1fr 1fr;}
   .filter-tabs{gap:4px;}
@@ -146,7 +149,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
     <div class="pricing-schedule">
       <div class="schedule-item active" id="p1">
         <div class="schedule-date">DO 31 MAJA</div>
-        <div class="schedule-price">BETA: <span>10 CHZ</span></div>
+        <div class="schedule-price">BETA: <span id="betaPriceText">10 CHZ</span></div>
       </div>
       <div class="schedule-item" id="p2">
         <div class="schedule-date">OD 1 CZERWCA</div>
@@ -158,8 +161,9 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
       </div>
     </div>
 
-    <div style="margin-bottom:24px;">
-      <button class="btn-mint-hero" onclick="window.open('https://block-kickers.vercel.app','_blank')">MINTUJ TERAZ →</button>
+    <div style="margin-bottom:24px; display:flex; justify-content:center; gap:12px; flex-wrap:wrap;">
+      <button class="btn-mint-hero" style="background:rgba(0,255,135,0.1); border:1px solid #00ff87; color:#00ff87;" onclick="directMint()">MINTUJ BEZPOŚREDNIO TUTAJ</button>
+      <button class="btn-mint-hero" onclick="window.open('https://block-kickers.vercel.app','_blank')">OTWÓRZ GŁÓWNĄ STRONĘ →</button>
     </div>
 
     <!-- ODLICZANIE DO KOŃCA TURNIEJU -->
@@ -256,6 +260,9 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
   </div>
 </div>
 
+<!-- ELEMENT TOASTU DO POWIADOMIEŃ -->
+<div id="toast">Wiadomość systemowa</div>
+
 <script>
 const CONTRACT_ADDRESS = "0xAAdc8D56e25a223B6cf4b88ba0889975560f21aB";
 const MARKET_ADDRESS   = "0xA18f7Bade67Eda41FD7D2B3A204d39b543977DaE";
@@ -263,7 +270,10 @@ const CHAIN_ID = 88888;
 
 const ABI = [
   "event FigureMinted(address indexed owner,uint256 indexed tokenId,uint256 dna,uint256 teamId,uint256 position,uint8 rarity,uint256 weight)",
-  "function totalMinted() external view returns (uint256)"
+  "function totalMinted() external view returns (uint256)",
+  "function mintPrice() external view returns (uint256)",
+  "function vaultBalance() external view returns (uint256)",
+  "function mint(address referrer) external payable"
 ];
 const MARKET_ABI = [
   "event Listed(uint256 indexed listingId,address indexed seller,uint256 tokenId,uint256 price)",
@@ -273,7 +283,6 @@ const MARKET_ABI = [
   "function buyFigure(uint256 listingId) external payable"
 ];
 
-// 48 reprezentacji zgodnie z mapowaniem w kontrakcie
 const TEAMS = [
   {id:0,  name:"Australia",     flag:"🇦🇺", fed:"AFC"},
   {id:1,  name:"Iran",          flag:"🇮🇷", fed:"AFC"},
@@ -332,6 +341,29 @@ let contract, marketContract;
 let activeFederation = 'ALL';
 window.dreamScores = {}; // portfel -> { teamId -> {weight, tid, rarity, dna} }
 let marketByTeam = {}; // teamId -> najtańsza aukcja {listingId, price, priceWei, weight, rarity}
+let currentMintPrice = ethers.parseEther("10"); // domyślna cena mintu
+
+// Funkcja pomocnicza do nieblokujących powiadomień na ekranie
+function showToast(message, isError = false) {
+  const toast = document.getElementById('toast');
+  toast.textContent = message;
+  toast.style.borderColor = isError ? '#ef4444' : '#00ff87';
+  toast.style.color = isError ? '#ef4444' : '#00ff87';
+  toast.style.display = 'block';
+  setTimeout(() => {
+    toast.style.display = 'none';
+  }, 6000);
+}
+
+// Pobieranie referrera z adresu URL (np. ?ref=0x...)
+function getReferrer() {
+  const params = new URLSearchParams(window.location.search);
+  const ref = params.get('ref');
+  if (ref && ethers.isAddress(ref)) {
+    return ref;
+  }
+  return "0x0000000000000000000000000000000000000000";
+}
 
 async function getReadProvider(){
   for(const url of PUBLIC_RPCS){
@@ -341,11 +373,17 @@ async function getReadProvider(){
 }
 
 async function connectWallet(){
-  if(!window.ethereum){ alert('Zainstaluj portfel MetaMask, aby kontynuować.'); return; }
+  if(!window.ethereum){
+    showToast('Zainstaluj portfel MetaMask, aby kontynuować.', true);
+    return;
+  }
   try{
     await window.ethereum.request({method:'eth_requestAccounts'});
     const cid = await window.ethereum.request({method:'eth_chainId'});
-    if(parseInt(cid,16) !== CHAIN_ID){ alert('Przełącz sieć portfela na Chiliz Chain.'); return; }
+    if(parseInt(cid,16) !== CHAIN_ID){
+      showToast('Przełącz sieć portfela na Chiliz Chain (ID: 88888).', true);
+      return;
+    }
     
     provider = new ethers.BrowserProvider(window.ethereum);
     signer = await provider.getSigner();
@@ -360,10 +398,12 @@ async function connectWallet(){
     document.getElementById('gameSection').style.display = 'block';
     document.getElementById('statsRow').style.display = 'grid';
     
-    // Ustawienie podświetlenia aktualnego progu cenowego na podstawie czasu
     updatePriceUI();
     await loadData();
-  }catch(e){ console.error(e); }
+  }catch(e){
+    console.error(e);
+    showToast('Błąd podczas łączenia z portfelem.', true);
+  }
 }
 
 function updatePriceUI() {
@@ -438,7 +478,6 @@ async function loadData(){
 
   let mints=[], sales=[], listed=[];
   try{
-    // Spróbuj pobrać z Vercel API w celu przyspieszenia
     const res = await fetch('/api/events');
     if(res.ok){
       const api = await res.json();
@@ -447,11 +486,22 @@ async function loadData(){
       listed = api.listings || [];
     }
   }catch(e){
-    // Fallback: pobieranie bezpośrednio przez queryFilter
     const ev = await fetchEvents();
     mints = ev.mints.map(m => ({owner: m.args.owner.toLowerCase(), tokenId: Number(m.args.tokenId), dna: m.args.dna}));
     sales = ev.sales;
     listed = ev.listed;
+  }
+
+  // Odpytanie o aktualną dynamiczną cenę mintu bezpośrednio z kontraktu
+  if (contract) {
+    try {
+      const p = await contract.mintPrice();
+      currentMintPrice = p;
+      const formattedPrice = ethers.formatEther(p);
+      document.getElementById('betaPriceText').textContent = `${parseFloat(formattedPrice).toLocaleString()} CHZ`;
+    } catch(e) {
+      console.warn("Nie udało się pobrać ceny mintu z kontraktu:", e);
+    }
   }
 
   // Mapa aktualnych właścicieli figurek
@@ -498,7 +548,7 @@ async function loadData(){
     const rp = await getReadProvider();
     const rmk = new ethers.Contract(MARKET_ADDRESS, MARKET_ABI, rp);
     const nextId = Number(await rmk.nextListingId());
-    const from = Math.max(0, nextId - 150); // Sprawdzamy ostatnie 150 listingów dla optymalizacji
+    const from = Math.max(0, nextId - 150);
     for(let i = from; i < nextId; i++){
       try{
         const l = await rmk.getListing(i);
@@ -509,7 +559,6 @@ async function loadData(){
         if(!fig) continue;
         const price = parseFloat(ethers.formatEther(priceWei));
         
-        // Zapisujemy najtańszą opcję dla danej drużyny
         if(!marketByTeam[fig.teamId] || price < marketByTeam[fig.teamId].price){
           marketByTeam[fig.teamId] = {listingId: i, price, priceWei, weight: fig.weight, rarity: fig.rarity};
         }
@@ -543,7 +592,6 @@ function renderStats() {
 
 function filterFederation(fed) {
   activeFederation = fed;
-  // Aktualizacja aktywności przycisku
   document.querySelectorAll('.tab-btn').forEach(btn => {
     btn.classList.remove('active');
     if (btn.textContent.includes(fed)) btn.classList.add('active');
@@ -557,7 +605,6 @@ function renderAlbum() {
   const myAddr = address?.toLowerCase();
   const myDream = window.dreamScores[myAddr] || {};
 
-  // Filtrowanie drużyn
   const filteredTeams = TEAMS.filter(t => activeFederation === 'ALL' || t.fed === activeFederation);
 
   filteredTeams.forEach(team => {
@@ -571,9 +618,9 @@ function renderAlbum() {
       
       let actionHtml = '';
       if(mkt && mkt.weight > scored.weight){
-        actionHtml = `<button onclick="buyFromMarket(${mkt.listingId})" class="btn-card-action upgrade">ULEPSZ W:${mkt.weight}<br>${mkt.price} CHZ</button>`;
+        actionHtml = `<button onclick="buyFromMarket(${mkt.listingId}, '${mkt.price}')" class="btn-card-action upgrade">ULEPSZ W:${mkt.weight}<br>${mkt.price} CHZ</button>`;
       } else {
-        actionHtml = `<div style="margin-top:8px;font-size:9px;color:#3d4a5a;font-family:Share Tech Mono,monospace;">MAKSYMALNA WAGA</div>`;
+        actionHtml = `<div style="margin-top:8px;font-size:9px;color:#3d4a5a;font-family:Share Tech Mono,monospace;letter-spacing:0.5px;">MAKSYMALNA WAGA</div>`;
       }
 
       card.innerHTML = `
@@ -592,7 +639,7 @@ function renderAlbum() {
       card.className = 'team-card missing';
       let actionHtml = '';
       if(mkt) {
-        actionHtml = `<button onclick="buyFromMarket(${mkt.listingId})" class="btn-card-action">KUP: ${mkt.price} CHZ</button>`;
+        actionHtml = `<button onclick="buyFromMarket(${mkt.listingId}, '${mkt.price}')" class="btn-card-action">KUP: ${mkt.price} CHZ</button>`;
       } else {
         actionHtml = `<div style="margin-top:8px;font-size:9px;color:#5a6a7a;font-family:Share Tech Mono,monospace;">BRAK NA RYNKU</div>`;
       }
@@ -614,18 +661,17 @@ function renderAlbum() {
   });
 }
 
-function renderLeaderboard(){
+async function renderLeaderboard(){
   const lb = document.getElementById('leaderboard');
   const myAddr = address?.toLowerCase();
 
-  // Budowanie tabeli graczy i ich wyników
   const players = Object.entries(window.dreamScores).map(([wallet, data]) => {
     const score = Object.values(data).reduce((s, v) => s + v.weight, 0);
     const filled = Object.keys(data).length;
     return { wallet, score, filled };
   }).sort((a,b) => {
     if(b.score !== a.score) return b.score - a.score;
-    return b.filled - a.filled; // Tie-breaker: więcej ukończonych krajów
+    return b.filled - a.filled;
   });
 
   if(players.length === 0){
@@ -633,10 +679,17 @@ function renderLeaderboard(){
     return;
   }
 
-  // Obliczenie wirtualnej puli nagród (95% ze skarbca wejść)
-  // Przykładowo szacujemy na podstawie transakcji na blockchainie
-  const totalPrizePool = players.length * 10 + 5000; // Podstawa + 10 CHZ od każdego gracza dla demonstracji
-  document.getElementById('poolInfo').textContent = `Aktualna pula dla zwycięzców: ~${totalPrizePool.toLocaleString()} CHZ`;
+  // Odpytanie o realny stan skarbca bezpośrednio z kontraktu, aby podać prawdziwą pulę nagród
+  let vaultBalanceCHZ = players.length * 10 + 5000; // domyślne szacowanie
+  if (contract) {
+    try {
+      const vb = await contract.vaultBalance();
+      vaultBalanceCHZ = parseFloat(ethers.formatEther(vb));
+    } catch(e) {
+      console.warn("Błąd podczas pobierania vaultBalance z blockchaina:", e);
+    }
+  }
+  document.getElementById('poolInfo').textContent = `Aktualna pula dla zwycięzców: ~${vaultBalanceCHZ.toLocaleString(undefined, {maximumFractionDigits: 2})} CHZ`;
 
   let rankMe = null;
   let html = '';
@@ -645,7 +698,6 @@ function renderLeaderboard(){
     const isMe = player.wallet === myAddr;
     if (isMe) rankMe = idx + 1;
 
-    // Pozycja w strefie wygrywającej (TOP 48)
     const isWinner = idx < 48;
     const posClass = isWinner ? 'winner' : '';
     const medal = idx === 0 ? '🥇' : idx === 1 ? '🥈' : idx === 2 ? '🥉' : '';
@@ -659,7 +711,6 @@ function renderLeaderboard(){
       </div>
     `;
 
-    // Linia odcięcia TOP 48
     if (idx === 47 && players.length > 48) {
       html += `
         <div class="cutoff-line">
@@ -671,22 +722,64 @@ function renderLeaderboard(){
 
   lb.innerHTML = html;
 
-  // Aktualizacja statusu gracza w Stat-Cards
   if(rankMe) {
     document.getElementById('myRank').textContent = `#${rankMe}`;
     if (rankMe <= 48) {
       document.getElementById('claimableStatus').textContent = "STREFA WYGRANEJ";
       document.getElementById('claimableStatus').style.color = "#00ff87";
     } else {
-      document.getElementById('claimableStatus').textContent = "BRAK (KWALIFIKACJA: TOP48)";
+      document.getElementById('claimableStatus').textContent = "KWALIFIKACJA: TOP48";
       document.getElementById('claimableStatus').style.color = "#ef4444";
     }
   }
 }
 
-function buyFromMarket(listingId){
-  // Przekierowanie na główną stronę giełdy w celu zatwierdzenia transakcji portfelem
-  window.open('https://block-kickers.vercel.app/#market', '_blank');
+// Funkcja bezpośredniego zakupu na rynku ( Marketplace integration )
+async function buyFromMarket(listingId, priceChz){
+  if (!signer || !marketContract) {
+    showToast('Połącz portfel, aby zakupić figurkę.', true);
+    return;
+  }
+  try {
+    showToast(`Inicjowanie zakupu listing #${listingId} za ${priceChz} CHZ...`);
+    
+    // Pobieramy dane o aukcji z kontraktu rynku
+    const l = await marketContract.getListing(listingId);
+    const priceWei = l[2]; // cena bezpośrednio w Wei z blockchaina
+
+    // Wywołanie transakcji bezpośredniej
+    const tx = await marketContract.buyFigure(listingId, { value: priceWei });
+    showToast('Transakcja wysłana do sieci Chiliz. Oczekiwanie na potwierdzenie...');
+    
+    await tx.wait();
+    showToast('Sukces! Figurka została zakupiona. Odświeżam dane...');
+    await loadData();
+  } catch (error) {
+    console.error(error);
+    showToast('Błąd transakcji zakupu. Upewnij się, że masz wystarczająco CHZ.', true);
+  }
+}
+
+// Funkcja bezpośredniego mintowania z tej strony
+async function directMint() {
+  if (!signer || !contract) {
+    showToast('Połącz portfel, aby móc bezpośrednio mintować.', true);
+    return;
+  }
+  try {
+    const referrer = getReferrer();
+    showToast(`Inicjowanie bezpośredniego mintu za ${ethers.formatEther(currentMintPrice)} CHZ...`);
+    
+    const tx = await contract.mint(referrer, { value: currentMintPrice });
+    showToast('Transakcja mintowania wysłana. Oczekiwanie na potwierdzenie...');
+    
+    await tx.wait();
+    showToast('Sukces! Twoja nowa figurka została wygenerowana i przypisana do portfela!');
+    await loadData();
+  } catch (error) {
+    console.error(error);
+    showToast('Błąd podczas mintowania. Sprawdź stan konta Chiliz.', true);
+  }
 }
 
 function shareOnX(){
@@ -697,7 +790,6 @@ function shareOnX(){
 }
 
 // ODLICZANIE BLOKÓW DO FINAŁU
-// DEADLINE — blok finałowy mistrzostw (ok. 19 Lipca 2026)
 const DEADLINE_BLOCK = 35886889;
 const BLOCK_TIME_MS = 3000; // 3 sekundy za każdy blok na sieci Chiliz Chain
 let currentBlock = 34158889; 
@@ -706,8 +798,25 @@ let lastBlockTime = Date.now();
 async function fetchCurrentBlock(){
   try{
     const res = await fetch('/api/events');
-    if(res.ok){ const d = await res.json(); if(d.currentBlock) { currentBlock = d.currentBlock; lastBlockTime = Date.now(); } }
+    if(res.ok){
+      const d = await res.json();
+      if(d.currentBlock) {
+        currentBlock = d.currentBlock;
+        lastBlockTime = Date.now();
+        return;
+      }
+    }
   }catch(e){}
+  
+  // Dynamiczny Fallback pobierania bloku przez RPC jeśli serwer Vercel API nie działa
+  try {
+    const rp = await getReadProvider();
+    const b = await rp.getBlockNumber();
+    currentBlock = b;
+    lastBlockTime = Date.now();
+  } catch(e) {
+    console.warn("Nie udało się pobrać bloku przez RPC:", e);
+  }
 }
 
 function getEstimatedBlock(){
