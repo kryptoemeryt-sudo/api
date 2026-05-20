@@ -2256,6 +2256,8 @@ async function runLiveSim(){
     document.getElementById('simTopScore').textContent=figs[0]?.score.toFixed(1)||'0';
     document.getElementById('simWinners').textContent=winners.length;
     document.getElementById('simPrize1').textContent=winners[0]&&totalScore>0?Math.floor((winners[0].score/totalScore)*pool65).toLocaleString()+' CHZ':'0';
+    const simCountryEl=document.getElementById('simCountry'); if(simCountryEl) simCountryEl.textContent=perCountry>0?perCountry.toLocaleString()+' CHZ':'—';
+    const simLegEl=document.getElementById('simLeg'); if(simLegEl) simLegEl.textContent=perLeg>0?perLeg.toLocaleString()+' CHZ':'—';
     const topEl=document.getElementById('simTop'); topEl.innerHTML='';
     const myTids=new Set(myFigures.map(x=>Number(x.tid)));
     figs.slice(0,10).forEach((f,i)=>{
@@ -2308,6 +2310,8 @@ function runSimulator(){
   document.getElementById('simTopScore').textContent=figs[0]?.score.toFixed(1)||'0';
   document.getElementById('simWinners').textContent=winners.length;
   document.getElementById('simPrize1').textContent=winners[0]&&totalScore>0?Math.floor((winners[0].score/totalScore)*pool65).toLocaleString()+' CHZ':'0';
+  const simCountryEl=document.getElementById('simCountry'); if(simCountryEl) simCountryEl.textContent=perCountry>0?perCountry.toLocaleString()+' CHZ':'—';
+  const simLegEl=document.getElementById('simLeg'); if(simLegEl) simLegEl.textContent=perLeg>0?perLeg.toLocaleString()+' CHZ':'—';
   const topEl=document.getElementById('simTop'); topEl.innerHTML='';
   figs.slice(0,10).forEach((f,i)=>{
     const r65=winners.includes(f)&&totalScore>0?Math.floor((f.score/totalScore)*pool65):0;
@@ -3607,12 +3611,16 @@ Knowledge beats luck — pick the right nation!
     </div>
   </div>
 
-  <div class="sim-grid">
+  <div class="sim-grid" style="grid-template-columns:repeat(auto-fit,minmax(130px,1fr));">
     <div class="sim-stat"><div class="sim-stat-label">Vault (CHZ)</div><div class="sim-stat-val" id="simVault">—</div></div>
     <div class="sim-stat"><div class="sim-stat-label">Top Score</div><div class="sim-stat-val" id="simTopScore">—</div></div>
-    <div class="sim-stat"><div class="sim-stat-label">Prize #1</div><div class="sim-stat-val" id="simPrize1">—</div></div>
+    <div class="sim-stat"><div class="sim-stat-label">🥇 Prize #1<br><span style="font-size:9px;color:var(--text3);">TOP 10% (65%)</span></div><div class="sim-stat-val" id="simPrize1">—</div></div>
+    <div class="sim-stat"><div class="sim-stat-label">🏅 Country<br><span style="font-size:9px;color:var(--text3);">per champion (25%)</span></div><div class="sim-stat-val" style="color:#ffc940;" id="simCountry">—</div></div>
+    <div class="sim-stat"><div class="sim-stat-label">⚡ Legendary<br><span style="font-size:9px;color:var(--text3);">per figure (10%)</span></div><div class="sim-stat-val" style="color:#c084fc;" id="simLeg">—</div></div>
     <div class="sim-stat"><div class="sim-stat-label">Winners</div><div class="sim-stat-val" id="simWinners">—</div></div>
   </div>
+
+  <div id="liveSimInfo" style="display:none;font-size:11px;color:var(--green);letter-spacing:1px;margin-bottom:12px;padding:8px 12px;background:rgba(0,255,135,0.06);border:1px solid rgba(0,255,135,0.2);border-radius:6px;">⚡ LIVE: Using real figures from blockchain</div>
 
   <div class="sim-controls">
     <div class="sim-control">
@@ -3622,7 +3630,6 @@ Knowledge beats luck — pick the right nation!
     <div class="sim-control">
       <label>Price: <span class="sim-val" id="simPriceVal">100</span> CHZ</label>
       <input type="range" min="10" max="500" value="100" step="10" id="simPrice" oninput="document.getElementById('simPriceVal').textContent=this.value">
-      <div id="liveSimInfo" style="display:none;font-size:11px;color:var(--green);letter-spacing:1px;margin-top:4px;">⚡ LIVE: Using real figures from blockchain</div>
     </div>
   </div>
 
