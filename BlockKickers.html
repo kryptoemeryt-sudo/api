@@ -2210,112 +2210,78 @@ function parseDNABig(dna){
 // ============================================================
 //  LIVE SIMULATOR — używa rzeczywistych figurek z blockchaina
 // ============================================================
+// ============================================================
+//  LIVE SIMULATOR
+// ============================================================
 async function runLiveSim(){
   const btn = document.getElementById('liveSimBtn');
   const info = document.getElementById('liveSimInfo');
-  if(!contract){
-    showToast('Connect wallet first', 'err');
-    return;
-  }
-  btn.textContent = '⏳ LOADING...';
-  btn.disabled = true;
-  info.style.display = 'block';
-
+  if(!contract){ showToast('Connect wallet first','err'); return; }
+  btn.textContent = '⏳ LOADING...'; btn.disabled = true;
+  if(info) info.style.display = 'block';
   try{
-    // Pobierz wszystkie figurki z blockchaina
-    const p = provider || new ethers.BrowserProvider(window.ethereum);
-    const c = contract || new ethers.Contract(CONTRACT_ADDRESS, ABI, p);
-    const current = await p.getBlockNumber();
+    const p = provider;
+    const c = contract;
     const events = await getAllMintEvents(c, p);
-
-    // Użyj eventów Transfer żeby śledzić aktualnego właściciela
-    const figMap = {}; // tokenId → {dna, owner}
-    // Najpierw zapisz mintera
+    const figMap = {};
     for(const ev of events){
       const tid = Number(ev.args.tokenId);
       figMap[tid] = {dna: ev.args.dna, owner: ev.args.owner};
     }
-    // Nadpisz sprzedażami z marketu (Sold event)
     try{
       if(marketContract){
         const sales = await getSoldEvents(marketContract, p);
-        for(const s of sales){
-          const tid = Number(s.args.tokenId);
-          if(figMap[tid]){
-            figMap[tid].owner = s.args.buyer;
-          }
-        }
+        for(const s of sales){ const tid = Number(s.args.tokenId); if(figMap[tid]) figMap[tid].owner = s.args.buyer; }
       }
-    }catch(e){ console.warn('sales fetch err', e); }
-
-    // Vault z kontraktu
+    }catch(e){}
     const vaultWei = await c.vaultBalance();
     const vault = Math.floor(Number(ethers.formatEther(vaultWei)));
     document.getElementById('simVault').textContent = vault.toLocaleString();
-
-    // Parsuj figurki
-    const figs = Object.entries(figMap).map(([tid, {dna, owner}]) => {
-      const parsed = parseDNABig(dna);
-      const teamId = parsed.teamId;
-      const rarity = parsed.rarity;
-      const weight = parsed.weight;
-      const pos = parsed.pos;
-      const result = simWCResults[teamId] || 0;
-      const score = weight * (SIM_MULT[result] || 0);
-      return {tid: Number(tid), teamId, rarity, weight, score, result, owner};
-    }).sort((a,b) => b.score - a.score);
-
-    const total = figs.length;
-    const topCount = Math.max(1, Math.ceil(total * 0.1));
-    const winners = figs.slice(0, topCount).filter(f => f.score > 0);
-    const totalScore = winners.reduce((s,f) => s+f.score, 0);
-
-    document.getElementById('simTopScore').textContent = figs[0]?.score.toFixed(1) || '0';
-    document.getElementById('simWinners').textContent = winners.length;
-    document.getElementById('simPrize1').textContent = winners[0] && totalScore > 0
-      ? Math.floor((winners[0].score/totalScore)*vault).toLocaleString()+' CHZ' : '0';
-
-    // Wyświetl top 10
-    const topEl = document.getElementById('simTop');
-    topEl.innerHTML = '';
-    const myTids = new Set(myFigures.map(x=>Number(x.tid)));
-    figs.slice(0, 10).forEach((f, i) => {
-      const reward = winners.includes(f) && totalScore > 0
-        ? Math.floor((f.score/totalScore)*vault) : 0;
-      const isMe = myTids.has(f.tid);
-      const div = document.createElement('div');
-      div.className = 'sim-row';
-      div.style.background = isMe ? 'rgba(0,255,135,0.04)' : '';
-      div.innerHTML = `
-        <span class="sim-rank" style="color:${i===0?'var(--gold)':i===1?'#aaa':i===2?'#cd7f32':'var(--text3)'}">#${i+1}</span>
-        <span class="sim-dot" style="background:${SIM_COLORS[f.teamId]||'#888'}"></span>
-        <span class="sim-name">${SIM_TEAMS[f.teamId]} <span style="font-size:11px;color:var(--text3);">${SIM_RARITY_NAMES[f.rarity]}</span>${isMe?' <span style="color:var(--green);font-size:10px;">YOU</span>':''}</span>
-        <span style="font-size:11px;color:var(--text2);">W:${f.weight}</span>
-        <span style="font-size:11px;color:var(--text2);">${SIM_RESULT_NAMES[f.result]}</span>
-        <span style="font-size:11px;color:var(--text2);">${f.score.toFixed(1)}pts</span>
-        <span class="sim-reward">${reward>0?reward.toLocaleString()+' CHZ':'—'}</span>`;
+    const pool65 = Math.floor(vault*0.65), pool25 = Math.floor(vault*0.25), pool10 = Math.floor(vault*0.10);
+    const figs = Object.entries(figMap).map(([tid,{dna,owner}]) => {
+      const t = parseDNA(dna);
+      const result = simWCResults[t.teamId]||0;
+      const score = t.weight*(SIM_MULT[result]||0);
+      return {tid:Number(tid),teamId:t.teamId,rarity:t.rarity,weight:t.weight,score,result,owner};
+    }).sort((a,b)=>b.score-a.score);
+    const topCount=Math.max(1,Math.ceil(figs.length*0.1));
+    const winners=figs.slice(0,topCount).filter(f=>f.score>0);
+    const totalScore=winners.reduce((s,f)=>s+f.score,0);
+    const countryBest={};
+    figs.forEach(f=>{ if(!countryBest[f.teamId]||f.weight>countryBest[f.teamId].weight) countryBest[f.teamId]=f; });
+    const champCount=Object.keys(countryBest).length;
+    const perCountry=champCount>0?Math.floor(pool25/champCount):0;
+    const legendaries=figs.filter(f=>f.rarity===3);
+    const perLeg=legendaries.length>0?Math.floor(pool10/legendaries.length):0;
+    document.getElementById('simTopScore').textContent=figs[0]?.score.toFixed(1)||'0';
+    document.getElementById('simWinners').textContent=winners.length;
+    document.getElementById('simPrize1').textContent=winners[0]&&totalScore>0?Math.floor((winners[0].score/totalScore)*pool65).toLocaleString()+' CHZ':'0';
+    const topEl=document.getElementById('simTop'); topEl.innerHTML='';
+    const myTids=new Set(myFigures.map(x=>Number(x.tid)));
+    figs.slice(0,10).forEach((f,i)=>{
+      const r65=winners.includes(f)&&totalScore>0?Math.floor((f.score/totalScore)*pool65):0;
+      const isChamp=countryBest[f.teamId]?.tid===f.tid;
+      const r25=isChamp?perCountry:0;
+      const r10=f.rarity===3?perLeg:0;
+      const total=r65+r25+r10;
+      const isMe=myTids.has(f.tid);
+      const div=document.createElement('div'); div.className='sim-row';
+      div.style.background=isMe?'rgba(0,255,135,0.04)':'';
+      div.innerHTML=`<span class="sim-rank" style="color:${i===0?'var(--gold)':i===1?'#aaa':i===2?'#cd7f32':'var(--text3)'}">#${i+1}</span>`+
+        `<span class="sim-dot" style="background:${SIM_COLORS[f.teamId]||'#888'}"></span>`+
+        `<span class="sim-name">${SIM_TEAMS[f.teamId]} <span style="font-size:11px;color:var(--text3);">${SIM_RARITY_NAMES[f.rarity]}</span>${isChamp?' 🏅':''}${f.rarity===3?' ⚡':''}${isMe?' <span style="color:var(--green);font-size:10px;">YOU</span>':''}</span>`+
+        `<span style="font-size:11px;color:var(--text2);">W:${f.weight}</span>`+
+        `<span style="font-size:11px;color:var(--text2);">${f.score.toFixed(1)}pts</span>`+
+        `<span class="sim-reward">${total>0?total.toLocaleString()+' CHZ':'—'}</span>`;
       topEl.appendChild(div);
     });
-
-    // Chart
-    const rewardData = winners.slice(0,20).map(f => totalScore>0?Math.floor((f.score/totalScore)*vault):0);
-    const labels = winners.slice(0,20).map((_,i) => `#${i+1}`);
+    const rd=winners.slice(0,20).map(f=>totalScore>0?Math.floor((f.score/totalScore)*pool65):0);
+    const lb=winners.slice(0,20).map((_,i)=>`#${i+1}`);
     if(simChart) simChart.destroy();
-    simChart = new Chart(document.getElementById('simChart'), {
-      type:'bar',
-      data:{labels, datasets:[{label:'CHZ', data:rewardData, backgroundColor:'#00ff87', borderRadius:4}]},
-      options:{responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}}, scales:{y:{ticks:{callback:v=>v.toLocaleString(),color:'#8892a4'},grid:{color:'rgba(255,255,255,0.05)'}},x:{ticks:{color:'#8892a4'},grid:{display:false}}}}
-    });
-
-    showToast('Live sim: '+total+' real figures loaded', 'ok');
-
-  } catch(e) {
-    showToast('Error: '+e.message, 'err');
-    console.error(e);
-  }
-
-  btn.textContent = '⚡ LIVE SIM';
-  btn.disabled = false;
+    simChart=new Chart(document.getElementById('simChart'),{type:'bar',data:{labels:lb,datasets:[{label:'CHZ',data:rd,backgroundColor:'#00ff87',borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{ticks:{callback:v=>v.toLocaleString(),color:'#8892a4'},grid:{color:'rgba(255,255,255,0.05)'}},x:{ticks:{color:'#8892a4'},grid:{display:false}}}}});
+    showToast('Live sim: '+figs.length+' figures · '+legendaries.length+' Legendary · '+champCount+' countries','ok');
+  }catch(e){ showToast('Error: '+e.message,'err'); console.error(e); }
+  btn.textContent='⚡ LIVE SIM'; btn.disabled=false;
 }
 
 function runSimulator(){
@@ -2323,58 +2289,48 @@ function runSimulator(){
   const price=parseInt(document.getElementById('simPrice').value);
   const vault=Math.floor(mints*price*0.95);
   document.getElementById('simVault').textContent=vault.toLocaleString();
-
+  const pool65=Math.floor(vault*0.65),pool25=Math.floor(vault*0.25),pool10=Math.floor(vault*0.10);
   const figs=Array.from({length:mints},()=>{
-    const n=Math.floor(Math.random()*Number.MAX_SAFE_INTEGER);
-    const t=simParseDNA(n);
+    const t=parseDNA(BigInt(Math.floor(Math.random()*1e15))*BigInt(Math.floor(Math.random()*1e15))+BigInt(Math.floor(Math.random()*1e15)));
     const result=simWCResults[t.teamId]||0;
     const score=t.weight*(SIM_MULT[result]||0);
-    return{...t,score,result};
+    return{...t,pos:t.position,score,result};
   }).sort((a,b)=>b.score-a.score);
-
   const topCount=Math.max(1,Math.ceil(mints*0.1));
   const winners=figs.slice(0,topCount).filter(f=>f.score>0);
   const totalScore=winners.reduce((s,f)=>s+f.score,0);
-
-  document.getElementById('simTopScore').textContent=figs[0].score.toFixed(1);
+  const countryBest={};
+  figs.forEach(f=>{ if(!countryBest[f.teamId]||f.weight>countryBest[f.teamId].weight) countryBest[f.teamId]=f; });
+  const champCount=Object.keys(countryBest).length;
+  const perCountry=champCount>0?Math.floor(pool25/champCount):0;
+  const legendaries=figs.filter(f=>f.rarity===3);
+  const perLeg=legendaries.length>0?Math.floor(pool10/legendaries.length):0;
+  document.getElementById('simTopScore').textContent=figs[0]?.score.toFixed(1)||'0';
   document.getElementById('simWinners').textContent=winners.length;
-
-  if(winners.length>0&&totalScore>0){
-    const top1=Math.floor((winners[0].score/totalScore)*vault);
-    document.getElementById('simPrize1').textContent=top1.toLocaleString()+' CHZ';
-  } else {
-    document.getElementById('simPrize1').textContent='0';
-  }
-
-  const topEl=document.getElementById('simTop');
-  topEl.innerHTML='';
+  document.getElementById('simPrize1').textContent=winners[0]&&totalScore>0?Math.floor((winners[0].score/totalScore)*pool65).toLocaleString()+' CHZ':'0';
+  const topEl=document.getElementById('simTop'); topEl.innerHTML='';
   figs.slice(0,10).forEach((f,i)=>{
-    const reward=winners.includes(f)&&totalScore>0?Math.floor((f.score/totalScore)*vault):0;
-    const div=document.createElement('div');
-    div.className='sim-row';
-    div.innerHTML=`
-      <span class="sim-rank" style="color:${i===0?'var(--gold)':i===1?'#aaa':i===2?'#cd7f32':'var(--text3)'}">#${i+1}</span>
-      <span class="sim-dot" style="background:${SIM_COLORS[f.teamId]||'#888'}"></span>
-      <span class="sim-name">${SIM_TEAMS[f.teamId]} <span style="font-size:11px;color:var(--text3);">#${f.pos} ${SIM_RARITY_NAMES[f.rarity]}</span></span>
-      <span style="font-size:11px;color:var(--text2);">W:${f.weight}</span>
-      <span style="font-size:11px;color:var(--text2);">${SIM_RESULT_NAMES[f.result]}</span>
-      <span style="font-size:11px;color:var(--text2);">${f.score.toFixed(1)}pts</span>
-      <span class="sim-reward">${reward>0?reward.toLocaleString()+' CHZ':'—'}</span>`;
+    const r65=winners.includes(f)&&totalScore>0?Math.floor((f.score/totalScore)*pool65):0;
+    const isChamp=countryBest[f.teamId]===f;
+    const r25=isChamp?perCountry:0;
+    const r10=f.rarity===3?perLeg:0;
+    const total=r65+r25+r10;
+    const div=document.createElement('div'); div.className='sim-row';
+    div.innerHTML=`<span class="sim-rank" style="color:${i===0?'var(--gold)':i===1?'#aaa':i===2?'#cd7f32':'var(--text3)'}">#${i+1}</span>`+
+      `<span class="sim-dot" style="background:${SIM_COLORS[f.teamId]||'#888'}"></span>`+
+      `<span class="sim-name">${SIM_TEAMS[f.teamId]} <span style="font-size:11px;color:var(--text3);">#${f.pos} ${SIM_RARITY_NAMES[f.rarity]}</span>${isChamp?' 🏅':''}${f.rarity===3?' ⚡':''}</span>`+
+      `<span style="font-size:11px;color:var(--text2);">W:${f.weight}</span>`+
+      `<span style="font-size:11px;color:var(--text2);">${SIM_RESULT_NAMES[f.result]}</span>`+
+      `<span style="font-size:11px;color:var(--text2);">${f.score.toFixed(1)}pts</span>`+
+      `<span class="sim-reward">${total>0?total.toLocaleString()+' CHZ':'—'}</span>`;
     topEl.appendChild(div);
   });
-
-  const rewardData=winners.slice(0,20).map(f=>totalScore>0?Math.floor((f.score/totalScore)*vault):0);
-  const labels=winners.slice(0,20).map((_,i)=>`#${i+1}`);
-
+  const rd=winners.slice(0,20).map(f=>totalScore>0?Math.floor((f.score/totalScore)*pool65):0);
+  const lb=winners.slice(0,20).map((_,i)=>`#${i+1}`);
   if(simChart) simChart.destroy();
-  simChart=new Chart(document.getElementById('simChart'),{
-    type:'bar',
-    data:{labels,datasets:[{label:'CHZ',data:rewardData,backgroundColor:'#00ff87',borderRadius:4}]},
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{ticks:{callback:v=>v.toLocaleString(),color:'#8892a4'},grid:{color:'rgba(255,255,255,0.05)'}},x:{ticks:{color:'#8892a4'},grid:{display:false}}}}
-  });
+  simChart=new Chart(document.getElementById('simChart'),{type:'bar',data:{labels:lb,datasets:[{label:'CHZ',data:rd,backgroundColor:'#00ff87',borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{ticks:{callback:v=>v.toLocaleString(),color:'#8892a4'},grid:{color:'rgba(255,255,255,0.05)'}},x:{ticks:{color:'#8892a4'},grid:{display:false}}}}});
 }
 
-// Init simulator on page load
 window.addEventListener('load',()=>{ setTimeout(()=>{ simInitResults(); runSimulator(); },500); });
 
 let _squadTeamFilter = null;
