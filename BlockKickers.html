@@ -2335,7 +2335,7 @@ function runSimulator(){
   simChart=new Chart(document.getElementById('simChart'),{type:'bar',data:{labels:lb,datasets:[{label:'CHZ',data:rd,backgroundColor:'#00ff87',borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{ticks:{callback:v=>v.toLocaleString(),color:'#8892a4'},grid:{color:'rgba(255,255,255,0.05)'}},x:{ticks:{color:'#8892a4'},grid:{display:false}}}}});
 }
 
-window.addEventListener('load',()=>{ setTimeout(()=>{ simInitResults(); runSimulator(); },500); });
+window.addEventListener('load',()=>{ setTimeout(()=>{ simInitResults(); },500); });
 
 let _squadTeamFilter = null;
 
@@ -3602,11 +3602,9 @@ Knowledge beats luck — pick the right nation!
   <div class="sec-header">
     <div>
       <div class="sec-title">PRIZE <span class="acc">SIMULATOR</span></div>
-      <div style="font-size:14px;color:var(--text2);margin-top:4px;">Click teams to set WC results · Adjust mints & price · See who wins</div>
+      <div style="font-size:14px;color:var(--text2);margin-top:4px;">Live data from blockchain · Real figures · Real vault</div>
     </div>
     <div id="simBtns" style="display:flex;gap:8px;flex-wrap:wrap;">
-      <button class="btn-sim" style="background:rgba(255,255,255,0.1);color:var(--text2);box-shadow:none;" onclick="simChampion=-1;simInitResults();runSimulator()">RANDOM WC</button>
-      <button class="btn-sim" onclick="runSimulator()">SIMULATE</button>
       <button class="btn-sim" style="background:rgba(0,255,135,0.15);border:1px solid rgba(0,255,135,0.4);" onclick="runLiveSim()" id="liveSimBtn">⚡ LIVE SIM</button>
     </div>
   </div>
@@ -3621,20 +3619,6 @@ Knowledge beats luck — pick the right nation!
   </div>
 
   <div id="liveSimInfo" style="display:none;font-size:11px;color:var(--green);letter-spacing:1px;margin-bottom:12px;padding:8px 12px;background:rgba(0,255,135,0.06);border:1px solid rgba(0,255,135,0.2);border-radius:6px;">⚡ LIVE: Using real figures from blockchain</div>
-
-  <div class="sim-controls">
-    <div class="sim-control">
-      <label>Mints: <span class="sim-val" id="simMintsVal">200</span></label>
-      <input type="range" min="10" max="10000" value="200" step="10" id="simMints" oninput="document.getElementById('simMintsVal').textContent=parseInt(this.value).toLocaleString()">
-    </div>
-    <div class="sim-control">
-      <label>Price: <span class="sim-val" id="simPriceVal">100</span> CHZ</label>
-      <input type="range" min="10" max="500" value="100" step="10" id="simPrice" oninput="document.getElementById('simPriceVal').textContent=this.value">
-    </div>
-  </div>
-
-  <div class="sim-results-label">🏆 CLICK A TEAM TO SET AS CHAMPION — rest is randomised</div>
-  <div class="sim-teams" id="simTeams"></div>
 
   <div class="sim-results-label">TOP 10 FIGURES</div>
   <div class="sim-top" id="simTop"></div>
