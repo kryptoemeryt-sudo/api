@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pl">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,14 +11,14 @@
 body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;font-size:16px;min-height:100vh;}
 .page{max-width:1100px;margin:0 auto;padding:0 0 60px;}
 
-/* NAWIGACJA */
+/* NAVIGATION */
 .topnav{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;border-bottom:1px solid #1c2028;background:rgba(6,8,10,0.97);position:sticky;top:0;z-index:100;backdrop-filter:blur(10px);}
 .topnav-logo{font-family:'Black Ops One',sans-serif;font-size:13px;letter-spacing:2px;color:#dde4f0;}
 .topnav-logo span{color:#00ff87;}
 .btn-connect{background:rgba(0,255,135,0.1);border:1px solid rgba(0,255,135,0.3);color:#00ff87;padding:8px 16px;border-radius:6px;font-family:'Black Ops One',sans-serif;font-size:11px;letter-spacing:1px;cursor:pointer;}
 .btn-connect.connected{background:rgba(0,255,135,0.15);border-color:#00ff87;}
 
-/* HERO & NAGŁÓWEK */
+/* HERO & HEADER */
 .hero{padding:48px 24px 40px;text-align:center;border-bottom:1px solid #1c2028;position:relative;overflow:hidden;}
 .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 0%,rgba(0,255,135,0.1),transparent);pointer-events:none;}
 .badge{display:inline-flex;align-items:center;gap:8px;background:rgba(0,255,135,0.1);border:1px solid rgba(0,255,135,0.3);border-radius:4px;padding:5px 14px;font-size:11px;letter-spacing:3px;color:#00ff87;margin-bottom:20px;}
@@ -30,7 +30,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
 .hero-title .gold{color:#ffc940;}
 .hero-sub{font-size:18px;color:#7a8899;margin-bottom:28px;max-width:750px;margin-left:auto;margin-right:auto;position:relative;z-index:1;}
 
-/* PANEL STATYSTYK */
+/* STATS CONTAINER */
 .stats-container{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin:24px;position:relative;z-index:1;}
 .stat-card{background:#0f1318;border:1px solid #1c2028;border-radius:12px;padding:20px;text-align:center;}
 .stat-val{font-family:'Black Ops One',sans-serif;font-size:36px;color:#dde4f0;line-height:1;margin-bottom:4px;}
@@ -38,7 +38,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
 .stat-val.gold{color:#ffc940;}
 .stat-lbl{font-size:11px;letter-spacing:2px;color:#5a6a7a;text-transform:uppercase;}
 
-/* HARMONOGRAM CEN */
+/* PRICING SCHEDULE */
 .pricing-schedule{background:rgba(99,102,241,0.05);border:1px solid rgba(99,102,241,0.2);border-radius:12px;padding:16px;margin:24px;display:flex;justify-content:space-around;align-items:center;flex-wrap:wrap;gap:16px;}
 .schedule-item{text-align:center;padding:8px 16px;position:relative;}
 .schedule-item.active{background:rgba(0,255,135,0.1);border:1px solid #00ff87;border-radius:8px;}
@@ -46,7 +46,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
 .schedule-price{font-family:'Black Ops One',sans-serif;font-size:20px;color:#dde4f0;}
 .schedule-price span{color:#ffc940;}
 
-/* SEKCJE GRID */
+/* SECTIONS GRID */
 .game-grid {
   display: grid;
   grid-template-columns: 1fr;
@@ -65,7 +65,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
   }
 }
 
-/* FILTRY FEDERACJI I LISTA KRAJÓW */
+/* FEDERATION FILTERS & COUNTRY LIST */
 .country-section {
   background: #0a0e14;
   border: 1px solid #1c2028;
@@ -146,7 +146,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
   font-size: 10px;
 }
 
-/* RENDERY FLAG Z CDN */
+/* FLAGS CDN RENDERING */
 .flag-img {
   width: 24px;
   height: 16px;
@@ -162,7 +162,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
   box-shadow: 0 2px 4px rgba(0,0,0,0.5);
 }
 
-/* PANEL BOISKA TAKTYCZNEGO */
+/* TACTICAL PITCH DESIGN */
 .pitch-container {
   background: #0a0e14;
   border: 1px solid #1c2028;
@@ -236,7 +236,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
   pointer-events: none;
 }
 
-/* FORMACJA I POZYCJE */
+/* FORMATION STRUCTURE */
 .formation {
   display: flex;
   flex-direction: column;
@@ -331,7 +331,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
 .btn-card-action.upgrade{background:rgba(0,255,135,0.1);border-color:rgba(0,255,135,0.3);color:#00ff87;}
 .btn-card-action.upgrade:hover{background:#00ff87;color:#000;}
 
-/* TABELA LIDERÓW I PRZYCISKI PRZEŁĄCZANIA */
+/* LEADERBOARD STANDINGS */
 .lb-section{padding: 0 24px 24px;}
 .lb-toggle-container {
   display: flex;
@@ -367,10 +367,10 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
 .lb-score{font-family:'Black Ops One',sans-serif;font-size:16px;color:#818cf8;}
 .lb-you{font-size:10px;color:#00ff87;letter-spacing:1px;background:rgba(0,255,135,0.1);padding:2px 6px;border-radius:4px;margin-left:8px;}
 
-/* LINIE ODCIĘCIA LEADERBOARDU */
+/* CUTOFF STANDINGS DIVIDERS */
 .cutoff-line{display:flex;align-items:center;justify-content:center;gap:12px;margin:12px 0;padding:8px;background:rgba(239,68,68,0.05);border:1px dotted rgba(239,68,68,0.4);border-radius:6px;font-size:11px;font-family:'Share Tech Mono',monospace;color:#ef4444;letter-spacing:1px;}
 
-/* POWIADOMIENIA I ODPOWIEDZIALNOŚĆ */
+/* LABELS & NOTIFICATIONS */
 .pitch-title{font-family:'Black Ops One',sans-serif;font-size:11px;letter-spacing:3px;color:#5a6a7a;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;}
 .lb-info {
   font-family: 'Share Tech Mono', monospace !important;
@@ -393,7 +393,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
 .spin{display:inline-block;width:16px;height:16px;border:2px solid rgba(0,255,135,0.3);border-top-color:#00ff87;border-radius:50%;animation:spin 0.8s linear infinite;vertical-align:middle;}
 @keyframes spin{to{transform:rotate(360deg)}}
 
-/* ODPOWIEDZIALNOŚĆ ODLICZACZA */
+/* BLOCK COUNTDOWN WIDGET */
 .countdown-wrap{background:#0f1318;border:1px solid rgba(0,255,135,0.3);border-radius:10px;padding:16px 24px;display:inline-flex;flex-direction:column;align-items:center;gap:6px;margin-top:20px;position:relative;z-index:1;min-width:280px;}
 .countdown-label{font-size:10px;letter-spacing:3px;color:#5a6a7a;text-align:center;}
 .countdown-timer {
@@ -464,51 +464,51 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
 
 <nav class="topnav">
   <a href="https://block-kickers.vercel.app" class="topnav-logo" style="text-decoration:none;">⚽ BLOCK <span>KICKERS</span></a>
-  <button class="btn-connect" id="connectBtn" onclick="connectWallet()">POŁĄCZ PORTFEL</button>
+  <button class="btn-connect" id="connectBtn" onclick="connectWallet()">CONNECT WALLET</button>
 </nav>
 
 <div class="page">
 
   <!-- HERO -->
   <div class="hero">
-    <div class="badge"><span class="dot"></span>WIDEO-QUEST · KOLEKCJA ALBURMÓW MŚ</div>
+    <div class="badge"><span class="dot"></span>VIDEO QUEST · WC ALBUMS COLLECTION</div>
     <span class="trophy">🏆</span>
     <div class="hero-title"><span class="acc">WORLD CUP</span><br><span class="gold">DREAM XI</span></div>
-    <div class="hero-sub">Zbuduj najsilniejsze taktycznie jedenastki na świecie! Skompletuj oddzielne 11-osobowe składy dla każdego z 48 uczestniczących państw. Sponsorowana pula nagród wynosząca dokładnie 25 000 CHZ zostanie w całości podzielona pomiędzy TOP 10 graczy o najwyższym globalnym wyniku!</div>
+    <div class="hero-sub">Construct the strongest tactical lineups in the world! Complete separate 11-player squads for each of the 48 participating countries. The sponsored prize pool of exactly 25,000 CHZ will be distributed among the TOP 10 players with the highest global score!</div>
 
-    <!-- TERMINARZ PROGÓW -->
+    <!-- PRICING SCHEDULE -->
     <div class="pricing-schedule">
       <div class="schedule-item active" id="p1">
-        <div class="schedule-date">DO 31 MAJA</div>
-        <div class="schedule-price">BETA: <span id="betaPriceText">10 CHZ</span></div>
+        <div class="schedule-date">UNTIL MAY 31</div>
+        <div class="schedule-price">EARLY BIRDS: <span id="betaPriceText">10 CHZ</span></div>
       </div>
       <div class="schedule-item" id="p2">
-        <div class="schedule-date">OD 1 CZERWCA</div>
+        <div class="schedule-date">FROM JUNE 1</div>
         <div class="schedule-price">PROMO: <span>50 CHZ</span></div>
       </div>
       <div class="schedule-item" id="p3">
-        <div class="schedule-date">OD 11 CZERWCA</div>
+        <div class="schedule-date">FROM JUNE 11</div>
         <div class="schedule-price">START: <span>100 CHZ</span></div>
       </div>
     </div>
 
     <div style="margin-bottom:24px; display:flex; justify-content:center; gap:12px; flex-wrap:wrap;">
-      <button class="btn-mint-hero" style="background:rgba(0,255,135,0.1); border:1px solid #00ff87; color:#00ff87;" onclick="directMint()">MINTUJ ZAWODNIKA</button>
-      <button class="btn-mint-hero" onclick="window.open('https://block-kickers.vercel.app','_blank')">STRONA GŁÓWNA →</button>
+      <button class="btn-mint-hero" style="background:rgba(0,255,135,0.1); border:1px solid #00ff87; color:#00ff87;" onclick="directMint()">MINT PLAYER</button>
+      <button class="btn-mint-hero" onclick="window.open('https://block-kickers.vercel.app','_blank')">MAIN WEBSITE →</button>
     </div>
 
-    <!-- ODLICZANIE CZASOWE -->
+    <!-- DEADLINE COUNTDOWN -->
     <div class="countdown-wrap">
-      <div class="countdown-label">TERMIN ZAKOŃCZENIA QUESTU (BLOK FINAŁOWY MŚ)</div>
+      <div class="countdown-label">QUEST END DEADLINE (WORLD CUP FINAL BLOCK)</div>
       <div class="countdown-timer">
         <div class="countdown-unit">
           <div class="countdown-num" id="cdD">--</div>
-          <div class="countdown-sub">DNI</div>
+          <div class="countdown-sub">DAYS</div>
         </div>
         <div class="countdown-divider">:</div>
         <div class="countdown-unit">
           <div class="countdown-num" id="cdH">--</div>
-          <div class="countdown-sub">GODZIN</div>
+          <div class="countdown-sub">HOURS</div>
         </div>
         <div class="countdown-divider">:</div>
         <div class="countdown-unit">
@@ -518,65 +518,70 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
         <div class="countdown-divider">:</div>
         <div class="countdown-unit">
           <div class="countdown-num" id="cdS">--</div>
-          <div class="countdown-sub">SEK</div>
+          <div class="countdown-sub">SEC</div>
         </div>
       </div>
       <div class="countdown-block" id="cdBlock">Target block: 35,886,889</div>
     </div>
   </div>
 
-  <!-- STATYSTYKI -->
+  <!-- PLAYER STATISTICS -->
   <div class="stats-container" id="statsRow" style="display:none;">
     <div class="stat-card">
       <div class="stat-val highlight" id="myCompGlobal">0 / 48</div>
-      <div class="stat-lbl">Aktywne Albumy</div>
+      <div class="stat-lbl">Active Albums</div>
     </div>
     <div class="stat-card">
       <div class="stat-val gold" id="myTotalCards">0</div>
-      <div class="stat-lbl">Posiadane Karty</div>
+      <div class="stat-lbl">Cards Owned</div>
     </div>
     <div class="stat-card">
       <div class="stat-val text-primary" id="myGlobalRank" style="color:#818cf8;">—</div>
-      <div class="stat-lbl">Pozycja Globalna</div>
+      <div class="stat-lbl">Global Position</div>
     </div>
     <div class="stat-card" style="background:rgba(0,255,135,0.03); border-color:rgba(0,255,135,0.2);">
       <div class="stat-val" id="myEstPayout" style="color:#00ff87; font-size:24px; padding-top:6px;">0.00 CHZ</div>
-      <div class="stat-lbl">Szacowana Wygrana (TOP 10)</div>
+      <div class="stat-lbl">Est. Quest Reward (TOP 10)</div>
     </div>
   </div>
 
-  <!-- PROMPT POŁĄCZENIA -->
+  <!-- CONNECT SECTION -->
   <div id="connectSection" class="connect-prompt">
-    <p>Połącz swój portfel Chiliz, aby przeglądać albumy narodowe i budować globalny wynik</p>
-    <button class="btn-connect-big" onclick="connectWallet()">POŁĄCZ PORTFEL</button>
+    <p>Connect your Chiliz Wallet to explore the 48 country albums and start dominating lists</p>
+    <button class="btn-connect-big" onclick="connectWallet()">CONNECT WALLET</button>
   </div>
 
-  <!-- GŁÓWNA SEKCJA GRY (PO ZALOGOWANIU) -->
+  <!-- MAIN GAME AREA (AFTER CONNECTION) -->
   <div id="gameSection" style="display:none;">
 
     <div style="display:flex; justify-content:space-between; align-items:center; padding:0 24px 16px;">
       <button class="btn-share" onclick="shareOnX()">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-        UDOSTĘPNIJ PROGRES NA X
+        SHARE ALBUM PROGRESS ON X
       </button>
-      <button class="btn-share" onclick="loadData()" style="border-color:rgba(99,102,241,0.3); color:#818cf8;">
-        ↻ ODŚWIEŻ DANE
-      </button>
+      <div style="display:flex; gap:8px;">
+        <button class="btn-share" onclick="toggleRulesModal(true)" style="border-color:#ffc940; color:#ffc940;">
+          📖 RULES & INFO
+        </button>
+        <button class="btn-share" onclick="loadData()" style="border-color:rgba(99,102,241,0.3); color:#818cf8;">
+          ↻ REFRESH DATA
+        </button>
+      </div>
     </div>
 
-    <!-- STREFA ROZGRYWKI -->
+    <!-- GAME PLAY GRID -->
     <div class="game-grid">
       
-      <!-- LEWA KOLUMNA: WYBÓR PAŃSTWA -->
+      <!-- LEFT COLUMN: NATION SELECTOR -->
       <div class="left-col country-section">
         <div class="pitch-title">
-          <span>WYBÓR KRAJU</span>
-          <span style="font-family:'Share Tech Mono',monospace; color:#818cf8;">48 ALBUMÓW</span>
+          <span>NATION SELECTOR</span>
+          <span style="font-family:'Share Tech Mono',monospace; color:#818cf8;">48 ALBUMS</span>
         </div>
 
-        <!-- TABY FEDERACJI -->
+        <!-- FEDERATION FILTER TABS -->
         <div class="filter-tabs">
-          <button class="tab-btn active" onclick="filterFederation('ALL')">WSZYSTKIE (48)</button>
+          <button class="tab-btn active" onclick="filterFederation('ALL')">ALL (48)</button>
           <button class="tab-btn" onclick="filterFederation('UEFA')">UEFA</button>
           <button class="tab-btn" onclick="filterFederation('CONMEBOL')">CONMEBOL</button>
           <button class="tab-btn" onclick="filterFederation('CAF')">CAF</button>
@@ -586,17 +591,17 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
         </div>
 
         <div class="country-grid" id="countryGridContainer">
-          <!-- Generowane dynamicznie przez JS -->
+          <!-- Populated dynamically via JS -->
         </div>
       </div>
 
-      <!-- PRAWA KOLUMNA: BOISKO WYBRANEGO PAŃSTWA -->
+      <!-- RIGHT COLUMN: SOCCER TACTICAL PITCH -->
       <div class="right-col pitch-container">
         <div class="pitch-title-row">
           <div class="pitch-title" style="margin-bottom:0;">
-            <span id="selectedCountryTitle">BOISKO TAKTYCZNE</span>
+            <span id="selectedCountryTitle">TACTICAL PITCH</span>
           </div>
-          <span style="font-family:'Share Tech Mono',monospace; color:#818cf8; font-size:12px;" id="selectedCountryCompletion">0/11 UKOŃCZONE</span>
+          <span style="font-family:'Share Tech Mono',monospace; color:#818cf8; font-size:12px;" id="selectedCountryCompletion">0/11 COMPLETED</span>
         </div>
 
         <div class="pitch-wrap">
@@ -606,40 +611,64 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
           <div class="pitch-penalty-area-bottom"></div>
 
           <div class="formation" id="pitchFormationGrid">
-            <!-- Pozycje 1-11 generowane dynamicznie -->
+            <!-- Positions 1-11 populated dynamically -->
           </div>
         </div>
       </div>
 
     </div>
 
-    <!-- TABELA LIDERÓW -->
+    <!-- STANDINGS & CONTESTS -->
     <div class="lb-section">
       <div class="lb-title-row">
-        <div class="pitch-title" style="margin-bottom:0;">KLASYFIKACJA i ROZGRYWKI</div>
-        <div class="lb-info" id="poolInfo">Pula sponsorska: ładowanie...</div>
+        <div class="pitch-title" style="margin-bottom:0;">STANDINGS & CONTESTS</div>
+        <div class="lb-info" id="poolInfo">Sponsor Pool: calculating...</div>
       </div>
       
       <div class="lb-toggle-container">
-        <button class="lb-toggle-btn active" id="btnToggleGlobal" onclick="switchLeaderboard('global')">GLOBALNE TOP 10 (PULA 25 000 CHZ)</button>
-        <button class="lb-toggle-btn" id="btnToggleLocal" onclick="switchLeaderboard('local')">KLASYFIKACJA KRAJOWA (WYBRANY KRAJ)</button>
+        <button class="lb-toggle-btn active" id="btnToggleGlobal" onclick="switchLeaderboard('global')">GLOBAL TOP 10 (25,000 CHZ POOL)</button>
+        <button class="lb-toggle-btn" id="btnToggleLocal" onclick="switchLeaderboard('local')">NATIONAL STANDINGS (SELECTED NATION)</button>
       </div>
 
       <div class="leaderboard-list" id="leaderboard">
-        <div style="text-align:center;color:#3d4a5a;padding:20px;font-size:13px;"><span class="spin"></span> Ładowanie tabeli...</div>
+        <div style="text-align:center;color:#3d4a5a;padding:20px;font-size:13px;"><span class="spin"></span> Loading Leaderboard...</div>
       </div>
     </div>
 
   </div>
 </div>
 
-<div id="toast">Wiadomość systemowa</div>
+<!-- MULTI-LANGUAGE RULES MODAL -->
+<div id="rulesModal" style="display:none; position:fixed; inset:0; background:rgba(6,8,10,0.85); backdrop-filter:blur(8px); z-index:1000; align-items:center; justify-content:center; padding:16px;">
+  <div style="background:#0f1318; border:1px solid #1c2028; border-radius:12px; max-width:550px; width:100%; padding:24px; position:relative; box-shadow:0 10px 40px rgba(0,0,0,0.6);">
+    <button onclick="toggleRulesModal(false)" style="position:absolute; top:16px; right:16px; background:none; border:none; color:#7a8899; font-size:24px; cursor:pointer;">&times;</button>
+    <h2 id="rulesTitle" style="font-family:'Black Ops One',sans-serif; font-size:24px; color:#ffc940; margin-bottom:16px;">How to Play & Rules</h2>
+    
+    <!-- Flag Multi-Language Selector Tabs -->
+    <div style="display:flex; gap:8px; margin-bottom:20px; flex-wrap:wrap; border-bottom:1px solid #1c2028; padding-bottom:12px;">
+      <button class="tab-btn active" id="lang-en" onclick="setRulesLanguage('en')">🇬🇧 EN</button>
+      <button class="tab-btn" id="lang-de" onclick="setRulesLanguage('de')">🇩🇪 DE</button>
+      <button class="tab-btn" id="lang-fr" onclick="setRulesLanguage('fr')">🇫🇷 FR</button>
+      <button class="tab-btn" id="lang-es" onclick="setRulesLanguage('es')">🇪🇸 ES</button>
+      <button class="tab-btn" id="lang-pt" onclick="setRulesLanguage('pt')">🇵🇹 PT</button>
+      <button class="tab-btn" id="lang-it" onclick="setRulesLanguage('it')">🇮🇹 IT</button>
+    </div>
+    
+    <ul id="rulesContent" style="list-style:none; display:flex; flex-direction:column; gap:12px; font-family:'Barlow Condensed',sans-serif; font-size:16px; color:#dde4f0; line-height:1.4;">
+      <!-- Populated dynamically via JS translations -->
+    </ul>
+    
+    <button class="btn-card-action" onclick="toggleRulesModal(false)" style="margin-top:24px; padding:10px; font-size:11px;">CLOSE RULES</button>
+  </div>
+</div>
+
+<div id="toast">System Notification</div>
 
 <script>
 const CONTRACT_ADDRESS = "0xAAdc8D56e25a223B6cf4b88ba0889975560f21aB";
 const MARKET_ADDRESS   = "0xA18f7Bade67Eda41FD7D2B3A204d39b543977DaE";
 const CHAIN_ID = 88888;
-const SPONSORED_POOL = 25000; // Sponsorowana, wydzielona pula 25 000 CHZ
+const SPONSORED_POOL = 25000; // Sponsored prize pool of exactly 25,000 CHZ
 
 const ABI = [
   "event FigureMinted(address indexed owner,uint256 indexed tokenId,uint256 dna,uint256 teamId,uint256 position,uint8 rarity,uint256 weight)",
@@ -655,20 +684,6 @@ const MARKET_ABI = [
   "function getListing(uint256) external view returns (address,uint256,uint256,bool)",
   "function buyFigure(uint256 listingId) external payable"
 ];
-
-const POSITION_NAMES = {
-  1: 'Bramkarz',
-  2: 'Prawy Obrońca',
-  3: 'Lewy Obrońca',
-  4: 'Środkowy Obrońca A',
-  5: 'Środkowy Obrońca B',
-  6: 'Defensywny Pomocnik',
-  7: 'Prawy Skrzydłowy',
-  8: 'Środkowy Pomocnik',
-  9: 'Napastnik',
-  10: 'Rozgrywający',
-  11: 'Lewy Skrzydłowy'
-};
 
 const POSITION_SHORT = {
   1: 'GK',
@@ -731,28 +746,98 @@ const TEAMS = [
   {id:34, name:"Bosnia",        flag:"🇧🇦", code:"ba", fed:"UEFA"},
   {id:35, name:"Croatia",       flag:"🇭🇷", code:"hr", fed:"UEFA"},
   {id:36, name:"Czech Rep.",    flag:"🇨🇿", code:"cz", fed:"UEFA"},
-  {id:37, name:"England",        flag:"🏴\u200d󠁢󠁥󠁮󠁧󠁿", code:"gb", fed:"UEFA"},
+  {id:37, name:"England",        flag:"🏴\u200d󠁢󠁥󠁮󠁧󠁿", code:"gb-eng", fed:"UEFA"},
   {id:38, name:"France",       flag:"🇫🇷", code:"fr", fed:"UEFA"},
   {id:39, name:"Germany",        flag:"🇩🇪", code:"de", fed:"UEFA"},
   {id:40, name:"Netherlands",    flag:"🇳🇱", code:"nl", fed:"UEFA"},
   {id:41, name:"Norway",        flag:"🇳🇴", code:"no", fed:"UEFA"},
   {id:42, name:"Portugal",      flag:"🇵🇹", code:"pt", fed:"UEFA"},
-  {id:43, name:"Scotland",      flag:"🏴\u200d󠁳󠁣󠁴󠁿", code:"gb", fed:"UEFA"},
+  {id:43, name:"Scotland",      flag:"🏴\u200d󠁳󠁣󠁴󠁿", code:"gb-sct", fed:"UEFA"},
   {id:44, name:"Spain",         flag:"🇪🇸", code:"es", fed:"UEFA"},
   {id:45, name:"Sweden",        flag:"🇸🇪", code:"se", fed:"UEFA"},
   {id:46, name:"Switzerland",    flag:"🇨🇭", code:"ch", fed:"UEFA"},
   {id:47, name:"Turkey",        flag:"🇹🇷", code:"tr", fed:"UEFA"}
 ];
 
+// Multilanguage Rules Data
+const RULES_TRANSLATIONS = {
+  en: {
+    title: "How to Play & Rules",
+    items: [
+      "🔗 Connect your Chiliz Wallet to activate your personal team hubs.",
+      "⚽ Mint player cards or purchase on the marketplace for any of the 48 participating nations.",
+      "📝 Complete the 11-player lineup (tactical positions) for each nation to maximize that nation's total weight.",
+      "⚡ Your Global Score is the sum of tactical weights achieved across all of your 48 national albums.",
+      "🏆 The Sponsored Prize Pool of 25,000 CHZ is shared strictly among the Global TOP 10 players.",
+      "📈 Est. Payout card live-updates to display your currently projected prize based on your rank!"
+    ]
+  },
+  de: {
+    title: "Spielregeln & Anleitung",
+    items: [
+      "🔗 Verbinden Sie Ihre Chiliz Wallet, um Ihre persönlichen Team-Hubs zu aktivieren.",
+      "⚽ Prägen Sie eine Spielerkarte oder kaufen Sie eine auf dem Marktplatz für eines der 48 teilnehmenden Länder.",
+      "📝 Vervollständigen Sie die 11-Spieler-Aufstellung für jedes Land, um das Gesamtgewicht dieses Landes zu maximieren.",
+      "⚡ Ihre globale Punktzahl ist die Summe der taktischen Gewichte, die in allen 48 Nationalalben erzielt wurden.",
+      "🏆 Der gesponserte Preispool von 25.000 CHZ wird streng unter den globalen TOP 10 Spielern aufgeteilt.",
+      "📈 Die geschätzte Auszahlung wird live aktualisiert, um Ihren derzeit prognostizierten Preis basierend auf Ihrem Rang anzuzeigen!"
+    ]
+  },
+  fr: {
+    title: "Règles et Comment Jouer",
+    items: [
+      "🔗 Connectez votre portefeuille Chiliz pour activer vos hubs d'équipe personnels.",
+      "⚽ Mintez une carte de joueur ou achetez-la sur le marché pour l'un des 48 pays participants.",
+      "📝 Complétez l'alignement de 11 joueurs pour chaque nation afin de maximiser le poids total de cette nation.",
+      "⚡ Votre score global est la somme des poids tactiques obtenus dans l'ensemble de vos 48 albums nationaux.",
+      "🏆 La cagnotte sponsorisée de 25 000 CHZ est strictement partagée entre les 10 meilleurs joueurs mondiaux.",
+      "📈 Le paiement estimé est mis à jour en direct pour afficher votre prix actuellement projeté en fonction de votre rang !"
+    ]
+  },
+  es: {
+    title: "Reglas y Cómo Jugar",
+    items: [
+      "🔗 Conecta tu billetera Chiliz para activar tus centros de equipo personales.",
+      "⚽ Mintea tarjetas de jugador o cómpralas en el mercado para cualquiera de los 48 países participantes.",
+      "📝 Completa la alineación de 11 jugadores para cada nación para maximizar el peso total de esa nación.",
+      "⚡ Tu puntuación global es la suma de los pesos tácticos logrados en tus 48 álbumes nacionales.",
+      "🏆 El fondo de premios patrocinado de 25,000 CHZ se comparte estrictamente entre los 10 mejores jugadores mundiales.",
+      "📈 El pago estimado se actualiza en vivo para mostrar el premio proyectado según tu clasificación."
+    ]
+  },
+  pt: {
+    title: "Regras e Como Jogar",
+    items: [
+      "🔗 Conecte sua carteira Chiliz para ativar os seus centros de equipa pessoais.",
+      "⚽ Minte cartas de jogador ou compre-as no mercado para qualquer um dos 48 países participantes.",
+      "📝 Complete a escalação de 11 jogadores para cada nação para maximizar o peso total dessa nação.",
+      "⚡ Sua pontuação global é a soma dos pesos táticos obtidos em cada um dos seus 48 álbuns nacionais.",
+      "🏆 O prêmio patrocinado de 25.000 CHZ é compartilhado estritamente entre os 10 melhores jogadores globais.",
+      "📈 O pagamento estimado é atualizado ao vivo para exibir o seu prêmio projetado com base na sua classificação!"
+    ]
+  },
+  it: {
+    title: "Regole e Come Giocare",
+    items: [
+      "🔗 Collega il tuo wallet Chiliz per attivare i tuoi hub di squadra personali.",
+      "⚽ Minta una carta giocatore o acquistala sul mercato per uno dei 48 paesi partecipanti.",
+      "📝 Completa la formazione di 11 giocatori per ogni nazione per massimizzare il peso totale di quella nazione.",
+      "⚡ Il tuo punteggio globale è la somma dei pesi tattici ottenuti in tutti e 48 i tuoi album nazionali.",
+      "🏆 Il montepremi sponsorizzato di 25.000 CHZ è interamente diviso tra i TOP 10 giocatori globali.",
+      "📈 Il pagamento stimato si aggiorna in tempo reale per mostrare il premio attualmente previsto in base al tuo posizionamento!"
+    ]
+  }
+};
+
 const PUBLIC_RPCS = ['https://chiliz-rpc.publicnode.com','https://rpc.chiliz.com'];
 
 let provider, signer, address;
 let contract, marketContract;
 let activeFederation = 'ALL';
-let selectedTeamId = 25; // Domyślnie: Argentyna
-let currentLeaderboardTab = 'global'; // global (TOP 10 ze wszystkich państw) lub local (wybrane państwo)
+let selectedTeamId = 25; // Default: Argentina
+let currentLeaderboardTab = 'global'; // global (TOP 10 + Connected wallet) or local
 
-window.dreamScores = {}; // portfel -> { teamId -> { position -> {weight, tid, rarity, dna} } }
+window.dreamScores = {}; // wallet -> { teamId -> { position -> {weight, tid, rarity, dna} } }
 let marketByTeamPosition = {}; // teamId -> { position -> {listingId, price, weight, rarity} }
 let currentMintPrice = ethers.parseEther("10"); 
 let dynamicVaultBalance = 0;
@@ -768,7 +853,35 @@ function showToast(message, isError = false) {
   }, 6000);
 }
 
-// Funkcja renderująca flagę za pomocą flagcdn.com z fallbackiem do emoji
+// Rules Modal visibility control
+function toggleRulesModal(show) {
+  const modal = document.getElementById('rulesModal');
+  modal.style.display = show ? 'flex' : 'none';
+  if (show) setRulesLanguage('en');
+}
+
+// Updates Rules content based on selected translation key
+function setRulesLanguage(lang) {
+  const data = RULES_TRANSLATIONS[lang] || RULES_TRANSLATIONS['en'];
+  document.getElementById('rulesTitle').textContent = data.title;
+  
+  // Highlight active lang btn
+  const langs = ['en', 'de', 'fr', 'es', 'pt', 'it'];
+  langs.forEach(l => {
+    const btn = document.getElementById(`lang-${l}`);
+    if (btn) btn.classList.toggle('active', l === lang);
+  });
+  
+  const container = document.getElementById('rulesContent');
+  container.innerHTML = '';
+  data.items.forEach(item => {
+    const li = document.createElement('li');
+    li.textContent = item;
+    container.appendChild(li);
+  });
+}
+
+// Renders flag using flagcdn.com with fallback to native emoji
 function getFlagHtml(team, isLarge = false) {
   const cls = isLarge ? 'flag-img-lg' : 'flag-img';
   return `
@@ -779,7 +892,7 @@ function getFlagHtml(team, isLarge = false) {
   `;
 }
 
-// Dystrybucja nagród sponsorskich dla TOP 10
+// Sponsored Prize Pool split layout for Top 10
 function getPrizeForRank(rank) {
   if (rank === 1) return 10000;
   if (rank === 2) return 5000;
@@ -808,14 +921,14 @@ async function getReadProvider(){
 
 async function connectWallet(){
   if(!window.ethereum){
-    showToast('Metamask nie jest zainstalowany. Zainstaluj portfel, aby przejść dalej.', true);
+    showToast('MetaMask is not installed. Install wallet extension to proceed.', true);
     return;
   }
   try{
     await window.ethereum.request({method:'eth_requestAccounts'});
     const cid = await window.ethereum.request({method:'eth_chainId'});
     if(parseInt(cid,16) !== CHAIN_ID){
-      showToast('Błędna sieć. Przełącz portfel na Chiliz Chain (ID: 88888).', true);
+      showToast('Wrong Network. Switch your wallet to Chiliz Chain (ID: 88888).', true);
       return;
     }
     
@@ -836,7 +949,7 @@ async function connectWallet(){
     await loadData();
   }catch(e){
     console.error(e);
-    showToast('Błąd podczas łączenia z portfelem.', true);
+    showToast('Error connecting wallet.', true);
   }
 }
 
@@ -908,7 +1021,7 @@ async function fetchEvents(){
 }
 
 async function loadData(){
-  document.getElementById('countryGridContainer').innerHTML = '<div style="text-align:center;color:#3d4a5a;padding:40px;grid-column:1/-1;"><span class="spin"></span> Odpytywanie blockchaina Chiliz...</div>';
+  document.getElementById('countryGridContainer').innerHTML = '<div style="text-align:center;color:#3d4a5a;padding:40px;grid-column:1/-1;"><span class="spin"></span> Querying Chiliz Blockchain...</div>';
 
   let mints=[], sales=[], listed=[];
   try {
@@ -1002,8 +1115,8 @@ async function loadData(){
     }
   }catch(e){ console.warn('Market scan error:', e); }
 
-  // Zewnętrzna, nieskomplikowana prezentacja sponsorska
-  document.getElementById('poolInfo').textContent = `Pula sponsorska: ${SPONSORED_POOL.toLocaleString()} CHZ (Sponsor Funded) · TOP 10 graczy zgarnia nagrody`;
+  // Independent sponsored pool presentation (English local)
+  document.getElementById('poolInfo').textContent = `Quest Prize Pool: ${SPONSORED_POOL.toLocaleString()} CHZ (Sponsor Funded) · Global TOP 10 Share Rewards`;
 
   renderStats();
   renderCountryHub();
@@ -1039,7 +1152,7 @@ function getCountryLeader(teamId) {
   return { wallet: leaderAddr, score: topScore, completed: topComp };
 }
 
-// Obliczanie globalnych statystyk dla liderów TOP 10
+// Calculates global leaderboard aggregated data
 function getGlobalLeaderboardData() {
   return Object.entries(window.dreamScores).map(([wallet, countryData]) => {
     let totalScore = 0;
@@ -1070,7 +1183,7 @@ function renderStats() {
   document.getElementById('myCompGlobal').textContent = `${compGlobalCount} / 48`;
   document.getElementById('myTotalCards').textContent = totalCardsHandled;
 
-  // Wyliczanie globalnej pozycji
+  // Resolving global position
   const players = getGlobalLeaderboardData();
   let myGlobalRankVal = '—';
   let myEstPrizeVal = 0;
@@ -1118,7 +1231,7 @@ function renderCountryHub() {
     card.className = `country-card ${selectedTeamId === team.id ? 'selected' : ''}`;
     card.onclick = () => selectCountry(team.id);
     
-    let scoreDisplay = userStats.score > 0 ? `${userStats.score} pkt` : 'nie rozpoczęty';
+    let scoreDisplay = userStats.score > 0 ? `${userStats.score} pts` : 'not started';
     let compDisplay = `${userStats.completed}/11`;
     let crownDisplay = isMeLeader ? '<span class="country-card-crown">👑</span>' : '';
 
@@ -1148,7 +1261,7 @@ function renderPitch() {
   
   const myTeamPositions = (window.dreamScores[myAddr] || {})[selectedTeamId] || {};
   const currentCompCount = Object.keys(myTeamPositions).length;
-  document.getElementById('selectedCountryCompletion').textContent = `${currentCompCount}/11 POZYCJI UKOŃCZONO`;
+  document.getElementById('selectedCountryCompletion').textContent = `${currentCompCount}/11 POSITIONS COMPLETED`;
 
   FORMATION.forEach(row => {
     const rowEl = document.createElement('div');
@@ -1166,9 +1279,9 @@ function renderPitch() {
         
         let actionHtml = '';
         if (mkt && mkt.weight > scored.weight) {
-          actionHtml = `<button onclick="buyFromMarket(${mkt.listingId}, '${mkt.price}')" class="btn-card-action upgrade">ULEPSZ +${mkt.weight - scored.weight}<br>${mkt.price} CHZ</button>`;
+          actionHtml = `<button onclick="buyFromMarket(${mkt.listingId}, '${mkt.price}')" class="btn-card-action upgrade">UPGRADE +${mkt.weight - scored.weight}<br>${mkt.price} CHZ</button>`;
         } else {
-          actionHtml = `<div style="margin-top:4px;font-size:8px;color:#5a6a7a;font-family:Share Tech Mono,monospace;letter-spacing:0.3px;">MAX WAGA</div>`;
+          actionHtml = `<div style="margin-top:4px;font-size:8px;color:#5a6a7a;font-family:Share Tech Mono,monospace;letter-spacing:0.3px;">BEST WEIGHT</div>`;
         }
 
         card.innerHTML = `
@@ -1186,9 +1299,9 @@ function renderPitch() {
         card.className = 'pos-card empty';
         let actionHtml = '';
         if (mkt) {
-          actionHtml = `<button onclick="buyFromMarket(${mkt.listingId}, '${mkt.price}')" class="btn-card-action">KUP W:${mkt.weight}<br>${mkt.price} CHZ</button>`;
+          actionHtml = `<button onclick="buyFromMarket(${mkt.listingId}, '${mkt.price}')" class="btn-card-action">BUY W:${mkt.weight}<br>${mkt.price} CHZ</button>`;
         } else {
-          actionHtml = `<div style="margin-top:4px;font-size:8px;color:#5a6a7a;font-family:Share Tech Mono,monospace;">BRAK OFERT</div>`;
+          actionHtml = `<div style="margin-top:4px;font-size:8px;color:#5a6a7a;font-family:Share Tech Mono,monospace;letter-spacing:0.3px;">NO LISTINGS</div>`;
         }
 
         card.innerHTML = `
@@ -1198,7 +1311,7 @@ function renderPitch() {
           </div>
           <div>
             <div class="pos-weight empty">—</div>
-            <div class="pos-rarity" style="color:#5a6a7a;">PUSTE</div>
+            <div class="pos-rarity" style="color:#5a6a7a;">EMPTY</div>
             ${actionHtml}
           </div>
         `;
@@ -1221,44 +1334,61 @@ function renderLeaderboard(){
   const myAddr = address?.toLowerCase();
 
   if (currentLeaderboardTab === 'global') {
-    // Tabela Globalna TOP 10 o całą pulę sponsorską
+    // Global Leaderboard TOP 10 + user's ranking if outside Top 10
     const players = getGlobalLeaderboardData();
     if(players.length === 0){
-      lb.innerHTML = '<div style="text-align:center;color:#3d4a5a;padding:20px;">Żaden gracz nie zebrał jeszcze ani jednego punktu. Bądź pierwszy!</div>';
+      lb.innerHTML = '<div style="text-align:center;color:#3d4a5a;padding:20px;">No points scored globally yet. Be the first to claim your spot!</div>';
       return;
     }
 
+    let top10 = players.slice(0, 10);
+    let myIndex = players.findIndex(p => p.wallet.toLowerCase() === myAddr);
+    let includeMeRow = (myAddr && myIndex !== -1 && myIndex >= 10);
+
     let html = '';
-    players.forEach((player, idx) => {
+
+    const renderRow = (player, idx) => {
       const isMe = player.wallet.toLowerCase() === myAddr;
       const rank = idx + 1;
       const isWinner = rank <= 10;
       const posClass = isWinner ? 'winner' : '';
       const medal = rank === 1 ? '🥇' : rank === 2 ? '🥈' : rank === 3 ? '🥉' : '';
       const prizeAmount = getPrizeForRank(rank);
-      const prizeDisplay = prizeAmount > 0 ? `<span style="color:#00ff87;">Nagroda: ${prizeAmount.toLocaleString()} CHZ</span>` : '<span style="color:#5a6a7a;">Brak nagrody</span>';
+      const prizeDisplay = prizeAmount > 0 ? `<span style="color:#00ff87;">Prize: ${prizeAmount.toLocaleString()} CHZ</span>` : '<span style="color:#5a6a7a;">No Prize</span>';
 
-      html += `
+      return `
         <div class="lb-row ${isMe ? 'me' : ''}">
           <div class="lb-pos ${posClass}">${medal || '#' + rank}</div>
-          <div class="lb-addr">${player.wallet.slice(0,6)}…${player.wallet.slice(-4)} ${isMe ? '<span class="lb-you">TY</span>' : ''}</div>
-          <div class="lb-completion">Aktywne Kraje: ${player.filled}/48</div>
+          <div class="lb-addr">${player.wallet.slice(0,6)}…${player.wallet.slice(-4)} ${isMe ? '<span class="lb-you">YOU</span>' : ''}</div>
+          <div class="lb-completion">Active Albums: ${player.filled}/48</div>
           <div class="lb-completion" style="margin-left: 12px; font-weight: 700;">${prizeDisplay}</div>
-          <div class="lb-score">${player.score} pkt</div>
+          <div class="lb-score">${player.score} pts</div>
         </div>
       `;
+    };
 
-      if (idx === 9 && players.length > 10) {
-        html += `
-          <div class="cutoff-line">
-            🚨 PRÓG NAGRODY SPONSORSKIEJ (TOP 10) — GRACZE PONIŻEJ NIE KWALIFIKUJĄ SIĘ DO PODZIAŁU 🚨
-          </div>
-        `;
-      }
+    top10.forEach((player, idx) => {
+      html += renderRow(player, idx);
     });
+
+    if (includeMeRow) {
+      html += `
+        <div class="cutoff-line" style="margin: 16px 0 12px;">
+          ⚡ YOUR CURRENT STANDING POSITION ⚡
+        </div>
+      `;
+      html += renderRow(players[myIndex], myIndex);
+    } else if (players.length > 10) {
+      html += `
+        <div class="cutoff-line">
+          🚨 SPONSORED PRIZE THRESHOLD (TOP 10) — PLAYERS BELOW DO NOT QUALIFY FOR SPONSOR PRIZES 🚨
+        </div>
+      `;
+    }
+
     lb.innerHTML = html;
   } else {
-    // Tabela Krajowa (Prestiż lokalny)
+    // National Leaderboard (Selected Country) TOP 10 + user's ranking if outside Top 10
     const selectedTeam = TEAMS.find(t => t.id === selectedTeamId);
     
     const LocalCompetitors = Object.entries(window.dreamScores).map(([wallet, countryObj]) => {
@@ -1272,70 +1402,90 @@ function renderLeaderboard(){
     });
 
     if (LocalCompetitors.length === 0) {
-      lb.innerHTML = `<div style="text-align:center;color:#3d4a5a;padding:20px;">Brak aktywnych rywali w ${selectedTeam.flag} ${selectedTeam.name}. Mintuj lub kupuj karty, aby zająć 1. miejsce!</div>`;
+      lb.innerHTML = `<div style="text-align:center;color:#3d4a5a;padding:20px;">No active contenders for ${selectedTeam.flag} ${selectedTeam.name} yet. Mint or buy cards to start dominating!</div>`;
       return;
     }
 
-    let html = '';
-    LocalCompetitors.forEach((player, idx) => {
-      const isMe = player.wallet.toLowerCase() === myAddr;
-      const isWinner = idx === 0;
-      const posClass = isWinner ? 'winner' : '';
-      const medal = idx === 0 ? '👑' : '';
+    let top10 = LocalCompetitors.slice(0, 10);
+    let myIndex = LocalCompetitors.findIndex(p => p.wallet.toLowerCase() === myAddr);
+    let includeMeRow = (myAddr && myIndex !== -1 && myIndex >= 10);
 
-      html += `
+    let html = '';
+
+    const renderLocalRow = (player, idx) => {
+      const isMe = player.wallet.toLowerCase() === myAddr;
+      const rank = idx + 1;
+      const isWinner = rank === 1;
+      const posClass = isWinner ? 'winner' : '';
+      const medal = rank === 1 ? '👑' : '';
+
+      return `
         <div class="lb-row ${isMe ? 'me' : ''}">
-          <div class="lb-pos ${posClass}">${medal || '#' + (idx + 1)}</div>
-          <div class="lb-addr">${player.wallet.slice(0,6)}…${player.wallet.slice(-4)} ${isMe ? '<span class="lb-you">TY</span>' : ''}</div>
-          <div class="lb-completion">Ukończone pozycje: ${player.completed}/11</div>
-          <div class="lb-score" style="${isWinner ? 'color: #00ff87;' : ''}">${player.score} pkt</div>
+          <div class="lb-pos ${posClass}">${medal || '#' + rank}</div>
+          <div class="lb-addr">${player.wallet.slice(0,6)}…${player.wallet.slice(-4)} ${isMe ? '<span class="lb-you">YOU</span>' : ''}</div>
+          <div class="lb-completion">Completed: ${player.completed}/11</div>
+          <div class="lb-score" style="${isWinner ? 'color: #00ff87;' : ''}">${player.score} pts</div>
         </div>
       `;
+    };
+
+    top10.forEach((player, idx) => {
+      html += renderLocalRow(player, idx);
     });
+
+    if (includeMeRow) {
+      html += `
+        <div class="cutoff-line" style="margin: 16px 0 12px;">
+          ⚡ YOUR CURRENT STANDING POSITION ⚡
+        </div>
+      `;
+      html += renderLocalRow(LocalCompetitors[myIndex], myIndex);
+    }
+
     lb.innerHTML = html;
   }
 }
 
 async function buyFromMarket(listingId, priceChz){
   if (!signer || !marketContract) {
-    showToast('Połącz swój portfel, aby dokonać transakcji.', true);
+    showToast('Connect your wallet to purchase on the marketplace.', true);
     return;
   }
   try {
-    showToast(`Inicjowanie zakupu na rynku: oferta #${listingId} za ${priceChz} CHZ...`);
+    showToast(`Initializing marketplace buy: Listing #${listingId} for ${priceChz} CHZ...`);
     const l = await marketContract.getListing(listingId);
     const priceWei = l[2];
 
     const tx = await marketContract.buyFigure(listingId, { value: priceWei });
-    showToast('Transakcja wysłana do sieci Chiliz. Oczekiwanie na potwierdzenie...');
+    showToast('Transaction sent to Chiliz Chain. Awaiting confirmation...');
     
     await tx.wait();
-    showToast('Sukces! Karta zakupiona. Skład zaktualizowany!');
+    showToast('Success! Card purchased. Lineup updated!');
     await loadData();
   } catch (error) {
     console.error(error);
-    showToast('Transakcja odrzucona. Upewnij się, że masz wystarczająco dużo CHZ.', true);
+    showToast('Transaction failed. Make sure you have enough CHZ.', true);
   }
 }
 
 async function directMint() {
   if (!signer || !contract) {
-    showToast('Połącz swój portfel, aby móc mintować.', true);
+    showToast('Connect your wallet to mint players.', true);
     return;
   }
   try {
     const referrer = getReferrer();
-    showToast(`Inicjowanie generatywnego mintowania za ${ethers.formatEther(currentMintPrice)} CHZ...`);
+    showToast(`Initializing player mint for ${ethers.formatEther(currentMintPrice)} CHZ...`);
     
     const tx = await contract.mint(referrer, { value: currentMintPrice });
-    showToast('Prośba o mint wysłana. Oczekiwanie na potwierdzenie...');
+    showToast('Mint transaction submitted. Awaiting confirmation...');
     
     await tx.wait();
-    showToast('Sukces! Nowa generatywna karta piłkarza została przypisana do Twojego portfela.');
+    showToast('Success! Your generative card has been issued to your address!');
     await loadData();
   } catch (error) {
     console.error(error);
-    showToast('Mintowanie nie powiodło się. Sprawdź stan portfela i połączenie.', true);
+    showToast('Mint failed. Check your CHZ balance and connection.', true);
   }
 }
 
@@ -1343,11 +1493,11 @@ function shareOnX(){
   const selectedTeam = TEAMS.find(t => t.id === selectedTeamId);
   const myAddr = address?.toLowerCase();
   const stats = getTeamDetails(myAddr, selectedTeamId);
-  const text = `🏆 Walczę o sponsorską pulę 25 000 CHZ w WORLD CUP DREAM XI na @fan_tokens Block Kickers!\n\nMój skład dla reprezentacji ${selectedTeam.flag} ${selectedTeam.name} to ${stats.score} pkt (${stats.completed}/11 pozycji ukończonych).\n\nZbuduj swoją drużynę i podejmij wyzwanie! ⚽🔥\n\nblock-kickers.vercel.app/dream-xi`;
+  const text = `🏆 Competing for the sponsored 25,000 CHZ prize pool in WORLD CUP DREAM XI on @fan_tokens Block Kickers!\n\nMy ${selectedTeam.flag} ${selectedTeam.name} lineup has scored ${stats.score} pts (${stats.completed}/11 positions finalized).\n\nBuild your squad and challenge me! ⚽🔥\n\nblock-kickers.vercel.app/dream-xi`;
   window.open('https://twitter.com/intent/tweet?text='+encodeURIComponent(text),'_blank');
 }
 
-/* LOGIKA LICZNIKA BLOKÓW */
+/* BLOCK TIMER & LOGIC */
 const DEADLINE_BLOCK = 35886889;
 const BLOCK_TIME_MS = 3000;
 let currentBlock = 34158889; 
@@ -1389,7 +1539,7 @@ function updateCountdown(){
     document.getElementById('cdH').textContent = '00';
     document.getElementById('cdM').textContent = '00';
     document.getElementById('cdS').textContent = '00';
-    document.getElementById('cdBlock').textContent = 'QUEST ZAKOŃCZONY NA BLOKU #'+DEADLINE_BLOCK.toLocaleString();
+    document.getElementById('cdBlock').textContent = 'QUEST CONCLUDED AT BLOCK #'+DEADLINE_BLOCK.toLocaleString();
     return;
   }
   const secsLeft = blocksLeft * 3;
@@ -1402,7 +1552,7 @@ function updateCountdown(){
   document.getElementById('cdH').textContent = String(h).padStart(2,'0');
   document.getElementById('cdM').textContent = String(m).padStart(2,'0');
   document.getElementById('cdS').textContent = String(s).padStart(2,'0');
-  document.getElementById('cdBlock').innerHTML = 'Czas końcowy: blok <a href="https://scan.chiliz.com/block/'+DEADLINE_BLOCK+'" target="_blank" style="color:#00ff87;text-decoration:none;">#'+DEADLINE_BLOCK.toLocaleString()+'</a> · Szacowany obecny: ~#'+estimated.toLocaleString()+' · Pozostało: '+blocksLeft.toLocaleString()+' bloków';
+  document.getElementById('cdBlock').innerHTML = 'Deadline block: <a href="https://scan.chiliz.com/block/'+DEADLINE_BLOCK+'" target="_blank" style="color:#00ff87;text-decoration:none;">#'+DEADLINE_BLOCK.toLocaleString()+'</a> · Estimated Current: ~#'+estimated.toLocaleString()+' · '+blocksLeft.toLocaleString()+' blocks remaining';
 }
 
 fetchCurrentBlock();
