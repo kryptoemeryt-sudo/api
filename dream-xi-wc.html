@@ -46,33 +46,166 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
 .schedule-price{font-family:'Black Ops One',sans-serif;font-size:20px;color:#dde4f0;}
 .schedule-price span{color:#ffc940;}
 
-/* SEKCJE FILTRÓW */
-.filter-tabs{display:flex;justify-content:center;gap:8px;margin-bottom:20px;flex-wrap:wrap;}
-.tab-btn{background:#0f1318;border:1px solid #1c2028;color:#7a8899;padding:8px 16px;border-radius:6px;font-family:'Black Ops One',sans-serif;font-size:11px;letter-spacing:1px;cursor:pointer;transition:all 0.2s;}
-.tab-btn:hover{border-color:#818cf8;color:#dde4f0;}
-.tab-btn.active{background:#818cf8;color:#000;border-color:#818cf8;}
-
-/* ALBUM GRID */
+/* WIZUALIZACJA BOISKA (SOCCER PITCH) */
 .album-wrap{background:#0a0e14;border:1px solid #1c2028;border-radius:12px;padding:24px;position:relative;}
-.album-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px;}
+.pitch-wrap {
+  background: linear-gradient(to bottom, #113018, #0b1f10);
+  border: 2px solid #1f5029;
+  border-radius: 16px;
+  padding: 40px 16px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: inset 0 0 40px rgba(0,0,0,0.8);
+}
+/* Linie boiska */
+.pitch-wrap::before {
+  content: '';
+  position: absolute;
+  inset: 12px;
+  border: 1px dashed rgba(255,255,255,0.12);
+  border-radius: 8px;
+  pointer-events: none;
+}
+.pitch-center-circle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 140px;
+  height: 140px;
+  border: 1px dashed rgba(255,255,255,0.12);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+.pitch-center-line {
+  position: absolute;
+  top: 50%;
+  left: 12px;
+  right: 12px;
+  height: 1px;
+  border-top: 1px dashed rgba(255,255,255,0.12);
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+.pitch-penalty-area-top {
+  position: absolute;
+  top: 12px;
+  left: 50%;
+  width: 280px;
+  height: 90px;
+  border: 1px dashed rgba(255,255,255,0.12);
+  border-top: none;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+.pitch-penalty-area-bottom {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  width: 280px;
+  height: 90px;
+  border: 1px dashed rgba(255,255,255,0.12);
+  border-bottom: none;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
 
-/* KARTA KRAJU (ALBUM) */
-.team-card{background:#0f1318;border:1px solid #1c2028;border-radius:10px;padding:12px;text-align:center;position:relative;transition:all 0.2s;display:flex;flex-direction:column;justify-content:space-between;min-height:160px;}
-.team-card.owned{border-color:rgba(0,255,135,0.3);background:rgba(0,255,135,0.03);}
-.team-card.owned::after{content:'✓';position:absolute;top:6px;right:8px;color:#00ff87;font-weight:bold;font-size:14px;}
-.team-card.missing{opacity:0.65;}
-.team-card.missing:hover{opacity:1;border-color:rgba(255,201,64,0.4);}
-.team-flag{font-size:32px;margin-bottom:4px;display:block;}
-.team-name{font-weight:700;font-size:14px;color:#dde4f0;line-height:1.2;margin-bottom:8px;letter-spacing:0.5px;}
-.team-fed{font-size:9px;font-family:'Share Tech Mono',monospace;color:#5a6a7a;background:rgba(255,255,255,0.03);padding:2px 6px;border-radius:4px;display:inline-block;margin-bottom:8px;}
+/* SZYK TAKTYCZNY */
+.formation {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  position: relative;
+  z-index: 2;
+}
+.form-row {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: nowrap;
+}
 
-/* Wagi i stany kart */
-.team-score{font-family:'Black Ops One',sans-serif;font-size:24px;color:#818cf8;line-height:1;}
-.team-score.gold{color:#ffc940;}
-.team-score.empty{color:#2a3040;font-size:18px;}
-.team-sub{font-size:9px;font-family:'Share Tech Mono',monospace;color:#5a6a7a;margin-top:2px;}
+/* KARTA POZYCJI NA BOISKU */
+.pos-card{
+  background: rgba(15, 19, 24, 0.88);
+  border: 1px solid #1c2028;
+  border-radius: 8px;
+  padding: 8px 6px;
+  text-align: center;
+  width: 96px;
+  min-height: 115px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  transition: all 0.2s;
+  backdrop-filter: blur(4px);
+}
+.pos-card:hover{
+  border-color: rgba(0, 255, 135, 0.5);
+  box-shadow: 0 0 12px rgba(0, 255, 135, 0.15);
+}
+.pos-card.owned{
+  border-color: rgba(0,255,135,0.4);
+  background: rgba(0,255,135,0.06);
+}
+.pos-card.owned::after{
+  content: '✓';
+  position: absolute;
+  top: 4px;
+  right: 6px;
+  color: #00ff87;
+  font-weight: bold;
+  font-size: 10px;
+}
+.pos-card.empty{
+  opacity: 0.5;
+  border-style: dashed;
+}
+.pos-name{
+  font-weight: 700;
+  font-size: 10px;
+  color: #7a8899;
+  line-height: 1.2;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+.pos-flag {
+  font-size: 20px;
+  margin: 2px 0;
+  display: block;
+}
 
-.btn-card-action{display:block;width:100%;background:rgba(255,201,64,0.1);border:1px solid rgba(255,201,64,0.3);color:#ffc940;font-family:'Black Ops One',sans-serif;font-size:9px;padding:6px;border-radius:4px;cursor:pointer;margin-top:8px;text-decoration:none;transition:all 0.2s;}
+/* Wagi i ranga */
+.pos-weight{
+  font-family:'Black Ops One',sans-serif;
+  font-size: 22px;
+  color: #818cf8;
+  line-height: 1;
+}
+.pos-weight.gold{color:#ffc940;}
+.pos-weight.empty{color:#2a3040;font-size:16px;}
+.pos-rarity{
+  font-size: 8px;
+  font-family: 'Share Tech Mono', monospace;
+  color: #5a6a7a;
+}
+
+.btn-card-action{
+  display:block;
+  width:100%;
+  background:rgba(255,201,64,0.1);
+  border:1px solid rgba(255,201,64,0.3);
+  color:#ffc940;
+  font-family:'Black Ops One',sans-serif;
+  font-size:8px;
+  padding:4px 2px;
+  border-radius:4px;
+  cursor:pointer;
+  margin-top:4px;
+  text-decoration:none;
+  transition:all 0.2s;
+}
 .btn-card-action:hover{background:#ffc940;color:#000;}
 .btn-card-action.upgrade{background:rgba(0,255,135,0.1);border-color:rgba(0,255,135,0.3);color:#00ff87;}
 .btn-card-action.upgrade:hover{background:#00ff87;color:#000;}
@@ -123,9 +256,14 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
 
 @media(max-width:600px){
   .stats-container{grid-template-columns:1fr 1fr;}
-  .filter-tabs{gap:4px;}
-  .tab-btn{padding:6px 10px;font-size:9px;}
-  .album-grid{grid-template-columns:repeat(auto-fill,minmax(110px,1fr));}
+  .form-row{gap:6px;}
+  .pos-card{width:70px;padding:6px 4px;min-height:95px;}
+  .pos-name{font-size:8px;}
+  .pos-weight{font-size:16px;}
+  .pos-rarity{font-size:7px;}
+  .btn-card-action{font-size:7px;padding:3px 1px;}
+  .pitch-penalty-area-top, .pitch-penalty-area-bottom { width: 180px; height: 60px; }
+  .pitch-center-circle { width: 90px; height: 90px; }
 }
 </style>
 </head>
@@ -143,7 +281,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
     <div class="badge"><span class="dot"></span>LIVE EVENT · MISTRZOSTWA ŚWIATA</div>
     <span class="trophy">🏆</span>
     <div class="hero-title"><span class="acc">WORLD CUP</span><br><span class="gold">DREAM XI</span></div>
-    <div class="hero-sub">Zbierz zawodników ze wszystkich 48 krajów uczestniczących. Pula nagród zostanie podzielona równo pomiędzy TOP 48 graczy z najcięższymi składami!</div>
+    <div class="hero-sub">Zbuduj najcięższy taktyczny skład wszech czasów! Zbierz 11 najlepszych zawodników na każdą pozycję na boisku. Pula nagród zostanie podzielona równo pomiędzy TOP 48 graczy.</div>
 
     <!-- HARMONOGRAM CEN -->
     <div class="pricing-schedule">
@@ -183,8 +321,8 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
   <!-- STATYSTYKI GRACZA -->
   <div class="stats-container" id="statsRow" style="display:none;">
     <div class="stat-card">
-      <div class="stat-val highlight" id="myCompletion">0 / 48</div>
-      <div class="stat-lbl">Ukończone Kraje</div>
+      <div class="stat-val highlight" id="myCompletion">0 / 11</div>
+      <div class="stat-lbl">Obsadzone Pozycje</div>
     </div>
     <div class="stat-card">
       <div class="stat-val gold" id="myScore">0</div>
@@ -202,7 +340,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
 
   <!-- BRAK POŁĄCZENIA -->
   <div id="connectSection" class="connect-prompt">
-    <p>Połącz swój portfel Chiliz, aby sprawdzić swoje postępy i skompletować 48 krajów</p>
+    <p>Połącz swój portfel Chiliz, aby sprawdzić swoje postępy i obsadzić 11 pozycji na boisku</p>
     <button class="btn-connect-big" onclick="connectWallet()">POŁĄCZ PORTFEL</button>
   </div>
 
@@ -212,35 +350,24 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
     <div style="display:flex; justify-content:space-between; align-items:center; padding:0 24px 16px;">
       <button class="btn-share" onclick="shareOnX()">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-        UDOSTĘPNIJ WYNIK NA X
+        UDOSTĘPNIJ SKŁAD NA X
       </button>
       <button class="btn-share" onclick="loadData()" style="border-color:rgba(99,102,241,0.3); color:#818cf8;">
         ↻ ODŚWIEŻ DANE
       </button>
     </div>
 
-    <!-- ALBUM KOLEKCJONERSKI -->
+    <!-- BOISKO TAKTYCZNE -->
     <div class="pitch-section">
       <div class="pitch-title">
-        <span>TWÓJ ALBUM MISTRZOSTW ŚWIATA (48 KRAJÓW)</span>
+        <span>TWÓJ TAKTYCZNY SZYK MISTRZOSTW ŚWIATA (11 POZYCJI)</span>
         <span style="font-family:'Share Tech Mono',monospace; color:#818cf8;" id="percentageComplete">0%</span>
       </div>
 
-      <!-- FILTRY FEDERACJI -->
-      <div class="filter-tabs">
-        <button class="tab-btn active" onclick="filterFederation('ALL')">WSZYSTKIE (48)</button>
-        <button class="tab-btn" onclick="filterFederation('UEFA')">UEFA (16)</button>
-        <button class="tab-btn" onclick="filterFederation('CONMEBOL')">CONMEBOL (6)</button>
-        <button class="tab-btn" onclick="filterFederation('CAF')">CAF (10)</button>
-        <button class="tab-btn" onclick="filterFederation('AFC')">AFC (9)</button>
-        <button class="tab-btn" onclick="filterFederation('CONCACAF')">CONCACAF (6)</button>
-        <button class="tab-btn" onclick="filterFederation('OFC')">OFC (1)</button>
-      </div>
-
-      <div class="album-wrap">
-        <div class="album-grid" id="teamsGrid">
-          <div style="text-align:center;color:#3d4a5a;font-family:Share Tech Mono,monospace;font-size:11px;padding:40px 0;grid-column:1/-1;">
-            <span class="spin"></span> Ładowanie albumu...
+      <div class="album-wrap" style="padding: 12px;">
+        <div id="pitchGrid">
+          <div style="text-align:center;color:#3d4a5a;font-family:Share Tech Mono,monospace;font-size:11px;padding:40px 0;">
+            <span class="spin"></span> Ładowanie taktycznego boiska...
           </div>
         </div>
       </div>
@@ -281,6 +408,44 @@ const MARKET_ABI = [
   "function nextListingId() external view returns (uint256)",
   "function getListing(uint256) external view returns (address,uint256,uint256,bool)",
   "function buyFigure(uint256 listingId) external payable"
+];
+
+// Pozycje na boisku piłkarskim
+const POSITION_NAMES = {
+  1: 'Bramkarz',
+  2: 'Prawy Obrońca',
+  3: 'Lewy Obrońca',
+  4: 'Śr. Obrońca A',
+  5: 'Śr. Obrońca B',
+  6: 'Def. Pomocnik',
+  7: 'Prawy Skrzydłowy',
+  8: 'Śr. Pomocnik',
+  9: 'Napastnik',
+  10: 'Rozgrywający',
+  11: 'Lewy Skrzydłowy'
+};
+
+const POSITION_SHORT = {
+  1: 'GK',
+  2: 'RB',
+  3: 'LB',
+  4: 'CB A',
+  5: 'CB B',
+  6: 'DM',
+  7: 'RW',
+  8: 'MID',
+  9: 'ST',
+  10: 'AM',
+  11: 'LW'
+};
+
+// Formacja taktyczna renderowana od góry do dołu (Napastnicy -> Bramkarz)
+const FORMATION = [
+  [9],         // ST (Napastnik)
+  [7,11],      // RW, LW (Skrzydłowi)
+  [6,8,10],    // DM, MID, AM (Pomocnicy)
+  [2,4,5,3],   // RB, CB A, CB B, LB (Obrońcy)
+  [1]          // GK (Bramkarz)
 ];
 
 const TEAMS = [
@@ -338,12 +503,11 @@ const PUBLIC_RPCS = ['https://chiliz-rpc.publicnode.com','https://rpc.chiliz.com
 
 let provider, signer, address;
 let contract, marketContract;
-let activeFederation = 'ALL';
-window.dreamScores = {}; // portfel -> { teamId -> {weight, tid, rarity, dna} }
-let marketByTeam = {}; // teamId -> najtańsza aukcja {listingId, price, priceWei, weight, rarity}
+window.dreamScores = {}; // portfel -> { position -> {weight, tid, rarity, dna, teamId} }
+let marketByPosition = {}; // position -> najtańsze/najcięższe ulepszenie {listingId, price, priceWei, weight, rarity, teamId}
 let currentMintPrice = ethers.parseEther("10"); // domyślna cena mintu
 
-// Funkcja pomocnicza do nieblokujących powiadomień na ekranie
+// Pomocnicze nieblokujące powiadomienia (Toasty)
 function showToast(message, isError = false) {
   const toast = document.getElementById('toast');
   toast.textContent = message;
@@ -474,10 +638,10 @@ async function fetchEvents(){
 }
 
 async function loadData(){
-  document.getElementById('teamsGrid').innerHTML = '<div style="text-align:center;color:#3d4a5a;padding:40px;grid-column:1/-1;"><span class="spin"></span> Pobieranie danych z Chiliz Chain...</div>';
+  document.getElementById('pitchGrid').innerHTML = '<div style="text-align:center;color:#3d4a5a;padding:40px;"><span class="spin"></span> Pobieranie danych z Chiliz Chain...</div>';
 
   let mints=[], sales=[], listed=[];
-  try{
+  try {
     const res = await fetch('/api/events');
     if(res.ok){
       const api = await res.json();
@@ -485,14 +649,14 @@ async function loadData(){
       sales = api.sales;
       listed = api.listings || [];
     }
-  }catch(e){
+  } catch(e) {
     const ev = await fetchEvents();
     mints = ev.mints.map(m => ({owner: m.args.owner.toLowerCase(), tokenId: Number(m.args.tokenId), dna: m.args.dna}));
     sales = ev.sales;
     listed = ev.listed;
   }
 
-  // Odpytanie o aktualną dynamiczną cenę mintu bezpośrednio z kontraktu
+  // Pobieranie aktualnej dynamicznej ceny mintu bezpośrednio z kontraktu
   if (contract) {
     try {
       const p = await contract.mintPrice();
@@ -517,16 +681,17 @@ async function loadData(){
     if(ownerMap[tid]) ownerMap[tid].owner = s.buyer?.toLowerCase();
   });
 
-  // System punktacji - dla każdego portfela najlepsza waga jaka przeszła (Mint lub Buy)
+  // System punktacji - dla każdego portfela najlepsza waga jaka przeszła na DANEJ POZYCJI (1-11)
   window.dreamScores = {};
   const score = (wallet, tokenId, dna) => {
     try{
       const dnaBig = typeof dna === 'bigint' ? dna : BigInt(String(dna));
       const t = parseDNA(dnaBig);
+      const pos = t.position; // 1-11
       if(!window.dreamScores[wallet]) window.dreamScores[wallet] = {};
-      const cur = window.dreamScores[wallet][t.teamId];
+      const cur = window.dreamScores[wallet][pos];
       if(!cur || t.weight > cur.weight){
-        window.dreamScores[wallet][t.teamId] = {weight: t.weight, tid: tokenId, rarity: t.rarity, dna};
+        window.dreamScores[wallet][pos] = {weight: t.weight, tid: tokenId, rarity: t.rarity, dna, teamId: t.teamId};
       }
     }catch(e){}
   };
@@ -542,8 +707,8 @@ async function loadData(){
     }
   });
 
-  // Skanowanie rynku wtórnego pod kątem najtańszej figurki dla każdego kraju
-  marketByTeam = {};
+  // Skanowanie rynku wtórnego pod kątem najkorzystniejszej oferty dla KAŻDEJ POZYCJI (1-11)
+  marketByPosition = {};
   try{
     const rp = await getReadProvider();
     const rmk = new ethers.Contract(MARKET_ADDRESS, MARKET_ABI, rp);
@@ -558,22 +723,24 @@ async function loadData(){
         const fig = ownerMap[tokenId];
         if(!fig) continue;
         const price = parseFloat(ethers.formatEther(priceWei));
+        const pos = fig.position;
         
-        if(!marketByTeam[fig.teamId] || price < marketByTeam[fig.teamId].price){
-          marketByTeam[fig.teamId] = {listingId: i, price, priceWei, weight: fig.weight, rarity: fig.rarity};
+        // Szukamy najlepszego wyboru: najwyższa waga (lub najtańsza przy równej wadze)
+        if(!marketByPosition[pos] || fig.weight > marketByPosition[pos].weight || (fig.weight === marketByPosition[pos].weight && price < marketByPosition[pos].price)){
+          marketByPosition[pos] = {listingId: i, price, priceWei, weight: fig.weight, rarity: fig.rarity, teamId: fig.teamId};
         }
       }catch(e){}
     }
   }catch(e){ console.warn('Błąd odczytu rynku:', e); }
 
   renderStats();
-  renderAlbum();
+  renderPitch();
   renderLeaderboard();
 }
 
 function getMyCompletion() {
   const my = window.dreamScores[address?.toLowerCase()] || {};
-  return Object.keys(my).length;
+  return Object.keys(my).length; // ile z 11 pozycji obsadzono
 }
 
 function getMyTotalScore() {
@@ -585,80 +752,101 @@ function renderStats() {
   const completed = getMyCompletion();
   const score = getMyTotalScore();
   
-  document.getElementById('myCompletion').textContent = `${completed} / 48`;
+  document.getElementById('myCompletion').textContent = `${completed} / 11`;
   document.getElementById('myScore').textContent = score;
-  document.getElementById('percentageComplete').textContent = `${Math.round((completed / 48) * 100)}%`;
+  document.getElementById('percentageComplete').textContent = `${Math.round((completed / 11) * 100)}%`;
 }
 
-function filterFederation(fed) {
-  activeFederation = fed;
-  document.querySelectorAll('.tab-btn').forEach(btn => {
-    btn.classList.remove('active');
-    if (btn.textContent.includes(fed)) btn.classList.add('active');
-  });
-  renderAlbum();
-}
-
-function renderAlbum() {
-  const grid = document.getElementById('teamsGrid');
+function renderPitch() {
+  const grid = document.getElementById('pitchGrid');
   grid.innerHTML = '';
   const myAddr = address?.toLowerCase();
   const myDream = window.dreamScores[myAddr] || {};
 
-  const filteredTeams = TEAMS.filter(t => activeFederation === 'ALL' || t.fed === activeFederation);
+  // Główne opakowanie taktycznego boiska
+  const pitchWrap = document.createElement('div');
+  pitchWrap.className = 'pitch-wrap';
 
-  filteredTeams.forEach(team => {
-    const scored = myDream[team.id];
-    const mkt = marketByTeam[team.id];
-    const card = document.createElement('div');
+  // Dodajemy elementy graficzne boiska piłkarskiego
+  const centerCircle = document.createElement('div');
+  centerCircle.className = 'pitch-center-circle';
+  const centerLine = document.createElement('div');
+  centerLine.className = 'pitch-center-line';
+  const penaltyTop = document.createElement('div');
+  penaltyTop.className = 'pitch-penalty-area-top';
+  const penaltyBottom = document.createElement('div');
+  penaltyBottom.className = 'pitch-penalty-area-bottom';
 
-    if(scored) {
-      const rarColor = ['#7a8899','#3b82f6','#c084fc','#ffc940'][scored.rarity];
-      card.className = 'team-card owned';
-      
-      let actionHtml = '';
-      if(mkt && mkt.weight > scored.weight){
-        actionHtml = `<button onclick="buyFromMarket(${mkt.listingId}, '${mkt.price}')" class="btn-card-action upgrade">ULEPSZ W:${mkt.weight}<br>${mkt.price} CHZ</button>`;
+  pitchWrap.appendChild(centerCircle);
+  pitchWrap.appendChild(centerLine);
+  pitchWrap.appendChild(penaltyTop);
+  pitchWrap.appendChild(penaltyBottom);
+
+  const formationContainer = document.createElement('div');
+  formationContainer.className = 'formation';
+
+  // Iterujemy przez linie formacji (od Napastników do Bramkarza)
+  FORMATION.forEach(row => {
+    const rowEl = document.createElement('div');
+    rowEl.className = 'form-row';
+
+    row.forEach(pos => {
+      const scored = myDream[pos];
+      const mkt = marketByPosition[pos];
+      const card = document.createElement('div');
+
+      if(scored) {
+        const teamInfo = TEAMS.find(t => t.id === scored.teamId) || {flag: "🏳️", name: "Nieznany"};
+        const rarColor = ['#7a8899','#3b82f6','#c084fc','#ffc940'][scored.rarity];
+        card.className = 'pos-card owned';
+        
+        let actionHtml = '';
+        if(mkt && mkt.weight > scored.weight){
+          actionHtml = `<button onclick="buyFromMarket(${mkt.listingId}, '${mkt.price}')" class="btn-card-action upgrade">ULEPSZ W:${mkt.weight}<br>${mkt.price} CHZ</button>`;
+        } else {
+          actionHtml = `<div style="margin-top:4px;font-size:8px;color:#5a6a7a;font-family:Share Tech Mono,monospace;letter-spacing:0.5px;">MAX WAGA</div>`;
+        }
+
+        card.innerHTML = `
+          <div>
+            <div class="pos-name">${POSITION_SHORT[pos]}</div>
+            <span class="pos-flag" title="${teamInfo.name}">${teamInfo.flag}</span>
+          </div>
+          <div>
+            <div class="pos-weight ${scored.rarity === 3 ? 'gold' : ''}">${scored.weight}</div>
+            <div class="pos-rarity" style="color:${rarColor}">${['Common','Rare','Epic','Legendary'][scored.rarity]}</div>
+            ${actionHtml}
+          </div>
+        `;
       } else {
-        actionHtml = `<div style="margin-top:8px;font-size:9px;color:#3d4a5a;font-family:Share Tech Mono,monospace;letter-spacing:0.5px;">MAKSYMALNA WAGA</div>`;
-      }
+        card.className = 'pos-card empty';
+        let actionHtml = '';
+        if(mkt) {
+          const teamInfo = TEAMS.find(t => t.id === mkt.teamId) || {flag: "🏳️"};
+          actionHtml = `<button onclick="buyFromMarket(${mkt.listingId}, '${mkt.price}')" class="btn-card-action">KUP ${teamInfo.flag}: ${mkt.price} CHZ</button>`;
+        } else {
+          actionHtml = `<div style="margin-top:4px;font-size:8px;color:#5a6a7a;font-family:Share Tech Mono,monospace;">BRAK KART</div>`;
+        }
 
-      card.innerHTML = `
-        <div>
-          <span class="team-flag">${team.flag}</span>
-          <div class="team-name">${team.name}</div>
-          <div class="team-fed">${team.fed}</div>
-        </div>
-        <div>
-          <div class="team-score ${scored.rarity === 3 ? 'gold' : ''}">${scored.weight}</div>
-          <div class="team-sub" style="color:${rarColor}">Ranga: ${['Common','Rare','Epic','Legendary'][scored.rarity]}</div>
-          ${actionHtml}
-        </div>
-      `;
-    } else {
-      card.className = 'team-card missing';
-      let actionHtml = '';
-      if(mkt) {
-        actionHtml = `<button onclick="buyFromMarket(${mkt.listingId}, '${mkt.price}')" class="btn-card-action">KUP: ${mkt.price} CHZ</button>`;
-      } else {
-        actionHtml = `<div style="margin-top:8px;font-size:9px;color:#5a6a7a;font-family:Share Tech Mono,monospace;">BRAK NA RYNKU</div>`;
+        card.innerHTML = `
+          <div>
+            <div class="pos-name" style="color:#5a6a7a;">${POSITION_SHORT[pos]}</div>
+            <span class="pos-flag" style="opacity: 0.15">⚽</span>
+          </div>
+          <div>
+            <div class="pos-weight empty">—</div>
+            <div class="pos-rarity" style="color:#5a6a7a;">Puste</div>
+            ${actionHtml}
+          </div>
+        `;
       }
-
-      card.innerHTML = `
-        <div>
-          <span class="team-flag" style="filter:grayscale(100%); opacity:0.3;">${team.flag}</span>
-          <div class="team-name" style="color:#5a6a7a;">${team.name}</div>
-          <div class="team-fed">${team.fed}</div>
-        </div>
-        <div>
-          <div class="team-score empty">—</div>
-          <div class="team-sub">Brak punktacji</div>
-          ${actionHtml}
-        </div>
-      `;
-    }
-    grid.appendChild(card);
+      rowEl.appendChild(card);
+    });
+    formationContainer.appendChild(rowEl);
   });
+
+  pitchWrap.appendChild(formationContainer);
+  grid.appendChild(pitchWrap);
 }
 
 async function renderLeaderboard(){
@@ -675,12 +863,12 @@ async function renderLeaderboard(){
   });
 
   if(players.length === 0){
-    lb.innerHTML = '<div style="text-align:center;color:#3d4a5a;padding:20px;">Żaden gracz nie skompletował jeszcze pierwszego kraju. Bądź pierwszy!</div>';
+    lb.innerHTML = '<div style="text-align:center;color:#3d4a5a;padding:20px;">Żaden gracz nie obsadził jeszcze pozycji. Bądź pierwszy!</div>';
     return;
   }
 
-  // Odpytanie o realny stan skarbca bezpośrednio z kontraktu, aby podać prawdziwą pulę nagród
-  let vaultBalanceCHZ = players.length * 10 + 5000; // domyślne szacowanie
+  // Pobieranie aktualnej wielkości Prize Vault z blockchaina
+  let vaultBalanceCHZ = players.length * 10 + 5000;
   if (contract) {
     try {
       const vb = await contract.vaultBalance();
@@ -706,7 +894,7 @@ async function renderLeaderboard(){
       <div class="lb-row ${isMe ? 'me' : ''}">
         <div class="lb-pos ${posClass}">${medal || '#' + (idx + 1)}</div>
         <div class="lb-addr">${player.wallet.slice(0,6)}…${player.wallet.slice(-4)} ${isMe ? '<span class="lb-you">TY</span>' : ''}</div>
-        <div class="lb-completion">Kraje: ${player.filled}/48</div>
+        <div class="lb-completion">Pozycje: ${player.filled}/11</div>
         <div class="lb-score">${player.score} pkt</div>
       </div>
     `;
@@ -734,7 +922,7 @@ async function renderLeaderboard(){
   }
 }
 
-// Funkcja bezpośredniego zakupu na rynku ( Marketplace integration )
+// Bezpośredni zakup karty na rynku
 async function buyFromMarket(listingId, priceChz){
   if (!signer || !marketContract) {
     showToast('Połącz portfel, aby zakupić figurkę.', true);
@@ -742,25 +930,22 @@ async function buyFromMarket(listingId, priceChz){
   }
   try {
     showToast(`Inicjowanie zakupu listing #${listingId} za ${priceChz} CHZ...`);
-    
-    // Pobieramy dane o aukcji z kontraktu rynku
     const l = await marketContract.getListing(listingId);
-    const priceWei = l[2]; // cena bezpośrednio w Wei z blockchaina
+    const priceWei = l[2];
 
-    // Wywołanie transakcji bezpośredniej
     const tx = await marketContract.buyFigure(listingId, { value: priceWei });
     showToast('Transakcja wysłana do sieci Chiliz. Oczekiwanie na potwierdzenie...');
     
     await tx.wait();
-    showToast('Sukces! Figurka została zakupiona. Odświeżam dane...');
+    showToast('Sukces! Karta zakupiona. Boisko zaktualizowane!');
     await loadData();
   } catch (error) {
     console.error(error);
-    showToast('Błąd transakcji zakupu. Upewnij się, że masz wystarczająco CHZ.', true);
+    showToast('Błąd transakcji zakupu. Upewnij się, że posiadasz odpowiedni stan CHZ.', true);
   }
 }
 
-// Funkcja bezpośredniego mintowania z tej strony
+// Bezpośredni mint z poziomu dAppa
 async function directMint() {
   if (!signer || !contract) {
     showToast('Połącz portfel, aby móc bezpośrednio mintować.', true);
@@ -785,13 +970,13 @@ async function directMint() {
 function shareOnX(){
   const score = getMyTotalScore();
   const completed = getMyCompletion();
-  const text = `🏆 Mój wynik w WORLD CUP DREAM XI na @fan_tokens Block Kickers: ${score} pkt (${completed}/48 krajów skompletowanych!).\n\nWalczę o podział puli nagród dla TOP 48 graczy. Spróbuj mnie pobić! ⚽🔥\n\n#Chiliz #BlockKickers #WorldCup #PlayToEarn\n\nblock-kickers.vercel.app/dream-xi`;
+  const text = `🏆 Mój taktyczny wynik w WORLD CUP DREAM XI na @fan_tokens Block Kickers: ${score} pkt (${completed}/11 pozycji obsadzonych!).\n\nRywalizuję o podział puli z opłat dla TOP 48 graczy. Wejdź na boisko i spróbuj mnie pokonać! ⚽🔥\n\n#Chiliz #BlockKickers #WorldCup #PlayToEarn\n\nblock-kickers.vercel.app/dream-xi`;
   window.open('https://twitter.com/intent/tweet?text='+encodeURIComponent(text),'_blank');
 }
 
 // ODLICZANIE BLOKÓW DO FINAŁU
 const DEADLINE_BLOCK = 35886889;
-const BLOCK_TIME_MS = 3000; // 3 sekundy za każdy blok na sieci Chiliz Chain
+const BLOCK_TIME_MS = 3000;
 let currentBlock = 34158889; 
 let lastBlockTime = Date.now();
 
@@ -808,7 +993,7 @@ async function fetchCurrentBlock(){
     }
   }catch(e){}
   
-  // Dynamiczny Fallback pobierania bloku przez RPC jeśli serwer Vercel API nie działa
+  // Dynamiczny Fallback pobierania bloku przez RPC
   try {
     const rp = await getReadProvider();
     const b = await rp.getBlockNumber();
