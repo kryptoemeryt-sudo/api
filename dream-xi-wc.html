@@ -377,6 +377,8 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
   .btn-card-action{font-size:6px;padding:2px 1px;}
   .pitch-penalty-area-top, .pitch-penalty-area-bottom { width: 140px; height: 40px; }
   .pitch-center-circle { width: 70px; height: 70px; }
+  .countdown-timer { gap: 8px; }
+  .countdown-num { font-size: 24px; }
 }
 </style>
 </head>
@@ -417,10 +419,12 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
       <button class="btn-mint-hero" onclick="window.open('https://block-kickers.vercel.app','_blank')">MAIN WEBSITE →</button>
     </div>
 
-    <!-- DEADLINE COUNTDOWN -->
+    <!-- DEADLINE COUNTDOWN WITH DAYS INCLUDED -->
     <div class="countdown-wrap">
       <div class="countdown-label">TOURNAMENT DEADLINE (WORLD CUP FINAL BLOCK)</div>
       <div class="countdown-timer">
+        <div class="countdown-unit"><div class="countdown-num" id="cdD">--</div><div class="countdown-sub">DAYS</div></div>
+        <div style="font-family:'Black Ops One',sans-serif;font-size:28px;color:#2a3040;padding-bottom:4px;">:</div>
         <div class="countdown-unit"><div class="countdown-num" id="cdH">--</div><div class="countdown-sub">HOURS</div></div>
         <div style="font-family:'Black Ops One',sans-serif;font-size:28px;color:#2a3040;padding-bottom:4px;">:</div>
         <div class="countdown-unit"><div class="countdown-num" id="cdM">--</div><div class="countdown-sub">MIN</div></div>
@@ -546,6 +550,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
 const CONTRACT_ADDRESS = "0xAAdc8D56e25a223B6cf4b88ba0889975560f21aB";
 const MARKET_ADDRESS   = "0xA18f7Bade67Eda41FD7D2B3A204d39b543977DaE";
 const CHAIN_ID = 88888;
+const SPONSORED_POOL = 25000; // Sponsored baseline reward pool of 25,000 CHZ
 
 const ABI = [
   "event FigureMinted(address indexed owner,uint256 indexed tokenId,uint256 dna,uint256 teamId,uint256 position,uint8 rarity,uint256 weight)",
@@ -885,7 +890,7 @@ async function loadData(){
     }
   }catch(e){ console.warn('Market scan error:', e); }
 
-  // Query Contract for Actual Vault Payout Pool
+  // Query Contract for Actual Vault Payout Pool & Add Sponsored baseline
   dynamicVaultBalance = 0;
   if (contract) {
     try {
@@ -898,7 +903,9 @@ async function loadData(){
       dynamicVaultBalance = uniquePlayers * 10 + 5000;
     }
   }
-  document.getElementById('poolInfo').textContent = `Total Payout Pool: ~${dynamicVaultBalance.toLocaleString(undefined, {maximumFractionDigits: 2})} CHZ (${(dynamicVaultBalance / 48).toFixed(2)} CHZ per country leader)`;
+  const totalPrizePool = SPONSORED_POOL + dynamicVaultBalance;
+  const sharePayout = totalPrizePool / 48;
+  document.getElementById('poolInfo').textContent = `Total Payout Pool: ~${totalPrizePool.toLocaleString(undefined, {maximumFractionDigits: 2})} CHZ (${sharePayout.toFixed(2)} CHZ per country leader)`;
 
   renderStats();
   renderCountryHub();
@@ -938,7 +945,7 @@ function renderStats() {
   const myAddr = address?.toLowerCase();
   const myData = window.dreamScores[myAddr] || {};
   
-  // Count unqiue albums we have placed at least 1 card in
+  // Count unique albums we have placed at least 1 card in
   let compGlobalCount = 0;
   let totalCardsHandled = 0;
   let leadsCount = 0;
@@ -959,7 +966,9 @@ function renderStats() {
   document.getElementById('myTotalCards').textContent = totalCardsHandled;
   document.getElementById('myChampionships').textContent = leadsCount;
   
-  const estimatedClaim = leadsCount * (dynamicVaultBalance / 48);
+  const totalPrizePool = SPONSORED_POOL + dynamicVaultBalance;
+  const sharePayout = totalPrizePool / 48;
+  const estimatedClaim = leadsCount * sharePayout;
   document.getElementById('myEstPayout').textContent = `${estimatedClaim.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})} CHZ`;
 }
 
@@ -1097,17 +1106,19 @@ function renderLeaderboard(){
   const lb = document.getElementById('leaderboard');
   const myAddr = address?.toLowerCase();
 
+  const totalPrizePool = SPONSORED_POOL + dynamicVaultBalance;
+  const sharePayout = totalPrizePool / 48;
+
   if (currentLeaderboardTab === 'global') {
     // Show 48 national leaders
     let html = '';
-    const sharePayout = dynamicVaultBalance / 48;
     
     TEAMS.forEach((team) => {
       const leader = getCountryLeader(team.id);
       const isMe = leader.wallet && leader.wallet.toLowerCase() === myAddr;
       const leadingDisplay = leader.wallet ? `${leader.wallet.slice(0,6)}…${leader.wallet.slice(-4)}` : 'No Contenders';
       const scoreDisplay = leader.wallet ? `${leader.score} pts` : '0 pts';
-      const estPayoutDisplay = leader.wallet ? `${sharePayout.toFixed(1)} CHZ` : `0.00 CHZ`;
+      const estPayoutDisplay = `${sharePayout.toLocaleString(undefined, {maximumFractionDigits: 1})} CHZ`;
 
       html += `
         <div class="lb-row ${isMe ? 'me' : ''}">
@@ -1125,7 +1136,7 @@ function renderLeaderboard(){
     });
     lb.innerHTML = html;
   } else {
-    // Show standigs for selected country (Top 10)
+    // Show standings for selected country (Top 10)
     const selectedTeam = TEAMS.find(t => t.id === selectedTeamId);
     
     const LocalCompetitors = Object.entries(window.dreamScores).map(([wallet, countryObj]) => {
@@ -1253,6 +1264,7 @@ function updateCountdown(){
   const estimated = getEstimatedBlock();
   const blocksLeft = Math.max(0, DEADLINE_BLOCK - estimated);
   if(blocksLeft === 0){
+    document.getElementById('cdD').textContent = '00';
     document.getElementById('cdH').textContent = '00';
     document.getElementById('cdM').textContent = '00';
     document.getElementById('cdS').textContent = '00';
@@ -1260,10 +1272,12 @@ function updateCountdown(){
     return;
   }
   const secsLeft = blocksLeft * 3;
-  const h = Math.floor(secsLeft / 3600);
-  const m = Math.floor((secsLeft % 3600) / 60);
+  const d = Math.floor(secsLeft / 86400);
+  const h = Math.floor((secsLeft % 86400) / 3600);
+  const m = Math.floor((secsLeft % 3,600) / 60);
   const s = secsLeft % 60;
   
+  document.getElementById('cdD').textContent = String(d).padStart(2,'0');
   document.getElementById('cdH').textContent = String(h).padStart(2,'0');
   document.getElementById('cdM').textContent = String(m).padStart(2,'0');
   document.getElementById('cdS').textContent = String(s).padStart(2,'0');
