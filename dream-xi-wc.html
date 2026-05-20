@@ -383,7 +383,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
 
 .btn-mint-hero{background:linear-gradient(135deg,#00ff87,#00c96a);color:#000;border:none;padding:14px 32px;border-radius:8px;font-family:'Black Ops One',sans-serif;font-size:14px;letter-spacing:2px;cursor:pointer;transition:all 0.2s;}
 .btn-mint-hero:hover{transform:scale(1.02);filter:brightness(1.1);}
-.btn-share{background:#000;border:1px solid #1c2028;color:#dde4f0;padding:10px 20px;border-radius:8px;font-family:'Black Ops One',sans-serif;font-size:12px;letter-spacing:1px;cursor:pointer;display:flex;align-items:center;gap:8px;transition:all 0.2s;}
+.btn-share{background:#000;border:1px solid #1c2028;color:#fff;padding:10px 20px;border-radius:8px;font-family:'Black Ops One',sans-serif;font-size:12px;letter-spacing:1px;cursor:pointer;display:flex;align-items:center;gap:8px;transition:all 0.2s;}
 .btn-share:hover{background:#111;border-color:#5a6a7a;}
 
 .connect-prompt{padding:40px 24px;text-align:center;}
@@ -932,7 +932,7 @@ function openSellModal(tokenId, pos, weight, rarity) {
   const selectedTeam = TEAMS.find(t => t.id === selectedTeamId);
   
   document.getElementById('sellCardInfo').innerHTML = `
-    <strong>Country:</strong> ${selectedTeam.flag} ${selectedTeam.name}<br>
+    <strong>Country:</strong> ${getFlagHtml(selectedTeam)} ${selectedTeam.name}<br>
     <strong>Position:</strong> ${posName}<br>
     <strong>Rarity:</strong> ${rarityName}<br>
     <strong>Weight:</strong> ${weight} pts<br>
@@ -1049,10 +1049,10 @@ function parseDNA(dna){
   const rarRand = Number((n >> 10n) % 10000n);
   const rarity = rarRand < 100 ? 3 : rarRand < 1000 ? 2 : rarRand < 3000 ? 1 : 0;
   const hasGoldenBoots = Number((n >> 24n) % 100n) < 5;
+  const hasTattoo = Number((n >> 30n) % 100n) < 15;
   const hasEarring = Number((n >> 27n) % 100n) < 25;
   const hasBand = Number((n >> 28n) % 100n) < 25;
   const hasGloves = Number((n >> 29n) % 100n) < 20;
-  const hasTattoo = Number((n >> 30n) % 100n) < 15;
   
   let weight = [10,18,36,82][rarity];
   if(hasGoldenBoots) weight += 8;
@@ -1401,8 +1401,9 @@ function renderPitch() {
       } else {
         card.className = 'pos-card empty';
         let actionHtml = '';
-        if (mkt) {
-          actionHtml = `<button onclick="buyFromMarket(${mkt.listingId}, '${mkt.price}')" class="btn-card-action">BUY W:${mkt.weight}<br>${mkt.price} CHZ</button>`;
+        // Używamy najtańszej figurki (floor) do bezpośredniego zakupu dla pustego slotu
+        if (floor) {
+          actionHtml = `<button onclick="buyFromMarket(${floor.listingId}, '${floor.price}')" class="btn-card-action">BUY<br>${floor.price} CHZ</button>`;
         } else {
           actionHtml = `<div style="margin-top:4px;font-size:8px;color:#5a6a7a;font-family:Share Tech Mono,monospace;">NO LISTINGS</div>`;
         }
@@ -1415,7 +1416,6 @@ function renderPitch() {
           <div>
             <div class="pos-weight empty">—</div>
             <div class="pos-rarity" style="color:#5a6a7a;">EMPTY</div>
-            ${floorHtml}
             ${actionHtml}
           </div>
         `;
