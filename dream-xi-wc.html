@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>WORLD CUP DREAM XI — Block Kickers</title>
+<title>🏆 WORLD CUP DREAM XI — Block Kickers</title>
 <link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Barlow+Condensed:wght@400;600;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.7.0/ethers.umd.min.js"></script>
 <style>
@@ -694,12 +694,16 @@ const ABI = [
   "function vaultBalance() external view returns (uint256)",
   "function mint(address referrer) external payable"
 ];
+
+// Added write functions 'listFigure' and 'cancelListing' to the ABI to fix Sell and buy errors
 const MARKET_ABI = [
   "event Listed(uint256 indexed listingId,address indexed seller,uint256 tokenId,uint256 price)",
   "event Sold(uint256 indexed listingId,address indexed buyer,uint256 price)",
   "function nextListingId() external view returns (uint256)",
   "function getListing(uint256) external view returns (address,uint256,uint256,bool)",
-  "function buyFigure(uint256 listingId) external payable"
+  "function buyFigure(uint256 listingId) external payable",
+  "function listFigure(uint256 tokenId, uint256 price) external returns (uint256)",
+  "function cancelListing(uint256 listingId) external"
 ];
 
 const POSITION_SHORT = {
@@ -835,7 +839,7 @@ const RULES_TRANSLATIONS = {
       "📝 Completa la alineación de 11 jugadores para cada nación para maximizar el peso total de esa nación.",
       "⚡ Tu puntuación global es la suma de los pesos tácticos logrados en tus 48 álbumes nacionales.",
       "🏆 El fondo de premios patrocinado de 25,000 CHZ se comparte estrictamente entre los 10 mejores jugadores mundiales.",
-      "📈 El pago estimado se actualiza en vivo para mostrar el premio proyectado según tu clasificación."
+      "📈 El pago estimado se updatea en vivo para mostrar el premio proyectado según tu clasificación."
     ]
   },
   pt: {
@@ -854,7 +858,7 @@ const RULES_TRANSLATIONS = {
     title: "Regole e Come Giocare",
     items: [
       "🔗 Collega il tuo wallet Chiliz per attivare i tuoi hub di squadra personali.",
-      "⚽ Minta una carta giocatore o acquistala sul mercato per uno dei 48 paesi partecipanti.",
+      "⚽ Minta una carta giocatore o acquistala sul mercato per uno dei 48 partecipanti partecipanti.",
       "⚠️ Le carte giocatore contano SOLO se mintate o acquistate sul mercato. Puoi metterle in vendita e venderle, ma i trasferimenti diretti/regali NON CONTANO (nessun punteggio assegnato).",
       "📝 Completa la formazione di 11 giocatori per ogni nazione per massimizzare il peso totale di quella nazione.",
       "⚡ Il tuo punteggio globale è la somma dei pesi tattici ottenuti in tutti e 48 i tuoi album nazionali.",
@@ -924,7 +928,7 @@ function toggleSellModal(show) {
   modal.style.display = show ? 'flex' : 'none';
 }
 
-// Open Sell Modal with selected card data
+// Open Sell Modal with selected card data and fully rendering vectors
 function openSellModal(tokenId, pos, weight, rarity) {
   activeSellTokenId = tokenId;
   const posName = POSITION_SHORT[pos] || pos;
@@ -1339,7 +1343,7 @@ function renderPitch() {
   const myAddr = address?.toLowerCase();
   
   const selectedTeam = TEAMS.find(t => t.id === selectedTeamId);
-  document.getElementById('selectedCountryTitle').textContent = `${selectedTeam.name.toUpperCase()} SQUAD`;
+  document.getElementById('selectedCountryTitle').innerHTML = `${getFlagHtml(selectedTeam, true)} &nbsp; ${selectedTeam.name.toUpperCase()} SQUAD`;
   
   const myTeamPositions = (window.dreamScores[myAddr] || {})[selectedTeamId] || {};
   const currentCompCount = Object.keys(myTeamPositions).length;
@@ -1358,12 +1362,10 @@ function renderPitch() {
       const floorTeam = marketFloorByTeamPosition[selectedTeamId] || {};
       const floor = floorTeam[pos];
 
-      // Format lowest price info
+      // Format lowest price info (Shown only for owned slots)
       let floorHtml = '';
-      if (floor) {
+      if (scored && floor) {
         floorHtml = `<div style="font-size:9px; color:#ffc940; font-family:'Share Tech Mono',monospace; margin-top:2px;">Floor: ${floor.price} CHZ</div>`;
-      } else {
-        floorHtml = `<div style="font-size:9px; color:#5a6a7a; font-family:'Share Tech Mono',monospace; margin-top:2px;">No listings</div>`;
       }
 
       if (scored) {
@@ -1401,7 +1403,7 @@ function renderPitch() {
       } else {
         card.className = 'pos-card empty';
         let actionHtml = '';
-        // Używamy najtańszej figurki (floor) do bezpośredniego zakupu dla pustego slotu
+        // Używamy najtańszej figurki (floor) do bezpośredniego zakupu dla pustego slotu (bez zbędnego floor textu)
         if (floor) {
           actionHtml = `<button onclick="buyFromMarket(${floor.listingId}, '${floor.price}')" class="btn-card-action">BUY<br>${floor.price} CHZ</button>`;
         } else {
@@ -1573,7 +1575,7 @@ async function buyFromMarket(listingId, priceChz){
 }
 
 async function sellFigure(tokenId, priceChz) {
-  if (!signer || !marketContract) {
+  if (!signer || !marketContract || !address) {
     showToast('Please connect your wallet first.', true);
     return;
   }
