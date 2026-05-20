@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Block Kickers — Live Stats</title>
+<link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Barlow+Condensed:wght@400;600;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;font-size:16px;}
+.wrap{max-width:860px;margin:0 auto;padding:40px 24px;}
+.logo{font-family:'Black Ops One',sans-serif;font-size:13px;letter-spacing:3px;color:#dde4f0;margin-bottom:32px;}
+.logo span{color:#00ff87;}
+.hero{margin-bottom:36px;}
+.hero-tag{display:inline-flex;align-items:center;gap:8px;background:rgba(0,255,135,0.08);border:1px solid rgba(0,255,135,0.2);border-radius:4px;padding:4px 12px;font-size:11px;letter-spacing:3px;color:#00ff87;margin-bottom:16px;}
+.dot{width:6px;height:6px;border-radius:50%;background:#00ff87;animation:blink 2s infinite;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.2}}
+.hero-title{font-family:'Black Ops One',sans-serif;font-size:clamp(32px,5vw,52px);line-height:0.95;margin-bottom:12px;}
+.acc{color:#00ff87;}
+.gold{color:#ffc940;}
+.purple{color:#c084fc;}
+.hero-sub{font-size:17px;color:#7a8899;max-width:600px;}
+
+/* STATS GRID */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin-bottom:28px;}
+.stat{background:#0f1318;border:1px solid #1c2028;border-radius:10px;padding:16px 18px;}
+.stat-n{font-family:'Black Ops One',sans-serif;font-size:32px;line-height:1;margin-bottom:4px;}
+.stat-l{font-size:11px;letter-spacing:2px;color:#5a6a7a;}
+.stat.green .stat-n{color:#00ff87;}
+.stat.gold .stat-n{color:#ffc940;}
+.stat.purple .stat-n{color:#c084fc;}
+.stat.blue .stat-n{color:#3b82f6;}
+
+/* FIGURES ROW */
+.figures{display:flex;gap:10px;margin-bottom:28px;flex-wrap:wrap;justify-content:center;}
+.fig-wrap{display:flex;flex-direction:column;align-items:center;gap:6px;}
+.fig-card{background:#0f1318;border-radius:8px;padding:8px;display:flex;align-items:center;justify-content:center;}
+.fig-label{font-size:10px;color:#5a6a7a;text-align:center;font-family:'Share Tech Mono',monospace;}
+.fig-label .rar{display:block;font-size:11px;font-family:'Black Ops One',sans-serif;}
+.fig-label .rar.legendary{color:#ffc940;}
+.fig-label .rar.epic{color:#c084fc;}
+.fig-label .rar.rare{color:#3b82f6;}
+
+/* REWARD LAYERS */
+.layers{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:28px;}
+.layer{border-radius:10px;padding:16px;}
+.layer.l65{background:rgba(0,255,135,0.06);border:1px solid rgba(0,255,135,0.2);}
+.layer.l25{background:rgba(255,201,64,0.06);border:1px solid rgba(255,201,64,0.2);}
+.layer.l10{background:rgba(192,132,252,0.06);border:1px solid rgba(192,132,252,0.2);}
+.layer-pct{font-family:'Black Ops One',sans-serif;font-size:28px;margin-bottom:4px;}
+.l65 .layer-pct{color:#00ff87;}
+.l25 .layer-pct{color:#ffc940;}
+.l10 .layer-pct{color:#c084fc;}
+.layer-title{font-family:'Black Ops One',sans-serif;font-size:12px;color:#dde4f0;margin-bottom:4px;}
+.layer-desc{font-size:13px;color:#7a8899;line-height:1.4;}
+.layer-val{font-family:'Black Ops One',sans-serif;font-size:18px;margin-top:6px;}
+.l65 .layer-val{color:#00ff87;}
+.l25 .layer-val{color:#ffc940;}
+.l10 .layer-val{color:#c084fc;}
+
+/* QUEST BANNER */
+.quest{background:linear-gradient(135deg,rgba(178,34,52,0.12),rgba(0,40,104,0.12));border:1px solid rgba(178,34,52,0.35);border-radius:12px;padding:18px 22px;margin-bottom:28px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;}
+.quest-flag{flex-shrink:0;}
+.quest-info{flex:1;}
+.quest-title{font-family:'Black Ops One',sans-serif;font-size:18px;color:#dde4f0;margin-bottom:4px;}
+.quest-desc{font-size:14px;color:#7a8899;line-height:1.5;}
+.quest-prize{font-family:'Black Ops One',sans-serif;font-size:28px;color:#ffc940;flex-shrink:0;}
+.quest-progress{width:100%;height:4px;background:rgba(255,255,255,0.06);border-radius:2px;margin-top:10px;overflow:hidden;}
+.quest-fill{height:100%;background:linear-gradient(90deg,#B22234,#002868);border-radius:2px;}
+
+/* DIVIDER */
+.div{height:1px;background:#1c2028;margin:28px 0;}
+
+/* SIM PREVIEW */
+.sim-preview{background:#0f1318;border:1px solid #1c2028;border-radius:10px;overflow:hidden;margin-bottom:28px;}
+.sim-header{padding:12px 16px;border-bottom:1px solid #1c2028;font-family:'Black Ops One',sans-serif;font-size:12px;letter-spacing:2px;color:#3d4a5a;}
+.sim-row{display:flex;align-items:center;gap:10px;padding:10px 16px;border-bottom:1px solid rgba(255,255,255,0.03);}
+.sim-row:last-child{border-bottom:none;}
+.sim-rank{font-family:'Black Ops One',sans-serif;font-size:15px;width:28px;flex-shrink:0;}
+.sim-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.sim-name{flex:1;font-size:14px;}
+.sim-rar{font-size:11px;color:#5a6a7a;}
+.sim-reward{font-family:'Black Ops One',sans-serif;font-size:14px;color:#00ff87;}
+
+/* CTA */
+.cta{text-align:center;padding:24px 0;}
+.cta-url{font-family:'Share Tech Mono',monospace;font-size:16px;color:#3d4a5a;letter-spacing:2px;margin-bottom:8px;}
+.cta-sub{font-size:13px;color:#3d4a5a;}
+
+/* SVG FIGURES */
+svg.fig{display:block;}
+
+@media(max-width:600px){
+  .layers{grid-template-columns:1fr;}
+  .wrap{padding:24px 16px;}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="logo">⚽ BLOCK <span>KICKERS</span></div>
+
+  <div class="hero">
+    <div class="hero-tag"><span class="dot"></span>WC 2026 · LIVE ON CHILIZ</div>
+    <div class="hero-title">MINT. COLLECT.<br><span class="acc">WIN CHZ.</span></div>
+    <div class="hero-sub">Generative football NFTs with on-chain vault rewards. Every mint feeds the prize pool. Smart contract distributes after WC 2026.</div>
+  </div>
+
+  <!-- LIVE STATS -->
+  <div class="stats">
+    <div class="stat green">
+      <div class="stat-n">8,526</div>
+      <div class="stat-l">CHZ IN VAULT</div>
+    </div>
+    <div class="stat blue">
+      <div class="stat-n">872</div>
+      <div class="stat-l">FIGURES MINTED</div>
+    </div>
+    <div class="stat gold">
+      <div class="stat-n">10 CHZ</div>
+      <div class="stat-l">MINT PRICE</div>
+    </div>
+    <div class="stat purple">
+      <div class="stat-n">7</div>
+      <div class="stat-l">LEGENDARY MINTED</div>
+    </div>
+  </div>
+
+  <!-- FIGURES -->
+  <div class="figures">
+
+    <!-- Legendary figure -->
+    <div class="fig-wrap">
+      <div class="fig-card" style="border:1px solid rgba(255,201,64,0.4);background:rgba(255,201,64,0.06);">
+        <svg class="fig" width="90" height="120" viewBox="0 0 90 120">
+          <!-- Body -->
+          <rect x="28" y="38" width="34" height="26" rx="4" fill="#74ACDF"/>
+          <rect x="28" y="38" width="34" height="13" rx="4" fill="#5a9cd0"/>
+          <!-- Head -->
+          <ellipse cx="45" cy="30" rx="13" ry="14" fill="#F1C27D"/>
+          <!-- Hair -->
+          <ellipse cx="45" cy="18" rx="13" ry="8" fill="#5a3010"/>
+          <!-- Number -->
+          <text x="45" y="56" text-anchor="middle" fill="#fff" font-family="'Black Ops One'" font-size="11">10</text>
+          <!-- Legs -->
+          <rect x="31" y="62" width="10" height="22" rx="3" fill="#1a1a2e"/>
+          <rect x="49" y="62" width="10" height="22" rx="3" fill="#1a1a2e"/>
+          <!-- Golden boots -->
+          <rect x="29" y="80" width="13" height="7" rx="2" fill="#FFD700"/>
+          <rect x="48" y="80" width="13" height="7" rx="2" fill="#FFD700"/>
+          <!-- Earring -->
+          <circle cx="33" cy="31" r="2" fill="#FFD700"/>
+          <!-- Stars -->
+          <text x="20" y="16" fill="#FFD700" font-size="8">★</text>
+          <text x="62" y="16" fill="#FFD700" font-size="8">★</text>
+          <text x="41" y="10" fill="#FFD700" font-size="8">★</text>
+        </svg>
+      </div>
+      <div class="fig-label">
+        <span class="rar legendary">LEGENDARY</span>
+        Argentina · #10 · W:95
+      </div>
+    </div>
+
+    <!-- Epic figure -->
+    <div class="fig-wrap">
+      <div class="fig-card" style="border:1px solid rgba(192,132,252,0.4);background:rgba(192,132,252,0.06);">
+        <svg class="fig" width="90" height="120" viewBox="0 0 90 120">
+          <rect x="28" y="38" width="34" height="26" rx="4" fill="#006847"/>
+          <rect x="28" y="38" width="34" height="13" rx="4" fill="#004d35"/>
+          <ellipse cx="45" cy="30" rx="13" ry="14" fill="#C68642"/>
+          <ellipse cx="45" cy="18" rx="13" ry="8" fill="#2a1a08"/>
+          <text x="45" y="56" text-anchor="middle" fill="#fff" font-family="'Black Ops One'" font-size="11">9</text>
+          <rect x="31" y="62" width="10" height="22" rx="3" fill="#1a1a2e"/>
+          <rect x="49" y="62" width="10" height="22" rx="3" fill="#1a1a2e"/>
+          <rect x="29" y="80" width="13" height="7" rx="2" fill="#111"/>
+          <rect x="48" y="80" width="13" height="7" rx="2" fill="#111"/>
+          <!-- Tattoo indicator -->
+          <line x1="60" y1="42" x2="60" y2="58" stroke="#c084fc" stroke-width="2" stroke-dasharray="2,2"/>
+          <text x="20" y="16" fill="#c084fc" font-size="8">★</text>
+          <text x="62" y="16" fill="#c084fc" font-size="8">★</text>
+        </svg>
+      </div>
+      <div class="fig-label">
+        <span class="rar epic">EPIC</span>
+        Mexico · ST · W:44
+      </div>
+    </div>
+
+    <!-- Rare figure -->
+    <div class="fig-wrap">
+      <div class="fig-card" style="border:1px solid rgba(59,130,246,0.4);background:rgba(59,130,246,0.06);">
+        <svg class="fig" width="90" height="120" viewBox="0 0 90 120">
+          <rect x="28" y="38" width="34" height="26" rx="4" fill="#002395"/>
+          <rect x="28" y="38" width="34" height="13" rx="4" fill="#001575"/>
+          <ellipse cx="45" cy="30" rx="13" ry="14" fill="#FDBCB4"/>
+          <ellipse cx="45" cy="18" rx="13" ry="8" fill="#c8a000"/>
+          <text x="45" y="56" text-anchor="middle" fill="#fff" font-family="'Black Ops One'" font-size="11">GK</text>
+          <rect x="31" y="62" width="10" height="22" rx="3" fill="#1a1a2e"/>
+          <rect x="49" y="62" width="10" height="22" rx="3" fill="#1a1a2e"/>
+          <rect x="29" y="80" width="13" height="7" rx="2" fill="#111"/>
+          <rect x="48" y="80" width="13" height="7" rx="2" fill="#111"/>
+          <!-- Gloves -->
+          <rect x="18" y="50" width="10" height="8" rx="3" fill="#3b82f6"/>
+          <rect x="62" y="50" width="10" height="8" rx="3" fill="#3b82f6"/>
+          <text x="41" y="10" fill="#3b82f6" font-size="8">★</text>
+        </svg>
+      </div>
+      <div class="fig-label">
+        <span class="rar rare">RARE</span>
+        France · GK · W:23
+      </div>
+    </div>
+
+    <!-- Common figure -->
+    <div class="fig-wrap">
+      <div class="fig-card" style="border:1px solid #1c2028;">
+        <svg class="fig" width="90" height="120" viewBox="0 0 90 120">
+          <rect x="28" y="38" width="34" height="26" rx="4" fill="#CE1126"/>
+          <rect x="28" y="38" width="34" height="13" rx="4" fill="#a00d1c"/>
+          <ellipse cx="45" cy="30" rx="13" ry="14" fill="#8D5524"/>
+          <ellipse cx="45" cy="18" rx="13" ry="8" fill="#2a1208"/>
+          <text x="45" y="56" text-anchor="middle" fill="#fff" font-family="'Black Ops One'" font-size="11">CB</text>
+          <rect x="31" y="62" width="10" height="22" rx="3" fill="#1a1a2e"/>
+          <rect x="49" y="62" width="10" height="22" rx="3" fill="#1a1a2e"/>
+          <rect x="29" y="80" width="13" height="7" rx="2" fill="#111"/>
+          <rect x="48" y="80" width="13" height="7" rx="2" fill="#111"/>
+        </svg>
+      </div>
+      <div class="fig-label">
+        <span class="rar" style="color:#9ca3af;">COMMON</span>
+        Egypt · CB · W:10
+      </div>
+    </div>
+
+  </div>
+
+  <!-- REWARD LAYERS -->
+  <div class="layers">
+    <div class="layer l65">
+      <div class="layer-pct">65%</div>
+      <div class="layer-title">TOP 10% GLOBAL</div>
+      <div class="layer-desc">Weight × WC multiplier. Champion nation ×5.0</div>
+      <div class="layer-val">~5,542 CHZ</div>
+    </div>
+    <div class="layer l25">
+      <div class="layer-pct">25%</div>
+      <div class="layer-title">COUNTRY CHAMPION</div>
+      <div class="layer-desc">Best figure per nation. 48 winners guaranteed</div>
+      <div class="layer-val">~44 CHZ each</div>
+    </div>
+    <div class="layer l10">
+      <div class="layer-pct">10%</div>
+      <div class="layer-title">LEGENDARY JACKPOT</div>
+      <div class="layer-desc">All Legendary figures split equally</div>
+      <div class="layer-val">~121 CHZ each</div>
+    </div>
+  </div>
+
+  <!-- QUEST BANNER -->
+  <div class="quest">
+    <div class="quest-flag">
+      <svg width="48" height="34" viewBox="0 0 56 40" style="border-radius:3px;">
+        <rect width="56" height="40" fill="#B22234"/>
+        <rect y="3.08" width="56" height="3.08" fill="#fff"/>
+        <rect y="9.23" width="56" height="3.08" fill="#fff"/>
+        <rect y="15.38" width="56" height="3.08" fill="#fff"/>
+        <rect y="21.54" width="56" height="3.08" fill="#fff"/>
+        <rect y="27.69" width="56" height="3.08" fill="#fff"/>
+        <rect y="33.85" width="56" height="3.08" fill="#fff"/>
+        <rect width="24" height="21.54" fill="#3C3B6E"/>
+      </svg>
+    </div>
+    <div class="quest-info">
+      <div class="quest-title">USA NATION QUEST — ACTIVE</div>
+      <div class="quest-desc">First to collect all 11 United States positions wins. Buy, trade, complete the squad.</div>
+      <div class="quest-progress">
+        <div class="quest-fill" style="width:82%;"></div>
+      </div>
+      <div style="font-size:11px;color:#5a6a7a;margin-top:6px;font-family:'Share Tech Mono',monospace;">9/11 positions minted · 2 still open</div>
+    </div>
+    <div class="quest-prize">1,000 CHZ</div>
+  </div>
+
+  <!-- SIM PREVIEW -->
+  <div class="sim-preview">
+    <div class="sim-header">PRIZE SIMULATOR — 1,000 MINTS AT 100 CHZ</div>
+    <div class="sim-row">
+      <div class="sim-rank" style="color:#ffc940;">#1</div>
+      <div class="sim-dot" style="background:#74ACDF;"></div>
+      <div class="sim-name">Argentina <span class="sim-rar">Legendary ⚡ 🏅</span></div>
+      <div style="font-size:11px;color:#7a8899;margin-right:8px;">W:95 · 475pts</div>
+      <div class="sim-reward">4,820 CHZ</div>
+    </div>
+    <div class="sim-row">
+      <div class="sim-rank" style="color:#aaa;">#2</div>
+      <div class="sim-dot" style="background:#006847;"></div>
+      <div class="sim-name">Mexico <span class="sim-rar">Legendary ⚡</span></div>
+      <div style="font-size:11px;color:#7a8899;margin-right:8px;">W:90 · 450pts</div>
+      <div class="sim-reward">3,240 CHZ</div>
+    </div>
+    <div class="sim-row">
+      <div class="sim-rank" style="color:#cd7f32;">#3</div>
+      <div class="sim-dot" style="background:#002395;"></div>
+      <div class="sim-name">France <span class="sim-rar">Epic 🏅</span></div>
+      <div style="font-size:11px;color:#7a8899;margin-right:8px;">W:44 · 220pts</div>
+      <div class="sim-reward">1,850 CHZ</div>
+    </div>
+    <div class="sim-row" style="background:rgba(0,255,135,0.03);border:1px solid rgba(0,255,135,0.1);border-radius:6px;margin:4px 8px;">
+      <div class="sim-rank" style="color:#00ff87;">#12</div>
+      <div class="sim-dot" style="background:#CE1126;"></div>
+      <div class="sim-name">Egypt <span class="sim-rar">Common 🏅</span></div>
+      <div style="font-size:11px;color:#7a8899;margin-right:8px;">W:10 · 0pts</div>
+      <div class="sim-reward" style="color:#ffc940;">44 CHZ</div>
+    </div>
+    <div style="padding:10px 16px;font-size:12px;color:#3d4a5a;font-family:'Share Tech Mono',monospace;">Common figure, group stage exit — still wins 44 CHZ as Country Champion</div>
+  </div>
+
+  <div class="cta">
+    <div class="cta-url">block-kickers.vercel.app</div>
+    <div class="cta-sub">Mint · Trade · Collect · Win · Chiliz Chain</div>
+  </div>
+
+</div>
+</body>
+</html>
