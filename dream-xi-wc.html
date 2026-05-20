@@ -647,6 +647,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
     <!-- Flag Multi-Language Selector Tabs -->
     <div style="display:flex; gap:8px; margin-bottom:20px; flex-wrap:wrap; border-bottom:1px solid #1c2028; padding-bottom:12px;">
       <button class="tab-btn active" id="lang-en" onclick="setRulesLanguage('en')">🇬🇧 EN</button>
+      <button class="tab-btn" id="lang-pl" onclick="setRulesLanguage('pl')">🇵🇱 PL</button>
       <button class="tab-btn" id="lang-de" onclick="setRulesLanguage('de')">🇩🇪 DE</button>
       <button class="tab-btn" id="lang-fr" onclick="setRulesLanguage('fr')">🇫🇷 FR</button>
       <button class="tab-btn" id="lang-es" onclick="setRulesLanguage('es')">🇪🇸 ES</button>
@@ -659,6 +660,22 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
     </ul>
     
     <button class="btn-card-action" onclick="toggleRulesModal(false)" style="margin-top:24px; padding:10px; font-size:11px;">CLOSE RULES</button>
+  </div>
+</div>
+
+<!-- SELL MODAL -->
+<div id="sellModal" style="display:none; position:fixed; inset:0; background:rgba(6,8,10,0.85); backdrop-filter:blur(8px); z-index:1000; align-items:center; justify-content:center; padding:16px;">
+  <div style="background:#0f1318; border:1px solid #1c2028; border-radius:12px; max-width:400px; width:100%; padding:24px; position:relative; box-shadow:0 10px 40px rgba(0,0,0,0.6);">
+    <button onclick="toggleSellModal(false)" style="position:absolute; top:16px; right:16px; background:none; border:none; color:#7a8899; font-size:24px; cursor:pointer;">&times;</button>
+    <h2 style="font-family:'Black Ops One',sans-serif; font-size:20px; color:#ef4444; margin-bottom:12px;">Sell Player Card</h2>
+    <div id="sellCardInfo" style="margin-bottom:16px; font-size:14px; color:#dde4f0; line-height:1.5;">
+      <!-- Dynamic card info -->
+    </div>
+    <div style="margin-bottom:20px;">
+      <label style="display:block; font-size:11px; letter-spacing:1px; color:#5a6a7a; margin-bottom:6px; text-transform:uppercase;">Set Listing Price (CHZ)</label>
+      <input type="number" id="sellPriceInput" step="0.1" min="0.1" placeholder="10.0" style="width:100%; background:#06080a; border:1px solid #1c2028; padding:10px; border-radius:6px; color:#dde4f0; font-family:'Share Tech Mono',monospace; font-size:16px;">
+    </div>
+    <button class="btn-card-action upgrade" id="btnSubmitSell" onclick="submitSellCard()" style="padding:10px; font-size:11px; text-transform:uppercase;">List Card For Sale</button>
   </div>
 </div>
 
@@ -766,10 +783,23 @@ const RULES_TRANSLATIONS = {
     items: [
       "🔗 Connect your Chiliz Wallet to activate your personal team hubs.",
       "⚽ Mint player cards or purchase on the marketplace for any of the 48 participating nations.",
+      "⚠️ Player cards count ONLY when minted or bought via the marketplace. You can list and sell them, but direct transfers/gifts DO NOT COUNT (no score assigned).",
       "📝 Complete the 11-player lineup (tactical positions) for each nation to maximize that nation's total weight.",
       "⚡ Your Global Score is the sum of tactical weights achieved across all of your 48 national albums.",
       "🏆 The Sponsored Prize Pool of 25,000 CHZ is shared strictly among the Global TOP 10 players.",
       "📈 Est. Payout card live-updates to display your currently projected prize based on your rank!"
+    ]
+  },
+  pl: {
+    title: "Zasady gry i wskazówki",
+    items: [
+      "🔗 Połącz swój portfel Chiliz, aby aktywować swój osobisty panel drużyn.",
+      "⚽ Mintuj karty graczy lub kupuj je na rynku dla każdego z 48 uczestniczących krajów.",
+      "⚠️ Karty są zaliczane do Twojego albumu i wyniku WYŁĄCZNIE, gdy zostaną wymintowane lub zakupione na rynku wtórnym. Możesz je wystawić i sprzedać, lecz bezpośrednie transfery/podarunki pomiędzy portfelami NIE NALICZAJĄ PUNKTÓW.",
+      "📝 Ukończ 11-osobowy skład (pozycje taktyczne) dla każdego kraju, aby zmaksymalizować jego łączną wagę.",
+      "⚡ Twój wynik globalny to suma wag taktycznych zdobytych we wszystkich Twoich 48 albumach narodowych.",
+      "🏆 Sponsorowana pula nagród 25 000 CHZ jest dzielona wyłącznie między TOP 10 graczy o najwyższym wyniku.",
+      "📈 Karta szacowanej wygranej aktualizuje się na żywo, pokazując Twoją przewidywaną nagrodę na podstawie Twojego miejsca!"
     ]
   },
   de: {
@@ -777,6 +807,7 @@ const RULES_TRANSLATIONS = {
     items: [
       "🔗 Verbinden Sie Ihre Chiliz Wallet, um Ihre persönlichen Team-Hubs zu aktivieren.",
       "⚽ Prägen Sie eine Spielerkarte oder kaufen Sie eine auf dem Marktplatz für eines der 48 teilnehmenden Länder.",
+      "⚠️ Spielerkarten zählen NUR, wenn sie geprägt (mint) oder auf dem Marktplatz gekauft wurden. Sie können sie anbieten und verkaufen, aber direkte Transfers/Schenkungen ZÄHLEN NICHT (keine Punktevergabe).",
       "📝 Vervollständigen Sie die 11-Spieler-Aufstellung für jedes Land, um das Gesamtgewicht dieses Landes zu maximieren.",
       "⚡ Ihre globale Punktzahl ist die Summe der taktischen Gewichte, die in allen 48 Nationalalben erzielt wurden.",
       "🏆 Der gesponserte Preispool von 25.000 CHZ wird streng unter den globalen TOP 10 Spielern aufgeteilt.",
@@ -788,6 +819,7 @@ const RULES_TRANSLATIONS = {
     items: [
       "🔗 Connectez votre portefeuille Chiliz pour activer vos hubs d'équipe personnels.",
       "⚽ Mintez une carte de joueur ou achetez-la sur le marché pour l'un des 48 pays participants.",
+      "⚠️ Les cartes de joueur comptent UNIQUEMENT si elles sont mintées ou achetées sur le marché. Vous pouvez les mettre en vente et les vendre, mais les transferts directs/cadeaux NE COMPTENT PAS (aucun point attribué).",
       "📝 Complétez l'alignement de 11 joueurs pour chaque nation afin de maximiser le poids total de cette nation.",
       "⚡ Votre score global est la somme des poids tactiques obtenus dans l'ensemble de vos 48 albums nationaux.",
       "🏆 La cagnotte sponsorisée de 25 000 CHZ est strictement partagée entre les 10 meilleurs joueurs mondiaux.",
@@ -799,6 +831,7 @@ const RULES_TRANSLATIONS = {
     items: [
       "🔗 Conecta tu billetera Chiliz para activar tus centros de equipo personales.",
       "⚽ Mintea tarjetas de jugador o cómpralas en el mercado para cualquiera de los 48 países participantes.",
+      "⚠️ Las cartas de jugador cuentan SOLO cuando se acuñan (mint) o se compran en el mercado. Puedes listarlas y venderlas, pero las transferencias directas/regalos NO CUENTAN (no se asignan puntos).",
       "📝 Completa la alineación de 11 jugadores para cada nación para maximizar el peso total de esa nación.",
       "⚡ Tu puntuación global es la suma de los pesos tácticos logrados en tus 48 álbumes nacionales.",
       "🏆 El fondo de premios patrocinado de 25,000 CHZ se comparte estrictamente entre los 10 mejores jugadores mundiales.",
@@ -810,6 +843,7 @@ const RULES_TRANSLATIONS = {
     items: [
       "🔗 Conecte sua carteira Chiliz para ativar os seus centros de equipa pessoais.",
       "⚽ Minte cartas de jogador ou compre-as no mercado para qualquer um dos 48 países participantes.",
+      "⚠️ As cartas de jogador contam APENAS quando são mintadas ou compradas no mercado. Pode listá-las e vendê-las, mas transferências diretas/ofertas NÃO CONTAM (nenhuma pontuação é atribuída).",
       "📝 Complete a escalação de 11 jogadores para cada nação para maximizar o peso total dessa nação.",
       "⚡ Sua pontuação global é a soma dos pesos táticos obtidos em cada um dos seus 48 álbuns nacionais.",
       "🏆 O prêmio patrocinado de 25.000 CHZ é compartilhado estritamente entre os 10 melhores jogadores globais.",
@@ -821,6 +855,7 @@ const RULES_TRANSLATIONS = {
     items: [
       "🔗 Collega il tuo wallet Chiliz per attivare i tuoi hub di squadra personali.",
       "⚽ Minta una carta giocatore o acquistala sul mercato per uno dei 48 paesi partecipanti.",
+      "⚠️ Le carte giocatore contano SOLO se mintate o acquistate sul mercato. Puoi metterle in vendita e venderle, ma i trasferimenti diretti/regali NON CONTANO (nessun punteggio assegnato).",
       "📝 Completa la formazione di 11 giocatori per ogni nazione per massimizzare il peso totale di quella nazione.",
       "⚡ Il tuo punteggio globale è la somma dei pesi tattici ottenuti in tutti e 48 i tuoi album nazionali.",
       "🏆 Il montepremi sponsorizzato di 25.000 CHZ è interamente diviso tra i TOP 10 giocatori globali.",
@@ -836,9 +871,11 @@ let contract, marketContract;
 let activeFederation = 'ALL';
 let selectedTeamId = 25; // Default: Argentina
 let currentLeaderboardTab = 'global'; // global (TOP 10 + Connected wallet) or local
+let activeSellTokenId = null;
 
 window.dreamScores = {}; // wallet -> { teamId -> { position -> {weight, tid, rarity, dna} } }
 let marketByTeamPosition = {}; // teamId -> { position -> {listingId, price, weight, rarity} }
+let marketFloorByTeamPosition = {}; // teamId -> { position -> {listingId, price} }
 let currentMintPrice = ethers.parseEther("10"); 
 let dynamicVaultBalance = 0;
 
@@ -866,7 +903,7 @@ function setRulesLanguage(lang) {
   document.getElementById('rulesTitle').textContent = data.title;
   
   // Highlight active lang btn
-  const langs = ['en', 'de', 'fr', 'es', 'pt', 'it'];
+  const langs = ['en', 'pl', 'de', 'fr', 'es', 'pt', 'it'];
   langs.forEach(l => {
     const btn = document.getElementById(`lang-${l}`);
     if (btn) btn.classList.toggle('active', l === lang);
@@ -879,6 +916,40 @@ function setRulesLanguage(lang) {
     li.textContent = item;
     container.appendChild(li);
   });
+}
+
+// Sell Modal visibility control
+function toggleSellModal(show) {
+  const modal = document.getElementById('sellModal');
+  modal.style.display = show ? 'flex' : 'none';
+}
+
+// Open Sell Modal with selected card data
+function openSellModal(tokenId, pos, weight, rarity) {
+  activeSellTokenId = tokenId;
+  const posName = POSITION_SHORT[pos] || pos;
+  const rarityName = ['Common','Rare','Epic','Legendary'][rarity];
+  const selectedTeam = TEAMS.find(t => t.id === selectedTeamId);
+  
+  document.getElementById('sellCardInfo').innerHTML = `
+    <strong>Country:</strong> ${selectedTeam.flag} ${selectedTeam.name}<br>
+    <strong>Position:</strong> ${posName}<br>
+    <strong>Rarity:</strong> ${rarityName}<br>
+    <strong>Weight:</strong> ${weight} pts<br>
+    <strong>Token ID:</strong> #${tokenId}
+  `;
+  document.getElementById('sellPriceInput').value = "10";
+  toggleSellModal(true);
+}
+
+// Handle Submit Card Listing
+async function submitSellCard() {
+  const priceInput = document.getElementById('sellPriceInput').value;
+  if (!priceInput || parseFloat(priceInput) <= 0) {
+    showToast('Enter a valid price greater than 0 CHZ.', true);
+    return;
+  }
+  await sellFigure(activeSellTokenId, priceInput);
 }
 
 // Renders flag using flagcdn.com with fallback to native emoji
@@ -1020,6 +1091,8 @@ async function fetchEvents(){
   return {mints, sales: salesWithToken, listed};
 }
 
+let ownerMap = {};
+
 async function loadData(){
   document.getElementById('countryGridContainer').innerHTML = '<div style="text-align:center;color:#3d4a5a;padding:40px;grid-column:1/-1;"><span class="spin"></span> Querying Chiliz Blockchain...</div>';
 
@@ -1050,7 +1123,7 @@ async function loadData(){
     }
   }
 
-  const ownerMap = {};
+  ownerMap = {};
   mints.forEach(m => {
     try{
       const t = parseDNA(m.dna);
@@ -1089,6 +1162,7 @@ async function loadData(){
   });
 
   marketByTeamPosition = {};
+  marketFloorByTeamPosition = {};
   try{
     const rp = await getReadProvider();
     const rmk = new ethers.Contract(MARKET_ADDRESS, MARKET_ABI, rp);
@@ -1106,10 +1180,18 @@ async function loadData(){
         const tid = fig.teamId;
         const pos = fig.position;
         
+        // Find best upgrade card
         if(!marketByTeamPosition[tid]) marketByTeamPosition[tid] = {};
         const curMkt = marketByTeamPosition[tid][pos];
         if(!curMkt || fig.weight > curMkt.weight || (fig.weight === curMkt.weight && price < curMkt.price)){
           marketByTeamPosition[tid][pos] = {listingId: i, price, priceWei, weight: fig.weight, rarity: fig.rarity};
+        }
+
+        // Find cheapest marketplace floor card
+        if(!marketFloorByTeamPosition[tid]) marketFloorByTeamPosition[tid] = {};
+        const curFloor = marketFloorByTeamPosition[tid][pos];
+        if(!curFloor || price < curFloor.price) {
+          marketFloorByTeamPosition[tid][pos] = {listingId: i, price, priceWei};
         }
       }catch(e){}
     }
@@ -1272,6 +1354,17 @@ function renderPitch() {
       const scored = myTeamPositions[pos];
       const mktTeam = marketByTeamPosition[selectedTeamId] || {};
       const mkt = mktTeam[pos];
+      
+      const floorTeam = marketFloorByTeamPosition[selectedTeamId] || {};
+      const floor = floorTeam[pos];
+
+      // Format lowest price info
+      let floorHtml = '';
+      if (floor) {
+        floorHtml = `<div style="font-size:9px; color:#ffc940; font-family:'Share Tech Mono',monospace; margin-top:2px;">Floor: ${floor.price} CHZ</div>`;
+      } else {
+        floorHtml = `<div style="font-size:9px; color:#5a6a7a; font-family:'Share Tech Mono',monospace; margin-top:2px;">No listings</div>`;
+      }
 
       if (scored) {
         const rarColor = ['#7a8899','#3b82f6','#c084fc','#ffc940'][scored.rarity];
@@ -1284,6 +1377,14 @@ function renderPitch() {
           actionHtml = `<div style="margin-top:4px;font-size:8px;color:#5a6a7a;font-family:Share Tech Mono,monospace;letter-spacing:0.3px;">BEST WEIGHT</div>`;
         }
 
+        // Sell Button if user currently owns the scored card
+        let sellBtnHtml = '';
+        const currentOwnerInfo = ownerMap[scored.tid];
+        const currentlyOwnsScored = myAddr && currentOwnerInfo && currentOwnerInfo.owner === myAddr;
+        if (currentlyOwnsScored) {
+          sellBtnHtml = `<button onclick="openSellModal(${scored.tid}, ${pos}, ${scored.weight}, ${scored.rarity})" class="btn-card-action" style="background:rgba(239,68,68,0.1); border-color:rgba(239,68,68,0.3); color:#ef4444; margin-top:4px;">SELL CARD</button>`;
+        }
+
         card.innerHTML = `
           <div>
             <div class="pos-name">${POSITION_SHORT[pos]}</div>
@@ -1292,7 +1393,9 @@ function renderPitch() {
           <div>
             <div class="pos-weight ${scored.rarity === 3 ? 'gold' : ''}">${scored.weight}</div>
             <div class="pos-rarity" style="color:${rarColor}">${['Common','Rare','Epic','Legendary'][scored.rarity]}</div>
+            ${floorHtml}
             ${actionHtml}
+            ${sellBtnHtml}
           </div>
         `;
       } else {
@@ -1301,7 +1404,7 @@ function renderPitch() {
         if (mkt) {
           actionHtml = `<button onclick="buyFromMarket(${mkt.listingId}, '${mkt.price}')" class="btn-card-action">BUY W:${mkt.weight}<br>${mkt.price} CHZ</button>`;
         } else {
-          actionHtml = `<div style="margin-top:4px;font-size:8px;color:#5a6a7a;font-family:Share Tech Mono,monospace;letter-spacing:0.3px;">NO LISTINGS</div>`;
+          actionHtml = `<div style="margin-top:4px;font-size:8px;color:#5a6a7a;font-family:Share Tech Mono,monospace;">NO LISTINGS</div>`;
         }
 
         card.innerHTML = `
@@ -1312,6 +1415,7 @@ function renderPitch() {
           <div>
             <div class="pos-weight empty">—</div>
             <div class="pos-rarity" style="color:#5a6a7a;">EMPTY</div>
+            ${floorHtml}
             ${actionHtml}
           </div>
         `;
@@ -1465,6 +1569,39 @@ async function buyFromMarket(listingId, priceChz){
   } catch (error) {
     console.error(error);
     showToast('Transaction failed. Make sure you have enough CHZ.', true);
+  }
+}
+
+async function sellFigure(tokenId, priceChz) {
+  if (!signer || !marketContract) {
+    showToast('Please connect your wallet first.', true);
+    return;
+  }
+  try {
+    const figContract = new ethers.Contract(CONTRACT_ADDRESS, [
+      "function isApprovedForAll(address account, address operator) external view returns (bool)",
+      "function setApprovalForAll(address operator, bool approved) external"
+    ], signer);
+
+    showToast('Checking marketplace approval...');
+    const isApproved = await figContract.isApprovedForAll(address, MARKET_ADDRESS);
+    if (!isApproved) {
+      showToast('Please approve the marketplace to handle your figures...');
+      const txApprove = await figContract.setApprovalForAll(MARKET_ADDRESS, true);
+      await txApprove.wait();
+      showToast('Marketplace approved! Now listing your figure...');
+    }
+
+    const priceWei = ethers.parseEther(priceChz);
+    showToast(`Listing card #${tokenId} for ${priceChz} CHZ...`);
+    const txList = await marketContract.listFigure(tokenId, priceWei);
+    await txList.wait();
+    showToast('Card successfully listed on the marketplace!');
+    toggleSellModal(false);
+    await loadData();
+  } catch(e) {
+    console.error(e);
+    showToast('Listing failed. Make sure you own this card and have sufficient gas.', true);
   }
 }
 
