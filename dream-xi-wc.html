@@ -368,6 +368,58 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
 
 #toast{position:fixed;bottom:24px;right:24px;background:#0f1318;border:1px solid #00ff87;padding:16px 24px;border-radius:8px;display:none;z-index:10000;font-family:'Share Tech Mono',monospace;color:#00ff87;box-shadow:0 10px 30px rgba(0,0,0,0.5);max-width:320px;line-height:1.4;}
 
+/* COUNTDOWN CLOCK SPECIFIC REPAIRS */
+.countdown-wrap{background:#0f1318;border:1px solid rgba(0,255,135,0.3);border-radius:10px;padding:16px 24px;display:inline-flex;flex-direction:column;align-items:center;gap:6px;margin-top:20px;position:relative;z-index:1;min-width:280px;}
+.countdown-label{font-size:10px;letter-spacing:3px;color:#5a6a7a;text-align:center;}
+.countdown-timer {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 12px !important;
+  margin: 10px auto 4px !important;
+}
+.countdown-unit {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+  min-width: 50px !important;
+}
+.countdown-num {
+  font-family: 'Black Ops One', sans-serif !important;
+  font-size: 32px !important;
+  color: #00ff87 !important;
+  line-height: 1 !important;
+}
+.countdown-sub {
+  font-size: 9px !important;
+  letter-spacing: 2px !important;
+  color: #5a6a7a !important;
+  margin-top: 4px !important;
+}
+.countdown-divider {
+  font-family: 'Black Ops One', sans-serif !important;
+  font-size: 24px !important;
+  color: #2a3040 !important;
+  margin: 0 2px !important;
+  padding: 0 !important;
+  line-height: 1 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  height: 32px !important;
+}
+.countdown-block {
+  font-size: 11px;
+  color: #3d4a5a;
+  font-family: 'Share Tech Mono', monospace;
+  margin-top: 4px;
+  text-align: center;
+}
+
 @media(max-width:600px){
   .stats-container{grid-template-columns:1fr 1fr;}
   .form-row{gap:4px;}
@@ -377,8 +429,9 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
   .btn-card-action{font-size:6px;padding:2px 1px;}
   .pitch-penalty-area-top, .pitch-penalty-area-bottom { width: 140px; height: 40px; }
   .pitch-center-circle { width: 70px; height: 70px; }
-  .countdown-timer { gap: 8px; }
-  .countdown-num { font-size: 24px; }
+  .countdown-timer { gap: 6px !important; }
+  .countdown-num { font-size: 24px !important; }
+  .countdown-unit { min-width: 40px !important; }
 }
 </style>
 </head>
@@ -423,13 +476,25 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
     <div class="countdown-wrap">
       <div class="countdown-label">TOURNAMENT DEADLINE (WORLD CUP FINAL BLOCK)</div>
       <div class="countdown-timer">
-        <div class="countdown-unit"><div class="countdown-num" id="cdD">--</div><div class="countdown-sub">DAYS</div></div>
-        <div style="font-family:'Black Ops One',sans-serif;font-size:28px;color:#2a3040;padding-bottom:4px;">:</div>
-        <div class="countdown-unit"><div class="countdown-num" id="cdH">--</div><div class="countdown-sub">HOURS</div></div>
-        <div style="font-family:'Black Ops One',sans-serif;font-size:28px;color:#2a3040;padding-bottom:4px;">:</div>
-        <div class="countdown-unit"><div class="countdown-num" id="cdM">--</div><div class="countdown-sub">MIN</div></div>
-        <div style="font-family:'Black Ops One',sans-serif;font-size:28px;color:#2a3040;padding-bottom:4px;">:</div>
-        <div class="countdown-unit"><div class="countdown-num" id="cdS">--</div><div class="countdown-sub">SEC</div></div>
+        <div class="countdown-unit">
+          <div class="countdown-num" id="cdD">--</div>
+          <div class="countdown-sub">DAYS</div>
+        </div>
+        <div class="countdown-divider">:</div>
+        <div class="countdown-unit">
+          <div class="countdown-num" id="cdH">--</div>
+          <div class="countdown-sub">HOURS</div>
+        </div>
+        <div class="countdown-divider">:</div>
+        <div class="countdown-unit">
+          <div class="countdown-num" id="cdM">--</div>
+          <div class="countdown-sub">MIN</div>
+        </div>
+        <div class="countdown-divider">:</div>
+        <div class="countdown-unit">
+          <div class="countdown-num" id="cdS">--</div>
+          <div class="countdown-sub">SEC</div>
+        </div>
       </div>
       <div class="countdown-block" id="cdBlock">Target block: 35,886,889</div>
     </div>
@@ -451,7 +516,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
     </div>
     <div class="stat-card" style="background:rgba(0,255,135,0.03); border-color:rgba(0,255,135,0.2);">
       <div class="stat-val" id="myEstPayout" style="color:#00ff87; font-size:24px; padding-top:6px;">0.00 CHZ</div>
-      <div class="stat-lbl">Est. Prize Claim</div>
+      <div class="stat-lbl">Est. Quest Prize Claim</div>
     </div>
   </div>
 
@@ -550,7 +615,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
 const CONTRACT_ADDRESS = "0xAAdc8D56e25a223B6cf4b88ba0889975560f21aB";
 const MARKET_ADDRESS   = "0xA18f7Bade67Eda41FD7D2B3A204d39b543977DaE";
 const CHAIN_ID = 88888;
-const SPONSORED_POOL = 25000; // Sponsored baseline reward pool of 25,000 CHZ
+const SPONSORED_POOL = 25000; // Sponsored baseline reward pool of exactly 25,000 CHZ
 
 const ABI = [
   "event FigureMinted(address indexed owner,uint256 indexed tokenId,uint256 dna,uint256 teamId,uint256 position,uint8 rarity,uint256 weight)",
@@ -890,7 +955,7 @@ async function loadData(){
     }
   }catch(e){ console.warn('Market scan error:', e); }
 
-  // Query Contract for Actual Vault Payout Pool & Add Sponsored baseline
+  // Query Contract for informational Vault Balance (keeps sponsored separate)
   dynamicVaultBalance = 0;
   if (contract) {
     try {
@@ -898,14 +963,10 @@ async function loadData(){
       dynamicVaultBalance = parseFloat(ethers.formatEther(vb));
     } catch(e) {
       console.warn("Vault balance query error:", e);
-      // fallback
-      const uniquePlayers = Object.keys(window.dreamScores).length;
-      dynamicVaultBalance = uniquePlayers * 10 + 5000;
     }
   }
-  const totalPrizePool = SPONSORED_POOL + dynamicVaultBalance;
-  const sharePayout = totalPrizePool / 48;
-  document.getElementById('poolInfo').textContent = `Total Payout Pool: ~${totalPrizePool.toLocaleString(undefined, {maximumFractionDigits: 2})} CHZ (${sharePayout.toFixed(2)} CHZ per country leader)`;
+  const sharePayout = SPONSORED_POOL / 48;
+  document.getElementById('poolInfo').textContent = `Quest Prize Pool: ${SPONSORED_POOL.toLocaleString()} CHZ (Sponsor Funded) · ${sharePayout.toFixed(2)} CHZ per country leader`;
 
   renderStats();
   renderCountryHub();
@@ -966,8 +1027,8 @@ function renderStats() {
   document.getElementById('myTotalCards').textContent = totalCardsHandled;
   document.getElementById('myChampionships').textContent = leadsCount;
   
-  const totalPrizePool = SPONSORED_POOL + dynamicVaultBalance;
-  const sharePayout = totalPrizePool / 48;
+  // Strictly calculated using the independent sponsored pool (25k CHZ)
+  const sharePayout = SPONSORED_POOL / 48;
   const estimatedClaim = leadsCount * sharePayout;
   document.getElementById('myEstPayout').textContent = `${estimatedClaim.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})} CHZ`;
 }
@@ -1106,8 +1167,7 @@ function renderLeaderboard(){
   const lb = document.getElementById('leaderboard');
   const myAddr = address?.toLowerCase();
 
-  const totalPrizePool = SPONSORED_POOL + dynamicVaultBalance;
-  const sharePayout = totalPrizePool / 48;
+  const sharePayout = SPONSORED_POOL / 48;
 
   if (currentLeaderboardTab === 'global') {
     // Show 48 national leaders
@@ -1274,7 +1334,7 @@ function updateCountdown(){
   const secsLeft = blocksLeft * 3;
   const d = Math.floor(secsLeft / 86400);
   const h = Math.floor((secsLeft % 86400) / 3600);
-  const m = Math.floor((secsLeft % 3,600) / 60);
+  const m = Math.floor((secsLeft % 3600) / 60);
   const s = secsLeft % 60;
   
   document.getElementById('cdD').textContent = String(d).padStart(2,'0');
