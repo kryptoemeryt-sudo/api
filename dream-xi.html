@@ -1512,6 +1512,7 @@ let currentMarketListings = [];
 let snipeFilterMode = 'all';
 let currentMintPrice = ethers.parseEther("10");
 let localMintEvents = [];
+let localSaleEvents = [];
 
 // Spis wszystkich 48 krajĂłw dla poprawnego mapowania nazw i flag w globalnym Ledgerze
 const TEAMS = [
@@ -2097,6 +2098,12 @@ async function loadData(){
     }
   });
 
+  localSaleEvents.forEach(localSale => {
+    if (!sales.some(s => Number(s.listingId) === Number(localSale.listingId) && Number(s.block || 0) === Number(localSale.block || 0))) {
+      sales.push(localSale);
+    }
+  });
+
   if (contract) {
     try {
       const p = await contract.mintPrice();
@@ -2221,7 +2228,7 @@ async function loadData(){
         // Wyszukanie najniĹĽszej ceny (floor)
         const curFloor = marketFloorByPos[pos];
         if(!curFloor || price < curFloor.price) {
-          marketFloorByPos[pos] = {listingId: i, price, priceWei: priceWei.toString(), seller: seller_addr};
+          marketFloorByPos[pos] = {listingId: i, price, priceWei: priceWei.toString(), seller: seller_addr, tokenId, weight: fig.weight, rarity: fig.rarity};
         }
       }catch(e){}
     }
@@ -2594,7 +2601,7 @@ function renderPitch() {
         
         let actionHtml = '';
         if (mkt && mkt.weight > scored.weight) {
-          actionHtml = `<button onclick="buyFromMarket(${mkt.listingId}, '${mkt.price}', '${mkt.priceWei}')" class="btn-card-action upgrade">UPGRADE +${mkt.weight - scored.weight}<br>${mkt.price} CHZ</button>`;
+          actionHtml = `<button onclick="buyFromMarket(${mkt.listingId}, '${mkt.price}', '${mkt.priceWei}')" class="btn-card-action upgrade">UPGRADE +${mkt.weight - scored.weight}<br>${mkt.weight} PTS / ${mkt.price} CHZ</button>`;
         } else {
           actionHtml = `<div style="margin-top:4px;font-size:8px;color:#5a6a7a;font-family:Share Tech Mono,monospace;letter-spacing:0.3px;">BEST WEIGHT</div>`;
         }
@@ -2632,7 +2639,7 @@ function renderPitch() {
         card.className = 'pos-card empty';
         let actionHtml = '';
         if (floor) {
-          actionHtml = `<button onclick="buyFromMarket(${floor.listingId}, '${floor.price}', '${floor.priceWei}')" class="btn-card-action">BUY<br>${floor.price} CHZ</button>`;
+          actionHtml = `<button onclick="buyFromMarket(${floor.listingId}, '${floor.price}', '${floor.priceWei}')" class="btn-card-action">BUY ${floor.weight || '-'} PTS<br>${floor.price} CHZ</button>`;
         } else {
           actionHtml = `<div style="margin-top:4px;font-size:8px;color:#5a6a7a;font-family:Share Tech Mono,monospace;">NO LISTINGS</div>`;
         }
@@ -2767,7 +2774,18 @@ async function buyFromMarket(listingId, priceChz, priceWeiRaw){
     const tx = await marketContract.buyFigure(listingId, { value: priceWei });
     showHeaderToast('Transaction sent to Chiliz Chain. Awaiting blockchain confirmation...');
     
-    await tx.wait();
+    const receipt = await tx.wait();
+    if (boughtFig && myAddr) {
+      localSaleEvents = localSaleEvents.filter(s => Number(s.listingId) !== Number(listingId));
+      localSaleEvents.push({
+        listingId: Number(listingId),
+        tokenId,
+        buyer: myAddr,
+        seller: sellerAddr,
+        price: parseFloat(ethers.formatEther(priceWei)),
+        block: Number(receipt.blockNumber || 0)
+      });
+    }
     await loadData();
     if (boughtFig && boughtFig.teamId === ARGENTINA_TEAM_ID) {
       const posName = POSITION_SHORT[boughtFig.position] || boughtFig.position;
