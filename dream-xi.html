@@ -1054,14 +1054,14 @@ const POSITION_SHORT = {
   7: 'RW',
   8: 'MID',
   9: 'ST',
-  10: 'AM',
+  10: '#10',
   11: 'LW'
 };
 
 // Pozycjonowanie obrońców (LB po lewej, RB po prawej) na boisku taktycznym
 const FORMATION = [
   [9],         // ST
-  [7,11],      // RW, LW
+  [11,7],      // LW, RW
   [6,8,10],    // DM, MID, AM
   [3,4,5,2],   // LB, CB A, CB B, RB
   [1]          // GK
@@ -1246,6 +1246,19 @@ function showHeaderToast(message, isError = false) {
   }, 6000);
 }
 
+
+async function updateWalletBalance() {
+  if (typeof window.ethereum !== 'undefined' && address) {
+    try {
+      const tempProvider = new ethers.BrowserProvider(window.ethereum);
+      const balanceWei = await tempProvider.getBalance(address);
+      const balanceEth = parseFloat(ethers.formatEther(balanceWei)).toFixed(1);
+      const balEl = document.getElementById('walletBalance');
+      if (balEl) { balEl.textContent = balanceEth + ' CHZ'; balEl.style.display = 'inline-block'; }
+    } catch(e) {}
+  }
+}
+
 function toggleRulesModal(show) {
   const modal = document.getElementById('rulesModal');
   modal.style.display = show ? 'flex' : 'none';
@@ -1365,6 +1378,7 @@ async function connectWallet(){
     
     contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
     marketContract = new ethers.Contract(MARKET_ADDRESS, MARKET_ABI, signer);
+    updateWalletBalance();
     
     document.getElementById('connectBtn').textContent = address.slice(0,6)+'...'+address.slice(-4);
     document.getElementById('connectBtn').classList.add('connected');
@@ -1525,12 +1539,17 @@ async function loadData(){
   // Parsowanie listingów w celach rozliczeniowych portfolio
   listed.forEach(ev => {
     try {
-      const lid = Number(ev.args.listingId);
-      const tokenId = Number(ev.args.tokenId);
-      const price = parseFloat(ethers.formatEther(ev.args.price));
+      // Obsługa obu formatów: API ({listingId, tokenId, price}) i RPC (ev.args.*)
+      const lid = Number(ev.listingId ?? ev.args?.listingId);
+      const tokenId = Number(ev.tokenId ?? ev.args?.tokenId);
+      const priceRaw = ev.price ?? ev.args?.price;
+      const price = typeof priceRaw === 'string' || typeof priceRaw === 'bigint'
+        ? parseFloat(ethers.formatEther(priceRaw))
+        : parseFloat(priceRaw) || 0;
+      const sellerRaw = ev.seller ?? ev.args?.seller;
       const fig = ownerMap[tokenId];
       listDetails[lid] = {
-        seller: ev.args.seller.toLowerCase(),
+        seller: sellerRaw?.toLowerCase() || '',
         tokenId: tokenId,
         price: price,
         teamId: fig ? fig.teamId : null,
@@ -1659,12 +1678,11 @@ function renderPortfolioAndLedger(mints, sales, listDetails) {
   // 2. Obliczanie zrealizowanych zakupów i sprzedaży rynkowych dla wszystkich 48 krajów
   sales.forEach(s => {
     const lid = Number(s.listingId);
-    const details = listDetails[lid] || s; 
+    const details = listDetails[lid] || {};
     const buyer = s.buyer?.toLowerCase();
-    const seller = s.seller?.toLowerCase() || details?.seller;
-    const price = s.price || details?.price || 0;
-
-    const figId = details?.tokenId || s.tokenId;
+    const seller = s.seller?.toLowerCase() || details?.seller || '';
+    const price = (s.price && s.price > 0) ? s.price : (details?.price || 0);
+    const figId = Number(details?.tokenId || s.tokenId);
     const fig = ownerMap[figId];
 
     if (fig) {
@@ -2027,7 +2045,7 @@ async function buyFromMarket(listingId, priceChz){
     showHeaderToast(`Initializing marketplace buy: Listing #${listingId} for ${priceChz} CHZ...`);
     const priceWei = ethers.parseEther(String(priceChz));
 
-    const tx = await marketContract.buyFigure(listingId, { value: priceWei });
+    const tx = await marketContract.buyFigure(listingId, { value: priceWei, gasLimit: 300000 });
     showHeaderToast('Transaction sent to Chiliz Chain. Awaiting blockchain confirmation...');
     
     await tx.wait();
@@ -2169,9 +2187,9 @@ function shareOnX(){
 }
 
 /* HARMONOGRAM I LICZNIK BLOKÓW SYSTEMOWYCH */
-const DEADLINE_BLOCK = 34253705;
+const DEADLINE_BLOCK = 34503406; // 31.05.2026 23:00
 const BLOCK_TIME_MS = 3000;
-let currentBlock = 34158889; 
+let currentBlock = 34196746; 
 let lastBlockTime = Date.now();
 
 async function fetchCurrentBlock(){
@@ -2213,13 +2231,13 @@ function updateCountdown(){
     return;
   }
   const secsLeft = blocksLeft * 3;
-  const h = Math.floor(secsLeft / 3600);
+  const d = Math.floor(secsLeft / 86400);
+  const h = Math.floor((secsLeft % 86400) / 3600);
   const m = Math.floor((secsLeft % 3600) / 60);
   const s = secsLeft % 60;
-  
-  document.getElementById('cdH').textContent = String(h).padStart(2,'0');
-  document.getElementById('cdM').textContent = String(m).padStart(2,'0');
-  document.getElementById('cdS').textContent = String(s).padStart(2,'0');
+  document.getElementById('cdH').textContent = d > 0 ? String(d).padStart(2,'0') : String(h).padStart(2,'0');
+  document.getElementById('cdM').textContent = d > 0 ? String(h).padStart(2,'0') : String(m).padStart(2,'0');
+  document.getElementById('cdS').textContent = d > 0 ? String(m).padStart(2,'0') : String(s).padStart(2,'0');
   document.getElementById('cdBlock').innerHTML = 'Deadline block: <a href="https://scan.chiliz.com/block/'+DEADLINE_BLOCK+'" target="_blank" style="color:#00ff87;text-decoration:none;">#'+DEADLINE_BLOCK.toLocaleString()+'</a> · Estimated current: ~#'+estimated.toLocaleString()+' · remaining: '+blocksLeft.toLocaleString()+' blocks';
 }
 
