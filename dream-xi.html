@@ -3131,16 +3131,10 @@ function shareOnX(){
 const BLOCK_TIME_MS = 3000;
 const DEADLINE_DAYS = 60;
 const DEADLINE_BLOCK_OFFSET = Math.floor((DEADLINE_DAYS * 24 * 60 * 60 * 1000) / BLOCK_TIME_MS);
-let currentBlock = 34158889; 
-let DEADLINE_BLOCK = currentBlock + DEADLINE_BLOCK_OFFSET;
-let deadlineInitialized = false;
+const DEADLINE_START_BLOCK = 34212717;
+const DEADLINE_BLOCK = DEADLINE_START_BLOCK + DEADLINE_BLOCK_OFFSET;
+let currentBlock = DEADLINE_START_BLOCK; 
 let lastBlockTime = Date.now();
-
-function initializeDeadlineBlock(baseBlock) {
-  if (deadlineInitialized || !baseBlock) return;
-  DEADLINE_BLOCK = Number(baseBlock) + DEADLINE_BLOCK_OFFSET;
-  deadlineInitialized = true;
-}
 
 async function fetchCurrentBlock(){
   try{
@@ -3149,7 +3143,6 @@ async function fetchCurrentBlock(){
       const d = await res.json();
       if(d.currentBlock) {
         currentBlock = d.currentBlock;
-        initializeDeadlineBlock(currentBlock);
         lastBlockTime = Date.now();
         return;
       }
@@ -3160,7 +3153,6 @@ async function fetchCurrentBlock(){
     const rp = await getReadProvider();
     const b = await rp.getBlockNumber();
     currentBlock = b;
-    initializeDeadlineBlock(currentBlock);
     lastBlockTime = Date.now();
   } catch(e) {
     console.warn("RPC block fetch failed:", e);
