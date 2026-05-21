@@ -1166,7 +1166,7 @@ const RULES_TRANSLATIONS = {
       "⚽ Мінтуйте картки гравців (вартість: 10 CHZ) або купуйте їх на вторинному ринку.",
       "⚠️ Картка зараховується у вашу команду ТІЛЬКИ якщо вона була змінтована вами або куплена на маркетплейсі. Прямі перекази (дарунки) між гаманцями НЕ ЗАРАХОВУЮТЬСЯ (тактичні бали не нараховуються).",
       "📝 Ваш загальний рахунок — це сума показників найкращих карток, які коли-небудь проходили через ваш гаманець.",
-      "⚡ Коли ви отримуєте сильнішу картку на позицію, ваш результат оновлюється миттєво. Слабшу картку ви можете виставити на продаж і повернути свої CHZ!",
+      "⚡ Коли ви отримуєте сильнішу картку на позицію, ваш результат оновлюється миттєво. Слабшу картку ви можете виставити на продаж і повернути свои CHZ!",
       "🏆 Топ-3 колекціонери з найбільшою вагою складу на момент фінального блоку розділять призовий фонд у розмірі 10 000 CHZ!"
     ]
   }
@@ -1372,6 +1372,16 @@ async function connectWallet(){
     document.getElementById('gameSection').style.display = 'block';
     document.getElementById('statsRow').style.display = 'grid';
     
+    // Pobierz i zaktualizuj wyświetlanie salda CHZ w nagłówku
+    const balanceWei = await provider.getBalance(address);
+    const balanceEth = ethers.formatEther(balanceWei);
+    const balanceFormatted = parseFloat(balanceEth).toFixed(1);
+    const balEl = document.getElementById('walletBalance');
+    if (balEl) {
+      balEl.textContent = `${balanceFormatted} CHZ`;
+      balEl.style.display = 'inline-block';
+    }
+
     await loadData();
   }catch(e){
     console.error(e);
@@ -1474,6 +1484,22 @@ async function loadData(){
       currentMintPrice = p;
     } catch(e) {
       console.warn("Could not query dynamic mint price:", e);
+    }
+  }
+
+  // Pobierz i zaktualizuj wyświetlanie salda CHZ w nagłówku strony
+  if (provider && address) {
+    try {
+      const balanceWei = await provider.getBalance(address);
+      const balanceEth = ethers.formatEther(balanceWei);
+      const balanceFormatted = parseFloat(balanceEth).toFixed(1);
+      const balEl = document.getElementById('walletBalance');
+      if (balEl) {
+        balEl.textContent = `${balanceFormatted} CHZ`;
+        balEl.style.display = 'inline-block';
+      }
+    } catch(e) {
+      console.warn("Could not fetch wallet balance inside loadData:", e);
     }
   }
 
