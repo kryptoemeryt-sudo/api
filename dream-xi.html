@@ -696,6 +696,13 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
   font-size: 24px;
   cursor: pointer;
 }
+.guide-steps{display:flex;flex-direction:column;gap:10px;margin-top:14px;}
+.guide-step{display:grid;grid-template-columns:32px 1fr;gap:10px;align-items:start;background:rgba(6,8,10,0.45);border:1px solid #1c2028;border-radius:8px;padding:10px;}
+.guide-step-num{font-family:'Black Ops One',sans-serif;color:#00ff87;background:rgba(0,255,135,0.1);border:1px solid rgba(0,255,135,0.25);border-radius:6px;height:28px;display:flex;align-items:center;justify-content:center;font-size:12px;}
+.guide-step-title{font-family:'Black Ops One',sans-serif;color:#dde4f0;font-size:12px;letter-spacing:1px;margin-bottom:3px;}
+.guide-step-text{color:#7a8899;font-size:14px;line-height:1.35;}
+.tip-box{background:rgba(255,201,64,0.08);border:1px solid rgba(255,201,64,0.28);border-radius:8px;padding:10px;margin-top:12px;color:#d9c27a;font-size:14px;line-height:1.35;}
+.tip-box strong{color:#ffc940;font-family:'Black Ops One',sans-serif;font-size:12px;letter-spacing:1px;}
 
 /* KLASA DLA ZAKĹADEK WYBORU JÄZYKA */
 .tab-btn{background:#0f1318;border:1px solid #1c2028;color:#7a8899;padding:6px 12px;border-radius:6px;font-family:'Black Ops One',sans-serif;font-size:10px;letter-spacing:1px;cursor:pointer;transition:all 0.2s;}
@@ -1017,6 +1024,46 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
 </div>
 
 <!-- MODAL: ZASADY W WIELU JÄZYKACH (TABY BEZ FLAG) -->
+<div id="onboardingModal" class="modal-overlay">
+  <div class="modal-content" style="max-width:560px;">
+    <button onclick="toggleOnboardingModal(false, true)" class="modal-close">&times;</button>
+    <h2 style="font-family:'Black Ops One',sans-serif; font-size:24px; color:#00ff87; margin-bottom:8px;">HOW ARGENTINA DREAM XI WORKS</h2>
+    <p style="color:#7a8899;line-height:1.4;">Build your Argentina squad with on-chain cards. A card scores as soon as it passes through your wallet, so you can keep it, sell it, or trade for the next upgrade.</p>
+    <div class="guide-steps">
+      <div class="guide-step">
+        <div class="guide-step-num">01</div>
+        <div>
+          <div class="guide-step-title">MINT A RANDOM WC CARD</div>
+          <div class="guide-step-text">Every mint gives one random card from the 48 World Cup teams. Argentina cards count in this quest.</div>
+        </div>
+      </div>
+      <div class="guide-step">
+        <div class="guide-step-num">02</div>
+        <div>
+          <div class="guide-step-title">FILL 11 POSITIONS</div>
+          <div class="guide-step-text">Your best Argentina card for each position is saved to the squad score. Higher weight means more points.</div>
+        </div>
+      </div>
+      <div class="guide-step">
+        <div class="guide-step-num">03</div>
+        <div>
+          <div class="guide-step-title">TRADE SMART</div>
+          <div class="guide-step-text">You do not need to hold a card forever. Once it is recorded for your wallet, you can sell reserves and hunt missing positions.</div>
+        </div>
+      </div>
+      <div class="guide-step">
+        <div class="guide-step-num">04</div>
+        <div>
+          <div class="guide-step-title">WATCH SCARCITY</div>
+          <div class="guide-step-text">The small x-number on squad cards shows detected circulation. If only one or two exist, the market price can be much higher.</div>
+        </div>
+      </div>
+    </div>
+    <div class="tip-box"><strong>LIVE TIP SYSTEM</strong><br>After important mints, the game will warn you when a card looks scarce or when it may be better to sell instead of listing too low.</div>
+    <button class="btn-card-action upgrade" onclick="toggleOnboardingModal(false, true)" style="margin-top:18px; padding:10px; font-size:11px;">START QUEST</button>
+  </div>
+</div>
+
 <div id="rulesModal" class="modal-overlay">
   <div class="modal-content" style="max-width:550px;">
     <button onclick="toggleRulesModal(false)" class="modal-close">&times;</button>
@@ -1357,6 +1404,22 @@ function toggleMintSuccessModal(show) {
   modal.style.display = show ? 'flex' : 'none';
 }
 
+function toggleOnboardingModal(show, remember = false) {
+  const modal = document.getElementById('onboardingModal');
+  if (!modal) return;
+  modal.style.display = show ? 'flex' : 'none';
+  if (!show && remember) {
+    try { localStorage.setItem('dreamXiGuideSeen', '1'); } catch(e) {}
+  }
+}
+
+function maybeShowOnboarding() {
+  try {
+    if (localStorage.getItem('dreamXiGuideSeen') === '1') return;
+  } catch(e) {}
+  setTimeout(() => toggleOnboardingModal(true), 500);
+}
+
 function scrollToSquad() {
   const squad = document.querySelector('.right-col.pitch-container');
   if (!squad) return;
@@ -1673,6 +1736,26 @@ function getErrorReason(error) {
     || error?.data?.message
     || error?.message
     || '';
+}
+
+function getMintTip(mintedCard, circulationCount, oldCard, isUpgrade) {
+  const teamInfo = TEAMS[mintedCard.teamId] || {name:'Unknown'};
+  const posName = POSITION_SHORT[mintedCard.position] || mintedCard.position;
+  const countText = circulationCount ? `${circulationCount}` : 'few';
+
+  if (mintedCard.teamId === ARGENTINA_TEAM_ID && circulationCount <= 1) {
+    return `<div class="tip-box"><strong>RARE POSITION ALERT</strong><br>This is currently the only detected Argentina ${posName} card in circulation. Consider checking the market carefully before listing it.</div>`;
+  }
+  if (mintedCard.teamId === ARGENTINA_TEAM_ID && circulationCount <= 3) {
+    return `<div class="tip-box"><strong>SCARCE CARD</strong><br>Only ${countText} detected Argentina ${posName} cards are in circulation. Scarce positions can be worth much more than the mint price.</div>`;
+  }
+  if (isUpgrade && mintedCard.teamId === ARGENTINA_TEAM_ID) {
+    return `<div class="tip-box"><strong>UPGRADE SECURED</strong><br>Your best score for this position is saved. You can keep this card or list weaker reserves to recover CHZ.</div>`;
+  }
+  if (mintedCard.teamId !== ARGENTINA_TEAM_ID) {
+    return `<div class="tip-box"><strong>${teamInfo.name.toUpperCase()} CARD</strong><br>This does not score in Argentina Dream XI, but it is still an on-chain card from the 48-team set. You can list it or keep it for future national quests.</div>`;
+  }
+  return `<div class="tip-box"><strong>MARKET TIP</strong><br>This card has already passed through your wallet. If it does not improve your squad, consider listing it to recycle liquidity.</div>`;
 }
 
 async function loadData(){
@@ -2524,6 +2607,8 @@ async function directMint() {
           <p style="color:#7a8899;">You already have a heavier card scored for this position (current best: ${oldCard.weight} pts). This card is sent to your reserves for marketplace selling!</p>
         `;
       }
+      const circulationAfterMint = mintedCard.teamId === ARGENTINA_TEAM_ID ? ((circulationByPos[mintedCard.position] || 0) + 1) : 0;
+      statusText += getMintTip(mintedCard, circulationAfterMint, oldCard, isUpgrade);
       document.getElementById('mintedCardStatus').innerHTML = statusText;
       toggleMintSuccessModal(true);
     }
@@ -2618,6 +2703,7 @@ setInterval(fetchCurrentBlock, 30000);
 
 // PrzywrĂłcenie poĹ‚Ä…czenia portfela po przeĹ‚adowaniu strony
 window.addEventListener('load', async () => {
+  maybeShowOnboarding();
   if(window.ethereum){
     try{
       const accounts = await window.ethereum.request({method:'eth_accounts'});
