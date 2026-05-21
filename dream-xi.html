@@ -700,7 +700,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
   .pitch-center-circle { width: 70px; height: 70px; }
   .countdown-timer { gap: 6px !important; }
   .countdown-num { font-size: 24px !important; }
-  .countdown-unit { min-width: 50px !important; }
+  .countdown-unit { min-width: 40px !important; }
 }
 </style>
 </head>
@@ -1066,8 +1066,8 @@ const POSITION_SHORT = {
 // LW (11) oraz RW (7) zostały zamienione miejscami na skrzydłach
 const FORMATION = [
   [9],         // ST
-  [11,7],      // LW, RW (Zamienione)
-  [6,8,10],    // DM, MID, AM
+  [7,11],      // RW, LW (Zamienione)
+  [6,8,10],    // DM, MID, #10
   [3,4,5,2],   // LB, CB A, CB B, RB
   [1]          // GK
 ];
@@ -1361,6 +1361,25 @@ async function getReadProvider(){
   }
 }
 
+// Niezależne i bezpieczne odpytywanie o saldo portfela w CHZ
+async function updateWalletBalance() {
+  if (typeof window.ethereum !== 'undefined' && address) {
+    try {
+      const tempProvider = new ethers.BrowserProvider(window.ethereum);
+      const balanceWei = await tempProvider.getBalance(address);
+      const balanceEth = ethers.formatEther(balanceWei);
+      const balanceFormatted = parseFloat(balanceEth).toFixed(1);
+      const balEl = document.getElementById('walletBalance');
+      if (balEl) {
+        balEl.textContent = `${balanceFormatted} CHZ`;
+        balEl.style.display = 'inline-block';
+      }
+    } catch (e) {
+      console.warn("Could not fetch wallet balance:", e);
+    }
+  }
+}
+
 async function connectWallet(){
   if(!window.ethereum){
     showHeaderToast('MetaMask not detected. Please install a compatible Web3 wallet.', true);
@@ -1387,16 +1406,7 @@ async function connectWallet(){
     document.getElementById('gameSection').style.display = 'block';
     document.getElementById('statsRow').style.display = 'grid';
     
-    // Wczytanie i wyświetlenie stanu salda CHZ w nawigacji
-    const balanceWei = await provider.getBalance(address);
-    const balanceEth = ethers.formatEther(balanceWei);
-    const balanceFormatted = parseFloat(balanceEth).toFixed(1);
-    const balEl = document.getElementById('walletBalance');
-    if (balEl) {
-      balEl.textContent = `${balanceFormatted} CHZ`;
-      balEl.style.display = 'inline-block';
-    }
-
+    await updateWalletBalance();
     await loadData();
   }catch(e){
     console.error(e);
@@ -1503,21 +1513,7 @@ async function loadData(){
     }
   }
 
-  // Wczytanie i zaktualizowanie wyświetlania salda CHZ portfela
-  if (provider && address) {
-    try {
-      const balanceWei = await provider.getBalance(address);
-      const balanceEth = ethers.formatEther(balanceWei);
-      const balanceFormatted = parseFloat(balanceEth).toFixed(1);
-      const balEl = document.getElementById('walletBalance');
-      if (balEl) {
-        balEl.textContent = `${balanceFormatted} CHZ`;
-        balEl.style.display = 'inline-block';
-      }
-    } catch(e) {
-      console.warn("Could not fetch wallet balance inside loadData:", e);
-    }
-  }
+  await updateWalletBalance();
 
   ownerMap = {};
   mints.forEach(m => {
@@ -1685,7 +1681,7 @@ function renderSnipeMarket(listings) {
   container.innerHTML = html;
 }
 
-// Obliczanie wydatków, przychodów, PnL i osobistego ledgera transakcji (Dla CAŁEJ historii portfela - 48 krajów!)
+// Obliczanie wydatków, przychodów, PnL i osobistego ledgera transakcji (Dla całej historii portfela)
 function renderPortfolioAndLedger(mints, sales, listDetails) {
   const myAddr = address?.toLowerCase();
   if (!myAddr) {
@@ -1698,7 +1694,7 @@ function renderPortfolioAndLedger(mints, sales, listDetails) {
   let myEarned = 0;
   let myLedger = []; 
 
-  // 1. Obliczanie kosztu mintowania wszystkich posiadanych kiedykolwiek kart na tym kontrakcie (wszystkie 48 krajów)
+  // 1. Obliczanie kosztu mintowania wszystkich posiadanych kiedykolwiek kart (48 krajów)
   mints.forEach(m => {
     if (m.owner.toLowerCase() === myAddr) {
       const fig = parseDNA(m.dna);
@@ -1714,7 +1710,7 @@ function renderPortfolioAndLedger(mints, sales, listDetails) {
     }
   });
 
-  // 2. Obliczanie zrealizowanych zakupów i sprzedaży rynkowych dla wszystkich 48 krajów
+  // 2. Obliczanie zakupów i sprzedaży rynkowych dla wszystkich 48 krajów
   sales.forEach(s => {
     const lid = Number(s.listingId);
     const details = listDetails[lid] || s; 
@@ -1754,11 +1750,11 @@ function renderPortfolioAndLedger(mints, sales, listDetails) {
     }
   });
 
-  // 3. Obliczanie wyceny posiadanego Locker Value na bazie globalnych cen floor rynkowych dla całej kolekcji (48 krajów)
+  // 3. Obliczanie wyceny Locker Value na bazie globalnych cen floor rynkowych (48 krajów)
   let lockerVal = 0;
   Object.entries(ownerMap).forEach(([tid, fig]) => {
     if (fig.owner === myAddr) {
-      const val = 10; // Domyślna wycena bazowa
+      const val = 10; 
       lockerVal += val;
     }
   });
@@ -1950,8 +1946,8 @@ function renderPitch() {
     row.forEach(pos => {
       const card = document.createElement('div');
       const scored = myTeamPositions[pos];
-      const mkt = marketByPos[pos];
-      const floor = marketFloorByPos[pos];
+      const mkt = marketByPos[pos]; // Wczytywanie z płaskiej struktury rynkowej
+      const floor = marketFloorByPos[pos]; // Wczytywanie z płaskiej struktury rynkowej
 
       let floorHtml = '';
       if (scored && floor) {
