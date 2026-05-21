@@ -943,7 +943,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
     border:1px solid #1c2028;
     border-radius:10px;
     display:grid;
-    grid-template-columns:minmax(170px,0.7fr) minmax(260px,1fr) minmax(360px,1.35fr) minmax(250px,0.9fr);
+    grid-template-columns:minmax(150px,0.55fr) minmax(240px,0.95fr) minmax(300px,1fr) minmax(300px,1.1fr);
     align-items:center;
     gap:12px;
     text-align:left;
@@ -958,10 +958,11 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
   .prize-box.main{min-width:150px;padding:8px 14px;}
   .prize-box.main .prize-num{font-size:28px;}
   .prize-chz{font-size:12px;}
-  .prize-side-notes{min-width:180px;gap:5px;}
+  .prize-side-notes{min-width:0;gap:5px;}
   .prize-note{font-size:9px;padding:5px 8px;}
-  .hero > div[style*="margin-bottom:24px"]{margin:0 !important;justify-content:flex-start !important;gap:7px !important;}
-  .btn-mint-hero{padding:8px 10px;font-size:9px;letter-spacing:1px;border-radius:6px;}
+  .hero > div[style*="margin-bottom:24px"]{margin:0 !important;justify-content:stretch !important;gap:0 !important;min-width:0;}
+  .hero > div[style*="margin-bottom:24px"] .btn-mint-hero{width:100%;min-width:0;max-width:360px;padding:13px 18px;font-size:12px;letter-spacing:1px;border-radius:8px;white-space:nowrap;}
+  .hero > div[style*="margin-bottom:24px"] .btn-mint-hero + .btn-mint-hero{display:none;}
   .countdown-wrap{min-width:240px;width:100%;padding:8px 10px;gap:2px;justify-self:end;}
   .countdown-label{font-size:8px;letter-spacing:1px;}
   .countdown-timer{gap:5px !important;margin:4px auto 2px !important;}
