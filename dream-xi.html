@@ -607,16 +607,22 @@ function shareOnX(){
 
 // COUNTDOWN
 // DEADLINE — 31.05.2026 godz 23:00 UTC
-const DEADLINE_BLOCK = 34503406; // 31.05 godz 23:00 
-const BLOCK_TIME_MS = 3000; 
-// Statystyki dla frontendu
-let blocksRemaining = DEADLINE_BLOCK - currentBlock;
-let timeRemainingSeconds = blocksRemaining * 3;
+const DEADLINE_BLOCK = 34503406;
+const BLOCK_TIME_MS = 3000;
+let currentBlock = 34196746; // blok startowy 21.05 07:27
+let lastBlockTime = Date.now();
 
 async function fetchCurrentBlock(){
   try{
     const res = await fetch('/api/events');
-    if(res.ok){ const d = await res.json(); if(d.currentBlock) { currentBlock = d.currentBlock; lastBlockTime = Date.now(); } }
+    if(res.ok){
+      const d = await res.json();
+      if(d.currentBlock && d.currentBlock > 0){
+        currentBlock = d.currentBlock;
+        lastBlockTime = Date.now();
+        updateCountdown();
+      }
+    }
   }catch(e){}
 }
 
@@ -642,10 +648,11 @@ function updateCountdown(){
   document.getElementById('cdH').textContent = String(h).padStart(2,'0');
   document.getElementById('cdM').textContent = String(m).padStart(2,'0');
   document.getElementById('cdS').textContent = String(s).padStart(2,'0');
-  document.getElementById('cdBlock').innerHTML = 'Deadline: block <a href="https://scan.chiliz.com/block/'+DEADLINE_BLOCK+'" target="_blank" style="color:#818cf8;text-decoration:none;">#'+DEADLINE_BLOCK.toLocaleString()+'</a> · current: ~#'+estimated.toLocaleString()+' · '+blocksLeft.toLocaleString()+' blocks left';
+  document.getElementById('cdBlock').innerHTML = 'Deadline: block <a href="https://scan.chiliz.com/block/'+DEADLINE_BLOCK+'" target="_blank" style="color:#818cf8;text-decoration:none;">#'+DEADLINE_BLOCK.toLocaleString()+'</a> · ~#'+estimated.toLocaleString()+' now · '+blocksLeft.toLocaleString()+' left';
 }
 
-fetchCurrentBlock();
+updateCountdown(); // pokazuj od razu z currentBlock
+fetchCurrentBlock(); // pobierz aktualny z API
 setInterval(updateCountdown, 1000);
 setInterval(fetchCurrentBlock, 30000);
 
