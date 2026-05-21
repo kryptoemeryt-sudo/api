@@ -185,7 +185,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
         <div style="font-family:'Black Ops One',sans-serif;font-size:28px;color:#3d4a5a;padding-bottom:4px;">:</div>
         <div class="countdown-unit"><div class="countdown-num" id="cdS">--</div><div class="countdown-sub">SEC</div></div>
       </div>
-      <div class="countdown-block" id="cdBlock">Target block: 35,157,280</div>
+      <div class="countdown-block" id="cdBlock">Target block: 34,253,705</div>
     </div>
   </div>
 
@@ -587,11 +587,12 @@ function shareOnX(){
 }
 
 // COUNTDOWN
-// DEADLINE — blok #34187689 (~24h od startu questu)
-const DEADLINE_BLOCK = 34187689;
-const BLOCK_TIME_MS = 3000; // 3 sekundy per blok na Chiliz
-let currentBlock = 34158889; // aktualny blok przy starcie questu
-let lastBlockTime = Date.now();
+// NOWY DEADLINE — blok #34253705 (+48h od teraz)
+const DEADLINE_BLOCK = 34253705; 
+const BLOCK_TIME_MS = 3000; 
+// Statystyki dla frontendu
+let blocksRemaining = DEADLINE_BLOCK - currentBlock;
+let timeRemainingSeconds = blocksRemaining * 3;
 
 async function fetchCurrentBlock(){
   try{
