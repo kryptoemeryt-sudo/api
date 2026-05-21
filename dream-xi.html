@@ -778,6 +778,28 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
 .cutoff-line{display:flex;align-items:center;justify-content:center;gap:12px;margin:12px 0;padding:8px;background:rgba(239,68,68,0.05);border:1px dotted rgba(239,68,68,0.4);border-radius:6px;font-size:11px;font-family:'Share Tech Mono',monospace;color:#ef4444;letter-spacing:1px;}
 
 /* NAKĹADKI OKIEN MODALNYCH */
+#toast {
+  display: none;
+  position: fixed;
+  top: max(14px, env(safe-area-inset-top));
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 4000;
+  width: min(92vw, 520px);
+  background: rgba(15,19,24,0.96);
+  border: 1px solid #00ff87;
+  color: #00ff87;
+  border-radius: 10px;
+  padding: 12px 16px;
+  box-shadow: 0 14px 40px rgba(0,0,0,0.55);
+  font-family: 'Barlow Condensed', Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  text-align: center;
+  line-height: 1.25;
+  pointer-events: none;
+}
+
 .modal-overlay {
   display: none;
   position: fixed;
@@ -1603,8 +1625,10 @@ function showHeaderToast(message, isError = false) {
   toast.textContent = message;
   toast.style.borderColor = isError ? '#ef4444' : '#00ff87';
   toast.style.color = isError ? '#ef4444' : '#00ff87';
+  toast.style.background = isError ? 'rgba(32,12,16,0.97)' : 'rgba(15,19,24,0.96)';
   toast.style.display = 'block';
-  setTimeout(() => {
+  clearTimeout(window.headerToastTimer);
+  window.headerToastTimer = setTimeout(() => {
     toast.style.display = 'none';
   }, 6000);
 }
@@ -2021,6 +2045,23 @@ function getErrorReason(error) {
     || error?.data?.message
     || error?.message
     || '';
+}
+
+function getUserFriendlyTxError(error, fallbackMessage) {
+  const reason = String(getErrorReason(error)).toLowerCase();
+  if (
+    reason.includes('insufficient funds') ||
+    reason.includes('insufficient balance') ||
+    reason.includes('exceeds the balance') ||
+    reason.includes('not enough') ||
+    reason.includes('funds')
+  ) {
+    return 'Not enough CHZ in your wallet for price + gas. Add CHZ and try again.';
+  }
+  if (reason.includes('user rejected') || reason.includes('user denied') || reason.includes('rejected')) {
+    return 'Transaction rejected in wallet.';
+  }
+  return fallbackMessage;
 }
 
 function getMintTip(mintedCard, circulationCount, oldCard, isUpgrade) {
@@ -2875,6 +2916,12 @@ async function buyFromMarket(listingId, priceChz, priceWeiRaw){
       try { priceWei = BigInt(String(priceWeiRaw)); } catch(e) {}
     }
 
+    const walletBalance = await provider.getBalance(address);
+    if (walletBalance <= priceWei) {
+      showHeaderToast('Not enough CHZ in your wallet for card price + gas.', true);
+      return;
+    }
+
     const tx = await marketContract.buyFigure(listingId, { value: priceWei });
     showHeaderToast('Transaction sent to Chiliz Chain. Awaiting blockchain confirmation...');
     
@@ -2908,7 +2955,7 @@ async function buyFromMarket(listingId, priceChz, priceWeiRaw){
     }
   } catch (error) {
     console.error(error);
-    showHeaderToast('Transaction failed. Ensure you have sufficient CHZ for gas and purchase price.', true);
+    showHeaderToast(getUserFriendlyTxError(error, 'Transaction failed. Ensure you have sufficient CHZ for gas and purchase price.'), true);
   }
 }
 
@@ -2965,6 +3012,11 @@ async function directMint() {
   }
   try {
     const referrer = getReferrer();
+    const walletBalance = await provider.getBalance(address);
+    if (walletBalance <= currentMintPrice) {
+      showHeaderToast('Not enough CHZ in your wallet for mint price + gas.', true);
+      return;
+    }
     showHeaderToast(`Initializing card mint for ${ethers.formatEther(currentMintPrice)} CHZ...`);
     
     const tx = await contract.mint(referrer, { value: currentMintPrice });
@@ -3064,7 +3116,7 @@ async function directMint() {
     await loadData();
   } catch (error) {
     console.error(error);
-    showHeaderToast('Minting failed. Verify your balance and try again.', true);
+    showHeaderToast(getUserFriendlyTxError(error, 'Minting failed. Verify your balance and try again.'), true);
   }
 }
 
@@ -3077,7 +3129,7 @@ function shareOnX(){
 
 /* HARMONOGRAM I LICZNIK BLOKĂ“W SYSTEMOWYCH */
 const BLOCK_TIME_MS = 3000;
-const DEADLINE_DAYS = 59;
+const DEADLINE_DAYS = 60;
 const DEADLINE_BLOCK_OFFSET = Math.floor((DEADLINE_DAYS * 24 * 60 * 60 * 1000) / BLOCK_TIME_MS);
 let currentBlock = 34158889; 
 let DEADLINE_BLOCK = currentBlock + DEADLINE_BLOCK_OFFSET;
