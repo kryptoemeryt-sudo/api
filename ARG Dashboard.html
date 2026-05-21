@@ -998,15 +998,16 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
   }
   .btn-share{padding:7px 10px;font-size:9px;border-radius:6px;}
   .game-grid{display:contents;padding:0;}
-  .left-control-panel{grid-area:left;min-height:0;gap:8px;overflow:hidden;display:grid;grid-template-rows:auto minmax(0,1fr) 210px;}
+  .left-control-panel{grid-area:left;min-height:0;gap:8px;overflow:hidden;display:grid;grid-template-rows:minmax(0,1fr) 210px;}
   .right-col.pitch-container{grid-area:pitch;min-height:0;overflow:hidden;}
-  .lb-section{grid-area:board;min-height:0;overflow:hidden;padding:10px;border:1px solid #1c2028;border-radius:12px;background:#0a0e14;}
+  .lb-section{grid-area:board;min-height:0;overflow:hidden;padding:10px;border:1px solid #1c2028;border-radius:12px;background:#0a0e14;display:flex;flex-direction:column;gap:8px;}
   .info-section{padding:10px;border-radius:8px;}
+  .side-info-section{flex-shrink:0;padding:8px;}
   .how-grid{grid-template-columns:1fr 1fr;gap:6px;}
-  .how-card{padding:8px;}
-  .how-n{font-size:15px;margin:0;}
-  .how-title{font-size:9px;margin-bottom:2px;}
-  .how-desc{font-size:10px;line-height:1.2;}
+  .how-card{padding:7px;}
+  .how-n{font-size:13px;margin:0;}
+  .how-title{font-size:8px;margin-bottom:2px;}
+  .how-desc{font-size:9px;line-height:1.15;}
   .desk-section{min-height:0;display:flex;flex-direction:column;}
   .desk-tabs{flex-shrink:0;}
   .desk-tab-btn{font-size:9px;padding:9px 6px;}
@@ -1048,7 +1049,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
   .pitch-penalty-area-top,.pitch-penalty-area-bottom{width:170px;height:48px;}
   .pitch-center-circle{width:74px;height:74px;}
   .lb-section .pitch-title{margin-bottom:8px;font-size:9px;letter-spacing:1px;gap:8px;}
-  .leaderboard-list{height:calc(100% - 26px);overflow:auto;padding:6px;border-radius:8px;}
+  .leaderboard-list{flex:1;min-height:0;overflow:auto;padding:6px;border-radius:8px;}
   .lb-row{gap:7px;padding:6px 8px;margin-bottom:5px;border-radius:6px;}
   .lb-pos{font-size:12px;width:24px;}
   .lb-addr{font-size:10px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
@@ -1179,36 +1180,6 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
       <div class="left-control-panel">
         
         <!-- JAK TO DZIAĹA -->
-        <div class="info-section">
-          <div class="pitch-title">
-            <span>HOW IT WORKS - ROTATION MODEL</span>
-            <span style="font-family:'Share Tech Mono',monospace; color:#818cf8;">ARGENTINA HUB</span>
-          </div>
-
-          <div class="how-grid">
-            <div class="how-card">
-              <div class="how-n">01</div>
-              <div class="how-title">&#127922; MINT OR BUY</div>
-              <div class="how-desc">Minting costs <span class="g">10 CHZ</span> and gives a random card from one of <span class="a">48 World Cup teams</span>. Buy Argentina cards on the market to complete this squad.</div>
-            </div>
-            <div class="how-card" style="border-color: rgba(239, 68, 68, 0.35); background: rgba(239, 68, 68, 0.03);">
-              <div class="how-n" style="color: #ef4444;">02</div>
-              <div class="how-title" style="color: #ef4444;">&#9888; NO P2P</div>
-              <div class="how-desc">Direct wallet-to-wallet transfers <span style="color: #ef4444; font-weight: bold;">DO NOT SCORE</span>. Only marketplace buys and mints count!</div>
-            </div>
-            <div class="how-card">
-              <div class="how-n">03</div>
-              <div class="how-title">&#9851; RECYCLE LIQUIDITY</div>
-              <div class="how-desc">Scored the stamp? <span class="p">Sell the card</span> on the marketplace and recover your CHZ liquidity.</div>
-            </div>
-            <div class="how-card" style="border-color:rgba(255,201,64,0.3); background:rgba(255,201,64,0.04);">
-              <div class="how-n" style="color:rgba(255,201,64,0.2);">04</div>
-              <div class="how-title" style="color:#ffc940;">&#127942; PRIZE PLACES</div>
-              <div class="how-desc">The prize pool is <span class="a">10,000 CHZ</span>. More unique collectors on the leaderboard means more paid ranks.</div>
-            </div>
-          </div>
-        </div>
-
         <!-- PRZEĹÄ„CZALNE KARTY (TABS: SNIPE / MY TRADING DESK) -->
         <div class="desk-section">
           <div class="desk-tabs">
@@ -1314,6 +1285,36 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
 
       <div class="leaderboard-list" id="leaderboard">
         <div style="text-align:center;color:#3d4a5a;padding:20px;font-size:13px;"><span class="spin"></span> Loading standings...</div>
+      </div>
+
+      <div class="info-section side-info-section">
+        <div class="pitch-title">
+          <span>HOW IT WORKS - ROTATION MODEL</span>
+          <span style="font-family:'Share Tech Mono',monospace; color:#818cf8;">ARGENTINA HUB</span>
+        </div>
+
+        <div class="how-grid">
+          <div class="how-card">
+            <div class="how-n">01</div>
+            <div class="how-title">&#127922; MINT OR BUY</div>
+            <div class="how-desc">Minting costs <span class="g">10 CHZ</span> and gives a random card from one of <span class="a">48 World Cup teams</span>. Buy Argentina cards on the market to complete this squad.</div>
+          </div>
+          <div class="how-card" style="border-color: rgba(239, 68, 68, 0.35); background: rgba(239, 68, 68, 0.03);">
+            <div class="how-n" style="color: #ef4444;">02</div>
+            <div class="how-title" style="color: #ef4444;">&#9888; NO P2P</div>
+            <div class="how-desc">Direct wallet-to-wallet transfers <span style="color: #ef4444; font-weight: bold;">DO NOT SCORE</span>. Only marketplace buys and mints count!</div>
+          </div>
+          <div class="how-card">
+            <div class="how-n">03</div>
+            <div class="how-title">&#9851; RECYCLE LIQUIDITY</div>
+            <div class="how-desc">Scored the stamp? <span class="p">Sell the card</span> on the marketplace and recover your CHZ liquidity.</div>
+          </div>
+          <div class="how-card" style="border-color:rgba(255,201,64,0.3); background:rgba(255,201,64,0.04);">
+            <div class="how-n" style="color:rgba(255,201,64,0.2);">04</div>
+            <div class="how-title" style="color:#ffc940;">&#127942; PRIZE PLACES</div>
+            <div class="how-desc">The prize pool is <span class="a">10,000 CHZ</span>. More unique collectors on the leaderboard means more paid ranks.</div>
+          </div>
+        </div>
       </div>
     </div>
 
