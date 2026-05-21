@@ -83,17 +83,30 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
 
 /* Formation rows */
 .formation{display:flex;flex-direction:column;gap:20px;position:relative;z-index:2;}
-.form-row{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;}
-.pos-card{background:rgba(15,19,24,0.9);border:1px solid #1c2028;border-radius:6px;padding:8px 6px;text-align:center;width:84px;min-height:96px;display:flex;flex-direction:column;justify-content:space-between;cursor:pointer;transition:all 0.2s;position:relative;backdrop-filter:blur(4px);}
+.form-row{display:flex;justify-content:center;gap:12px;}
+.pos-card{
+  background:rgba(15,19,24,0.9);
+  border:1px solid #1c2028;
+  border-radius:6px;
+  padding:6px 4px;
+  text-align:center;
+  width:78px;
+  min-height:98px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  position:relative;
+  transition:all 0.2s;
+  backdrop-filter:blur(4px);
+}
 .pos-card:hover{border-color:rgba(0,255,135,0.5);box-shadow:0 0 10px rgba(0,255,135,0.15);}
-.pos-card.owned{border-color:rgba(0,255,135,0.4);background:rgba(0,255,135,0.06);}
-.pos-card.owned::after{content:'✓';position:absolute;top:2px;right:4px;color:#00ff87;font-size:8px;}
-.pos-card.owned-past{border-color:rgba(99,102,241,0.5);background:rgba(99,102,241,0.08);}
-.pos-card.owned-past::after{content:'✓';position:absolute;top:2px;right:4px;color:#818cf8;font-size:8px;}
+.pos-card.owned-past{border-color:rgba(99,102,241,0.4);background:rgba(99,102,241,0.06);}
+.pos-card.owned-past::after{content:'✓';position:absolute;top:2px;right:4px;color:#818cf8;font-weight:bold;font-size:8px;}
 .pos-card.market{border-color:rgba(255,201,64,0.4);background:rgba(255,201,64,0.05);}
-.pos-card.empty{opacity:0.5;border-style:dashed;}
-.pos-name{font-family:'Black Ops One',sans-serif;font-size:9px;letter-spacing:1px;color:#7a8899;margin-bottom:4px;}
-.pos-weight{font-family:'Black Ops One',sans-serif;font-size:20px;line-height:1;margin-bottom:2px;}
+.pos-card.empty{opacity:0.6;border-style:dashed;}
+.pos-name{font-weight:700;font-size:8px;color:#7a8899;letter-spacing:0.3px;text-transform:uppercase;}
+.pos-ball{font-size:16px;margin:1px 0;display:block;}
+.pos-weight{font-family:'Black Ops One',sans-serif;font-size:18px;color:#818cf8;line-height:1;}
 
 .pos-weight.green{color:#00ff87;}
 .pos-weight.purple{color:#818cf8;}
@@ -600,39 +613,28 @@ function renderPitch(){
         const isLegendary = scored.rarity === 3;
         card.className = 'pos-card owned-past';
 
-        // Upgrade button if better card on market
         let actionHtml = '';
         if(mkt && mkt.weight > scored.weight){
-          actionHtml = `<button onclick="buyFromMarket(${mkt.listingId},'${mkt.price}')" class="btn-card-action upgrade">▲ UPGRADE W:${mkt.weight}<br>${mkt.price} CHZ</button>`;
-        } else if(mkt){
-          actionHtml = `<div style="margin-top:3px;font-size:7px;color:#3d4a5a;font-family:Share Tech Mono,monospace;">mkt W:${mkt.weight} weaker</div>`;
+          actionHtml = `<button onclick="buyFromMarket(${mkt.listingId},'${mkt.price}')" class="btn-card-action upgrade">▲ W:${mkt.weight}<br>${mkt.price} CHZ</button>`;
         }
 
-        // Sell button if currently owns the card
         let sellHtml = '';
         if(myAddr && ownerMap[scored.tid] && ownerMap[scored.tid].owner === myAddr){
-          sellHtml = `<button onclick="openSellModal(${scored.tid},${pos},${scored.weight},${scored.rarity})" class="btn-card-action" style="background:rgba(239,68,68,0.1);border-color:rgba(239,68,68,0.3);color:#ef4444;margin-top:3px;">SELL</button>`;
+          sellHtml = `<button onclick="openSellModal(${scored.tid},${pos},${scored.weight},${scored.rarity})" class="btn-card-action" style="background:rgba(239,68,68,0.1);border-color:rgba(239,68,68,0.3);color:#ef4444;">SELL</button>`;
         }
 
         card.innerHTML =
+          '<div><div class="pos-name">'+(POSITION_SHORT[pos]||pos)+'</div><span class="pos-ball">⚽</span></div>' +
           '<div>' +
-            '<div class="pos-name">'+(POSITION_SHORT[pos]||pos)+'</div>' +
-            '<span style="font-size:14px;">⚽</span>' +
-          '</div>' +
-          '<div>' +
-            '<div class="pos-weight '+(isLegendary?'gold':'purple')+'">'+scored.weight+'</div>' +
+            '<div class="pos-weight '+(isLegendary?'gold':'')+'">'+scored.weight+'</div>' +
             '<div class="pos-rarity" style="color:'+rarColor+'">'+RARITY_NAMES[scored.rarity]+'</div>' +
-            actionHtml +
-            sellHtml +
+            actionHtml + sellHtml +
           '</div>';
 
       } else if(mkt){
         card.className = 'pos-card market';
         card.innerHTML =
-          '<div>' +
-            '<div class="pos-name" style="color:#5a6a7a;">'+(POSITION_SHORT[pos]||pos)+'</div>' +
-            '<span style="font-size:14px;opacity:0.3;">⚽</span>' +
-          '</div>' +
+          '<div><div class="pos-name" style="color:#5a6a7a;">'+(POSITION_SHORT[pos]||pos)+'</div><span class="pos-ball" style="opacity:0.2;">⚽</span></div>' +
           '<div>' +
             '<div class="pos-weight gold">'+mkt.weight+'</div>' +
             '<div class="pos-rarity">'+RARITY_NAMES[mkt.rarity]+'</div>' +
@@ -642,14 +644,8 @@ function renderPitch(){
       } else {
         card.className = 'pos-card empty';
         card.innerHTML =
-          '<div>' +
-            '<div class="pos-name" style="color:#3d4a5a;">'+(POSITION_SHORT[pos]||pos)+'</div>' +
-            '<span style="font-size:14px;opacity:0.1;">⚽</span>' +
-          '</div>' +
-          '<div>' +
-            '<div class="pos-weight empty">—</div>' +
-            '<div class="pos-rarity" style="color:#3d4a5a;">EMPTY</div>' +
-          '</div>';
+          '<div><div class="pos-name" style="color:#3d4a5a;">'+(POSITION_SHORT[pos]||pos)+'</div><span class="pos-ball" style="opacity:0.1;">⚽</span></div>' +
+          '<div><div class="pos-weight empty">—</div><div class="pos-rarity" style="color:#3d4a5a;">EMPTY</div></div>';
       }
       rowEl.appendChild(card);
     });
