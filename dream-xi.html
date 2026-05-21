@@ -270,6 +270,33 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
   background: rgba(0,255,135,0.1);
   color: #00ff87;
 }
+.mini-badge.pressure {
+  border-color: rgba(239,68,68,0.45);
+  background: rgba(239,68,68,0.1);
+  color: #ef4444;
+}
+.mini-badge.pressure.hot {
+  border-color: rgba(255,201,64,0.45);
+  background: rgba(255,201,64,0.1);
+  color: #ffc940;
+}
+.pressure-line {
+  color: #ef4444;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 8px;
+  margin-top: 3px;
+  letter-spacing: 0;
+}
+.smart-mint-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 14px;
+}
+.smart-mint-actions .btn-card-action {
+  padding: 10px 6px;
+  font-size: 10px;
+}
 .snipe-action {
   display: flex;
   align-items: center;
@@ -854,6 +881,8 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
   .pos-card-count{font-size:6px;left:3px;padding:1px 3px;}
   .mini-badges{gap:2px;margin-top:3px;justify-content:center;}
   .mini-badge{font-size:6px;padding:1px 3px;}
+  .pressure-line{font-size:6px;margin-top:2px;}
+  .smart-mint-actions{grid-template-columns:1fr;gap:6px;}
   .pos-name{font-size:7px;}
   .pos-card-meta{font-size:6px;min-height:14px;}
   .pos-weight{font-size:13px;}
@@ -1235,7 +1264,10 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
       <!-- Status ulepszenia -->
     </div>
 
-    <button class="btn-card-action upgrade" onclick="toggleMintSuccessModal(false)" style="padding:10px; font-size:11px; text-transform:uppercase; font-family:'Black Ops One', sans-serif;">CONTINUE TO PITCH</button>
+    <div id="mintSmartActions" class="smart-mint-actions">
+      <button class="btn-card-action upgrade" onclick="toggleMintSuccessModal(false); scrollToSquad();" style="text-transform:uppercase; font-family:'Black Ops One', sans-serif;">VIEW SQUAD</button>
+      <button class="btn-card-action" onclick="toggleMintSuccessModal(false)" style="text-transform:uppercase; font-family:'Black Ops One', sans-serif;">CLOSE</button>
+    </div>
   </div>
 </div>
 
@@ -1635,6 +1667,27 @@ function toggleMintSuccessModal(show) {
   modal.style.display = show ? 'flex' : 'none';
 }
 
+function smartListMintedCard(tokenId, pos, weight, rarity) {
+  toggleMintSuccessModal(false);
+  openSellModal(tokenId, pos, weight, rarity);
+}
+
+function renderMintSmartActions(mintedCard, oldCard, isUpgrade) {
+  const actions = document.getElementById('mintSmartActions');
+  if (!actions) return;
+  const listBtn = `<button class="btn-card-action sell" onclick="smartListMintedCard(${mintedCard.tokenId}, ${mintedCard.position}, ${mintedCard.weight}, ${mintedCard.rarity})">LIST CARD</button>`;
+  const squadBtn = `<button class="btn-card-action upgrade" onclick="toggleMintSuccessModal(false); scrollToSquad();">VIEW SQUAD</button>`;
+  const closeBtn = `<button class="btn-card-action" onclick="toggleMintSuccessModal(false)">CLOSE</button>`;
+
+  if (mintedCard.teamId !== ARGENTINA_TEAM_ID) {
+    actions.innerHTML = `${listBtn}${closeBtn}`;
+  } else if (isUpgrade) {
+    actions.innerHTML = `${squadBtn}${closeBtn}`;
+  } else {
+    actions.innerHTML = `${listBtn}${squadBtn}`;
+  }
+}
+
 function toggleOnboardingModal(show, remember = false) {
   const modal = document.getElementById('onboardingModal');
   if (!modal) return;
@@ -1996,13 +2049,52 @@ function getMissingPositions() {
   return POSITION_IDS.filter(pos => !myTeamPositions[pos]);
 }
 
+function getPositionPressure(pos) {
+  const activeCollectors = Object.values(window.dreamScores || {}).filter(positions => Object.keys(positions || {}).length > 0);
+  const missingCollectors = activeCollectors.filter(positions => !positions[pos]).length;
+  const supply = circulationByPos[pos] || 0;
+  const listings = currentMarketListings.filter(deal => deal.pos === pos).length;
+  let label = '';
+  let className = '';
+
+  if (missingCollectors >= 3 && listings === 0) {
+    label = 'HOT SLOT';
+    className = 'pressure';
+  } else if (missingCollectors >= 3 && listings <= 1) {
+    label = 'HIGH DEMAND';
+    className = 'pressure';
+  } else if (missingCollectors >= 2 && supply <= 3) {
+    label = 'PRESSURE';
+    className = 'pressure hot';
+  } else if (missingCollectors >= 1 && listings === 0) {
+    label = 'WANTED';
+    className = 'pressure hot';
+  }
+
+  return {label, className, missingCollectors, supply, listings};
+}
+
+function getPressureBadge(pos) {
+  const pressure = getPositionPressure(pos);
+  if (!pressure.label) return '';
+  return `<span class="mini-badge ${pressure.className}" title="${pressure.missingCollectors} collectors missing ${POSITION_SHORT[pos]}, ${pressure.listings} active listings">${pressure.label}</span>`;
+}
+
 function getPositionBadges(pos, floor = null) {
   const count = circulationByPos[pos] || 0;
   const badges = [];
   if (count === 1) badges.push(`<span class="mini-badge scarce">ONLY 1</span>`);
   else if (count > 1 && count <= 3) badges.push(`<span class="mini-badge scarce">LOW SUPPLY x${count}</span>`);
   if (floor) badges.push(`<span class="mini-badge hot">FLOOR ${floor.price} CHZ</span>`);
+  const pressureBadge = getPressureBadge(pos);
+  if (pressureBadge) badges.push(pressureBadge);
   return badges.length ? `<div class="mini-badges">${badges.join('')}</div>` : '';
+}
+
+function getPressureLine(pos) {
+  const pressure = getPositionPressure(pos);
+  if (!pressure.label) return '';
+  return `<div class="pressure-line">${pressure.missingCollectors} NEED / ${pressure.listings} LISTED</div>`;
 }
 
 function renderMissingPositionAlert() {
@@ -2238,12 +2330,12 @@ async function loadData(){
   const paidPlaces = getPaidPlaces(playerCount);
   document.getElementById('poolInfo').textContent = `Quest Prize Pool: ${PRIZE_POOL_CHZ.toLocaleString()} CHZ - ${paidPlaces || 1} paid ranks from ${playerCount} collectors`;
 
+  currentMarketListings = rawMarketListings;
   renderStats();
   renderPitch();
   renderLeaderboard();
   
   // Renderowanie bocznych widgetĂłw gieĹ‚dowych
-  currentMarketListings = rawMarketListings;
   renderSnipeMarket(rawMarketListings);
   renderLiveActivityFeed(mints, sales);
   renderPortfolioAndLedger(mints, sales, listDetails);
@@ -2285,6 +2377,7 @@ function renderSnipeMarket(listings) {
     const rarColor = ['#7a8899','#3b82f6','#c084fc','#ffc940'][deal.rarity];
     const floor = marketFloorByPos[deal.pos] || null;
     const badgesHtml = getPositionBadges(deal.pos, floor);
+    const pressureLine = getPressureLine(deal.pos);
 
     html += `
       <div class="snipe-row">
@@ -2294,6 +2387,7 @@ function renderSnipeMarket(listings) {
             <span style="color:${rarColor}; font-weight:600;">${rarName}</span> (${deal.weight} pts)<br>
             Status: ${upgradeLabel}
             ${badgesHtml}
+            ${pressureLine}
           </div>
         </div>
         <div class="snipe-action">
@@ -2589,6 +2683,7 @@ function renderPitch() {
       const circulationCount = circulationByPos[pos] || 0;
       const circulationHtml = `<span class="pos-card-count" title="Argentina ${POSITION_SHORT[pos]} cards in circulation">x${circulationCount}</span>`;
       const badgesHtml = getPositionBadges(pos, floor);
+      const pressureLine = getPressureLine(pos);
 
       let floorHtml = '';
       if (scored && floor) {
@@ -2630,6 +2725,7 @@ function renderPitch() {
             <div class="pos-weight ${scored.rarity === 3 ? 'gold' : ''}">${scored.weight}</div>
             <div class="pos-rarity" style="color:${rarColor}">${['Common','Rare','Epic','Legendary'][scored.rarity]}</div>
             ${badgesHtml}
+            ${pressureLine}
             ${floorHtml}
             ${actionHtml}
             ${sellBtnHtml}
@@ -2655,6 +2751,7 @@ function renderPitch() {
             <div class="pos-weight empty">-</div>
             <div class="pos-rarity" style="color:#5a6a7a;">EMPTY SLOT</div>
             ${badgesHtml}
+            ${pressureLine}
             ${actionHtml}
           </div>
         `;
@@ -2953,6 +3050,7 @@ async function directMint() {
       const circulationAfterMint = mintedCard.teamId === ARGENTINA_TEAM_ID ? ((circulationByPos[mintedCard.position] || 0) + 1) : 0;
       statusText += getMintTip(mintedCard, circulationAfterMint, oldCard, isUpgrade);
       document.getElementById('mintedCardStatus').innerHTML = statusText;
+      renderMintSmartActions(mintedCard, oldCard, isUpgrade);
       toggleMintSuccessModal(true);
     }
     
