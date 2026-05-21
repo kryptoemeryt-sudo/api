@@ -111,7 +111,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
 .how-desc .p{color:#818cf8;font-weight:700;}
 .how-desc .a{color:#ffc940;font-weight:700;}
 
-/* NOWE MODUŁY PANELU KOLEKCJONERSKIEGO (TABS: SNIPE / PORTFOLIO) */
+/* PRZEŁĄCZALNE SEKCJE: SNIPE MARKET ORAZ MY TRADING DESK */
 .desk-section {
   background: #0a0e14;
   border: 1px solid #1c2028;
@@ -224,7 +224,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
   color: #000;
 }
 
-/* WIDŻETY: PERSONAL TRADING DESK */
+/* WIDŻET: TRADING DESK */
 .portfolio-state-msg {
   text-align: center;
   color: #5a6a7a;
@@ -294,7 +294,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
 .ledger-val.plus { color: #00ff87; }
 .ledger-val.minus { color: #ef4444; }
 
-/* DZIENNIK TRANSAKCJI OGÓLNYCH (LIVE FEED) */
+/* DZIENNIK OSTATNICH TRANSAKCJI GŁÓWNYCH (LIVE FEED) */
 .live-feed-section {
   background: #0a0e14;
   border: 1px solid #1c2028;
@@ -423,7 +423,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
   pointer-events: none;
 }
 
-/* FORMACJA I LINIE */
+/* FORMACJA */
 .formation {
   display: flex;
   flex-direction: column;
@@ -437,7 +437,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
   gap: 12px;
 }
 
-/* KARTA POZYCJI */
+/* KARTY POZYCJI */
 .pos-card{
   background: rgba(15, 19, 24, 0.9);
   border: 1px solid #1c2028;
@@ -520,7 +520,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
 .btn-card-action.upgrade{background:rgba(0,255,135,0.1);border-color:rgba(0,255,135,0.3);color:#00ff87;}
 .btn-card-action.upgrade:hover{background:#00ff87;color:#000;}
 
-/* PODŚWIETLENIE PRZYCISKU "CANCEL" — ZGODNE STYLIZACYJNIE Z "BUY" / "UPGRADE" */
+/* PODŚWIETLENIE PRZYCISKU "CANCEL" — JEST PODŚWIETLANY NA CZERWONO */
 .btn-card-action.cancel {
   background: rgba(239, 68, 68, 0.15);
   border-color: rgba(239, 68, 68, 0.4);
@@ -622,7 +622,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
   border-radius: 2px;
 }
 
-/* ROZPISKA RANKINGU */
+/* TABELA LIDERÓW */
 .lb-section{padding: 24px;}
 .leaderboard-list{background:#0a0e14;border:1px solid #1c2028;border-radius:12px;padding:12px;}
 
@@ -670,12 +670,12 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
   cursor: pointer;
 }
 
-/* KLASA DLA ZAKŁADEK WYBORU JĘZYKA */
+/* ZAKŁADKI WYBORU JĘZYKA W MODALU */
 .tab-btn{background:#0f1318;border:1px solid #1c2028;color:#7a8899;padding:6px 12px;border-radius:6px;font-family:'Black Ops One',sans-serif;font-size:10px;letter-spacing:1px;cursor:pointer;transition:all 0.2s;}
 .tab-btn:hover{border-color:#818cf8;color:#dde4f0;}
 .tab-btn.active{background:#818cf8;color:#000;border-color:#818cf8;}
 
-/* PRZYCISKI AKCJI W HERO */
+/* PRZYCISKI AKCJI */
 .btn-mint-hero{background:linear-gradient(135deg,#00ff87,#00c96a);color:#000;border:none;padding:14px 32px;border-radius:8px;font-family:'Black Ops One',sans-serif;font-size:14px;letter-spacing:2px;cursor:pointer;transition:all 0.2s;}
 .btn-mint-hero:hover{transform:scale(1.02);filter:brightness(1.1);}
 .btn-share{background:#000;border:1px solid #1c2028;color:#fff;padding:10px 20px;border-radius:8px;font-family:'Black Ops One',sans-serif;font-size:12px;letter-spacing:1px;cursor:pointer;display:flex;align-items:center;gap:8px;transition:all 0.2s;}
@@ -727,7 +727,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
     </div>
     <div class="hero-sub">Build the heaviest tactical Argentina squad ever assembled! Cards only need to pass through your wallet — buy, score, and sell duplicates on the marketplace. Real prizes await leaders in the deadline block!</div>
 
-    <!-- PULA NAGRÓD -->
+    <!-- PROGI NAGRÓD -->
     <div class="prize-row">
       <div class="prize-box">
         <div style="font-size:11px;letter-spacing:2px;color:#ffc940;margin-bottom:4px;">🥇 1ST PLACE</div>
@@ -751,7 +751,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
       <button class="btn-mint-hero" onclick="window.open('https://block-kickers.vercel.app','_blank')">MAIN WEBSITE →</button>
     </div>
 
-    <!-- ODLICZANIE BLOKÓW QUESTU -->
+    <!-- LICZNIK QUESTU -->
     <div class="countdown-wrap">
       <div class="countdown-label">QUEST DEADLINE (QUEST TARGET BLOCK)</div>
       <div class="countdown-timer">
@@ -776,25 +776,27 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
 
   <!-- STATYSTYKI DRUŻYNY GRACZA -->
   <div class="stats-container" id="statsRow" style="display:none;">
-    <div class="stat-card">
-      <div class="stat-val highlight" id="myCompCount">0 / 11</div>
-      <div class="stat-lbl">Positions Scored</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-val gold" id="myScoreText">0 pts</div>
-      <div class="stat-lbl">Active Lineup Weight</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-val" id="myGlobalRank" style="color:#818cf8;">—</div>
-      <div class="stat-lbl">Leaderboard Rank</div>
-    </div>
-    <div class="stat-card" style="background:rgba(0,255,135,0.03); border-color:rgba(0,255,135,0.2);">
-      <div class="stat-val" id="myEstPayout" style="color:#00ff87; font-size:24px; padding-top:6px;">0.00 CHZ</div>
-      <div class="stat-lbl">Est. Quest Reward (Sponsor)</div>
+    <div class="stats-container" id="statsRow" style="display:none;">
+      <div class="stat-card">
+        <div class="stat-val highlight" id="myCompCount">0 / 11</div>
+        <div class="stat-lbl">Positions Scored</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val gold" id="myScoreText">0 pts</div>
+        <div class="stat-lbl">Active Lineup Weight</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val" id="myGlobalRank" style="color:#818cf8;">—</div>
+        <div class="stat-lbl">Leaderboard Rank</div>
+      </div>
+      <div class="stat-card" style="background:rgba(0,255,135,0.03); border-color:rgba(0,255,135,0.2);">
+        <div class="stat-val" id="myEstPayout" style="color:#00ff87; font-size:24px; padding-top:6px;">0.00 CHZ</div>
+        <div class="stat-lbl">Est. Quest Reward (Sponsor)</div>
+      </div>
     </div>
   </div>
 
-  <!-- MONIT POŁĄCZENIA PORTFELA -->
+  <!-- CONNECT SECTION -->
   <div id="connectSection" class="connect-prompt">
     <p>Connect your Chiliz Wallet to explore the tactical pitch, find the best deals, and start scoring.</p>
     <button class="btn-connect-big" onclick="connectWallet()">CONNECT WALLET</button>
@@ -1143,7 +1145,7 @@ const RULES_TRANSLATIONS = {
   ja: {
     title: "ゲームルールとヒント",
     items: [
-      "🔗 ワークスウォレット（Chiliz）を接続して、アルゼンチンスクワッドを起動します。",
+      "🔗 ウォレット（Chiliz）を接続して、アルゼンチンスクワッドを起動します。",
       "⚽ 選手カードをミントするか、マーケットプレイスで購入します（費用：10 CHZ）。",
       "⚠️ ミント、またはマーケットプレイスで購入されたカードのみがチームをスコアします。直接の転送（ギフト）はスコアとしてカウントされません。",
       "📝 あなたのスコアは、これまでに獲得した各ポジションの最も重いカード重量の合計です。",
@@ -1851,24 +1853,24 @@ function renderLiveActivityFeed(mints, sales) {
 function getMyScore(){
   const myAddr = address?.toLowerCase();
   const myData = window.dreamScores[myAddr] || {};
-  return Object.values(myData).reduce((s,v) => s+v.weight, 0);
+  const myArgPositions = myData[ARGENTINA_TEAM_ID] || {};
+  return Object.values(myArgPositions).reduce((s,v) => s+v.weight, 0);
 }
 
 function getMyCompletion(){
   const myAddr = address?.toLowerCase();
   const myData = window.dreamScores[myAddr] || {};
-  return Object.keys(myData).length;
+  const myArgPositions = myData[ARGENTINA_TEAM_ID] || {};
+  return Object.keys(myArgPositions).length;
 }
 
 function getLeaderboardData() {
-  return Object.entries(window.dreamScores).map(([wallet, positions]) => {
-    const score = Object.values(positions).reduce((s,v) => s + v.weight, 0);
-    const completed = Object.keys(positions).length;
+  return Object.entries(window.dreamScores).map(([wallet, countryObj]) => {
+    const myArgPositions = countryObj[ARGENTINA_TEAM_ID] || {};
+    const score = Object.values(myArgPositions).reduce((s,v) => s + v.weight, 0);
+    const completed = Object.keys(myArgPositions).length;
     return { wallet, score, completed };
-  }).sort((a,b) => {
-    if (b.score !== a.score) return b.score - a.score;
-    return b.completed - a.completed;
-  });
+  }).sort((a,b) => b.score - a.score);
 }
 
 function renderStats() {
@@ -1904,7 +1906,7 @@ function renderPitch() {
   const compCount = getMyCompletion();
   document.getElementById('selectedCountryCompletion').textContent = `${compCount}/11 POSITIONS COMPLETED`;
 
-  const myTeamPositions = window.dreamScores[myAddr] || {};
+  const myTeamPositions = (window.dreamScores[myAddr] || {})[ARGENTINA_TEAM_ID] || {};
 
   const legendEl = document.createElement('div');
   legendEl.className = 'legend';
@@ -1922,13 +1924,9 @@ function renderPitch() {
     row.forEach(pos => {
       const card = document.createElement('div');
       const scored = myTeamPositions[pos];
-      const mktTeam = marketByTeamPosition[selectedTeamId] || {};
-      const mkt = mktTeam[pos];
-      
-      const floorTeam = marketFloorByTeamPosition[selectedTeamId] || {};
-      const floor = floorTeam[pos];
+      const mkt = marketByPos[pos];
+      const floor = marketFloorByPos[pos];
 
-      // Format najtańszej ceny floor na rynku wtórnym
       let floorHtml = '';
       if (scored && floor) {
         floorHtml = `<div style="font-size:9px; color:#ffc940; font-family:'Share Tech Mono',monospace; margin-top:2px;">Floor: ${floor.price} CHZ</div>`;
@@ -2171,7 +2169,7 @@ async function directMint() {
 
     if (mintedCard) {
       const myAddr = address.toLowerCase();
-      const oldCard = window.dreamScores[myAddr]?.[mintedCard.position];
+      const oldCard = window.dreamScores[myAddr]?.[mintedCard.teamId]?.[mintedCard.position];
       const isUpgrade = !oldCard || mintedCard.weight > oldCard.weight;
 
       const posName = POSITION_SHORT[mintedCard.position] || mintedCard.position;
@@ -2207,7 +2205,7 @@ async function directMint() {
           <span style="display:inline-block; background:rgba(122,136,153,0.15); color:#7a8899; border:1px solid #1c2028; padding:6px 12px; border-radius:4px; font-weight:700; margin-bottom:12px; font-size:13px; text-transform:uppercase; letter-spacing:1px;">
             RESERVE PLAYER ACQUIRED
           </span>
-          <p style="color:#7a8899;">You already have a heavier card scored for this position (current best: ${oldCard.weight} pts). This card is sent to your reserves for marketplace selling!</p>
+          <p style="color:#7a8899;">You already have a heavier card in this slot (owned: ${oldCard.weight} pts). This card is sent to your reserves for marketplace selling!</p>
         `;
       }
       document.getElementById('mintedCardStatus').innerHTML = statusText;
