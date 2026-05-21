@@ -683,6 +683,8 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
 .tab-btn{background:#0f1318;border:1px solid #1c2028;color:#7a8899;padding:6px 12px;border-radius:6px;font-family:'Black Ops One',sans-serif;font-size:10px;letter-spacing:1px;cursor:pointer;transition:all 0.2s;}
 .tab-btn:hover{border-color:#818cf8;color:#dde4f0;}
 .tab-btn.active{background:#818cf8;color:#000;border-color:#818cf8;}
+.tab-btn img{width:16px;height:11px;border-radius:1px;object-fit:cover;margin-right:5px;vertical-align:-1px;}
+.rules-icon{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:8px;background:rgba(255,201,64,0.12);border:1px solid rgba(255,201,64,0.35);margin-right:8px;font-size:20px;}
 
 /* PRZYCISKI AKCJI W HERO */
 .btn-mint-hero{background:linear-gradient(135deg,#00ff87,#00c96a);color:#000;border:none;padding:14px 32px;border-radius:8px;font-family:'Black Ops One',sans-serif;font-size:14px;letter-spacing:2px;cursor:pointer;transition:all 0.2s;}
@@ -698,17 +700,42 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
 @keyframes spin{to{transform:rotate(360deg)}}
 
 @media(max-width:600px){
+  .page{padding-bottom:30px;}
+  .hero{padding:28px 10px 24px;}
+  .hero-title{font-size:32px;}
+  .hero-sub{font-size:14px;padding:0 4px;}
+  .prize-row{gap:6px;margin-bottom:18px;}
+  .prize-box{min-width:96px;padding:10px 8px;}
+  .prize-num{font-size:20px;}
+  .btn-mint-hero{padding:11px 12px;font-size:11px;letter-spacing:1px;}
+  .game-grid{padding:0 6px 20px;gap:12px;}
+  .pitch-container{padding:8px;border-radius:8px;}
+  .pitch-title-row{margin-bottom:6px;gap:8px;}
+  .pitch-title{font-size:9px;letter-spacing:1px;}
+  .pitch-wrap{padding:16px 3px;border-radius:10px;}
+  .formation{gap:8px;}
   .stats-container{grid-template-columns:1fr 1fr;}
-  .form-row{gap:4px;}
-  .pos-card{width:64px;padding:4px 2px;min-height:85px;}
+  .form-row{gap:3px;}
+  .pos-card{width:58px;padding:4px 2px;min-height:78px;border-radius:5px;}
   .pos-name{font-size:7px;}
-  .pos-weight{font-size:14px;}
+  .pos-card-meta{font-size:6px;min-height:14px;}
+  .pos-weight{font-size:13px;}
+  .pos-rarity{font-size:6px;}
   .btn-card-action{font-size:6px;padding:2px 1px;}
-  .pitch-penalty-area-top, .pitch-penalty-area-bottom { width: 140px; height: 40px; }
-  .pitch-center-circle { width: 70px; height: 70px; }
-  .countdown-timer { gap: 6px !important; }
-  .countdown-num { font-size: 24px !important; }
-  .countdown-unit { min-width: 40px !important; }
+  .pitch-penalty-area-top, .pitch-penalty-area-bottom { width: 120px; height: 34px; }
+  .pitch-center-circle { width: 56px; height: 56px; }
+  .countdown-wrap{min-width:0;width:100%;padding:12px 8px;}
+  .countdown-timer { gap: 4px !important; }
+  .countdown-num { font-size: 22px !important; }
+  .countdown-unit { min-width: 38px !important; }
+  .countdown-sub{font-size:7px !important;letter-spacing:1px !important;}
+  .leaderboard-list{padding:6px;}
+  .lb-section{padding:16px 6px;}
+  .lb-row{display:grid;grid-template-columns:32px minmax(0,1fr) auto;gap:6px;padding:8px;}
+  .lb-addr{font-size:11px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .lb-completion{font-size:10px;margin:0;grid-column:2 / 4;}
+  .lb-score{font-size:13px;white-space:nowrap;text-align:right;}
+  .lb-you{display:inline-block;margin-left:4px;padding:1px 4px;}
 }
 </style>
 </head>
@@ -746,7 +773,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
       <div class="prize-box s">
         <div style="font-size:11px;letter-spacing:2px;color:#9ca3af;margin-bottom:4px;">&#127919; PAID PLACES</div>
         <div class="prize-num">GROW</div>
-        <div class="prize-chz">WITH PLAYERS</div>
+        <div class="prize-chz">WITH COLLECTORS</div>
       </div>
       <div class="prize-box b">
         <div style="font-size:11px;letter-spacing:2px;color:#cd7f32;margin-bottom:4px;">&#127918; 48 WC TEAMS</div>
@@ -756,14 +783,19 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
     </div>
 
     <div style="margin-bottom:24px; display:flex; justify-content:center; gap:12px; flex-wrap:wrap;">
-      <button class="btn-mint-hero" style="background:rgba(0,255,135,0.1); border:1px solid #00ff87; color:#00ff87;" onclick="directMint()">&#127922; MINT RANDOM WC PLAYER</button>
-      <button class="btn-mint-hero" onclick="window.open('https://block-kickers.vercel.app','_blank')">&#127968; MAIN WEBSITE</button>
+      <button class="btn-mint-hero" style="background:rgba(0,255,135,0.1); border:1px solid #00ff87; color:#00ff87;" onclick="directMint()">&#127922; MINT RANDOM WC CARD</button>
+      <button class="btn-mint-hero" onclick="scrollToSquad()">&#9917; GO TO SQUAD</button>
     </div>
 
     <!-- ODLICZANIE BLOKĂ“W QUESTU -->
     <div class="countdown-wrap">
       <div class="countdown-label">QUEST DEADLINE (QUEST TARGET BLOCK)</div>
       <div class="countdown-timer">
+        <div class="countdown-unit">
+          <div class="countdown-num" id="cdD">--</div>
+          <div class="countdown-sub">DAYS</div>
+        </div>
+        <div class="countdown-divider">:</div>
         <div class="countdown-unit">
           <div class="countdown-num" id="cdH">--</div>
           <div class="countdown-sub">HOURS</div>
@@ -844,7 +876,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
             <div class="how-card">
               <div class="how-n">01</div>
               <div class="how-title">&#127922; MINT OR BUY</div>
-              <div class="how-desc">Minting costs <span class="g">10 CHZ</span> and gives a random player from one of <span class="a">48 World Cup teams</span>. Buy Argentina cards on the market to complete this squad.</div>
+              <div class="how-desc">Minting costs <span class="g">10 CHZ</span> and gives a random card from one of <span class="a">48 World Cup teams</span>. Buy Argentina cards on the market to complete this squad.</div>
             </div>
             <div class="how-card" style="border-color: rgba(239, 68, 68, 0.35); background: rgba(239, 68, 68, 0.03);">
               <div class="how-n" style="color: #ef4444;">02</div>
@@ -859,7 +891,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
             <div class="how-card" style="border-color:rgba(255,201,64,0.3); background:rgba(255,201,64,0.04);">
               <div class="how-n" style="color:rgba(255,201,64,0.2);">04</div>
               <div class="how-title" style="color:#ffc940;">&#127942; PRIZE PLACES</div>
-              <div class="how-desc">The prize pool is <span class="a">10,000 CHZ</span>. More unique players on the leaderboard means more paid ranks.</div>
+              <div class="how-desc">The prize pool is <span class="a">10,000 CHZ</span>. More unique collectors on the leaderboard means more paid ranks.</div>
             </div>
           </div>
         </div>
@@ -971,18 +1003,18 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
 <div id="rulesModal" class="modal-overlay">
   <div class="modal-content" style="max-width:550px;">
     <button onclick="toggleRulesModal(false)" class="modal-close">&times;</button>
-    <h2 id="rulesTitle" style="font-family:'Black Ops One',sans-serif; font-size:24px; color:#ffc940; margin-bottom:16px;">How to Play & Rules</h2>
+    <h2 style="font-family:'Black Ops One',sans-serif; font-size:24px; color:#ffc940; margin-bottom:16px;display:flex;align-items:center;"><span class="rules-icon">&#8505;</span><span id="rulesTitle">How to Play & Rules</span></h2>
     
     <div style="display:flex; gap:6px; margin-bottom:20px; flex-wrap:wrap; border-bottom:1px solid #1c2028; padding-bottom:12px;">
-      <button class="tab-btn active" id="lang-en" onclick="setRulesLanguage('en')">EN</button>
-      <button class="tab-btn" id="lang-de" onclick="setRulesLanguage('de')">DE</button>
-      <button class="tab-btn" id="lang-fr" onclick="setRulesLanguage('fr')">FR</button>
-      <button class="tab-btn" id="lang-es" onclick="setRulesLanguage('es')">ES</button>
-      <button class="tab-btn" id="lang-it" onclick="setRulesLanguage('it')">ITA</button>
-      <button class="tab-btn" id="lang-pt" onclick="setRulesLanguage('pt')">POR</button>
-      <button class="tab-btn" id="lang-ja" onclick="setRulesLanguage('ja')">JAP</button>
-      <button class="tab-btn" id="lang-uk" onclick="setRulesLanguage('uk')">UKR</button>
-      <button class="tab-btn" id="lang-pl" onclick="setRulesLanguage('pl')">PL</button>
+      <button class="tab-btn active" id="lang-en" onclick="setRulesLanguage('en')"><img src="https://flagcdn.com/w20/gb.png" alt="">EN</button>
+      <button class="tab-btn" id="lang-de" onclick="setRulesLanguage('de')"><img src="https://flagcdn.com/w20/de.png" alt="">DE</button>
+      <button class="tab-btn" id="lang-fr" onclick="setRulesLanguage('fr')"><img src="https://flagcdn.com/w20/fr.png" alt="">FR</button>
+      <button class="tab-btn" id="lang-es" onclick="setRulesLanguage('es')"><img src="https://flagcdn.com/w20/es.png" alt="">ES</button>
+      <button class="tab-btn" id="lang-it" onclick="setRulesLanguage('it')"><img src="https://flagcdn.com/w20/it.png" alt="">ITA</button>
+      <button class="tab-btn" id="lang-pt" onclick="setRulesLanguage('pt')"><img src="https://flagcdn.com/w20/pt.png" alt="">POR</button>
+      <button class="tab-btn" id="lang-ja" onclick="setRulesLanguage('ja')"><img src="https://flagcdn.com/w20/jp.png" alt="">JAP</button>
+      <button class="tab-btn" id="lang-uk" onclick="setRulesLanguage('uk')"><img src="https://flagcdn.com/w20/ua.png" alt="">UKR</button>
+      <button class="tab-btn" id="lang-pl" onclick="setRulesLanguage('pl')"><img src="https://flagcdn.com/w20/pl.png" alt="">PL</button>
     </div>
     
     <ul id="rulesContent" style="list-style:none; display:flex; flex-direction:column; gap:12px; font-family:'Barlow Condensed',sans-serif; font-size:16px; color:#dde4f0; line-height:1.4;">
@@ -997,7 +1029,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
 <div id="sellModal" class="modal-overlay">
   <div class="modal-content" style="max-width:400px;">
     <button onclick="toggleSellModal(false)" class="modal-close">&times;</button>
-    <h2 style="font-family:'Black Ops One',sans-serif; font-size:20px; color:#ef4444; margin-bottom:12px;">List Player on Marketplace</h2>
+    <h2 style="font-family:'Black Ops One',sans-serif; font-size:20px; color:#ef4444; margin-bottom:12px;">List Card on Marketplace</h2>
     <div id="sellCardInfo" style="margin-bottom:16px; font-size:14px; color:#dde4f0; line-height:1.5; display: flex; flex-direction: column; align-items: flex-start; gap: 4px;">
       <!-- Dynamiczne info karty -->
     </div>
@@ -1014,7 +1046,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
   <div class="modal-content" style="max-width:450px; text-align:center;">
     <button onclick="toggleMintSuccessModal(false)" class="modal-close">&times;</button>
     <div style="font-size: 26px; margin-bottom: 12px; animation: pulse 2s infinite; font-family:'Black Ops One',sans-serif; color:#00ff87;">SUCCESS</div>
-    <h2 style="font-family:'Black Ops One',sans-serif; font-size:24px; color:#00ff87; margin-bottom:16px; letter-spacing:1px;">PLAYER MINTED!</h2>
+    <h2 style="font-family:'Black Ops One',sans-serif; font-size:24px; color:#00ff87; margin-bottom:16px; letter-spacing:1px;">CARD MINTED!</h2>
     
     <div id="mintedCardVisual" style="background:#06080a; border:1px solid #1c2028; border-radius:8px; padding:20px; margin-bottom:20px; display:inline-block; width:100%;">
       <!-- PodglÄ…d karty zawodnika -->
@@ -1086,99 +1118,99 @@ const RULES_TRANSLATIONS = {
     title: "How to Play & Rules",
     items: [
       "Connect your Chiliz Wallet to activate your personal Argentina squad and check live progress.",
-      "Mint player cards for 10 CHZ. Each mint gives a random player from one of the 48 World Cup teams.",
+      "Mint cards for 10 CHZ. Each mint gives a random card from one of the 48 World Cup teams.",
       "A card only scores in your Argentina squad if it was minted by you or bought through the marketplace. Direct wallet transfers do not score.",
       "Your score is the sum of the best card weights that have ever passed through your wallet.",
       "When you secure a heavier card for a position, your score updates instantly. You can sell weaker cards on the marketplace to recover CHZ.",
-      "The 10,000 CHZ prize pool is split across paid ranks. More unique players on the leaderboard means more paid ranks."
+      "The 10,000 CHZ prize pool is split across paid ranks. More unique collectors on the leaderboard means more paid ranks."
     ]
   },
   de: {
     title: "Spielregeln",
     items: [
       "Verbinde dein Chiliz Wallet, um dein persoenliches Argentinien-Team und den Live-Fortschritt zu sehen.",
-      "Mint kostet 10 CHZ. Jeder Mint gibt einen zufaelligen Spieler aus einem der 48 World-Cup-Teams.",
+      "Mint kostet 10 CHZ. Jeder Mint gibt eine zufaellige Karte aus einem der 48 World-Cup-Teams.",
       "Eine Karte punktet nur, wenn sie von dir gemintet oder ueber den Marketplace gekauft wurde. Direkte Wallet-Transfers zaehlen nicht.",
       "Dein Score ist die Summe der staerksten Karten, die jemals durch dein Wallet gegangen sind.",
       "Wenn du eine staerkere Karte fuer eine Position bekommst, wird dein Score sofort aktualisiert. Schwaechere Karten kannst du verkaufen.",
-      "Der Preispool von 10,000 CHZ wird auf bezahlte Raenge verteilt. Mehr eindeutige Spieler bedeuten mehr bezahlte Raenge."
+      "Der Preispool von 10,000 CHZ wird auf bezahlte Raenge verteilt. Mehr eindeutige Sammler bedeuten mehr bezahlte Raenge."
     ]
   },
   fr: {
     title: "Regles du jeu",
     items: [
       "Connecte ton wallet Chiliz pour activer ton equipe d'Argentine et suivre ta progression.",
-      "Le mint coute 10 CHZ. Chaque mint donne un joueur aleatoire parmi les 48 equipes de la Coupe du monde.",
+      "Le mint coute 10 CHZ. Chaque mint donne une carte aleatoire parmi les 48 equipes de la Coupe du monde.",
       "Une carte marque seulement si elle a ete mintee par toi ou achetee sur le marketplace. Les transferts directs ne comptent pas.",
       "Ton score est la somme des meilleures cartes passees par ton wallet.",
       "Quand tu obtiens une carte plus forte pour une position, ton score se met a jour instantanement. Tu peux vendre les cartes plus faibles.",
-      "Le prize pool de 10,000 CHZ est partage entre les rangs payes. Plus il y a de joueurs uniques, plus il y a de rangs payes."
+      "Le prize pool de 10,000 CHZ est partage entre les rangs payes. Plus il y a de collectionneurs uniques, plus il y a de rangs payes."
     ]
   },
   es: {
     title: "Reglas del juego",
     items: [
       "Conecta tu wallet Chiliz para activar tu equipo de Argentina y ver el progreso en vivo.",
-      "Mintear cuesta 10 CHZ. Cada mint entrega un jugador aleatorio de uno de los 48 equipos del Mundial.",
+      "Mintear cuesta 10 CHZ. Cada mint entrega una carta aleatoria de uno de los 48 equipos del Mundial.",
       "Una carta solo puntua si la minteaste tu o la compraste en el marketplace. Las transferencias directas no cuentan.",
       "Tu puntuacion es la suma de las cartas mas fuertes que pasaron por tu wallet.",
       "Cuando consigues una carta mas fuerte para una posicion, tu score se actualiza al instante. Puedes vender cartas mas debiles.",
-      "El prize pool de 10,000 CHZ se reparte entre rangos pagados. Mas jugadores unicos significa mas rangos pagados."
+      "El prize pool de 10,000 CHZ se reparte entre rangos pagados. Mas coleccionistas unicos significa mas rangos pagados."
     ]
   },
   it: {
     title: "Regole del gioco",
     items: [
       "Collega il tuo wallet Chiliz per attivare la squadra Argentina e vedere i progressi live.",
-      "Il mint costa 10 CHZ. Ogni mint assegna un giocatore casuale da una delle 48 squadre World Cup.",
+      "Il mint costa 10 CHZ. Ogni mint assegna una carta casuale da una delle 48 squadre World Cup.",
       "Una carta fa punti solo se e stata mintata da te o comprata sul marketplace. I trasferimenti diretti non contano.",
       "Il tuo score e la somma delle carte migliori passate dal tuo wallet.",
       "Quando ottieni una carta piu forte per una posizione, lo score si aggiorna subito. Puoi vendere le carte piu deboli.",
-      "Il prize pool da 10,000 CHZ viene diviso tra i ranghi pagati. Piu giocatori unici significa piu ranghi pagati."
+      "Il prize pool da 10,000 CHZ viene diviso tra i ranghi pagati. Piu collezionisti unici significa piu ranghi pagati."
     ]
   },
   pt: {
     title: "Regras do jogo",
     items: [
       "Conecta a tua wallet Chiliz para ativar a equipa da Argentina e acompanhar o progresso.",
-      "O mint custa 10 CHZ. Cada mint da um jogador aleatorio de uma das 48 equipas da World Cup.",
+      "O mint custa 10 CHZ. Cada mint da uma carta aleatoria de uma das 48 equipas da World Cup.",
       "Uma carta so pontua se foi mintada por ti ou comprada no marketplace. Transferencias diretas nao contam.",
       "A tua pontuacao e a soma das melhores cartas que passaram pela tua wallet.",
       "Quando recebes uma carta mais forte para uma posicao, a pontuacao atualiza imediatamente. Podes vender cartas mais fracas.",
-      "O prize pool de 10,000 CHZ e dividido pelos lugares pagos. Mais jogadores unicos significa mais lugares pagos."
+      "O prize pool de 10,000 CHZ e dividido pelos lugares pagos. Mais colecionadores unicos significa mais lugares pagos."
     ]
   },
   ja: {
     title: "Game Rules",
     items: [
       "Connect your Chiliz Wallet to activate your Argentina squad and see live progress.",
-      "Mint costs 10 CHZ. Each mint gives a random player from one of the 48 World Cup teams.",
+      "Mint costs 10 CHZ. Each mint gives a random card from one of the 48 World Cup teams.",
       "A card scores only if you minted it or bought it through the marketplace. Direct wallet transfers do not score.",
       "Your score is the sum of the best cards that have passed through your wallet.",
       "When you get a stronger card for a position, your score updates instantly. You can sell weaker cards.",
-      "The 10,000 CHZ prize pool is split across paid ranks. More unique players means more paid ranks."
+      "The 10,000 CHZ prize pool is split across paid ranks. More unique collectors means more paid ranks."
     ]
   },
   uk: {
     title: "Pravyla hry",
     items: [
       "Pidkliuchit Chiliz Wallet, shchob aktyvuvaty sklad Argentyny ta bachyty progres.",
-      "Mint koshtuye 10 CHZ. Kozhen mint daye vypadkovoho hravtsia z odniyeyi z 48 World Cup komand.",
+      "Mint koshtuye 10 CHZ. Kozhen mint daye vypadkovu kartu z odniyeyi z 48 World Cup komand.",
       "Karta narakhovuye ochky lyshe yakshcho ty yii zmintyuvav abo kupyv na marketplace. Pryami transfery ne rakhuyutsia.",
       "Tviy score tse suma naikrashchykh kart, yaki proishly cherez tviy wallet.",
       "Koly otrymuyesh sylnishu kartu na pozytsiiu, score onovliuietsia odrazu. Slabshi karty mozhna prodaty.",
-      "Prize pool 10,000 CHZ rozdiliaietsia mizh platnymy mistsiamy. Bilsh unikalnykh hravtsiv oznachaye bilshe platnykh mists."
+      "Prize pool 10,000 CHZ rozdiliaietsia mizh platnymy mistsiamy. Bilsh unikalnykh kolektsioneriv oznachaye bilshe platnykh mists."
     ]
   },
   pl: {
     title: "Zasady gry",
     items: [
       "Polacz Chiliz Wallet, aby aktywowac swoj sklad Argentyny i sprawdzac postep na zywo.",
-      "Mint kosztuje 10 CHZ. Kazdy mint daje losowego gracza z jednej z 48 druzyn World Cup.",
+      "Mint kosztuje 10 CHZ. Kazdy mint daje losowa karte z jednej z 48 druzyn World Cup.",
       "Karta punktuje tylko wtedy, gdy zostala wymintowana przez Ciebie albo kupiona na marketplace. Bezposrednie transfery nie punktuja.",
       "Twoj wynik to suma najlepszych kart, ktore przeszly przez Twoj wallet.",
       "Gdy zdobedziesz mocniejsza karte na pozycje, wynik aktualizuje sie natychmiast. Slabsze karty mozesz sprzedac.",
-      "Pula 10,000 CHZ jest dzielona na platne miejsca. Im wiecej unikalnych graczy, tym wiecej platnych miejsc."
+      "Pula 10,000 CHZ jest dzielona na platne miejsca. Im wiecej unikalnych kolekcjonerow, tym wiecej platnych miejsc."
     ]
   }
 };
@@ -1280,6 +1312,17 @@ function toggleRulesModal(show) {
 function setRulesLanguage(lang) {
   const data = RULES_TRANSLATIONS[lang] || RULES_TRANSLATIONS['en'];
   document.getElementById('rulesTitle').textContent = data.title;
+  const langFonts = {
+    en: "'Barlow Condensed', sans-serif",
+    de: "'Barlow Condensed', Arial, sans-serif",
+    fr: "'Barlow Condensed', 'Trebuchet MS', sans-serif",
+    es: "'Barlow Condensed', Arial, sans-serif",
+    it: "'Barlow Condensed', Georgia, sans-serif",
+    pt: "'Barlow Condensed', Arial, sans-serif",
+    ja: "'Noto Sans JP', 'Yu Gothic', 'Meiryo', sans-serif",
+    uk: "'Barlow Condensed', Arial, sans-serif",
+    pl: "'Barlow Condensed', Arial, sans-serif"
+  };
   
   const langs = ['en', 'de', 'fr', 'es', 'it', 'pt', 'ja', 'uk', 'pl'];
   langs.forEach(l => {
@@ -1288,6 +1331,7 @@ function setRulesLanguage(lang) {
   });
   
   const container = document.getElementById('rulesContent');
+  container.style.fontFamily = langFonts[lang] || langFonts.en;
   container.innerHTML = '';
   data.items.forEach(item => {
     const li = document.createElement('li');
@@ -1306,6 +1350,11 @@ function toggleMintSuccessModal(show) {
   modal.style.display = show ? 'flex' : 'none';
 }
 
+function scrollToSquad() {
+  const squad = document.querySelector('.right-col.pitch-container');
+  if (squad) squad.scrollIntoView({behavior: 'smooth', block: 'start'});
+}
+
 function switchDeskTab(tab) {
   document.getElementById('btnDeskSnipe').classList.toggle('active', tab === 'snipe');
   document.getElementById('btnDeskPortfolio').classList.toggle('active', tab === 'portfolio');
@@ -1322,7 +1371,7 @@ function openSellModal(tokenId, pos, weight, rarity) {
     <strong>National Team:</strong> ${getFlagHtml()} Argentina<br>
     <strong>Tactical Position:</strong> ${posName}<br>
     <strong>Rarity Class:</strong> ${rarityName}<br>
-    <strong>Player Weight:</strong> ${weight} pts<br>
+    <strong>Card Weight:</strong> ${weight} pts<br>
     <strong>Token ID:</strong> #${tokenId}
   `;
   document.getElementById('sellPriceInput').value = "40";
@@ -1709,7 +1758,7 @@ async function loadData(){
 
   const playerCount = getLeaderboardData().length;
   const paidPlaces = getPaidPlaces(playerCount);
-  document.getElementById('poolInfo').textContent = `Quest Prize Pool: ${PRIZE_POOL_CHZ.toLocaleString()} CHZ - ${paidPlaces || 1} paid ranks from ${playerCount} players`;
+  document.getElementById('poolInfo').textContent = `Quest Prize Pool: ${PRIZE_POOL_CHZ.toLocaleString()} CHZ - ${paidPlaces || 1} paid ranks from ${playerCount} collectors`;
 
   renderStats();
   renderPitch();
@@ -2107,7 +2156,7 @@ function renderLeaderboard(){
   const paidPlaces = getPaidPlaces(playerCount);
 
   if(competitors.length === 0){
-    lb.innerHTML = '<div style="text-align:center;color:#3d4a5a;padding:20px;">No active contenders on the Argentina leaderboard yet. Mint or buy a player to start!</div>';
+    lb.innerHTML = '<div style="text-align:center;color:#3d4a5a;padding:20px;">No active contenders on the Argentina leaderboard yet. Mint or buy a card to start!</div>';
     return;
   }
 
@@ -2152,7 +2201,7 @@ function renderLeaderboard(){
   } else if (competitors.length > paidPlaces) {
     html += `
       <div class="cutoff-line">
-        SPONSORED PRIZE THRESHOLD (${paidPlaces} PAID RANKS) - MORE UNIQUE PLAYERS MEANS MORE PAID RANKS
+        SPONSORED PRIZE THRESHOLD (${paidPlaces} PAID RANKS) - MORE UNIQUE COLLECTORS MEANS MORE PAID RANKS
       </div>
     `;
   }
@@ -2260,18 +2309,18 @@ async function sellFigure(tokenId, priceChz) {
 
 async function directMint() {
   if (!signer || !contract) {
-    showHeaderToast('Connect your wallet to mint players.', true);
+    showHeaderToast('Connect your wallet to mint cards.', true);
     return;
   }
   try {
     const referrer = getReferrer();
-    showHeaderToast(`Initializing player mint for ${ethers.formatEther(currentMintPrice)} CHZ...`);
+    showHeaderToast(`Initializing card mint for ${ethers.formatEther(currentMintPrice)} CHZ...`);
     
     const tx = await contract.mint(referrer, { value: currentMintPrice });
     showHeaderToast('Mint transaction sent. Awaiting block confirmation...');
     
     const receipt = await tx.wait();
-    showHeaderToast('Generative player card minted successfully!');
+    showHeaderToast('Generative card minted successfully!');
 
     let mintedCard = null;
     try {
@@ -2342,14 +2391,14 @@ async function directMint() {
       } else if (mintedCard.teamId !== ARGENTINA_TEAM_ID) {
         statusText = `
           <span style="display:inline-block; background:rgba(122,136,153,0.15); color:#7a8899; border:1px solid #1c2028; padding:6px 12px; border-radius:4px; font-weight:700; margin-bottom:12px; font-size:13px; text-transform:uppercase; letter-spacing:1px;">
-            PLAYER FROM ANOTHER NATION
+            CARD FROM ANOTHER NATION
           </span>
           <p style="color:#7a8899;">Great pull, but from a different national team! The card is saved in your Block Kickers locker. You can sell it on the market or use it in the World Cup albums!</p>
         `;
       } else {
         statusText = `
           <span style="display:inline-block; background:rgba(122,136,153,0.15); color:#7a8899; border:1px solid #1c2028; padding:6px 12px; border-radius:4px; font-weight:700; margin-bottom:12px; font-size:13px; text-transform:uppercase; letter-spacing:1px;">
-            RESERVE PLAYER ACQUIRED
+            RESERVE CARD ACQUIRED
           </span>
           <p style="color:#7a8899;">You already have a heavier card scored for this position (current best: ${oldCard.weight} pts). This card is sent to your reserves for marketplace selling!</p>
         `;
@@ -2421,6 +2470,7 @@ function updateCountdown(){
   const estimated = getEstimatedBlock();
   const blocksLeft = Math.max(0, DEADLINE_BLOCK - estimated);
   if(blocksLeft === 0){
+    document.getElementById('cdD').textContent = '00';
     document.getElementById('cdH').textContent = '00';
     document.getElementById('cdM').textContent = '00';
     document.getElementById('cdS').textContent = '00';
@@ -2428,10 +2478,12 @@ function updateCountdown(){
     return;
   }
   const secsLeft = blocksLeft * 3;
-  const h = Math.floor(secsLeft / 3600);
+  const d = Math.floor(secsLeft / 86400);
+  const h = Math.floor((secsLeft % 86400) / 3600);
   const m = Math.floor((secsLeft % 3600) / 60);
   const s = secsLeft % 60;
   
+  document.getElementById('cdD').textContent = String(d).padStart(2,'0');
   document.getElementById('cdH').textContent = String(h).padStart(2,'0');
   document.getElementById('cdM').textContent = String(m).padStart(2,'0');
   document.getElementById('cdS').textContent = String(s).padStart(2,'0');
