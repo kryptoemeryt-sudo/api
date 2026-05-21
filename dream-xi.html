@@ -2091,6 +2091,16 @@ function getPositionBadges(pos, floor = null) {
   return badges.length ? `<div class="mini-badges">${badges.join('')}</div>` : '';
 }
 
+function getPitchPriorityBadge(pos, floor = null) {
+  const pressureBadge = getPressureBadge(pos);
+  if (pressureBadge) return `<div class="mini-badges">${pressureBadge}</div>`;
+  const count = circulationByPos[pos] || 0;
+  if (count === 1) return `<div class="mini-badges"><span class="mini-badge scarce">ONLY 1</span></div>`;
+  if (count > 1 && count <= 3) return `<div class="mini-badges"><span class="mini-badge scarce">LOW x${count}</span></div>`;
+  if (floor) return `<div class="mini-badges"><span class="mini-badge hot">FLOOR ${floor.price}</span></div>`;
+  return '';
+}
+
 function getPressureLine(pos) {
   const pressure = getPositionPressure(pos);
   if (!pressure.label) return '';
@@ -2682,8 +2692,7 @@ function renderPitch() {
       const floor = marketFloorByPos[pos];
       const circulationCount = circulationByPos[pos] || 0;
       const circulationHtml = `<span class="pos-card-count" title="Argentina ${POSITION_SHORT[pos]} cards in circulation">x${circulationCount}</span>`;
-      const badgesHtml = getPositionBadges(pos, floor);
-      const pressureLine = getPressureLine(pos);
+      const badgesHtml = getPitchPriorityBadge(pos, floor);
 
       let floorHtml = '';
       if (scored && floor) {
@@ -2725,7 +2734,6 @@ function renderPitch() {
             <div class="pos-weight ${scored.rarity === 3 ? 'gold' : ''}">${scored.weight}</div>
             <div class="pos-rarity" style="color:${rarColor}">${['Common','Rare','Epic','Legendary'][scored.rarity]}</div>
             ${badgesHtml}
-            ${pressureLine}
             ${floorHtml}
             ${actionHtml}
             ${sellBtnHtml}
@@ -2751,7 +2759,6 @@ function renderPitch() {
             <div class="pos-weight empty">-</div>
             <div class="pos-rarity" style="color:#5a6a7a;">EMPTY SLOT</div>
             ${badgesHtml}
-            ${pressureLine}
             ${actionHtml}
           </div>
         `;
