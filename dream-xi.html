@@ -1739,11 +1739,9 @@ function renderLiveActivityFeed(mints, sales) {
   mints.forEach(m => {
     try {
       const fig = parseDNA(m.dna);
-      if (fig.teamId === ARGENTINA_TEAM_ID) {
-        eventsLog.push({type:'mint', owner:m.owner, block:m.block||0,
-          teamId:fig.teamId, posName:POSITION_SHORT[fig.position],
-          weight:fig.weight, rarity:fig.rarity});
-      }
+      eventsLog.push({type:'mint', owner:m.owner, block:m.block||0,
+        teamId:fig.teamId, posName:POSITION_SHORT[fig.position],
+        weight:fig.weight, rarity:fig.rarity});
     } catch(e){}
   });
 
@@ -2111,16 +2109,18 @@ async function directMint() {
     try {
       const iface = new ethers.Interface(ABI);
       for (const log of receipt.logs) {
-        const parsed = iface.parseLog(log);
+        let parsed = null;
+        try { parsed = iface.parseLog(log); } catch(e) { continue; }
         if (parsed && parsed.name === 'FigureMinted') {
+          const dnaParsed = parseDNA(parsed.args[2]);
           mintedCard = {
             owner: parsed.args[0],
             tokenId: Number(parsed.args[1]),
             dna: parsed.args[2],
-            teamId: Number(parsed.args[3]),
-            position: Number(parsed.args[4]),
-            rarity: Number(parsed.args[5]),
-            weight: Number(parsed.args[6])
+            teamId: dnaParsed.teamId,
+            position: dnaParsed.position,
+            rarity: dnaParsed.rarity,
+            weight: dnaParsed.weight
           };
           break;
         }
