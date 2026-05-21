@@ -1344,7 +1344,11 @@ function toggleMintSuccessModal(show) {
 
 function scrollToSquad() {
   const squad = document.querySelector('.right-col.pitch-container');
-  if (squad) squad.scrollIntoView({behavior: 'smooth', block: 'start'});
+  if (!squad) return;
+  const nav = document.querySelector('.topnav');
+  const navHeight = nav ? nav.getBoundingClientRect().height : 0;
+  const targetTop = squad.getBoundingClientRect().top + window.scrollY - navHeight - 12;
+  window.scrollTo({top: Math.max(0, targetTop), behavior: 'smooth'});
 }
 
 function switchDeskTab(tab) {
@@ -1554,7 +1558,7 @@ async function fetchEvents(){
   return {mints: rawMints, sales: salesWithToken, listed};
 }
 
-async function fetchRecentEvents(lookbackBlocks = 120000) {
+async function fetchRecentEvents(lookbackBlocks = 300000) {
   const rp = await getReadProvider();
   const rc = new ethers.Contract(CONTRACT_ADDRESS, ABI, rp);
   const rmk = new ethers.Contract(MARKET_ADDRESS, MARKET_ABI, rp);
@@ -1664,8 +1668,26 @@ async function loadData(){
     const res = await fetch('/api/events');
     if(res.ok){
       const api = await res.json();
-      mints = api.mints.map(m => ({owner: m.owner, tokenId: m.tokenId, dna: BigInt(m.dna), block: m.block || 34086621}));
-      sales = api.sales;
+      mints = api.mints.map(m => ({owner: m.owner, tokenId: m.tokenId, dna: BigInt(m.dna), block: m.block || 0}));
+      sales = (api.sales || []).map(s => {
+        let price = s.price || 0;
+        try {
+          if (typeof price === 'string' && !price.includes('.')) {
+            price = parseFloat(ethers.formatEther(BigInt(price)));
+          } else {
+            price = parseFloat(price);
+          }
+        } catch(e) {
+          price = 0;
+        }
+        return {
+          ...s,
+          price,
+          block: s.block || 0,
+          buyer: s.buyer?.toLowerCase(),
+          seller: s.seller ? s.seller.toLowerCase() : null
+        };
+      });
       listed = api.listings || [];
     }
   } catch(e) {
