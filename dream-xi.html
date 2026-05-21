@@ -195,11 +195,11 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
     <div class="countdown-wrap">
       <div class="countdown-label">QUEST ENDS AT BLOCK</div>
       <div class="countdown-timer">
-        <div class="countdown-unit"><div class="countdown-num" id="cdH">--</div><div class="countdown-sub">HRS</div></div>
+        <div class="countdown-unit"><div class="countdown-num" id="cdH">--</div><div class="countdown-sub" id="cdHlbl">HRS</div></div>
         <div style="font-family:'Black Ops One',sans-serif;font-size:28px;color:#3d4a5a;padding-bottom:4px;">:</div>
-        <div class="countdown-unit"><div class="countdown-num" id="cdM">--</div><div class="countdown-sub">MIN</div></div>
+        <div class="countdown-unit"><div class="countdown-num" id="cdM">--</div><div class="countdown-sub" id="cdMlbl">MIN</div></div>
         <div style="font-family:'Black Ops One',sans-serif;font-size:28px;color:#3d4a5a;padding-bottom:4px;">:</div>
-        <div class="countdown-unit"><div class="countdown-num" id="cdS">--</div><div class="countdown-sub">SEC</div></div>
+        <div class="countdown-unit"><div class="countdown-num" id="cdS">--</div><div class="countdown-sub" id="cdSlbl">SEC</div></div>
       </div>
       <div class="countdown-block" id="cdBlock">Target block: 34,253,705</div>
     </div>
@@ -267,12 +267,6 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
         <!-- Grass effect -->
         <div style="position:absolute;inset:0;background:repeating-linear-gradient(90deg,rgba(255,255,255,0.015) 0px,rgba(255,255,255,0.015) 1px,transparent 1px,transparent 40px);border-radius:12px;pointer-events:none;"></div>
 
-        <div class="legend" style="position:relative;z-index:1;">
-          <div class="legend-item"><div class="legend-dot" style="background:rgba(0,255,135,0.4);border:1px solid rgba(0,255,135,0.6);"></div>You own now</div>
-          <div class="legend-item"><div class="legend-dot" style="background:rgba(99,102,241,0.4);border:1px solid rgba(99,102,241,0.6);"></div>Best score (past)</div>
-          <div class="legend-item"><div class="legend-dot" style="background:rgba(255,201,64,0.4);border:1px solid rgba(255,201,64,0.6);"></div>On market — click to buy</div>
-          <div class="legend-item"><div class="legend-dot" style="background:#1c2028;border:1px solid #2a3040;"></div>Empty</div>
-        </div>
 
         <div class="formation" id="pitchFormation" style="position:relative;z-index:1;">
           <div style="text-align:center;color:#3d4a5a;font-family:Share Tech Mono,monospace;font-size:11px;padding:20px 0;"><span class="spin"></span> Loading your squad...</div>
@@ -314,11 +308,11 @@ const POSITION_NAMES = {1:'Goalkeeper',2:'Right Back',3:'Left Back',4:'Centre Ba
 const POSITION_SHORT = {1:'GK',2:'RB',3:'LB',4:'CB',5:'CB2',6:'DM',7:'RW',8:'MID',9:'ST',10:'#10',11:'LW'};
 const RARITY_NAMES = {0:'Common',1:'Rare',2:'Epic',3:'Legendary'};
 const FORMATION = [
-  [1],        // GK
-  [2,4,5,3],  // DEF
-  [6,8,10],   // MID
-  [7,11],     // WING
-  [9]         // ST
+  [9],         // ST
+  [7,11],      // WING
+  [6,8,10],    // MID
+  [2,4,5,3],   // DEF
+  [1]          // GK
 ];
 
 const PUBLIC_RPCS = ['https://chiliz-rpc.publicnode.com','https://rpc.chiliz.com'];
@@ -625,7 +619,8 @@ async function buyFromMarket(listingId, priceChz){
       const s = await p2.getSigner();
       marketContract = new ethers.Contract(MARKET_ADDRESS, MARKET_ABI, s);
     }
-    const tx = await marketContract.buyFigure(listingId, {value: ethers.parseEther(String(priceChz))});
+    const priceWei = ethers.parseEther(String(priceChz));
+    const tx = await marketContract.buyFigure(listingId, {value: priceWei, gasLimit: 300000});
     alert('Transaction sent...');
     await tx.wait();
     alert('Purchased! Refreshing...');
@@ -664,16 +659,23 @@ function shareOnX(){
 
 // COUNTDOWN
 // NOWY DEADLINE — blok #34253705 (+48h od teraz)
-const DEADLINE_BLOCK = 34253705; 
-const BLOCK_TIME_MS = 3000; 
-// Statystyki dla frontendu
+const DEADLINE_BLOCK = 34503406; // 31.05.2026 godz 23:00
+const BLOCK_TIME_MS = 3000;
+let currentBlock = 34196746;
+let lastBlockTime = Date.now();
 let blocksRemaining = DEADLINE_BLOCK - currentBlock;
-let timeRemainingSeconds = blocksRemaining * 3;
 
 async function fetchCurrentBlock(){
   try{
     const res = await fetch('/api/events');
-    if(res.ok){ const d = await res.json(); if(d.currentBlock) { currentBlock = d.currentBlock; lastBlockTime = Date.now(); } }
+    if(res.ok){
+      const d = await res.json();
+      if(d.currentBlock && d.currentBlock > 0){
+        currentBlock = d.currentBlock;
+        lastBlockTime = Date.now();
+        updateCountdown();
+      }
+    }
   }catch(e){}
 }
 
@@ -693,15 +695,21 @@ function updateCountdown(){
     return;
   }
   const secsLeft = blocksLeft * 3;
-  const h = Math.floor(secsLeft / 3600);
+  const d = Math.floor(secsLeft / 86400);
+  const h = Math.floor((secsLeft % 86400) / 3600);
   const m = Math.floor((secsLeft % 3600) / 60);
   const s = secsLeft % 60;
-  document.getElementById('cdH').textContent = String(h).padStart(2,'0');
-  document.getElementById('cdM').textContent = String(m).padStart(2,'0');
-  document.getElementById('cdS').textContent = String(s).padStart(2,'0');
-  document.getElementById('cdBlock').innerHTML = 'Deadline: block <a href="https://scan.chiliz.com/block/'+DEADLINE_BLOCK+'" target="_blank" style="color:#818cf8;text-decoration:none;">#'+DEADLINE_BLOCK.toLocaleString()+'</a> · current: ~#'+estimated.toLocaleString()+' · '+blocksLeft.toLocaleString()+' blocks left';
+  document.getElementById('cdH').textContent = d > 0 ? String(d).padStart(2,'0') : String(h).padStart(2,'0');
+  document.getElementById('cdM').textContent = d > 0 ? String(h).padStart(2,'0') : String(m).padStart(2,'0');
+  document.getElementById('cdS').textContent = d > 0 ? String(m).padStart(2,'0') : String(s).padStart(2,'0');
+  const lH = document.getElementById('cdHlbl'), lM = document.getElementById('cdMlbl'), lS = document.getElementById('cdSlbl');
+  if(lH){ lH.textContent = d > 0 ? 'DAYS' : 'HRS'; }
+  if(lM){ lM.textContent = d > 0 ? 'HRS' : 'MIN'; }
+  if(lS){ lS.textContent = d > 0 ? 'MIN' : 'SEC'; }
+  document.getElementById('cdBlock').innerHTML = 'Deadline: block <a href="https://scan.chiliz.com/block/'+DEADLINE_BLOCK+'" target="_blank" style="color:#818cf8;text-decoration:none;">#'+DEADLINE_BLOCK.toLocaleString()+'</a> · ~#'+estimated.toLocaleString()+' now · '+blocksLeft.toLocaleString()+' left';
 }
 
+updateCountdown();
 fetchCurrentBlock();
 setInterval(updateCountdown, 1000);
 setInterval(fetchCurrentBlock, 30000);
