@@ -708,7 +708,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
 
 <nav class="topnav">
   <a href="https://block-kickers.vercel.app" class="topnav-logo" style="text-decoration:none;">⚽ BLOCK <span>KICKERS</span></a>
-  <button class="btn-connect" id="connectBtn" onclick="connectWallet()">POŁĄCZ PORTFEL</button>
+  <span id="walletBalance" style="font-family:'Share Tech Mono',monospace;color:#00ff87;font-size:13px;display:none;background:rgba(0,255,135,0.06);border:1px solid rgba(0,255,135,0.2);padding:6px 12px;border-radius:6px;">0.0 CHZ</span><button class="btn-connect" id="connectBtn" onclick="connectWallet()">POŁĄCZ PORTFEL</button>
 </nav>
 
 <div class="page">
@@ -1181,6 +1181,7 @@ let activeSellTokenId = null;
 window.dreamScores = {}; // portfel -> { teamId -> { pozycja -> {weight, tid, rarity, dna} } }
 let marketByPos = {}; 
 let marketFloorByPos = {}; 
+let activeListingsByTokenId = {};
 let currentMintPrice = ethers.parseEther("10");
 
 // Spis wszystkich 48 krajów dla poprawnego mapowania nazw i flag w globalnym Ledgerze
@@ -1533,6 +1534,7 @@ async function loadData(){
   // Odpytywanie rynku wtórnego o aktualne oferty dla Argentyny
   marketByPos = {};
   marketFloorByPos = {};
+  activeListingsByTokenId = {};
   let rawMarketListings = []; 
   let listDetails = {}; 
 
@@ -1571,8 +1573,12 @@ async function loadData(){
         if(!l[3]) continue; 
         const tokenId = Number(l[1]);
         const priceWei = l[2];
+        const seller = l[0].toLowerCase();
+        // Track listings by this wallet
+        if (myAddr && seller === myAddr) {
+          activeListingsByTokenId[tokenId] = i;
+        }
         const fig = ownerMap[tokenId];
-        if(!fig || fig.teamId !== ARGENTINA_TEAM_ID) continue;
         const price = parseFloat(ethers.formatEther(priceWei));
         const pos = fig.position;
         
@@ -1627,18 +1633,22 @@ function renderSnipeMarket(listings) {
     const rarName = ['Common', 'Rare', 'Epic', 'Legendary'][deal.rarity];
     const rarColor = ['#7a8899','#3b82f6','#c084fc','#ffc940'][deal.rarity];
 
+    const isOurs = myAddr && activeListingsByTokenId[deal.tokenId] !== undefined;
+    const actionBtn = isOurs
+      ? `<button onclick="cancelListing(${deal.listingId})" class="btn-snipe" style="background:rgba(239,68,68,0.15);border-color:rgba(239,68,68,0.4);color:#ef4444;">CANCEL</button>`
+      : `<button onclick="buyFromMarket(${deal.listingId}, '${deal.price}')" class="btn-snipe">SNIPE</button>`;
     html += `
-      <div class="snipe-row">
+      <div class="snipe-row" style="${isOurs ? 'border-color:rgba(239,68,68,0.3);background:rgba(239,68,68,0.04);' : ''}">
         <div class="snipe-details">
           <div class="snipe-pos">${POSITION_SHORT[deal.pos]}</div>
           <div class="snipe-info-text">
             <span style="color:${rarColor}; font-weight:600;">${rarName}</span> (${deal.weight} pts)<br>
-            Status: ${upgradeLabel}
+            Status: ${isOurs ? '<span style="color:#ef4444;">YOUR LISTING</span>' : upgradeLabel}
           </div>
         </div>
         <div class="snipe-action">
           <span class="snipe-price">${deal.price} CHZ</span>
-          <button onclick="buyFromMarket(${deal.listingId}, '${deal.price}')" class="btn-snipe">SNIPE</button>
+          ${actionBtn}
         </div>
       </div>
     `;
@@ -1756,11 +1766,11 @@ function renderPortfolioAndLedger(mints, sales, listDetails) {
 
       ledgerHtml += `
         <div class="ledger-row ${rowClass}">
-          <div>
-            <strong style="color: #dde4f0;">${actionLabel}</strong> 
-            <span style="color:${rColor}; font-weight:600;">${item.posName}</span>
+          <div style="display:flex;align-items:center;gap:6px;">
+            <span style="font-size:10px;color:#5a6a7a;">${actionLabel}</span>
+            <span style="color:${rColor};font-weight:700;font-size:12px;">${item.posName}</span>
           </div>
-          <div class="ledger-val ${valClass}">
+          <div class="ledger-val ${valClass}" style="font-size:13px;">
             ${isPlus ? '+' : ''}${item.val.toFixed(1)} CHZ
           </div>
         </div>
@@ -1818,18 +1828,23 @@ function renderLiveActivityFeed(mints, sales) {
   let html = '';
   visibleLogs.forEach(evt => {
     const rarName = ['Common', 'Rare', 'Epic', 'Legendary'][evt.rarity];
+    const rarColor = ['#7a8899','#3b82f6','#c084fc','#ffc940'][evt.rarity];
+    const rarBg = ['rgba(122,136,153,0.1)','rgba(59,130,246,0.1)','rgba(192,132,252,0.1)','rgba(255,201,64,0.1)'][evt.rarity];
+    const argFlag = `<img src="https://flagcdn.com/w20/ar.png" style="width:14px;height:10px;border-radius:1px;vertical-align:middle;margin-right:3px;" onerror="this.style.display='none'"/>`;
     if (evt.type === 'mint') {
       html += `
         <div class="feed-item mint">
           🔨 <span class="feed-addr">${evt.owner.slice(0,6)}…${evt.owner.slice(-4)}</span> minted 
-          <span class="feed-highlight">${evt.posName} (${rarName})</span> for <span class="feed-price-text">10 CHZ</span>
+          ${argFlag}<span style="color:${rarColor};font-weight:700;background:${rarBg};padding:1px 5px;border-radius:3px;">${rarName}</span>
+          <span class="feed-highlight"> ${evt.posName}</span> · <span class="feed-price-text">10 CHZ</span>
         </div>
       `;
     } else {
       html += `
         <div class="feed-item sale">
-          💰 <span class="feed-addr">${evt.buyer.slice(0,6)}…${evt.buyer.slice(-4)}</span> purchased 
-          <span class="feed-highlight">${evt.posName} (${rarName})</span> from marketplace
+          💰 <span class="feed-addr">${evt.buyer.slice(0,6)}…${evt.buyer.slice(-4)}</span> bought 
+          ${argFlag}<span style="color:${rarColor};font-weight:700;background:${rarBg};padding:1px 5px;border-radius:3px;">${rarName}</span>
+          <span class="feed-highlight"> ${evt.posName}</span>
         </div>
       `;
     }
@@ -1934,7 +1949,12 @@ function renderPitch() {
         const currentOwnerInfo = ownerMap[scored.tid];
         const currentlyOwnsScored = myAddr && currentOwnerInfo && currentOwnerInfo.owner === myAddr;
         if (currentlyOwnsScored) {
-          sellBtnHtml = `<button onclick="openSellModal(${scored.tid}, ${pos}, ${scored.weight}, ${scored.rarity})" class="btn-card-action sell">SELL CARD</button>`;
+          const activeListingId = activeListingsByTokenId[scored.tid];
+          if (activeListingId !== undefined) {
+            sellBtnHtml = `<button onclick="cancelListing(${activeListingId})" class="btn-card-action cancel">CANCEL LISTING</button>`;
+          } else {
+            sellBtnHtml = `<button onclick="openSellModal(${scored.tid}, ${pos}, ${scored.weight}, ${scored.rarity})" class="btn-card-action sell">SELL CARD</button>`;
+          }
         }
 
         card.innerHTML = `
@@ -2034,6 +2054,17 @@ function renderLeaderboard(){
   }
 
   lb.innerHTML = html;
+}
+
+async function cancelListing(listingId) {
+  if (!signer || !marketContract) { showHeaderToast('Connect wallet first.', true); return; }
+  try {
+    showHeaderToast(`Cancelling listing #${listingId}...`);
+    const tx = await marketContract.cancelListing(listingId);
+    await tx.wait();
+    showHeaderToast('Listing cancelled!');
+    await loadData();
+  } catch(e) { showHeaderToast('Cancellation failed.', true); }
 }
 
 async function buyFromMarket(listingId, priceChz){
@@ -2187,7 +2218,7 @@ function shareOnX(){
 }
 
 /* HARMONOGRAM I LICZNIK BLOKÓW SYSTEMOWYCH */
-const DEADLINE_BLOCK = 34503406; // 31.05.2026 23:00
+const DEADLINE_BLOCK = 35924746; // 20.07.2026 - po finale WC
 const BLOCK_TIME_MS = 3000;
 let currentBlock = 34196746; 
 let lastBlockTime = Date.now();
