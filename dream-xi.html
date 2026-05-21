@@ -269,16 +269,9 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
           <div class="pitch-center-line"></div>
           <div class="pitch-penalty-top"></div>
           <div class="pitch-penalty-bot"></div>
-
-        <div class="legend" style="position:relative;z-index:1;">
-          <div class="legend-item"><div class="legend-dot" style="background:rgba(0,255,135,0.4);border:1px solid rgba(0,255,135,0.6);"></div>You own now</div>
-          <div class="legend-item"><div class="legend-dot" style="background:rgba(99,102,241,0.4);border:1px solid rgba(99,102,241,0.6);"></div>Best score (past)</div>
-          <div class="legend-item"><div class="legend-dot" style="background:rgba(255,201,64,0.4);border:1px solid rgba(255,201,64,0.6);"></div>On market — click to buy</div>
-          <div class="legend-item"><div class="legend-dot" style="background:#1c2028;border:1px solid #2a3040;"></div>Empty</div>
-        </div>
-
-        <div class="formation" id="pitchFormation" style="position:relative;z-index:1;">
-          <div style="text-align:center;color:#3d4a5a;font-family:Share Tech Mono,monospace;font-size:11px;padding:20px 0;"><span class="spin"></span> Loading your squad...</div>
+          <div class="formation" id="pitchFormation">
+            <div style="text-align:center;color:#3d4a5a;font-family:Share Tech Mono,monospace;font-size:11px;padding:20px 0;"><span class="spin"></span> Loading your squad...</div>
+          </div>
         </div>
       </div>
     </div>
@@ -316,11 +309,11 @@ const POSITION_NAMES = {1:'Goalkeeper',2:'Right Back',3:'Left Back',4:'Centre Ba
 const POSITION_SHORT = {1:'GK',2:'RB',3:'LB',4:'CB',5:'CB2',6:'DM',7:'RW',8:'MID',9:'ST',10:'#10',11:'LW'};
 const RARITY_NAMES = {0:'Common',1:'Rare',2:'Epic',3:'Legendary'};
 const FORMATION = [
-  [1],        // GK
-  [2,4,5,3],  // DEF
-  [6,8,10],   // MID
-  [7,11],     // WING
-  [9]         // ST
+  [9],         // ST
+  [7,11],      // WING
+  [6,8,10],    // MID
+  [2,4,5,3],   // DEF
+  [1]          // GK
 ];
 
 const PUBLIC_RPCS = ['https://chiliz-rpc.publicnode.com','https://rpc.chiliz.com'];
@@ -518,7 +511,6 @@ function renderPitch(){
     '<div class="legend-item"><div class="legend-dot" style="background:rgba(0,255,135,0.3);border:1px solid rgba(0,255,135,0.5);"></div>You own now</div>' +
     '<div class="legend-item"><div class="legend-dot" style="background:rgba(99,102,241,0.3);border:1px solid rgba(99,102,241,0.5);"></div>Best scored</div>' +
     '<div class="legend-item"><div class="legend-dot" style="background:rgba(255,201,64,0.3);border:1px solid rgba(255,201,64,0.5);"></div>On market — click to buy</div>';
-  formation.appendChild(legend);
 
   FORMATION.forEach(row => {
     const rowEl = document.createElement('div');
@@ -563,6 +555,7 @@ function renderPitch(){
     });
     formation.appendChild(rowEl);
   });
+  formation.appendChild(legend);
 }
 
 function renderLeaderboard(){
