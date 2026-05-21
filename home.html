@@ -19,6 +19,11 @@
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:'Barlow Condensed',sans-serif;background:var(--black);color:var(--text);min-height:100vh;overflow-x:hidden;overflow-y:auto;font-size:22px;max-width:100vw;padding-top:99px;}
+*{scrollbar-width:thin;scrollbar-color:rgba(0,255,135,0.38) rgba(255,255,255,0.035);}
+::-webkit-scrollbar{width:8px;height:8px;}
+::-webkit-scrollbar-track{background:rgba(255,255,255,0.035);border-radius:8px;}
+::-webkit-scrollbar-thumb{background:linear-gradient(180deg,rgba(0,255,135,0.72),rgba(255,201,64,0.55));border:2px solid rgba(6,8,10,0.92);border-radius:8px;}
+::-webkit-scrollbar-thumb:hover{background:linear-gradient(180deg,rgba(0,255,135,0.95),rgba(255,201,64,0.78));}
 
 /* NAV */
 nav{display:flex;align-items:center;justify-content:space-between;padding:14px 32px;border-bottom:1px solid var(--border);background:rgba(6,8,10,0.97);backdrop-filter:blur(10px);position:fixed;top:0;left:0;right:0;z-index:100;}
@@ -244,6 +249,12 @@ h1 .accent{color:var(--green);text-shadow:0 0 30px var(--green-glow);}
 .rar-name.r0{color:var(--text2);}
 .rar-pct{font-size:26px;font-weight:700;margin-bottom:4px;}
 .rar-weight{font-size:14px;color:var(--text2);}
+.quest-launcher{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;}
+.quest-link{display:flex;align-items:center;gap:8px;min-width:0;padding:10px 11px;border-radius:9px;border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.025);text-decoration:none;color:var(--text);transition:all .18s;}
+.quest-link:hover{border-color:rgba(0,255,135,0.35);background:rgba(0,255,135,0.06);transform:translateY(-1px);}
+.quest-icon{font-size:18px;line-height:1;flex-shrink:0;}
+.quest-title{font-family:'Black Ops One',sans-serif;font-size:10px;letter-spacing:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.quest-sub{font-size:10px;color:var(--text3);line-height:1.2;margin-top:2px;}
 
 @media (max-width: 768px) {
   /* GLOBAL */
@@ -405,10 +416,15 @@ h1 .accent{color:var(--green);text-shadow:0 0 30px var(--green-glow);}
   body.dash-active .badge{margin-bottom:8px;font-size:9px;padding:4px 8px;}
   body.dash-active .hero-title-desktop{font-size:31px;line-height:0.92;margin:0 0 8px;letter-spacing:0;}
   body.dash-active .hero-desc{display:none;}
-  body.dash-active .stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin:0 0 10px;}
+  body.dash-active .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin:0 0 10px;}
   body.dash-active .stat{background:rgba(255,255,255,0.025);border:1px solid rgba(255,255,255,0.045);border-radius:8px;padding:7px 5px;align-items:center;}
   body.dash-active .stat-n{font-size:21px;}
   body.dash-active .stat-l{font-size:9px;letter-spacing:1px;text-align:center;}
+  body.dash-active .quest-launcher{margin-bottom:10px;}
+  body.dash-active .quest-link{padding:8px;}
+  body.dash-active .quest-icon{font-size:16px;}
+  body.dash-active .quest-title{font-size:9px;}
+  body.dash-active .quest-sub{font-size:9px;}
   body.dash-active .mint-box{max-width:100%!important;width:100%;padding:12px;border-radius:9px;}
   body.dash-active .price-row{margin-bottom:9px;}
   body.dash-active .price-val{font-size:26px;}
@@ -692,7 +708,24 @@ document.addEventListener('DOMContentLoaded', setupDesktopDashboardLayout);
     <div class="stats-row">
       <div class="stat" style="text-align:center;"><div class="stat-n" id="sMinted">0</div><div class="stat-l">MINTED</div></div>
       <div class="stat" style="text-align:center;"><div class="stat-n" id="sVault">0</div><div class="stat-l">CHZ IN VAULT</div></div>
+      <div class="stat" style="text-align:center;"><div class="stat-n" id="sHolders">0</div><div class="stat-l">PLAYERS</div></div>
       <div class="stat" style="text-align:center;"><div class="stat-n">&infin;</div><div class="stat-l">SUPPLY</div></div>
+    </div>
+    <div class="quest-launcher">
+      <a class="quest-link" href="/dream-xi">
+        <span class="quest-icon">&#127942;</span>
+        <span style="min-width:0;">
+          <span class="quest-title">DREAM XI</span>
+          <span class="quest-sub">Argentina card race</span>
+        </span>
+      </a>
+      <a class="quest-link" href="/nation-quest">
+        <span class="quest-icon">&#127482;&#127480;</span>
+        <span style="min-width:0;">
+          <span class="quest-title">NATION QUEST</span>
+          <span class="quest-sub">USA 1,000 CHZ race</span>
+        </span>
+      </a>
     </div>
   </div>
   <div class="hero-center" style="padding:32px 16px;z-index:2;width:340px;flex-shrink:0;">
@@ -903,7 +936,7 @@ document.addEventListener('DOMContentLoaded', setupDesktopDashboardLayout);
   <div class="sec-header">
     <div>
       <div class="sec-title">LEADER<span class="acc">BOARD</span></div>
-      <div class="sec-sub">All figures ranked by weight Â· Top 10% win prize pool after WC final</div>
+      <div class="sec-sub">All figures ranked by weight &middot; Top 10% win prize pool after WC final</div>
     </div>
     <button onclick="loadLeaderboard()" style="background:var(--green-dim);border:1px solid rgba(0,255,135,0.3);color:var(--green);padding:8px 18px;border-radius:6px;font-family:'Black Ops One',sans-serif;font-size:11px;letter-spacing:1px;cursor:pointer;">REFRESH</button>
   </div>
@@ -1899,6 +1932,8 @@ async function loadTicker(){
       topCard.team+' '+topCard.rarity+' W:'+topCard.weight;
     document.getElementById('tickerHolders').textContent = holders+' wallets';
     document.getElementById('tickerVault').textContent = vaultChz;
+    const sHolders = document.getElementById('sHolders');
+    if(sHolders) sHolders.textContent = holders.toString();
 
   }catch(e){ console.warn('ticker error:', e); }
 }
