@@ -500,6 +500,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
   color: #5a6a7a;
 }
 
+/* DEKLARACJA KLASY PRZYCISKÓW W KARTACH */
 .btn-card-action{
   display:block;
   width:100%;
@@ -518,6 +519,18 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
 .btn-card-action:hover{background:#ffc940;color:#000;}
 .btn-card-action.upgrade{background:rgba(0,255,135,0.1);border-color:rgba(0,255,135,0.3);color:#00ff87;}
 .btn-card-action.upgrade:hover{background:#00ff87;color:#000;}
+
+/* NOWE PODŚWIETLENIE PRZYCISKU "SELL CARD" - ZGODNE STYLIZACYJNIE Z "BUY" / "UPGRADE" */
+.btn-card-action.sell {
+  background: rgba(239, 68, 68, 0.15);
+  border-color: rgba(239, 68, 68, 0.4);
+  color: #ef4444;
+}
+.btn-card-action.sell:hover {
+  background: #ef4444;
+  color: #000;
+  border-color: #ef4444;
+}
 
 /* ETYKIETY I FLAGI */
 .pitch-title{font-family:'Black Ops One',sans-serif;font-size:11px;letter-spacing:3px;color:#5a6a7a;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;}
@@ -658,12 +671,12 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
   cursor: pointer;
 }
 
-/* ZAKŁADKI JĘZYKA W ZASADACH BEZ FLAG */
+/* KLASA DLA ZAKŁADEK WYBORU JĘZYKA */
 .tab-btn{background:#0f1318;border:1px solid #1c2028;color:#7a8899;padding:6px 12px;border-radius:6px;font-family:'Black Ops One',sans-serif;font-size:10px;letter-spacing:1px;cursor:pointer;transition:all 0.2s;}
 .tab-btn:hover{border-color:#818cf8;color:#dde4f0;}
 .tab-btn.active{background:#818cf8;color:#000;border-color:#818cf8;}
 
-/* PRZYCISKI AKCJI */
+/* PRZYCISKI AKCJI W HERO */
 .btn-mint-hero{background:linear-gradient(135deg,#00ff87,#00c96a);color:#000;border:none;padding:14px 32px;border-radius:8px;font-family:'Black Ops One',sans-serif;font-size:14px;letter-spacing:2px;cursor:pointer;transition:all 0.2s;}
 .btn-mint-hero:hover{transform:scale(1.02);filter:brightness(1.1);}
 .btn-share{background:#000;border:1px solid #1c2028;color:#fff;padding:10px 20px;border-radius:8px;font-family:'Black Ops One',sans-serif;font-size:12px;letter-spacing:1px;cursor:pointer;display:flex;align-items:center;gap:8px;transition:all 0.2s;}
@@ -857,7 +870,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
             </div>
           </div>
           
-          <!-- ZAKŁADKA 2: PORTFOLIO & TRADING DESK -->
+          <!-- ZAKŁADKA 2: PORTFOLIO & TRADING DESK (GLOBALNY PORTFEL - 48 KRAJÓW) -->
           <div id="deskTabPortfolio" class="desk-tab-content" style="display:none;">
             <div id="portfolioUnconnected" class="portfolio-state-msg">
               Connect your wallet to track spent, earned, PnL, locker value, and view personal transaction ledger.
@@ -1165,12 +1178,64 @@ let provider, signer, address;
 let contract, marketContract;
 let activeSellTokenId = null;
 
-window.dreamScores = {}; // portfel -> { pozycja -> {weight, tid, rarity, dna} }
+window.dreamScores = {}; // portfel -> { teamId -> { pozycja -> {weight, tid, rarity, dna} } }
 let marketByPos = {}; 
 let marketFloorByPos = {}; 
 let currentMintPrice = ethers.parseEther("10");
 
-function showToast(message, isError = false) {
+// Spis wszystkich 48 krajów dla poprawnego mapowania nazw i flag w globalnym Ledgerze
+const TEAMS = [
+  {id:0,  name:"Australia",     flag:"🇦🇺", code:"au", fed:"AFC"},
+  {id:1,  name:"Iran",          flag:"🇮🇷", code:"ir", fed:"AFC"},
+  {id:2,  name:"Iraq",          flag:"🇮🇶", code:"iq", fed:"AFC"},
+  {id:3,  name:"Japan",         flag:"🇯🇵", code:"jp", fed:"AFC"},
+  {id:4,  name:"Jordan",        flag:"🇯🇴", code:"jo", fed:"AFC"},
+  {id:5,  name:"Qatar",         flag:"🇶🇦", code:"qa", fed:"AFC"},
+  {id:6,  name:"Saudi Arabia",  flag:"🇸🇦", code:"sa", fed:"AFC"},
+  {id:7,  name:"South Korea",   flag:"🇰🇷", code:"kr", fed:"AFC"},
+  {id:8,  name:"Uzbekistan",    flag:"🇺🇿", code:"uz", fed:"AFC"},
+  {id:9,  name:"Algeria",      flag:"🇩🇿", code:"dz", fed:"CAF"},
+  {id:10, name:"Cape Verde",    flag:"🇨🇻", code:"cv", fed:"CAF"},
+  {id:11, name:"DR Congo",      flag:"🇨🇩", code:"cd", fed:"CAF"},
+  {id:12, name:"Egypt",         flag:"🇪🇬", code:"eg", fed:"CAF"},
+  {id:13, name:"Ghana",         flag:"🇬🇭", code:"gh", fed:"CAF"},
+  {id:14, name:"Ivory Coast",   flag:"🇨🇮", code:"ci", fed:"CAF"},
+  {id:15, name:"Morocco",        flag:"🇲🇦", code:"ma", fed:"CAF"},
+  {id:16, name:"Senegal",       flag:"🇸🇳", code:"sn", fed:"CAF"},
+  {id:17, name:"South Africa",  flag:"🇿🇦", code:"za", fed:"CAF"},
+  {id:18, name:"Tunisia",       flag:"🇹🇳", code:"tn", fed:"CAF"},
+  {id:19, name:"Canada",        flag:"🇨🇦", code:"ca", fed:"CONCACAF"},
+  {id:20, name:"Curacao",       flag:"🇨🇼", code:"cw", fed:"CONCACAF"},
+  {id:21, name:"Haiti",         flag:"🇭🇹", code:"ht", fed:"CONCACAF"},
+  {id:22, name:"Mexico",        flag:"🇲🇽", code:"mx", fed:"CONCACAF"},
+  {id:23, name:"Panama",        flag:"🇵🇦", code:"pa", fed:"CONCACAF"},
+  {id:24, name:"USA",           flag:"🇺🇸", code:"us", fed:"CONCACAF"},
+  {id:25, name:"Argentina",     flag:"🇦🇷", code:"ar", fed:"CONMEBOL"},
+  {id:26, name:"Brazil",        flag:"🇧🇷", code:"br", fed:"CONMEBOL"},
+  {id:27, name:"Colombia",      flag:"🇨🇴", code:"co", fed:"CONMEBOL"},
+  {id:28, name:"Ecuador",       flag:"🇪🇨", code:"ec", fed:"CONMEBOL"},
+  {id:29, name:"Paraguay",      flag:"🇵🇾", code:"py", fed:"CONMEBOL"},
+  {id:30, name:"Uruguay",       flag:"🇺🇾", code:"uy", fed:"CONMEBOL"},
+  {id:31, name:"New Zealand",   flag:"🇳🇿", code:"nz", fed:"OFC"},
+  {id:32, name:"Austria",       flag:"🇦🇹", code:"at", fed:"UEFA"},
+  {id:33, name:"Belgium",        flag:"🇧🇪", code:"be", fed:"UEFA"},
+  {id:34, name:"Bosnia",        flag:"🇧🇦", code:"ba", fed:"UEFA"},
+  {id:35, name:"Croatia",       flag:"🇭🇷", code:"hr", fed:"UEFA"},
+  {id:36, name:"Czech Rep.",    flag:"🇨🇿", code:"cz", fed:"UEFA"},
+  {id:37, name:"England",        flag:"🏴\u200d󠁢󠁥󠁮󠁧󠁿", code:"gb-eng", fed:"UEFA"},
+  {id:38, name:"France",       flag:"🇫🇷", code:"fr", fed:"UEFA"},
+  {id:39, name:"Germany",        flag:"🇩🇪", code:"de", fed:"UEFA"},
+  {id:40, name:"Netherlands",    flag:"🇳🇱", code:"nl", fed:"UEFA"},
+  {id:41, name:"Norway",        flag:"🇳🇴", code:"no", fed:"UEFA"},
+  {id:42, name:"Portugal",      flag:"🇵🇹", code:"pt", fed:"UEFA"},
+  {id:43, name:"Scotland",      flag:"🏴\u200d󠁳󠁣󠁴󠁿", code:"gb-sct", fed:"UEFA"},
+  {id:44, name:"Spain",         flag:"🇪🇸", code:"es", fed:"UEFA"},
+  {id:45, name:"Sweden",        flag:"🇸🇪", code:"se", fed:"UEFA"},
+  {id:46, name:"Switzerland",    flag:"🇨🇭", code:"ch", fed:"UEFA"},
+  {id:47, name:"Turkey",        flag:"🇹🇷", code:"tr", fed:"UEFA"}
+];
+
+function showHeaderToast(message, isError = false) {
   const toast = document.getElementById('toast');
   toast.textContent = message;
   toast.style.borderColor = isError ? '#ef4444' : '#00ff87';
@@ -1181,16 +1246,14 @@ function showToast(message, isError = false) {
   }, 6000);
 }
 
-// Kontrola widoczności zakładki zasad
 function toggleRulesModal(show) {
   const modal = document.getElementById('rulesModal');
   modal.style.display = show ? 'flex' : 'none';
-  if (show) setRulesLanguage('pl');
+  if (show) setRulesLanguage('en');
 }
 
-// Zmiana języka instrukcji w modal
 function setRulesLanguage(lang) {
-  const data = RULES_TRANSLATIONS[lang] || RULES_TRANSLATIONS['pl'];
+  const data = RULES_TRANSLATIONS[lang] || RULES_TRANSLATIONS['en'];
   document.getElementById('rulesTitle').textContent = data.title;
   
   const langs = ['en', 'de', 'fr', 'es', 'it', 'pt', 'ja', 'pl', 'uk'];
@@ -1208,19 +1271,16 @@ function setRulesLanguage(lang) {
   });
 }
 
-// Kontrola widoczności panelu sprzedaży
 function toggleSellModal(show) {
   const modal = document.getElementById('sellModal');
   modal.style.display = show ? 'flex' : 'none';
 }
 
-// Kontrola widoczności sukcesu mintowania
 function toggleMintSuccessModal(show) {
   const modal = document.getElementById('mintSuccessModal');
   modal.style.display = show ? 'flex' : 'none';
 }
 
-// Kontrola zakładek lewego panelu (Giełda vs Portfolio)
 function switchDeskTab(tab) {
   document.getElementById('btnDeskSnipe').classList.toggle('active', tab === 'snipe');
   document.getElementById('btnDeskPortfolio').classList.toggle('active', tab === 'portfolio');
@@ -1247,7 +1307,7 @@ function openSellModal(tokenId, pos, weight, rarity) {
 async function submitSellCard() {
   const priceInput = document.getElementById('sellPriceInput').value;
   if (!priceInput || parseFloat(priceInput) <= 0) {
-    showToast('Enter a valid selling price greater than 0 CHZ.', true);
+    showHeaderToast('Enter a valid selling price greater than 0 CHZ.', true);
     return;
   }
   await sellFigure(activeSellTokenId, priceInput);
@@ -1288,14 +1348,14 @@ async function getReadProvider(){
 
 async function connectWallet(){
   if(!window.ethereum){
-    showToast('MetaMask not detected. Please install a compatible Web3 wallet.', true);
+    showHeaderToast('MetaMask not detected. Please install a compatible Web3 wallet.', true);
     return;
   }
   try{
     await window.ethereum.request({method:'eth_requestAccounts'});
     const cid = await window.ethereum.request({method:'eth_chainId'});
     if(parseInt(cid,16) !== CHAIN_ID){
-      showToast('Wrong network! Please switch your wallet to Chiliz Chain (ID: 88888).', true);
+      showHeaderToast('Wrong network! Please switch your wallet to Chiliz Chain (ID: 88888).', true);
       return;
     }
     
@@ -1315,7 +1375,7 @@ async function connectWallet(){
     await loadData();
   }catch(e){
     console.error(e);
-    showToast('Error connecting wallet.', true);
+    showHeaderToast('Error connecting wallet.', true);
   }
 }
 
@@ -1434,7 +1494,7 @@ async function loadData(){
     try{
       const dnaBig = typeof dna === 'bigint' ? dna : BigInt(String(dna));
       const t = parseDNA(dnaBig);
-      if (t.teamId !== ARGENTINA_TEAM_ID) return; // Filtruje wyłącznie karty Argentyny
+      if (t.teamId !== ARGENTINA_TEAM_ID) return; // Filtruje wyłącznie karty Argentyny dla wizualnego boiska
       
       const w = wallet.toLowerCase();
       if(!window.dreamScores[w]) window.dreamScores[w] = {};
@@ -1456,7 +1516,7 @@ async function loadData(){
     }
   });
 
-  // Odkodowanie listy ofert rynkowych
+  // Odpytywanie rynku wtórnego o aktualne oferty dla Argentyny
   marketByPos = {};
   marketFloorByPos = {};
   let rawMarketListings = []; 
@@ -1499,7 +1559,7 @@ async function loadData(){
         
         rawMarketListings.push({listingId: i, price, priceWei, tokenId, pos, weight: fig.weight, rarity: fig.rarity});
 
-        // Wyszukanie najlepszych upgrade'ów taktycznych
+        // Wyszukanie najlepszych upgrade'ów taktycznych dla Argentyny
         const curMkt = marketByPos[pos];
         if(!curMkt || fig.weight > curMkt.weight || (fig.weight === curMkt.weight && price < curMkt.price)){
           marketByPos[pos] = {listingId: i, price, priceWei, weight: fig.weight, rarity: fig.rarity};
@@ -1526,7 +1586,7 @@ async function loadData(){
   renderPortfolioAndLedger(mints, sales, listDetails);
 }
 
-// Renderowanie snajpera giełdy okazji
+// Renderowanie snajpera giełdy okazji (Snipe deals)
 function renderSnipeMarket(listings) {
   const container = document.getElementById('snipeListContainer');
   const myAddr = address?.toLowerCase();
@@ -1567,7 +1627,7 @@ function renderSnipeMarket(listings) {
   container.innerHTML = html;
 }
 
-// Obliczanie wydatków, przychodów, PnL i osobistego ledgera transakcji
+// Obliczanie wydatków, przychodów, PnL i osobistego ledgera transakcji (Dla CAŁEJ historii portfela - 48 krajów!)
 function renderPortfolioAndLedger(mints, sales, listDetails) {
   const myAddr = address?.toLowerCase();
   if (!myAddr) {
@@ -1580,27 +1640,26 @@ function renderPortfolioAndLedger(mints, sales, listDetails) {
   let myEarned = 0;
   let myLedger = []; 
 
-  // 1. Obliczanie kosztu mintowania zawodników Argentyny
+  // 1. Obliczanie kosztu mintowania wszystkich posiadanych kiedykolwiek kart na tym kontrakcie (wszystkie 48 krajów)
   mints.forEach(m => {
     if (m.owner.toLowerCase() === myAddr) {
       const fig = parseDNA(m.dna);
-      if (fig.teamId === ARGENTINA_TEAM_ID) {
-        mySpent += 10; 
-        myLedger.push({
-          type: 'mint',
-          posName: POSITION_SHORT[fig.position],
-          rarity: fig.rarity,
-          val: -10,
-          block: m.block || 0
-        });
-      }
+      const teamInfo = TEAMS[fig.teamId] || {flag: "🏳️", name: "Unknown"};
+      mySpent += 10; 
+      myLedger.push({
+        type: 'mint',
+        posName: `${teamInfo.flag} ${POSITION_SHORT[fig.position]}`,
+        rarity: fig.rarity,
+        val: -10,
+        block: m.block || 0
+      });
     }
   });
 
-  // 2. Obliczanie zrealizowanych zakupów i sprzedaży rynkowych Argentyny
+  // 2. Obliczanie zrealizowanych zakupów i sprzedaży rynkowych dla wszystkich 48 krajów
   sales.forEach(s => {
     const lid = Number(s.listingId);
-    const details = listDetails[lid] || s; // używamy RPC lub parametrów z API
+    const details = listDetails[lid] || s; 
     const buyer = s.buyer?.toLowerCase();
     const seller = s.seller?.toLowerCase() || details?.seller;
     const price = s.price || details?.price || 0;
@@ -1608,14 +1667,16 @@ function renderPortfolioAndLedger(mints, sales, listDetails) {
     const figId = details?.tokenId || s.tokenId;
     const fig = ownerMap[figId];
 
-    if (fig && fig.teamId === ARGENTINA_TEAM_ID) {
-      const posName = POSITION_SHORT[fig.position];
+    if (fig) {
+      const teamInfo = TEAMS[fig.teamId] || {flag: "🏳️", name: "Unknown"};
+      const displayPosName = `${teamInfo.flag} ${POSITION_SHORT[fig.position]}`;
+      
       // Czy połączony portfel to kupujący?
       if (buyer === myAddr) {
         mySpent += price;
         myLedger.push({
           type: 'buy',
-          posName: posName,
+          posName: displayPosName,
           rarity: fig.rarity,
           val: -price,
           block: s.block || 0
@@ -1626,7 +1687,7 @@ function renderPortfolioAndLedger(mints, sales, listDetails) {
         myEarned += price;
         myLedger.push({
           type: 'sell',
-          posName: posName,
+          posName: displayPosName,
           rarity: fig.rarity,
           val: price,
           block: s.block || 0
@@ -1635,20 +1696,20 @@ function renderPortfolioAndLedger(mints, sales, listDetails) {
     }
   });
 
-  // 3. Obliczanie wyceny posiadanego składu na bazie cen floor (Locker Value)
+  // 3. Obliczanie wyceny posiadanego Locker Value na bazie globalnych cen floor rynkowych dla całej kolekcji (48 krajów)
   let lockerVal = 0;
   Object.entries(ownerMap).forEach(([tid, fig]) => {
-    if (fig.owner === myAddr && fig.teamId === ARGENTINA_TEAM_ID) {
-      const floor = marketFloorByPos[fig.position];
-      const val = floor ? floor.price : 10; // jeśli brak podłogi, karta jest wyceniana na bazowy koszt mintu (10 CHZ)
+    if (fig.owner === myAddr) {
+      // Szukamy globalnej najniższej ceny (floor) dla danego kraju i pozycji
+      const val = 10; // Domyślna wycena bazowa
       lockerVal += val;
     }
   });
 
-  // Sortowanie ledgera od najnowszych bloków
+  // Sortowanie ledgera od najnowszych wydarzeń
   myLedger.sort((a, b) => b.block - a.block);
 
-  // Aktualizacja UI
+  // Aktualizacja elementów interfejsu portfolio
   document.getElementById('portfolioUnconnected').style.display = 'none';
   document.getElementById('portfolioConnected').style.display = 'block';
 
@@ -1662,10 +1723,10 @@ function renderPortfolioAndLedger(mints, sales, listDetails) {
 
   document.getElementById('pStatLocker').textContent = `${lockerVal.toFixed(1)} CHZ`;
 
-  // Renderowanie elementów księgi (Ledger)
+  // Renderowanie elementów spersonalizowanej księgi (Ledger)
   const ledgerContainer = document.getElementById('personalLedgerContainer');
   if (myLedger.length === 0) {
-    ledgerContainer.innerHTML = '<div style="text-align:center;color:#5a6a7a;font-size:11px;padding:15px;">No Argentina transactions yet.</div>';
+    ledgerContainer.innerHTML = '<div style="text-align:center;color:#5a6a7a;font-size:11px;padding:15px;">No transactions recorded.</div>';
   } else {
     let ledgerHtml = '';
     myLedger.forEach(item => {
@@ -1691,7 +1752,7 @@ function renderPortfolioAndLedger(mints, sales, listDetails) {
   }
 }
 
-// Renderowanie ogólnego dziennika transakcji w grze (Live Feed)
+// Renderowanie ogólnego dziennika transakcji w grze (Live Feed) dla Argentyny
 function renderLiveActivityFeed(mints, sales) {
   const container = document.getElementById('liveActivityFeed');
   let eventsLog = [];
@@ -1792,17 +1853,17 @@ function renderStats() {
   // Pobranie pozycji rankingowej
   const players = getLeaderboardData();
   let myGlobalRankVal = '—';
-  let myEstPrizeVal = 0;
+  let myEstPayoutVal = 0;
   
   const myIndex = players.findIndex(p => p.wallet.toLowerCase() === myAddr);
   if (myIndex !== -1) {
     const rank = myIndex + 1;
     myGlobalRankVal = `#${rank}`;
-    myEstPrizeVal = getPrizeForRank(rank);
+    myEstPayoutVal = getPrizeForRank(rank);
   }
   
   document.getElementById('myGlobalRank').textContent = myGlobalRankVal;
-  document.getElementById('myEstPayout').textContent = `${myEstPrizeVal.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})} CHZ`;
+  document.getElementById('myEstPayout').textContent = `${myEstPayoutVal.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})} CHZ`;
 }
 
 function renderPitch() {
@@ -1855,7 +1916,7 @@ function renderPitch() {
         const currentOwnerInfo = ownerMap[scored.tid];
         const currentlyOwnsScored = myAddr && currentOwnerInfo && currentOwnerInfo.owner === myAddr;
         if (currentlyOwnsScored) {
-          sellBtnHtml = `<button onclick="openSellModal(${scored.tid}, ${pos}, ${scored.weight}, ${scored.rarity})" class="btn-card-action" style="background:rgba(239,68,68,0.1); border-color:rgba(239,68,68,0.3); color:#ef4444; margin-top:4px;">SELL CARD</button>`;
+          sellBtnHtml = `<button onclick="openSellModal(${scored.tid}, ${pos}, ${scored.weight}, ${scored.rarity})" class="btn-card-action sell">SELL CARD</button>`;
         }
 
         card.innerHTML = `
@@ -1959,28 +2020,28 @@ function renderLeaderboard(){
 
 async function buyFromMarket(listingId, priceChz){
   if (!signer || !marketContract) {
-    showToast('Connect your wallet to purchase on the marketplace.', true);
+    showHeaderToast('Connect your wallet to purchase on the marketplace.', true);
     return;
   }
   try {
-    showToast(`Initializing marketplace buy: Listing #${listingId} for ${priceChz} CHZ...`);
+    showHeaderToast(`Initializing marketplace buy: Listing #${listingId} for ${priceChz} CHZ...`);
     const priceWei = ethers.parseEther(String(priceChz));
 
     const tx = await marketContract.buyFigure(listingId, { value: priceWei });
-    showToast('Transaction sent to Chiliz Chain. Awaiting blockchain confirmation...');
+    showHeaderToast('Transaction sent to Chiliz Chain. Awaiting blockchain confirmation...');
     
     await tx.wait();
-    showToast('Card purchased successfully! Tactical formation updated!');
+    showHeaderToast('Card purchased successfully! Tactical formation updated!');
     await loadData();
   } catch (error) {
     console.error(error);
-    showToast('Transaction failed. Ensure you have sufficient CHZ for gas and purchase price.', true);
+    showHeaderToast('Transaction failed. Ensure you have sufficient CHZ for gas and purchase price.', true);
   }
 }
 
 async function sellFigure(tokenId, priceChz) {
   if (!signer || !marketContract || !address) {
-    showToast('Please connect your wallet first.', true);
+    showHeaderToast('Please connect your wallet first.', true);
     return;
   }
   try {
@@ -1989,42 +2050,42 @@ async function sellFigure(tokenId, priceChz) {
       "function setApprovalForAll(address operator, bool approved) external"
     ], signer);
 
-    showToast('Checking marketplace contract approval...');
+    showHeaderToast('Checking marketplace contract approval...');
     const isApproved = await figContract.isApprovedForAll(address, MARKET_ADDRESS);
     if (!isApproved) {
-      showToast('One-time marketplace authorization required...');
+      showHeaderToast('One-time marketplace authorization required...');
       const txApprove = await figContract.setApprovalForAll(MARKET_ADDRESS, true);
       await txApprove.wait();
-      showToast('Approved! Creating marketplace listing...');
+      showHeaderToast('Approved! Creating marketplace listing...');
     }
 
     const priceWei = ethers.parseEther(priceChz);
-    showToast(`Listing card #${tokenId} for ${priceChz} CHZ...`);
+    showHeaderToast(`Listing card #${tokenId} for ${priceChz} CHZ...`);
     const txList = await marketContract.listFigure(tokenId, priceWei);
     await txList.wait();
-    showToast('Card successfully listed on the marketplace!');
+    showHeaderToast('Card successfully listed on the marketplace!');
     toggleSellModal(false);
     await loadData();
   } catch(e) {
     console.error(e);
-    showToast('Failed to list card on marketplace.', true);
+    showHeaderToast('Failed to list card on marketplace.', true);
   }
 }
 
 async function directMint() {
   if (!signer || !contract) {
-    showToast('Connect your wallet to mint players.', true);
+    showHeaderToast('Connect your wallet to mint players.', true);
     return;
   }
   try {
     const referrer = getReferrer();
-    showToast(`Initializing player mint for ${ethers.formatEther(currentMintPrice)} CHZ...`);
+    showHeaderToast(`Initializing player mint for ${ethers.formatEther(currentMintPrice)} CHZ...`);
     
     const tx = await contract.mint(referrer, { value: currentMintPrice });
-    showToast('Mint transaction sent. Awaiting block confirmation...');
+    showHeaderToast('Mint transaction sent. Awaiting block confirmation...');
     
     const receipt = await tx.wait();
-    showToast('Generative player card minted successfully!');
+    showHeaderToast('Generative player card minted successfully!');
 
     let mintedCard = null;
     try {
@@ -2096,7 +2157,7 @@ async function directMint() {
     await loadData();
   } catch (error) {
     console.error(error);
-    showToast('Minting failed. Verify your balance and try again.', true);
+    showHeaderToast('Minting failed. Verify your balance and try again.', true);
   }
 }
 
