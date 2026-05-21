@@ -111,7 +111,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
 .how-desc .p{color:#818cf8;font-weight:700;}
 .how-desc .a{color:#ffc940;font-weight:700;}
 
-/* NOWE MODUŁY PANELU KOLEKCJONERSKIEGO (TABS: SNIPE / PORTFOLIO) */
+/* PANEL KOLEKCJONERSKIEGO (TABS: SNIPE / PORTFOLIO) */
 .desk-section {
   background: #0a0e14;
   border: 1px solid #1c2028;
@@ -700,7 +700,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
   .pitch-center-circle { width: 70px; height: 70px; }
   .countdown-timer { gap: 6px !important; }
   .countdown-num { font-size: 24px !important; }
-  .countdown-unit { min-width: 40px !important; }
+  .countdown-unit { min-width: 50px !important; }
 }
 </style>
 </head>
@@ -1058,7 +1058,7 @@ const POSITION_SHORT = {
   7: 'RW',
   8: 'MID',
   9: 'ST',
-  10: 'AM',
+  10: '#10', // Zamieniono z 'AM' na '#10'
   11: 'LW'
 };
 
@@ -1148,7 +1148,7 @@ const RULES_TRANSLATIONS = {
       "🔗 ワークスウォレット（Chiliz）を接続して、アルゼンチンスクワッドを起動します。",
       "⚽ 選手カードをミントするか、マーケットプレイスで購入します（費用：10 CHZ）。",
       "⚠️ ミント、またはマーケットプレイスで購入されたカードのみがチームをスコアします。直接の転送（ギフト）はスコアとしてカウントされません。",
-      "📝 あなたのスコアは、これまでに獲得した各ポジションの最も重いカード重量の合計です。",
+      "📝 あなたのスコアは、これまでに獲得した各ポジション of the most heavy cards の合計重量です。",
       "⚡ ポジションに対して重いカードを獲得すると、スコアは即座にアップデートされます。不要なカードは売却できます！",
       "🏆 ターゲットブロックに到達した時点で、タクティカル総重量が最も高い上位3名のコレクターが10,000 CHZの賞金プールを分け合います！"
     ]
@@ -1183,7 +1183,7 @@ let provider, signer, address;
 let contract, marketContract;
 let activeSellTokenId = null;
 
-window.dreamScores = {}; // portfel -> { teamId -> { pozycja -> {weight, tid, rarity, dna} } }
+window.dreamScores = {}; // portfel -> { pozycja -> {weight, tid, rarity, dna} }
 let marketByPos = {}; 
 let marketFloorByPos = {}; 
 let activeListingsByTokenId = {}; // tokenId -> listingId (Śledzenie aktywnych ofert zalogowanego portfela)
@@ -1319,12 +1319,21 @@ async function submitSellCard() {
   await sellFigure(activeSellTokenId, priceInput);
 }
 
-function getFlagHtml(isLarge = false) {
-  const cls = isLarge ? 'flag-img-lg' : 'flag-img';
+// Funkcja pomocnicza do pobierania grafiki flagi, dostosowana do obsługi dynamicznych krajów
+function getFlagHtml(team = ARGENTINA_TEAM_DATA, isLarge = false) {
+  let t = team;
+  let lg = isLarge;
+  if (typeof team === 'boolean') {
+    lg = team;
+    t = ARGENTINA_TEAM_DATA;
+  } else if (!team) {
+    t = ARGENTINA_TEAM_DATA;
+  }
+  const cls = lg ? 'flag-img-lg' : 'flag-img';
   return `
     <span class="flag-container" style="display: inline-flex; align-items: center; justify-content: center; margin-right: 6px; vertical-align: middle;">
-      <img src="https://flagcdn.com/w40/${ARGENTINA_TEAM_DATA.code}.png" class="${cls}" alt="Argentina" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';" />
-      <span style="display: none; font-size: ${isLarge ? '28px' : '18px'};">${ARGENTINA_TEAM_DATA.flag}</span>
+      <img src="https://flagcdn.com/w40/${t.code}.png" class="${cls}" alt="${t.name}" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';" />
+      <span style="display: none; font-size: ${lg ? '28px' : '18px'};">${t.flag}</span>
     </span>
   `;
 }
@@ -1378,7 +1387,7 @@ async function connectWallet(){
     document.getElementById('gameSection').style.display = 'block';
     document.getElementById('statsRow').style.display = 'grid';
     
-    // Pobierz i zaktualizuj wyświetlanie salda CHZ w nagłówku
+    // Wczytanie i wyświetlenie stanu salda CHZ w nawigacji
     const balanceWei = await provider.getBalance(address);
     const balanceEth = ethers.formatEther(balanceWei);
     const balanceFormatted = parseFloat(balanceEth).toFixed(1);
@@ -1494,7 +1503,7 @@ async function loadData(){
     }
   }
 
-  // Pobierz i zaktualizuj wyświetlanie salda CHZ w nagłówku strony
+  // Wczytanie i zaktualizowanie wyświetlania salda CHZ portfela
   if (provider && address) {
     try {
       const balanceWei = await provider.getBalance(address);
@@ -1522,12 +1531,13 @@ async function loadData(){
     if(ownerMap[tid]) ownerMap[tid].owner = s.buyer?.toLowerCase();
   });
 
+  // Konstrukcja płaskiej struktury dreamScores (wallet -> position -> stats)
   window.dreamScores = {};
   const score = (wallet, tokenId, dna) => {
     try{
       const dnaBig = typeof dna === 'bigint' ? dna : BigInt(String(dna));
       const t = parseDNA(dnaBig);
-      if (t.teamId !== ARGENTINA_TEAM_ID) return; // Filtruje wyłącznie karty Argentyny dla wizualnego boiska
+      if (t.teamId !== ARGENTINA_TEAM_ID) return; // Filtruje wyłącznie karty Argentyny dla tego wyzwania
       
       const w = wallet.toLowerCase();
       if(!window.dreamScores[w]) window.dreamScores[w] = {};
@@ -1588,7 +1598,7 @@ async function loadData(){
         const priceWei = l[2];
         const seller = l[0].toLowerCase();
 
-        // Przypisanie listing ID dla aktywnej oferty wystawionej przez użytkownika
+        // Przypisanie listing ID dla aktywnej oferty wystawionej przez zalogowanego gracza
         if (myAddr && seller === myAddr) {
           activeListingsByTokenId[tokenId] = i;
         }
@@ -1748,7 +1758,6 @@ function renderPortfolioAndLedger(mints, sales, listDetails) {
   let lockerVal = 0;
   Object.entries(ownerMap).forEach(([tid, fig]) => {
     if (fig.owner === myAddr) {
-      // Szukamy globalnej najniższej ceny (floor) dla danego kraju i pozycji
       const val = 10; // Domyślna wycena bazowa
       lockerVal += val;
     }
@@ -2193,36 +2202,34 @@ async function directMint() {
       const rarityName = ['Common','Rare','Epic','Legendary'][mintedCard.rarity];
       const rarColor = ['#7a8899','#3b82f6','#c084fc','#ffc940'][mintedCard.rarity];
 
+      const mintedTeam = TEAMS.find(t => t.id === mintedCard.teamId) || ARGENTINA_TEAM_DATA;
+
       document.getElementById('mintedCardVisual').innerHTML = `
-        <div style="font-size:32px; margin-bottom:8px;">${getFlagHtml(true)}</div>
-        <div style="font-family:'Black Ops One',sans-serif; font-size:18px; color:#dde4f0; margin-bottom:4px;">ARGENTINA</div>
+        <div style="font-size:32px; margin-bottom:8px;">${getFlagHtml(mintedTeam, true)}</div>
+        <div style="font-family:'Black Ops One',sans-serif; font-size:18px; color:#dde4f0; margin-bottom:4px;">${mintedTeam.name.toUpperCase()}</div>
         <div style="font-family:'Share Tech Mono',monospace; font-size:14px; color:#5a6a7a; margin-bottom:8px;">Tactical Position: ${posName}</div>
         <div style="font-family:'Black Ops One',sans-serif; font-size:36px; color:${rarColor}; line-height:1;">${mintedCard.weight} <span style="font-size:16px;">PTS</span></div>
         <div style="font-size:11px; font-family:'Share Tech Mono',monospace; color:${rarColor}; margin-top:4px; text-transform:uppercase;">${rarityName}</div>
       `;
 
       let statusText = '';
-      if (isUpgrade && mintedCard.teamId === ARGENTINA_TEAM_ID) {
+      if (mintedCard.teamId === ARGENTINA_TEAM_ID) {
         const upgradeDiff = oldCard ? (mintedCard.weight - oldCard.weight) : mintedCard.weight;
+        const upgradeStatus = isUpgrade 
+          ? `<span style="display:inline-block; background:rgba(0,255,135,0.15); color:#00ff87; border:1px solid #00ff87; padding:6px 12px; border-radius:4px; font-weight:700; margin-bottom:12px; font-size:13px; text-transform:uppercase; letter-spacing:1px; animation: pulse 1.5s infinite;">🔥 SQUAD UPGRADED! (+${upgradeDiff} PTS)</span>`
+          : `<span style="display:inline-block; background:rgba(122,136,153,0.15); color:#7a8899; border:1px solid #1c2028; padding:6px 12px; border-radius:4px; font-weight:700; margin-bottom:12px; font-size:13px; text-transform:uppercase; letter-spacing:1px;">RESERVE PLAYER ACQUIRED</span>`;
+        
         statusText = `
-          <span style="display:inline-block; background:rgba(0,255,135,0.15); color:#00ff87; border:1px solid #00ff87; padding:6px 12px; border-radius:4px; font-weight:700; margin-bottom:12px; font-size:13px; text-transform:uppercase; letter-spacing:1px; animation: pulse 1.5s infinite;">
-            🔥 SQUAD UPGRADED! (+${upgradeDiff} PTS)
-          </span>
-          <p style="color:#7a8899;">Superb draw! This card is heavier than your previous one. Your tactical squad weight and leaderboard score have increased!</p>
+          ${upgradeStatus}
+          <p style="color:#00ff87; font-weight:600; font-size:16px; margin-bottom:8px;">Congratulations! You hit a player from Argentina! 🇦🇷</p>
+          <p style="color:#7a8899;">This player belongs to your active tactics. ${isUpgrade ? 'Your squad weight has been upgraded.' : 'You already have a heavier player scored for this slot.'}</p>
         `;
-      } else if (mintedCard.teamId !== ARGENTINA_TEAM_ID) {
+      } else {
         statusText = `
           <span style="display:inline-block; background:rgba(122,136,153,0.15); color:#7a8899; border:1px solid #1c2028; padding:6px 12px; border-radius:4px; font-weight:700; margin-bottom:12px; font-size:13px; text-transform:uppercase; letter-spacing:1px;">
             PLAYER FROM ANOTHER NATION
           </span>
           <p style="color:#7a8899;">Great pull, but from a different national team! The card is saved in your Block Kickers locker. You can sell it on the market or use it in the World Cup albums!</p>
-        `;
-      } else {
-        statusText = `
-          <span style="display:inline-block; background:rgba(122,136,153,0.15); color:#7a8899; border:1px solid #1c2028; padding:6px 12px; border-radius:4px; font-weight:700; margin-bottom:12px; font-size:13px; text-transform:uppercase; letter-spacing:1px;">
-            RESERVE PLAYER ACQUIRED
-          </span>
-          <p style="color:#7a8899;">You already have a heavier card scored for this position (current best: ${oldCard.weight} pts). This card is sent to your reserves for marketplace selling!</p>
         `;
       }
       document.getElementById('mintedCardStatus').innerHTML = statusText;
