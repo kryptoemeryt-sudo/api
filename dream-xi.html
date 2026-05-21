@@ -80,9 +80,8 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
   padding: 0 24px;
 }
 @media (min-width: 900px) {
-  .page{max-width:1300px;}
   .game-grid {
-    grid-template-columns: 1fr 1.5fr;
+    grid-template-columns: 1fr 1.4fr;
   }
 }
 
@@ -424,7 +423,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
   pointer-events: none;
 }
 
-/* FORMACJA I LINIE BOISKA */
+/* FORMACJA I LINIE */
 .formation {
   display: flex;
   flex-direction: column;
@@ -438,7 +437,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
   gap: 12px;
 }
 
-/* KARTY POZYCJI */
+/* KARTA POZYCJI */
 .pos-card{
   background: rgba(15, 19, 24, 0.9);
   border: 1px solid #1c2028;
@@ -501,7 +500,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
   color: #5a6a7a;
 }
 
-/* PRZYCISKI W KARTACH */
+/* DEKLARACJA KLASY PRZYCISKÓW W KARTACH */
 .btn-card-action{
   display:block;
   width:100%;
@@ -521,19 +520,19 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
 .btn-card-action.upgrade{background:rgba(0,255,135,0.1);border-color:rgba(0,255,135,0.3);color:#00ff87;}
 .btn-card-action.upgrade:hover{background:#00ff87;color:#000;}
 
-/* PODŚWIETLENIE PRZYCISKÓW SELL / CANCEL */
-.btn-card-action.sell, .btn-card-action.cancel {
+/* NOWE PODŚWIETLENIE PRZYCISKU "SELL CARD" - ZGODNE STYLIZACYJNIE Z "BUY" / "UPGRADE" */
+.btn-card-action.sell {
   background: rgba(239, 68, 68, 0.15);
   border-color: rgba(239, 68, 68, 0.4);
   color: #ef4444;
 }
-.btn-card-action.sell:hover, .btn-card-action.cancel:hover {
+.btn-card-action.sell:hover {
   background: #ef4444;
   color: #000;
   border-color: #ef4444;
 }
 
-/* LABELS & FLAGI */
+/* ETYKIETY I FLAGI */
 .pitch-title{font-family:'Black Ops One',sans-serif;font-size:11px;letter-spacing:3px;color:#5a6a7a;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;}
 .flag-img {
   width: 24px;
@@ -602,7 +601,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
   text-align: center;
 }
 
-/* LEGENDA KOLORÓW */
+/* LEGENDA KOLORÓW BOISKA */
 .legend {
   display: flex;
   gap: 12px;
@@ -709,11 +708,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
 
 <nav class="topnav">
   <a href="https://block-kickers.vercel.app" class="topnav-logo" style="text-decoration:none;">⚽ BLOCK <span>KICKERS</span></a>
-  <div style="display:flex; align-items:center; gap:12px;">
-    <!-- Sformatowany balans portfela prezentowany po lewej stronie adresu (domyślnie ukryty do momentu autoryzacji) -->
-    <span id="walletBalance" style="font-family:'Share Tech Mono',monospace; color:#00ff87; font-size:13px; font-weight:600; display:none; background:rgba(0,255,135,0.06); border:1px solid rgba(0,255,135,0.2); padding:6px 12px; border-radius:6px; letter-spacing:0.5px;">0.0 CHZ</span>
-    <button class="btn-connect" id="connectBtn" onclick="connectWallet()">CONNECT WALLET</button>
-  </div>
+  <button class="btn-connect" id="connectBtn" onclick="connectWallet()">POŁĄCZ PORTFEL</button>
 </nav>
 
 <div class="page">
@@ -840,8 +835,8 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
               <div class="how-desc">Get Argentina cards by minting for <span class="g">10 CHZ</span> or buying from others on the market.</div>
             </div>
             <div class="how-card" style="border-color: rgba(239, 68, 68, 0.35); background: rgba(239, 68, 68, 0.03);">
-              <div class="how-n">02</div>
-              <div class="how-title">⚠️ NO P2P</div>
+              <div class="how-n" style="color: #ef4444;">02</div>
+              <div class="how-title" style="color: #ef4444;">⚠️ NO P2P</div>
               <div class="how-desc">Direct wallet-to-wallet transfers <span style="color: #ef4444; font-weight: bold;">DO NOT SCORE</span>. Only marketplace buys and mints count!</div>
             </div>
             <div class="how-card">
@@ -850,8 +845,8 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
               <div class="how-desc">Scored the stamp? <span class="p">Sell the card</span> on the marketplace and recover your CHZ liquidity.</div>
             </div>
             <div class="how-card" style="border-color:rgba(255,201,64,0.3); background:rgba(255,201,64,0.04);">
-              <div class="how-n">04</div>
-              <div class="how-title">CLAIM THE CHEST</div>
+              <div class="how-n" style="color:rgba(255,201,64,0.2);">04</div>
+              <div class="how-title" style="color:#ffc940;">CLAIM THE CHEST</div>
               <div class="how-desc">The TOP 3 share a sponsored prize pool of <span class="a">10,000 CHZ</span> at the target deadline block!</div>
             </div>
           </div>
@@ -1059,16 +1054,15 @@ const POSITION_SHORT = {
   7: 'RW',
   8: 'MID',
   9: 'ST',
-  10: '#10', // Zamieniono z 'AM' na '#10'
+  10: 'AM',
   11: 'LW'
 };
 
 // Pozycjonowanie obrońców (LB po lewej, RB po prawej) na boisku taktycznym
-// LW (11) oraz RW (7) zostały przywrócone na standardowe miejsca na skrzydłach (LW po lewej, RW po prawej)
 const FORMATION = [
   [9],         // ST
-  [11,7],      // LW, RW (Poprawiona kolejność)
-  [6,8,10],    // DM, MID, #10
+  [7,11],      // RW, LW
+  [6,8,10],    // DM, MID, AM
   [3,4,5,2],   // LB, CB A, CB B, RB
   [1]          // GK
 ];
@@ -1149,8 +1143,8 @@ const RULES_TRANSLATIONS = {
       "🔗 ワークスウォレット（Chiliz）を接続して、アルゼンチンスクワッドを起動します。",
       "⚽ 選手カードをミントするか、マーケットプレイスで購入します（費用：10 CHZ）。",
       "⚠️ ミント、またはマーケットプレイスで購入されたカードのみがチームをスコアします。直接の転送（ギフト）はスコアとしてカウントされません。",
-      "📝 あなたのスコアは、これまでに獲得した各ポジション of the most heavy cards の合計重量です。",
-      "⚡ ポジションに対して重いカードを獲得すると、スコア is updated. 不要なカードは売却できます！",
+      "📝 あなたのスコアは、これまでに獲得した各ポジションの最も重いカード重量の合計です。",
+      "⚡ ポジションに対して重いカードを獲得すると、スコアは即座にアップデートされます。不要なカードは売却できます！",
       "🏆 ターゲットブロックに到達した時点で、タクティカル総重量が最も高い上位3名のコレクターが10,000 CHZの賞金プールを分け合います！"
     ]
   },
@@ -1172,7 +1166,7 @@ const RULES_TRANSLATIONS = {
       "⚽ Мінтуйте картки гравців (вартість: 10 CHZ) або купуйте їх на вторинному ринку.",
       "⚠️ Картка зараховується у вашу команду ТІЛЬКИ якщо вона була змінтована вами або куплена на маркетплейсі. Прямі перекази (дарунки) між гаманцями НЕ ЗАРАХОВУЮТЬСЯ (тактичні бали не нараховуються).",
       "📝 Ваш загальний рахунок — це сума показників найкращих карток, які коли-небудь проходили через ваш гаманець.",
-      "⚡ Коли ви отримуєте сильнішу картку на позицію, ваш результат оновлюється миттєво. Слабшу картку ви можете виставити на продаж і повернути свои CHZ!",
+      "⚡ Коли ви отримуєте сильнішу картку на позицію, ваш результат оновлюється миттєво. Слабшу картку ви можете виставити на продаж і повернути свої CHZ!",
       "🏆 Топ-3 колекціонери з найбільшою вагою складу на момент фінального блоку розділять призовий фонд у розмірі 10 000 CHZ!"
     ]
   }
@@ -1184,10 +1178,9 @@ let provider, signer, address;
 let contract, marketContract;
 let activeSellTokenId = null;
 
-window.dreamScores = {}; // portfel -> { pozycja -> {weight, tid, rarity, dna} }
+window.dreamScores = {}; // portfel -> { teamId -> { pozycja -> {weight, tid, rarity, dna} } }
 let marketByPos = {}; 
 let marketFloorByPos = {}; 
-let activeListingsByTokenId = {}; // tokenId -> listingId (Śledzenie aktywnych ofert zalogowanego portfela)
 let currentMintPrice = ethers.parseEther("10");
 
 // Spis wszystkich 48 krajów dla poprawnego mapowania nazw i flag w globalnym Ledgerze
@@ -1242,36 +1235,90 @@ const TEAMS = [
   {id:47, name:"Turkey",        flag:"🇹🇷", code:"tr", fed:"UEFA"}
 ];
 
-// Zunifikowany system powiadomień tosterowych
-function showToast(message, isError = false) {
+function showHeaderToast(message, isError = false) {
   const toast = document.getElementById('toast');
-  if (toast) {
-    toast.textContent = message;
-    toast.style.borderColor = isError ? '#ef4444' : '#00ff87';
-    toast.style.color = isError ? '#ef4444' : '#00ff87';
-    toast.style.display = 'block';
-    setTimeout(() => {
-      toast.style.display = 'none';
-    }, 6000);
-  }
+  toast.textContent = message;
+  toast.style.borderColor = isError ? '#ef4444' : '#00ff87';
+  toast.style.color = isError ? '#ef4444' : '#00ff87';
+  toast.style.display = 'block';
+  setTimeout(() => {
+    toast.style.display = 'none';
+  }, 6000);
 }
-const showHeaderToast = showToast; // Alias dla zachowania pełnej kompatybilności wstecznej
 
-// Renders flag using flagcdn.com with fallback to native emoji
-function getFlagHtml(team = ARGENTINA_TEAM_DATA, isLarge = false) {
-  let t = team;
-  let lg = isLarge;
-  if (typeof team === 'boolean') {
-    lg = team;
-    t = ARGENTINA_TEAM_DATA;
-  } else if (!team) {
-    t = ARGENTINA_TEAM_DATA;
+function toggleRulesModal(show) {
+  const modal = document.getElementById('rulesModal');
+  modal.style.display = show ? 'flex' : 'none';
+  if (show) setRulesLanguage('en');
+}
+
+function setRulesLanguage(lang) {
+  const data = RULES_TRANSLATIONS[lang] || RULES_TRANSLATIONS['en'];
+  document.getElementById('rulesTitle').textContent = data.title;
+  
+  const langs = ['en', 'de', 'fr', 'es', 'it', 'pt', 'ja', 'pl', 'uk'];
+  langs.forEach(l => {
+    const btn = document.getElementById(`lang-${l}`);
+    if (btn) btn.classList.toggle('active', l === lang);
+  });
+  
+  const container = document.getElementById('rulesContent');
+  container.innerHTML = '';
+  data.items.forEach(item => {
+    const li = document.createElement('li');
+    li.textContent = item;
+    container.appendChild(li);
+  });
+}
+
+function toggleSellModal(show) {
+  const modal = document.getElementById('sellModal');
+  modal.style.display = show ? 'flex' : 'none';
+}
+
+function toggleMintSuccessModal(show) {
+  const modal = document.getElementById('mintSuccessModal');
+  modal.style.display = show ? 'flex' : 'none';
+}
+
+function switchDeskTab(tab) {
+  document.getElementById('btnDeskSnipe').classList.toggle('active', tab === 'snipe');
+  document.getElementById('btnDeskPortfolio').classList.toggle('active', tab === 'portfolio');
+  document.getElementById('deskTabSnipe').style.display = tab === 'snipe' ? 'block' : 'none';
+  document.getElementById('deskTabPortfolio').style.display = tab === 'portfolio' ? 'block' : 'none';
+}
+
+function openSellModal(tokenId, pos, weight, rarity) {
+  activeSellTokenId = tokenId;
+  const posName = POSITION_SHORT[pos] || pos;
+  const rarityName = ['Common','Rare','Epic','Legendary'][rarity];
+  
+  document.getElementById('sellCardInfo').innerHTML = `
+    <strong>National Team:</strong> ${getFlagHtml()} Argentina<br>
+    <strong>Tactical Position:</strong> ${posName}<br>
+    <strong>Rarity Class:</strong> ${rarityName}<br>
+    <strong>Player Weight:</strong> ${weight} pts<br>
+    <strong>Token ID:</strong> #${tokenId}
+  `;
+  document.getElementById('sellPriceInput').value = "40";
+  toggleSellModal(true);
+}
+
+async function submitSellCard() {
+  const priceInput = document.getElementById('sellPriceInput').value;
+  if (!priceInput || parseFloat(priceInput) <= 0) {
+    showHeaderToast('Enter a valid selling price greater than 0 CHZ.', true);
+    return;
   }
-  const cls = lg ? 'flag-img-lg' : 'flag-img';
+  await sellFigure(activeSellTokenId, priceInput);
+}
+
+function getFlagHtml(isLarge = false) {
+  const cls = isLarge ? 'flag-img-lg' : 'flag-img';
   return `
     <span class="flag-container" style="display: inline-flex; align-items: center; justify-content: center; margin-right: 6px; vertical-align: middle;">
-      <img src="https://flagcdn.com/w40/${t.code}.png" class="${cls}" alt="${t.name}" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';" />
-      <span style="display: none; font-size: ${lg ? '28px' : '18px'};">${t.flag}</span>
+      <img src="https://flagcdn.com/w40/${ARGENTINA_TEAM_DATA.code}.png" class="${cls}" alt="Argentina" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';" />
+      <span style="display: none; font-size: ${isLarge ? '28px' : '18px'};">${ARGENTINA_TEAM_DATA.flag}</span>
     </span>
   `;
 }
@@ -1299,35 +1346,16 @@ async function getReadProvider(){
   }
 }
 
-// Niezależne i bezpieczne odpytywanie o saldo portfela w Chiliz (CHZ)
-async function updateWalletBalance() {
-  if (typeof window.ethereum !== 'undefined' && address) {
-    try {
-      const tempProvider = new ethers.BrowserProvider(window.ethereum);
-      const balanceWei = await tempProvider.getBalance(address);
-      const balanceEth = ethers.formatEther(balanceWei);
-      const balanceFormatted = parseFloat(balanceEth).toFixed(1);
-      const balEl = document.getElementById('walletBalance');
-      if (balEl) {
-        balEl.textContent = `${balanceFormatted} CHZ`;
-        balEl.style.display = 'inline-block';
-      }
-    } catch (e) {
-      console.warn("Could not fetch wallet balance:", e);
-    }
-  }
-}
-
 async function connectWallet(){
   if(!window.ethereum){
-    showToast('MetaMask not detected. Please install a compatible Web3 wallet.', true);
+    showHeaderToast('MetaMask not detected. Please install a compatible Web3 wallet.', true);
     return;
   }
   try{
     await window.ethereum.request({method:'eth_requestAccounts'});
     const cid = await window.ethereum.request({method:'eth_chainId'});
     if(parseInt(cid,16) !== CHAIN_ID){
-      showToast('Wrong network! Please switch your wallet to Chiliz Chain (ID: 88888).', true);
+      showHeaderToast('Wrong network! Please switch your wallet to Chiliz Chain (ID: 88888).', true);
       return;
     }
     
@@ -1344,11 +1372,10 @@ async function connectWallet(){
     document.getElementById('gameSection').style.display = 'block';
     document.getElementById('statsRow').style.display = 'grid';
     
-    await updateWalletBalance();
     await loadData();
   }catch(e){
     console.error(e);
-    showToast('Error connecting wallet.', true);
+    showHeaderToast('Error connecting wallet.', true);
   }
 }
 
@@ -1356,8 +1383,8 @@ function parseDNA(dna){
   const n = typeof dna === 'bigint' ? dna : BigInt(dna.toString());
   const teamId = Number(n % 48n);
   const position = Number((n >> 6n) % 11n) + 1;
-  const rarityRand = Number((n >> 10n) % 10000n);
-  const rarity = rarityRand < 100 ? 3 : rarityRand < 1000 ? 2 : rarityRand < 3000 ? 1 : 0;
+  const rarRand = Number((n >> 10n) % 10000n);
+  const rarity = rarRand < 100 ? 3 : rarRand < 1000 ? 2 : rarRand < 3000 ? 1 : 0;
   const hasGoldenBoots = Number((n >> 24n) % 100n) < 5;
   const hasTattoo = Number((n >> 30n) % 100n) < 15;
   const hasEarring = Number((n >> 27n) % 100n) < 25;
@@ -1426,7 +1453,6 @@ async function loadData(){
   document.getElementById('pitchFormationGrid').innerHTML = '<div style="text-align:center;color:#3d4a5a;padding:40px;grid-column:1/-1;"><span class="spin"></span> Querying Chiliz Blockchain data...</div>';
 
   let mints=[], sales=[], listed=[];
-  const myAddr = address?.toLowerCase();
   try {
     const res = await fetch('/api/events');
     if(res.ok){
@@ -1451,8 +1477,6 @@ async function loadData(){
     }
   }
 
-  await updateWalletBalance();
-
   ownerMap = {};
   mints.forEach(m => {
     try{
@@ -1465,13 +1489,12 @@ async function loadData(){
     if(ownerMap[tid]) ownerMap[tid].owner = s.buyer?.toLowerCase();
   });
 
-  // Konstrukcja płaskiej struktury dreamScores (wallet -> position -> stats)
   window.dreamScores = {};
   const score = (wallet, tokenId, dna) => {
     try{
       const dnaBig = typeof dna === 'bigint' ? dna : BigInt(String(dna));
       const t = parseDNA(dnaBig);
-      if (t.teamId !== ARGENTINA_TEAM_ID) return; // Filtruje wyłącznie karty Argentyny dla tego wyzwania
+      if (t.teamId !== ARGENTINA_TEAM_ID) return; // Filtruje wyłącznie karty Argentyny dla wizualnego boiska
       
       const w = wallet.toLowerCase();
       if(!window.dreamScores[w]) window.dreamScores[w] = {};
@@ -1496,7 +1519,6 @@ async function loadData(){
   // Odpytywanie rynku wtórnego o aktualne oferty dla Argentyny
   marketByPos = {};
   marketFloorByPos = {};
-  activeListingsByTokenId = {}; 
   let rawMarketListings = []; 
   let listDetails = {}; 
 
@@ -1530,13 +1552,6 @@ async function loadData(){
         if(!l[3]) continue; 
         const tokenId = Number(l[1]);
         const priceWei = l[2];
-        const seller = l[0].toLowerCase();
-
-        // Przypisanie listing ID dla aktywnej oferty wystawionej przez zalogowanego gracza
-        if (myAddr && seller === myAddr) {
-          activeListingsByTokenId[tokenId] = i;
-        }
-
         const fig = ownerMap[tokenId];
         if(!fig || fig.teamId !== ARGENTINA_TEAM_ID) continue;
         const price = parseFloat(ethers.formatEther(priceWei));
@@ -1593,13 +1608,6 @@ function renderSnipeMarket(listings) {
     const rarName = ['Common', 'Rare', 'Epic', 'Legendary'][deal.rarity];
     const rarColor = ['#7a8899','#3b82f6','#c084fc','#ffc940'][deal.rarity];
 
-    // Sprawdzenie, czy oferta na rynku wtórnym jest nasza (pochodzi od zalogowanego gracza)
-    const isOurs = myAddr && activeListingsByTokenId[deal.tokenId] !== undefined;
-
-    const actionBtn = isOurs
-      ? `<button onclick="cancelListing(${deal.listingId})" class="btn-snipe" style="background:rgba(239, 68, 68, 0.15); border-color:rgba(239, 68, 68, 0.4); color:#ef4444;">CANCEL</button>`
-      : `<button onclick="buyFromMarket(${deal.listingId}, '${deal.price}')" class="btn-snipe">SNIPE</button>`;
-
     html += `
       <div class="snipe-row">
         <div class="snipe-details">
@@ -1611,7 +1619,7 @@ function renderSnipeMarket(listings) {
         </div>
         <div class="snipe-action">
           <span class="snipe-price">${deal.price} CHZ</span>
-          ${actionBtn}
+          <button onclick="buyFromMarket(${deal.listingId}, '${deal.price}')" class="btn-snipe">SNIPE</button>
         </div>
       </div>
     `;
@@ -1619,7 +1627,7 @@ function renderSnipeMarket(listings) {
   container.innerHTML = html;
 }
 
-// Obliczanie wydatków, przychodów, PnL i osobistego ledgera transakcji (Dla całej historii portfela)
+// Obliczanie wydatków, przychodów, PnL i osobistego ledgera transakcji (Dla CAŁEJ historii portfela - 48 krajów!)
 function renderPortfolioAndLedger(mints, sales, listDetails) {
   const myAddr = address?.toLowerCase();
   if (!myAddr) {
@@ -1632,7 +1640,7 @@ function renderPortfolioAndLedger(mints, sales, listDetails) {
   let myEarned = 0;
   let myLedger = []; 
 
-  // 1. Obliczanie kosztu mintowania wszystkich posiadanych kiedykolwiek kart (48 krajów)
+  // 1. Obliczanie kosztu mintowania wszystkich posiadanych kiedykolwiek kart na tym kontrakcie (wszystkie 48 krajów)
   mints.forEach(m => {
     if (m.owner.toLowerCase() === myAddr) {
       const fig = parseDNA(m.dna);
@@ -1648,7 +1656,7 @@ function renderPortfolioAndLedger(mints, sales, listDetails) {
     }
   });
 
-  // 2. Obliczanie zakupów i sprzedaży rynkowych dla wszystkich 48 krajów
+  // 2. Obliczanie zrealizowanych zakupów i sprzedaży rynkowych dla wszystkich 48 krajów
   sales.forEach(s => {
     const lid = Number(s.listingId);
     const details = listDetails[lid] || s; 
@@ -1663,7 +1671,7 @@ function renderPortfolioAndLedger(mints, sales, listDetails) {
       const teamInfo = TEAMS[fig.teamId] || {flag: "🏳️", name: "Unknown"};
       const displayPosName = `${teamInfo.flag} ${POSITION_SHORT[fig.position]}`;
       
-      // Czy zalogowany portfel to kupujący?
+      // Czy połączony portfel to kupujący?
       if (buyer === myAddr) {
         mySpent += price;
         myLedger.push({
@@ -1674,7 +1682,7 @@ function renderPortfolioAndLedger(mints, sales, listDetails) {
           block: s.block || 0
         });
       }
-      // Czy zalogowany portfel to sprzedawca?
+      // Czy połączony portfel to sprzedawca?
       if (seller === myAddr) {
         myEarned += price;
         myLedger.push({
@@ -1688,11 +1696,12 @@ function renderPortfolioAndLedger(mints, sales, listDetails) {
     }
   });
 
-  // 3. Obliczanie wyceny posiadanego Locker Value na bazie globalnych cen floor rynkowych (48 krajów)
+  // 3. Obliczanie wyceny posiadanego Locker Value na bazie globalnych cen floor rynkowych dla całej kolekcji (48 krajów)
   let lockerVal = 0;
   Object.entries(ownerMap).forEach(([tid, fig]) => {
     if (fig.owner === myAddr) {
-      const val = 10; 
+      // Szukamy globalnej najniższej ceny (floor) dla danego kraju i pozycji
+      const val = 10; // Domyślna wycena bazowa
       lockerVal += val;
     }
   });
@@ -1884,8 +1893,8 @@ function renderPitch() {
     row.forEach(pos => {
       const card = document.createElement('div');
       const scored = myTeamPositions[pos];
-      const mkt = marketByPos[pos]; // Poprawne płaskie mapowanie
-      const floor = marketFloorByPos[pos]; // Poprawne płaskie mapowanie
+      const mkt = marketByPos[pos];
+      const floor = marketFloorByPos[pos];
 
       let floorHtml = '';
       if (scored && floor) {
@@ -1903,19 +1912,11 @@ function renderPitch() {
           actionHtml = `<div style="margin-top:4px;font-size:8px;color:#5a6a7a;font-family:Share Tech Mono,monospace;letter-spacing:0.3px;">BEST WEIGHT</div>`;
         }
 
-        // Dodanie opcji SELL / CANCEL LISTING bezpośrednio z murawy taktycznej boiska
         let sellBtnHtml = '';
         const currentOwnerInfo = ownerMap[scored.tid];
         const currentlyOwnsScored = myAddr && currentOwnerInfo && currentOwnerInfo.owner === myAddr;
         if (currentlyOwnsScored) {
-          const activeListingId = activeListingsByTokenId[scored.tid];
-          // Jeżeli karta jest już wystawiona, wyświetla się czerwony przycisk "CANCEL"
-          if (activeListingId !== undefined) {
-            sellBtnHtml = `<button onclick="cancelListing(${activeListingId})" class="btn-card-action cancel">CANCEL</button>`;
-          } else {
-            // Zwykłe wystawienie na sprzedaż podświetla się w schemacie rdzawym rynkowym
-            sellBtnHtml = `<button onclick="openSellModal(${scored.tid}, ${pos}, ${scored.weight}, ${scored.rarity})" class="btn-card-action sell">SELL CARD</button>`;
-          }
+          sellBtnHtml = `<button onclick="openSellModal(${scored.tid}, ${pos}, ${scored.weight}, ${scored.rarity})" class="btn-card-action sell">SELL CARD</button>`;
         }
 
         card.innerHTML = `
@@ -1947,7 +1948,7 @@ function renderPitch() {
           </div>
           <div>
             <div class="pos-weight empty">—</div>
-            <div class="pos-rarity" style="color:#5a6a7a;">EMPTY</div>
+            <div class="pos-rarity" style="color:#5a6a7a;">EMPTY SLOT</div>
             ${actionHtml}
           </div>
         `;
@@ -2019,91 +2020,72 @@ function renderLeaderboard(){
 
 async function buyFromMarket(listingId, priceChz){
   if (!signer || !marketContract) {
-    showToast('Connect your wallet to purchase on the marketplace.', true);
+    showHeaderToast('Connect your wallet to purchase on the marketplace.', true);
     return;
   }
   try {
-    showToast(`Initializing marketplace buy: Listing #${listingId} for ${priceChz} CHZ...`);
+    showHeaderToast(`Initializing marketplace buy: Listing #${listingId} for ${priceChz} CHZ...`);
     const priceWei = ethers.parseEther(String(priceChz));
 
     const tx = await marketContract.buyFigure(listingId, { value: priceWei });
-    showToast('Transaction sent to Chiliz Chain. Awaiting blockchain confirmation...');
+    showHeaderToast('Transaction sent to Chiliz Chain. Awaiting blockchain confirmation...');
     
     await tx.wait();
-    showToast('Card purchased successfully! Tactical formation updated!');
+    showHeaderToast('Card purchased successfully! Tactical formation updated!');
     await loadData();
   } catch (error) {
     console.error(error);
-    showToast('Transaction failed. Ensure you have sufficient CHZ for gas and purchase price.', true);
+    showHeaderToast('Transaction failed. Ensure you have sufficient CHZ for gas and purchase price.', true);
   }
 }
 
 async function sellFigure(tokenId, priceChz) {
   if (!signer || !marketContract || !address) {
-    showToast('Please connect your wallet first.', true);
+    showHeaderToast('Please connect your wallet first.', true);
     return;
   }
   try {
     const figContract = new ethers.Contract(CONTRACT_ADDRESS, [
-      "function isApprovedForAll(address owner, address operator) external view returns (bool)",
+      "function isApprovedForAll(address account, address operator) external view returns (bool)",
       "function setApprovalForAll(address operator, bool approved) external"
     ], signer);
 
-    showToast('Checking marketplace contract approval...');
+    showHeaderToast('Checking marketplace contract approval...');
     const isApproved = await figContract.isApprovedForAll(address, MARKET_ADDRESS);
     if (!isApproved) {
-      showToast('One-time marketplace authorization required...');
+      showHeaderToast('One-time marketplace authorization required...');
       const txApprove = await figContract.setApprovalForAll(MARKET_ADDRESS, true);
       await txApprove.wait();
-      showToast('Approved! Creating marketplace listing...');
+      showHeaderToast('Approved! Creating marketplace listing...');
     }
 
     const priceWei = ethers.parseEther(priceChz);
-    showToast(`Listing card #${tokenId} for ${priceChz} CHZ...`);
+    showHeaderToast(`Listing card #${tokenId} for ${priceChz} CHZ...`);
     const txList = await marketContract.listFigure(tokenId, priceWei);
     await txList.wait();
-    showToast('Card successfully listed on the marketplace!');
+    showHeaderToast('Card successfully listed on the marketplace!');
     toggleSellModal(false);
     await loadData();
   } catch(e) {
     console.error(e);
-    showToast('Failed to list card on marketplace.', true);
-  }
-}
-
-// Funkcja anulowania wystawionej oferty na rynku wtórnym
-async function cancelListing(listingId) {
-  if (!signer || !marketContract) {
-    showToast('Please connect your wallet first.', true);
-    return;
-  }
-  try {
-    showToast(`Canceling marketplace listing #${listingId}...`);
-    const tx = await marketContract.cancelListing(listingId);
-    showToast('Cancel transaction submitted. Awaiting block confirmation...');
-    await tx.wait();
-    showToast('Listing successfully canceled!');
-    await loadData();
-  } catch (error) {
-    console.error(error);
-    showToast('Cancellation failed.', true);
+    showHeaderToast('Failed to list card on marketplace.', true);
   }
 }
 
 async function directMint() {
   if (!signer || !contract) {
-    showToast('Connect your wallet to mint players.', true);
+    showHeaderToast('Connect your wallet to mint players.', true);
     return;
   }
   try {
     const referrer = getReferrer();
-    showToast('Initializing player mint...');
+    showHeaderToast(`Initializing player mint for ${ethers.formatEther(currentMintPrice)} CHZ...`);
     
     const tx = await contract.mint(referrer, { value: currentMintPrice });
-    showToast('Mint transaction sent. Awaiting block confirmation...');
+    showHeaderToast('Mint transaction sent. Awaiting block confirmation...');
     
     const receipt = await tx.wait();
-    showToast('Generative player card minted successfully!');
+    showHeaderToast('Generative player card minted successfully!');
 
     let mintedCard = null;
     try {
@@ -2136,34 +2118,36 @@ async function directMint() {
       const rarityName = ['Common','Rare','Epic','Legendary'][mintedCard.rarity];
       const rarColor = ['#7a8899','#3b82f6','#c084fc','#ffc940'][mintedCard.rarity];
 
-      const mintedTeam = TEAMS.find(t => t.id === mintedCard.teamId) || ARGENTINA_TEAM_DATA;
-
       document.getElementById('mintedCardVisual').innerHTML = `
-        <div style="font-size:32px; margin-bottom:8px;">${getFlagHtml(mintedTeam, true)}</div>
-        <div style="font-family:'Black Ops One',sans-serif; font-size:18px; color:#dde4f0; margin-bottom:4px;">${mintedTeam.name.toUpperCase()}</div>
+        <div style="font-size:32px; margin-bottom:8px;">${getFlagHtml(true)}</div>
+        <div style="font-family:'Black Ops One',sans-serif; font-size:18px; color:#dde4f0; margin-bottom:4px;">ARGENTINA</div>
         <div style="font-family:'Share Tech Mono',monospace; font-size:14px; color:#5a6a7a; margin-bottom:8px;">Tactical Position: ${posName}</div>
         <div style="font-family:'Black Ops One',sans-serif; font-size:36px; color:${rarColor}; line-height:1;">${mintedCard.weight} <span style="font-size:16px;">PTS</span></div>
         <div style="font-size:11px; font-family:'Share Tech Mono',monospace; color:${rarColor}; margin-top:4px; text-transform:uppercase;">${rarityName}</div>
       `;
 
       let statusText = '';
-      if (mintedCard.teamId === ARGENTINA_TEAM_ID) {
+      if (isUpgrade && mintedCard.teamId === ARGENTINA_TEAM_ID) {
         const upgradeDiff = oldCard ? (mintedCard.weight - oldCard.weight) : mintedCard.weight;
-        const upgradeStatus = isUpgrade 
-          ? `<span style="display:inline-block; background:rgba(0,255,135,0.15); color:#00ff87; border:1px solid #00ff87; padding:6px 12px; border-radius:4px; font-weight:700; margin-bottom:12px; font-size:13px; text-transform:uppercase; letter-spacing:1px; animation: pulse 1.5s infinite;">🔥 SQUAD UPGRADED! (+${upgradeDiff} PTS)</span>`
-          : `<span style="display:inline-block; background:rgba(122,136,153,0.15); color:#7a8899; border:1px solid #1c2028; padding:6px 12px; border-radius:4px; font-weight:700; margin-bottom:12px; font-size:13px; text-transform:uppercase; letter-spacing:1px;">RESERVE PLAYER ACQUIRED</span>`;
-        
         statusText = `
-          ${upgradeStatus}
-          <p style="color:#00ff87; font-weight:600; font-size:16px; margin-bottom:8px;">Congratulations! You hit a player from Argentina! 🇦🇷</p>
-          <p style="color:#7a8899;">This player belongs to your active tactics. ${isUpgrade ? 'Your squad weight has been upgraded.' : 'You already have a heavier player scored for this slot.'}</p>
+          <span style="display:inline-block; background:rgba(0,255,135,0.15); color:#00ff87; border:1px solid #00ff87; padding:6px 12px; border-radius:4px; font-weight:700; margin-bottom:12px; font-size:13px; text-transform:uppercase; letter-spacing:1px; animation: pulse 1.5s infinite;">
+            🔥 SQUAD UPGRADED! (+${upgradeDiff} PTS)
+          </span>
+          <p style="color:#7a8899;">Superb draw! This card is heavier than your previous one. Your tactical squad weight and leaderboard score have increased!</p>
         `;
-      } else {
+      } else if (mintedCard.teamId !== ARGENTINA_TEAM_ID) {
         statusText = `
           <span style="display:inline-block; background:rgba(122,136,153,0.15); color:#7a8899; border:1px solid #1c2028; padding:6px 12px; border-radius:4px; font-weight:700; margin-bottom:12px; font-size:13px; text-transform:uppercase; letter-spacing:1px;">
             PLAYER FROM ANOTHER NATION
           </span>
           <p style="color:#7a8899;">Great pull, but from a different national team! The card is saved in your Block Kickers locker. You can sell it on the market or use it in the World Cup albums!</p>
+        `;
+      } else {
+        statusText = `
+          <span style="display:inline-block; background:rgba(122,136,153,0.15); color:#7a8899; border:1px solid #1c2028; padding:6px 12px; border-radius:4px; font-weight:700; margin-bottom:12px; font-size:13px; text-transform:uppercase; letter-spacing:1px;">
+            RESERVE PLAYER ACQUIRED
+          </span>
+          <p style="color:#7a8899;">You already have a heavier card scored for this position (current best: ${oldCard.weight} pts). This card is sent to your reserves for marketplace selling!</p>
         `;
       }
       document.getElementById('mintedCardStatus').innerHTML = statusText;
@@ -2173,7 +2157,7 @@ async function directMint() {
     await loadData();
   } catch (error) {
     console.error(error);
-    showToast('Minting failed. Verify your balance and try again.', true);
+    showHeaderToast('Minting failed. Verify your balance and try again.', true);
   }
 }
 
