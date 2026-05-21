@@ -465,13 +465,13 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
   background: rgba(0,255,135,0.06);
 }
 .pos-card.owned::after{
-  content: 'âś“';
+  content: '\2713';
   position: absolute;
   top: 2px;
   right: 4px;
   color: #00ff87;
   font-weight: bold;
-  font-size: 8px;
+  font-size: 10px;
 }
 .pos-card.empty{
   opacity: 0.6;
@@ -484,10 +484,15 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
   letter-spacing: 0.3px;
   text-transform: uppercase;
 }
-.pos-ball {
-  font-size: 16px;
-  margin: 1px 0;
+.pos-card-meta {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 8px;
+  color: #00ff87;
+  margin: 2px 0;
   display: block;
+  line-height: 1.1;
+  min-height: 18px;
+  word-break: break-word;
 }
 .pos-weight{
   font-family:'Black Ops One',sans-serif;
@@ -970,6 +975,14 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
     
     <div style="display:flex; gap:6px; margin-bottom:20px; flex-wrap:wrap; border-bottom:1px solid #1c2028; padding-bottom:12px;">
       <button class="tab-btn active" id="lang-en" onclick="setRulesLanguage('en')">EN</button>
+      <button class="tab-btn" id="lang-de" onclick="setRulesLanguage('de')">DE</button>
+      <button class="tab-btn" id="lang-fr" onclick="setRulesLanguage('fr')">FR</button>
+      <button class="tab-btn" id="lang-es" onclick="setRulesLanguage('es')">ES</button>
+      <button class="tab-btn" id="lang-it" onclick="setRulesLanguage('it')">ITA</button>
+      <button class="tab-btn" id="lang-pt" onclick="setRulesLanguage('pt')">POR</button>
+      <button class="tab-btn" id="lang-ja" onclick="setRulesLanguage('ja')">JAP</button>
+      <button class="tab-btn" id="lang-uk" onclick="setRulesLanguage('uk')">UKR</button>
+      <button class="tab-btn" id="lang-pl" onclick="setRulesLanguage('pl')">PL</button>
     </div>
     
     <ul id="rulesContent" style="list-style:none; display:flex; flex-direction:column; gap:12px; font-family:'Barlow Condensed',sans-serif; font-size:16px; color:#dde4f0; line-height:1.4;">
@@ -1079,6 +1092,94 @@ const RULES_TRANSLATIONS = {
       "When you secure a heavier card for a position, your score updates instantly. You can sell weaker cards on the marketplace to recover CHZ.",
       "The 10,000 CHZ prize pool is split across paid ranks. More unique players on the leaderboard means more paid ranks."
     ]
+  },
+  de: {
+    title: "Spielregeln",
+    items: [
+      "Verbinde dein Chiliz Wallet, um dein persoenliches Argentinien-Team und den Live-Fortschritt zu sehen.",
+      "Mint kostet 10 CHZ. Jeder Mint gibt einen zufaelligen Spieler aus einem der 48 World-Cup-Teams.",
+      "Eine Karte punktet nur, wenn sie von dir gemintet oder ueber den Marketplace gekauft wurde. Direkte Wallet-Transfers zaehlen nicht.",
+      "Dein Score ist die Summe der staerksten Karten, die jemals durch dein Wallet gegangen sind.",
+      "Wenn du eine staerkere Karte fuer eine Position bekommst, wird dein Score sofort aktualisiert. Schwaechere Karten kannst du verkaufen.",
+      "Der Preispool von 10,000 CHZ wird auf bezahlte Raenge verteilt. Mehr eindeutige Spieler bedeuten mehr bezahlte Raenge."
+    ]
+  },
+  fr: {
+    title: "Regles du jeu",
+    items: [
+      "Connecte ton wallet Chiliz pour activer ton equipe d'Argentine et suivre ta progression.",
+      "Le mint coute 10 CHZ. Chaque mint donne un joueur aleatoire parmi les 48 equipes de la Coupe du monde.",
+      "Une carte marque seulement si elle a ete mintee par toi ou achetee sur le marketplace. Les transferts directs ne comptent pas.",
+      "Ton score est la somme des meilleures cartes passees par ton wallet.",
+      "Quand tu obtiens une carte plus forte pour une position, ton score se met a jour instantanement. Tu peux vendre les cartes plus faibles.",
+      "Le prize pool de 10,000 CHZ est partage entre les rangs payes. Plus il y a de joueurs uniques, plus il y a de rangs payes."
+    ]
+  },
+  es: {
+    title: "Reglas del juego",
+    items: [
+      "Conecta tu wallet Chiliz para activar tu equipo de Argentina y ver el progreso en vivo.",
+      "Mintear cuesta 10 CHZ. Cada mint entrega un jugador aleatorio de uno de los 48 equipos del Mundial.",
+      "Una carta solo puntua si la minteaste tu o la compraste en el marketplace. Las transferencias directas no cuentan.",
+      "Tu puntuacion es la suma de las cartas mas fuertes que pasaron por tu wallet.",
+      "Cuando consigues una carta mas fuerte para una posicion, tu score se actualiza al instante. Puedes vender cartas mas debiles.",
+      "El prize pool de 10,000 CHZ se reparte entre rangos pagados. Mas jugadores unicos significa mas rangos pagados."
+    ]
+  },
+  it: {
+    title: "Regole del gioco",
+    items: [
+      "Collega il tuo wallet Chiliz per attivare la squadra Argentina e vedere i progressi live.",
+      "Il mint costa 10 CHZ. Ogni mint assegna un giocatore casuale da una delle 48 squadre World Cup.",
+      "Una carta fa punti solo se e stata mintata da te o comprata sul marketplace. I trasferimenti diretti non contano.",
+      "Il tuo score e la somma delle carte migliori passate dal tuo wallet.",
+      "Quando ottieni una carta piu forte per una posizione, lo score si aggiorna subito. Puoi vendere le carte piu deboli.",
+      "Il prize pool da 10,000 CHZ viene diviso tra i ranghi pagati. Piu giocatori unici significa piu ranghi pagati."
+    ]
+  },
+  pt: {
+    title: "Regras do jogo",
+    items: [
+      "Conecta a tua wallet Chiliz para ativar a equipa da Argentina e acompanhar o progresso.",
+      "O mint custa 10 CHZ. Cada mint da um jogador aleatorio de uma das 48 equipas da World Cup.",
+      "Uma carta so pontua se foi mintada por ti ou comprada no marketplace. Transferencias diretas nao contam.",
+      "A tua pontuacao e a soma das melhores cartas que passaram pela tua wallet.",
+      "Quando recebes uma carta mais forte para uma posicao, a pontuacao atualiza imediatamente. Podes vender cartas mais fracas.",
+      "O prize pool de 10,000 CHZ e dividido pelos lugares pagos. Mais jogadores unicos significa mais lugares pagos."
+    ]
+  },
+  ja: {
+    title: "Game Rules",
+    items: [
+      "Connect your Chiliz Wallet to activate your Argentina squad and see live progress.",
+      "Mint costs 10 CHZ. Each mint gives a random player from one of the 48 World Cup teams.",
+      "A card scores only if you minted it or bought it through the marketplace. Direct wallet transfers do not score.",
+      "Your score is the sum of the best cards that have passed through your wallet.",
+      "When you get a stronger card for a position, your score updates instantly. You can sell weaker cards.",
+      "The 10,000 CHZ prize pool is split across paid ranks. More unique players means more paid ranks."
+    ]
+  },
+  uk: {
+    title: "Pravyla hry",
+    items: [
+      "Pidkliuchit Chiliz Wallet, shchob aktyvuvaty sklad Argentyny ta bachyty progres.",
+      "Mint koshtuye 10 CHZ. Kozhen mint daye vypadkovoho hravtsia z odniyeyi z 48 World Cup komand.",
+      "Karta narakhovuye ochky lyshe yakshcho ty yii zmintyuvav abo kupyv na marketplace. Pryami transfery ne rakhuyutsia.",
+      "Tviy score tse suma naikrashchykh kart, yaki proishly cherez tviy wallet.",
+      "Koly otrymuyesh sylnishu kartu na pozytsiiu, score onovliuietsia odrazu. Slabshi karty mozhna prodaty.",
+      "Prize pool 10,000 CHZ rozdiliaietsia mizh platnymy mistsiamy. Bilsh unikalnykh hravtsiv oznachaye bilshe platnykh mists."
+    ]
+  },
+  pl: {
+    title: "Zasady gry",
+    items: [
+      "Polacz Chiliz Wallet, aby aktywowac swoj sklad Argentyny i sprawdzac postep na zywo.",
+      "Mint kosztuje 10 CHZ. Kazdy mint daje losowego gracza z jednej z 48 druzyn World Cup.",
+      "Karta punktuje tylko wtedy, gdy zostala wymintowana przez Ciebie albo kupiona na marketplace. Bezposrednie transfery nie punktuja.",
+      "Twoj wynik to suma najlepszych kart, ktore przeszly przez Twoj wallet.",
+      "Gdy zdobedziesz mocniejsza karte na pozycje, wynik aktualizuje sie natychmiast. Slabsze karty mozesz sprzedac.",
+      "Pula 10,000 CHZ jest dzielona na platne miejsca. Im wiecej unikalnych graczy, tym wiecej platnych miejsc."
+    ]
   }
 };
 
@@ -1180,7 +1281,7 @@ function setRulesLanguage(lang) {
   const data = RULES_TRANSLATIONS[lang] || RULES_TRANSLATIONS['en'];
   document.getElementById('rulesTitle').textContent = data.title;
   
-  const langs = ['en'];
+  const langs = ['en', 'de', 'fr', 'es', 'it', 'pt', 'ja', 'uk', 'pl'];
   langs.forEach(l => {
     const btn = document.getElementById(`lang-${l}`);
     if (btn) btn.classList.toggle('active', l === lang);
@@ -1795,10 +1896,18 @@ function renderLiveActivityFeed(mints, sales) {
     } catch(e){}
   });
 
+  const listDetailsById = {};
+  if (typeof rawMarketListings !== 'undefined' && Array.isArray(rawMarketListings)) {
+    rawMarketListings.forEach(l => {
+      listDetailsById[Number(l.listingId)] = l;
+    });
+  }
+
   // ALL market sales (not just Argentina)
   sales.forEach(s => {
     try {
-      const fig = ownerMap[Number(s.tokenId)];
+      const details = listDetailsById[Number(s.listingId)] || {};
+      const fig = ownerMap[Number(s.tokenId)] || ownerMap[Number(details.tokenId)];
       if (fig) {
         const price = s.price || 0;
         eventsLog.push({type:'sale', buyer:s.buyer, seller:s.seller||'',
@@ -1809,6 +1918,7 @@ function renderLiveActivityFeed(mints, sales) {
     } catch(e){}
   });
 
+  eventsLog = eventsLog.filter(evt => Number(evt.block) > 0);
   eventsLog.sort((a,b) => b.block - a.block);
   const visibleLogs = eventsLog.slice(0, 10);
 
@@ -1825,14 +1935,15 @@ function renderLiveActivityFeed(mints, sales) {
     const teamInfo = TEAMS[evt.teamId] || {code:'un', flag: 'UN'};
     const flagImg = `<img src="https://flagcdn.com/w20/${teamInfo.code}.png" style="width:14px;height:10px;border-radius:1px;vertical-align:middle;margin:0 2px;" onerror="this.style.display='none'"/>`;
     const rarSpan = `<span style="color:${rarColor};font-weight:700;background:${rarBg};padding:1px 5px;border-radius:3px;font-size:10px;">${rarName}</span>`;
+    const blockHtml = `<span style="color:#5a6a7a;font-size:10px;">#${Number(evt.block).toLocaleString()}</span>`;
     if (evt.type === 'mint') {
-      html += `<div class="feed-item mint"><span class="feed-addr">${evt.owner.slice(0,6)}...${evt.owner.slice(-4)}</span> minted ${flagImg}${rarSpan} <span class="feed-highlight">${evt.posName}</span> <span class="feed-price-text">10 CHZ</span></div>`;
+      html += `<div class="feed-item mint">${blockHtml} <span class="feed-addr">${evt.owner.slice(0,6)}...${evt.owner.slice(-4)}</span> minted ${flagImg}${rarSpan} <span class="feed-highlight">${evt.posName}</span> <span class="feed-price-text">10 CHZ</span></div>`;
     } else {
-      const isWhale = evt.price >= 1000;
+      const isWhale = evt.price >= 100;
       const priceHtml = isWhale
-        ? `<span style="color:#ffc940;font-weight:700;font-size:12px;background:rgba(255,201,64,0.15);padding:1px 6px;border-radius:3px;">${evt.price} CHZ</span>`
+        ? `<span style="color:#ffc940;font-weight:700;font-size:12px;background:rgba(255,201,64,0.15);padding:1px 6px;border-radius:3px;">BIG BUY ${evt.price} CHZ</span>`
         : `<span class="feed-price-text">${evt.price > 0 ? evt.price+' CHZ' : ''}</span>`;
-      html += `<div class="feed-item sale${isWhale?' whale':''}"><span class="feed-addr">${(evt.buyer||'').slice(0,6)}...${(evt.buyer||'').slice(-4)}</span> bought ${flagImg}${rarSpan} <span class="feed-highlight">${evt.posName}</span> ${priceHtml}</div>`;
+      html += `<div class="feed-item sale${isWhale?' whale':''}">${blockHtml} <span class="feed-addr">${(evt.buyer||'').slice(0,6)}...${(evt.buyer||'').slice(-4)}</span> bought ${flagImg}${rarSpan} <span class="feed-highlight">${evt.posName}</span> ${priceHtml}</div>`;
     }
   });
   container.innerHTML = html;
@@ -1943,11 +2054,13 @@ function renderPitch() {
             sellBtnHtml = `<button onclick="openSellModal(${scored.tid}, ${pos}, ${scored.weight}, ${scored.rarity})" class="btn-card-action sell">SELL CARD</button>`;
           }
         }
+        const activeListingIdForMeta = activeListingsByTokenId[scored.tid];
+        const cardMeta = activeListingIdForMeta !== undefined ? `LISTED #${activeListingIdForMeta}` : `TOKEN #${scored.tid}`;
 
         card.innerHTML = `
           <div>
             <div class="pos-name">${POSITION_SHORT[pos]}</div>
-            <span class="pos-ball">BK</span>
+            <span class="pos-card-meta">${cardMeta}</span>
           </div>
           <div>
             <div class="pos-weight ${scored.rarity === 3 ? 'gold' : ''}">${scored.weight}</div>
@@ -1965,11 +2078,12 @@ function renderPitch() {
         } else {
           actionHtml = `<div style="margin-top:4px;font-size:8px;color:#5a6a7a;font-family:Share Tech Mono,monospace;">NO LISTINGS</div>`;
         }
+        const emptyMeta = floor ? `MARKET #${floor.listingId}` : 'OPEN SLOT';
 
         card.innerHTML = `
           <div>
             <div class="pos-name" style="color:#5a6a7a;">${POSITION_SHORT[pos]}</div>
-            <span class="pos-ball" style="opacity: 0.15">BK</span>
+            <span class="pos-card-meta" style="opacity:${floor ? '1' : '0.35'}">${emptyMeta}</span>
           </div>
           <div>
             <div class="pos-weight empty">-</div>
