@@ -345,6 +345,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
 }
 .feed-item.mint { border-color: #00ff87; }
 .feed-item.sale { border-color: #ffc940; }
+.feed-item.whale { border-color: #ffc940; background: rgba(255,201,64,0.04); }
 .feed-addr { color: #818cf8; }
 .feed-highlight { color: #00ff87; }
 .feed-price-text { color: #ffc940; }
@@ -708,7 +709,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
 
 <nav class="topnav">
   <a href="https://block-kickers.vercel.app" class="topnav-logo" style="text-decoration:none;">⚽ BLOCK <span>KICKERS</span></a>
-  <span id="walletBalance" style="font-family:'Share Tech Mono',monospace;color:#00ff87;font-size:13px;display:none;background:rgba(0,255,135,0.06);border:1px solid rgba(0,255,135,0.2);padding:6px 12px;border-radius:6px;">0.0 CHZ</span><button class="btn-connect" id="connectBtn" onclick="connectWallet()">POŁĄCZ PORTFEL</button>
+  <span id="walletBalance" style="font-family:'Share Tech Mono',monospace;color:#00ff87;font-size:13px;display:none;background:rgba(0,255,135,0.06);border:1px solid rgba(0,255,135,0.2);padding:6px 12px;border-radius:6px;letter-spacing:0.5px;">0.0 CHZ</span><button class="btn-connect" id="connectBtn" onclick="connectWallet()">POŁĄCZ PORTFEL</button>
 </nav>
 
 <div class="page">
@@ -1179,8 +1180,8 @@ let contract, marketContract;
 let activeSellTokenId = null;
 
 window.dreamScores = {}; // portfel -> { teamId -> { pozycja -> {weight, tid, rarity, dna} } }
-let marketByPos = {}; 
-let marketFloorByPos = {}; 
+let marketByPos = {};
+let marketFloorByPos = {};
 let activeListingsByTokenId = {};
 let currentMintPrice = ethers.parseEther("10");
 
@@ -1247,15 +1248,14 @@ function showHeaderToast(message, isError = false) {
   }, 6000);
 }
 
-
 async function updateWalletBalance() {
   if (typeof window.ethereum !== 'undefined' && address) {
     try {
-      const tempProvider = new ethers.BrowserProvider(window.ethereum);
-      const balanceWei = await tempProvider.getBalance(address);
-      const balanceEth = parseFloat(ethers.formatEther(balanceWei)).toFixed(1);
-      const balEl = document.getElementById('walletBalance');
-      if (balEl) { balEl.textContent = balanceEth + ' CHZ'; balEl.style.display = 'inline-block'; }
+      const p = new ethers.BrowserProvider(window.ethereum);
+      const bal = await p.getBalance(address);
+      const formatted = parseFloat(ethers.formatEther(bal)).toFixed(1);
+      const el = document.getElementById('walletBalance');
+      if(el){ el.textContent = formatted+' CHZ'; el.style.display='inline-block'; }
     } catch(e) {}
   }
 }
@@ -1379,7 +1379,6 @@ async function connectWallet(){
     
     contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
     marketContract = new ethers.Contract(MARKET_ADDRESS, MARKET_ABI, signer);
-    updateWalletBalance();
     
     document.getElementById('connectBtn').textContent = address.slice(0,6)+'...'+address.slice(-4);
     document.getElementById('connectBtn').classList.add('connected');
@@ -1541,17 +1540,12 @@ async function loadData(){
   // Parsowanie listingów w celach rozliczeniowych portfolio
   listed.forEach(ev => {
     try {
-      // Obsługa obu formatów: API ({listingId, tokenId, price}) i RPC (ev.args.*)
-      const lid = Number(ev.listingId ?? ev.args?.listingId);
-      const tokenId = Number(ev.tokenId ?? ev.args?.tokenId);
-      const priceRaw = ev.price ?? ev.args?.price;
-      const price = typeof priceRaw === 'string' || typeof priceRaw === 'bigint'
-        ? parseFloat(ethers.formatEther(priceRaw))
-        : parseFloat(priceRaw) || 0;
-      const sellerRaw = ev.seller ?? ev.args?.seller;
+      const lid = Number(ev.args.listingId);
+      const tokenId = Number(ev.args.tokenId);
+      const price = parseFloat(ethers.formatEther(ev.args.price));
       const fig = ownerMap[tokenId];
       listDetails[lid] = {
-        seller: sellerRaw?.toLowerCase() || '',
+        seller: ev.args.seller.toLowerCase(),
         tokenId: tokenId,
         price: price,
         teamId: fig ? fig.teamId : null,
@@ -1573,12 +1567,10 @@ async function loadData(){
         if(!l[3]) continue; 
         const tokenId = Number(l[1]);
         const priceWei = l[2];
-        const seller = l[0].toLowerCase();
-        // Track listings by this wallet
-        if (myAddr && seller === myAddr) {
-          activeListingsByTokenId[tokenId] = i;
-        }
+        const seller_addr = l[0].toLowerCase();
+        if(myAddr && seller_addr === myAddr) activeListingsByTokenId[tokenId] = i;
         const fig = ownerMap[tokenId];
+        if(!fig || fig.teamId !== ARGENTINA_TEAM_ID) continue;
         const price = parseFloat(ethers.formatEther(priceWei));
         const pos = fig.position;
         
@@ -1633,22 +1625,21 @@ function renderSnipeMarket(listings) {
     const rarName = ['Common', 'Rare', 'Epic', 'Legendary'][deal.rarity];
     const rarColor = ['#7a8899','#3b82f6','#c084fc','#ffc940'][deal.rarity];
 
-    const isOurs = myAddr && activeListingsByTokenId[deal.tokenId] !== undefined;
-    const actionBtn = isOurs
-      ? `<button onclick="cancelListing(${deal.listingId})" class="btn-snipe" style="background:rgba(239,68,68,0.15);border-color:rgba(239,68,68,0.4);color:#ef4444;">CANCEL</button>`
-      : `<button onclick="buyFromMarket(${deal.listingId}, '${deal.price}')" class="btn-snipe">SNIPE</button>`;
     html += `
-      <div class="snipe-row" style="${isOurs ? 'border-color:rgba(239,68,68,0.3);background:rgba(239,68,68,0.04);' : ''}">
+      <div class="snipe-row">
         <div class="snipe-details">
           <div class="snipe-pos">${POSITION_SHORT[deal.pos]}</div>
           <div class="snipe-info-text">
             <span style="color:${rarColor}; font-weight:600;">${rarName}</span> (${deal.weight} pts)<br>
-            Status: ${isOurs ? '<span style="color:#ef4444;">YOUR LISTING</span>' : upgradeLabel}
+            Status: ${upgradeLabel}
           </div>
         </div>
         <div class="snipe-action">
           <span class="snipe-price">${deal.price} CHZ</span>
-          ${actionBtn}
+          ${(myAddr && activeListingsByTokenId[deal.tokenId] !== undefined)
+            ? `<button onclick="cancelListing(${deal.listingId})" class="btn-snipe" style="background:rgba(239,68,68,0.15);border-color:rgba(239,68,68,0.4);color:#ef4444;">CANCEL</button>`
+            : `<button onclick="buyFromMarket(${deal.listingId}, '${deal.price}')" class="btn-snipe">SNIPE</button>`
+          }
         </div>
       </div>
     `;
@@ -1677,7 +1668,7 @@ function renderPortfolioAndLedger(mints, sales, listDetails) {
       mySpent += 10; 
       myLedger.push({
         type: 'mint',
-        posName: `${teamInfo.flag} ${POSITION_SHORT[fig.position]}`,
+        posName: `<img src='https://flagcdn.com/w20/${teamInfo.code}.png' style='width:14px;height:10px;border-radius:1px;vertical-align:middle;margin-right:3px;' onerror='this.style.display=\'none\''/>${POSITION_SHORT[fig.position]}`,
         rarity: fig.rarity,
         val: -10,
         block: m.block || 0
@@ -1688,16 +1679,17 @@ function renderPortfolioAndLedger(mints, sales, listDetails) {
   // 2. Obliczanie zrealizowanych zakupów i sprzedaży rynkowych dla wszystkich 48 krajów
   sales.forEach(s => {
     const lid = Number(s.listingId);
-    const details = listDetails[lid] || {};
+    const details = listDetails[lid] || s; 
     const buyer = s.buyer?.toLowerCase();
-    const seller = s.seller?.toLowerCase() || details?.seller || '';
-    const price = (s.price && s.price > 0) ? s.price : (details?.price || 0);
-    const figId = Number(details?.tokenId || s.tokenId);
+    const seller = s.seller?.toLowerCase() || details?.seller;
+    const price = s.price || details?.price || 0;
+
+    const figId = details?.tokenId || s.tokenId;
     const fig = ownerMap[figId];
 
     if (fig) {
       const teamInfo = TEAMS[fig.teamId] || {flag: "🏳️", name: "Unknown"};
-      const displayPosName = `${teamInfo.flag} ${POSITION_SHORT[fig.position]}`;
+      const displayPosName = `<img src='https://flagcdn.com/w20/${teamInfo.code}.png' style='width:14px;height:10px;border-radius:1px;vertical-align:middle;margin-right:3px;' onerror='this.style.display="none"'/>${POSITION_SHORT[fig.position]}`;
       
       // Czy połączony portfel to kupujący?
       if (buyer === myAddr) {
@@ -1756,7 +1748,7 @@ function renderPortfolioAndLedger(mints, sales, listDetails) {
   if (myLedger.length === 0) {
     ledgerContainer.innerHTML = '<div style="text-align:center;color:#5a6a7a;font-size:11px;padding:15px;">No transactions recorded.</div>';
   } else {
-    let ledgerHtml = '';
+    ledgerContainer.innerHTML = '';
     myLedger.forEach(item => {
       const rColor = ['#7a8899','#3b82f6','#c084fc','#ffc940'][item.rarity];
       const isPlus = item.val >= 0;
@@ -1764,19 +1756,11 @@ function renderPortfolioAndLedger(mints, sales, listDetails) {
       const valClass = isPlus ? 'plus' : 'minus';
       const actionLabel = item.type === 'mint' ? 'Minted' : item.type === 'buy' ? 'Bought' : 'Sold';
 
-      ledgerHtml += `
-        <div class="ledger-row ${rowClass}">
-          <div style="display:flex;align-items:center;gap:6px;">
-            <span style="font-size:10px;color:#5a6a7a;">${actionLabel}</span>
-            <span style="color:${rColor};font-weight:700;font-size:12px;">${item.posName}</span>
-          </div>
-          <div class="ledger-val ${valClass}" style="font-size:13px;">
-            ${isPlus ? '+' : ''}${item.val.toFixed(1)} CHZ
-          </div>
-        </div>
-      `;
+      const ledgerEl = document.createElement('div');
+      ledgerEl.className = `ledger-row ${rowClass}`;
+      ledgerEl.innerHTML = `<div style="display:flex;align-items:center;gap:5px;"><span style="font-size:10px;color:#5a6a7a;">${actionLabel}</span><span style="color:${rColor};font-weight:700;">${item.posName}</span></div><div class="ledger-val ${valClass}">${isPlus ? '+' : ''}${item.val.toFixed(1)} CHZ</div>`;
+      ledgerContainer.appendChild(ledgerEl);
     });
-    ledgerContainer.innerHTML = ledgerHtml;
   }
 }
 
@@ -1789,36 +1773,29 @@ function renderLiveActivityFeed(mints, sales) {
     try {
       const fig = parseDNA(m.dna);
       if (fig.teamId === ARGENTINA_TEAM_ID) {
-        eventsLog.push({
-          type: 'mint',
-          owner: m.owner,
-          block: m.block,
-          posName: POSITION_SHORT[fig.position],
-          weight: fig.weight,
-          rarity: fig.rarity
-        });
+        eventsLog.push({type:'mint', owner:m.owner, block:m.block||0,
+          teamId:fig.teamId, posName:POSITION_SHORT[fig.position],
+          weight:fig.weight, rarity:fig.rarity});
       }
     } catch(e){}
   });
 
+  // ALL market sales (not just Argentina)
   sales.forEach(s => {
     try {
       const fig = ownerMap[Number(s.tokenId)];
-      if (fig && fig.teamId === ARGENTINA_TEAM_ID) {
-        eventsLog.push({
-          type: 'sale',
-          buyer: s.buyer,
-          block: s.block,
-          posName: POSITION_SHORT[fig.position],
-          weight: fig.weight,
-          rarity: fig.rarity
-        });
+      if (fig) {
+        const price = s.price || 0;
+        eventsLog.push({type:'sale', buyer:s.buyer, seller:s.seller||'',
+          block:s.block||0, teamId:fig.teamId,
+          posName:POSITION_SHORT[fig.position],
+          weight:fig.weight, rarity:fig.rarity, price});
       }
     } catch(e){}
   });
 
-  eventsLog.sort((a, b) => b.block - a.block);
-  const visibleLogs = eventsLog.slice(0, 8); 
+  eventsLog.sort((a,b) => b.block - a.block);
+  const visibleLogs = eventsLog.slice(0, 10);
 
   if (visibleLogs.length === 0) {
     container.innerHTML = '<div style="text-align:center;color:#5a6a7a;font-size:12px;padding:10px;">No recent transactions found.</div>';
@@ -1827,26 +1804,20 @@ function renderLiveActivityFeed(mints, sales) {
 
   let html = '';
   visibleLogs.forEach(evt => {
-    const rarName = ['Common', 'Rare', 'Epic', 'Legendary'][evt.rarity];
+    const rarName = ['Common','Rare','Epic','Legendary'][evt.rarity];
     const rarColor = ['#7a8899','#3b82f6','#c084fc','#ffc940'][evt.rarity];
     const rarBg = ['rgba(122,136,153,0.1)','rgba(59,130,246,0.1)','rgba(192,132,252,0.1)','rgba(255,201,64,0.1)'][evt.rarity];
-    const argFlag = `<img src="https://flagcdn.com/w20/ar.png" style="width:14px;height:10px;border-radius:1px;vertical-align:middle;margin-right:3px;" onerror="this.style.display='none'"/>`;
+    const teamInfo = TEAMS[evt.teamId] || {code:'un', flag:'🏳️'};
+    const flagImg = `<img src="https://flagcdn.com/w20/${teamInfo.code}.png" style="width:14px;height:10px;border-radius:1px;vertical-align:middle;margin:0 2px;" onerror="this.style.display='none'"/>`;
+    const rarSpan = `<span style="color:${rarColor};font-weight:700;background:${rarBg};padding:1px 5px;border-radius:3px;font-size:10px;">${rarName}</span>`;
     if (evt.type === 'mint') {
-      html += `
-        <div class="feed-item mint">
-          🔨 <span class="feed-addr">${evt.owner.slice(0,6)}…${evt.owner.slice(-4)}</span> minted 
-          ${argFlag}<span style="color:${rarColor};font-weight:700;background:${rarBg};padding:1px 5px;border-radius:3px;">${rarName}</span>
-          <span class="feed-highlight"> ${evt.posName}</span> · <span class="feed-price-text">10 CHZ</span>
-        </div>
-      `;
+      html += `<div class="feed-item mint">🔨 <span class="feed-addr">${evt.owner.slice(0,6)}…${evt.owner.slice(-4)}</span> minted ${flagImg}${rarSpan} <span class="feed-highlight">${evt.posName}</span> <span class="feed-price-text">10 CHZ</span></div>`;
     } else {
-      html += `
-        <div class="feed-item sale">
-          💰 <span class="feed-addr">${evt.buyer.slice(0,6)}…${evt.buyer.slice(-4)}</span> bought 
-          ${argFlag}<span style="color:${rarColor};font-weight:700;background:${rarBg};padding:1px 5px;border-radius:3px;">${rarName}</span>
-          <span class="feed-highlight"> ${evt.posName}</span>
-        </div>
-      `;
+      const isWhale = evt.price >= 1000;
+      const priceHtml = isWhale
+        ? `<span style="color:#ffc940;font-weight:700;font-size:12px;background:rgba(255,201,64,0.15);padding:1px 6px;border-radius:3px;">🐋 ${evt.price} CHZ</span>`
+        : `<span class="feed-price-text">${evt.price > 0 ? evt.price+' CHZ' : ''}</span>`;
+      html += `<div class="feed-item sale${isWhale?' whale':''}">💰 <span class="feed-addr">${(evt.buyer||'').slice(0,6)}…${(evt.buyer||'').slice(-4)}</span> bought ${flagImg}${rarSpan} <span class="feed-highlight">${evt.posName}</span> ${priceHtml}</div>`;
     }
   });
   container.innerHTML = html;
@@ -1951,7 +1922,7 @@ function renderPitch() {
         if (currentlyOwnsScored) {
           const activeListingId = activeListingsByTokenId[scored.tid];
           if (activeListingId !== undefined) {
-            sellBtnHtml = `<button onclick="cancelListing(${activeListingId})" class="btn-card-action cancel">CANCEL LISTING</button>`;
+            sellBtnHtml = `<button onclick="cancelListing(${activeListingId})" class="btn-card-action sell">CANCEL LISTING</button>`;
           } else {
             sellBtnHtml = `<button onclick="openSellModal(${scored.tid}, ${pos}, ${scored.weight}, ${scored.rarity})" class="btn-card-action sell">SELL CARD</button>`;
           }
@@ -2059,7 +2030,7 @@ function renderLeaderboard(){
 async function cancelListing(listingId) {
   if (!signer || !marketContract) { showHeaderToast('Connect wallet first.', true); return; }
   try {
-    showHeaderToast(`Cancelling listing #${listingId}...`);
+    showHeaderToast('Cancelling listing...');
     const tx = await marketContract.cancelListing(listingId);
     await tx.wait();
     showHeaderToast('Listing cancelled!');
@@ -2076,7 +2047,7 @@ async function buyFromMarket(listingId, priceChz){
     showHeaderToast(`Initializing marketplace buy: Listing #${listingId} for ${priceChz} CHZ...`);
     const priceWei = ethers.parseEther(String(priceChz));
 
-    const tx = await marketContract.buyFigure(listingId, { value: priceWei, gasLimit: 300000 });
+    const tx = await marketContract.buyFigure(listingId, { value: priceWei });
     showHeaderToast('Transaction sent to Chiliz Chain. Awaiting blockchain confirmation...');
     
     await tx.wait();
@@ -2167,12 +2138,19 @@ async function directMint() {
       const rarityName = ['Common','Rare','Epic','Legendary'][mintedCard.rarity];
       const rarColor = ['#7a8899','#3b82f6','#c084fc','#ffc940'][mintedCard.rarity];
 
+      const mintedTeamInfo = TEAMS[mintedCard.teamId] || {flag: '🏳️', name: 'Unknown', code: 'un'};
+      const rarBorderColor = ['rgba(122,136,153,0.5)','rgba(59,130,246,0.6)','rgba(192,132,252,0.6)','rgba(255,201,64,0.7)'][mintedCard.rarity];
+      const rarBg = ['rgba(122,136,153,0.05)','rgba(59,130,246,0.08)','rgba(192,132,252,0.08)','rgba(255,201,64,0.08)'][mintedCard.rarity];
+      document.getElementById('mintedCardVisual').style.border = `2px solid ${rarBorderColor}`;
+      document.getElementById('mintedCardVisual').style.background = rarBg;
       document.getElementById('mintedCardVisual').innerHTML = `
-        <div style="font-size:32px; margin-bottom:8px;">${getFlagHtml(true)}</div>
-        <div style="font-family:'Black Ops One',sans-serif; font-size:18px; color:#dde4f0; margin-bottom:4px;">ARGENTINA</div>
-        <div style="font-family:'Share Tech Mono',monospace; font-size:14px; color:#5a6a7a; margin-bottom:8px;">Tactical Position: ${posName}</div>
-        <div style="font-family:'Black Ops One',sans-serif; font-size:36px; color:${rarColor}; line-height:1;">${mintedCard.weight} <span style="font-size:16px;">PTS</span></div>
-        <div style="font-size:11px; font-family:'Share Tech Mono',monospace; color:${rarColor}; margin-top:4px; text-transform:uppercase;">${rarityName}</div>
+        <div style="display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:10px;">
+          <img src="https://flagcdn.com/w40/${mintedTeamInfo.code}.png" style="width:40px;height:28px;border-radius:3px;object-fit:cover;box-shadow:0 2px 6px rgba(0,0,0,0.5);" onerror="this.style.display='none'"/>
+          <span style="font-family:'Black Ops One',sans-serif;font-size:20px;color:#dde4f0;">${mintedTeamInfo.name.toUpperCase()}</span>
+        </div>
+        <div style="font-family:'Share Tech Mono',monospace;font-size:13px;color:#5a6a7a;margin-bottom:6px;">Position: ${posName} · Token #${mintedCard.tokenId}</div>
+        <div style="font-family:'Black Ops One',sans-serif;font-size:40px;color:${rarColor};line-height:1;">${mintedCard.weight}<span style="font-size:16px;"> PTS</span></div>
+        <div style="display:inline-block;margin-top:6px;padding:3px 12px;border-radius:4px;border:1px solid ${rarBorderColor};background:${rarBg};font-size:12px;font-family:'Black Ops One',sans-serif;color:${rarColor};letter-spacing:1px;">${rarityName}</div>
       `;
 
       let statusText = '';
@@ -2218,9 +2196,9 @@ function shareOnX(){
 }
 
 /* HARMONOGRAM I LICZNIK BLOKÓW SYSTEMOWYCH */
-const DEADLINE_BLOCK = 35924746; // 20.07.2026 - po finale WC
+const DEADLINE_BLOCK = 34300000;
 const BLOCK_TIME_MS = 3000;
-let currentBlock = 34196746; 
+let currentBlock = 34158889; 
 let lastBlockTime = Date.now();
 
 async function fetchCurrentBlock(){
@@ -2262,13 +2240,13 @@ function updateCountdown(){
     return;
   }
   const secsLeft = blocksLeft * 3;
-  const d = Math.floor(secsLeft / 86400);
-  const h = Math.floor((secsLeft % 86400) / 3600);
+  const h = Math.floor(secsLeft / 3600);
   const m = Math.floor((secsLeft % 3600) / 60);
   const s = secsLeft % 60;
-  document.getElementById('cdH').textContent = d > 0 ? String(d).padStart(2,'0') : String(h).padStart(2,'0');
-  document.getElementById('cdM').textContent = d > 0 ? String(h).padStart(2,'0') : String(m).padStart(2,'0');
-  document.getElementById('cdS').textContent = d > 0 ? String(m).padStart(2,'0') : String(s).padStart(2,'0');
+  
+  document.getElementById('cdH').textContent = String(h).padStart(2,'0');
+  document.getElementById('cdM').textContent = String(m).padStart(2,'0');
+  document.getElementById('cdS').textContent = String(s).padStart(2,'0');
   document.getElementById('cdBlock').innerHTML = 'Deadline block: <a href="https://scan.chiliz.com/block/'+DEADLINE_BLOCK+'" target="_blank" style="color:#00ff87;text-decoration:none;">#'+DEADLINE_BLOCK.toLocaleString()+'</a> · Estimated current: ~#'+estimated.toLocaleString()+' · remaining: '+blocksLeft.toLocaleString()+' blocks';
 }
 
