@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!-- Tytuł zakładki zapobiegający renderowaniu brzydkiego "AR" na systemie Windows -->
-<title>ARGENTINA DREAM XI — Block Kickers</title>
-<!-- Wektorowa ikona zakładki (Favicon) reprezentująca flagę Argentyny dla wszystkich systemów operacyjnych -->
+<!-- TytuĹ‚ zakĹ‚adki zapobiegajÄ…cy renderowaniu brzydkiego "AR" na systemie Windows -->
+<title>ARGENTINA DREAM XI â€” Block Kickers</title>
+<!-- Wektorowa ikona zakĹ‚adki (Favicon) reprezentujÄ…ca flagÄ™ Argentyny dla wszystkich systemĂłw operacyjnych -->
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 9 6'%3E%3Cpath fill='%2374acdf' d='M0 0h9v6H0z'/%3E%3Cpath fill='%23fff' d='M0 2h9v2H0z'/%3E%3Ccircle cx='4.5' cy='3' r='.5' fill='%23f1b42f'/%3E%3C/svg%3E">
 <link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Barlow+Condensed:wght@400;600;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.7.0/ethers.umd.min.js"></script>
@@ -14,14 +14,14 @@
 body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;font-size:16px;min-height:100vh;}
 .page{max-width:1200px;margin:0 auto;padding:0 0 60px;}
 
-/* NAWIGACJA GŁÓWNA */
+/* NAWIGACJA GĹĂ“WNA */
 .topnav{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;border-bottom:1px solid #1c2028;background:rgba(6,8,10,0.97);position:sticky;top:0;z-index:100;backdrop-filter:blur(10px);}
 .topnav-logo{font-family:'Black Ops One',sans-serif;font-size:13px;letter-spacing:2px;color:#dde4f0;}
 .topnav-logo span{color:#00ff87;}
 .btn-connect{background:rgba(0,255,135,0.1);border:1px solid rgba(0,255,135,0.3);color:#00ff87;padding:8px 16px;border-radius:6px;font-family:'Black Ops One',sans-serif;font-size:11px;letter-spacing:1px;cursor:pointer;}
 .btn-connect.connected{background:rgba(0,255,135,0.15);border-color:#00ff87;}
 
-/* SEKCJA HERO I NAGŁÓWEK */
+/* SEKCJA HERO I NAGĹĂ“WEK */
 .hero{padding:48px 24px 40px;text-align:center;border-bottom:1px solid #1c2028;position:relative;overflow:hidden;}
 .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 0%,rgba(116,172,223,0.15),transparent);pointer-events:none;}
 .badge{display:inline-flex;align-items:center;gap:8px;background:rgba(116,172,223,0.1);border:1px solid rgba(116,172,223,0.3);border-radius:4px;padding:5px 14px;font-size:11px;letter-spacing:3px;color:#74ACDF;margin-bottom:20px;}
@@ -34,7 +34,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
 .trophy{font-size:64px;margin-bottom:16px;display:block;filter:drop-shadow(0 0 20px rgba(116,172,223,0.5));}
 .hero-title{font-family:'Black Ops One',sans-serif;font-size:clamp(32px,6vw,64px);line-height:0.95;margin-bottom:12px;position:relative;z-index:1;}
 
-/* GRADIENTY BARW FLAGI ARGENTYNY DLA NAGŁÓWKA */
+/* GRADIENTY BARW FLAGI ARGENTYNY DLA NAGĹĂ“WKA */
 .hero-title .sky {
   color: #74ACDF;
   text-shadow: 0 0 15px rgba(116, 172, 223, 0.4);
@@ -46,7 +46,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
 
 .hero-sub{font-size:18px;color:#7a8899;margin-bottom:28px;max-width:750px;margin-left:auto;margin-right:auto;position:relative;z-index:1;}
 
-/* DEKORACYJNA FLAGA ARGENTYNY POD TYTUŁEM */
+/* DEKORACYJNA FLAGA ARGENTYNY POD TYTUĹEM */
 .arg-flag{display:flex;height:6px;border-radius:3px;overflow:hidden;width:120px;margin:0 auto 24px;}
 .arg-flag div:nth-child(1){flex:1;background:#74ACDF;}
 .arg-flag div:nth-child(2){flex:1;background:#fff;}
@@ -72,7 +72,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
 .prize-box.b .prize-num{color:#cd7f32;}
 .prize-box.b .prize-chz{color:#cd7f32;}
 
-/* ASYMETRYCZNY UKŁAD ROZGRYWKI (BOISKO PO PRAWEJ JEST SZERSZE) */
+/* ASYMETRYCZNY UKĹAD ROZGRYWKI (BOISKO PO PRAWEJ JEST SZERSZE) */
 .game-grid {
   display: grid;
   grid-template-columns: 1fr;
@@ -111,7 +111,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
 .how-desc .p{color:#818cf8;font-weight:700;}
 .how-desc .a{color:#ffc940;font-weight:700;}
 
-/* NOWE MODUŁY PANELU KOLEKCJONERSKIEGO (TABS: SNIPE / PORTFOLIO) */
+/* NOWE MODUĹY PANELU KOLEKCJONERSKIEGO (TABS: SNIPE / PORTFOLIO) */
 .desk-section {
   background: #0a0e14;
   border: 1px solid #1c2028;
@@ -148,7 +148,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
   padding: 16px;
 }
 
-/* WIDŻETY: RYNEK OKAZJI */
+/* WIDĹ»ETY: RYNEK OKAZJI */
 .snipe-title-row {
   display: flex;
   justify-content: space-between;
@@ -224,7 +224,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
   color: #000;
 }
 
-/* WIDŻETY: PERSONAL TRADING DESK */
+/* WIDĹ»ETY: PERSONAL TRADING DESK */
 .portfolio-state-msg {
   text-align: center;
   color: #5a6a7a;
@@ -294,7 +294,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
 .ledger-val.plus { color: #00ff87; }
 .ledger-val.minus { color: #ef4444; }
 
-/* DZIENNIK TRANSAKCJI OGÓLNYCH (LIVE FEED) */
+/* DZIENNIK TRANSAKCJI OGĂ“LNYCH (LIVE FEED) */
 .live-feed-section {
   background: #0a0e14;
   border: 1px solid #1c2028;
@@ -463,7 +463,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
   background: rgba(0,255,135,0.06);
 }
 .pos-card.owned::after{
-  content: '✓';
+  content: 'âś“';
   position: absolute;
   top: 2px;
   right: 4px;
@@ -501,7 +501,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
   color: #5a6a7a;
 }
 
-/* DEKLARACJA KLASY PRZYCISKÓW W KARTACH */
+/* DEKLARACJA KLASY PRZYCISKĂ“W W KARTACH */
 .btn-card-action{
   display:block;
   width:100%;
@@ -521,7 +521,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
 .btn-card-action.upgrade{background:rgba(0,255,135,0.1);border-color:rgba(0,255,135,0.3);color:#00ff87;}
 .btn-card-action.upgrade:hover{background:#00ff87;color:#000;}
 
-/* NOWE PODŚWIETLENIE PRZYCISKU "SELL CARD" - ZGODNE STYLIZACYJNIE Z "BUY" / "UPGRADE" */
+/* NOWE PODĹšWIETLENIE PRZYCISKU "SELL CARD" - ZGODNE STYLIZACYJNIE Z "BUY" / "UPGRADE" */
 .btn-card-action.sell {
   background: rgba(239, 68, 68, 0.15);
   border-color: rgba(239, 68, 68, 0.4);
@@ -550,7 +550,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
   box-shadow: 0 2px 4px rgba(0,0,0,0.5);
 }
 
-/* WIDŻET ODLICZANIA BLOKÓW */
+/* WIDĹ»ET ODLICZANIA BLOKĂ“W */
 .countdown-wrap{background:#0f1318;border:1px solid rgba(0,255,135,0.3);border-radius:10px;padding:16px 24px;display:inline-flex;flex-direction:column;align-items:center;gap:6px;position:relative;z-index:1;min-width:280px;}
 .countdown-label{font-size:10px;letter-spacing:3px;color:#5a6a7a;text-align:center;}
 .countdown-timer {
@@ -602,7 +602,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
   text-align: center;
 }
 
-/* LEGENDA KOLORÓW BOISKA */
+/* LEGENDA KOLORĂ“W BOISKA */
 .legend {
   display: flex;
   gap: 12px;
@@ -636,10 +636,10 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
 .lb-score{font-family:'Black Ops One',sans-serif;font-size:16px;color:#818cf8;}
 .lb-you{font-size:10px;color:#00ff87;letter-spacing:1px;background:rgba(0,255,135,0.1);padding:2px 6px;border-radius:4px;margin-left:8px;}
 
-/* ODCIĘCIA RANKINGOWE */
+/* ODCIÄCIA RANKINGOWE */
 .cutoff-line{display:flex;align-items:center;justify-content:center;gap:12px;margin:12px 0;padding:8px;background:rgba(239,68,68,0.05);border:1px dotted rgba(239,68,68,0.4);border-radius:6px;font-size:11px;font-family:'Share Tech Mono',monospace;color:#ef4444;letter-spacing:1px;}
 
-/* NAKŁADKI OKIEN MODALNYCH */
+/* NAKĹADKI OKIEN MODALNYCH */
 .modal-overlay {
   display: none;
   position: fixed;
@@ -672,7 +672,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
   cursor: pointer;
 }
 
-/* KLASA DLA ZAKŁADEK WYBORU JĘZYKA */
+/* KLASA DLA ZAKĹADEK WYBORU JÄZYKA */
 .tab-btn{background:#0f1318;border:1px solid #1c2028;color:#7a8899;padding:6px 12px;border-radius:6px;font-family:'Black Ops One',sans-serif;font-size:10px;letter-spacing:1px;cursor:pointer;transition:all 0.2s;}
 .tab-btn:hover{border-color:#818cf8;color:#dde4f0;}
 .tab-btn.active{background:#818cf8;color:#000;border-color:#818cf8;}
@@ -708,37 +708,37 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
 <body>
 
 <nav class="topnav">
-  <a href="https://block-kickers.vercel.app" class="topnav-logo" style="text-decoration:none;">⚽ BLOCK <span>KICKERS</span></a>
-  <span id="walletBalance" style="font-family:'Share Tech Mono',monospace;color:#00ff87;font-size:13px;display:none;background:rgba(0,255,135,0.06);border:1px solid rgba(0,255,135,0.2);padding:6px 12px;border-radius:6px;letter-spacing:0.5px;">0.0 CHZ</span><button class="btn-connect" id="connectBtn" onclick="connectWallet()">POŁĄCZ PORTFEL</button>
+  <a href="https://block-kickers.vercel.app" class="topnav-logo" style="text-decoration:none;">âš˝ BLOCK <span>KICKERS</span></a>
+  <span id="walletBalance" style="font-family:'Share Tech Mono',monospace;color:#00ff87;font-size:13px;display:none;background:rgba(0,255,135,0.06);border:1px solid rgba(0,255,135,0.2);padding:6px 12px;border-radius:6px;letter-spacing:0.5px;">0.0 CHZ</span><button class="btn-connect" id="connectBtn" onclick="connectWallet()">POĹÄ„CZ PORTFEL</button>
 </nav>
 
 <div class="page">
 
   <!-- SEKCJA HERO -->
   <div class="hero">
-    <div class="badge"><span class="dot"></span>QUEST · ARGENTINA DREAM XI</div>
-    <span class="trophy">🏆</span>
+    <div class="badge"><span class="dot"></span>QUEST Â· ARGENTINA DREAM XI</div>
+    <span class="trophy">đźŹ†</span>
     <div class="arg-flag"><div></div><div></div><div></div></div>
     <div class="hero-title">
       <span class="sky">DREAM XI</span><br>
       <span class="white">ARGENTINA</span>
     </div>
-    <div class="hero-sub">Build the heaviest tactical Argentina squad ever assembled! Cards only need to pass through your wallet — buy, score, and sell duplicates on the marketplace. Real prizes await leaders in the deadline block!</div>
+    <div class="hero-sub">Build the heaviest tactical Argentina squad ever assembled! Cards only need to pass through your wallet â€” buy, score, and sell duplicates on the marketplace. Real prizes await leaders in the deadline block!</div>
 
-    <!-- PULA NAGRÓD -->
+    <!-- PULA NAGRĂ“D -->
     <div class="prize-row">
       <div class="prize-box">
-        <div style="font-size:11px;letter-spacing:2px;color:#ffc940;margin-bottom:4px;">🥇 1ST PLACE</div>
+        <div style="font-size:11px;letter-spacing:2px;color:#ffc940;margin-bottom:4px;">đźĄ‡ 1ST PLACE</div>
         <div class="prize-num">6,000</div>
         <div class="prize-chz">CHZ</div>
       </div>
       <div class="prize-box s">
-        <div style="font-size:11px;letter-spacing:2px;color:#9ca3af;margin-bottom:4px;">🥈 2ND PLACE</div>
+        <div style="font-size:11px;letter-spacing:2px;color:#9ca3af;margin-bottom:4px;">đźĄ 2ND PLACE</div>
         <div class="prize-num">3,000</div>
         <div class="prize-chz">CHZ</div>
       </div>
       <div class="prize-box b">
-        <div style="font-size:11px;letter-spacing:2px;color:#cd7f32;margin-bottom:4px;">🥉 3RD PLACE</div>
+        <div style="font-size:11px;letter-spacing:2px;color:#cd7f32;margin-bottom:4px;">đźĄ‰ 3RD PLACE</div>
         <div class="prize-num">1,000</div>
         <div class="prize-chz">CHZ</div>
       </div>
@@ -746,10 +746,10 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
 
     <div style="margin-bottom:24px; display:flex; justify-content:center; gap:12px; flex-wrap:wrap;">
       <button class="btn-mint-hero" style="background:rgba(0,255,135,0.1); border:1px solid #00ff87; color:#00ff87;" onclick="directMint()">MINT PLAYER</button>
-      <button class="btn-mint-hero" onclick="window.open('https://block-kickers.vercel.app','_blank')">MAIN WEBSITE →</button>
+      <button class="btn-mint-hero" onclick="window.open('https://block-kickers.vercel.app','_blank')">MAIN WEBSITE â†’</button>
     </div>
 
-    <!-- ODLICZANIE BLOKÓW QUESTU -->
+    <!-- ODLICZANIE BLOKĂ“W QUESTU -->
     <div class="countdown-wrap">
       <div class="countdown-label">QUEST DEADLINE (QUEST TARGET BLOCK)</div>
       <div class="countdown-timer">
@@ -772,7 +772,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
     </div>
   </div>
 
-  <!-- STATYSTYKI DRUŻYNY GRACZA -->
+  <!-- STATYSTYKI DRUĹ»YNY GRACZA -->
   <div class="stats-container" id="statsRow" style="display:none;">
     <div class="stat-card">
       <div class="stat-val highlight" id="myCompCount">0 / 11</div>
@@ -783,7 +783,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
       <div class="stat-lbl">Active Lineup Weight</div>
     </div>
     <div class="stat-card">
-      <div class="stat-val" id="myGlobalRank" style="color:#818cf8;">—</div>
+      <div class="stat-val" id="myGlobalRank" style="color:#818cf8;">â€”</div>
       <div class="stat-lbl">Leaderboard Rank</div>
     </div>
     <div class="stat-card" style="background:rgba(0,255,135,0.03); border-color:rgba(0,255,135,0.2);">
@@ -792,13 +792,13 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
     </div>
   </div>
 
-  <!-- MONIT POŁĄCZENIA PORTFELA -->
+  <!-- MONIT POĹÄ„CZENIA PORTFELA -->
   <div id="connectSection" class="connect-prompt">
     <p>Connect your Chiliz Wallet to explore the tactical pitch, find the best deals, and start scoring.</p>
     <button class="btn-connect-big" onclick="connectWallet()">CONNECT WALLET</button>
   </div>
 
-  <!-- PANEL GŁÓWNY ROZGRYWKI -->
+  <!-- PANEL GĹĂ“WNY ROZGRYWKI -->
   <div id="gameSection" style="display:none;">
 
     <div style="display:flex; justify-content:space-between; align-items:center; padding:0 24px 16px; flex-wrap:wrap; gap:12px;">
@@ -808,24 +808,24 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
       </button>
       <div style="display:flex; gap:8px;">
         <button class="btn-share" onclick="toggleRulesModal(true)" style="border-color:#ffc940; color:#ffc940;">
-          📖 RULES & INFO
+          đź“– RULES & INFO
         </button>
         <button class="btn-share" onclick="loadData()" style="border-color:rgba(99,102,241,0.3); color:#818cf8;">
-          ↻ REFRESH DATA
+          â†» REFRESH DATA
         </button>
       </div>
     </div>
 
-    <!-- ASYMETRYCZNY UKŁAD ROZGRYWKI -->
+    <!-- ASYMETRYCZNY UKĹAD ROZGRYWKI -->
     <div class="game-grid">
       
       <!-- LEWA KOLUMNA: HOW IT WORKS, SNIPE MARKET, LIVE FEED -->
       <div class="left-control-panel">
         
-        <!-- JAK TO DZIAŁA -->
+        <!-- JAK TO DZIAĹA -->
         <div class="info-section">
           <div class="pitch-title">
-            <span>HOW IT WORKS — ROTATION MODEL</span>
+            <span>HOW IT WORKS â€” ROTATION MODEL</span>
             <span style="font-family:'Share Tech Mono',monospace; color:#818cf8;">ARGENTINA HUB</span>
           </div>
 
@@ -837,7 +837,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
             </div>
             <div class="how-card" style="border-color: rgba(239, 68, 68, 0.35); background: rgba(239, 68, 68, 0.03);">
               <div class="how-n" style="color: #ef4444;">02</div>
-              <div class="how-title" style="color: #ef4444;">⚠️ NO P2P</div>
+              <div class="how-title" style="color: #ef4444;">âš ď¸Ź NO P2P</div>
               <div class="how-desc">Direct wallet-to-wallet transfers <span style="color: #ef4444; font-weight: bold;">DO NOT SCORE</span>. Only marketplace buys and mints count!</div>
             </div>
             <div class="how-card">
@@ -853,14 +853,14 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
           </div>
         </div>
 
-        <!-- PRZEŁĄCZALNE KARTY (TABS: SNIPE / MY TRADING DESK) -->
+        <!-- PRZEĹÄ„CZALNE KARTY (TABS: SNIPE / MY TRADING DESK) -->
         <div class="desk-section">
           <div class="desk-tabs">
-            <button class="desk-tab-btn active" id="btnDeskSnipe" onclick="switchDeskTab('snipe')">🔥 SNIPE DEALS</button>
-            <button class="desk-tab-btn" id="btnDeskPortfolio" onclick="switchDeskTab('portfolio')">📊 MY TRADING DESK</button>
+            <button class="desk-tab-btn active" id="btnDeskSnipe" onclick="switchDeskTab('snipe')">đź”Ą SNIPE DEALS</button>
+            <button class="desk-tab-btn" id="btnDeskPortfolio" onclick="switchDeskTab('portfolio')">đź“Š MY TRADING DESK</button>
           </div>
           
-          <!-- ZAKŁADKA 1: SNIPE DEALS -->
+          <!-- ZAKĹADKA 1: SNIPE DEALS -->
           <div id="deskTabSnipe" class="desk-tab-content">
             <div class="snipe-title-row">
               <div class="snipe-title">HOT LISTINGS (ARGENTINA SNIPER)</div>
@@ -871,7 +871,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
             </div>
           </div>
           
-          <!-- ZAKŁADKA 2: PORTFOLIO & TRADING DESK (GLOBALNY PORTFEL - 48 KRAJÓW) -->
+          <!-- ZAKĹADKA 2: PORTFOLIO & TRADING DESK (GLOBALNY PORTFEL - 48 KRAJĂ“W) -->
           <div id="deskTabPortfolio" class="desk-tab-content" style="display:none;">
             <div id="portfolioUnconnected" class="portfolio-state-msg">
               Connect your wallet to track spent, earned, PnL, locker value, and view personal transaction ledger.
@@ -896,7 +896,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
                   <div class="p-stat-lbl">Locker Value</div>
                 </div>
               </div>
-              <!-- OSOBISTA KSIĘGA RACHUNKOWA -->
+              <!-- OSOBISTA KSIÄGA RACHUNKOWA -->
               <div class="ledger-header">MY TRANSACTION LEDGER</div>
               <div class="ledger-container" id="personalLedgerContainer">
                 <div style="text-align:center;color:#3d4a5a;padding:10px;font-size:11px;">No transactions recorded.</div>
@@ -905,10 +905,10 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
           </div>
         </div>
 
-        <!-- DZIENNIK TRANSAKCJI GŁÓWNYCH (LIVE FEED) -->
+        <!-- DZIENNIK TRANSAKCJI GĹĂ“WNYCH (LIVE FEED) -->
         <div class="live-feed-section">
           <div class="feed-header">
-            <div class="feed-title">⚡ RECENT TRANSACTIONS (LIVE FEED)</div>
+            <div class="feed-title">âšˇ RECENT TRANSACTIONS (LIVE FEED)</div>
             <div class="feed-pulse"></div>
           </div>
           <div class="feed-container" id="liveActivityFeed">
@@ -944,7 +944,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
     <!-- SEKCJA RANKINGOWA -->
     <div class="lb-section">
       <div class="pitch-title">
-        <span>COLLECTORS STANDINGS — ARGENTINA QUEST</span>
+        <span>COLLECTORS STANDINGS â€” ARGENTINA QUEST</span>
         <span style="font-family:'Share Tech Mono',monospace; color:#ffc940;" id="poolInfo">Prize Pool: 10,000 CHZ</span>
       </div>
 
@@ -956,13 +956,13 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
   </div>
 </div>
 
-<!-- MODAL: ZASADY W WIELU JĘZYKACH (TABY BEZ FLAG) -->
+<!-- MODAL: ZASADY W WIELU JÄZYKACH (TABY BEZ FLAG) -->
 <div id="rulesModal" class="modal-overlay">
   <div class="modal-content" style="max-width:550px;">
     <button onclick="toggleRulesModal(false)" class="modal-close">&times;</button>
     <h2 id="rulesTitle" style="font-family:'Black Ops One',sans-serif; font-size:24px; color:#ffc940; margin-bottom:16px;">How to Play & Rules</h2>
     
-    <!-- Zakładki wyboru języków — bez ikon flag -->
+    <!-- ZakĹ‚adki wyboru jÄ™zykĂłw â€” bez ikon flag -->
     <div style="display:flex; gap:6px; margin-bottom:20px; flex-wrap:wrap; border-bottom:1px solid #1c2028; padding-bottom:12px;">
       <button class="tab-btn" id="lang-en" onclick="setRulesLanguage('en')">EN</button>
       <button class="tab-btn" id="lang-de" onclick="setRulesLanguage('de')">DE</button>
@@ -976,7 +976,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
     </div>
     
     <ul id="rulesContent" style="list-style:none; display:flex; flex-direction:column; gap:12px; font-family:'Barlow Condensed',sans-serif; font-size:16px; color:#dde4f0; line-height:1.4;">
-      <!-- Treść ładowana dynamicznie przez JS -->
+      <!-- TreĹ›Ä‡ Ĺ‚adowana dynamicznie przez JS -->
     </ul>
     
     <button class="btn-card-action" onclick="toggleRulesModal(false)" style="margin-top:24px; padding:10px; font-size:11px;">CLOSE RULES</button>
@@ -1003,11 +1003,11 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
 <div id="mintSuccessModal" class="modal-overlay">
   <div class="modal-content" style="max-width:450px; text-align:center;">
     <button onclick="toggleMintSuccessModal(false)" class="modal-close">&times;</button>
-    <div style="font-size: 50px; margin-bottom: 12px; animation: pulse 2s infinite;">🎉</div>
+    <div style="font-size: 50px; margin-bottom: 12px; animation: pulse 2s infinite;">đźŽ‰</div>
     <h2 style="font-family:'Black Ops One',sans-serif; font-size:24px; color:#00ff87; margin-bottom:16px; letter-spacing:1px;">PLAYER MINTED!</h2>
     
     <div id="mintedCardVisual" style="background:#06080a; border:1px solid #1c2028; border-radius:8px; padding:20px; margin-bottom:20px; display:inline-block; width:100%;">
-      <!-- Podgląd karty zawodnika -->
+      <!-- PodglÄ…d karty zawodnika -->
     </div>
 
     <div id="mintedCardStatus" style="font-family:'Barlow Condensed',sans-serif; font-size:16px; line-height:1.4; margin-bottom:20px;">
@@ -1022,7 +1022,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
 <div id="toast">System Notification</div>
 
 <script>
-// Konfiguracja kontraktów on-chain dla sieci Chiliz Chain (Mainnet)
+// Konfiguracja kontraktĂłw on-chain dla sieci Chiliz Chain (Mainnet)
 const CONTRACT_ADDRESS = "0xAAdc8D56e25a223B6cf4b88ba0889975560f21aB";
 const MARKET_ADDRESS   = "0xA18f7Bade67Eda41FD7D2B3A204d39b543977DaE";
 const CHAIN_ID = 88888;
@@ -1059,7 +1059,7 @@ const POSITION_SHORT = {
   11: 'LW'
 };
 
-// Pozycjonowanie obrońców (LB po lewej, RB po prawej) na boisku taktycznym
+// Pozycjonowanie obroĹ„cĂłw (LB po lewej, RB po prawej) na boisku taktycznym
 const FORMATION = [
   [9],         // ST
   [11,7],      // LW, RW
@@ -1068,107 +1068,107 @@ const FORMATION = [
   [1]          // GK
 ];
 
-const ARGENTINA_TEAM_DATA = {id: 25, name: "Argentina", flag: "🇦🇷", code: "ar", fed: "CONMEBOL"};
+const ARGENTINA_TEAM_DATA = {id: 25, name: "Argentina", flag: "đź‡¦đź‡·", code: "ar", fed: "CONMEBOL"};
 
-// Wielojęzyczne tłumaczenia zasad gry (9 języków: EN, DE, FR, ES, IT, PT, JA, PL, UK)
+// WielojÄ™zyczne tĹ‚umaczenia zasad gry (9 jÄ™zykĂłw: EN, DE, FR, ES, IT, PT, JA, PL, UK)
 const RULES_TRANSLATIONS = {
   en: {
     title: "How to Play & Rules",
     items: [
-      "🔗 Connect your Chiliz Wallet to activate your personal Argentina squad and check live progress.",
-      "⚽ Mint player cards (cost: 10 CHZ) or purchase on the secondary marketplace.",
-      "⚠️ A card only scores a tactical point in your Argentina squad IF it is minted by you or bought via the secondary marketplace. Direct transfers (gifts) between wallets DO NOT register (no tactical score is assigned).",
-      "📝 Your score represents the sum of the best card weights that have ever passed through your wallet.",
-      "⚡ When you secure a heavier card for a position, your score updates instantly. You can then sell the weaker card on the market to recover your CHZ!",
-      "🏆 The top 3 collectors with the highest tactical weight at the target block share the 10,000 CHZ prize pool!"
+      "đź”— Connect your Chiliz Wallet to activate your personal Argentina squad and check live progress.",
+      "âš˝ Mint player cards (cost: 10 CHZ) or purchase on the secondary marketplace.",
+      "âš ď¸Ź A card only scores a tactical point in your Argentina squad IF it is minted by you or bought via the secondary marketplace. Direct transfers (gifts) between wallets DO NOT register (no tactical score is assigned).",
+      "đź“ť Your score represents the sum of the best card weights that have ever passed through your wallet.",
+      "âšˇ When you secure a heavier card for a position, your score updates instantly. You can then sell the weaker card on the market to recover your CHZ!",
+      "đźŹ† The top 3 collectors with the highest tactical weight at the target block share the 10,000 CHZ prize pool!"
     ]
   },
   de: {
     title: "Spielregeln & Anleitung",
     items: [
-      "🔗 Verbinden Sie Ihre Chiliz-Wallet, um Ihre Argentinien-Aufstellung zu aktivieren und den Live-Fortschritt zu verfolgen.",
-      "⚽ Prägen Sie Spielerkarten (Kosten: 10 CHZ) oder kaufen Sie diese direkt auf dem Sekundärmarktplatz.",
-      "⚠️ Eine Karte zählt NUR dann für Ihre Aufstellung, wenn sie von Ihnen geprägt oder auf dem Marktplatz gekauft wurde. Direkte Transfers (Schenkungen) zwischen Wallets zählen NICHT (keine Punktvergabe).",
-      "📝 Ihre Punktzahl ist die Summe der besten Spielergewichte, die jemals Ihre Wallet passiert haben.",
-      "⚡ Wenn Sie eine stärkere Karte für einen Slot erhalten, wird das Gewicht sofort aktualisiert. Sie können das schwächere Modell verkaufen, um Ihre CHZ zurückzuerhalten!",
-      "🏆 Die Top 3 Sammler mit dem höchsten taktischen Gesamtgewicht bei Erreichen des Zielblocks teilen sich den Preispool von 10.000 CHZ!"
+      "đź”— Verbinden Sie Ihre Chiliz-Wallet, um Ihre Argentinien-Aufstellung zu aktivieren und den Live-Fortschritt zu verfolgen.",
+      "âš˝ PrĂ¤gen Sie Spielerkarten (Kosten: 10 CHZ) oder kaufen Sie diese direkt auf dem SekundĂ¤rmarktplatz.",
+      "âš ď¸Ź Eine Karte zĂ¤hlt NUR dann fĂĽr Ihre Aufstellung, wenn sie von Ihnen geprĂ¤gt oder auf dem Marktplatz gekauft wurde. Direkte Transfers (Schenkungen) zwischen Wallets zĂ¤hlen NICHT (keine Punktvergabe).",
+      "đź“ť Ihre Punktzahl ist die Summe der besten Spielergewichte, die jemals Ihre Wallet passiert haben.",
+      "âšˇ Wenn Sie eine stĂ¤rkere Karte fĂĽr einen Slot erhalten, wird das Gewicht sofort aktualisiert. Sie kĂ¶nnen das schwĂ¤chere Modell verkaufen, um Ihre CHZ zurĂĽckzuerhalten!",
+      "đźŹ† Die Top 3 Sammler mit dem hĂ¶chsten taktischen Gesamtgewicht bei Erreichen des Zielblocks teilen sich den Preispool von 10.000 CHZ!"
     ]
   },
   fr: {
-    title: "Règles & Fonctionnement",
+    title: "RĂ¨gles & Fonctionnement",
     items: [
-      "🔗 Connectez votre portefeuille Chiliz pour activer votre équipe d'Argentine et suivre vos progrès.",
-      "⚽ Mintez des cartes de joueurs (coût : 10 CHZ) ou achetez-les sur le marché secondaire.",
-      "⚠️ Une carte ne marque un point tactique QUE si elle est mintée par vous ou achetée sur le marché secondaire. Les transferts directs (cadeaux) entre portefeuilles NE COMPTENT PAS (aucun point attribué).",
-      "📝 Votre score correspond à la somme des meilleurs poids de cartes ayant transité par votre portefeuille.",
-      "⚡ Lorsque vous obtenez une carte plus forte, votre score est mis à jour instantanément. Vous pouvez alors vendre la carte la plus faible pour récupérer vos CHZ !",
-      "🏆 Les 3 meilleurs collectionneurs avec le poids tactique le plus élevé au bloc cible se partagent la cagnotte de 10 000 CHZ !"
+      "đź”— Connectez votre portefeuille Chiliz pour activer votre Ă©quipe d'Argentine et suivre vos progrĂ¨s.",
+      "âš˝ Mintez des cartes de joueurs (coĂ»t : 10 CHZ) ou achetez-les sur le marchĂ© secondaire.",
+      "âš ď¸Ź Une carte ne marque un point tactique QUE si elle est mintĂ©e par vous ou achetĂ©e sur le marchĂ© secondaire. Les transferts directs (cadeaux) entre portefeuilles NE COMPTENT PAS (aucun point attribuĂ©).",
+      "đź“ť Votre score correspond Ă  la somme des meilleurs poids de cartes ayant transitĂ© par votre portefeuille.",
+      "âšˇ Lorsque vous obtenez une carte plus forte, votre score est mis Ă  jour instantanĂ©ment. Vous pouvez alors vendre la carte la plus faible pour rĂ©cupĂ©rer vos CHZ !",
+      "đźŹ† Les 3 meilleurs collectionneurs avec le poids tactique le plus Ă©levĂ© au bloc cible se partagent la cagnotte de 10 000 CHZ !"
     ]
   },
   es: {
     title: "Reglas & Consejos",
     items: [
-      "🔗 Conecta tu billetera Chiliz para activar tu plantilla de Argentina y seguir tu progreso en tiempo real.",
-      "⚽ Mintea cartas de jugador (costo: 10 CHZ) o cómpralas en el mercado secundario.",
-      "⚠️ Una carta SOLO sumará puntos tácticos si la minteas tú o la compras en el mercado secundario. Las transferencias directas (regalos) entre billeteras NO CUENTAN (no se asignan puntos tácticos).",
-      "📝 Tu puntuación representa la suma de los mejores pesos de cartas que han pasado por tu billetera.",
-      "⚡ Cuando consigues una carta más fuerte para una posición, tu puntuación se actualiza al instante. ¡Puedes vender la carta más débil en el mercado para recuperar tus CHZ!",
-      "🏆 ¡Los 3 mejores coleccionistas con el mayor peso táctico al llegar al bloque objetivo se repartirán el fondo de premios de 10.000 CHZ!"
+      "đź”— Conecta tu billetera Chiliz para activar tu plantilla de Argentina y seguir tu progreso en tiempo real.",
+      "âš˝ Mintea cartas de jugador (costo: 10 CHZ) o cĂłmpralas en el mercado secundario.",
+      "âš ď¸Ź Una carta SOLO sumarĂˇ puntos tĂˇcticos si la minteas tĂş o la compras en el mercado secundario. Las transferencias directas (regalos) entre billeteras NO CUENTAN (no se asignan puntos tĂˇcticos).",
+      "đź“ť Tu puntuaciĂłn representa la suma de los mejores pesos de cartas que han pasado por tu billetera.",
+      "âšˇ Cuando consigues una carta mĂˇs fuerte para una posiciĂłn, tu puntuaciĂłn se actualiza al instante. ÂˇPuedes vender la carta mĂˇs dĂ©bil en el mercado para recuperar tus CHZ!",
+      "đźŹ† ÂˇLos 3 mejores coleccionistas con el mayor peso tĂˇctico al llegar al bloque objetivo se repartirĂˇn el fondo de premios de 10.000 CHZ!"
     ]
   },
   it: {
     title: "Regole del Gioco & Suggerimenti",
     items: [
-      "🔗 Collega il tuo wallet Chiliz per attivare la tua squadra dell'Argentina e seguire i progressi in tempo reale.",
-      "⚽ Minta le carte dei giocatori (costo: 10 CHZ) o acquistale sul mercato secondario.",
-      "⚠️ Una carta assegna un punto tattico SOLO se viene mintata da te o acquistata sul mercato secondario. I trasferimenti diretti (regali) tra wallet NON CONTANO (nessun punteggio tattico assegnato).",
-      "📝 Il tuo punteggio rappresenta la somma dei migliori pesi delle carte che sono transitate nel tuo wallet.",
-      "⚡ Quando ottieni una carta più forte per una posizione, il punteggio si aggiorna all'istante. Puoi vendere la carta più debole sul mercato per recuperare i tuoi CHZ!",
-      "🏆 I primi 3 collezionisti con il maggior peso tattico al blocco obiettivo si spartiranno il montepremi di 10.000 CHZ!"
+      "đź”— Collega il tuo wallet Chiliz per attivare la tua squadra dell'Argentina e seguire i progressi in tempo reale.",
+      "âš˝ Minta le carte dei giocatori (costo: 10 CHZ) o acquistale sul mercato secondario.",
+      "âš ď¸Ź Una carta assegna un punto tattico SOLO se viene mintata da te o acquistata sul mercato secondario. I trasferimenti diretti (regali) tra wallet NON CONTANO (nessun punteggio tattico assegnato).",
+      "đź“ť Il tuo punteggio rappresenta la somma dei migliori pesi delle carte che sono transitate nel tuo wallet.",
+      "âšˇ Quando ottieni una carta piĂą forte per una posizione, il punteggio si aggiorna all'istante. Puoi vendere la carta piĂą debole sul mercato per recuperare i tuoi CHZ!",
+      "đźŹ† I primi 3 collezionisti con il maggior peso tattico al blocco obiettivo si spartiranno il montepremi di 10.000 CHZ!"
     ]
   },
   pt: {
     title: "Regras do Jogo & Dicas",
     items: [
-      "🔗 Conecte sua carteira Chiliz para ativar sua seleção da Argentina e acompanhar seu progresso ao vivo.",
-      "⚽ Minte cartas de jogadores (custo: 10 CHZ) ou compre-as no mercado secundário.",
-      "⚠️ Uma carta só marca pontos táticos se for mintada por si ou comprada no mercado secundário. Transferências diretas (ofertas) entre carteiras NÃO CONTAM (nenhuma pontuação é atribuída).",
-      "📝 Sua pontuação representa a soma dos melhores pesos de cartas que já passaram pela sua carteira.",
-      "⚡ Quando consegue uma carta mais forte para uma posição, sua pontuação atualiza-se instantaneamente. Pode vender a carta mais fraca para recuperar seus CHZ!",
-      "🏆 Os 3 melhores colecionadores com o maior peso tático no bloco final dividem a premiação de 10.000 CHZ!"
+      "đź”— Conecte sua carteira Chiliz para ativar sua seleĂ§ĂŁo da Argentina e acompanhar seu progresso ao vivo.",
+      "âš˝ Minte cartas de jogadores (custo: 10 CHZ) ou compre-as no mercado secundĂˇrio.",
+      "âš ď¸Ź Uma carta sĂł marca pontos tĂˇticos se for mintada por si ou comprada no mercado secundĂˇrio. TransferĂŞncias diretas (ofertas) entre carteiras NĂO CONTAM (nenhuma pontuaĂ§ĂŁo Ă© atribuĂ­da).",
+      "đź“ť Sua pontuaĂ§ĂŁo representa a soma dos melhores pesos de cartas que jĂˇ passaram pela sua carteira.",
+      "âšˇ Quando consegue uma carta mais forte para uma posiĂ§ĂŁo, sua pontuaĂ§ĂŁo atualiza-se instantaneamente. Pode vender a carta mais fraca para recuperar seus CHZ!",
+      "đźŹ† Os 3 melhores colecionadores com o maior peso tĂˇtico no bloco final dividem a premiaĂ§ĂŁo de 10.000 CHZ!"
     ]
   },
   ja: {
-    title: "ゲームルールとヒント",
+    title: "ă‚˛ăĽă ă«ăĽă«ă¨ă’ăłă",
     items: [
-      "🔗 ワークスウォレット（Chiliz）を接続して、アルゼンチンスクワッドを起動します。",
-      "⚽ 選手カードをミントするか、マーケットプレイスで購入します（費用：10 CHZ）。",
-      "⚠️ ミント、またはマーケットプレイスで購入されたカードのみがチームをスコアします。直接の転送（ギフト）はスコアとしてカウントされません。",
-      "📝 あなたのスコアは、これまでに獲得した各ポジションの最も重いカード重量の合計です。",
-      "⚡ ポジションに対して重いカードを獲得すると、スコアは即座にアップデートされます。不要なカードは売却できます！",
-      "🏆 ターゲットブロックに到達した時点で、タクティカル総重量が最も高い上位3名のコレクターが10,000 CHZの賞金プールを分け合います！"
+      "đź”— ăŻăĽă‚Żă‚ąă‚¦ă‚©ă¬ăăďĽChilizďĽ‰ă‚’ćŽĄç¶šă—ă¦ă€ă‚˘ă«ă‚Ľăłăăłă‚ąă‚ŻăŻăă‰ă‚’čµ·ĺ‹•ă—ăľă™ă€‚",
+      "âš˝ é¸ć‰‹ă‚«ăĽă‰ă‚’ăźăłăă™ă‚‹ă‹ă€ăžăĽă‚±ăăă—ă¬ă‚¤ă‚ąă§čłĽĺ…Ąă—ăľă™ďĽč˛»ç”¨ďĽš10 CHZďĽ‰ă€‚",
+      "âš ď¸Ź ăźăłăă€ăľăźăŻăžăĽă‚±ăăă—ă¬ă‚¤ă‚ąă§čłĽĺ…Ąă•ă‚Śăźă‚«ăĽă‰ă®ăżăŚăăĽă ă‚’ă‚ąă‚łă‚˘ă—ăľă™ă€‚ç›´ćŽĄă®č»˘é€ďĽă‚®ă•ăďĽ‰ăŻă‚ąă‚łă‚˘ă¨ă—ă¦ă‚«ă‚¦ăłăă•ă‚Śăľă›ă‚“ă€‚",
+      "đź“ť ă‚ăŞăźă®ă‚ąă‚łă‚˘ăŻă€ă“ă‚Śăľă§ă«çŤ˛ĺľ—ă—ăźĺ„ăťă‚¸ă‚·ă§ăłă®ćś€ă‚‚é‡Ťă„ă‚«ăĽă‰é‡Ťé‡Źă®ĺč¨ă§ă™ă€‚",
+      "âšˇ ăťă‚¸ă‚·ă§ăłă«ĺŻľă—ă¦é‡Ťă„ă‚«ăĽă‰ă‚’çŤ˛ĺľ—ă™ă‚‹ă¨ă€ă‚ąă‚łă‚˘ăŻĺŤłĺş§ă«ă‚˘ăă—ă‡ăĽăă•ă‚Śăľă™ă€‚ä¸Ťč¦ăŞă‚«ăĽă‰ăŻĺŁ˛ĺŤ´ă§ăŤăľă™ďĽ",
+      "đźŹ† ă‚żăĽă‚˛ăăă–ă­ăă‚Żă«ĺ°é”ă—ăźć™‚ç‚ąă§ă€ă‚żă‚Żă†ă‚Łă‚«ă«ç·Źé‡Ťé‡ŹăŚćś€ă‚‚é«ă„ä¸Šä˝Ť3ĺŤă®ă‚łă¬ă‚Żă‚żăĽăŚ10,000 CHZă®čłžé‡‘ă—ăĽă«ă‚’ĺ†ă‘ĺă„ăľă™ďĽ"
     ]
   },
   pl: {
-    title: "Zasady gry i wskazówki",
+    title: "Zasady gry i wskazĂłwki",
     items: [
-      "🔗 Połącz portfel Chiliz Chain, aby wyświetlić postęp i swój unikalny skład Argentyny.",
-      "⚽ Mintuj zawodników bezpośrednio z kontraktu (koszt 10 CHZ) lub skupuj brakujące karty z rynku.",
-      "⚠️ Karta zalicza punkt taktyczny w formacji Argentyny WYŁĄCZNIE wtedy, gdy zostanie wymintowana przez Ciebie lub zakupiona na rynku wtórnym. Przelew bezpośredni (gift) pomiędzy portfelami nie rejestruje punktu (brak naliczenia wagi).",
-      "📝 Twój wynik na boisku to suma wag najlepszych kart, jakie kiedykolwiek przeszły przez Twój portfel.",
-      "⚡ Gdy zdobędziesz lepszą kartę dla danej pozycji (upgrade), wynik natychmiast zaktualizuje się o różnicę, a Ty możesz wystawić gorszą kartę na sprzedaż i odzyskać CHZ!",
-      "🏆 Najwyższy łączny wynik w formacji na koniec odliczania w bloku docelowym zgarnia nagrody ze sponsorowanej puli 10 000 CHZ!"
+      "đź”— PoĹ‚Ä…cz portfel Chiliz Chain, aby wyĹ›wietliÄ‡ postÄ™p i swĂłj unikalny skĹ‚ad Argentyny.",
+      "âš˝ Mintuj zawodnikĂłw bezpoĹ›rednio z kontraktu (koszt 10 CHZ) lub skupuj brakujÄ…ce karty z rynku.",
+      "âš ď¸Ź Karta zalicza punkt taktyczny w formacji Argentyny WYĹÄ„CZNIE wtedy, gdy zostanie wymintowana przez Ciebie lub zakupiona na rynku wtĂłrnym. Przelew bezpoĹ›redni (gift) pomiÄ™dzy portfelami nie rejestruje punktu (brak naliczenia wagi).",
+      "đź“ť TwĂłj wynik na boisku to suma wag najlepszych kart, jakie kiedykolwiek przeszĹ‚y przez TwĂłj portfel.",
+      "âšˇ Gdy zdobÄ™dziesz lepszÄ… kartÄ™ dla danej pozycji (upgrade), wynik natychmiast zaktualizuje siÄ™ o rĂłĹĽnicÄ™, a Ty moĹĽesz wystawiÄ‡ gorszÄ… kartÄ™ na sprzedaĹĽ i odzyskaÄ‡ CHZ!",
+      "đźŹ† NajwyĹĽszy Ĺ‚Ä…czny wynik w formacji na koniec odliczania w bloku docelowym zgarnia nagrody ze sponsorowanej puli 10 000 CHZ!"
     ]
   },
   uk: {
-    title: "Правила гри та поради",
+    title: "ĐźŃ€Đ°Đ˛Đ¸Đ»Đ° ĐłŃ€Đ¸ Ń‚Đ° ĐżĐľŃ€Đ°Đ´Đ¸",
     items: [
-      "🔗 Підключіть свій гаманець Chiliz, щоб активувати склад збірної Аргентини та стежити за прогресом.",
-      "⚽ Мінтуйте картки гравців (вартість: 10 CHZ) або купуйте їх на вторинному ринку.",
-      "⚠️ Картка зараховується у вашу команду ТІЛЬКИ якщо вона була змінтована вами або куплена на маркетплейсі. Прямі перекази (дарунки) між гаманцями НЕ ЗАРАХОВУЮТЬСЯ (тактичні бали не нараховуються).",
-      "📝 Ваш загальний рахунок — це сума показників найкращих карток, які коли-небудь проходили через ваш гаманець.",
-      "⚡ Коли ви отримуєте сильнішу картку на позицію, ваш результат оновлюється миттєво. Слабшу картку ви можете виставити на продаж і повернути свої CHZ!",
-      "🏆 Топ-3 колекціонери з найбільшою вагою складу на момент фінального блоку розділять призовий фонд у розмірі 10 000 CHZ!"
+      "đź”— ĐźŃ–Đ´ĐşĐ»ŃŽŃ‡Ń–Ń‚ŃŚ ŃĐ˛Ń–Đą ĐłĐ°ĐĽĐ°Đ˝ĐµŃ†ŃŚ Chiliz, Ń‰ĐľĐ± Đ°ĐşŃ‚Đ¸Đ˛ŃĐ˛Đ°Ń‚Đ¸ ŃĐşĐ»Đ°Đ´ Đ·Đ±Ń–Ń€Đ˝ĐľŃ— ĐŃ€ĐłĐµĐ˝Ń‚Đ¸Đ˝Đ¸ Ń‚Đ° ŃŃ‚ĐµĐ¶Đ¸Ń‚Đ¸ Đ·Đ° ĐżŃ€ĐľĐłŃ€ĐµŃĐľĐĽ.",
+      "âš˝ ĐśŃ–Đ˝Ń‚ŃĐąŃ‚Đµ ĐşĐ°Ń€Ń‚ĐşĐ¸ ĐłŃ€Đ°Đ˛Ń†Ń–Đ˛ (Đ˛Đ°Ń€Ń‚Ń–ŃŃ‚ŃŚ: 10 CHZ) Đ°Đ±Đľ ĐşŃĐżŃĐąŃ‚Đµ Ń—Ń… Đ˝Đ° Đ˛Ń‚ĐľŃ€Đ¸Đ˝Đ˝ĐľĐĽŃ Ń€Đ¸Đ˝ĐşŃ.",
+      "âš ď¸Ź ĐšĐ°Ń€Ń‚ĐşĐ° Đ·Đ°Ń€Đ°Ń…ĐľĐ˛ŃŃ”Ń‚ŃŚŃŃŹ Ń Đ˛Đ°ŃŃ ĐşĐľĐĽĐ°Đ˝Đ´Ń Đ˘Đ†Đ›Đ¬ĐšĐ ŃŹĐşŃ‰Đľ Đ˛ĐľĐ˝Đ° Đ±ŃĐ»Đ° Đ·ĐĽŃ–Đ˝Ń‚ĐľĐ˛Đ°Đ˝Đ° Đ˛Đ°ĐĽĐ¸ Đ°Đ±Đľ ĐşŃĐżĐ»ĐµĐ˝Đ° Đ˝Đ° ĐĽĐ°Ń€ĐşĐµŃ‚ĐżĐ»ĐµĐąŃŃ–. ĐźŃ€ŃŹĐĽŃ– ĐżĐµŃ€ĐµĐşĐ°Đ·Đ¸ (Đ´Đ°Ń€ŃĐ˝ĐşĐ¸) ĐĽŃ–Đ¶ ĐłĐ°ĐĽĐ°Đ˝Ń†ŃŹĐĽĐ¸ ĐťĐ• Đ—ĐĐ ĐĐĄĐžĐ’ĐŁĐ®Đ˘Đ¬ĐˇĐŻ (Ń‚Đ°ĐşŃ‚Đ¸Ń‡Đ˝Ń– Đ±Đ°Đ»Đ¸ Đ˝Đµ Đ˝Đ°Ń€Đ°Ń…ĐľĐ˛ŃŃŽŃ‚ŃŚŃŃŹ).",
+      "đź“ť Đ’Đ°Ń Đ·Đ°ĐłĐ°Đ»ŃŚĐ˝Đ¸Đą Ń€Đ°Ń…ŃĐ˝ĐľĐş â€” Ń†Đµ ŃŃĐĽĐ° ĐżĐľĐşĐ°Đ·Đ˝Đ¸ĐşŃ–Đ˛ Đ˝Đ°ĐąĐşŃ€Đ°Ń‰Đ¸Ń… ĐşĐ°Ń€Ń‚ĐľĐş, ŃŹĐşŃ– ĐşĐľĐ»Đ¸-Đ˝ĐµĐ±ŃĐ´ŃŚ ĐżŃ€ĐľŃ…ĐľĐ´Đ¸Đ»Đ¸ Ń‡ĐµŃ€ĐµĐ· Đ˛Đ°Ń ĐłĐ°ĐĽĐ°Đ˝ĐµŃ†ŃŚ.",
+      "âšˇ ĐšĐľĐ»Đ¸ Đ˛Đ¸ ĐľŃ‚Ń€Đ¸ĐĽŃŃ”Ń‚Đµ ŃĐ¸Đ»ŃŚĐ˝Ń–ŃŃ ĐşĐ°Ń€Ń‚ĐşŃ Đ˝Đ° ĐżĐľĐ·Đ¸Ń†Ń–ŃŽ, Đ˛Đ°Ń Ń€ĐµĐ·ŃĐ»ŃŚŃ‚Đ°Ń‚ ĐľĐ˝ĐľĐ˛Đ»ŃŽŃ”Ń‚ŃŚŃŃŹ ĐĽĐ¸Ń‚Ń‚Ń”Đ˛Đľ. ĐˇĐ»Đ°Đ±ŃŃ ĐşĐ°Ń€Ń‚ĐşŃ Đ˛Đ¸ ĐĽĐľĐ¶ĐµŃ‚Đµ Đ˛Đ¸ŃŃ‚Đ°Đ˛Đ¸Ń‚Đ¸ Đ˝Đ° ĐżŃ€ĐľĐ´Đ°Đ¶ Ń– ĐżĐľĐ˛ĐµŃ€Đ˝ŃŃ‚Đ¸ ŃĐ˛ĐľŃ— CHZ!",
+      "đźŹ† Đ˘ĐľĐż-3 ĐşĐľĐ»ĐµĐşŃ†Ń–ĐľĐ˝ĐµŃ€Đ¸ Đ· Đ˝Đ°ĐąĐ±Ń–Đ»ŃŚŃĐľŃŽ Đ˛Đ°ĐłĐľŃŽ ŃĐşĐ»Đ°Đ´Ń Đ˝Đ° ĐĽĐľĐĽĐµĐ˝Ń‚ Ń„Ń–Đ˝Đ°Đ»ŃŚĐ˝ĐľĐłĐľ Đ±Đ»ĐľĐşŃ Ń€ĐľĐ·Đ´Ń–Đ»ŃŹŃ‚ŃŚ ĐżŃ€Đ¸Đ·ĐľĐ˛Đ¸Đą Ń„ĐľĐ˝Đ´ Ń Ń€ĐľĐ·ĐĽŃ–Ń€Ń– 10 000 CHZ!"
     ]
   }
 };
@@ -1185,56 +1185,56 @@ let marketFloorByPos = {};
 let activeListingsByTokenId = {};
 let currentMintPrice = ethers.parseEther("10");
 
-// Spis wszystkich 48 krajów dla poprawnego mapowania nazw i flag w globalnym Ledgerze
+// Spis wszystkich 48 krajĂłw dla poprawnego mapowania nazw i flag w globalnym Ledgerze
 const TEAMS = [
-  {id:0,  name:"Australia",     flag:"🇦🇺", code:"au", fed:"AFC"},
-  {id:1,  name:"Iran",          flag:"🇮🇷", code:"ir", fed:"AFC"},
-  {id:2,  name:"Iraq",          flag:"🇮🇶", code:"iq", fed:"AFC"},
-  {id:3,  name:"Japan",         flag:"🇯🇵", code:"jp", fed:"AFC"},
-  {id:4,  name:"Jordan",        flag:"🇯🇴", code:"jo", fed:"AFC"},
-  {id:5,  name:"Qatar",         flag:"🇶🇦", code:"qa", fed:"AFC"},
-  {id:6,  name:"Saudi Arabia",  flag:"🇸🇦", code:"sa", fed:"AFC"},
-  {id:7,  name:"South Korea",   flag:"🇰🇷", code:"kr", fed:"AFC"},
-  {id:8,  name:"Uzbekistan",    flag:"🇺🇿", code:"uz", fed:"AFC"},
-  {id:9,  name:"Algeria",      flag:"🇩🇿", code:"dz", fed:"CAF"},
-  {id:10, name:"Cape Verde",    flag:"🇨🇻", code:"cv", fed:"CAF"},
-  {id:11, name:"DR Congo",      flag:"🇨🇩", code:"cd", fed:"CAF"},
-  {id:12, name:"Egypt",         flag:"🇪🇬", code:"eg", fed:"CAF"},
-  {id:13, name:"Ghana",         flag:"🇬🇭", code:"gh", fed:"CAF"},
-  {id:14, name:"Ivory Coast",   flag:"🇨🇮", code:"ci", fed:"CAF"},
-  {id:15, name:"Morocco",        flag:"🇲🇦", code:"ma", fed:"CAF"},
-  {id:16, name:"Senegal",       flag:"🇸🇳", code:"sn", fed:"CAF"},
-  {id:17, name:"South Africa",  flag:"🇿🇦", code:"za", fed:"CAF"},
-  {id:18, name:"Tunisia",       flag:"🇹🇳", code:"tn", fed:"CAF"},
-  {id:19, name:"Canada",        flag:"🇨🇦", code:"ca", fed:"CONCACAF"},
-  {id:20, name:"Curacao",       flag:"🇨🇼", code:"cw", fed:"CONCACAF"},
-  {id:21, name:"Haiti",         flag:"🇭🇹", code:"ht", fed:"CONCACAF"},
-  {id:22, name:"Mexico",        flag:"🇲🇽", code:"mx", fed:"CONCACAF"},
-  {id:23, name:"Panama",        flag:"🇵🇦", code:"pa", fed:"CONCACAF"},
-  {id:24, name:"USA",           flag:"🇺🇸", code:"us", fed:"CONCACAF"},
-  {id:25, name:"Argentina",     flag:"🇦🇷", code:"ar", fed:"CONMEBOL"},
-  {id:26, name:"Brazil",        flag:"🇧🇷", code:"br", fed:"CONMEBOL"},
-  {id:27, name:"Colombia",      flag:"🇨🇴", code:"co", fed:"CONMEBOL"},
-  {id:28, name:"Ecuador",       flag:"🇪🇨", code:"ec", fed:"CONMEBOL"},
-  {id:29, name:"Paraguay",      flag:"🇵🇾", code:"py", fed:"CONMEBOL"},
-  {id:30, name:"Uruguay",       flag:"🇺🇾", code:"uy", fed:"CONMEBOL"},
-  {id:31, name:"New Zealand",   flag:"🇳🇿", code:"nz", fed:"OFC"},
-  {id:32, name:"Austria",       flag:"🇦🇹", code:"at", fed:"UEFA"},
-  {id:33, name:"Belgium",        flag:"🇧🇪", code:"be", fed:"UEFA"},
-  {id:34, name:"Bosnia",        flag:"🇧🇦", code:"ba", fed:"UEFA"},
-  {id:35, name:"Croatia",       flag:"🇭🇷", code:"hr", fed:"UEFA"},
-  {id:36, name:"Czech Rep.",    flag:"🇨🇿", code:"cz", fed:"UEFA"},
-  {id:37, name:"England",        flag:"🏴\u200d󠁢󠁥󠁮󠁧󠁿", code:"gb-eng", fed:"UEFA"},
-  {id:38, name:"France",       flag:"🇫🇷", code:"fr", fed:"UEFA"},
-  {id:39, name:"Germany",        flag:"🇩🇪", code:"de", fed:"UEFA"},
-  {id:40, name:"Netherlands",    flag:"🇳🇱", code:"nl", fed:"UEFA"},
-  {id:41, name:"Norway",        flag:"🇳🇴", code:"no", fed:"UEFA"},
-  {id:42, name:"Portugal",      flag:"🇵🇹", code:"pt", fed:"UEFA"},
-  {id:43, name:"Scotland",      flag:"🏴\u200d󠁳󠁣󠁴󠁿", code:"gb-sct", fed:"UEFA"},
-  {id:44, name:"Spain",         flag:"🇪🇸", code:"es", fed:"UEFA"},
-  {id:45, name:"Sweden",        flag:"🇸🇪", code:"se", fed:"UEFA"},
-  {id:46, name:"Switzerland",    flag:"🇨🇭", code:"ch", fed:"UEFA"},
-  {id:47, name:"Turkey",        flag:"🇹🇷", code:"tr", fed:"UEFA"}
+  {id:0,  name:"Australia",     flag:"đź‡¦đź‡ş", code:"au", fed:"AFC"},
+  {id:1,  name:"Iran",          flag:"đź‡®đź‡·", code:"ir", fed:"AFC"},
+  {id:2,  name:"Iraq",          flag:"đź‡®đź‡¶", code:"iq", fed:"AFC"},
+  {id:3,  name:"Japan",         flag:"đź‡Żđź‡µ", code:"jp", fed:"AFC"},
+  {id:4,  name:"Jordan",        flag:"đź‡Żđź‡´", code:"jo", fed:"AFC"},
+  {id:5,  name:"Qatar",         flag:"đź‡¶đź‡¦", code:"qa", fed:"AFC"},
+  {id:6,  name:"Saudi Arabia",  flag:"đź‡¸đź‡¦", code:"sa", fed:"AFC"},
+  {id:7,  name:"South Korea",   flag:"đź‡°đź‡·", code:"kr", fed:"AFC"},
+  {id:8,  name:"Uzbekistan",    flag:"đź‡şđź‡ż", code:"uz", fed:"AFC"},
+  {id:9,  name:"Algeria",      flag:"đź‡©đź‡ż", code:"dz", fed:"CAF"},
+  {id:10, name:"Cape Verde",    flag:"đź‡¨đź‡»", code:"cv", fed:"CAF"},
+  {id:11, name:"DR Congo",      flag:"đź‡¨đź‡©", code:"cd", fed:"CAF"},
+  {id:12, name:"Egypt",         flag:"đź‡Şđź‡¬", code:"eg", fed:"CAF"},
+  {id:13, name:"Ghana",         flag:"đź‡¬đź‡­", code:"gh", fed:"CAF"},
+  {id:14, name:"Ivory Coast",   flag:"đź‡¨đź‡®", code:"ci", fed:"CAF"},
+  {id:15, name:"Morocco",        flag:"đź‡˛đź‡¦", code:"ma", fed:"CAF"},
+  {id:16, name:"Senegal",       flag:"đź‡¸đź‡ł", code:"sn", fed:"CAF"},
+  {id:17, name:"South Africa",  flag:"đź‡żđź‡¦", code:"za", fed:"CAF"},
+  {id:18, name:"Tunisia",       flag:"đź‡ąđź‡ł", code:"tn", fed:"CAF"},
+  {id:19, name:"Canada",        flag:"đź‡¨đź‡¦", code:"ca", fed:"CONCACAF"},
+  {id:20, name:"Curacao",       flag:"đź‡¨đź‡Ľ", code:"cw", fed:"CONCACAF"},
+  {id:21, name:"Haiti",         flag:"đź‡­đź‡ą", code:"ht", fed:"CONCACAF"},
+  {id:22, name:"Mexico",        flag:"đź‡˛đź‡˝", code:"mx", fed:"CONCACAF"},
+  {id:23, name:"Panama",        flag:"đź‡µđź‡¦", code:"pa", fed:"CONCACAF"},
+  {id:24, name:"USA",           flag:"đź‡şđź‡¸", code:"us", fed:"CONCACAF"},
+  {id:25, name:"Argentina",     flag:"đź‡¦đź‡·", code:"ar", fed:"CONMEBOL"},
+  {id:26, name:"Brazil",        flag:"đź‡§đź‡·", code:"br", fed:"CONMEBOL"},
+  {id:27, name:"Colombia",      flag:"đź‡¨đź‡´", code:"co", fed:"CONMEBOL"},
+  {id:28, name:"Ecuador",       flag:"đź‡Şđź‡¨", code:"ec", fed:"CONMEBOL"},
+  {id:29, name:"Paraguay",      flag:"đź‡µđź‡ľ", code:"py", fed:"CONMEBOL"},
+  {id:30, name:"Uruguay",       flag:"đź‡şđź‡ľ", code:"uy", fed:"CONMEBOL"},
+  {id:31, name:"New Zealand",   flag:"đź‡łđź‡ż", code:"nz", fed:"OFC"},
+  {id:32, name:"Austria",       flag:"đź‡¦đź‡ą", code:"at", fed:"UEFA"},
+  {id:33, name:"Belgium",        flag:"đź‡§đź‡Ş", code:"be", fed:"UEFA"},
+  {id:34, name:"Bosnia",        flag:"đź‡§đź‡¦", code:"ba", fed:"UEFA"},
+  {id:35, name:"Croatia",       flag:"đź‡­đź‡·", code:"hr", fed:"UEFA"},
+  {id:36, name:"Czech Rep.",    flag:"đź‡¨đź‡ż", code:"cz", fed:"UEFA"},
+  {id:37, name:"England",        flag:"đźŹ´\u200dó ˘ó Ąó ®ó §ó ż", code:"gb-eng", fed:"UEFA"},
+  {id:38, name:"France",       flag:"đź‡«đź‡·", code:"fr", fed:"UEFA"},
+  {id:39, name:"Germany",        flag:"đź‡©đź‡Ş", code:"de", fed:"UEFA"},
+  {id:40, name:"Netherlands",    flag:"đź‡łđź‡±", code:"nl", fed:"UEFA"},
+  {id:41, name:"Norway",        flag:"đź‡łđź‡´", code:"no", fed:"UEFA"},
+  {id:42, name:"Portugal",      flag:"đź‡µđź‡ą", code:"pt", fed:"UEFA"},
+  {id:43, name:"Scotland",      flag:"đźŹ´\u200dó łó Łó ´ó ż", code:"gb-sct", fed:"UEFA"},
+  {id:44, name:"Spain",         flag:"đź‡Şđź‡¸", code:"es", fed:"UEFA"},
+  {id:45, name:"Sweden",        flag:"đź‡¸đź‡Ş", code:"se", fed:"UEFA"},
+  {id:46, name:"Switzerland",    flag:"đź‡¨đź‡­", code:"ch", fed:"UEFA"},
+  {id:47, name:"Turkey",        flag:"đź‡ąđź‡·", code:"tr", fed:"UEFA"}
 ];
 
 function showHeaderToast(message, isError = false) {
@@ -1322,6 +1322,13 @@ async function submitSellCard() {
   const priceInput = document.getElementById('sellPriceInput').value;
   if (!priceInput || parseFloat(priceInput) <= 0) {
     showHeaderToast('Enter a valid selling price greater than 0 CHZ.', true);
+    return;
+  }
+  const activeListingId = activeListingsByTokenId[activeSellTokenId];
+  if (activeListingId !== undefined) {
+    toggleSellModal(false);
+    showHeaderToast('This card is already listed. Use CANCEL LISTING in your squad to delist it first.', true);
+    renderPitch();
     return;
   }
   await sellFigure(activeSellTokenId, priceInput);
@@ -1463,6 +1470,50 @@ async function fetchEvents(){
 
 let ownerMap = {};
 
+function normalizeListingEvent(ev) {
+  const args = ev?.args || ev || {};
+  const listingIdRaw = args.listingId ?? ev?.listingId;
+  const tokenIdRaw = args.tokenId ?? ev?.tokenId;
+  const priceRaw = args.price ?? ev?.price;
+  const sellerRaw = args.seller ?? ev?.seller;
+
+  if (listingIdRaw === undefined || tokenIdRaw === undefined || priceRaw === undefined) return null;
+
+  let price = 0;
+  try {
+    if (typeof priceRaw === 'bigint') {
+      price = parseFloat(ethers.formatEther(priceRaw));
+    } else if (typeof priceRaw === 'number') {
+      price = priceRaw > 1e12 ? parseFloat(ethers.formatEther(BigInt(Math.trunc(priceRaw)))) : priceRaw;
+    } else {
+      const priceText = String(priceRaw);
+      if (priceText.includes('.')) {
+        price = parseFloat(priceText);
+      } else {
+        const priceBig = BigInt(priceText);
+        price = priceBig > 1000000000000n ? parseFloat(ethers.formatEther(priceBig)) : parseFloat(priceText);
+      }
+    }
+  } catch(e) {
+    price = parseFloat(String(priceRaw));
+  }
+
+  return {
+    listingId: Number(listingIdRaw),
+    tokenId: Number(tokenIdRaw),
+    price,
+    seller: sellerRaw ? String(sellerRaw).toLowerCase() : null
+  };
+}
+
+function getErrorReason(error) {
+  return error?.reason
+    || error?.revert?.args?.[0]
+    || error?.data?.message
+    || error?.message
+    || '';
+}
+
 async function loadData(){
   document.getElementById('pitchFormationGrid').innerHTML = '<div style="text-align:center;color:#3d4a5a;padding:40px;grid-column:1/-1;"><span class="spin"></span> Querying Chiliz Blockchain data...</div>';
 
@@ -1508,7 +1559,7 @@ async function loadData(){
     try{
       const dnaBig = typeof dna === 'bigint' ? dna : BigInt(String(dna));
       const t = parseDNA(dnaBig);
-      if (t.teamId !== ARGENTINA_TEAM_ID) return; // Filtruje wyłącznie karty Argentyny dla wizualnego boiska
+      if (t.teamId !== ARGENTINA_TEAM_ID) return; // Filtruje wyĹ‚Ä…cznie karty Argentyny dla wizualnego boiska
       
       const w = wallet.toLowerCase();
       if(!window.dreamScores[w]) window.dreamScores[w] = {};
@@ -1530,22 +1581,25 @@ async function loadData(){
     }
   });
 
-  // Odpytywanie rynku wtórnego o aktualne oferty dla Argentyny
+  // Odpytywanie rynku wtĂłrnego o aktualne oferty dla Argentyny
+  const myAddr = address?.toLowerCase();
   marketByPos = {};
   marketFloorByPos = {};
   activeListingsByTokenId = {};
   let rawMarketListings = []; 
   let listDetails = {}; 
 
-  // Parsowanie listingów w celach rozliczeniowych portfolio
+  // Parsowanie listingĂłw w celach rozliczeniowych portfolio
   listed.forEach(ev => {
     try {
-      const lid = Number(ev.args.listingId);
-      const tokenId = Number(ev.args.tokenId);
-      const price = parseFloat(ethers.formatEther(ev.args.price));
+      const listing = normalizeListingEvent(ev);
+      if (!listing) return;
+      const lid = listing.listingId;
+      const tokenId = listing.tokenId;
+      const price = listing.price;
       const fig = ownerMap[tokenId];
       listDetails[lid] = {
-        seller: ev.args.seller.toLowerCase(),
+        seller: listing.seller,
         tokenId: tokenId,
         price: price,
         teamId: fig ? fig.teamId : null,
@@ -1560,8 +1614,18 @@ async function loadData(){
     const rp = await getReadProvider();
     const rmk = new ethers.Contract(MARKET_ADDRESS, MARKET_ABI, rp);
     const nextId = Number(await rmk.nextListingId());
-    const from = Math.max(0, nextId - 150);
-    for(let i = from; i < nextId; i++){
+    const knownListingIds = listed
+      .map(normalizeListingEvent)
+      .filter(Boolean)
+      .map(l => l.listingId);
+    const recentFrom = Math.max(0, nextId - 300);
+    const recentListingIds = [];
+    for (let i = recentFrom; i < nextId; i++) recentListingIds.push(i);
+    const listingIdsToCheck = [...new Set([...knownListingIds, ...recentListingIds])]
+      .filter(i => Number.isFinite(i) && i >= 0 && i < nextId)
+      .sort((a, b) => a - b);
+
+    for(const i of listingIdsToCheck){
       try{
         const l = await rmk.getListing(i);
         if(!l[3]) continue; 
@@ -1576,13 +1640,13 @@ async function loadData(){
         
         rawMarketListings.push({listingId: i, price, priceWei, tokenId, pos, weight: fig.weight, rarity: fig.rarity});
 
-        // Wyszukanie najlepszych upgrade'ów taktycznych dla Argentyny
+        // Wyszukanie najlepszych upgrade'Ăłw taktycznych dla Argentyny
         const curMkt = marketByPos[pos];
         if(!curMkt || fig.weight > curMkt.weight || (fig.weight === curMkt.weight && price < curMkt.price)){
           marketByPos[pos] = {listingId: i, price, priceWei, weight: fig.weight, rarity: fig.rarity};
         }
 
-        // Wyszukanie najniższej ceny (floor)
+        // Wyszukanie najniĹĽszej ceny (floor)
         const curFloor = marketFloorByPos[pos];
         if(!curFloor || price < curFloor.price) {
           marketFloorByPos[pos] = {listingId: i, price, priceWei};
@@ -1597,13 +1661,13 @@ async function loadData(){
   renderPitch();
   renderLeaderboard();
   
-  // Renderowanie bocznych widgetów giełdowych
+  // Renderowanie bocznych widgetĂłw gieĹ‚dowych
   renderSnipeMarket(rawMarketListings);
   renderLiveActivityFeed(mints, sales);
   renderPortfolioAndLedger(mints, sales, listDetails);
 }
 
-// Renderowanie snajpera giełdy okazji (Snipe deals)
+// Renderowanie snajpera gieĹ‚dy okazji (Snipe deals)
 function renderSnipeMarket(listings) {
   const container = document.getElementById('snipeListContainer');
   const myAddr = address?.toLowerCase();
@@ -1647,7 +1711,7 @@ function renderSnipeMarket(listings) {
   container.innerHTML = html;
 }
 
-// Obliczanie wydatków, przychodów, PnL i osobistego ledgera transakcji (Dla CAŁEJ historii portfela - 48 krajów!)
+// Obliczanie wydatkĂłw, przychodĂłw, PnL i osobistego ledgera transakcji (Dla CAĹEJ historii portfela - 48 krajĂłw!)
 function renderPortfolioAndLedger(mints, sales, listDetails) {
   const myAddr = address?.toLowerCase();
   if (!myAddr) {
@@ -1660,11 +1724,11 @@ function renderPortfolioAndLedger(mints, sales, listDetails) {
   let myEarned = 0;
   let myLedger = []; 
 
-  // 1. Obliczanie kosztu mintowania wszystkich posiadanych kiedykolwiek kart na tym kontrakcie (wszystkie 48 krajów)
+  // 1. Obliczanie kosztu mintowania wszystkich posiadanych kiedykolwiek kart na tym kontrakcie (wszystkie 48 krajĂłw)
   mints.forEach(m => {
     if (m.owner.toLowerCase() === myAddr) {
       const fig = parseDNA(m.dna);
-      const teamInfo = TEAMS[fig.teamId] || {flag: "🏳️", name: "Unknown"};
+      const teamInfo = TEAMS[fig.teamId] || {flag: "đźŹłď¸Ź", name: "Unknown"};
       mySpent += 10; 
       myLedger.push({
         type: 'mint',
@@ -1676,7 +1740,7 @@ function renderPortfolioAndLedger(mints, sales, listDetails) {
     }
   });
 
-  // 2. Obliczanie zrealizowanych zakupów i sprzedaży rynkowych dla wszystkich 48 krajów
+  // 2. Obliczanie zrealizowanych zakupĂłw i sprzedaĹĽy rynkowych dla wszystkich 48 krajĂłw
   sales.forEach(s => {
     const lid = Number(s.listingId);
     const details = listDetails[lid] || s; 
@@ -1688,10 +1752,10 @@ function renderPortfolioAndLedger(mints, sales, listDetails) {
     const fig = ownerMap[figId];
 
     if (fig) {
-      const teamInfo = TEAMS[fig.teamId] || {flag: "🏳️", name: "Unknown"};
+      const teamInfo = TEAMS[fig.teamId] || {flag: "đźŹłď¸Ź", name: "Unknown"};
       const displayPosName = `<img src='https://flagcdn.com/w20/${teamInfo.code}.png' style='width:14px;height:10px;border-radius:1px;vertical-align:middle;margin-right:3px;' onerror='this.style.display="none"'/>${POSITION_SHORT[fig.position]}`;
       
-      // Czy połączony portfel to kupujący?
+      // Czy poĹ‚Ä…czony portfel to kupujÄ…cy?
       if (buyer === myAddr) {
         mySpent += price;
         myLedger.push({
@@ -1702,7 +1766,7 @@ function renderPortfolioAndLedger(mints, sales, listDetails) {
           block: s.block || 0
         });
       }
-      // Czy połączony portfel to sprzedawca?
+      // Czy poĹ‚Ä…czony portfel to sprzedawca?
       if (seller === myAddr) {
         myEarned += price;
         myLedger.push({
@@ -1716,20 +1780,20 @@ function renderPortfolioAndLedger(mints, sales, listDetails) {
     }
   });
 
-  // 3. Obliczanie wyceny posiadanego Locker Value na bazie globalnych cen floor rynkowych dla całej kolekcji (48 krajów)
+  // 3. Obliczanie wyceny posiadanego Locker Value na bazie globalnych cen floor rynkowych dla caĹ‚ej kolekcji (48 krajĂłw)
   let lockerVal = 0;
   Object.entries(ownerMap).forEach(([tid, fig]) => {
     if (fig.owner === myAddr) {
-      // Szukamy globalnej najniższej ceny (floor) dla danego kraju i pozycji
-      const val = 10; // Domyślna wycena bazowa
+      // Szukamy globalnej najniĹĽszej ceny (floor) dla danego kraju i pozycji
+      const val = 10; // DomyĹ›lna wycena bazowa
       lockerVal += val;
     }
   });
 
-  // Sortowanie ledgera od najnowszych wydarzeń
+  // Sortowanie ledgera od najnowszych wydarzeĹ„
   myLedger.sort((a, b) => b.block - a.block);
 
-  // Aktualizacja elementów interfejsu portfolio
+  // Aktualizacja elementĂłw interfejsu portfolio
   document.getElementById('portfolioUnconnected').style.display = 'none';
   document.getElementById('portfolioConnected').style.display = 'block';
 
@@ -1743,7 +1807,7 @@ function renderPortfolioAndLedger(mints, sales, listDetails) {
 
   document.getElementById('pStatLocker').textContent = `${lockerVal.toFixed(1)} CHZ`;
 
-  // Renderowanie elementów spersonalizowanej księgi (Ledger)
+  // Renderowanie elementĂłw spersonalizowanej ksiÄ™gi (Ledger)
   const ledgerContainer = document.getElementById('personalLedgerContainer');
   if (myLedger.length === 0) {
     ledgerContainer.innerHTML = '<div style="text-align:center;color:#5a6a7a;font-size:11px;padding:15px;">No transactions recorded.</div>';
@@ -1764,7 +1828,7 @@ function renderPortfolioAndLedger(mints, sales, listDetails) {
   }
 }
 
-// Renderowanie ogólnego dziennika transakcji w grze (Live Feed) dla Argentyny
+// Renderowanie ogĂłlnego dziennika transakcji w grze (Live Feed) dla Argentyny
 function renderLiveActivityFeed(mints, sales) {
   const container = document.getElementById('liveActivityFeed');
   let eventsLog = [];
@@ -1807,17 +1871,17 @@ function renderLiveActivityFeed(mints, sales) {
     const rarName = ['Common','Rare','Epic','Legendary'][evt.rarity];
     const rarColor = ['#7a8899','#3b82f6','#c084fc','#ffc940'][evt.rarity];
     const rarBg = ['rgba(122,136,153,0.1)','rgba(59,130,246,0.1)','rgba(192,132,252,0.1)','rgba(255,201,64,0.1)'][evt.rarity];
-    const teamInfo = TEAMS[evt.teamId] || {code:'un', flag:'🏳️'};
+    const teamInfo = TEAMS[evt.teamId] || {code:'un', flag:'đźŹłď¸Ź'};
     const flagImg = `<img src="https://flagcdn.com/w20/${teamInfo.code}.png" style="width:14px;height:10px;border-radius:1px;vertical-align:middle;margin:0 2px;" onerror="this.style.display='none'"/>`;
     const rarSpan = `<span style="color:${rarColor};font-weight:700;background:${rarBg};padding:1px 5px;border-radius:3px;font-size:10px;">${rarName}</span>`;
     if (evt.type === 'mint') {
-      html += `<div class="feed-item mint">🔨 <span class="feed-addr">${evt.owner.slice(0,6)}…${evt.owner.slice(-4)}</span> minted ${flagImg}${rarSpan} <span class="feed-highlight">${evt.posName}</span> <span class="feed-price-text">10 CHZ</span></div>`;
+      html += `<div class="feed-item mint">đź”¨ <span class="feed-addr">${evt.owner.slice(0,6)}â€¦${evt.owner.slice(-4)}</span> minted ${flagImg}${rarSpan} <span class="feed-highlight">${evt.posName}</span> <span class="feed-price-text">10 CHZ</span></div>`;
     } else {
       const isWhale = evt.price >= 1000;
       const priceHtml = isWhale
-        ? `<span style="color:#ffc940;font-weight:700;font-size:12px;background:rgba(255,201,64,0.15);padding:1px 6px;border-radius:3px;">🐋 ${evt.price} CHZ</span>`
+        ? `<span style="color:#ffc940;font-weight:700;font-size:12px;background:rgba(255,201,64,0.15);padding:1px 6px;border-radius:3px;">đź‹ ${evt.price} CHZ</span>`
         : `<span class="feed-price-text">${evt.price > 0 ? evt.price+' CHZ' : ''}</span>`;
-      html += `<div class="feed-item sale${isWhale?' whale':''}">💰 <span class="feed-addr">${(evt.buyer||'').slice(0,6)}…${(evt.buyer||'').slice(-4)}</span> bought ${flagImg}${rarSpan} <span class="feed-highlight">${evt.posName}</span> ${priceHtml}</div>`;
+      html += `<div class="feed-item sale${isWhale?' whale':''}">đź’° <span class="feed-addr">${(evt.buyer||'').slice(0,6)}â€¦${(evt.buyer||'').slice(-4)}</span> bought ${flagImg}${rarSpan} <span class="feed-highlight">${evt.posName}</span> ${priceHtml}</div>`;
     }
   });
   container.innerHTML = html;
@@ -1856,7 +1920,7 @@ function renderStats() {
 
   // Pobranie pozycji rankingowej
   const players = getLeaderboardData();
-  let myGlobalRankVal = '—';
+  let myGlobalRankVal = 'â€”';
   let myEstPayoutVal = 0;
   
   const myIndex = players.findIndex(p => p.wallet.toLowerCase() === myAddr);
@@ -1931,7 +1995,7 @@ function renderPitch() {
         card.innerHTML = `
           <div>
             <div class="pos-name">${POSITION_SHORT[pos]}</div>
-            <span class="pos-ball">⚽</span>
+            <span class="pos-ball">âš˝</span>
           </div>
           <div>
             <div class="pos-weight ${scored.rarity === 3 ? 'gold' : ''}">${scored.weight}</div>
@@ -1953,10 +2017,10 @@ function renderPitch() {
         card.innerHTML = `
           <div>
             <div class="pos-name" style="color:#5a6a7a;">${POSITION_SHORT[pos]}</div>
-            <span class="pos-ball" style="opacity: 0.15">⚽</span>
+            <span class="pos-ball" style="opacity: 0.15">âš˝</span>
           </div>
           <div>
-            <div class="pos-weight empty">—</div>
+            <div class="pos-weight empty">â€”</div>
             <div class="pos-rarity" style="color:#5a6a7a;">EMPTY SLOT</div>
             ${actionHtml}
           </div>
@@ -1990,14 +2054,14 @@ function renderLeaderboard(){
     const rank = idx + 1;
     const isWinner = rank <= 3;
     const posClass = isWinner ? 'winner' : '';
-    const medal = rank === 1 ? '🥇' : rank === 2 ? '🥈' : rank === 3 ? '🥉' : '';
+    const medal = rank === 1 ? 'đźĄ‡' : rank === 2 ? 'đźĄ' : rank === 3 ? 'đźĄ‰' : '';
     const prizeAmount = getPrizeForRank(rank);
     const prizeDisplay = prizeAmount > 0 ? `<span style="color:#00ff87;">Prize: ${prizeAmount.toLocaleString()} CHZ</span>` : '<span style="color:#5a6a7a;">No Prize</span>';
 
     return `
       <div class="lb-row ${isMe ? 'me' : ''}">
         <div class="lb-pos ${posClass}">${medal || '#' + rank}</div>
-        <div class="lb-addr">${player.wallet.slice(0,6)}…${player.wallet.slice(-4)} ${isMe ? '<span class="lb-you">YOU</span>' : ''}</div>
+        <div class="lb-addr">${player.wallet.slice(0,6)}â€¦${player.wallet.slice(-4)} ${isMe ? '<span class="lb-you">YOU</span>' : ''}</div>
         <div class="lb-completion">Completed: ${player.completed}/11</div>
         <div class="lb-completion" style="margin-left: 12px; font-weight: 700;">${prizeDisplay}</div>
         <div class="lb-score">${player.score} pts</div>
@@ -2012,14 +2076,14 @@ function renderLeaderboard(){
   if (includeMeRow) {
     html += `
       <div class="cutoff-line" style="margin: 16px 0 12px;">
-        ⚡ YOUR CURRENT STANDING POSITION ⚡
+        âšˇ YOUR CURRENT STANDING POSITION âšˇ
       </div>
     `;
     html += renderRow(competitors[myIndex], myIndex);
   } else if (competitors.length > 3) {
     html += `
       <div class="cutoff-line">
-        🚨 SPONSORED PRIZE THRESHOLD (TOP 3) — PLAYERS BELOW DO NOT QUALIFY FOR SPONSOR PRIZES 🚨
+        đźš¨ SPONSORED PRIZE THRESHOLD (TOP 3) â€” PLAYERS BELOW DO NOT QUALIFY FOR SPONSOR PRIZES đźš¨
       </div>
     `;
   }
@@ -2064,6 +2128,12 @@ async function sellFigure(tokenId, priceChz) {
     showHeaderToast('Please connect your wallet first.', true);
     return;
   }
+  if (activeListingsByTokenId[tokenId] !== undefined) {
+    toggleSellModal(false);
+    showHeaderToast('This card is already listed. Use CANCEL LISTING in your squad to delist it first.', true);
+    renderPitch();
+    return;
+  }
   try {
     const figContract = new ethers.Contract(CONTRACT_ADDRESS, [
       "function isApprovedForAll(address account, address operator) external view returns (bool)",
@@ -2088,6 +2158,13 @@ async function sellFigure(tokenId, priceChz) {
     await loadData();
   } catch(e) {
     console.error(e);
+    const reason = getErrorReason(e);
+    if (String(reason).includes('Already listed')) {
+      toggleSellModal(false);
+      showHeaderToast('This card is already listed. Refreshing squad so you can cancel it.', true);
+      await loadData();
+      return;
+    }
     showHeaderToast('Failed to list card on marketplace.', true);
   }
 }
@@ -2138,7 +2215,7 @@ async function directMint() {
       const rarityName = ['Common','Rare','Epic','Legendary'][mintedCard.rarity];
       const rarColor = ['#7a8899','#3b82f6','#c084fc','#ffc940'][mintedCard.rarity];
 
-      const mintedTeamInfo = TEAMS[mintedCard.teamId] || {flag: '🏳️', name: 'Unknown', code: 'un'};
+      const mintedTeamInfo = TEAMS[mintedCard.teamId] || {flag: 'đźŹłď¸Ź', name: 'Unknown', code: 'un'};
       const rarBorderColor = ['rgba(122,136,153,0.5)','rgba(59,130,246,0.6)','rgba(192,132,252,0.6)','rgba(255,201,64,0.7)'][mintedCard.rarity];
       const rarBg = ['rgba(122,136,153,0.05)','rgba(59,130,246,0.08)','rgba(192,132,252,0.08)','rgba(255,201,64,0.08)'][mintedCard.rarity];
       document.getElementById('mintedCardVisual').style.border = `2px solid ${rarBorderColor}`;
@@ -2148,7 +2225,7 @@ async function directMint() {
           <img src="https://flagcdn.com/w40/${mintedTeamInfo.code}.png" style="width:40px;height:28px;border-radius:3px;object-fit:cover;box-shadow:0 2px 6px rgba(0,0,0,0.5);" onerror="this.style.display='none'"/>
           <span style="font-family:'Black Ops One',sans-serif;font-size:20px;color:#dde4f0;">${mintedTeamInfo.name.toUpperCase()}</span>
         </div>
-        <div style="font-family:'Share Tech Mono',monospace;font-size:13px;color:#5a6a7a;margin-bottom:6px;">Position: ${posName} · Token #${mintedCard.tokenId}</div>
+        <div style="font-family:'Share Tech Mono',monospace;font-size:13px;color:#5a6a7a;margin-bottom:6px;">Position: ${posName} Â· Token #${mintedCard.tokenId}</div>
         <div style="font-family:'Black Ops One',sans-serif;font-size:40px;color:${rarColor};line-height:1;">${mintedCard.weight}<span style="font-size:16px;"> PTS</span></div>
         <div style="display:inline-block;margin-top:6px;padding:3px 12px;border-radius:4px;border:1px solid ${rarBorderColor};background:${rarBg};font-size:12px;font-family:'Black Ops One',sans-serif;color:${rarColor};letter-spacing:1px;">${rarityName}</div>
       `;
@@ -2158,7 +2235,7 @@ async function directMint() {
         const upgradeDiff = oldCard ? (mintedCard.weight - oldCard.weight) : mintedCard.weight;
         statusText = `
           <span style="display:inline-block; background:rgba(0,255,135,0.15); color:#00ff87; border:1px solid #00ff87; padding:6px 12px; border-radius:4px; font-weight:700; margin-bottom:12px; font-size:13px; text-transform:uppercase; letter-spacing:1px; animation: pulse 1.5s infinite;">
-            🔥 SQUAD UPGRADED! (+${upgradeDiff} PTS)
+            đź”Ą SQUAD UPGRADED! (+${upgradeDiff} PTS)
           </span>
           <p style="color:#7a8899;">Superb draw! This card is heavier than your previous one. Your tactical squad weight and leaderboard score have increased!</p>
         `;
@@ -2191,11 +2268,11 @@ async function directMint() {
 function shareOnX(){
   const score = getMyScore();
   const comp = getMyCompletion();
-  const text = `🏆 Competing for the sponsored 10,000 CHZ prize pool in ARGENTINA DREAM XI on @fan_tokens Block Kickers!\n\nMy Argentine tactical squad achieved ${score} pts (${comp}/11 slots populated).\n\nForm your lineup and challenge my weight! ⚽🔥\n\nblock-kickers.vercel.app/dream-xi`;
+  const text = `đźŹ† Competing for the sponsored 10,000 CHZ prize pool in ARGENTINA DREAM XI on @fan_tokens Block Kickers!\n\nMy Argentine tactical squad achieved ${score} pts (${comp}/11 slots populated).\n\nForm your lineup and challenge my weight! âš˝đź”Ą\n\nblock-kickers.vercel.app/dream-xi`;
   window.open('https://twitter.com/intent/tweet?text='+encodeURIComponent(text),'_blank');
 }
 
-/* HARMONOGRAM I LICZNIK BLOKÓW SYSTEMOWYCH */
+/* HARMONOGRAM I LICZNIK BLOKĂ“W SYSTEMOWYCH */
 const DEADLINE_BLOCK = 34300000;
 const BLOCK_TIME_MS = 3000;
 let currentBlock = 34158889; 
@@ -2247,7 +2324,7 @@ function updateCountdown(){
   document.getElementById('cdH').textContent = String(h).padStart(2,'0');
   document.getElementById('cdM').textContent = String(m).padStart(2,'0');
   document.getElementById('cdS').textContent = String(s).padStart(2,'0');
-  document.getElementById('cdBlock').innerHTML = 'Deadline block: <a href="https://scan.chiliz.com/block/'+DEADLINE_BLOCK+'" target="_blank" style="color:#00ff87;text-decoration:none;">#'+DEADLINE_BLOCK.toLocaleString()+'</a> · Estimated current: ~#'+estimated.toLocaleString()+' · remaining: '+blocksLeft.toLocaleString()+' blocks';
+  document.getElementById('cdBlock').innerHTML = 'Deadline block: <a href="https://scan.chiliz.com/block/'+DEADLINE_BLOCK+'" target="_blank" style="color:#00ff87;text-decoration:none;">#'+DEADLINE_BLOCK.toLocaleString()+'</a> Â· Estimated current: ~#'+estimated.toLocaleString()+' Â· remaining: '+blocksLeft.toLocaleString()+' blocks';
 }
 
 fetchCurrentBlock();
@@ -2255,7 +2332,7 @@ updateCountdown();
 setInterval(updateCountdown, 1000);
 setInterval(fetchCurrentBlock, 30000);
 
-// Przywrócenie połączenia portfela po przeładowaniu strony
+// PrzywrĂłcenie poĹ‚Ä…czenia portfela po przeĹ‚adowaniu strony
 window.addEventListener('load', async () => {
   if(window.ethereum){
     try{
