@@ -760,7 +760,8 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
   z-index: 1000;
   align-items: center;
   justify-content: center;
-  padding: 16px;
+  padding: max(16px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) max(16px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
+  overflow-y: auto;
 }
 .modal-content {
   background: #0f1318;
@@ -770,6 +771,9 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
   width: 100%;
   padding: 24px;
   position: relative;
+  max-height: calc(100dvh - 32px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+  overflow-y: auto;
+  overscroll-behavior: contain;
   box-shadow: 0 10px 40px rgba(0,0,0,0.6);
 }
 .modal-close {
@@ -789,6 +793,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
 .guide-step-text{color:#7a8899;font-size:14px;line-height:1.35;}
 .tip-box{background:rgba(255,201,64,0.08);border:1px solid rgba(255,201,64,0.28);border-radius:8px;padding:10px;margin-top:12px;color:#d9c27a;font-size:14px;line-height:1.35;}
 .tip-box strong{color:#ffc940;font-family:'Black Ops One',sans-serif;font-size:12px;letter-spacing:1px;}
+#onboardingModal .btn-card-action{position:sticky;bottom:0;z-index:2;}
 
 /* KLASA DLA ZAKĹADEK WYBORU JÄZYKA */
 .tab-btn{background:#0f1318;border:1px solid #1c2028;color:#7a8899;padding:6px 12px;border-radius:6px;font-family:'Black Ops One',sans-serif;font-size:10px;letter-spacing:1px;cursor:pointer;transition:all 0.2s;}
@@ -812,6 +817,18 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
 
 @media(max-width:600px){
   .page{padding-bottom:30px;}
+  .modal-overlay{align-items:flex-start;padding:max(10px, env(safe-area-inset-top)) 10px max(18px, env(safe-area-inset-bottom));}
+  .modal-content{padding:16px 14px;max-height:calc(100dvh - 28px - env(safe-area-inset-top) - env(safe-area-inset-bottom));border-radius:10px;}
+  .modal-close{top:8px;right:10px;font-size:26px;width:34px;height:34px;line-height:30px;background:#0f1318;border:1px solid #1c2028;border-radius:8px;z-index:3;}
+  #onboardingModal h2{font-size:18px !important;padding-right:36px;margin-bottom:6px !important;}
+  #onboardingModal p{font-size:13px;line-height:1.25 !important;}
+  .guide-steps{gap:6px;margin-top:10px;}
+  .guide-step{grid-template-columns:26px 1fr;gap:7px;padding:7px;border-radius:6px;}
+  .guide-step-num{height:23px;font-size:10px;border-radius:5px;}
+  .guide-step-title{font-size:10px;margin-bottom:1px;letter-spacing:0.5px;}
+  .guide-step-text{font-size:12px;line-height:1.2;}
+  .tip-box{font-size:12px;line-height:1.25;padding:8px;margin-top:8px;}
+  .tip-box strong{font-size:10px;}
   .hero{padding:28px 10px 24px;}
   .hero-title{font-size:32px;}
   .hero-sub{font-size:14px;padding:0 4px;}
@@ -1457,10 +1474,20 @@ function showHeaderToast(message, isError = false) {
   }, 6000);
 }
 
+function getWalletProvider() {
+  const eth = window.ethereum;
+  if (!eth) return null;
+  if (Array.isArray(eth.providers) && eth.providers.length) {
+    return eth.providers.find(p => p.isTrust) || eth.providers.find(p => p.isMetaMask) || eth.providers[0];
+  }
+  return eth;
+}
+
 async function updateWalletBalance() {
-  if (typeof window.ethereum !== 'undefined' && address) {
+  const walletProvider = getWalletProvider();
+  if (walletProvider && address) {
     try {
-      const p = new ethers.BrowserProvider(window.ethereum);
+      const p = new ethers.BrowserProvider(walletProvider);
       const bal = await p.getBalance(address);
       const formatted = parseFloat(ethers.formatEther(bal)).toFixed(1);
       const el = document.getElementById('walletBalance');
@@ -1631,19 +1658,20 @@ async function getReadProvider(){
 }
 
 async function connectWallet(){
-  if(!window.ethereum){
-    showHeaderToast('MetaMask not detected. Please install a compatible Web3 wallet.', true);
+  const walletProvider = getWalletProvider();
+  if(!walletProvider){
+    showHeaderToast('No compatible Web3 wallet detected. Open in MetaMask, Trust Wallet, or another EIP-1193 wallet browser.', true);
     return;
   }
   try{
-    await window.ethereum.request({method:'eth_requestAccounts'});
-    const cid = await window.ethereum.request({method:'eth_chainId'});
+    await walletProvider.request({method:'eth_requestAccounts'});
+    const cid = await walletProvider.request({method:'eth_chainId'});
     if(parseInt(cid,16) !== CHAIN_ID){
       showHeaderToast('Wrong network! Please switch your wallet to Chiliz Chain (ID: 88888).', true);
       return;
     }
     
-    provider = new ethers.BrowserProvider(window.ethereum);
+    provider = new ethers.BrowserProvider(walletProvider);
     signer = await provider.getSigner();
     address = await signer.getAddress();
     
@@ -2883,11 +2911,12 @@ setInterval(fetchCurrentBlock, 30000);
 // PrzywrĂłcenie poĹ‚Ä…czenia portfela po przeĹ‚adowaniu strony
 window.addEventListener('load', async () => {
   maybeShowOnboarding();
-  if(window.ethereum){
+  const walletProvider = getWalletProvider();
+  if(walletProvider){
     try{
-      const accounts = await window.ethereum.request({method:'eth_accounts'});
+      const accounts = await walletProvider.request({method:'eth_accounts'});
       if(accounts.length > 0){
-        const cid = await window.ethereum.request({method:'eth_chainId'});
+        const cid = await walletProvider.request({method:'eth_chainId'});
         if(parseInt(cid,16) === CHAIN_ID){
           await connectWallet();
         }
