@@ -11,14 +11,14 @@
 body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;font-size:16px;min-height:100vh;}
 .page{max-width:1100px;margin:0 auto;padding:0 0 60px;}
 
-/* NAVIGATION */
+/* NAWIGACJA GŁÓWNA */
 .topnav{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;border-bottom:1px solid #1c2028;background:rgba(6,8,10,0.97);position:sticky;top:0;z-index:100;backdrop-filter:blur(10px);}
 .topnav-logo{font-family:'Black Ops One',sans-serif;font-size:13px;letter-spacing:2px;color:#dde4f0;}
 .topnav-logo span{color:#00ff87;}
 .btn-connect{background:rgba(0,255,135,0.1);border:1px solid rgba(0,255,135,0.3);color:#00ff87;padding:8px 16px;border-radius:6px;font-family:'Black Ops One',sans-serif;font-size:11px;letter-spacing:1px;cursor:pointer;}
 .btn-connect.connected{background:rgba(0,255,135,0.15);border-color:#00ff87;}
 
-/* HERO & HEADER */
+/* SEKCJA HERO I NAGŁÓWEK */
 .hero{padding:48px 24px 40px;text-align:center;border-bottom:1px solid #1c2028;position:relative;overflow:hidden;}
 .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 0%,rgba(116,172,223,0.15),transparent);pointer-events:none;}
 .badge{display:inline-flex;align-items:center;gap:8px;background:rgba(116,172,223,0.1);border:1px solid rgba(116,172,223,0.3);border-radius:4px;padding:5px 14px;font-size:11px;letter-spacing:3px;color:#74ACDF;margin-bottom:20px;}
@@ -31,7 +31,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
 .trophy{font-size:64px;margin-bottom:16px;display:block;filter:drop-shadow(0 0 20px rgba(116,172,223,0.5));}
 .hero-title{font-family:'Black Ops One',sans-serif;font-size:clamp(32px,6vw,64px);line-height:0.95;margin-bottom:12px;position:relative;z-index:1;}
 
-/* ARGENTINA COLOR PALETTE FOR MAIN HEADER */
+/* KOLORYSTYKA FLAGI ARGENTYNY DLA NAGŁÓWKA */
 .hero-title .sky {
   color: #74ACDF;
   text-shadow: 0 0 15px rgba(116, 172, 223, 0.4);
@@ -47,13 +47,13 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
 
 .hero-sub{font-size:18px;color:#7a8899;margin-bottom:28px;max-width:750px;margin-left:auto;margin-right:auto;position:relative;z-index:1;}
 
-/* ARGENTINE FLAG UNDER TITLE */
+/* FLAGA ARGENTYNY POD TYTUŁEM */
 .arg-flag{display:flex;height:6px;border-radius:3px;overflow:hidden;width:120px;margin:0 auto 24px;}
 .arg-flag div:nth-child(1){flex:1;background:#74ACDF;}
 .arg-flag div:nth-child(2){flex:1;background:#fff;}
 .arg-flag div:nth-child(3){flex:1;background:#74ACDF;}
 
-/* STATS CARDS */
+/* KARTY STATYSTYK */
 .stats-container{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin:24px;position:relative;z-index:1;}
 .stat-card{background:#0f1318;border:1px solid #1c2028;border-radius:12px;padding:20px;text-align:center;}
 .stat-val{font-family:'Black Ops One',sans-serif;font-size:36px;color:#dde4f0;line-height:1;margin-bottom:4px;}
@@ -61,7 +61,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
 .stat-val.gold{color:#ffc940;}
 .stat-lbl{font-size:11px;letter-spacing:2px;color:#5a6a7a;text-transform:uppercase;}
 
-/* PRIZE BOXES */
+/* BLOKI NAGRÓD */
 .prize-row{display:flex;gap:12px;justify-content:center;margin-bottom:32px;flex-wrap:wrap;}
 .prize-box{background:rgba(255,201,64,0.07);border:1px solid rgba(255,201,64,0.3);border-radius:10px;padding:16px 28px;text-align:center;}
 .prize-num{font-family:'Black Ops One',sans-serif;font-size:40px;color:#ffc940;line-height:1;}
@@ -74,7 +74,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
 .prize-box.b .prize-num{color:#cd7f32;}
 .prize-box.b .prize-chz{color:#cd7f32;}
 
-/* PLAYGROUND GRID */
+/* SIATKA ROZGRYWKI */
 .game-grid {
   display: grid;
   grid-template-columns: 1fr;
@@ -93,7 +93,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
   }
 }
 
-/* HOW IT WORKS PANEL */
+/* PANEL JAK TO DZIAŁA */
 .info-section {
   background: #0a0e14;
   border: 1px solid #1c2028;
@@ -109,7 +109,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
 .how-desc .p{color:#818cf8;font-weight:700;}
 .how-desc .a{color:#ffc940;font-weight:700;}
 
-/* STANDINGS */
+/* TABLICA LIDERÓW */
 .lb-section{padding: 24px;}
 .leaderboard-list{background:#0a0e14;border:1px solid #1c2028;border-radius:12px;padding:12px;}
 .lb-row{display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:8px;margin-bottom:6px;background:#0f1318;border:1px solid #1c2028;position:relative;}
@@ -122,7 +122,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
 .lb-you{font-size:10px;color:#00ff87;letter-spacing:1px;background:rgba(0,255,135,0.1);padding:2px 6px;border-radius:4px;margin-left:8px;}
 .cutoff-line{display:flex;align-items:center;justify-content:center;gap:12px;margin:12px 0;padding:8px;background:rgba(239,68,68,0.05);border:1px dotted rgba(239,68,68,0.4);border-radius:6px;font-size:11px;font-family:'Share Tech Mono',monospace;color:#ef4444;letter-spacing:1px;}
 
-/* TACTICAL SOCCER PITCH */
+/* BOISKO TAKTYCZNE */
 .pitch-container {
   background: #0a0e14;
   border: 1px solid #1c2028;
@@ -196,7 +196,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
   pointer-events: none;
 }
 
-/* FORMATION STRUCTURE */
+/* STRUKTURA FORMACJI */
 .formation {
   display: flex;
   flex-direction: column;
@@ -210,7 +210,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
   gap: 12px;
 }
 
-/* SOCCER PLAYER POSITION CARD */
+/* KARTA POZYCJI ZAWODNIKA */
 .pos-card{
   background: rgba(15, 19, 24, 0.9);
   border: 1px solid #1c2028;
@@ -292,7 +292,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
 .btn-card-action.upgrade{background:rgba(0,255,135,0.1);border-color:rgba(0,255,135,0.3);color:#00ff87;}
 .btn-card-action.upgrade:hover{background:#00ff87;color:#000;}
 
-/* LABELS & ICONS */
+/* ETYKIETY I IKONY */
 .pitch-title{font-family:'Black Ops One',sans-serif;font-size:11px;letter-spacing:3px;color:#5a6a7a;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;}
 .flag-img {
   width: 24px;
@@ -309,7 +309,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
   box-shadow: 0 2px 4px rgba(0,0,0,0.5);
 }
 
-/* COUNTDOWN WIDGET */
+/* WIDŻET ODLICZANIA BLOKÓW */
 .countdown-wrap{background:#0f1318;border:1px solid rgba(0,255,135,0.3);border-radius:10px;padding:16px 24px;display:inline-flex;flex-direction:column;align-items:center;gap:6px;position:relative;z-index:1;min-width:280px;}
 .countdown-label{font-size:10px;letter-spacing:3px;color:#5a6a7a;text-align:center;}
 .countdown-timer {
@@ -361,7 +361,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
   text-align: center;
 }
 
-/* LEGEND */
+/* LEGENDA */
 .legend {
   display: flex;
   gap: 12px;
@@ -382,7 +382,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
   border-radius: 2px;
 }
 
-/* OVERLAYS & MODALS */
+/* OKNA MODALNE */
 .modal-overlay {
   display: none;
   position: fixed;
@@ -415,7 +415,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
   cursor: pointer;
 }
 
-/* SYSTEM NOTIFICATIONS (TOASTS) */
+/* NOTYFIKACJE SYSTEMOWE (TOASTY) */
 #toast {
   position: fixed;
   bottom: 24px;
@@ -433,7 +433,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
   max-width: 320px;
 }
 
-/* BUTTONS */
+/* PRZYCISKI AKCJI */
 .btn-mint-hero{background:linear-gradient(135deg,#00ff87,#00c96a);color:#000;border:none;padding:14px 32px;border-radius:8px;font-family:'Black Ops One',sans-serif;font-size:14px;letter-spacing:2px;cursor:pointer;transition:all 0.2s;}
 .btn-mint-hero:hover{transform:scale(1.02);filter:brightness(1.1);}
 .btn-share{background:#000;border:1px solid #1c2028;color:#fff;padding:10px 20px;border-radius:8px;font-family:'Black Ops One',sans-serif;font-size:12px;letter-spacing:1px;cursor:pointer;display:flex;align-items:center;gap:8px;transition:all 0.2s;}
@@ -470,20 +470,21 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
 
 <div class="page">
 
-  <!-- HERO SECTION -->
+  <!-- SEKCJA HERO -->
   <div class="hero">
-    <div class="badge"><span class="dot"></span>QUEST · ARGENTINA DREAM XI</div>
-    <!-- Argentine Flag emoji replacing the trophy in the hero header -->
-    <span class="trophy">🇦🇷</span>
+    <!-- Przeniesiona flaga do tła odznaki -->
+    <div class="badge"><span class="dot"></span>QUEST · ARGENTINA DREAM XI 🇦🇷</div>
+    <!-- Puchar (🏆) przywrócony jako główna ikona nagłówka -->
+    <span class="trophy">🏆</span>
     <div class="arg-flag"><div></div><div></div><div></div></div>
-    <!-- Main header styled in high-fidelity Argentine Flag colors -->
+    <!-- Tytuł ostylowany w błękitno-białych barwach Argentyny z neonowym blaskiem -->
     <div class="hero-title">
       <span class="sky">DREAM XI</span><br>
       <span class="white">ARGENTINA</span>
     </div>
     <div class="hero-sub">Build the heaviest tactical Argentina squad ever assembled! Cards only need to pass through your wallet — buy, score, and sell duplicates on the marketplace. Real prizes await leaders in the deadline block!</div>
 
-    <!-- PRIZE STRUCTURE -->
+    <!-- STRUKTURA NAGRÓD -->
     <div class="prize-row">
       <div class="prize-box">
         <div style="font-size:11px;letter-spacing:2px;color:#ffc940;margin-bottom:4px;">🥇 1ST PLACE</div>
@@ -507,7 +508,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
       <button class="btn-mint-hero" onclick="window.open('https://block-kickers.vercel.app','_blank')">MAIN WEBSITE →</button>
     </div>
 
-    <!-- QUEST COUNTDOWN TIMER -->
+    <!-- LICZNIK QUESTU -->
     <div class="countdown-wrap">
       <div class="countdown-label">QUEST DEADLINE (QUEST TARGET BLOCK)</div>
       <div class="countdown-timer">
@@ -530,7 +531,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
     </div>
   </div>
 
-  <!-- PLAYER SQUAD STATS -->
+  <!-- STATYSTYKI DRUŻYNY GRACZA -->
   <div class="stats-container" id="statsRow" style="display:none;">
     <div class="stat-card">
       <div class="stat-val highlight" id="myCompCount">0 / 11</div>
@@ -550,13 +551,13 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
     </div>
   </div>
 
-  <!-- CONNECT PROMPT -->
+  <!-- MONIT O PODŁĄCZENIE -->
   <div id="connectSection" class="connect-prompt">
     <p>Connect your Chiliz Wallet to explore the tactical pitch and start scoring</p>
     <button class="btn-connect-big" onclick="connectWallet()">CONNECT WALLET</button>
   </div>
 
-  <!-- MAIN GAME AREA -->
+  <!-- GŁÓWNY PANEL GRY -->
   <div id="gameSection" style="display:none;">
 
     <div style="display:flex; justify-content:space-between; align-items:center; padding:0 24px 16px; flex-wrap:wrap; gap:12px;">
@@ -574,10 +575,10 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
       </div>
     </div>
 
-    <!-- GAME LAYOUT GRID -->
+    <!-- SIATKA ROZGRYWKI -->
     <div class="game-grid">
       
-      <!-- LEFT COLUMN: HOW IT WORKS & P2P TRANSFERS EXPLANATION -->
+      <!-- LEWA KOLUMNA: INSTRUKCJA I BRAK PRZESYŁU P2P -->
       <div class="left-col info-section">
         <div class="pitch-title">
           <span>HOW IT WORKS — THE GAME ECONOMY</span>
@@ -585,25 +586,25 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
         </div>
 
         <div class="how-grid">
-          <!-- STEP 1 -->
+          <!-- KROK 1 -->
           <div class="how-card">
             <div class="how-n">01</div>
             <div class="how-title">MINT OR BUY</div>
             <div class="how-desc">Get Argentina cards by minting for <span class="g">10 CHZ</span> or buying from others on the market. Every tactical position matters.</div>
           </div>
-          <!-- STEP 2 (P2P TRANSFER RESTRICTION HIGHLIGHT) -->
+          <!-- KROK 2 (OSTRZEŻENIE O P2P TRANSFERACH) -->
           <div class="how-card" style="border-color: rgba(239, 68, 68, 0.35); background: rgba(239, 68, 68, 0.03);">
             <div class="how-n" style="color: #ef4444;">02</div>
             <div class="how-title" style="color: #ef4444;">⚠️ NO P2P TRANSFERS</div>
             <div class="how-desc">Direct wallet-to-wallet transfers or gifts <span style="color: #ef4444; font-weight: bold;">DO NOT COUNT</span>. Cards only score when minted or bought directly on the market!</div>
           </div>
-          <!-- STEP 3 -->
+          <!-- KROK 3 -->
           <div class="how-card">
             <div class="how-n">03</div>
             <div class="how-title">SCORE & SELL</div>
             <div class="how-desc">Once a card is in your wallet, the system <span class="p">permanently stamps your best weight</span>. Sell duplicates immediately to recover your CHZ!</div>
           </div>
-          <!-- STEP 4 -->
+          <!-- KROK 4 -->
           <div class="how-card" style="border-color:rgba(255,201,64,0.3); background:rgba(255,201,64,0.04);">
             <div class="how-n" style="color:rgba(255,201,64,0.2);">04</div>
             <div class="how-title" style="color:#ffc940;">CLAIM THE JACKPOT</div>
@@ -612,7 +613,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
         </div>
       </div>
 
-      <!-- RIGHT COLUMN: SOCCER TAKTICAL PITCH -->
+      <!-- PRAWA KOLUMNA: BOISKO TAKTYCZNE -->
       <div class="right-col pitch-container">
         <div class="pitch-title-row">
           <div class="pitch-title" style="margin-bottom:0;">
@@ -628,14 +629,14 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
           <div class="pitch-penalty-area-bottom"></div>
 
           <div class="formation" id="pitchFormationGrid">
-            <!-- Positions 1-11 populated dynamically -->
+            <!-- Pozycje 1-11 ładowane dynamicznie -->
           </div>
         </div>
       </div>
 
     </div>
 
-    <!-- LEADERBOARD STANDINGS -->
+    <!-- TABLICA LIDERÓW QUESTU -->
     <div class="lb-section">
       <div class="pitch-title">
         <span>COLLECTORS STANDINGS — ARGENTINA QUEST</span>
@@ -650,13 +651,13 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
   </div>
 </div>
 
-<!-- MULTI-LANGUAGE RULES MODAL -->
+<!-- MODAL: INSTRUKCJE W WIELU JĘZYKACH -->
 <div id="rulesModal" class="modal-overlay">
   <div class="modal-content" style="max-width:550px;">
     <button onclick="toggleRulesModal(false)" class="modal-close">&times;</button>
     <h2 id="rulesTitle" style="font-family:'Black Ops One',sans-serif; font-size:24px; color:#ffc940; margin-bottom:16px;">How to Play & Rules</h2>
     
-    <!-- Language toggle tabs -->
+    <!-- Zakładki wyboru języków -->
     <div style="display:flex; gap:8px; margin-bottom:20px; flex-wrap:wrap; border-bottom:1px solid #1c2028; padding-bottom:12px;">
       <button class="tab-btn active" id="lang-en" onclick="setRulesLanguage('en')">🇬🇧 EN</button>
       <button class="tab-btn" id="lang-pl" onclick="setRulesLanguage('pl')">🇵🇱 PL</button>
@@ -664,20 +665,20 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
     </div>
     
     <ul id="rulesContent" style="list-style:none; display:flex; flex-direction:column; gap:12px; font-family:'Barlow Condensed',sans-serif; font-size:16px; color:#dde4f0; line-height:1.4;">
-      <!-- Content populated dynamically -->
+      <!-- Treść modalu ładowana dynamicznie przez JS -->
     </ul>
     
     <button class="btn-card-action" onclick="toggleRulesModal(false)" style="margin-top:24px; padding:10px; font-size:11px;">CLOSE RULES</button>
   </div>
 </div>
 
-<!-- SELL CARD MODAL -->
+<!-- MODAL: WYSTAWIENIE NA RYNEK -->
 <div id="sellModal" class="modal-overlay">
   <div class="modal-content" style="max-width:400px;">
     <button onclick="toggleSellModal(false)" class="modal-close">&times;</button>
     <h2 style="font-family:'Black Ops One',sans-serif; font-size:20px; color:#ef4444; margin-bottom:12px;">List Player on Marketplace</h2>
     <div id="sellCardInfo" style="margin-bottom:16px; font-size:14px; color:#dde4f0; line-height:1.5; display: flex; flex-direction: column; align-items: flex-start; gap: 4px;">
-      <!-- Dynamic card details -->
+      <!-- Dynamiczne dane karty -->
     </div>
     <div style="margin-bottom:20px;">
       <label style="display:block; font-size:11px; letter-spacing:1px; color:#5a6a7a; margin-bottom:6px; text-transform:uppercase;">Listing Price (CHZ)</label>
@@ -687,7 +688,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
   </div>
 </div>
 
-<!-- MINT SUCCESS MODAL -->
+<!-- MODAL: SUKCES MINTU -->
 <div id="mintSuccessModal" class="modal-overlay">
   <div class="modal-content" style="max-width:450px; text-align:center;">
     <button onclick="toggleMintSuccessModal(false)" class="modal-close">&times;</button>
@@ -695,22 +696,22 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
     <h2 style="font-family:'Black Ops One',sans-serif; font-size:24px; color:#00ff87; margin-bottom:16px; letter-spacing:1px;">PLAYER MINTED!</h2>
     
     <div id="mintedCardVisual" style="background:#06080a; border:1px solid #1c2028; border-radius:8px; padding:20px; margin-bottom:20px; display:inline-block; width:100%;">
-      <!-- Card visual renderer -->
+      <!-- Render wizualny karty -->
     </div>
 
     <div id="mintedCardStatus" style="font-family:'Barlow Condensed',sans-serif; font-size:16px; line-height:1.4; margin-bottom:20px;">
-      <!-- Improvement/Reserve info status -->
+      <!-- Status ulepszenia / rezerwy -->
     </div>
 
     <button class="btn-card-action upgrade" onclick="toggleMintSuccessModal(false)" style="padding:10px; font-size:11px; text-transform:uppercase; font-family:'Black Ops One', sans-serif;">CONTINUE TO PITCH</button>
   </div>
 </div>
 
-<!-- SYSTEM TOAST OVERLAY -->
+<!-- TOAST POWIADOMIENIOWY -->
 <div id="toast">System Notification</div>
 
 <script>
-// Main configurations for Chiliz Chain Mainnet integration
+// Konfiguracja integracji Chiliz Chain Mainnet
 const CONTRACT_ADDRESS = "0xAAdc8D56e25a223B6cf4b88ba0889975560f21aB";
 const MARKET_ADDRESS   = "0xA18f7Bade67Eda41FD7D2B3A204d39b543977DaE";
 const CHAIN_ID = 88888;
@@ -747,18 +748,18 @@ const POSITION_SHORT = {
   11: 'LW'
 };
 
-// Swapped LB (Position 3) with RB (Position 2) inside the defense line row of the tactical field formation
+// Zamiana LB (Pozycja 3) z RB (Pozycja 2) w formacji defensywnej boiska
 const FORMATION = [
   [9],         // ST
   [7,11],      // RW, LW
   [6,8,10],    // DM, MID, AM
-  [3,4,5,2],   // LB, CB A, CB B, RB (Swapped visually left-to-right)
+  [3,4,5,2],   // LB, CB A, CB B, RB (Wizualnie zamienione lewa-prawa)
   [1]          // GK
 ];
 
 const ARGENTINA_TEAM_DATA = {id: 25, name: "Argentina", flag: "🇦🇷", code: "ar", fed: "CONMEBOL"};
 
-// Localized documentation modal translations
+// Wielojęzyczne tłumaczenia zasad wyzwania
 const RULES_TRANSLATIONS = {
   en: {
     title: "How to Play & Rules",
@@ -801,7 +802,7 @@ let provider, signer, address;
 let contract, marketContract;
 let activeSellTokenId = null;
 
-window.dreamScores = {}; // wallet -> { position -> {weight, tid, rarity, dna} }
+window.dreamScores = {}; // portfel -> { pozycja -> {weight, tid, rarity, dna} }
 let marketByPos = {}; 
 let marketFloorByPos = {}; 
 let currentMintPrice = ethers.parseEther("10");
@@ -1038,7 +1039,7 @@ async function loadData(){
     try{
       const dnaBig = typeof dna === 'bigint' ? dna : BigInt(String(dna));
       const t = parseDNA(dnaBig);
-      if (t.teamId !== ARGENTINA_TEAM_ID) return; // Filters only Argentina player cards for this quest
+      if (t.teamId !== ARGENTINA_TEAM_ID) return; // Filtruje wyłącznie karty Argentyny dla tego wyzwania
       
       const w = wallet.toLowerCase();
       if(!window.dreamScores[w]) window.dreamScores[w] = {};
@@ -1060,7 +1061,7 @@ async function loadData(){
     }
   });
 
-  // Query marketplace items for Argentina
+  // Odpytywanie rynku wtórnego o aktualne oferty
   marketByPos = {};
   marketFloorByPos = {};
   try{
@@ -1079,13 +1080,13 @@ async function loadData(){
         const price = parseFloat(ethers.formatEther(priceWei));
         const pos = fig.position;
         
-        // Best upgrade item (heaviest)
+        // Najlepszy upgrade taktyczny
         const curMkt = marketByPos[pos];
         if(!curMkt || fig.weight > curMkt.weight || (fig.weight === curMkt.weight && price < curMkt.price)){
           marketByPos[pos] = {listingId: i, price, priceWei, weight: fig.weight, rarity: fig.rarity};
         }
 
-        // Cheapest floor item
+        // Najniższa cena rynkowa (floor)
         const curFloor = marketFloorByPos[pos];
         if(!curFloor || price < curFloor.price) {
           marketFloorByPos[pos] = {listingId: i, price, priceWei};
@@ -1132,7 +1133,7 @@ function renderStats() {
   document.getElementById('myCompCount').textContent = `${compCount} / 11`;
   document.getElementById('myScoreText').textContent = `${scoreVal} pts`;
 
-  // Global rank resolving
+  // Pobranie rankingu gracza
   const players = getLeaderboardData();
   let myGlobalRankVal = '—';
   let myEstPrizeVal = 0;
@@ -1159,7 +1160,7 @@ function renderPitch() {
 
   const myTeamPositions = window.dreamScores[myAddr] || {};
 
-  // Generating legend elements
+  // Generowanie elementów legendy
   const legendEl = document.createElement('div');
   legendEl.className = 'legend';
   legendEl.innerHTML = `
@@ -1179,7 +1180,7 @@ function renderPitch() {
       const mkt = marketByPos[pos];
       const floor = marketFloorByPos[pos];
 
-      // Format floor price info (Shown only for owned slots)
+      // Cena minimalna (floor) na rynku dla posiadanych pozycji
       let floorHtml = '';
       if (scored && floor) {
         floorHtml = `<div style="font-size:9px; color:#ffc940; font-family:'Share Tech Mono',monospace; margin-top:2px;">Floor: ${floor.price} CHZ</div>`;
@@ -1196,7 +1197,7 @@ function renderPitch() {
           actionHtml = `<div style="margin-top:4px;font-size:8px;color:#5a6a7a;font-family:Share Tech Mono,monospace;letter-spacing:0.3px;">BEST WEIGHT</div>`;
         }
 
-        // Sell Button if user currently owns the scored card in Web3
+        // Przycisk sprzedaży widoczny tylko jeśli gracz faktycznie posiada tę kartę
         let sellBtnHtml = '';
         const currentOwnerInfo = ownerMap[scored.tid];
         const currentlyOwnsScored = myAddr && currentOwnerInfo && currentOwnerInfo.owner === myAddr;
@@ -1453,7 +1454,7 @@ function shareOnX(){
   window.open('https://twitter.com/intent/tweet?text='+encodeURIComponent(text),'_blank');
 }
 
-/* BLOCK DEADLINE SYSTEM CONFIGS */
+/* HARMONOGRAM I LICZNIK BLOKÓW SYSTEMOWYCH */
 const DEADLINE_BLOCK = 34253705;
 const BLOCK_TIME_MS = 3000;
 let currentBlock = 34158889; 
@@ -1513,7 +1514,7 @@ updateCountdown();
 setInterval(updateCountdown, 1000);
 setInterval(fetchCurrentBlock, 30000);
 
-// Auto reconnect Web3 provider logic on startup
+// Przywrócenie połączenia portfela po przeładowaniu strony
 window.addEventListener('load', async () => {
   if(window.ethereum){
     try{
