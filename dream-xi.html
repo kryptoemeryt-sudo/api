@@ -16,6 +16,8 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
 
 /* NAWIGACJA GĹĂ“WNA */
 .topnav{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;border-bottom:1px solid #1c2028;background:rgba(6,8,10,0.97);position:sticky;top:0;z-index:100;backdrop-filter:blur(10px);}
+.topnav-left{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.wallet-pill{font-family:'Share Tech Mono',monospace;font-size:12px;display:none;background:rgba(0,255,135,0.06);border:1px solid rgba(0,255,135,0.2);padding:6px 10px;border-radius:6px;letter-spacing:0.3px;white-space:nowrap;}
 .topnav-logo{font-family:'Black Ops One',sans-serif;font-size:13px;letter-spacing:2px;color:#dde4f0;}
 .topnav-logo span{color:#00ff87;}
 .btn-connect{background:rgba(0,255,135,0.1);border:1px solid rgba(0,255,135,0.3);color:#00ff87;padding:8px 16px;border-radius:6px;font-family:'Black Ops One',sans-serif;font-size:11px;letter-spacing:1px;cursor:pointer;}
@@ -708,8 +710,12 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
 <body>
 
 <nav class="topnav">
-  <a href="https://block-kickers.vercel.app" class="topnav-logo" style="text-decoration:none;">BLOCK <span>KICKERS</span></a>
-  <span id="walletBalance" style="font-family:'Share Tech Mono',monospace;color:#00ff87;font-size:13px;display:none;background:rgba(0,255,135,0.06);border:1px solid rgba(0,255,135,0.2);padding:6px 12px;border-radius:6px;letter-spacing:0.5px;">0.0 CHZ</span><button class="btn-connect" id="connectBtn" onclick="connectWallet()">CONNECT WALLET</button>
+  <div class="topnav-left">
+    <a href="https://block-kickers.vercel.app" class="topnav-logo" style="text-decoration:none;">BLOCK <span>KICKERS</span></a>
+    <span id="walletAddress" class="wallet-pill" style="color:#dde4f0;">0x0000...0000</span>
+    <span id="walletBalance" class="wallet-pill" style="color:#00ff87;">0.0 CHZ</span>
+  </div>
+  <button class="btn-connect" id="connectBtn" onclick="connectWallet()">CONNECT WALLET</button>
 </nav>
 
 <div class="page">
@@ -728,19 +734,19 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
     <!-- PULA NAGRĂ“D -->
     <div class="prize-row">
       <div class="prize-box">
-        <div style="font-size:11px;letter-spacing:2px;color:#ffc940;margin-bottom:4px;">1ST PLACE</div>
-        <div class="prize-num">6,000</div>
+        <div style="font-size:11px;letter-spacing:2px;color:#ffc940;margin-bottom:4px;">PRIZE POOL</div>
+        <div class="prize-num">10,000</div>
         <div class="prize-chz">CHZ</div>
       </div>
       <div class="prize-box s">
-        <div style="font-size:11px;letter-spacing:2px;color:#9ca3af;margin-bottom:4px;">2ND PLACE</div>
-        <div class="prize-num">3,000</div>
-        <div class="prize-chz">CHZ</div>
+        <div style="font-size:11px;letter-spacing:2px;color:#9ca3af;margin-bottom:4px;">MTT STYLE</div>
+        <div class="prize-num">TOP</div>
+        <div class="prize-chz">FIELD PAID</div>
       </div>
       <div class="prize-box b">
-        <div style="font-size:11px;letter-spacing:2px;color:#cd7f32;margin-bottom:4px;">3RD PLACE</div>
-        <div class="prize-num">1,000</div>
-        <div class="prize-chz">CHZ</div>
+        <div style="font-size:11px;letter-spacing:2px;color:#cd7f32;margin-bottom:4px;">MORE PLAYERS</div>
+        <div class="prize-num">MORE</div>
+        <div class="prize-chz">PAID PLACES</div>
       </div>
     </div>
 
@@ -1248,11 +1254,39 @@ function getFlagHtml(isLarge = false) {
   `;
 }
 
-function getPrizeForRank(rank) {
-  if (rank === 1) return 6000;
-  if (rank === 2) return 3000;
-  if (rank === 3) return 1000;
-  return 0;
+const PRIZE_POOL_CHZ = 10000;
+
+function getPaidPlaces(playerCount) {
+  if (playerCount <= 0) return 0;
+  if (playerCount <= 3) return 1;
+  if (playerCount <= 6) return 2;
+  if (playerCount <= 12) return 3;
+  return Math.min(playerCount, Math.max(3, Math.ceil(playerCount * 0.15)));
+}
+
+function getPrizeForRank(rank, playerCount = getLeaderboardData().length) {
+  const paidPlaces = getPaidPlaces(playerCount);
+  if (rank < 1 || rank > paidPlaces) return 0;
+
+  const weights = [];
+  for (let i = 1; i <= paidPlaces; i++) {
+    weights.push(Math.pow(paidPlaces - i + 1, 1.6));
+  }
+
+  const totalWeight = weights.reduce((sum, w) => sum + w, 0);
+  const payouts = weights.map(w => Math.floor((PRIZE_POOL_CHZ * w / totalWeight) * 10) / 10);
+  const paidSoFar = payouts.reduce((sum, p) => sum + p, 0);
+  payouts[0] += Math.round((PRIZE_POOL_CHZ - paidSoFar) * 10) / 10;
+
+  return payouts[rank - 1] || 0;
+}
+
+function getOrdinal(rank) {
+  const suffix = (rank % 10 === 1 && rank % 100 !== 11) ? 'st'
+    : (rank % 10 === 2 && rank % 100 !== 12) ? 'nd'
+    : (rank % 10 === 3 && rank % 100 !== 13) ? 'rd'
+    : 'th';
+  return `${rank}${suffix}`;
 }
 
 function getReferrer() {
@@ -1293,6 +1327,12 @@ async function connectWallet(){
     
     document.getElementById('connectBtn').textContent = address.slice(0,6)+'...'+address.slice(-4);
     document.getElementById('connectBtn').classList.add('connected');
+    const walletAddressEl = document.getElementById('walletAddress');
+    if (walletAddressEl) {
+      walletAddressEl.textContent = address.slice(0,6)+'...'+address.slice(-4);
+      walletAddressEl.style.display = 'inline-block';
+    }
+    await updateWalletBalance();
     document.getElementById('connectSection').style.display = 'none';
     document.getElementById('gameSection').style.display = 'block';
     document.getElementById('statsRow').style.display = 'grid';
@@ -1451,6 +1491,7 @@ async function loadData(){
       console.warn("Could not query dynamic mint price:", e);
     }
   }
+  await updateWalletBalance();
 
   ownerMap = {};
   mints.forEach(m => {
@@ -1565,7 +1606,9 @@ async function loadData(){
     }
   }catch(e){ console.warn('Marketplace read error:', e); }
 
-  document.getElementById('poolInfo').textContent = `Quest Prize Pool: Sponsored pool of 10,000 CHZ divided among TOP 3 collectors`;
+  const playerCount = getLeaderboardData().length;
+  const paidPlaces = getPaidPlaces(playerCount);
+  document.getElementById('poolInfo').textContent = `Quest Prize Pool: ${PRIZE_POOL_CHZ.toLocaleString()} CHZ - Top ${paidPlaces || 1} paid (${playerCount} players)`;
 
   renderStats();
   renderPitch();
@@ -1828,6 +1871,7 @@ function renderStats() {
 
   // Pobranie pozycji rankingowej
   const players = getLeaderboardData();
+  const playerCount = players.length;
   let myGlobalRankVal = '-';
   let myEstPayoutVal = 0;
   
@@ -1835,7 +1879,7 @@ function renderStats() {
   if (myIndex !== -1) {
     const rank = myIndex + 1;
     myGlobalRankVal = `#${rank}`;
-    myEstPayoutVal = getPrizeForRank(rank);
+    myEstPayoutVal = getPrizeForRank(rank, playerCount);
   }
   
   document.getElementById('myGlobalRank').textContent = myGlobalRankVal;
@@ -1945,25 +1989,28 @@ function renderLeaderboard(){
   const myAddr = address?.toLowerCase();
 
   const competitors = getLeaderboardData();
+  const playerCount = competitors.length;
+  const paidPlaces = getPaidPlaces(playerCount);
 
   if(competitors.length === 0){
     lb.innerHTML = '<div style="text-align:center;color:#3d4a5a;padding:20px;">No active contenders on the Argentina leaderboard yet. Mint or buy a player to start!</div>';
     return;
   }
 
-  let top10 = competitors.slice(0, 10);
+  const visibleCount = Math.max(10, paidPlaces);
+  let top10 = competitors.slice(0, visibleCount);
   let myIndex = competitors.findIndex(p => p.wallet.toLowerCase() === myAddr);
-  let includeMeRow = (myAddr && myIndex !== -1 && myIndex >= 10);
+  let includeMeRow = (myAddr && myIndex !== -1 && myIndex >= visibleCount);
 
   let html = '';
 
   const renderRow = (player, idx) => {
     const isMe = player.wallet.toLowerCase() === myAddr;
     const rank = idx + 1;
-    const isWinner = rank <= 3;
+    const isWinner = rank <= paidPlaces;
     const posClass = isWinner ? 'winner' : '';
-    const medal = rank === 1 ? '1st' : rank === 2 ? '2nd' : rank === 3 ? '3rd' : '';
-    const prizeAmount = getPrizeForRank(rank);
+    const medal = rank <= 3 ? getOrdinal(rank) : '';
+    const prizeAmount = getPrizeForRank(rank, playerCount);
     const prizeDisplay = prizeAmount > 0 ? `<span style="color:#00ff87;">Prize: ${prizeAmount.toLocaleString()} CHZ</span>` : '<span style="color:#5a6a7a;">No Prize</span>';
 
     return `
@@ -1988,10 +2035,10 @@ function renderLeaderboard(){
       </div>
     `;
     html += renderRow(competitors[myIndex], myIndex);
-  } else if (competitors.length > 3) {
+  } else if (competitors.length > paidPlaces) {
     html += `
       <div class="cutoff-line">
-        SPONSORED PRIZE THRESHOLD (TOP 3) - PLAYERS BELOW DO NOT QUALIFY FOR SPONSOR PRIZES
+        SPONSORED PRIZE THRESHOLD (TOP ${paidPlaces}) - PLAYERS BELOW DO NOT QUALIFY FOR SPONSOR PRIZES
       </div>
     `;
   }
