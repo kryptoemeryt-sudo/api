@@ -33,7 +33,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
   0%, 100% { transform: scale(1); opacity: 1; }
   50% { transform: scale(1.03); opacity: 0.9; }
 }
-.trophy{font-size:64px;margin-bottom:16px;display:block;filter:drop-shadow(0 0 20px rgba(116,172,223,0.5));}
+.trophy{font-size:clamp(54px,10vw,86px);line-height:1;margin-bottom:16px;display:block;filter:drop-shadow(0 0 20px rgba(116,172,223,0.5));}
 .hero-title{font-family:'Black Ops One',sans-serif;font-size:clamp(32px,6vw,64px);line-height:0.95;margin-bottom:12px;position:relative;z-index:1;}
 
 /* GRADIENTY BARW FLAGI ARGENTYNY DLA NAGĹĂ“WKA */
@@ -723,36 +723,36 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
   <!-- SEKCJA HERO -->
   <div class="hero">
     <div class="badge"><span class="dot"></span>QUEST - ARGENTINA DREAM XI</div>
-    <span class="trophy">PRIZE</span>
+    <span class="trophy" aria-label="Trophy">&#127942;</span>
     <div class="arg-flag"><div></div><div></div><div></div></div>
     <div class="hero-title">
       <span class="sky">DREAM XI</span><br>
       <span class="white">ARGENTINA</span>
     </div>
-    <div class="hero-sub">Build the heaviest tactical Argentina squad ever assembled! Cards only need to pass through your wallet - buy, score, and sell duplicates on the marketplace. Real prizes await leaders in the deadline block!</div>
+    <div class="hero-sub">Build the heaviest tactical Argentina squad ever assembled! Minting gives a random team from the 48 World Cup nations - buy Argentina cards, score, and sell duplicates on the marketplace.</div>
 
     <!-- PULA NAGRĂ“D -->
     <div class="prize-row">
       <div class="prize-box">
-        <div style="font-size:11px;letter-spacing:2px;color:#ffc940;margin-bottom:4px;">PRIZE POOL</div>
+        <div style="font-size:11px;letter-spacing:2px;color:#ffc940;margin-bottom:4px;">&#127942; PRIZE POOL</div>
         <div class="prize-num">10,000</div>
         <div class="prize-chz">CHZ</div>
       </div>
       <div class="prize-box s">
-        <div style="font-size:11px;letter-spacing:2px;color:#9ca3af;margin-bottom:4px;">MTT STYLE</div>
-        <div class="prize-num">TOP</div>
-        <div class="prize-chz">FIELD PAID</div>
+        <div style="font-size:11px;letter-spacing:2px;color:#9ca3af;margin-bottom:4px;">&#127919; PAID PLACES</div>
+        <div class="prize-num">GROW</div>
+        <div class="prize-chz">WITH PLAYERS</div>
       </div>
       <div class="prize-box b">
-        <div style="font-size:11px;letter-spacing:2px;color:#cd7f32;margin-bottom:4px;">MORE PLAYERS</div>
-        <div class="prize-num">MORE</div>
-        <div class="prize-chz">PAID PLACES</div>
+        <div style="font-size:11px;letter-spacing:2px;color:#cd7f32;margin-bottom:4px;">&#127918; 48 WC TEAMS</div>
+        <div class="prize-num">RANDOM</div>
+        <div class="prize-chz">MINT TEAM</div>
       </div>
     </div>
 
     <div style="margin-bottom:24px; display:flex; justify-content:center; gap:12px; flex-wrap:wrap;">
-      <button class="btn-mint-hero" style="background:rgba(0,255,135,0.1); border:1px solid #00ff87; color:#00ff87;" onclick="directMint()">MINT PLAYER</button>
-      <button class="btn-mint-hero" onclick="window.open('https://block-kickers.vercel.app','_blank')">MAIN WEBSITE</button>
+      <button class="btn-mint-hero" style="background:rgba(0,255,135,0.1); border:1px solid #00ff87; color:#00ff87;" onclick="directMint()">&#127922; MINT RANDOM WC PLAYER</button>
+      <button class="btn-mint-hero" onclick="window.open('https://block-kickers.vercel.app','_blank')">&#127968; MAIN WEBSITE</button>
     </div>
 
     <!-- ODLICZANIE BLOKĂ“W QUESTU -->
@@ -774,7 +774,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
           <div class="countdown-sub">SECONDS</div>
         </div>
       </div>
-      <div class="countdown-block" id="cdBlock">Target block: 34,253,705</div>
+      <div class="countdown-block" id="cdBlock">Target block: loading...</div>
     </div>
   </div>
 
@@ -810,14 +810,14 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
     <div style="display:flex; justify-content:space-between; align-items:center; padding:0 24px 16px; flex-wrap:wrap; gap:12px;">
       <button class="btn-share" onclick="shareOnX()">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-        SHARE LINEUP ON X
+        &#128257; SHARE LINEUP ON X
       </button>
       <div style="display:flex; gap:8px;">
         <button class="btn-share" onclick="toggleRulesModal(true)" style="border-color:#ffc940; color:#ffc940;">
-          RULES & INFO
+          &#8505; RULES & INFO
         </button>
         <button class="btn-share" onclick="loadData()" style="border-color:rgba(99,102,241,0.3); color:#818cf8;">
-          REFRESH DATA
+          &#8635; REFRESH DATA
         </button>
       </div>
     </div>
@@ -838,23 +838,23 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
           <div class="how-grid">
             <div class="how-card">
               <div class="how-n">01</div>
-              <div class="how-title">MINT OR BUY</div>
-              <div class="how-desc">Get Argentina cards by minting for <span class="g">10 CHZ</span> or buying from others on the market.</div>
+              <div class="how-title">&#127922; MINT OR BUY</div>
+              <div class="how-desc">Minting costs <span class="g">10 CHZ</span> and gives a random player from one of <span class="a">48 World Cup teams</span>. Buy Argentina cards on the market to complete this squad.</div>
             </div>
             <div class="how-card" style="border-color: rgba(239, 68, 68, 0.35); background: rgba(239, 68, 68, 0.03);">
               <div class="how-n" style="color: #ef4444;">02</div>
-              <div class="how-title" style="color: #ef4444;">NO P2P</div>
+              <div class="how-title" style="color: #ef4444;">&#9888; NO P2P</div>
               <div class="how-desc">Direct wallet-to-wallet transfers <span style="color: #ef4444; font-weight: bold;">DO NOT SCORE</span>. Only marketplace buys and mints count!</div>
             </div>
             <div class="how-card">
               <div class="how-n">03</div>
-              <div class="how-title">RECYCLE LIQUIDITY</div>
+              <div class="how-title">&#9851; RECYCLE LIQUIDITY</div>
               <div class="how-desc">Scored the stamp? <span class="p">Sell the card</span> on the marketplace and recover your CHZ liquidity.</div>
             </div>
             <div class="how-card" style="border-color:rgba(255,201,64,0.3); background:rgba(255,201,64,0.04);">
               <div class="how-n" style="color:rgba(255,201,64,0.2);">04</div>
-              <div class="how-title" style="color:#ffc940;">CLAIM THE CHEST</div>
-              <div class="how-desc">The TOP 3 share a sponsored prize pool of <span class="a">10,000 CHZ</span> at the target deadline block!</div>
+              <div class="how-title" style="color:#ffc940;">&#127942; PRIZE PLACES</div>
+              <div class="how-desc">The prize pool is <span class="a">10,000 CHZ</span>. More unique players on the leaderboard means more paid ranks.</div>
             </div>
           </div>
         </div>
@@ -862,15 +862,15 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
         <!-- PRZEĹÄ„CZALNE KARTY (TABS: SNIPE / MY TRADING DESK) -->
         <div class="desk-section">
           <div class="desk-tabs">
-            <button class="desk-tab-btn active" id="btnDeskSnipe" onclick="switchDeskTab('snipe')">SNIPE DEALS</button>
-            <button class="desk-tab-btn" id="btnDeskPortfolio" onclick="switchDeskTab('portfolio')">MY TRADING DESK</button>
+            <button class="desk-tab-btn active" id="btnDeskSnipe" onclick="switchDeskTab('snipe')">&#127919; SNIPE DEALS</button>
+            <button class="desk-tab-btn" id="btnDeskPortfolio" onclick="switchDeskTab('portfolio')">&#128202; MY TRADING DESK</button>
           </div>
           
           <!-- ZAKĹADKA 1: SNIPE DEALS -->
           <div id="deskTabSnipe" class="desk-tab-content">
             <div class="snipe-title-row">
               <div class="snipe-title">HOT LISTINGS (ARGENTINA SNIPER)</div>
-              <span style="font-family:'Share Tech Mono',monospace; color:#ffc940; font-size:11px;">MINT: 10 CHZ</span>
+              <span style="font-family:'Share Tech Mono',monospace; color:#ffc940; font-size:11px;">MINT: 10 CHZ - RANDOM 48 WC TEAM</span>
             </div>
             <div class="snipe-list" id="snipeListContainer">
               <div style="text-align:center;color:#3d4a5a;padding:15px;font-size:12px;"><span class="spin"></span> Sourcing marketplace deals...</div>
@@ -1073,11 +1073,11 @@ const RULES_TRANSLATIONS = {
     title: "How to Play & Rules",
     items: [
       "Connect your Chiliz Wallet to activate your personal Argentina squad and check live progress.",
-      "Mint player cards (cost: 10 CHZ) or purchase on the secondary marketplace.",
+      "Mint player cards for 10 CHZ. Each mint gives a random player from one of the 48 World Cup teams.",
       "A card only scores in your Argentina squad if it was minted by you or bought through the marketplace. Direct wallet transfers do not score.",
       "Your score is the sum of the best card weights that have ever passed through your wallet.",
       "When you secure a heavier card for a position, your score updates instantly. You can sell weaker cards on the marketplace to recover CHZ.",
-      "The top 3 collectors with the highest tactical weight at the target block share the 10,000 CHZ prize pool."
+      "The 10,000 CHZ prize pool is split across paid ranks. More unique players on the leaderboard means more paid ranks."
     ]
   }
 };
@@ -1608,7 +1608,7 @@ async function loadData(){
 
   const playerCount = getLeaderboardData().length;
   const paidPlaces = getPaidPlaces(playerCount);
-  document.getElementById('poolInfo').textContent = `Quest Prize Pool: ${PRIZE_POOL_CHZ.toLocaleString()} CHZ - Top ${paidPlaces || 1} paid (${playerCount} players)`;
+  document.getElementById('poolInfo').textContent = `Quest Prize Pool: ${PRIZE_POOL_CHZ.toLocaleString()} CHZ - ${paidPlaces || 1} paid ranks from ${playerCount} players`;
 
   renderStats();
   renderPitch();
@@ -2038,7 +2038,7 @@ function renderLeaderboard(){
   } else if (competitors.length > paidPlaces) {
     html += `
       <div class="cutoff-line">
-        SPONSORED PRIZE THRESHOLD (TOP ${paidPlaces}) - PLAYERS BELOW DO NOT QUALIFY FOR SPONSOR PRIZES
+        SPONSORED PRIZE THRESHOLD (${paidPlaces} PAID RANKS) - MORE UNIQUE PLAYERS MEANS MORE PAID RANKS
       </div>
     `;
   }
@@ -2259,10 +2259,19 @@ function shareOnX(){
 }
 
 /* HARMONOGRAM I LICZNIK BLOKĂ“W SYSTEMOWYCH */
-const DEADLINE_BLOCK = 34300000;
 const BLOCK_TIME_MS = 3000;
+const DEADLINE_DAYS = 30;
+const DEADLINE_BLOCK_OFFSET = Math.floor((DEADLINE_DAYS * 24 * 60 * 60 * 1000) / BLOCK_TIME_MS);
 let currentBlock = 34158889; 
+let DEADLINE_BLOCK = currentBlock + DEADLINE_BLOCK_OFFSET;
+let deadlineInitialized = false;
 let lastBlockTime = Date.now();
+
+function initializeDeadlineBlock(baseBlock) {
+  if (deadlineInitialized || !baseBlock) return;
+  DEADLINE_BLOCK = Number(baseBlock) + DEADLINE_BLOCK_OFFSET;
+  deadlineInitialized = true;
+}
 
 async function fetchCurrentBlock(){
   try{
@@ -2271,6 +2280,7 @@ async function fetchCurrentBlock(){
       const d = await res.json();
       if(d.currentBlock) {
         currentBlock = d.currentBlock;
+        initializeDeadlineBlock(currentBlock);
         lastBlockTime = Date.now();
         return;
       }
@@ -2281,6 +2291,7 @@ async function fetchCurrentBlock(){
     const rp = await getReadProvider();
     const b = await rp.getBlockNumber();
     currentBlock = b;
+    initializeDeadlineBlock(currentBlock);
     lastBlockTime = Date.now();
   } catch(e) {
     console.warn("RPC block fetch failed:", e);
@@ -2310,7 +2321,7 @@ function updateCountdown(){
   document.getElementById('cdH').textContent = String(h).padStart(2,'0');
   document.getElementById('cdM').textContent = String(m).padStart(2,'0');
   document.getElementById('cdS').textContent = String(s).padStart(2,'0');
-  document.getElementById('cdBlock').innerHTML = 'Deadline block: <a href="https://scan.chiliz.com/block/'+DEADLINE_BLOCK+'" target="_blank" style="color:#00ff87;text-decoration:none;">#'+DEADLINE_BLOCK.toLocaleString()+'</a> Â· Estimated current: ~#'+estimated.toLocaleString()+' Â· remaining: '+blocksLeft.toLocaleString()+' blocks';
+  document.getElementById('cdBlock').innerHTML = 'Deadline block: <a href="https://scan.chiliz.com/block/'+DEADLINE_BLOCK+'" target="_blank" style="color:#00ff87;text-decoration:none;">#'+DEADLINE_BLOCK.toLocaleString()+'</a> - Estimated current: ~#'+estimated.toLocaleString()+' - remaining: '+blocksLeft.toLocaleString()+' blocks';
 }
 
 fetchCurrentBlock();
