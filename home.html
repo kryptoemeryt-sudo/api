@@ -346,6 +346,151 @@ h1 .accent{color:var(--green);text-shadow:0 0 30px var(--green-glow);}
   .hero-top-mobile h1{display:none!important;}
 }
 
+.desktop-dashboard{display:none;}
+.country-dash-summary{display:none;}
+
+@media (min-width: 1200px) and (min-height: 720px) {
+  body.dash-active{height:100vh;overflow:hidden;padding-top:99px;background:#05070a;}
+  body.dash-active #betaBanner,
+  body.dash-active #statsTicker,
+  body.dash-active #rareFeed,
+  body.dash-active #howto,
+  body.dash-active #album,
+  body.dash-active footer,
+  body.dash-active > div[style*="background:#06080a"]{display:none!important;}
+  body.dash-active #navMenu a[onclick*="howto"],
+  body.dash-active #navMenu a[onclick*="album"],
+  body.dash-active #navMenu a[onclick*="claimSection"]{display:none!important;}
+
+  body.dash-active .desktop-dashboard{
+    display:grid;
+    grid-template-columns:330px minmax(430px,1fr) 390px;
+    gap:10px;
+    height:calc(100vh - 99px);
+    padding:10px;
+    min-height:0;
+  }
+  body.dash-active .dash-column{display:grid;gap:10px;min-height:0;}
+  body.dash-active .dash-left{grid-template-rows:minmax(315px,0.95fr) minmax(260px,1fr);}
+  body.dash-active .dash-center{grid-template-rows:1fr;}
+  body.dash-active .dash-right{grid-template-rows:minmax(230px,0.74fr) minmax(300px,1fr);}
+
+  body.dash-active .section,
+  body.dash-active .hero{
+    padding:12px!important;
+    background:linear-gradient(180deg,rgba(15,19,24,0.98),rgba(9,12,16,0.98));
+    border:1px solid var(--border);
+    border-radius:10px;
+    min-width:0;
+    min-height:0;
+    overflow:hidden;
+  }
+  body.dash-active .section{display:flex;flex-direction:column;}
+  body.dash-active .sec-header{
+    margin-bottom:8px;
+    padding-bottom:8px;
+    gap:8px;
+    align-items:center;
+    flex-shrink:0;
+  }
+  body.dash-active .sec-title{font-size:22px;letter-spacing:1px;}
+  body.dash-active .sec-sub{font-size:11px;line-height:1.35;}
+  body.dash-active .sec-header button{padding:6px 10px!important;font-size:9px!important;}
+
+  body.dash-active .hero{display:flex;flex-direction:column;position:relative;}
+  body.dash-active .hero::before{opacity:0.75;}
+  body.dash-active .hero-left{padding:0!important;width:100%;}
+  body.dash-active .hero-center{padding:0!important;width:100%!important;max-width:100%!important;}
+  body.dash-active .hero-right{display:none!important;}
+  body.dash-active .badge{margin-bottom:8px;font-size:9px;padding:4px 8px;}
+  body.dash-active .hero-title-desktop{font-size:31px;line-height:0.92;margin:0 0 8px;letter-spacing:0;}
+  body.dash-active .hero-desc{display:none;}
+  body.dash-active .stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin:0 0 10px;}
+  body.dash-active .stat{background:rgba(255,255,255,0.025);border:1px solid rgba(255,255,255,0.045);border-radius:8px;padding:7px 5px;align-items:center;}
+  body.dash-active .stat-n{font-size:21px;}
+  body.dash-active .stat-l{font-size:9px;letter-spacing:1px;text-align:center;}
+  body.dash-active .mint-box{max-width:100%!important;width:100%;padding:12px;border-radius:9px;}
+  body.dash-active .price-row{margin-bottom:9px;}
+  body.dash-active .price-val{font-size:26px;}
+  body.dash-active .split-row{margin-bottom:10px;}
+  body.dash-active .split{padding:7px;}
+  body.dash-active .btn-mint,
+  body.dash-active .btn-connect-hero{padding:12px;font-size:14px;}
+
+  body.dash-active #market .market-tabs{margin-bottom:8px;flex-shrink:0;}
+  body.dash-active #marketFilters,
+  body.dash-active #squadFilters{flex-shrink:0;max-height:31px;overflow-x:auto;overflow-y:hidden;flex-wrap:nowrap;}
+  body.dash-active #marketList{
+    grid-template-columns:repeat(auto-fill,minmax(132px,1fr));
+    gap:8px;
+    overflow-y:auto;
+    padding-right:4px;
+    min-height:0;
+    align-content:start;
+  }
+  body.dash-active #market .fig-canvas{height:82px!important;}
+  body.dash-active #market .fig-info{padding:9px;}
+  body.dash-active #market .fig-name{font-size:12px!important;}
+  body.dash-active #market .fig-id{font-size:9px!important;}
+  body.dash-active #market .btn-buy,
+  body.dash-active #market .btn-cancel{padding:5px 8px!important;font-size:9px!important;}
+
+  body.dash-active #squad .col-grid{
+    grid-template-columns:repeat(auto-fill,minmax(92px,1fr));
+    gap:7px;
+    overflow-y:auto;
+    padding-right:4px;
+    min-height:0;
+    align-content:start;
+  }
+  body.dash-active #squad .fig-canvas{height:62px;}
+  body.dash-active #squad .fig-info{padding:7px;}
+  body.dash-active #squad .fig-name{font-size:11px!important;}
+  body.dash-active #squad .fig-id{font-size:8px!important;}
+  body.dash-active #squad .rarity-badge{font-size:7px;padding:2px 4px;letter-spacing:1px;}
+  body.dash-active #squad .fig-weight{font-size:10px!important;}
+
+  body.dash-active #leaderboard #lbWrap,
+  body.dash-active #countryLb #countryLbGrid{
+    overflow-y:auto;
+    min-height:0;
+    padding-right:4px;
+  }
+  body.dash-active #leaderboard .lb-table{table-layout:fixed;}
+  body.dash-active #leaderboard .lb-table th:nth-child(4),
+  body.dash-active #leaderboard .lb-table td:nth-child(4),
+  body.dash-active #leaderboard .lb-table th:nth-child(5),
+  body.dash-active #leaderboard .lb-table td:nth-child(5),
+  body.dash-active #leaderboard .lb-table th:nth-child(7),
+  body.dash-active #leaderboard .lb-table td:nth-child(7){display:none;}
+  body.dash-active #leaderboard .lb-rank{font-size:14px;padding:8px 4px;width:36px;}
+  body.dash-active #leaderboard .lb-mini{width:44px;height:48px;padding:3px;}
+  body.dash-active #leaderboard .lb-info{padding:8px 4px;}
+  body.dash-active #leaderboard .lb-name{font-size:12px;}
+  body.dash-active #leaderboard .lb-sub{font-size:9px;}
+  body.dash-active #leaderboard .lb-weight{font-size:13px;padding:6px 4px;}
+
+  body.dash-active .country-dash-summary{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:8px;
+    margin-bottom:8px;
+    flex-shrink:0;
+  }
+  body.dash-active .country-dash-card{
+    background:rgba(255,255,255,0.025);
+    border:1px solid rgba(255,255,255,0.055);
+    border-radius:8px;
+    padding:9px;
+    min-width:0;
+  }
+  body.dash-active .country-dash-label{font-size:9px;color:var(--text3);letter-spacing:1px;text-transform:uppercase;margin-bottom:3px;}
+  body.dash-active .country-dash-value{font-family:'Black Ops One',sans-serif;font-size:18px;color:var(--gold);line-height:1.05;}
+  body.dash-active .country-dash-note{font-size:10px;color:var(--text2);line-height:1.25;margin-top:3px;}
+  body.dash-active #countryLbGrid > div[style*="GROUP"]{font-size:10px!important;padding:6px 0 3px!important;margin:6px 0 5px!important;}
+  body.dash-active #countryLbGrid > div[style*="grid-template-columns"]{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:5px!important;}
+}
+
 /* Custom scrollbar */
 #ptfTeams::-webkit-scrollbar { width: 4px; }
 #ptfTeams::-webkit-scrollbar-track { background: transparent; }
@@ -434,6 +579,53 @@ function updateNavHeight(){
 window.addEventListener('resize', updateNavHeight);
 document.addEventListener('DOMContentLoaded', updateNavHeight);
 
+const DASHBOARD_ITEMS = [
+  ['mint', 'dashLeft'],
+  ['countryLb', 'dashLeft'],
+  ['market', 'dashCenter'],
+  ['squad', 'dashRight'],
+  ['leaderboard', 'dashRight']
+];
+const dashboardPlaceholders = {};
+let dashboardResizeTimer = null;
+
+function isDashboardViewport(){
+  return window.matchMedia('(min-width: 1200px) and (min-height: 720px)').matches;
+}
+
+function setupDesktopDashboardLayout(){
+  const dash = document.getElementById('desktopDashboard');
+  if(!dash) return;
+  const active = isDashboardViewport();
+  document.body.classList.toggle('dash-active', active);
+
+  DASHBOARD_ITEMS.forEach(([sectionId, targetId]) => {
+    const section = document.getElementById(sectionId);
+    if(!section) return;
+    if(!dashboardPlaceholders[sectionId]){
+      const ph = document.createComment('dashboard-placeholder:' + sectionId);
+      section.parentNode.insertBefore(ph, section);
+      dashboardPlaceholders[sectionId] = ph;
+    }
+    if(active){
+      const target = document.getElementById(targetId);
+      if(target && section.parentNode !== target) target.appendChild(section);
+    }else{
+      const ph = dashboardPlaceholders[sectionId];
+      if(ph && ph.parentNode && section.parentNode !== ph.parentNode){
+        ph.parentNode.insertBefore(section, ph.nextSibling);
+      }
+    }
+  });
+  updateNavHeight();
+}
+
+window.addEventListener('resize', () => {
+  clearTimeout(dashboardResizeTimer);
+  dashboardResizeTimer = setTimeout(setupDesktopDashboardLayout, 120);
+});
+document.addEventListener('DOMContentLoaded', setupDesktopDashboardLayout);
+
 // Fix dla MetaMask browser - wymusza poprawny viewport
 (function(){
   // MetaMask mobile ma bug z viewport - wymuszamy 100vw
@@ -478,6 +670,12 @@ document.addEventListener('DOMContentLoaded', updateNavHeight);
   <span style="color:var(--border);">|</span>
   <span style="color:var(--text3);">&#128176; VAULT:</span>
   <span id="tickerVault" style="color:var(--text2);">â€”</span>
+</div>
+
+<div id="desktopDashboard" class="desktop-dashboard">
+  <div class="dash-column dash-left" id="dashLeft"></div>
+  <div class="dash-column dash-center" id="dashCenter"></div>
+  <div class="dash-column dash-right" id="dashRight"></div>
 </div>
 
 <div class="hero" id="mint">
@@ -3731,9 +3929,21 @@ Knowledge beats luck â€” pick the right nation!
   <div class="sec-header">
     <div>
       <div class="sec-title">COUNTRY <span class="acc">CHAMPIONS</span></div>
-      <div class="sec-sub">Best figure per country Â· 25% of vault prize Â· 48 winners guaranteed</div>
+      <div class="sec-sub">Best card in each country earns the current country reward. Your leading countries are marked YOU.</div>
     </div>
     <button onclick="loadCountryLb()" style="background:var(--green-dim);border:1px solid rgba(0,255,135,0.3);color:var(--green);padding:8px 18px;border-radius:6px;font-family:'Black Ops One',sans-serif;font-size:11px;letter-spacing:1px;cursor:pointer;">REFRESH</button>
+  </div>
+  <div id="countryDashSummary" class="country-dash-summary">
+    <div class="country-dash-card">
+      <div class="country-dash-label">Country Reward</div>
+      <div class="country-dash-value">CONNECT</div>
+      <div class="country-dash-note">Current reward per country loads from the prize vault.</div>
+    </div>
+    <div class="country-dash-card">
+      <div class="country-dash-label">Your Lead</div>
+      <div class="country-dash-value">-</div>
+      <div class="country-dash-note">If your wallet owns the best card in a country, it appears here.</div>
+    </div>
   </div>
   <div id="countryLbGrid" style="display:block;margin-top:8px;">
     <div style="grid-column:1/-1;text-align:center;color:var(--text3);padding:32px;letter-spacing:2px;font-size:12px;">CONNECT WALLET TO SEE COUNTRY CHAMPIONS</div>
@@ -3897,6 +4107,40 @@ Knowledge beats luck â€” pick the right nation!
 // ============================================================
 //  COUNTRY LEADERBOARD
 // ============================================================
+function updateCountryDashboardSummary(countryBest, perCountry){
+  const box = document.getElementById('countryDashSummary');
+  if(!box) return;
+  const best = Object.values(countryBest || {});
+  const reward = Number.isFinite(perCountry) ? perCountry : 0;
+  const rewardText = reward >= 100 ? reward.toFixed(0) : reward >= 10 ? reward.toFixed(1) : reward.toFixed(2);
+  const leaders = address
+    ? best.filter(c => c.owner && c.owner.toLowerCase() === address.toLowerCase()).sort((a,b) => b.weight - a.weight)
+    : [];
+  const top = best.slice().sort((a,b) => b.weight - a.weight)[0];
+  const topTeam = top ? TEAMS[top.teamId % TEAMS.length] : 'No leader yet';
+  const leadValue = leaders.length ? `${leaders.length} COUNTRY${leaders.length === 1 ? '' : 'IES'}` : 'NO LEAD';
+  const leadNote = leaders.length
+    ? leaders.slice(0, 3).map(c => `${TEAMS[c.teamId % TEAMS.length]} W:${c.weight}`).join(' Â· ')
+    : 'Own the highest-weight card in any country to lead its reward race.';
+
+  box.innerHTML = `
+    <div class="country-dash-card">
+      <div class="country-dash-label">Country Reward</div>
+      <div class="country-dash-value">~${rewardText} CHZ</div>
+      <div class="country-dash-note">Current estimated reward for the best card in each country.</div>
+    </div>
+    <div class="country-dash-card">
+      <div class="country-dash-label">Your Lead</div>
+      <div class="country-dash-value" style="color:${leaders.length ? 'var(--green)' : 'var(--text2)'};">${leadValue}</div>
+      <div class="country-dash-note">${leadNote}</div>
+    </div>
+    <div class="country-dash-card" style="grid-column:1/-1;">
+      <div class="country-dash-label">Highest Country Card</div>
+      <div class="country-dash-value" style="font-size:15px;color:var(--text);">${topTeam}${top ? ` Â· W:${top.weight}` : ''}</div>
+      <div class="country-dash-note">${top ? `${top.owner.slice(0,6)}...${top.owner.slice(-4)} is leading that country.` : 'Mint or buy a strong country card to start the race.'}</div>
+    </div>`;
+}
+
 async function loadCountryLb(){
   const grid = document.getElementById('countryLbGrid');
   if(!grid) return;
@@ -3929,6 +4173,7 @@ async function loadCountryLb(){
     let vaultChz = 0;
     try{ vaultChz = parseFloat(ethers.formatEther(await contract.vaultBalance())); }catch(e){}
     const perCountry = vaultChz * 0.25 / 48;
+    updateCountryDashboardSummary(countryBest, perCountry);
 
     grid.innerHTML = '';
 
