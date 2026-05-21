@@ -170,6 +170,44 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
   letter-spacing: 2px;
   color: #ffc940;
 }
+.market-alert {
+  border: 1px solid rgba(255,201,64,0.25);
+  background: rgba(255,201,64,0.06);
+  color: #d9c27a;
+  border-radius: 6px;
+  padding: 8px 10px;
+  font-size: 12px;
+  line-height: 1.35;
+  margin-bottom: 10px;
+}
+.market-alert strong {
+  color: #ffc940;
+  font-family: 'Black Ops One', sans-serif;
+  font-size: 10px;
+  letter-spacing: 1px;
+}
+.market-filters {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+.market-filter-btn {
+  background: #0a0e14;
+  border: 1px solid #1c2028;
+  color: #7a8899;
+  border-radius: 5px;
+  padding: 6px 9px;
+  font-family: 'Black Ops One', sans-serif;
+  font-size: 9px;
+  letter-spacing: 1px;
+  cursor: pointer;
+}
+.market-filter-btn.active {
+  color: #00ff87;
+  border-color: rgba(0,255,135,0.45);
+  background: rgba(0,255,135,0.08);
+}
 .snipe-list {
   display: flex;
   flex-direction: column;
@@ -203,6 +241,34 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
   font-size: 12px;
   color: #7a8899;
   line-height: 1.2;
+}
+.mini-badges {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  margin-top: 5px;
+}
+.mini-badge {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid rgba(122,136,153,0.25);
+  background: rgba(122,136,153,0.08);
+  color: #9aa8b8;
+  border-radius: 4px;
+  padding: 2px 5px;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 9px;
+  line-height: 1;
+}
+.mini-badge.hot {
+  border-color: rgba(255,201,64,0.4);
+  background: rgba(255,201,64,0.1);
+  color: #ffc940;
+}
+.mini-badge.scarce {
+  border-color: rgba(0,255,135,0.4);
+  background: rgba(0,255,135,0.1);
+  color: #00ff87;
 }
 .snipe-action {
   display: flex;
@@ -370,6 +436,26 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
   align-items: center;
   margin-bottom: 12px;
 }
+.pitch-title-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+.btn-pitch-mint {
+  background: rgba(0,255,135,0.1);
+  border: 1px solid rgba(0,255,135,0.45);
+  color: #00ff87;
+  border-radius: 6px;
+  padding: 7px 10px;
+  font-family: 'Black Ops One', sans-serif;
+  font-size: 9px;
+  letter-spacing: 1px;
+  cursor: pointer;
+  text-transform: uppercase;
+}
+.btn-pitch-mint:hover { background: rgba(0,255,135,0.18); }
 .pitch-wrap {
   background: linear-gradient(to bottom, #113018, #0b1f10);
   border: 2px solid #1f5029;
@@ -740,6 +826,8 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
   .game-grid{padding:0 6px 20px;gap:12px;}
   .pitch-container{padding:8px;border-radius:8px;}
   .pitch-title-row{margin-bottom:6px;gap:8px;}
+  .pitch-title-actions{gap:5px;}
+  .btn-pitch-mint{padding:6px 7px;font-size:8px;letter-spacing:0;}
   .pitch-title{font-size:9px;letter-spacing:1px;}
   .pitch-wrap{padding:16px 3px;border-radius:10px;}
   .formation{gap:8px;}
@@ -747,6 +835,8 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
   .form-row{gap:3px;}
   .pos-card{width:58px;padding:4px 2px;min-height:78px;border-radius:5px;}
   .pos-card-count{font-size:6px;left:3px;padding:1px 3px;}
+  .mini-badges{gap:2px;margin-top:3px;justify-content:center;}
+  .mini-badge{font-size:6px;padding:1px 3px;}
   .pos-name{font-size:7px;}
   .pos-card-meta{font-size:6px;min-height:14px;}
   .pos-weight{font-size:13px;}
@@ -933,6 +1023,11 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
               <div class="snipe-title">HOT LISTINGS (ARGENTINA SNIPER)</div>
               <span style="font-family:'Share Tech Mono',monospace; color:#ffc940; font-size:11px;">MINT: 10 CHZ - RANDOM 48 WC TEAM</span>
             </div>
+            <div id="marketMissingAlert"></div>
+            <div class="market-filters">
+              <button class="market-filter-btn active" id="filterAllDeals" onclick="setSnipeFilter('all')">ALL DEALS</button>
+              <button class="market-filter-btn" id="filterMissingDeals" onclick="setSnipeFilter('missing')">MY MISSING POSITIONS</button>
+            </div>
             <div class="snipe-list" id="snipeListContainer">
               <div style="text-align:center;color:#3d4a5a;padding:15px;font-size:12px;"><span class="spin"></span> Sourcing marketplace deals...</div>
             </div>
@@ -991,7 +1086,10 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
           <div class="pitch-title" style="margin-bottom:0;">
             <span id="selectedCountryTitle">TACTICAL PITCH</span>
           </div>
-          <span style="font-family:'Share Tech Mono',monospace; color:#818cf8; font-size:12px;" id="selectedCountryCompletion">0/11 COMPLETED</span>
+          <div class="pitch-title-actions">
+            <span style="font-family:'Share Tech Mono',monospace; color:#818cf8; font-size:12px;" id="selectedCountryCompletion">0/11 COMPLETED</span>
+            <button class="btn-pitch-mint" onclick="directMint()">&#127922; Mint</button>
+          </div>
         </div>
 
         <div class="pitch-wrap">
@@ -1173,6 +1271,7 @@ const FORMATION = [
   [3,4,5,2],   // LB, CB A, CB B, RB
   [1]          // GK
 ];
+const POSITION_IDS = FORMATION.flat();
 
 const ARGENTINA_TEAM_DATA = {id: 25, name: "Argentina", flag:"UN", code:"ar", fed: "CONMEBOL"};
 
@@ -1290,6 +1389,8 @@ let marketByPos = {};
 let marketFloorByPos = {};
 let activeListingsByTokenId = {};
 let circulationByPos = {};
+let currentMarketListings = [];
+let snipeFilterMode = 'all';
 let currentMintPrice = ethers.parseEther("10");
 let localMintEvents = [];
 
@@ -1758,6 +1859,46 @@ function getMintTip(mintedCard, circulationCount, oldCard, isUpgrade) {
   return `<div class="tip-box"><strong>MARKET TIP</strong><br>This card has already passed through your wallet. If it does not improve your squad, consider listing it to recycle liquidity.</div>`;
 }
 
+function getMissingPositions() {
+  const myAddr = address?.toLowerCase();
+  const myTeamPositions = window.dreamScores[myAddr] || {};
+  return POSITION_IDS.filter(pos => !myTeamPositions[pos]);
+}
+
+function getPositionBadges(pos, floor = null) {
+  const count = circulationByPos[pos] || 0;
+  const badges = [];
+  if (count === 1) badges.push(`<span class="mini-badge scarce">ONLY 1</span>`);
+  else if (count > 1 && count <= 3) badges.push(`<span class="mini-badge scarce">LOW SUPPLY x${count}</span>`);
+  if (floor) badges.push(`<span class="mini-badge hot">FLOOR ${floor.price} CHZ</span>`);
+  return badges.length ? `<div class="mini-badges">${badges.join('')}</div>` : '';
+}
+
+function renderMissingPositionAlert() {
+  const el = document.getElementById('marketMissingAlert');
+  if (!el) return;
+  if (!address) {
+    el.innerHTML = '<div class="market-alert"><strong>CONNECT WALLET</strong><br>Connect your wallet to highlight listings for your missing Argentina positions.</div>';
+    return;
+  }
+  const missing = getMissingPositions();
+  if (missing.length === 0) {
+    el.innerHTML = '<div class="market-alert"><strong>FULL SQUAD</strong><br>Your Argentina XI has all positions scored. Focus on upgrades and rare low-supply cards.</div>';
+    return;
+  }
+  const missingText = missing.map(pos => POSITION_SHORT[pos]).join(', ');
+  el.innerHTML = `<div class="market-alert"><strong>MISSING POSITION ALERT</strong><br>You still need ${missing.length}/11 positions: ${missingText}. Use the filter below to hunt only those listings.</div>`;
+}
+
+function setSnipeFilter(mode) {
+  snipeFilterMode = mode;
+  const allBtn = document.getElementById('filterAllDeals');
+  const missingBtn = document.getElementById('filterMissingDeals');
+  if (allBtn) allBtn.classList.toggle('active', mode === 'all');
+  if (missingBtn) missingBtn.classList.toggle('active', mode === 'missing');
+  renderSnipeMarket(currentMarketListings);
+}
+
 async function loadData(){
   document.getElementById('pitchFormationGrid').innerHTML = '<div style="text-align:center;color:#3d4a5a;padding:40px;grid-column:1/-1;"><span class="spin"></span> Querying Chiliz Blockchain data...</div>';
 
@@ -1965,6 +2106,7 @@ async function loadData(){
   renderLeaderboard();
   
   // Renderowanie bocznych widgetĂłw gieĹ‚dowych
+  currentMarketListings = rawMarketListings;
   renderSnipeMarket(rawMarketListings);
   renderLiveActivityFeed(mints, sales);
   renderPortfolioAndLedger(mints, sales, listDetails);
@@ -1976,11 +2118,24 @@ function renderSnipeMarket(listings) {
   const myAddr = address?.toLowerCase();
   const myTeamPositions = window.dreamScores[myAddr] || {};
 
-  listings.sort((a, b) => a.price - b.price);
-  const bestDeals = listings.slice(0, 5); 
+  renderMissingPositionAlert();
+  const allBtn = document.getElementById('filterAllDeals');
+  const missingBtn = document.getElementById('filterMissingDeals');
+  if (allBtn) allBtn.classList.toggle('active', snipeFilterMode === 'all');
+  if (missingBtn) missingBtn.classList.toggle('active', snipeFilterMode === 'missing');
+
+  const missingPositions = getMissingPositions();
+  const filteredListings = snipeFilterMode === 'missing'
+    ? listings.filter(deal => missingPositions.includes(deal.pos))
+    : listings;
+
+  filteredListings.sort((a, b) => a.price - b.price);
+  const bestDeals = filteredListings.slice(0, 8); 
 
   if (bestDeals.length === 0) {
-    container.innerHTML = '<div style="text-align:center;color:#5a6a7a;font-size:12px;padding:10px;">No active listings on the marketplace.</div>';
+    container.innerHTML = snipeFilterMode === 'missing'
+      ? '<div style="text-align:center;color:#5a6a7a;font-size:12px;padding:10px;">No active listings for your missing positions right now.</div>'
+      : '<div style="text-align:center;color:#5a6a7a;font-size:12px;padding:10px;">No active listings on the marketplace.</div>';
     return;
   }
 
@@ -1991,6 +2146,8 @@ function renderSnipeMarket(listings) {
     const upgradeLabel = isUpgrade ? `<span style="color:#00ff87; font-weight:bold;">(+${scored ? deal.weight - scored.weight : deal.weight} pts!)</span>` : '<span style="color:#5a6a7a;">(Reserve)</span>';
     const rarName = ['Common', 'Rare', 'Epic', 'Legendary'][deal.rarity];
     const rarColor = ['#7a8899','#3b82f6','#c084fc','#ffc940'][deal.rarity];
+    const floor = marketFloorByPos[deal.pos] || null;
+    const badgesHtml = getPositionBadges(deal.pos, floor);
 
     html += `
       <div class="snipe-row">
@@ -1999,6 +2156,7 @@ function renderSnipeMarket(listings) {
           <div class="snipe-info-text">
             <span style="color:${rarColor}; font-weight:600;">${rarName}</span> (${deal.weight} pts)<br>
             Status: ${upgradeLabel}
+            ${badgesHtml}
           </div>
         </div>
         <div class="snipe-action">
@@ -2277,6 +2435,7 @@ function renderPitch() {
       const floor = marketFloorByPos[pos];
       const circulationCount = circulationByPos[pos] || 0;
       const circulationHtml = `<span class="pos-card-count" title="Argentina ${POSITION_SHORT[pos]} cards in circulation">x${circulationCount}</span>`;
+      const badgesHtml = getPositionBadges(pos, floor);
 
       let floorHtml = '';
       if (scored && floor) {
@@ -2317,6 +2476,7 @@ function renderPitch() {
           <div>
             <div class="pos-weight ${scored.rarity === 3 ? 'gold' : ''}">${scored.weight}</div>
             <div class="pos-rarity" style="color:${rarColor}">${['Common','Rare','Epic','Legendary'][scored.rarity]}</div>
+            ${badgesHtml}
             ${floorHtml}
             ${actionHtml}
             ${sellBtnHtml}
@@ -2341,6 +2501,7 @@ function renderPitch() {
           <div>
             <div class="pos-weight empty">-</div>
             <div class="pos-rarity" style="color:#5a6a7a;">EMPTY SLOT</div>
+            ${badgesHtml}
             ${actionHtml}
           </div>
         `;
@@ -2433,8 +2594,12 @@ async function buyFromMarket(listingId, priceChz, priceWeiRaw){
     showHeaderToast(`Initializing marketplace buy: Listing #${listingId} for ${priceChz} CHZ...`);
     const listing = await marketContract.getListing(listingId);
     const sellerAddr = String(listing[0]).toLowerCase();
+    const tokenId = Number(listing[1]);
     const onChainPriceWei = listing[2];
     const isActive = Boolean(listing[3]);
+    const boughtFig = ownerMap[tokenId] || null;
+    const myAddr = address?.toLowerCase();
+    const previousBest = boughtFig && myAddr ? window.dreamScores[myAddr]?.[boughtFig.position] : null;
 
     if (!isActive) {
       showHeaderToast('This listing is no longer active. Refreshing marketplace...', true);
@@ -2457,8 +2622,22 @@ async function buyFromMarket(listingId, priceChz, priceWeiRaw){
     showHeaderToast('Transaction sent to Chiliz Chain. Awaiting blockchain confirmation...');
     
     await tx.wait();
-    showHeaderToast('Card purchased successfully! Tactical formation updated!');
     await loadData();
+    if (boughtFig && boughtFig.teamId === ARGENTINA_TEAM_ID) {
+      const posName = POSITION_SHORT[boughtFig.position] || boughtFig.position;
+      if (!previousBest) {
+        showHeaderToast(`New Argentina ${posName} scored! Your squad is closer to 11/11.`);
+      } else if (boughtFig.weight > previousBest.weight) {
+        showHeaderToast(`Squad upgraded: ${posName} +${boughtFig.weight - previousBest.weight} pts.`);
+      } else {
+        showHeaderToast(`Card purchased and recorded, but your current ${posName} is stronger.`);
+      }
+    } else if (boughtFig) {
+      const teamInfo = TEAMS[boughtFig.teamId] || {name:'World Cup'};
+      showHeaderToast(`${teamInfo.name} card purchased. It is saved on-chain for future quests.`);
+    } else {
+      showHeaderToast('Card purchased successfully! Tactical formation updated!');
+    }
   } catch (error) {
     console.error(error);
     showHeaderToast('Transaction failed. Ensure you have sufficient CHZ for gas and purchase price.', true);
@@ -2629,7 +2808,7 @@ function shareOnX(){
 
 /* HARMONOGRAM I LICZNIK BLOKĂ“W SYSTEMOWYCH */
 const BLOCK_TIME_MS = 3000;
-const DEADLINE_DAYS = 30;
+const DEADLINE_DAYS = 59;
 const DEADLINE_BLOCK_OFFSET = Math.floor((DEADLINE_DAYS * 24 * 60 * 60 * 1000) / BLOCK_TIME_MS);
 let currentBlock = 34158889; 
 let DEADLINE_BLOCK = currentBlock + DEADLINE_BLOCK_OFFSET;
