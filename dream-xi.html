@@ -196,11 +196,11 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
     <div class="countdown-wrap">
       <div class="countdown-label">QUEST ENDS AT BLOCK</div>
       <div class="countdown-timer">
-        <div class="countdown-unit"><div class="countdown-num" id="cdH">--</div><div class="countdown-sub">HRS</div></div>
+        <div class="countdown-unit"><div class="countdown-num" id="cdH">--</div><div class="countdown-sub" id="cdHlbl">HRS</div></div>
         <div style="font-family:'Black Ops One',sans-serif;font-size:28px;color:#3d4a5a;padding-bottom:4px;">:</div>
-        <div class="countdown-unit"><div class="countdown-num" id="cdM">--</div><div class="countdown-sub">MIN</div></div>
+        <div class="countdown-unit"><div class="countdown-num" id="cdM">--</div><div class="countdown-sub" id="cdMlbl">MIN</div></div>
         <div style="font-family:'Black Ops One',sans-serif;font-size:28px;color:#3d4a5a;padding-bottom:4px;">:</div>
-        <div class="countdown-unit"><div class="countdown-num" id="cdS">--</div><div class="countdown-sub">SEC</div></div>
+        <div class="countdown-unit"><div class="countdown-num" id="cdS">--</div><div class="countdown-sub" id="cdSlbl">SEC</div></div>
       </div>
       <div class="countdown-block" id="cdBlock">Target block: 34,253,705</div>
     </div>
@@ -642,12 +642,16 @@ function updateCountdown(){
     return;
   }
   const secsLeft = blocksLeft * 3;
-  const h = Math.floor(secsLeft / 3600);
+  const d = Math.floor(secsLeft / 86400);
+  const h = Math.floor((secsLeft % 86400) / 3600);
   const m = Math.floor((secsLeft % 3600) / 60);
   const s = secsLeft % 60;
-  document.getElementById('cdH').textContent = String(h).padStart(2,'0');
-  document.getElementById('cdM').textContent = String(m).padStart(2,'0');
-  document.getElementById('cdS').textContent = String(s).padStart(2,'0');
+  document.getElementById('cdH').textContent = d > 0 ? String(d).padStart(2,'0') : String(h).padStart(2,'0');
+  document.getElementById('cdM').textContent = d > 0 ? String(h).padStart(2,'0') : String(m).padStart(2,'0');
+  document.getElementById('cdS').textContent = d > 0 ? String(m).padStart(2,'0') : String(s).padStart(2,'0');
+  document.getElementById('cdHlbl').textContent = d > 0 ? 'DAYS' : 'HRS';
+  document.getElementById('cdMlbl').textContent = d > 0 ? 'HRS' : 'MIN';
+  document.getElementById('cdSlbl').textContent = d > 0 ? 'MIN' : 'SEC';
   document.getElementById('cdBlock').innerHTML = 'Deadline: block <a href="https://scan.chiliz.com/block/'+DEADLINE_BLOCK+'" target="_blank" style="color:#818cf8;text-decoration:none;">#'+DEADLINE_BLOCK.toLocaleString()+'</a> · ~#'+estimated.toLocaleString()+' now · '+blocksLeft.toLocaleString()+' left';
 }
 
