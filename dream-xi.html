@@ -112,7 +112,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
 .how-desc .p{color:#818cf8;font-weight:700;}
 .how-desc .a{color:#ffc940;font-weight:700;}
 
-/* PANEL KOLEKCJONERSKIEGO (TABS: SNIPE / PORTFOLIO) */
+/* NOWE MODUŁY PANELU KOLEKCJONERSKIEGO (TABS: SNIPE / PORTFOLIO) */
 .desk-section {
   background: #0a0e14;
   border: 1px solid #1c2028;
@@ -623,7 +623,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
   border-radius: 2px;
 }
 
-/* RANKING */
+/* ROZPISKA RANKINGU */
 .lb-section{padding: 24px;}
 .leaderboard-list{background:#0a0e14;border:1px solid #1c2028;border-radius:12px;padding:12px;}
 
@@ -710,7 +710,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
 <nav class="topnav">
   <a href="https://block-kickers.vercel.app" class="topnav-logo" style="text-decoration:none;">⚽ BLOCK <span>KICKERS</span></a>
   <div style="display:flex; align-items:center; gap:12px;">
-    <!-- Wyświetlanie salda konta CHZ na żywo -->
+    <!-- Sformatowany balans portfela prezentowany po lewej stronie adresu (domyślnie ukryty do momentu autoryzacji) -->
     <span id="walletBalance" style="font-family:'Share Tech Mono',monospace; color:#00ff87; font-size:13px; font-weight:600; display:none; background:rgba(0,255,135,0.06); border:1px solid rgba(0,255,135,0.2); padding:6px 12px; border-radius:6px; letter-spacing:0.5px;">0.0 CHZ</span>
     <button class="btn-connect" id="connectBtn" onclick="connectWallet()">CONNECT WALLET</button>
   </div>
@@ -1299,7 +1299,7 @@ async function getReadProvider(){
   }
 }
 
-// Bezpieczne pobieranie stanu salda portfela w Chiliz (CHZ)
+// Niezależne i bezpieczne odpytywanie o saldo portfela w Chiliz (CHZ)
 async function updateWalletBalance() {
   if (typeof window.ethereum !== 'undefined' && address) {
     try {
@@ -1884,8 +1884,8 @@ function renderPitch() {
     row.forEach(pos => {
       const card = document.createElement('div');
       const scored = myTeamPositions[pos];
-      const mkt = marketByPos[pos]; // Wczytywanie z płaskiej struktury rynkowej
-      const floor = marketFloorByPos[pos]; // Wczytywanie z płaskiej struktury rynkowej
+      const mkt = marketByPos[pos]; // Poprawne płaskie mapowanie
+      const floor = marketFloorByPos[pos]; // Poprawne płaskie mapowanie
 
       let floorHtml = '';
       if (scored && floor) {
@@ -1947,7 +1947,7 @@ function renderPitch() {
           </div>
           <div>
             <div class="pos-weight empty">—</div>
-            <div class="pos-rarity" style="color:#5a6a7a;">EMPTY SLOT</div>
+            <div class="pos-rarity" style="color:#5a6a7a;">EMPTY</div>
             ${actionHtml}
           </div>
         `;
@@ -2045,7 +2045,7 @@ async function sellFigure(tokenId, priceChz) {
   }
   try {
     const figContract = new ethers.Contract(CONTRACT_ADDRESS, [
-      "function isApprovedForAll(address account, address operator) external view returns (bool)",
+      "function isApprovedForAll(address owner, address operator) external view returns (bool)",
       "function setApprovalForAll(address operator, bool approved) external"
     ], signer);
 
