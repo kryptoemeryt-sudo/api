@@ -1293,7 +1293,7 @@ const POSITION_IDS = FORMATION.flat();
 const ARGENTINA_TEAM_DATA = {id: 25, name: "Argentina", flag:"UN", code:"ar", fed: "CONMEBOL"};
 
 // WielojÄ™zyczne tĹ‚umaczenia zasad gry (9 jÄ™zykĂłw: EN, DE, FR, ES, IT, PT, JA, PL, UK)
-const RULES_TRANSLATIONS = {
+const RULES_TRANSLATIONS_LEGACY = {
   en: {
     title: "How to Play & Rules",
     items: [
@@ -1378,6 +1378,108 @@ const RULES_TRANSLATIONS = {
       "Mint ĐşĐľŃŃ‚ŃŃ” 10 CHZ. ĐšĐľĐ¶ĐµĐ˝ mint Đ´Đ°Ń” Đ˛Đ¸ĐżĐ°Đ´ĐşĐľĐ˛Ń ĐşĐ°Ń€Ń‚Ń Đ· ĐľĐ´Đ˝Ń–Ń”Ń— Đ· 48 ĐşĐľĐĽĐ°Đ˝Đ´ World Cup.",
       "ĐšĐ°Ń€Ń‚Đ° Đ·Đ°Ń€Đ°Ń…ĐľĐ˛ŃŃ”Ń‚ŃŚŃŃŹ Đ»Đ¸ŃĐµ ŃŹĐşŃ‰Đľ Đ˛Đ¸ Ń—Ń— Đ·ĐĽŃ–Đ˝Ń‚Đ¸Đ»Đ¸ Đ°Đ±Đľ ĐşŃĐżĐ¸Đ»Đ¸ Đ˝Đ° marketplace. ĐźŃ€ŃŹĐĽŃ– ĐżĐµŃ€ĐµĐşĐ°Đ·Đ¸ Đ˝Đµ Ń€Đ°Ń…ŃŃŽŃ‚ŃŚŃŃŹ.",
       "Đ’Đ°Ń score â€” Ń†Đµ ŃŃĐĽĐ° Đ˝Đ°ĐąĐşŃ€Đ°Ń‰Đ¸Ń… ĐşĐ°Ń€Ń‚, ŃŹĐşŃ– ĐżŃ€ĐľŃ…ĐľĐ´Đ¸Đ»Đ¸ Ń‡ĐµŃ€ĐµĐ· Đ˛Đ°Ń wallet.",
+      "ĐšĐľĐ»Đ¸ Đ˛Đ¸ ĐľŃ‚Ń€Đ¸ĐĽŃŃ”Ń‚Đµ ŃĐ¸Đ»ŃŚĐ˝Ń–ŃŃ ĐşĐ°Ń€Ń‚Ń Đ˝Đ° ĐżĐľĐ·Đ¸Ń†Ń–ŃŽ, score ĐľĐ˝ĐľĐ˛Đ»ŃŽŃ”Ń‚ŃŚŃŃŹ ĐľĐ´Ń€Đ°Đ·Ń. ĐˇĐ»Đ°Đ±ŃŃ– ĐşĐ°Ń€Ń‚Đ¸ ĐĽĐľĐ¶Đ˝Đ° ĐżŃ€ĐľĐ´Đ°Ń‚Đ¸.",
+      "Prize pool 10,000 CHZ Ń€ĐľĐ·ĐżĐľĐ´Ń–Đ»ŃŹŃ”Ń‚ŃŚŃŃŹ ĐĽŃ–Đ¶ ĐżĐ»Đ°Ń‚Đ˝Đ¸ĐĽĐ¸ ĐĽŃ–ŃŃ†ŃŹĐĽĐ¸. Đ‘Ń–Đ»ŃŚŃĐµ ŃĐ˝Ń–ĐşĐ°Đ»ŃŚĐ˝Đ¸Ń… ĐşĐľĐ»ĐµĐşŃ†Ń–ĐľĐ˝ĐµŃ€Ń–Đ˛ ĐľĐ·Đ˝Đ°Ń‡Đ°Ń” Đ±Ń–Đ»ŃŚŃĐµ ĐżĐ»Đ°Ń‚Đ˝Đ¸Ń… ĐĽŃ–ŃŃ†ŃŚ."
+    ]
+  },
+  pl: {
+    title: "Zasady gry",
+    items: [
+      "PoĹ‚Ä…cz Chiliz Wallet, aby aktywowaÄ‡ skĹ‚ad Argentyny i sprawdzaÄ‡ postÄ™p na ĹĽywo.",
+      "Mint kosztuje 10 CHZ. KaĹĽdy mint daje losowÄ… kartÄ™ z jednej z 48 druĹĽyn World Cup.",
+      "Karta punktuje tylko wtedy, gdy zostaĹ‚a wymintowana przez Ciebie albo kupiona na marketplace. BezpoĹ›rednie transfery nie punktujÄ….",
+      "TwĂłj wynik to suma najlepszych kart, ktĂłre przeszĹ‚y przez TwĂłj wallet.",
+      "Gdy zdobÄ™dziesz mocniejszÄ… kartÄ™ na pozycjÄ™, wynik aktualizuje siÄ™ natychmiast. SĹ‚absze karty moĹĽesz sprzedaÄ‡.",
+      "Pula 10,000 CHZ jest dzielona na pĹ‚atne miejsca. Im wiÄ™cej unikalnych kolekcjonerĂłw, tym wiÄ™cej pĹ‚atnych miejsc."
+    ]
+  }
+};
+
+const RULES_TRANSLATIONS = {
+  en: {
+    title: "How to Play & Rules",
+    items: [
+      "Connect your Chiliz Wallet to activate your personal Argentina squad and check live progress.",
+      "Mint cards for 10 CHZ. Each mint gives a random card from one of the 48 World Cup teams.",
+      "A card only scores in your Argentina squad if it was minted by you or bought through the marketplace. Direct wallet transfers do not score.",
+      "Your score is the sum of the best card weights that have ever passed through your wallet.",
+      "When you secure a heavier card for a position, your score updates instantly. You can sell weaker cards on the marketplace to recover CHZ.",
+      "The 10,000 CHZ prize pool is split across paid ranks. More unique collectors on the leaderboard means more paid ranks."
+    ]
+  },
+  de: {
+    title: "Spielregeln",
+    items: [
+      "Verbinde dein Chiliz Wallet, um dein persĂ¶nliches Argentinien-Team und den Live-Fortschritt zu sehen.",
+      "Minten kostet 10 CHZ. Jeder Mint gibt eine zufĂ¤llige Karte aus einem der 48 World-Cup-Teams.",
+      "Eine Karte punktet nur, wenn sie von dir gemintet oder ĂĽber den Marketplace gekauft wurde. Direkte Wallet-Transfers zĂ¤hlen nicht.",
+      "Dein Score ist die Summe der stĂ¤rksten Karten, die jemals durch dein Wallet gegangen sind.",
+      "Wenn du eine stĂ¤rkere Karte fĂĽr eine Position bekommst, wird dein Score sofort aktualisiert. SchwĂ¤chere Karten kannst du verkaufen.",
+      "Der Preispool von 10,000 CHZ wird auf bezahlte RĂ¤nge verteilt. Mehr eindeutige Sammler bedeuten mehr bezahlte RĂ¤nge."
+    ]
+  },
+  fr: {
+    title: "RĂ¨gles du jeu",
+    items: [
+      "Connecte ton wallet Chiliz pour activer ton Ă©quipe d'Argentine et suivre ta progression.",
+      "Le mint coĂ»te 10 CHZ. Chaque mint donne une carte alĂ©atoire parmi les 48 Ă©quipes de la Coupe du monde.",
+      "Une carte marque seulement si elle a Ă©tĂ© mintĂ©e par toi ou achetĂ©e sur le marketplace. Les transferts directs ne comptent pas.",
+      "Ton score est la somme des meilleures cartes passĂ©es par ton wallet.",
+      "Quand tu obtiens une carte plus forte pour une position, ton score se met Ă  jour instantanĂ©ment. Tu peux vendre les cartes plus faibles.",
+      "Le prize pool de 10,000 CHZ est partagĂ© entre les rangs payĂ©s. Plus il y a de collectionneurs uniques, plus il y a de rangs payĂ©s."
+    ]
+  },
+  es: {
+    title: "Reglas del juego",
+    items: [
+      "Conecta tu wallet Chiliz para activar tu equipo de Argentina y ver el progreso en vivo.",
+      "Mintear cuesta 10 CHZ. Cada mint entrega una carta aleatoria de uno de los 48 equipos del Mundial.",
+      "Una carta solo puntĂşa si la minteaste tĂş o la compraste en el marketplace. Las transferencias directas no cuentan.",
+      "Tu puntuaciĂłn es la suma de las cartas mĂˇs fuertes que pasaron por tu wallet.",
+      "Cuando consigues una carta mĂˇs fuerte para una posiciĂłn, tu score se actualiza al instante. Puedes vender cartas mĂˇs dĂ©biles.",
+      "El prize pool de 10,000 CHZ se reparte entre rangos pagados. MĂˇs coleccionistas Ăşnicos significa mĂˇs rangos pagados."
+    ]
+  },
+  it: {
+    title: "Regole del gioco",
+    items: [
+      "Collega il tuo wallet Chiliz per attivare la squadra Argentina e vedere i progressi live.",
+      "Il mint costa 10 CHZ. Ogni mint assegna una carta casuale da una delle 48 squadre World Cup.",
+      "Una carta fa punti solo se Ă¨ stata mintata da te o comprata sul marketplace. I trasferimenti diretti non contano.",
+      "Il tuo score Ă¨ la somma delle carte migliori passate dal tuo wallet.",
+      "Quando ottieni una carta piĂą forte per una posizione, lo score si aggiorna subito. Puoi vendere le carte piĂą deboli.",
+      "Il prize pool da 10,000 CHZ viene diviso tra i ranghi pagati. PiĂą collezionisti unici significa piĂą ranghi pagati."
+    ]
+  },
+  pt: {
+    title: "Regras do jogo",
+    items: [
+      "Conecta a tua wallet Chiliz para ativar a equipa da Argentina e acompanhar o progresso.",
+      "O mint custa 10 CHZ. Cada mint dĂˇ uma carta aleatĂłria de uma das 48 equipas da World Cup.",
+      "Uma carta sĂł pontua se foi mintada por ti ou comprada no marketplace. TransferĂŞncias diretas nĂŁo contam.",
+      "A tua pontuaĂ§ĂŁo Ă© a soma das melhores cartas que passaram pela tua wallet.",
+      "Quando recebes uma carta mais forte para uma posiĂ§ĂŁo, a pontuaĂ§ĂŁo atualiza imediatamente. Podes vender cartas mais fracas.",
+      "O prize pool de 10,000 CHZ Ă© dividido pelos lugares pagos. Mais colecionadores Ăşnicos significa mais lugares pagos."
+    ]
+  },
+  ja: {
+    title: "ă‚˛ăĽă ă«ăĽă«",
+    items: [
+      "Chiliz Wallet ă‚’ćŽĄç¶šă™ă‚‹ă¨ă€ă‚ăŞăźă®ă‚˘ă«ă‚ĽăłăăłăăĽă ă¨é€˛čˇŚçŠ¶ćłă‚’ç˘şčŞŤă§ăŤăľă™ă€‚",
+      "ăźăłăăŻ 10 CHZ ă§ă™ă€‚ĺ„ăźăłăă§ 48 ă® World Cup ăăĽă ă‹ă‚‰ă©ăłă€ă ăŞă‚«ăĽă‰ăŚĺ‡şăľă™ă€‚",
+      "ă‚«ăĽă‰ăŚă‚ąă‚łă‚˘ă«ĺŹŤć ă•ă‚Śă‚‹ă®ăŻă€č‡Şĺ†ă§ăźăłăă—ăźĺ ´ĺă€ăľăźăŻ marketplace ă§čłĽĺ…Ąă—ăźĺ ´ĺă ă‘ă§ă™ă€‚ç›´ćŽĄé€é‡‘ăŻă‚«ă‚¦ăłăă•ă‚Śăľă›ă‚“ă€‚",
+      "ă‚ąă‚łă‚˘ăŻă€ă‚ăŞăźă® wallet ă‚’é€šéŽă—ăźĺ„ăťă‚¸ă‚·ă§ăłă®ćś€é«ă‚«ăĽă‰ă®ĺč¨ă§ă™ă€‚",
+      "ă‚ă‚ŠĺĽ·ă„ă‚«ăĽă‰ă‚’çŤ˛ĺľ—ă™ă‚‹ă¨ă€ă‚ąă‚łă‚˘ăŻă™ăă«ć›´ć–°ă•ă‚Śăľă™ă€‚ĺĽ±ă„ă‚«ăĽă‰ăŻ marketplace ă§ĺŁ˛ĺŤ´ă§ăŤăľă™ă€‚",
+      "10,000 CHZ ă® prize pool ăŻćś‰ć–™é †ä˝Ťă«ĺ†é…Ťă•ă‚Śăľă™ă€‚ă¦ă‹ăĽă‚ŻăŞă‚łă¬ă‚Żă‚żăĽăŚĺ˘—ăă‚‹ă»ă©ă€ćś‰ć–™é †ä˝Ťă‚‚ĺ˘—ăăľă™ă€‚"
+    ]
+  },
+  uk: {
+    title: "ĐźŃ€Đ°Đ˛Đ¸Đ»Đ° ĐłŃ€Đ¸",
+    items: [
+      "ĐźŃ–Đ´ĐşĐ»ŃŽŃ‡Ń–Ń‚ŃŚ Chiliz Wallet, Ń‰ĐľĐ± Đ°ĐşŃ‚Đ¸Đ˛ŃĐ˛Đ°Ń‚Đ¸ ŃĐşĐ»Đ°Đ´ ĐŃ€ĐłĐµĐ˝Ń‚Đ¸Đ˝Đ¸ Ń‚Đ° Đ±Đ°Ń‡Đ¸Ń‚Đ¸ ĐżŃ€ĐľĐłŃ€ĐµŃ Đ˝Đ°Đ¶Đ¸Đ˛Đľ.",
+      "Mint ĐşĐľŃŃ‚ŃŃ” 10 CHZ. ĐšĐľĐ¶ĐµĐ˝ mint Đ´Đ°Ń” Đ˛Đ¸ĐżĐ°Đ´ĐşĐľĐ˛Ń ĐşĐ°Ń€Ń‚Ń Đ· ĐľĐ´Đ˝Ń–Ń”Ń— Đ· 48 ĐşĐľĐĽĐ°Đ˝Đ´ World Cup.",
+      "ĐšĐ°Ń€Ń‚Đ° Đ·Đ°Ń€Đ°Ń…ĐľĐ˛ŃŃ”Ń‚ŃŚŃŃŹ Đ»Đ¸ŃĐµ ŃŹĐşŃ‰Đľ Đ˛Đ¸ Ń—Ń— Đ·ĐĽŃ–Đ˝Ń‚Đ¸Đ»Đ¸ Đ°Đ±Đľ ĐşŃĐżĐ¸Đ»Đ¸ Đ˝Đ° marketplace. ĐźŃ€ŃŹĐĽŃ– ĐżĐµŃ€ĐµĐşĐ°Đ·Đ¸ Đ˝Đµ Ń€Đ°Ń…ŃŃŽŃ‚ŃŚŃŃŹ.",
+      "Đ’Đ°Ń score - Ń†Đµ ŃŃĐĽĐ° Đ˝Đ°ĐąĐşŃ€Đ°Ń‰Đ¸Ń… ĐşĐ°Ń€Ń‚, ŃŹĐşŃ– ĐżŃ€ĐľŃ…ĐľĐ´Đ¸Đ»Đ¸ Ń‡ĐµŃ€ĐµĐ· Đ˛Đ°Ń wallet.",
       "ĐšĐľĐ»Đ¸ Đ˛Đ¸ ĐľŃ‚Ń€Đ¸ĐĽŃŃ”Ń‚Đµ ŃĐ¸Đ»ŃŚĐ˝Ń–ŃŃ ĐşĐ°Ń€Ń‚Ń Đ˝Đ° ĐżĐľĐ·Đ¸Ń†Ń–ŃŽ, score ĐľĐ˝ĐľĐ˛Đ»ŃŽŃ”Ń‚ŃŚŃŃŹ ĐľĐ´Ń€Đ°Đ·Ń. ĐˇĐ»Đ°Đ±ŃŃ– ĐşĐ°Ń€Ń‚Đ¸ ĐĽĐľĐ¶Đ˝Đ° ĐżŃ€ĐľĐ´Đ°Ń‚Đ¸.",
       "Prize pool 10,000 CHZ Ń€ĐľĐ·ĐżĐľĐ´Ń–Đ»ŃŹŃ”Ń‚ŃŚŃŃŹ ĐĽŃ–Đ¶ ĐżĐ»Đ°Ń‚Đ˝Đ¸ĐĽĐ¸ ĐĽŃ–ŃŃ†ŃŹĐĽĐ¸. Đ‘Ń–Đ»ŃŚŃĐµ ŃĐ˝Ń–ĐşĐ°Đ»ŃŚĐ˝Đ¸Ń… ĐşĐľĐ»ĐµĐşŃ†Ń–ĐľĐ˝ĐµŃ€Ń–Đ˛ ĐľĐ·Đ˝Đ°Ń‡Đ°Ń” Đ±Ń–Đ»ŃŚŃĐµ ĐżĐ»Đ°Ń‚Đ˝Đ¸Ń… ĐĽŃ–ŃŃ†ŃŚ."
     ]
@@ -2370,18 +2472,34 @@ function renderLiveActivityFeed(mints, sales) {
     const teamInfo = TEAMS[evt.teamId] || {code:'un', flag: 'UN'};
     const flagImg = `<img src="https://flagcdn.com/w20/${teamInfo.code}.png" style="width:14px;height:10px;border-radius:1px;vertical-align:middle;margin:0 2px;" onerror="this.style.display='none'"/>`;
     const rarSpan = `<span style="color:${rarColor};font-weight:700;background:${rarBg};padding:1px 5px;border-radius:3px;font-size:10px;">${rarName}</span>`;
-    const blockHtml = `<span style="color:#5a6a7a;font-size:10px;">#${Number(evt.block).toLocaleString()}</span>`;
+    const timeHtml = `<span style="color:#5a6a7a;font-size:10px;white-space:nowrap;">${formatEventBlockTime(evt.block)}</span>`;
     if (evt.type === 'mint') {
-      html += `<div class="feed-item mint">${blockHtml} <span class="feed-addr">${evt.owner.slice(0,6)}...${evt.owner.slice(-4)}</span> minted ${flagImg}${rarSpan} <span class="feed-highlight">${evt.posName}</span> <span class="feed-price-text">10 CHZ</span></div>`;
+      html += `<div class="feed-item mint">${timeHtml} <span class="feed-addr">${shortWallet(evt.owner)}</span> minted ${flagImg}${rarSpan} <span class="feed-highlight">${evt.posName}</span> <span class="feed-price-text">10 CHZ</span></div>`;
     } else {
       const isWhale = evt.price >= 100;
       const priceHtml = isWhale
         ? `<span style="color:#ffc940;font-weight:700;font-size:12px;background:rgba(255,201,64,0.15);padding:1px 6px;border-radius:3px;">BIG BUY ${evt.price} CHZ</span>`
         : `<span class="feed-price-text">${evt.price > 0 ? evt.price+' CHZ' : ''}</span>`;
-      html += `<div class="feed-item sale${isWhale?' whale':''}">${blockHtml} <span class="feed-addr">${(evt.buyer||'').slice(0,6)}...${(evt.buyer||'').slice(-4)}</span> bought ${flagImg}${rarSpan} <span class="feed-highlight">${evt.posName}</span> ${priceHtml}</div>`;
+      html += `<div class="feed-item sale${isWhale?' whale':''}">${timeHtml} <span class="feed-addr">${shortWallet(evt.buyer)}</span> bought ${flagImg}${rarSpan} <span class="feed-highlight">${evt.posName}</span> ${priceHtml}</div>`;
     }
   });
   container.innerHTML = html;
+}
+
+function shortWallet(addr) {
+  const text = String(addr || '');
+  if (!text || text.length < 6) return '0x...';
+  return `0x...${text.slice(-4)}`;
+}
+
+function formatEventBlockTime(block) {
+  const blockNum = Number(block || 0);
+  if (!blockNum) return '--:--';
+  const estimatedCurrent = typeof estimateCurrentBlock === 'function' ? estimateCurrentBlock() : currentBlock;
+  const diffBlocks = estimatedCurrent - blockNum;
+  const eventMs = Date.now() - (diffBlocks * BLOCK_TIME_MS);
+  const d = new Date(eventMs);
+  return d.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
 }
 
 function getMyScore(){
