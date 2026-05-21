@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Block Kickers — Goalkeeper Quest</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Barlow+Condensed:wght@400;600;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;font-size:16px;}
+.page{max-width:860px;margin:0 auto;}
+
+/* HERO */
+.hero{padding:56px 40px 48px;text-align:center;border-bottom:1px solid #1c2028;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 50% at 50% 0%,rgba(59,130,246,0.12),transparent);pointer-events:none;}
+.badge{display:inline-flex;align-items:center;gap:8px;background:rgba(59,130,246,0.1);border:1px solid rgba(59,130,246,0.3);border-radius:4px;padding:5px 14px;font-size:11px;letter-spacing:3px;color:#3b82f6;margin-bottom:24px;}
+.dot{width:6px;height:6px;border-radius:50%;background:#3b82f6;animation:blink 2s infinite;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.2}}
+.hero-title{font-family:'Black Ops One',sans-serif;font-size:clamp(40px,8vw,80px);line-height:0.88;margin-bottom:16px;position:relative;z-index:1;}
+.acc{color:#00ff87;}
+.blue{color:#3b82f6;}
+.gold{color:#ffc940;}
+.hero-sub{font-size:20px;color:#7a8899;margin-bottom:32px;position:relative;z-index:1;}
+.prize-box{display:inline-flex;flex-direction:column;align-items:center;background:rgba(59,130,246,0.07);border:1px solid rgba(59,130,246,0.3);border-radius:12px;padding:20px 48px;margin-bottom:40px;position:relative;z-index:1;}
+.prize-num{font-family:'Black Ops One',sans-serif;font-size:64px;color:#3b82f6;line-height:1;}
+.prize-chz{font-family:'Black Ops One',sans-serif;font-size:24px;color:#3b82f6;}
+.prize-lbl{font-size:12px;letter-spacing:3px;color:#5a6a7a;margin-top:6px;}
+
+/* PROGRESS */
+.progress-wrap{padding:32px 40px;border-bottom:1px solid #1c2028;}
+.sec-label{font-size:11px;letter-spacing:4px;color:#3d4a5a;margin-bottom:20px;}
+.progress-bar-wrap{background:#0f1318;border:1px solid rgba(59,130,246,0.2);border-radius:10px;padding:20px 24px;margin-bottom:16px;}
+.progress-header{display:flex;align-items:baseline;gap:10px;margin-bottom:12px;}
+.progress-num{font-family:'Black Ops One',sans-serif;font-size:40px;color:#3b82f6;line-height:1;}
+.progress-total{font-size:20px;color:#3d4a5a;}
+.progress-track{height:12px;background:rgba(255,255,255,0.05);border-radius:6px;overflow:hidden;margin-bottom:10px;}
+.progress-fill{height:100%;width:83.3%;background:linear-gradient(90deg,#3b82f6,#00ff87);border-radius:6px;}
+.progress-sub{font-size:13px;color:#7a8899;}
+.missing-grid{display:flex;flex-wrap:wrap;gap:8px;}
+.missing-tag{background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.2);border-radius:6px;padding:6px 12px;font-size:13px;color:#ef4444;font-family:'Share Tech Mono',monospace;}
+.missing-tag.usa{border-color:rgba(178,34,52,0.4);background:rgba(178,34,52,0.08);color:#ef4444;}
+
+/* SECTIONS */
+.section{padding:36px 40px;border-bottom:1px solid #1c2028;}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;}
+.card{background:#0f1318;border:1px solid #1c2028;border-radius:10px;padding:20px;}
+.card.blue-card{border-color:rgba(59,130,246,0.25);background:rgba(59,130,246,0.04);}
+.card.green-card{border-color:rgba(0,255,135,0.2);background:rgba(0,255,135,0.04);}
+.card.gold-card{border-color:rgba(255,201,64,0.2);background:rgba(255,201,64,0.04);}
+.card.red-card{border-color:rgba(239,68,68,0.2);background:rgba(239,68,68,0.04);}
+.card-title{font-family:'Black Ops One',sans-serif;font-size:14px;color:#dde4f0;margin-bottom:10px;letter-spacing:0.5px;}
+.card-desc{font-size:15px;color:#7a8899;line-height:1.6;}
+.card-desc .g{color:#00ff87;font-weight:700;}
+.card-desc .b{color:#3b82f6;font-weight:700;}
+.card-desc .a{color:#ffc940;font-weight:700;}
+.card-desc .r{color:#ef4444;font-weight:700;}
+.step-n{font-family:'Black Ops One',sans-serif;font-size:36px;color:#1c2028;line-height:1;margin-bottom:10px;}
+
+/* EXAMPLE */
+.example{background:#0f1318;border:1px solid rgba(0,255,135,0.15);border-radius:10px;overflow:hidden;}
+.ex-row{display:flex;align-items:flex-start;gap:16px;padding:18px 22px;border-bottom:1px solid #1c2028;}
+.ex-row:last-child{border-bottom:none;}
+.ex-n{font-family:'Black Ops One',sans-serif;font-size:22px;color:#3b82f6;width:32px;flex-shrink:0;line-height:1.2;}
+.ex-text{font-size:16px;color:#7a8899;line-height:1.5;}
+.ex-text strong{color:#dde4f0;}
+
+/* STATS ROW */
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:0;}
+.stat{background:#0f1318;border:1px solid #1c2028;border-radius:8px;padding:16px;}
+.stat-n{font-family:'Black Ops One',sans-serif;font-size:32px;line-height:1;margin-bottom:4px;}
+.stat-l{font-size:12px;letter-spacing:1px;color:#5a6a7a;}
+
+/* GK GRID */
+.gk-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(90px,1fr));gap:6px;}
+.gk-tag{background:#0f1318;border:1px solid #1c2028;border-radius:6px;padding:6px 8px;font-size:11px;font-family:'Share Tech Mono',monospace;color:#7a8899;text-align:center;}
+.gk-tag.has{border-color:rgba(59,130,246,0.3);background:rgba(59,130,246,0.06);color:#3b82f6;}
+.gk-tag.missing{border-color:rgba(239,68,68,0.25);background:rgba(239,68,68,0.05);color:#ef4444;}
+
+/* RULES */
+.rules{background:#0a0d10;border:1px solid #1c2028;border-radius:10px;padding:22px;}
+.rules-title{font-size:10px;letter-spacing:4px;color:#3d4a5a;margin-bottom:14px;}
+.rule{display:flex;gap:10px;font-size:14px;color:#5a6a7a;margin-bottom:8px;line-height:1.4;}
+.rule::before{content:'›';color:#3b82f6;flex-shrink:0;}
+
+/* CTA */
+.cta{padding:48px 40px;text-align:center;}
+.cta-label{font-size:11px;letter-spacing:4px;color:#3d4a5a;margin-bottom:16px;}
+.cta-btn{display:inline-block;background:linear-gradient(135deg,#3b82f6,#1d4ed8);color:#fff;font-family:'Black Ops One',sans-serif;font-size:16px;letter-spacing:2px;padding:18px 48px;border-radius:8px;text-decoration:none;margin-bottom:20px;}
+.url{font-family:'Share Tech Mono',monospace;font-size:16px;color:#3d4a5a;letter-spacing:2px;}
+
+@media(max-width:600px){
+  .hero{padding:40px 24px 36px;}
+  .section,.progress-wrap,.cta{padding:28px 24px;}
+  .grid-2,.grid-3,.stats-row{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- HERO -->
+<div class="hero">
+  <div class="badge"><span class="dot"></span>QUEST #2 · BLOCK KICKERS 2026</div>
+  <div class="hero-title">🧤 GOALKEEPER<br><span class="blue">QUEST</span></div>
+  <div class="hero-sub">Collect one Goalkeeper from every nation.<br>48 countries · 1 winner · 1000 CHZ prize.</div>
+  <div class="prize-box">
+    <div class="prize-num"> 1000</div>
+    <div class="prize-chz">CHZ</div>
+    <div class="prize-lbl">PRIZE · FIRST TO COMPLETE WINS</div>
+  </div>
+  <div style="font-size:15px;color:#5a6a7a;position:relative;z-index:1;">
+    Active alongside <svg width="20" height="14" viewBox="0 0 28 20" style="border-radius:2px;vertical-align:middle;margin-right:4px;"><rect width="28" height="20" fill="#B22234"/><rect y="1.54" width="28" height="1.54" fill="#fff"/><rect y="4.62" width="28" height="1.54" fill="#fff"/><rect y="7.69" width="28" height="1.54" fill="#fff"/><rect y="10.77" width="28" height="1.54" fill="#fff"/><rect y="13.85" width="28" height="1.54" fill="#fff"/><rect y="16.92" width="28" height="1.54" fill="#fff"/><rect width="12" height="10.77" fill="#3C3B6E"/></svg><span style="color:#ffc940;">USA Nation Quest (1000 CHZ)</span>
+  </div>
+</div>
+
+<!-- LIVE PROGRESS -->
+<div class="progress-wrap">
+  <div class="sec-label">LIVE PROGRESS — GOALKEEPERS MINTED</div>
+  <div class="progress-bar-wrap">
+    <div class="progress-header">
+      <div class="progress-num">40</div>
+      <div class="progress-total">/ 48 nations have a Goalkeeper</div>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill"></div>
+    </div>
+    <div class="progress-sub">83% complete globally · 8 nations still missing their GK</div>
+  </div>
+  <div class="sec-label" style="margin-bottom:12px;">MISSING GOALKEEPERS — MINT TO GET THEM</div>
+  <div class="missing-grid">
+    <div class="missing-tag usa">United States</div>
+    <div class="missing-tag">Germany</div>
+    <div class="missing-tag">Argentina</div>
+    <div class="missing-tag">Japan</div>
+    <div class="missing-tag">Uzbekistan</div>
+    <div class="missing-tag">Bosnia</div>
+    <div class="missing-tag">Panama</div>
+    <div class="missing-tag">Curacao</div>
+  </div>
+</div>
+
+<!-- HOW TO WIN -->
+<div class="section">
+  <div class="sec-label">HOW TO WIN</div>
+  <div class="grid-3">
+    <div class="card">
+      <div class="step-n">01</div>
+      <div class="card-title">MINT OR BUY</div>
+      <div class="card-desc">Mint for <span class="g">10 CHZ</span> and hope for a GK. Or buy directly from the market — 40 nations already have one available.</div>
+    </div>
+    <div class="card">
+      <div class="step-n">02</div>
+      <div class="card-title">COLLECT ALL 48</div>
+      <div class="card-desc">One Goalkeeper from each of the <span class="b">48 WC 2026 nations</span>. Nation doesn't matter — GK from Curacao counts the same as GK from Brazil.</div>
+    </div>
+    <div class="card blue-card">
+      <div class="step-n" style="color:rgba(59,130,246,0.2);">03</div>
+      <div class="card-title" style="color:#3b82f6;">CLAIM 1000 CHZ</div>
+      <div class="card-desc">First wallet holding 48 GK simultaneously wins. <span class="a">Verified on-chain</span> — blockchain timestamp decides. Prize paid within 24 hours.</div>
+    </div>
+  </div>
+</div>
+
+<!-- WHY GK IS SPECIAL -->
+<div class="section">
+  <div class="sec-label">WHY THIS QUEST IS DIFFERENT</div>
+  <div class="card green-card" style="margin-bottom:14px;">
+    <div class="card-title">EVERY GOALKEEPER HAS EQUAL VALUE</div>
+    <div class="card-desc">In Nation Quest you need a specific country. Here — <span class="g">every GK from every nation matters equally</span>. The weakest nation's GK is worth the same as Brazil's. This creates a market for cards that nobody wanted before.</div>
+  </div>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">76 GK ALREADY MINTED</div>
+      <div class="card-desc">Some players have <span class="b">duplicate Goalkeepers</span> they don't need. Now those duplicates have real value — someone racing to complete the quest will buy them.</div>
+    </div>
+    <div class="card red-card">
+      <div class="card-title">8 NATIONS HAVE NO GK YET</div>
+      <div class="card-desc">Germany, Argentina, Japan, USA, Bosnia, Uzbekistan, Panama, Curacao. <span class="r">Someone needs to mint them.</span> That someone gets to name their price on the market.</div>
+    </div>
+  </div>
+</div>
+
+<!-- INVESTMENT EXAMPLES -->
+<div class="section">
+  <div class="sec-label">THE OPPORTUNITY — REAL EXAMPLES</div>
+  <div class="example">
+    <div class="ex-row">
+      <div class="ex-n">A</div>
+      <div class="ex-text">You mint for <strong>10 CHZ</strong> and land <strong>Germany Goalkeeper</strong>. Nobody else has it. You're holding the only GK from one of the world's biggest football nations. Someone needs it to complete 48/48.</div>
+    </div>
+    <div class="ex-row">
+      <div class="ex-n">B</div>
+      <div class="ex-text">You list Germany GK for <strong style="color:#ffc940;">300 CHZ</strong>. The person racing to complete the quest has 47/48 — they will pay. You turned <strong>10 CHZ into 285 CHZ</strong> (after 5% royalty). <strong style="color:#00ff87;">28.5× return.</strong></div>
+    </div>
+    <div class="ex-row">
+      <div class="ex-n">C</div>
+      <div class="ex-text">You already have <strong>3 duplicate GK</strong> sitting in your squad doing nothing. List them all. Someone completing the quest buys every one. Your duplicates become <strong style="color:#00ff87;">instant income.</strong></div>
+    </div>
+    <div class="ex-row">
+      <div class="ex-n">D</div>
+      <div class="ex-text">You're racing to win. You need <strong>8 more GK</strong>. Some are on the market, some need minting. You buy 5, mint 10 hoping for the last 3. You win <strong style="color:#3b82f6;">1000 CHZ</strong> — your investment was 150 CHZ total. <strong style="color:#00ff87;">3.3× return.</strong></div>
+    </div>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="section">
+  <div class="sec-label">BLOCK KICKERS — LIVE STATS</div>
+  <div class="stats-row">
+    <div class="stat">
+      <div class="stat-n" style="color:#00ff87;">816</div>
+      <div class="stat-l">FIGURES MINTED</div>
+    </div>
+    <div class="stat">
+      <div class="stat-n" style="color:#3b82f6;">20</div>
+      <div class="stat-l">ACTIVE PLAYERS</div>
+    </div>
+    <div class="stat">
+      <div class="stat-n" style="color:#ffc940;">7,785</div>
+      <div class="stat-l">CHZ IN VAULT</div>
+    </div>
+    <div class="stat">
+      <div class="stat-n" style="color:#c084fc;">10</div>
+      <div class="stat-l">CHZ MINT PRICE</div>
+    </div>
+  </div>
+</div>
+
+<!-- ALBUM TIP -->
+<div class="section">
+  <div class="sec-label">TRACK YOUR PROGRESS IN THE ALBUM</div>
+  <div class="card blue-card">
+    <div class="card-title">SEE ALL GOALKEEPERS IN REAL TIME</div>
+    <div class="card-desc" style="margin-bottom:14px;">The album shows every nation's GK status. Green = someone owns it. Gold = available on market to buy. Grey = not minted yet — mint to get it first.<br><br>Your GK cards show a <span class="g">bright green badge</span> — click to sell instantly. Missing GK with a market listing show a <span class="a">gold badge</span> — click to buy instantly.</div>
+    <a href="https://block-kickers.vercel.app/#album" style="display:inline-flex;align-items:center;gap:8px;background:rgba(59,130,246,0.15);border:1px solid rgba(59,130,246,0.4);color:#3b82f6;padding:10px 20px;border-radius:6px;font-family:'Black Ops One',sans-serif;font-size:12px;letter-spacing:1px;text-decoration:none;">OPEN ALBUM →</a>
+  </div>
+</div>
+
+<!-- RULES -->
+<div class="section">
+  <div class="sec-label">OFFICIAL RULES</div>
+  <div class="rules">
+    <div class="rules-title">GOALKEEPER QUEST · RULES</div>
+    <div class="rule">First wallet holding one Goalkeeper from all 48 WC 2026 nations simultaneously wins 1000 CHZ</div>
+    <div class="rule">Verified on-chain — blockchain timestamp of completion determines winner</div>
+    <div class="rule">All 48 GK must be in your wallet, not listed on market, at time of claim</div>
+    <div class="rule">Duplicate Goalkeepers from the same nation do not count — one per nation only</div>
+    <div class="rule">Prize paid within 24 hours of verified completion</div>
+    <div class="rule">Running simultaneously with USA Nation Quest (1000 CHZ) — you can compete in both</div>
+    <div class="rule">Track live progress at block-kickers.vercel.app</div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta">
+  <div class="cta-label">START COLLECTING</div>
+  <div style="font-size:20px;color:#7a8899;margin-bottom:16px;">Mint · Buy · Collect · Win</div>
+  <a href="https://block-kickers.vercel.app" class="cta-btn">PLAY NOW</a>
+  <div style="margin-top:16px;">
+    <div class="url">block-kickers.vercel.app</div>
+    <div style="font-size:13px;color:#3d4a5a;margin-top:6px;">Connect wallet · Mint for 10 CHZ · Track in album</div>
+  </div>
+</div>
+
+</div>
+</body>
+</html>
