@@ -7,6 +7,7 @@
     { "source": "/gk-quest", "destination": "/goalkeeper-quest.html" },
     { "source": "/info", "destination": "/how-to-play-dream-ii.html" },
     { "source": "/dashboard", "destination": "/ARG%20Dashboard.html" },
+    { "source": "/home", "destination": "/home.html" },
     { "source": "/dream-xi-wc", "destination": "/dream-xi-wc.html" }
   ]
 }
