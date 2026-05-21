@@ -998,7 +998,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
   }
   .btn-share{padding:7px 10px;font-size:9px;border-radius:6px;}
   .game-grid{display:contents;padding:0;}
-  .left-control-panel{grid-area:left;min-height:0;gap:8px;overflow:hidden;}
+  .left-control-panel{grid-area:left;min-height:0;gap:8px;overflow:hidden;display:grid;grid-template-rows:auto minmax(0,1fr) 210px;}
   .right-col.pitch-container{grid-area:pitch;min-height:0;overflow:hidden;}
   .lb-section{grid-area:board;min-height:0;overflow:hidden;padding:10px;border:1px solid #1c2028;border-radius:12px;background:#0a0e14;}
   .info-section{padding:10px;border-radius:8px;}
@@ -1007,7 +1007,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
   .how-n{font-size:15px;margin:0;}
   .how-title{font-size:9px;margin-bottom:2px;}
   .how-desc{font-size:10px;line-height:1.2;}
-  .desk-section{min-height:0;display:flex;flex-direction:column;flex:1;}
+  .desk-section{min-height:0;display:flex;flex-direction:column;}
   .desk-tabs{flex-shrink:0;}
   .desk-tab-btn{font-size:9px;padding:9px 6px;}
   .desk-tab-content{padding:8px;min-height:0;overflow:hidden;}
@@ -1018,7 +1018,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
   .market-alert{padding:6px 7px;font-size:10px;margin-bottom:6px;}
   .market-filters{gap:4px;margin-bottom:6px;}
   .market-filter-btn{font-size:8px;padding:5px 6px;}
-  .snipe-list{gap:5px;max-height:238px;overflow:auto;padding-right:2px;}
+  .snipe-list{gap:5px;max-height:none;height:100%;overflow:auto;padding-right:2px;}
   .snipe-row{padding:6px 7px;border-radius:5px;gap:7px;}
   .snipe-details{gap:7px;min-width:0;}
   .snipe-pos{font-size:11px;min-width:36px;padding:3px 5px;}
@@ -1026,9 +1026,11 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
   .snipe-action{gap:6px;}
   .snipe-price{font-size:12px;}
   .btn-snipe{font-size:8px;padding:4px 7px;}
-  .live-feed-section{padding:9px;border-radius:8px;min-height:128px;max-height:150px;}
-  .feed-container{max-height:104px;}
-  .feed-item{font-size:9px;padding:4px 6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .live-feed-section{padding:9px;border-radius:8px;min-height:0;max-height:none;display:flex;flex-direction:column;overflow:hidden;}
+  .live-feed-section .feed-header{padding-bottom:6px;margin-bottom:7px;flex-shrink:0;}
+  .live-feed-section .feed-title{font-size:9px;letter-spacing:1px;}
+  .feed-container{max-height:none;flex:1;min-height:0;overflow-y:auto;gap:5px;}
+  .feed-item{font-size:10px;padding:5px 6px;white-space:normal;overflow:visible;text-overflow:clip;line-height:1.2;}
   .pitch-container{padding:10px;border-radius:10px;display:flex;flex-direction:column;}
   .pitch-title-row{margin-bottom:7px;flex-shrink:0;}
   .pitch-wrap{flex:1;min-height:0;padding:14px 8px;border-radius:12px;}
