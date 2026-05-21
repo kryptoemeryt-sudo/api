@@ -311,7 +311,7 @@ const FORMATION = [
   [9],         // ST
   [7,11],      // WING
   [6,8,10],    // MID
-  [2,4,5,3],   // DEF
+  [3,4,5,2],   // DEF
   [1]          // GK
 ];
 
@@ -333,11 +333,11 @@ async function getReadProvider(){
 }
 
 async function connectWallet(){
-  if(!window.ethereum){ alert('Install MetaMask'); return; }
+  if(!window.ethereum){ showToast('Install MetaMask','err'); return; }
   try{
     await window.ethereum.request({method:'eth_requestAccounts'});
     const cid = await window.ethereum.request({method:'eth_chainId'});
-    if(parseInt(cid,16) !== CHAIN_ID){ alert('Switch to Chiliz Chain'); return; }
+    if(parseInt(cid,16) !== CHAIN_ID){ showToast('Switch to Chiliz Chain (88888)','err'); return; }
     provider = new ethers.BrowserProvider(window.ethereum);
     signer = await provider.getSigner();
     address = await signer.getAddress();
@@ -607,12 +607,12 @@ function openSellModal(tokenId, pos, weight, rarity){
 
 async function submitSellCard(){
   const p = document.getElementById('sellPriceInput').value;
-  if(!p || parseFloat(p) <= 0){ alert('Enter a valid price'); return; }
+  if(!p || parseFloat(p) <= 0){ showToast('Enter a valid price','err'); return; }
   await sellFigure(activeSellTokenId, p);
 }
 
 async function buyFromMarket(listingId, priceChz){
-  if(!window.ethereum){ alert('Connect wallet'); return; }
+  if(!window.ethereum){ showToast('Connect wallet first','err'); return; }
   try{
     if(!marketContract){
       const p2 = new ethers.BrowserProvider(window.ethereum);
@@ -621,15 +621,15 @@ async function buyFromMarket(listingId, priceChz){
     }
     const priceWei = ethers.parseEther(String(priceChz));
     const tx = await marketContract.buyFigure(listingId, {value: priceWei, gasLimit: 300000});
-    alert('Transaction sent...');
+    showToast('Transaction sent — awaiting confirmation...','ok');
     await tx.wait();
-    alert('Purchased! Refreshing...');
+    showToast('Purchased! Refreshing...','ok');
     await loadData();
-  }catch(e){ alert('Error: '+(e.reason||e.message||String(e))); }
+  }catch(e){ showToast('Error: '+(e.reason||e.message||String(e)),'err'); }
 }
 
 async function sellFigure(tokenId, priceChz){
-  if(!signer||!address){ alert('Connect wallet first'); return; }
+  if(!signer||!address){ showToast('Connect wallet first','err'); return; }
   try{
     const figContract = new ethers.Contract(CONTRACT_ADDRESS,[
       'function isApprovedForAll(address account,address operator) external view returns (bool)',
@@ -637,16 +637,28 @@ async function sellFigure(tokenId, priceChz){
     ], signer);
     const isApproved = await figContract.isApprovedForAll(address, MARKET_ADDRESS);
     if(!isApproved){
-      alert('Approving marketplace...');
+      showToast('Approving marketplace...','ok');
       const tx = await figContract.setApprovalForAll(MARKET_ADDRESS, true);
       await tx.wait();
     }
     const tx = await marketContract.listFigure(tokenId, ethers.parseEther(String(priceChz)));
     await tx.wait();
-    alert('Card listed!');
+    showToast('Card listed on marketplace!','ok');
     toggleSellModal(false);
     await loadData();
-  }catch(e){ alert('Error: '+(e.reason||e.message||String(e))); }
+  }catch(e){ showToast('Error: '+(e.reason||e.message||String(e)),'err'); }
+}
+
+function showToast(msg, type){
+  const t = document.getElementById('dxi-toast');
+  if(!t) return;
+  t.textContent = msg;
+  t.style.borderColor = type === 'err' ? 'rgba(239,68,68,0.5)' : type === 'ok' ? 'rgba(0,255,135,0.4)' : '#1c2028';
+  t.style.color = type === 'err' ? '#ef4444' : type === 'ok' ? '#00ff87' : '#dde4f0';
+  t.style.display = 'block';
+  t.style.opacity = '1';
+  clearTimeout(window._toastTimer);
+  window._toastTimer = setTimeout(() => { t.style.opacity='0'; setTimeout(()=>t.style.display='none',300); }, 4000);
 }
 
 function shareOnX(){
@@ -739,5 +751,7 @@ window.addEventListener('load', async () => {
     <button onclick="submitSellCard()" style="width:100%;background:rgba(0,255,135,0.15);border:1px solid rgba(0,255,135,0.4);color:#00ff87;padding:12px;border-radius:8px;font-family:'Black Ops One',sans-serif;font-size:12px;letter-spacing:1px;cursor:pointer;">LIST FOR SALE</button>
   </div>
 </div>
+
+<div id="dxi-toast" style="display:none;position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:9999;background:#0f1318;border:1px solid #1c2028;border-radius:8px;padding:12px 20px;font-family:'Black Ops One',sans-serif;font-size:13px;letter-spacing:1px;color:#dde4f0;box-shadow:0 4px 20px rgba(0,0,0,0.6);transition:opacity 0.3s;max-width:90vw;text-align:center;"></div>
 </body>
 </html>
