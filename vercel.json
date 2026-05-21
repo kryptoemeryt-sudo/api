@@ -4,6 +4,7 @@
     { "source": "/", "destination": "/BlockKickers.html" },
     { "source": "/promo-stats", "destination": "/promo-stats.html" },
     { "source": "/dream-xi", "destination": "/dream-xi.html" },
+    { "source": "/gk-quest", "destination": "/goalkeeper-quest.html" },
     { "source": "/dream-xi-wc", "destination": "/dream-xi-wc.html" }
   ]
 }
