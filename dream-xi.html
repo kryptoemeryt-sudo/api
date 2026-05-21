@@ -478,6 +478,19 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
   font-weight: bold;
   font-size: 10px;
 }
+.pos-card-count{
+  position:absolute;
+  top:2px;
+  left:4px;
+  font-family:'Share Tech Mono',monospace;
+  font-size:8px;
+  color:#ffc940;
+  background:rgba(255,201,64,0.1);
+  border:1px solid rgba(255,201,64,0.25);
+  border-radius:3px;
+  padding:1px 4px;
+  line-height:1;
+}
 .pos-card.empty{
   opacity: 0.6;
   border-style: dashed;
@@ -726,6 +739,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
   .stats-container{grid-template-columns:1fr 1fr;}
   .form-row{gap:3px;}
   .pos-card{width:58px;padding:4px 2px;min-height:78px;border-radius:5px;}
+  .pos-card-count{font-size:6px;left:3px;padding:1px 3px;}
   .pos-name{font-size:7px;}
   .pos-card-meta{font-size:6px;min-height:14px;}
   .pos-weight{font-size:13px;}
@@ -1228,6 +1242,7 @@ window.dreamScores = {}; // portfel -> { teamId -> { pozycja -> {weight, tid, ra
 let marketByPos = {};
 let marketFloorByPos = {};
 let activeListingsByTokenId = {};
+let circulationByPos = {};
 let currentMintPrice = ethers.parseEther("10");
 let localMintEvents = [];
 
@@ -1750,6 +1765,13 @@ async function loadData(){
     if(ownerMap[tid]) ownerMap[tid].owner = s.buyer?.toLowerCase();
   });
 
+  circulationByPos = {};
+  Object.values(ownerMap).forEach(fig => {
+    if (fig.teamId === ARGENTINA_TEAM_ID) {
+      circulationByPos[fig.position] = (circulationByPos[fig.position] || 0) + 1;
+    }
+  });
+
   window.dreamScores = {};
   const score = (wallet, tokenId, dna) => {
     try{
@@ -2170,6 +2192,8 @@ function renderPitch() {
       const scored = myTeamPositions[pos];
       const mkt = marketByPos[pos];
       const floor = marketFloorByPos[pos];
+      const circulationCount = circulationByPos[pos] || 0;
+      const circulationHtml = `<span class="pos-card-count" title="Argentina ${POSITION_SHORT[pos]} cards in circulation">x${circulationCount}</span>`;
 
       let floorHtml = '';
       if (scored && floor) {
@@ -2202,6 +2226,7 @@ function renderPitch() {
         const cardMeta = activeListingIdForMeta !== undefined ? `LISTED #${activeListingIdForMeta}` : `TOKEN #${scored.tid}`;
 
         card.innerHTML = `
+          ${circulationHtml}
           <div>
             <div class="pos-name">${POSITION_SHORT[pos]}</div>
             <span class="pos-card-meta">${cardMeta}</span>
@@ -2225,6 +2250,7 @@ function renderPitch() {
         const emptyMeta = floor ? `MARKET #${floor.listingId}` : 'OPEN SLOT';
 
         card.innerHTML = `
+          ${circulationHtml}
           <div>
             <div class="pos-name" style="color:#5a6a7a;">${POSITION_SHORT[pos]}</div>
             <span class="pos-card-meta" style="opacity:${floor ? '1' : '0.35'}">${emptyMeta}</span>
