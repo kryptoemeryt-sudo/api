@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 56 40'><rect width='56' height='40' fill='%2374ACDF'/><rect y='13' width='56' height='14' fill='%23fff'/><circle cx='28' cy='20' r='5' fill='%23F6B40E'/></svg>">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>DREAM XI — Block Kickers</title>
 <link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Barlow+Condensed:wght@400;600;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
@@ -66,48 +65,36 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
 
 /* PITCH */
 .pitch-section{padding:24px;}
-.pitch-title{font-family:'Black Ops One',sans-serif;font-size:11px;letter-spacing:3px;color:#5a6a7a;margin-bottom:16px;}
+.pitch-title{font-family:'Black Ops One',sans-serif;font-size:11px;letter-spacing:3px;color:#3d4a5a;margin-bottom:16px;}
 .pitch-wrap{
-  background:linear-gradient(to bottom,#113018,#0b1f10);
-  border:2px solid #1f5029;
-  border-radius:16px;
-  padding:30px 12px;
+  background:linear-gradient(to bottom,#0d2010,#071408);
+  border:1px solid #1f4a25;
+  border-radius:12px;
+  padding:24px;
   position:relative;
-  box-shadow:inset 0 0 30px rgba(0,0,0,0.8);
+  overflow:hidden;
+  box-shadow:inset 0 0 20px rgba(0,0,0,0.6);
 }
-.pitch-wrap::before{content:'';position:absolute;inset:10px;border:1px dashed rgba(255,255,255,0.12);border-radius:8px;pointer-events:none;}
-.pitch-center-circle{position:absolute;top:50%;left:50%;width:90px;height:90px;border:1px dashed rgba(255,255,255,0.12);border-radius:50%;transform:translate(-50%,-50%);pointer-events:none;}
-.pitch-center-line{position:absolute;top:50%;left:10px;right:10px;height:1px;border-top:1px dashed rgba(255,255,255,0.12);transform:translateY(-50%);pointer-events:none;}
-.pitch-penalty-top{position:absolute;top:10px;left:50%;width:180px;height:50px;border:1px dashed rgba(255,255,255,0.12);border-top:none;transform:translateX(-50%);pointer-events:none;}
-.pitch-penalty-bot{position:absolute;bottom:10px;left:50%;width:180px;height:50px;border:1px dashed rgba(255,255,255,0.12);border-bottom:none;transform:translateX(-50%);pointer-events:none;}
+.pitch-wrap::before{content:'';position:absolute;inset:8px;border:1px dashed rgba(255,255,255,0.08);border-radius:6px;pointer-events:none;}
 
 /* Formation rows */
-.formation{display:flex;flex-direction:column;gap:20px;position:relative;z-index:2;}
-.form-row{display:flex;justify-content:center;gap:12px;}
-.pos-card{
-  background:rgba(15,19,24,0.9);
-  border:1px solid #1c2028;
-  border-radius:6px;
-  padding:6px 4px;
-  text-align:center;
-  width:78px;
-  min-height:98px;
-  display:flex;
-  flex-direction:column;
-  justify-content:space-between;
-  position:relative;
-  transition:all 0.2s;
-  backdrop-filter:blur(4px);
-}
-.pos-card:hover{border-color:rgba(0,255,135,0.5);box-shadow:0 0 10px rgba(0,255,135,0.15);}
-.pos-card.owned-past{border-color:rgba(99,102,241,0.4);background:rgba(99,102,241,0.06);}
-.pos-card.owned-past::after{content:'✓';position:absolute;top:2px;right:4px;color:#818cf8;font-weight:bold;font-size:8px;}
-.pos-card.market{border-color:rgba(255,201,64,0.4);background:rgba(255,201,64,0.05);}
-.pos-card.empty{opacity:0.6;border-style:dashed;}
-.pos-name{font-weight:700;font-size:8px;color:#7a8899;letter-spacing:0.3px;text-transform:uppercase;}
-.pos-ball{font-size:16px;margin:1px 0;display:block;}
-.pos-weight{font-family:'Black Ops One',sans-serif;font-size:18px;color:#818cf8;line-height:1;}
+.formation{display:flex;flex-direction:column;gap:20px;}
+.form-row{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;}
+.pos-card{background:#0f1318;border:1px solid #1c2028;border-radius:8px;padding:10px 8px;text-align:center;width:100px;cursor:pointer;transition:all 0.2s;position:relative;}
+.pos-card:hover{border-color:rgba(99,102,241,0.5);}
+.pos-card.owned{border-color:rgba(0,255,135,0.4);background:rgba(0,255,135,0.05);}
+.pos-card.owned-past{border-color:rgba(99,102,241,0.5);background:rgba(99,102,241,0.08);}
+.pos-card.market{border-color:rgba(255,201,64,0.4);background:rgba(255,201,64,0.05);cursor:pointer;}
+.pos-card.empty{opacity:0.4;}
+.btn-card-action{display:block;width:100%;background:rgba(255,201,64,0.1);border:1px solid rgba(255,201,64,0.3);color:#ffc940;font-family:'Black Ops One',sans-serif;font-size:7px;padding:3px 2px;border-radius:3px;cursor:pointer;margin-top:3px;transition:all 0.2s;}
+.btn-card-action:hover{background:#ffc940;color:#000;}
+.btn-card-action.sell{background:rgba(239,68,68,0.1);border-color:rgba(239,68,68,0.3);color:#ef4444;}
+.btn-card-action.sell:hover{background:#ef4444;color:#fff;}
+.btn-card-action.upgrade{background:rgba(0,255,135,0.1);border-color:rgba(0,255,135,0.3);color:#00ff87;}
+.btn-card-action.upgrade:hover{background:#00ff87;color:#000;}
 
+.pos-name{font-family:'Black Ops One',sans-serif;font-size:10px;letter-spacing:1px;color:#5a6a7a;margin-bottom:6px;}
+.pos-weight{font-family:'Black Ops One',sans-serif;font-size:20px;line-height:1;margin-bottom:2px;}
 .pos-weight.green{color:#00ff87;}
 .pos-weight.purple{color:#818cf8;}
 .pos-weight.gold{color:#ffc940;}
@@ -158,20 +145,6 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
 .legend-dot{width:10px;height:10px;border-radius:2px;}
 
 /* LOADING */
-
-.btn-card-action{
-  display:block;width:100%;
-  background:rgba(255,201,64,0.1);
-  border:1px solid rgba(255,201,64,0.3);
-  color:#ffc940;
-  font-family:'Black Ops One',sans-serif;
-  font-size:7px;padding:3px 1px;border-radius:3px;
-  cursor:pointer;margin-top:4px;
-  text-decoration:none;transition:all 0.2s;
-}
-.btn-card-action:hover{background:#ffc940;color:#000;}
-.btn-card-action.upgrade{background:rgba(0,255,135,0.1);border-color:rgba(0,255,135,0.3);color:#00ff87;}
-.btn-card-action.upgrade:hover{background:#00ff87;color:#000;}
 .spin{display:inline-block;width:16px;height:16px;border:2px solid rgba(99,102,241,0.3);border-top-color:#818cf8;border-radius:50%;animation:spin 0.8s linear infinite;vertical-align:middle;}
 @keyframes spin{to{transform:rotate(360deg)}}
 
@@ -222,11 +195,11 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
     <div class="countdown-wrap">
       <div class="countdown-label">QUEST ENDS AT BLOCK</div>
       <div class="countdown-timer">
-        <div class="countdown-unit"><div class="countdown-num" id="cdH">--</div><div class="countdown-sub" id="cdHlbl">HRS</div></div>
+        <div class="countdown-unit"><div class="countdown-num" id="cdH">--</div><div class="countdown-sub">HRS</div></div>
         <div style="font-family:'Black Ops One',sans-serif;font-size:28px;color:#3d4a5a;padding-bottom:4px;">:</div>
-        <div class="countdown-unit"><div class="countdown-num" id="cdM">--</div><div class="countdown-sub" id="cdMlbl">MIN</div></div>
+        <div class="countdown-unit"><div class="countdown-num" id="cdM">--</div><div class="countdown-sub">MIN</div></div>
         <div style="font-family:'Black Ops One',sans-serif;font-size:28px;color:#3d4a5a;padding-bottom:4px;">:</div>
-        <div class="countdown-unit"><div class="countdown-num" id="cdS">--</div><div class="countdown-sub" id="cdSlbl">SEC</div></div>
+        <div class="countdown-unit"><div class="countdown-num" id="cdS">--</div><div class="countdown-sub">SEC</div></div>
       </div>
       <div class="countdown-block" id="cdBlock">Target block: 34,253,705</div>
     </div>
@@ -291,13 +264,18 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
     <div class="pitch-section">
       <div class="pitch-title">YOUR ARGENTINA DREAM XI</div>
       <div class="pitch-wrap">
-          <div class="pitch-center-circle"></div>
-          <div class="pitch-center-line"></div>
-          <div class="pitch-penalty-top"></div>
-          <div class="pitch-penalty-bot"></div>
-          <div class="formation" id="pitchFormation">
-            <div style="text-align:center;color:#3d4a5a;font-family:Share Tech Mono,monospace;font-size:11px;padding:20px 0;"><span class="spin"></span> Loading your squad...</div>
-          </div>
+        <!-- Grass effect -->
+        <div style="position:absolute;inset:0;background:repeating-linear-gradient(90deg,rgba(255,255,255,0.015) 0px,rgba(255,255,255,0.015) 1px,transparent 1px,transparent 40px);border-radius:12px;pointer-events:none;"></div>
+
+        <div class="legend" style="position:relative;z-index:1;">
+          <div class="legend-item"><div class="legend-dot" style="background:rgba(0,255,135,0.4);border:1px solid rgba(0,255,135,0.6);"></div>You own now</div>
+          <div class="legend-item"><div class="legend-dot" style="background:rgba(99,102,241,0.4);border:1px solid rgba(99,102,241,0.6);"></div>Best score (past)</div>
+          <div class="legend-item"><div class="legend-dot" style="background:rgba(255,201,64,0.4);border:1px solid rgba(255,201,64,0.6);"></div>On market — click to buy</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#1c2028;border:1px solid #2a3040;"></div>Empty</div>
+        </div>
+
+        <div class="formation" id="pitchFormation" style="position:relative;z-index:1;">
+          <div style="text-align:center;color:#3d4a5a;font-family:Share Tech Mono,monospace;font-size:11px;padding:20px 0;"><span class="spin"></span> Loading your squad...</div>
         </div>
       </div>
     </div>
@@ -336,11 +314,11 @@ const POSITION_NAMES = {1:'Goalkeeper',2:'Right Back',3:'Left Back',4:'Centre Ba
 const POSITION_SHORT = {1:'GK',2:'RB',3:'LB',4:'CB',5:'CB2',6:'DM',7:'RW',8:'MID',9:'ST',10:'#10',11:'LW'};
 const RARITY_NAMES = {0:'Common',1:'Rare',2:'Epic',3:'Legendary'};
 const FORMATION = [
-  [9],         // ST
-  [7,11],      // WING
-  [6,8,10],    // MID
-  [2,4,5,3],   // DEF
-  [1]          // GK
+  [1],        // GK
+  [2,4,5,3],  // DEF
+  [6,8,10],   // MID
+  [7,11],     // WING
+  [9]         // ST
 ];
 
 const PUBLIC_RPCS = ['https://chiliz-rpc.publicnode.com','https://rpc.chiliz.com'];
@@ -433,8 +411,8 @@ async function loadData(){
     const res = await fetch('/api/events');
     if(res.ok){
       const api = await res.json();
-      mints = api.mints.map(m => ({owner: m.owner, tokenId: Number(m.tokenId), dna: BigInt(m.dna)}));
-      sales = api.sales.map(s => ({...s, tokenId: Number(s.tokenId)}));
+      mints = api.mints.map(m => ({owner: m.owner, tokenId: m.tokenId, dna: BigInt(m.dna)}));
+      sales = api.sales;
       listed = api.listings || [];
     }
   }catch(e){
@@ -444,19 +422,22 @@ async function loadData(){
     listed = ev.listed;
   }
 
-  // Build ownerMap
-  const ownerMap = {};
+  // Build ownerMap (current owner)
+  window.ownerMap = {};
+  const ownerMap = window.ownerMap;
   mints.forEach(m => {
     try{
       const t = parseDNA(m.dna);
-      ownerMap[m.tokenId] = {owner: m.owner.toLowerCase(), dna: m.dna, ...t};
+      ownerMap[Number(m.tokenId)] = {owner: m.owner.toLowerCase(), dna: m.dna, ...t};
     }catch(e){}
   });
   sales.forEach(s => {
-    if(ownerMap[s.tokenId]) ownerMap[s.tokenId].owner = s.buyer?.toLowerCase();
+    const tid = Number(s.tokenId);
+    if(ownerMap[tid]) ownerMap[tid].owner = s.buyer?.toLowerCase();
   });
 
-  // Build dream scores
+  // Build dream scores — per wallet, per position: best weight that passed through
+  // A card "passes through" if: minted by wallet OR bought by wallet (in sales)
   window.dreamScores = {};
   dreamScores = window.dreamScores;
 
@@ -473,40 +454,41 @@ async function loadData(){
     }catch(e){}
   };
 
+  // Original mints
   mints.forEach(m => score(m.owner.toLowerCase(), m.tokenId, m.dna));
+  // Sales (buyer scored)
   sales.forEach(s => {
+    const tokenId = Number(s.tokenId);
     const buyer = s.buyer?.toLowerCase();
     if(!buyer) return;
-    const fig = ownerMap[s.tokenId];
-    if(fig && fig.teamId === ARGENTINA_TEAM_ID) score(buyer, s.tokenId, fig.dna);
+    const fig = ownerMap[tokenId];
+    if(fig && fig.teamId === ARGENTINA_TEAM_ID){
+      score(buyer, tokenId, fig.dna);
+    }
   });
 
-  // Market — z API eventów (szybko, bez getListing w pętli)
+  // Market listings dla Argentyny — live check przez getListing (dokładne ceny)
   marketByPos = {};
-  window.marketByPos = marketByPos;
   try{
-    const listedArr = Array.isArray(listed) ? listed : [];
-    const soldTokenIds = new Set(sales.map(s => s.tokenId));
-    // Grupuj po tokenId — weź ostatni listing (najnowszy)
-    const latestListing = {};
-    listedArr.forEach(l => {
-      const tokenId = Number(l.tokenId ?? l.args?.tokenId);
-      const listingId = Number(l.listingId ?? l.args?.listingId);
-      if(!latestListing[tokenId] || listingId > latestListing[tokenId].listingId){
-        latestListing[tokenId] = {listingId, price: l.price ?? l.args?.price};
-      }
-    });
-    Object.entries(latestListing).forEach(([tokenId, {listingId, price}]) => {
-      const tid = Number(tokenId);
-      if(soldTokenIds.has(tid)) return; // sprzedana
-      const fig = ownerMap[tid];
-      if(!fig || fig.teamId !== ARGENTINA_TEAM_ID) return;
-      const priceChz = parseFloat(ethers.formatEther(price));
-      if(!marketByPos[fig.position] || priceChz < marketByPos[fig.position].price){
-        marketByPos[fig.position] = {listingId, price: priceChz, priceWei: price, weight: fig.weight, rarity: fig.rarity};
-      }
-    });
-  }catch(e){ console.warn('market error:', e); }
+    const rp = await getReadProvider();
+    const rmk = new ethers.Contract(MARKET_ADDRESS, MARKET_ABI, rp);
+    const nextId = Number(await rmk.nextListingId());
+    const from = Math.max(0, nextId - 100);
+    for(let i = from; i < nextId; i++){
+      try{
+        const l = await rmk.getListing(i);
+        if(!Boolean(l[3])) continue;
+        const tokenId = Number(l[1]);
+        const priceWei = l[2];
+        const fig = ownerMap[tokenId];
+        if(!fig || fig.teamId !== ARGENTINA_TEAM_ID) continue;
+        const price = parseFloat(ethers.formatEther(priceWei));
+        if(!marketByPos[fig.position] || price < marketByPos[fig.position].price){
+          marketByPos[fig.position] = {listingId: i, price, priceWei, weight: fig.weight, rarity: fig.rarity};
+        }
+      }catch(e){}
+    }
+  }catch(e){ console.warn('market check error:', e); }
 
   renderPitch();
   renderLeaderboard();
@@ -515,70 +497,6 @@ async function loadData(){
 function getMyScore(){
   const my = dreamScores[address?.toLowerCase()] || {};
   return Object.values(my).reduce((s,v) => s+v.weight, 0);
-}
-
-let activeSellTokenId = null;
-
-function toggleSellModal(show){
-  document.getElementById('sellModal').style.display = show ? 'flex' : 'none';
-}
-
-function openSellModal(tokenId, pos, weight, rarity){
-  activeSellTokenId = tokenId;
-  const posName = POSITION_SHORT[pos] || pos;
-  const rarityName = RARITY_NAMES[rarity] || '?';
-  document.getElementById('sellCardInfo').innerHTML =
-    '<strong>Position:</strong> '+posName+'<br>' +
-    '<strong>Rarity:</strong> '+rarityName+'<br>' +
-    '<strong>Weight:</strong> '+weight+' pts<br>' +
-    '<strong>Token ID:</strong> #'+tokenId;
-  document.getElementById('sellPriceInput').value = '10';
-  toggleSellModal(true);
-}
-
-async function submitSellCard(){
-  const priceInput = document.getElementById('sellPriceInput').value;
-  if(!priceInput || parseFloat(priceInput) <= 0){ alert('Enter a valid price'); return; }
-  await sellFigure(activeSellTokenId, priceInput);
-}
-
-async function buyFromMarket(listingId, priceChz){
-  if(!window.ethereum){ alert('Connect wallet'); return; }
-  try{
-    if(!marketContract){
-      const p = new ethers.BrowserProvider(window.ethereum);
-      const s = await p.getSigner();
-      marketContract = new ethers.Contract(MARKET_ADDRESS, MARKET_ABI, s);
-    }
-    const priceWei = ethers.parseEther(String(priceChz));
-    const tx = await marketContract.buyFigure(listingId, {value: priceWei});
-    alert('Transaction sent — awaiting confirmation...');
-    await tx.wait();
-    alert('Purchased! Refreshing...');
-    await loadData();
-  }catch(e){ alert('Error: '+(e.reason||e.message||String(e))); }
-}
-
-async function sellFigure(tokenId, priceChz){
-  if(!signer||!marketContract||!address){ alert('Connect wallet first'); return; }
-  try{
-    const figContract = new ethers.Contract(CONTRACT_ADDRESS,[
-      'function isApprovedForAll(address account,address operator) external view returns (bool)',
-      'function setApprovalForAll(address operator,bool approved) external'
-    ], signer);
-    const isApproved = await figContract.isApprovedForAll(address, MARKET_ADDRESS);
-    if(!isApproved){
-      alert('Approving marketplace...');
-      const tx = await figContract.setApprovalForAll(MARKET_ADDRESS, true);
-      await tx.wait();
-    }
-    const priceWei = ethers.parseEther(String(priceChz));
-    const tx = await marketContract.listFigure(tokenId, priceWei);
-    await tx.wait();
-    alert('Card listed successfully!');
-    toggleSellModal(false);
-    await loadData();
-  }catch(e){ alert('Error: '+(e.reason||e.message||String(e))); }
 }
 
 function renderPitch(){
@@ -599,6 +517,7 @@ function renderPitch(){
     '<div class="legend-item"><div class="legend-dot" style="background:rgba(0,255,135,0.3);border:1px solid rgba(0,255,135,0.5);"></div>You own now</div>' +
     '<div class="legend-item"><div class="legend-dot" style="background:rgba(99,102,241,0.3);border:1px solid rgba(99,102,241,0.5);"></div>Best scored</div>' +
     '<div class="legend-item"><div class="legend-dot" style="background:rgba(255,201,64,0.3);border:1px solid rgba(255,201,64,0.5);"></div>On market — click to buy</div>';
+  formation.appendChild(legend);
 
   FORMATION.forEach(row => {
     const rowEl = document.createElement('div');
@@ -610,48 +529,41 @@ function renderPitch(){
 
       if(scored){
         const rarColor = ['#7a8899','#3b82f6','#c084fc','#ffc940'][scored.rarity];
-        const isLegendary = scored.rarity === 3;
         card.className = 'pos-card owned-past';
-
-        let actionHtml = '';
+        let upgradeHtml = '';
         if(mkt && mkt.weight > scored.weight){
-          actionHtml = `<button onclick="buyFromMarket(${mkt.listingId},'${mkt.price}')" class="btn-card-action upgrade">▲ W:${mkt.weight}<br>${mkt.price} CHZ</button>`;
+          upgradeHtml = '<button onclick="buyFromMarket('+mkt.listingId+',\''+mkt.price+'\')" class="btn-card-action upgrade">▲ W:'+mkt.weight+' · '+mkt.price+' CHZ</button>';
+        } else if(mkt && mkt.weight <= scored.weight){
+          upgradeHtml = '<div style="margin-top:3px;font-size:9px;color:#3d4a5a;font-family:Share Tech Mono,monospace;">mkt W:'+mkt.weight+' weaker</div>';
         }
-
+        // Sell button only if currently owns this token
         let sellHtml = '';
-        if(myAddr && ownerMap[scored.tid] && ownerMap[scored.tid].owner === myAddr){
-          sellHtml = `<button onclick="openSellModal(${scored.tid},${pos},${scored.weight},${scored.rarity})" class="btn-card-action" style="background:rgba(239,68,68,0.1);border-color:rgba(239,68,68,0.3);color:#ef4444;">SELL</button>`;
+        if(myAddr && window.ownerMap && window.ownerMap[scored.tid] && window.ownerMap[scored.tid].owner === myAddr){
+          sellHtml = '<button onclick="openSellModal('+scored.tid+','+pos+','+scored.weight+','+scored.rarity+')" class="btn-card-action sell">SELL</button>';
         }
-
         card.innerHTML =
-          '<div><div class="pos-name">'+(POSITION_SHORT[pos]||pos)+'</div><span class="pos-ball">⚽</span></div>' +
-          '<div>' +
-            '<div class="pos-weight '+(isLegendary?'gold':'')+'">'+scored.weight+'</div>' +
-            '<div class="pos-rarity" style="color:'+rarColor+'">'+RARITY_NAMES[scored.rarity]+'</div>' +
-            actionHtml + sellHtml +
-          '</div>';
-
+          '<div class="pos-name">'+(POSITION_SHORT[pos]||pos)+'</div>' +
+          '<div class="pos-weight purple">'+scored.weight+'</div>' +
+          '<div class="pos-rarity" style="color:'+rarColor+'">'+RARITY_NAMES[scored.rarity]+'</div>' +
+          upgradeHtml + sellHtml;
       } else if(mkt){
         card.className = 'pos-card market';
         card.innerHTML =
-          '<div><div class="pos-name" style="color:#5a6a7a;">'+(POSITION_SHORT[pos]||pos)+'</div><span class="pos-ball" style="opacity:0.2;">⚽</span></div>' +
-          '<div>' +
-            '<div class="pos-weight gold">'+mkt.weight+'</div>' +
-            '<div class="pos-rarity">'+RARITY_NAMES[mkt.rarity]+'</div>' +
-            `<button onclick="buyFromMarket(${mkt.listingId},'${mkt.price}')" class="btn-card-action">BUY<br>${mkt.price} CHZ</button>` +
-          '</div>';
-
+          '<div class="pos-name">'+(POSITION_SHORT[pos]||pos)+'</div>' +
+          '<div class="pos-weight gold">'+mkt.weight+'</div>' +
+          '<div class="pos-rarity">'+RARITY_NAMES[mkt.rarity]+'</div>' +
+          '<button onclick="buyFromMarket('+mkt.listingId+',\''+mkt.price+'\')" class="btn-card-action">BUY · '+mkt.price+' CHZ</button>';
       } else {
         card.className = 'pos-card empty';
         card.innerHTML =
-          '<div><div class="pos-name" style="color:#3d4a5a;">'+(POSITION_SHORT[pos]||pos)+'</div><span class="pos-ball" style="opacity:0.1;">⚽</span></div>' +
-          '<div><div class="pos-weight empty">—</div><div class="pos-rarity" style="color:#3d4a5a;">EMPTY</div></div>';
+          '<div class="pos-name">'+(POSITION_SHORT[pos]||pos)+'</div>' +
+          '<div class="pos-weight empty">—</div>' +
+          '<div class="pos-rarity">not scored</div>';
       }
       rowEl.appendChild(card);
     });
     formation.appendChild(rowEl);
   });
-  formation.appendChild(legend);
 }
 
 function renderLeaderboard(){
@@ -682,8 +594,64 @@ function renderLeaderboard(){
   }).join('');
 }
 
-function buyFromMarket(listingId, priceEth){
-  window.location.href = 'https://block-kickers.vercel.app/#market';
+let activeSellTokenId = null;
+
+function toggleSellModal(show){
+  document.getElementById('sellModal').style.display = show ? 'flex' : 'none';
+}
+
+function openSellModal(tokenId, pos, weight, rarity){
+  activeSellTokenId = tokenId;
+  document.getElementById('sellCardInfo').innerHTML =
+    '<strong>Position:</strong> '+(POSITION_SHORT[pos]||pos)+'<br>' +
+    '<strong>Rarity:</strong> '+(RARITY_NAMES[rarity]||'?')+'<br>' +
+    '<strong>Weight:</strong> '+weight+' pts<br>' +
+    '<strong>Token ID:</strong> #'+tokenId;
+  document.getElementById('sellPriceInput').value = '10';
+  toggleSellModal(true);
+}
+
+async function submitSellCard(){
+  const p = document.getElementById('sellPriceInput').value;
+  if(!p || parseFloat(p) <= 0){ alert('Enter a valid price'); return; }
+  await sellFigure(activeSellTokenId, p);
+}
+
+async function buyFromMarket(listingId, priceChz){
+  if(!window.ethereum){ alert('Connect wallet'); return; }
+  try{
+    if(!marketContract){
+      const p2 = new ethers.BrowserProvider(window.ethereum);
+      const s = await p2.getSigner();
+      marketContract = new ethers.Contract(MARKET_ADDRESS, MARKET_ABI, s);
+    }
+    const tx = await marketContract.buyFigure(listingId, {value: ethers.parseEther(String(priceChz))});
+    alert('Transaction sent...');
+    await tx.wait();
+    alert('Purchased! Refreshing...');
+    await loadData();
+  }catch(e){ alert('Error: '+(e.reason||e.message||String(e))); }
+}
+
+async function sellFigure(tokenId, priceChz){
+  if(!signer||!address){ alert('Connect wallet first'); return; }
+  try{
+    const figContract = new ethers.Contract(CONTRACT_ADDRESS,[
+      'function isApprovedForAll(address account,address operator) external view returns (bool)',
+      'function setApprovalForAll(address operator,bool approved) external'
+    ], signer);
+    const isApproved = await figContract.isApprovedForAll(address, MARKET_ADDRESS);
+    if(!isApproved){
+      alert('Approving marketplace...');
+      const tx = await figContract.setApprovalForAll(MARKET_ADDRESS, true);
+      await tx.wait();
+    }
+    const tx = await marketContract.listFigure(tokenId, ethers.parseEther(String(priceChz)));
+    await tx.wait();
+    alert('Card listed!');
+    toggleSellModal(false);
+    await loadData();
+  }catch(e){ alert('Error: '+(e.reason||e.message||String(e))); }
 }
 
 function shareOnX(){
@@ -695,23 +663,17 @@ function shareOnX(){
 }
 
 // COUNTDOWN
-// DEADLINE — 31.05.2026 godz 23:00 UTC
-const DEADLINE_BLOCK = 34503406;
-const BLOCK_TIME_MS = 3000;
-let currentBlock = 34196746; // blok startowy 21.05 07:27
-let lastBlockTime = Date.now();
+// NOWY DEADLINE — blok #34253705 (+48h od teraz)
+const DEADLINE_BLOCK = 34253705; 
+const BLOCK_TIME_MS = 3000; 
+// Statystyki dla frontendu
+let blocksRemaining = DEADLINE_BLOCK - currentBlock;
+let timeRemainingSeconds = blocksRemaining * 3;
 
 async function fetchCurrentBlock(){
   try{
     const res = await fetch('/api/events');
-    if(res.ok){
-      const d = await res.json();
-      if(d.currentBlock && d.currentBlock > 0){
-        currentBlock = d.currentBlock;
-        lastBlockTime = Date.now();
-        updateCountdown();
-      }
-    }
+    if(res.ok){ const d = await res.json(); if(d.currentBlock) { currentBlock = d.currentBlock; lastBlockTime = Date.now(); } }
   }catch(e){}
 }
 
@@ -731,21 +693,16 @@ function updateCountdown(){
     return;
   }
   const secsLeft = blocksLeft * 3;
-  const d = Math.floor(secsLeft / 86400);
-  const h = Math.floor((secsLeft % 86400) / 3600);
+  const h = Math.floor(secsLeft / 3600);
   const m = Math.floor((secsLeft % 3600) / 60);
   const s = secsLeft % 60;
-  document.getElementById('cdH').textContent = d > 0 ? String(d).padStart(2,'0') : String(h).padStart(2,'0');
-  document.getElementById('cdM').textContent = d > 0 ? String(h).padStart(2,'0') : String(m).padStart(2,'0');
-  document.getElementById('cdS').textContent = d > 0 ? String(m).padStart(2,'0') : String(s).padStart(2,'0');
-  document.getElementById('cdHlbl').textContent = d > 0 ? 'DAYS' : 'HRS';
-  document.getElementById('cdMlbl').textContent = d > 0 ? 'HRS' : 'MIN';
-  document.getElementById('cdSlbl').textContent = d > 0 ? 'MIN' : 'SEC';
-  document.getElementById('cdBlock').innerHTML = 'Deadline: block <a href="https://scan.chiliz.com/block/'+DEADLINE_BLOCK+'" target="_blank" style="color:#818cf8;text-decoration:none;">#'+DEADLINE_BLOCK.toLocaleString()+'</a> · ~#'+estimated.toLocaleString()+' now · '+blocksLeft.toLocaleString()+' left';
+  document.getElementById('cdH').textContent = String(h).padStart(2,'0');
+  document.getElementById('cdM').textContent = String(m).padStart(2,'0');
+  document.getElementById('cdS').textContent = String(s).padStart(2,'0');
+  document.getElementById('cdBlock').innerHTML = 'Deadline: block <a href="https://scan.chiliz.com/block/'+DEADLINE_BLOCK+'" target="_blank" style="color:#818cf8;text-decoration:none;">#'+DEADLINE_BLOCK.toLocaleString()+'</a> · current: ~#'+estimated.toLocaleString()+' · '+blocksLeft.toLocaleString()+' blocks left';
 }
 
-updateCountdown(); // pokazuj od razu z currentBlock
-fetchCurrentBlock(); // pobierz aktualny z API
+fetchCurrentBlock();
 setInterval(updateCountdown, 1000);
 setInterval(fetchCurrentBlock, 30000);
 
@@ -764,20 +721,15 @@ window.addEventListener('load', async () => {
   }
 });
 </script>
-
-<!-- SELL MODAL -->
 <div id="sellModal" style="display:none;position:fixed;inset:0;background:rgba(6,8,10,0.85);backdrop-filter:blur(8px);z-index:1000;align-items:center;justify-content:center;padding:16px;">
-  <div style="background:#0f1318;border:1px solid #1c2028;border-radius:12px;max-width:400px;width:100%;padding:24px;position:relative;box-shadow:0 10px 40px rgba(0,0,0,0.6);">
+  <div style="background:#0f1318;border:1px solid #1c2028;border-radius:12px;max-width:400px;width:100%;padding:24px;position:relative;">
     <button onclick="toggleSellModal(false)" style="position:absolute;top:16px;right:16px;background:none;border:none;color:#7a8899;font-size:24px;cursor:pointer;">&times;</button>
     <h2 style="font-family:'Black Ops One',sans-serif;font-size:20px;color:#ef4444;margin-bottom:12px;">Sell Player Card</h2>
-    <div id="sellCardInfo" style="margin-bottom:16px;font-size:14px;color:#dde4f0;line-height:1.5;"></div>
-    <div style="margin-bottom:20px;">
-      <label style="display:block;font-size:11px;letter-spacing:1px;color:#5a6a7a;margin-bottom:6px;text-transform:uppercase;">Set Listing Price (CHZ)</label>
-      <input type="number" id="sellPriceInput" step="0.1" min="0.1" placeholder="10.0" style="width:100%;background:#06080a;border:1px solid #1c2028;padding:10px;border-radius:6px;color:#dde4f0;font-family:'Share Tech Mono',monospace;font-size:16px;">
-    </div>
-    <button class="btn-card-action upgrade" onclick="submitSellCard()" style="padding:10px;font-size:11px;text-transform:uppercase;">LIST CARD FOR SALE</button>
+    <div id="sellCardInfo" style="margin-bottom:16px;font-size:14px;color:#dde4f0;line-height:1.6;"></div>
+    <label style="display:block;font-size:11px;letter-spacing:1px;color:#5a6a7a;margin-bottom:6px;">SET LISTING PRICE (CHZ)</label>
+    <input type="number" id="sellPriceInput" step="0.1" min="0.1" placeholder="10.0" style="width:100%;background:#06080a;border:1px solid #1c2028;padding:10px;border-radius:6px;color:#dde4f0;font-family:'Share Tech Mono',monospace;font-size:16px;margin-bottom:16px;">
+    <button onclick="submitSellCard()" style="width:100%;background:rgba(0,255,135,0.15);border:1px solid rgba(0,255,135,0.4);color:#00ff87;padding:12px;border-radius:8px;font-family:'Black Ops One',sans-serif;font-size:12px;letter-spacing:1px;cursor:pointer;">LIST FOR SALE</button>
   </div>
 </div>
-
 </body>
 </html>
