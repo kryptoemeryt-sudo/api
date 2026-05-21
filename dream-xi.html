@@ -1087,6 +1087,7 @@ let marketByPos = {};
 let marketFloorByPos = {};
 let activeListingsByTokenId = {};
 let currentMintPrice = ethers.parseEther("10");
+let localMintEvents = [];
 
 // Spis wszystkich 48 krajĂłw dla poprawnego mapowania nazw i flag w globalnym Ledgerze
 const TEAMS = [
@@ -1435,6 +1436,12 @@ async function loadData(){
     sales = ev.sales;
     listed = ev.listed;
   }
+
+  localMintEvents.forEach(localMint => {
+    if (!mints.some(m => Number(m.tokenId) === Number(localMint.tokenId))) {
+      mints.push(localMint);
+    }
+  });
 
   if (contract) {
     try {
@@ -2117,6 +2124,7 @@ async function directMint() {
             owner: parsed.args[0],
             tokenId: Number(parsed.args[1]),
             dna: parsed.args[2],
+            block: Number(receipt.blockNumber || 0),
             teamId: dnaParsed.teamId,
             position: dnaParsed.position,
             rarity: dnaParsed.rarity,
@@ -2130,6 +2138,14 @@ async function directMint() {
     }
 
     if (mintedCard) {
+      localMintEvents = localMintEvents.filter(m => Number(m.tokenId) !== mintedCard.tokenId);
+      localMintEvents.push({
+        owner: String(mintedCard.owner).toLowerCase(),
+        tokenId: mintedCard.tokenId,
+        dna: mintedCard.dna,
+        block: mintedCard.block || Number(receipt.blockNumber || 0)
+      });
+
       const myAddr = address.toLowerCase();
       const oldCard = window.dreamScores[myAddr]?.[mintedCard.position];
       const isUpgrade = !oldCard || mintedCard.weight > oldCard.weight;
