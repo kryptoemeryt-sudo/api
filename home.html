@@ -255,6 +255,18 @@ h1 .accent{color:var(--green);text-shadow:0 0 30px var(--green-glow);}
 .quest-icon{font-size:18px;line-height:1;flex-shrink:0;}
 .quest-title{font-family:'Black Ops One',sans-serif;font-size:10px;letter-spacing:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .quest-sub{font-size:10px;color:var(--text3);line-height:1.2;margin-top:2px;}
+.flow-earn-card{background:rgba(0,255,135,0.045);border:1px solid rgba(0,255,135,0.18);border-radius:9px;padding:10px 11px;margin-bottom:10px;}
+.flow-earn-title{font-family:'Black Ops One',sans-serif;font-size:12px;color:var(--green);letter-spacing:1px;margin-bottom:4px;}
+.flow-earn-text{font-size:13px;color:var(--text2);line-height:1.35;}
+.reward-lanes{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:10px;}
+.reward-lane{border-radius:8px;padding:9px;border:1px solid rgba(255,255,255,0.07);background:rgba(255,255,255,0.025);min-width:0;}
+.reward-pct{font-family:'Black Ops One',sans-serif;font-size:20px;line-height:1;margin-bottom:3px;}
+.reward-lane.global .reward-pct,.reward-lane.global .reward-value{color:var(--green);}
+.reward-lane.country .reward-pct,.reward-lane.country .reward-value{color:var(--gold);}
+.reward-lane.legendary .reward-pct,.reward-lane.legendary .reward-value{color:var(--purple);}
+.reward-title{font-family:'Black Ops One',sans-serif;font-size:9px;color:var(--text);letter-spacing:1px;margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.reward-copy{font-size:9px;color:var(--text3);line-height:1.2;}
+.reward-value{font-family:'Black Ops One',sans-serif;font-size:13px;margin-top:5px;white-space:nowrap;}
 
 @media (max-width: 768px) {
   /* GLOBAL */
@@ -425,6 +437,15 @@ h1 .accent{color:var(--green);text-shadow:0 0 30px var(--green-glow);}
   body.dash-active .quest-icon{font-size:16px;}
   body.dash-active .quest-title{font-size:9px;}
   body.dash-active .quest-sub{font-size:9px;}
+  body.dash-active .flow-earn-card{padding:8px;margin-bottom:8px;}
+  body.dash-active .flow-earn-title{font-size:10px;}
+  body.dash-active .flow-earn-text{font-size:11px;}
+  body.dash-active .reward-lanes{gap:6px;margin-bottom:8px;}
+  body.dash-active .reward-lane{padding:7px;}
+  body.dash-active .reward-pct{font-size:17px;}
+  body.dash-active .reward-title{font-size:8px;}
+  body.dash-active .reward-copy{font-size:8px;}
+  body.dash-active .reward-value{font-size:11px;}
   body.dash-active .mint-box{max-width:100%!important;width:100%;padding:12px;border-radius:9px;}
   body.dash-active .price-row{margin-bottom:9px;}
   body.dash-active .price-val{font-size:26px;}
@@ -704,7 +725,7 @@ document.addEventListener('DOMContentLoaded', setupDesktopDashboardLayout);
     </div>
     <!-- Desktop: tylko tytuĹ‚ (figurka po prawej) -->
     <h1 class="hero-title-desktop">BLOCK<br><span class="accent">KICKERS</span><br>2026</h1>
-    <p class="hero-desc">Mint unique generative football figures. Every trait encoded in DNA on-chain. 95% goes to prize pool. Every country has a winner &mdash; every Legendary gets rewarded.</p>
+    <p class="hero-desc">Two quests are live. Mint a card, score it in your squad, then sell it on the market. The score stays stamped while the card keeps flowing.</p>
     <div class="stats-row">
       <div class="stat" style="text-align:center;"><div class="stat-n" id="sMinted">0</div><div class="stat-l">MINTED</div></div>
       <div class="stat" style="text-align:center;"><div class="stat-n" id="sVault">0</div><div class="stat-l">CHZ IN VAULT</div></div>
@@ -715,17 +736,41 @@ document.addEventListener('DOMContentLoaded', setupDesktopDashboardLayout);
       <a class="quest-link" href="/dream-xi">
         <span class="quest-icon">&#127942;</span>
         <span style="min-width:0;">
-          <span class="quest-title">DREAM XI</span>
-          <span class="quest-sub">Argentina card race</span>
+          <span class="quest-title">LIVE: DREAM XI</span>
+          <span class="quest-sub">score then sell cards</span>
         </span>
       </a>
       <a class="quest-link" href="/nation-quest">
         <span class="quest-icon">&#127482;&#127480;</span>
         <span style="min-width:0;">
-          <span class="quest-title">NATION QUEST</span>
+          <span class="quest-title">LIVE: NATION QUEST</span>
           <span class="quest-sub">USA 1,000 CHZ race</span>
         </span>
       </a>
+    </div>
+    <div class="flow-earn-card">
+      <div class="flow-earn-title">FLOW TO EARN: SCORE THEN SELL</div>
+      <div class="flow-earn-text">Mint or buy a card. It scores when it enters your wallet. Then list it, trade it, and hunt the next upgrade.</div>
+    </div>
+    <div class="reward-lanes">
+      <div class="reward-lane global">
+        <div class="reward-pct">65%</div>
+        <div class="reward-title">GLOBAL TOP</div>
+        <div class="reward-copy">main prize race</div>
+        <div class="reward-value" id="rewardGlobal">- CHZ</div>
+      </div>
+      <div class="reward-lane country">
+        <div class="reward-pct">25%</div>
+        <div class="reward-title">COUNTRY WINNERS</div>
+        <div class="reward-copy">best card per nation</div>
+        <div class="reward-value" id="rewardCountry">- CHZ</div>
+      </div>
+      <div class="reward-lane legendary">
+        <div class="reward-pct">15%</div>
+        <div class="reward-title">LEGENDARY</div>
+        <div class="reward-copy">guaranteed reward lane</div>
+        <div class="reward-value" id="rewardLegendary">- CHZ</div>
+      </div>
     </div>
   </div>
   <div class="hero-center" style="padding:32px 16px;z-index:2;width:340px;flex-shrink:0;">
@@ -1881,6 +1926,43 @@ async function rpcCall(method, params){
   return j.result;
 }
 
+function formatGameNumber(value, opts = {}){
+  const n = Number(value || 0);
+  if(!Number.isFinite(n)) return '-';
+  if(opts.compact && Math.abs(n) >= 100000) return (n / 1000).toFixed(n >= 1000000 ? 0 : 1).replace(/\.0$/, '') + 'K';
+  return Math.round(n).toLocaleString('en-US');
+}
+
+function formatGameChz(value, opts = {}){
+  const n = Number(value || 0);
+  if(!Number.isFinite(n)) return '- CHZ';
+  if(opts.compact && n >= 100000) return (n / 1000).toFixed(n >= 1000000 ? 0 : 1).replace(/\.0$/, '') + 'K CHZ';
+  const digits = n >= 100 ? 0 : n >= 10 ? 1 : 2;
+  return n.toLocaleString('en-US', { maximumFractionDigits: digits }) + ' CHZ';
+}
+
+function updateRewardPreview(vaultWeiOrChz, legendaryCount = null){
+  let vaultChz = 0;
+  try{
+    vaultChz = typeof vaultWeiOrChz === 'bigint'
+      ? parseFloat(ethers.formatEther(vaultWeiOrChz))
+      : Number(vaultWeiOrChz || 0);
+  }catch(e){ vaultChz = 0; }
+  const globalPool = vaultChz * 0.65;
+  const countryEach = vaultChz * 0.25 / 48;
+  const legendaryPool = vaultChz * 0.15;
+  const legendaryEach = legendaryCount && legendaryCount > 0 ? legendaryPool / legendaryCount : legendaryPool;
+
+  const g = document.getElementById('rewardGlobal');
+  const c = document.getElementById('rewardCountry');
+  const l = document.getElementById('rewardLegendary');
+  if(g) g.textContent = formatGameChz(globalPool, { compact: true });
+  if(c) c.textContent = formatGameChz(countryEach);
+  if(l) l.textContent = legendaryCount && legendaryCount > 0
+    ? formatGameChz(legendaryEach) + ' / LEG'
+    : formatGameChz(legendaryPool, { compact: true });
+}
+
 async function loadTicker(){
   try{
     // UĹĽyj istniejÄ…cego contract lub stwĂłrz read-only
@@ -1899,12 +1981,14 @@ async function loadTicker(){
 
     const holderMap = {};
     let topCard = null;
+    let legendaryCount = 0;
 
     events.forEach(ev => {
       const addr = ev.args.owner.toLowerCase();
       holderMap[addr] = (holderMap[addr]||0) + 1;
       try{
         const t = parseDNA(ev.args.dna);
+        if(t.rarity === 3) legendaryCount++;
         if(!topCard || t.weight > topCard.weight){
           topCard = {
             weight: t.weight,
@@ -1920,20 +2004,22 @@ async function loadTicker(){
     const topHolder = sorted[0];
     const holders = sorted.length;
 
-    let vaultChz = 'â€”';
+    let vaultChz = '&mdash;';
     try{
       const v = await c.vaultBalance();
-      vaultChz = parseFloat(ethers.formatEther(v)).toFixed(1)+' CHZ';
+      const vaultRaw = parseFloat(ethers.formatEther(v));
+      vaultChz = formatGameChz(vaultRaw);
+      updateRewardPreview(vaultRaw, legendaryCount);
     }catch(e){}
 
     if(topHolder) document.getElementById('tickerTopHolder').textContent =
       topHolder[0].slice(0,6)+'...'+topHolder[0].slice(-4)+' ('+topHolder[1]+' figs)';
     if(topCard) document.getElementById('tickerTopFigure').textContent =
       topCard.team+' '+topCard.rarity+' W:'+topCard.weight;
-    document.getElementById('tickerHolders').textContent = holders+' wallets';
+    document.getElementById('tickerHolders').textContent = formatGameNumber(holders)+' wallets';
     document.getElementById('tickerVault').textContent = vaultChz;
     const sHolders = document.getElementById('sHolders');
-    if(sHolders) sHolders.textContent = holders.toString();
+    if(sHolders) sHolders.textContent = formatGameNumber(holders);
 
   }catch(e){ console.warn('ticker error:', e); }
 }
@@ -1947,8 +2033,9 @@ async function updateStats(){
       contract.mintPrice(),
       contract.tournamentEnded()
     ]);
-    document.getElementById('sMinted').textContent=minted.toString();
-    document.getElementById('sVault').textContent=parseFloat(ethers.formatEther(vault)).toFixed(1);
+    document.getElementById('sMinted').textContent=formatGameNumber(Number(minted));
+    document.getElementById('sVault').textContent=formatGameNumber(parseFloat(ethers.formatEther(vault)), { compact: true });
+    updateRewardPreview(vault);
     currentPrice=ethers.formatEther(price);
     document.getElementById('priceDisplay').textContent=parseFloat(currentPrice).toString()+' CHZ';
     const bal=await provider.getBalance(address);
@@ -3211,8 +3298,9 @@ async function fetchInitialPrice(){
     ], rpc);
     const [price, minted, vault] = await Promise.all([c.mintPrice(), c.totalMinted(), c.vaultBalance()]);
     document.getElementById('priceDisplay').textContent = parseFloat(ethers.formatEther(price)).toString() + ' CHZ';
-    document.getElementById('sMinted').textContent = minted.toString();
-    document.getElementById('sVault').textContent = parseFloat(ethers.formatEther(vault)).toFixed(1);
+    document.getElementById('sMinted').textContent = formatGameNumber(Number(minted));
+    document.getElementById('sVault').textContent = formatGameNumber(parseFloat(ethers.formatEther(vault)), { compact: true });
+    updateRewardPreview(vault);
   }catch(e){ console.warn('Price fetch failed:', e); }
 }
 
@@ -4147,7 +4235,7 @@ function updateCountryDashboardSummary(countryBest, perCountry){
   if(!box) return;
   const best = Object.values(countryBest || {});
   const reward = Number.isFinite(perCountry) ? perCountry : 0;
-  const rewardText = reward >= 100 ? reward.toFixed(0) : reward >= 10 ? reward.toFixed(1) : reward.toFixed(2);
+  const rewardText = formatGameChz(reward);
   const leaders = address
     ? best.filter(c => c.owner && c.owner.toLowerCase() === address.toLowerCase()).sort((a,b) => b.weight - a.weight)
     : [];
@@ -4161,7 +4249,7 @@ function updateCountryDashboardSummary(countryBest, perCountry){
   box.innerHTML = `
     <div class="country-dash-card">
       <div class="country-dash-label">Country Reward</div>
-      <div class="country-dash-value">~${rewardText} CHZ</div>
+      <div class="country-dash-value">~${rewardText}</div>
       <div class="country-dash-note">Current estimated reward for the best card in each country.</div>
     </div>
     <div class="country-dash-card">
