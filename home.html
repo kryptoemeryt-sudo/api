@@ -26,11 +26,13 @@ body{font-family:'Barlow Condensed',sans-serif;background:var(--black);color:var
 ::-webkit-scrollbar-thumb:hover{background:linear-gradient(180deg,rgba(0,255,135,0.95),rgba(255,201,64,0.78));}
 
 /* NAV */
-nav{display:flex;align-items:center;justify-content:space-between;padding:14px 32px;border-bottom:1px solid var(--border);background:rgba(6,8,10,0.97);backdrop-filter:blur(10px);position:fixed;top:0;left:0;right:0;z-index:100;}
-.logo{font-family:'Black Ops One',sans-serif;font-size:22px;letter-spacing:3px;color:var(--green);text-shadow:0 0 20px var(--green-glow);}
+nav{display:flex;align-items:center;justify-content:space-between;padding:12px 28px;border-bottom:1px solid rgba(0,255,135,0.14);background:rgba(5,7,10,0.96);backdrop-filter:blur(14px);position:fixed;top:0;left:0;right:0;z-index:100;}
+.logo{font-family:'Black Ops One',sans-serif;font-size:18px;letter-spacing:2px;color:var(--text);text-shadow:0 0 18px rgba(0,255,135,0.16);}
+.logo span{color:var(--green);}
 .nav-right{display:flex;align-items:center;gap:12px;}
 .wallet-addr{font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--text2);}
 .wallet-bal{font-family:'Black Ops One',sans-serif;font-size:13px;color:var(--gold);}
+.btn-updates,.wallet-bal{display:none!important;}
 .btn-connect{background:var(--green-dim);border:1px solid rgba(0,255,135,0.3);color:var(--green);padding:8px 18px;border-radius:6px;font-family:'Black Ops One',sans-serif;font-size:11px;letter-spacing:1px;cursor:pointer;transition:all 0.2s;}
 .btn-connect:hover{background:rgba(0,255,135,0.2);}
 .filter-strip{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px;}
@@ -253,6 +255,7 @@ h1 .accent{color:var(--green);text-shadow:0 0 30px var(--green-glow);}
 .quest-link{display:flex;align-items:center;gap:8px;min-width:0;padding:10px 11px;border-radius:9px;border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.025);text-decoration:none;color:var(--text);transition:all .18s;}
 .quest-link:hover{border-color:rgba(0,255,135,0.35);background:rgba(0,255,135,0.06);transform:translateY(-1px);}
 .quest-icon{font-size:18px;line-height:1;flex-shrink:0;}
+.quest-flag-us{width:20px;height:14px;border-radius:2px;flex-shrink:0;box-shadow:0 0 0 1px rgba(255,255,255,0.12);}
 .quest-title{font-family:'Black Ops One',sans-serif;font-size:10px;letter-spacing:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .quest-sub{font-size:10px;color:var(--text3);line-height:1.2;margin-top:2px;}
 .flow-earn-card{background:rgba(0,255,135,0.045);border:1px solid rgba(0,255,135,0.18);border-radius:9px;padding:10px 11px;margin-bottom:10px;}
@@ -373,9 +376,10 @@ h1 .accent{color:var(--green);text-shadow:0 0 30px var(--green-glow);}
 .country-dash-summary{display:none;}
 
 @media (min-width: 1200px) and (min-height: 720px) {
-  body.dash-active{height:100vh;overflow:hidden;padding-top:99px;background:#05070a;}
+  body.dash-active{height:100vh;overflow:hidden;padding-top:49px;background:#05070a;}
   body.dash-active #betaBanner,
   body.dash-active #statsTicker,
+  body.dash-active #navMenu,
   body.dash-active #rareFeed,
   body.dash-active #howto,
   body.dash-active #album,
@@ -389,7 +393,7 @@ h1 .accent{color:var(--green);text-shadow:0 0 30px var(--green-glow);}
     display:grid;
     grid-template-columns:330px minmax(430px,1fr) 390px;
     gap:10px;
-    height:calc(100vh - 99px);
+    height:calc(100vh - 49px);
     padding:10px;
     min-height:0;
   }
@@ -424,9 +428,20 @@ h1 .accent{color:var(--green);text-shadow:0 0 30px var(--green-glow);}
   body.dash-active .hero::before{opacity:0.75;}
   body.dash-active .hero-left{padding:0!important;width:100%;}
   body.dash-active .hero-center{padding:0!important;width:100%!important;max-width:100%!important;}
-  body.dash-active .hero-right{display:none!important;}
+  body.dash-active .hero-right{
+    display:block!important;
+    position:absolute!important;
+    top:34px;
+    right:4px;
+    width:118px;
+    height:142px;
+    opacity:.96;
+    pointer-events:none;
+  }
+  body.dash-active .hero-right #heroCanvas{position:static!important;width:118px!important;height:142px!important;min-height:0!important;}
+  body.dash-active .hero-right > div{display:none!important;}
   body.dash-active .badge{margin-bottom:8px;font-size:9px;padding:4px 8px;}
-  body.dash-active .hero-title-desktop{font-size:31px;line-height:0.92;margin:0 0 8px;letter-spacing:0;}
+  body.dash-active .hero-title-desktop{font-size:31px;line-height:0.92;margin:0 118px 8px 0;letter-spacing:0;}
   body.dash-active .hero-desc{display:none;}
   body.dash-active .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin:0 0 10px;}
   body.dash-active .stat{background:rgba(255,255,255,0.025);border:1px solid rgba(255,255,255,0.045);border-radius:8px;padding:7px 5px;align-items:center;}
@@ -538,9 +553,9 @@ h1 .accent{color:var(--green);text-shadow:0 0 30px var(--green-glow);}
 <body>
 
 <nav>
-  <div class="logo">&#9917; BLOCK KICKERS</div>
+  <div class="logo">&#9917; BLOCK <span>KICKERS</span></div>
   <div class="nav-right">
-    <button onclick="openChangelog()" style="background:none;border:1px solid rgba(255,255,255,0.1);color:var(--text3);padding:5px 10px;border-radius:6px;font-family:'Black Ops One',sans-serif;font-size:10px;letter-spacing:1px;cursor:pointer;transition:all 0.2s;white-space:nowrap;" onmouseover="this.style.borderColor='rgba(0,255,135,0.4)';this.style.color='var(--green)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.1)';this.style.color='var(--text3)'">UPDATES</button>
+    <button class="btn-updates" onclick="openChangelog()" style="background:none;border:1px solid rgba(255,255,255,0.1);color:var(--text3);padding:5px 10px;border-radius:6px;font-family:'Black Ops One',sans-serif;font-size:10px;letter-spacing:1px;cursor:pointer;transition:all 0.2s;white-space:nowrap;" onmouseover="this.style.borderColor='rgba(0,255,135,0.4)';this.style.color='var(--green)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.1)';this.style.color='var(--text3)'">UPDATES</button>
     <span class="wallet-addr" id="navAddr" style="display:none"></span>
     <span class="wallet-bal" id="navBal" style="display:none"></span>
     <button class="btn-connect" id="navBtn" onclick="connectWallet()">CONNECT</button>
@@ -697,16 +712,16 @@ document.addEventListener('DOMContentLoaded', setupDesktopDashboardLayout);
 <!-- STATS TICKER -->
 <div id="statsTicker" style="background:rgba(0,0,0,0.4);border-bottom:1px solid var(--border);padding:6px 32px;display:flex;align-items:center;justify-content:center;gap:24px;font-size:11px;font-family:'Share Tech Mono',monospace;overflow-x:auto;white-space:nowrap;">
   <span style="color:var(--text3);">&#127942; TOP HOLDER:</span>
-  <span id="tickerTopHolder" style="color:var(--green);">â€”</span>
+  <span id="tickerTopHolder" style="color:var(--green);">-</span>
   <span style="color:var(--border);">|</span>
   <span style="color:var(--text3);">&#9889; TOP FIGURE:</span>
-  <span id="tickerTopFigure" style="color:var(--gold);">â€”</span>
+  <span id="tickerTopFigure" style="color:var(--gold);">-</span>
   <span style="color:var(--border);">|</span>
   <span style="color:var(--text3);">&#128101; HOLDERS:</span>
-  <span id="tickerHolders" style="color:var(--text2);">â€”</span>
+  <span id="tickerHolders" style="color:var(--text2);">-</span>
   <span style="color:var(--border);">|</span>
   <span style="color:var(--text3);">&#128176; VAULT:</span>
-  <span id="tickerVault" style="color:var(--text2);">â€”</span>
+  <span id="tickerVault" style="color:var(--text2);">-</span>
 </div>
 
 <div id="desktopDashboard" class="desktop-dashboard">
@@ -741,7 +756,11 @@ document.addEventListener('DOMContentLoaded', setupDesktopDashboardLayout);
         </span>
       </a>
       <a class="quest-link" href="/nation-quest">
-        <span class="quest-icon">&#127482;&#127480;</span>
+        <svg class="quest-flag-us" viewBox="0 0 28 20" aria-hidden="true">
+          <rect width="28" height="20" fill="#B22234"/>
+          <path d="M0 1.54h28v1.54H0zm0 3.08h28v1.54H0zm0 3.08h28v1.54H0zm0 3.08h28v1.54H0zm0 3.08h28v1.54H0zm0 3.08h28v1.54H0" fill="#fff"/>
+          <rect width="12.2" height="10.77" fill="#3C3B6E"/>
+        </svg>
         <span style="min-width:0;">
           <span class="quest-title">LIVE: NATION QUEST</span>
           <span class="quest-sub">USA 1,000 CHZ race</span>
@@ -874,13 +893,13 @@ document.addEventListener('DOMContentLoaded', setupDesktopDashboardLayout);
     <div style="background:#0a0d10;border:1px solid #1c2028;border-radius:8px;padding:14px;margin-bottom:16px;font-size:14px;color:#7a8899;line-height:1.7;">
       Collect all <span style="color:#dde4f0;font-weight:700;">11 United States positions</span> in your wallet.<br>
       First wallet to complete wins <span style="color:#ffc940;font-weight:700;">1,000 CHZ</span>.<br><br>
-      <span style="color:#00ff87;">â†’</span> Mint for 10 CHZ â€” land a USA card<br>
-      <span style="color:#00ff87;">â†’</span> Buy missing positions on the market<br>
-      <span style="color:#00ff87;">â†’</span> Track progress in the <span style="color:#dde4f0;">Album</span> section
+      <span style="color:#00ff87;">&rarr;</span> Mint for 10 CHZ &mdash; land a USA card<br>
+      <span style="color:#00ff87;">&rarr;</span> Buy missing positions on the market<br>
+      <span style="color:#00ff87;">&rarr;</span> Track progress in the <span style="color:#dde4f0;">Album</span> section
     </div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;">
       <div style="background:#0f1318;border:1px solid #1c2028;border-radius:8px;padding:12px;text-align:center;">
-        <div style="font-family:'Black Ops One',sans-serif;font-size:22px;color:#3b82f6;" id="nqWelcomeCount">â€”<span style="font-size:13px;color:#3d4a5a;">/11</span></div>
+        <div style="font-family:'Black Ops One',sans-serif;font-size:22px;color:#3b82f6;" id="nqWelcomeCount">&mdash;<span style="font-size:13px;color:#3d4a5a;">/11</span></div>
         <div style="font-size:11px;letter-spacing:1px;color:#5a6a7a;">POSITIONS MINTED</div>
       </div>
       <div style="background:#0f1318;border:1px solid #1c2028;border-radius:8px;padding:12px;text-align:center;">
@@ -893,7 +912,7 @@ document.addEventListener('DOMContentLoaded', setupDesktopDashboardLayout);
       <button onclick="closeNqWelcome()" style="flex:1;background:linear-gradient(135deg,rgba(0,255,135,0.15),rgba(0,255,135,0.05));border:1px solid rgba(0,255,135,0.4);color:#00ff87;padding:12px;border-radius:8px;font-family:'Black Ops One',sans-serif;font-size:12px;letter-spacing:1px;cursor:pointer;">START MINTING</button>
     </div>
     <div style="text-align:center;margin-top:10px;">
-      <a href="https://block-kickers.vercel.app/nation-quest" target="_blank" style="font-size:11px;color:#3d4a5a;text-decoration:none;letter-spacing:1px;">FULL RULES â†’</a>
+      <a href="https://block-kickers.vercel.app/nation-quest" target="_blank" style="font-size:11px;color:#3d4a5a;text-decoration:none;letter-spacing:1px;">FULL RULES &rarr;</a>
       <span style="color:#1c2028;margin:0 8px;">|</span>
       <button onclick="closeNqWelcome(true)" style="background:none;border:none;font-size:11px;color:#3d4a5a;cursor:pointer;letter-spacing:1px;">DON'T SHOW AGAIN</button>
     </div>
@@ -903,11 +922,11 @@ document.addEventListener('DOMContentLoaded', setupDesktopDashboardLayout);
 <div class="list-modal" id="mintSuccessModal" onclick="if(event.target===this)closeMintSuccess()">
   <div class="list-box" style="max-width:360px;text-align:center;">
     <div style="font-family:'Black Ops One',sans-serif;font-size:11px;letter-spacing:3px;color:var(--green);margin-bottom:4px;">YOU MINTED</div>
-    <div style="font-family:'Black Ops One',sans-serif;font-size:20px;color:var(--text);margin-bottom:16px;" id="mintPopupName">â€”</div>
+    <div style="font-family:'Black Ops One',sans-serif;font-size:20px;color:var(--text);margin-bottom:16px;" id="mintPopupName">&mdash;</div>
     <div id="mintPopupSvg" style="display:flex;justify-content:center;margin-bottom:16px;"></div>
     <div id="mintPopupStats" style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px;"></div>
     <div id="mintPopupExtras" style="display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-bottom:16px;"></div>
-    <button onclick="shareMintOnX()" style="width:100%;background:#000;border:1px solid #333;color:#fff;padding:10px;border-radius:8px;font-family:'Black Ops One',sans-serif;font-size:12px;letter-spacing:1px;cursor:pointer;margin-bottom:8px;">đť•Ź SHARE ON X</button>
+    <button onclick="shareMintOnX()" style="width:100%;background:#000;border:1px solid #333;color:#fff;padding:10px;border-radius:8px;font-family:'Black Ops One',sans-serif;font-size:12px;letter-spacing:1px;cursor:pointer;margin-bottom:8px;">X SHARE ON X</button>
     <button onclick="closeMintSuccess()" style="width:100%;background:none;border:1px solid var(--border);color:var(--text3);padding:8px;border-radius:8px;font-family:'Black Ops One',sans-serif;font-size:11px;letter-spacing:1px;cursor:pointer;">CLOSE</button>
   </div>
 </div>
@@ -916,7 +935,7 @@ document.addEventListener('DOMContentLoaded', setupDesktopDashboardLayout);
   <div class="list-box" style="max-width:480px;max-height:80vh;overflow-y:auto;">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;">
       <div class="list-title" style="margin-bottom:0;color:var(--text);">LAST <span style="color:var(--green);">UPDATES</span></div>
-      <button onclick="closeChangelog()" style="background:none;border:none;color:var(--text3);font-size:20px;cursor:pointer;line-height:1;padding:0 4px;">âś•</button>
+      <button onclick="closeChangelog()" style="background:none;border:none;color:var(--text3);font-size:20px;cursor:pointer;line-height:1;padding:0 4px;">&times;</button>
     </div>
     <div id="changelogContent"></div>
   </div>
@@ -927,13 +946,13 @@ document.addEventListener('DOMContentLoaded', setupDesktopDashboardLayout);
   <div class="list-box" style="max-width:380px;">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
       <div class="list-title" style="margin-bottom:0;color:var(--green);">SELL FIGURE</div>
-      <button onclick="closeAlbumSell()" style="background:none;border:none;color:var(--text3);font-size:20px;cursor:pointer;padding:0 4px;">âś•</button>
+      <button onclick="closeAlbumSell()" style="background:none;border:none;color:var(--text3);font-size:20px;cursor:pointer;padding:0 4px;">&times;</button>
     </div>
-    <div style="font-size:13px;color:var(--text2);margin-bottom:6px;" id="albumSellName">â€”</div>
+    <div style="font-size:13px;color:var(--text2);margin-bottom:6px;" id="albumSellName">&mdash;</div>
     <div id="albumSellSvg" style="display:flex;justify-content:center;margin:10px 0;"></div>
     <div style="font-size:12px;color:var(--text3);margin-bottom:6px;letter-spacing:1px;">PRICE IN CHZ</div>
     <input class="list-input" type="number" id="albumSellPrice" placeholder="e.g. 500" min="1" step="1">
-    <div class="list-note">5% royalty deducted on sale Â· You receive 95%</div>
+    <div class="list-note">5% royalty deducted on sale &middot; You receive 95%</div>
     <div class="list-actions">
       <button class="btn-list-cancel" onclick="closeAlbumSell()">CANCEL</button>
       <button class="btn-list-confirm" id="albumSellConfirmBtn" onclick="confirmAlbumSell()">LIST FOR SALE</button>
@@ -945,10 +964,10 @@ document.addEventListener('DOMContentLoaded', setupDesktopDashboardLayout);
 <div class="list-modal" id="buyModal">
   <div class="list-box">
     <div class="list-title" style="color:var(--gold);">BUY FIGURE</div>
-    <div style="font-size:13px;color:var(--text2);margin-bottom:6px;" id="buyFigureName">â€”</div>
+    <div style="font-size:13px;color:var(--text2);margin-bottom:6px;" id="buyFigureName">&mdash;</div>
     <div id="buyFigureSvg" style="display:flex;justify-content:center;margin:10px 0;"></div>
     <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:18px;padding:14px;background:rgba(255,201,64,0.06);border:1px solid rgba(255,201,64,0.2);border-radius:8px;">
-      <div style="font-family:'Black Ops One',sans-serif;font-size:28px;color:var(--gold);" id="buyPrice">â€”</div>
+      <div style="font-family:'Black Ops One',sans-serif;font-size:28px;color:var(--gold);" id="buyPrice">&mdash;</div>
       <div style="font-size:13px;color:var(--text3);">CHZ</div>
       <div style="flex:1;"></div>
       <div style="font-size:11px;color:var(--text3);" id="buyPriceUsd"></div>
@@ -964,10 +983,10 @@ document.addEventListener('DOMContentLoaded', setupDesktopDashboardLayout);
 <div class="list-modal" id="listModal">
   <div class="list-box">
     <div class="list-title">LIST FOR SALE</div>
-    <div style="font-size:14px;color:var(--text2);margin-bottom:16px;" id="listFigureName">â€”</div>
+    <div style="font-size:14px;color:var(--text2);margin-bottom:16px;" id="listFigureName">-</div>
     <div style="font-size:12px;color:var(--text3);margin-bottom:6px;letter-spacing:1px;">PRICE IN CHZ</div>
     <input class="list-input" type="number" id="listPriceInput" placeholder="e.g. 500" min="1" step="1">
-    <div class="list-note">5% royalty deducted on sale Â· You receive 95%</div>
+    <div class="list-note">5% royalty deducted on sale &middot; You receive 95%</div>
     <div class="list-actions">
       <button class="btn-list-cancel" onclick="closeListModal()">CANCEL</button>
       <button class="btn-list-confirm" onclick="confirmList()">LIST FOR SALE</button>
@@ -995,7 +1014,7 @@ document.addEventListener('DOMContentLoaded', setupDesktopDashboardLayout);
   <div class="modal">
     <div class="modal-head">
       <div class="modal-title" id="modalTitle">FIGURE</div>
-      <button class="modal-x" onclick="closeModal()">âś•</button>
+      <button class="modal-x" onclick="closeModal()">&times;</button>
     </div>
     <div class="modal-3d" id="modal3d"></div>
     <div class="modal-body">
@@ -1048,59 +1067,59 @@ const TEAMS = [
 
 const TEAM_COLORS = [
   // AFC (0-8)
-  '#FFD700', // 0  Australia      â€” gold
-  '#239F40', // 1  Iran           â€” green
-  '#CC0001', // 2  Iraq           â€” red
-  '#BC002D', // 3  Japan          â€” red (classic away)
-  '#007A3D', // 4  Jordan         â€” green
-  '#8D153A', // 5  Qatar          â€” maroon
-  '#006C35', // 6  Saudi Arabia   â€” green
-  '#CD2E3A', // 7  South Korea    â€” red
-  '#1EB53A', // 8  Uzbekistan     â€” green
+  '#FFD700', // 0  Australia      - gold
+  '#239F40', // 1  Iran           - green
+  '#CC0001', // 2  Iraq           - red
+  '#BC002D', // 3  Japan          - red (classic away)
+  '#007A3D', // 4  Jordan         - green
+  '#8D153A', // 5  Qatar          - maroon
+  '#006C35', // 6  Saudi Arabia   - green
+  '#CD2E3A', // 7  South Korea    - red
+  '#1EB53A', // 8  Uzbekistan     - green
   // CAF (9-18)
-  '#006233', // 9  Algeria        â€” green (away)
-  '#003893', // 10 Cape Verde     â€” blue
-  '#007FFF', // 11 DR Congo       â€” sky blue
-  '#CE1126', // 12 Egypt          â€” red
-  '#006B3F', // 13 Ghana          â€” green (away)
-  '#F77F00', // 14 Ivory Coast    â€” orange
-  '#C1272D', // 15 Morocco        â€” red
-  '#00853F', // 16 Senegal        â€” green
-  '#007749', // 17 South Africa   â€” green
-  '#E70013', // 18 Tunisia        â€” red
+  '#006233', // 9  Algeria        - green (away)
+  '#003893', // 10 Cape Verde     - blue
+  '#007FFF', // 11 DR Congo       - sky blue
+  '#CE1126', // 12 Egypt          - red
+  '#006B3F', // 13 Ghana          - green (away)
+  '#F77F00', // 14 Ivory Coast    - orange
+  '#C1272D', // 15 Morocco        - red
+  '#00853F', // 16 Senegal        - green
+  '#007749', // 17 South Africa   - green
+  '#E70013', // 18 Tunisia        - red
   // CONCACAF (19-24)
-  '#FF0000', // 19 Canada         â€” red
-  '#002B7F', // 20 Curacao        â€” blue
-  '#00209F', // 21 Haiti          â€” blue
-  '#006847', // 22 Mexico         â€” green
-  '#DA121A', // 23 Panama         â€” red
-  '#002868', // 24 United States  â€” navy blue
+  '#FF0000', // 19 Canada         - red
+  '#002B7F', // 20 Curacao        - blue
+  '#00209F', // 21 Haiti          - blue
+  '#006847', // 22 Mexico         - green
+  '#DA121A', // 23 Panama         - red
+  '#002868', // 24 United States  - navy blue
   // CONMEBOL (25-30)
-  '#74ACDF', // 25 Argentina      â€” sky blue
-  '#009C3B', // 26 Brazil         â€” green
-  '#FCD116', // 27 Colombia       â€” yellow
-  '#FFD100', // 28 Ecuador        â€” yellow
-  '#D52B1E', // 29 Paraguay       â€” red
-  '#5EB6E4', // 30 Uruguay        â€” sky blue
+  '#74ACDF', // 25 Argentina      - sky blue
+  '#009C3B', // 26 Brazil         - green
+  '#FCD116', // 27 Colombia       - yellow
+  '#FFD100', // 28 Ecuador        - yellow
+  '#D52B1E', // 29 Paraguay       - red
+  '#5EB6E4', // 30 Uruguay        - sky blue
   // OFC (31)
-  '#00247D', // 31 New Zealand    â€” navy
+  '#00247D', // 31 New Zealand    - navy
   // UEFA (32-47)
-  '#ED2939', // 32 Austria        â€” red
-  '#000000', // 33 Belgium        â€” black
-  '#002395', // 34 Bosnia         â€” blue
-  '#FF0000', // 35 Croatia        â€” red (classic)
-  '#D7141A', // 36 Czech Republic â€” red
-  '#FFFFFF', // 37 England        â€” white
-  '#002395', // 38 France         â€” blue
-  '#000000', // 39 Germany        â€” black (away classic)
-  '#FF6600', // 40 Netherlands    â€” orange
-  '#EF2B2D', // 41 Norway         â€” red
-  '#006600', // 42 Portugal       â€” green
-  '#003087', // 43 Scotland       â€” blue
-  '#AA151B', // 44 Spain          â€” red
-  '#006AA7', // 45 Sweden         â€” blue
-  '#FF0000', // 46 Switzerland    â€” red
-  '#E30A17', // 47 Turkey         â€” red
+  '#ED2939', // 32 Austria        - red
+  '#000000', // 33 Belgium        - black
+  '#002395', // 34 Bosnia         - blue
+  '#FF0000', // 35 Croatia        - red (classic)
+  '#D7141A', // 36 Czech Republic - red
+  '#FFFFFF', // 37 England        - white
+  '#002395', // 38 France         - blue
+  '#000000', // 39 Germany        - black (away classic)
+  '#FF6600', // 40 Netherlands    - orange
+  '#EF2B2D', // 41 Norway         - red
+  '#006600', // 42 Portugal       - green
+  '#003087', // 43 Scotland       - blue
+  '#AA151B', // 44 Spain          - red
+  '#006AA7', // 45 Sweden         - blue
+  '#FF0000', // 46 Switzerland    - red
+  '#E30A17', // 47 Turkey         - red
 ];
 
 const RARITY_NAMES = ['COMMON','RARE','EPIC','LEGENDARY'];
@@ -1249,7 +1268,7 @@ class Figure3D {
     const darkMat = new THREE.MeshStandardMaterial({color:0x0a0a0a,roughness:0.8});
     const whiteMat = new THREE.MeshStandardMaterial({color:0xffffff,roughness:0.7});
 
-    // BOOTS â€” colorful, distinct from legs
+    // BOOTS - colorful, distinct from legs
     const bootColors = [0xff2200,0xffd700,0x00cc44,0x0066ff,0xff00cc,0xffffff,0x222222,0xff6600];
     const bootCol = t.hasGoldenBoots ? 0xffd700 : bootColors[t.teamId % bootColors.length];
     const bootMat = new THREE.MeshStandardMaterial({
@@ -1260,11 +1279,11 @@ class Figure3D {
       emissiveIntensity: t.hasGoldenBoots ? 0.3 : 0
     });
 
-    // SHORTS â€” darker version of kit color
+    // SHORTS - darker version of kit color
     const shortsCol = new THREE.Color(teamCol).multiplyScalar(0.4);
     const shortsMat = new THREE.MeshStandardMaterial({color:shortsCol,roughness:0.8});
 
-    // SOCKS â€” white or team color
+    // SOCKS - white or team color
     const socksMat = whiteMat;
 
     // === BODY PROPORTIONS (more athletic) ===
@@ -1291,7 +1310,7 @@ class Figure3D {
     // SHORTS
     fig.add(this.bx(0.56,0.22,0.30,shortsMat,0,Y_SHORTS,0));
 
-    // TORSO (slightly tapered â€” wider shoulders)
+    // TORSO (slightly tapered - wider shoulders)
     fig.add(this.bx(0.62,0.65,0.34,kitMat,0,Y_TORSO,0));
 
     // Shirt number
@@ -1324,10 +1343,10 @@ class Figure3D {
     // NECK (slimmer)
     fig.add(this.cy(0.085,0.085,0.16,8,skinMat,0,Y_NECK,0));
 
-    // HEAD (slightly taller than wide â€” more human)
+    // HEAD (slightly taller than wide - more human)
     fig.add(this.bx(0.48,0.52,0.44,skinMat,0,Y_HEAD,0));
 
-    // EYES â€” larger, more expressive
+    // EYES - larger, more expressive
     const eyeMat=new THREE.MeshStandardMaterial({color:0x0a0a14,roughness:0.5});
     const eyeWhiteMat=new THREE.MeshStandardMaterial({color:0xffffff,roughness:0.8});
     // Eye whites
@@ -1349,7 +1368,7 @@ class Figure3D {
     fig.add(this.bx(0.04,0.10,0.04,skinMat,-0.25,Y_HEAD+0.01,0));
     fig.add(this.bx(0.04,0.10,0.04,skinMat, 0.25,Y_HEAD+0.01,0));
 
-    // TATTOO â€” left arm band
+    // TATTOO - left arm band
     if(t.hasTattoo){
       const tatColors=[0x1a1aff,0xff1a1a,0x1aff1a,0xffff1a,0xff1aff];
       const tatMat=new THREE.MeshStandardMaterial({color:tatColors[t.teamId%tatColors.length],roughness:0.9,emissive:new THREE.Color(tatColors[t.teamId%tatColors.length]),emissiveIntensity:0.15});
@@ -1383,20 +1402,20 @@ class Figure3D {
       fig.add(this.bx(0.48,0.07,0.44,hm,0,hy-0.02,0));
       for(let i=-2;i<=2;i++) fig.add(this.bx(0.06,0.28,0.06,hm,i*0.10,hy-0.12,-0.18));
     }else if(t.hairStyle===6){ // Bald
-      // No hair â€” shiny head
+      // No hair - shiny head
       // already rendered by skin head
     }else if(t.hairStyle===7){ // Wavy
       fig.add(this.bx(0.50,0.08,0.46,hm,0,hy-0.01,0));
       fig.add(this.bx(0.50,0.06,0.46,hm,0,hy+0.07,-0.01));
     }
 
-    // EARRING â€” gold sphere on left ear
+    // EARRING - gold sphere on left ear
     if(t.hasEarring){
       const em=new THREE.MeshStandardMaterial({color:0xffd700,metalness:1,roughness:0.05,emissive:new THREE.Color(0xffd700),emissiveIntensity:0.3});
       fig.add(this.sp(0.04,em,-0.27,Y_HEAD-0.04,0));
     }
 
-    // HEADBAND â€” contrasting color strip around head
+    // HEADBAND - contrasting color strip around head
     if(t.hasBand){
       const bandColors=[0xffffff,0x000000,0xff0000,0x00ff00,0x0000ff,0xffff00];
       const bm=new THREE.MeshStandardMaterial({color:bandColors[t.position%bandColors.length],roughness:0.6});
@@ -1501,9 +1520,9 @@ const CHANGELOG = [
     date: '2026-05-19',
     title: 'Album & Market Integration',
     items: [
-      'WC Album now grouped by WC groups (Aâ€“L), 4 teams per row',
-      'Missing positions show golden badge if available on market â€” click to buy instantly',
-      'Buy popup shows figure preview, rarity and price â€” no page scroll needed',
+      'WC Album now grouped by WC groups (A-L), 4 teams per row',
+      'Missing positions show golden badge if available on market - click to buy instantly',
+      'Buy popup shows figure preview, rarity and price - no page scroll needed',
       'Album always picks the cheapest available listing per position',
     ]
   },
@@ -1521,9 +1540,9 @@ const CHANGELOG = [
     date: '2026-05-19',
     title: 'UI Fixes',
     items: [
-      'Navigation tab bar is now fixed â€” stays visible while scrolling',
+      'Navigation tab bar is now fixed - stays visible while scrolling',
       'Mobile hero: figure repositioned next to BLOCK KICKERS title, no more overflow',
-      'Nation Quest banner â€” removed spoiler text, kept "Coming Soon"',
+      'Nation Quest banner - removed spoiler text, kept "Coming Soon"',
     ]
   },
 ];
@@ -1553,13 +1572,13 @@ function closeChangelog(){
   document.getElementById('changelogModal').classList.remove('show');
 }
 // ============================================================
-const dnaCache = {};           // tokenId â†’ dna
+const dnaCache = {};           // tokenId -> dna
 let   eventsCache = null;      // cache wszystkich FigureMinted eventĂłw
 let   eventsCacheBlock = 0;    // blok przy ktĂłrym cache byĹ‚ zbudowany
 let   salesCache = null;       // cache Sold eventĂłw
 const CACHE_BLOCKS = 50;       // odĹ›wieĹĽaj cache co 50 blokĂłw (~2.5 min)
 
-// Publiczne RPC â€” uĹĽywane do queryFilter (omija limit MetaMask 50k blokĂłw)
+// Publiczne RPC - uĹĽywane do queryFilter (omija limit MetaMask 50k blokĂłw)
 const PUBLIC_RPCS = [
   'https://chiliz-rpc.publicnode.com',
   'https://rpc.chiliz.com',
@@ -1581,7 +1600,7 @@ async function getReadProvider(){
       return p;
     }catch(e){ console.warn('RPC unavailable:', url); }
   }
-  // Ostateczny fallback â€” MetaMask provider
+  // Ostateczny fallback - MetaMask provider
   return provider || new ethers.BrowserProvider(window.ethereum);
 }
 
@@ -1596,10 +1615,10 @@ async function rpcWithRetry(fn, retries=3, delay=500){
   }
 }
 
-// Cache z Vercel API â€” jeden fetch dla wszystkich userĂłw
+// Cache z Vercel API - jeden fetch dla wszystkich userĂłw
 let _apiCache = null;
 let _apiCacheTime = 0;
-const API_CACHE_MS = 60 * 1000; // 60 sekund â€” sync z Vercel cache
+const API_CACHE_MS = 60 * 1000; // 60 sekund - sync z Vercel cache
 
 async function fetchFromAPI(){
   if(_apiCache && Date.now() - _apiCacheTime < API_CACHE_MS) return _apiCache;
@@ -1617,7 +1636,7 @@ async function fetchFromAPI(){
 let _fetchMintEventsQueue = [];
 let _fetchingMintEvents = false;
 
-// Pobierz wszystkie FigureMinted eventy â€” najpierw z /api/events, fallback RPC
+// Pobierz wszystkie FigureMinted eventy - najpierw z /api/events, fallback RPC
 async function getAllMintEvents(c, p){
   const rp = await getReadProvider();
   const current = await rp.getBlockNumber();
@@ -1639,7 +1658,7 @@ async function getAllMintEvents(c, p){
   };
 
   try{
-    // PrĂłbuj API najpierw (Vercel cache â€” 1 request dla wszystkich userĂłw)
+    // PrĂłbuj API najpierw (Vercel cache - 1 request dla wszystkich userĂłw)
     const api = await fetchFromAPI();
     if(api && api.mints && api.mints.length > 0){
       let events = api.mints.map(m => ({
@@ -1661,7 +1680,7 @@ async function getAllMintEvents(c, p){
       return release(eventsCache);
     }
 
-    // Fallback â€” bezpoĹ›rednie RPC chunkami
+    // Fallback - bezpoĹ›rednie RPC chunkami
     const rc = new ethers.Contract(CONTRACT_ADDRESS, ABI, rp);
     const CHUNK = 20000;
     let events = [];
@@ -1694,7 +1713,7 @@ async function getAllMintEvents(c, p){
 }
 
 
-// Pobierz Sold eventy z cache â€” najpierw /api/events, fallback RPC
+// Pobierz Sold eventy z cache - najpierw /api/events, fallback RPC
 async function getSoldEvents(mk, p){
   if(salesCache) return salesCache;
 
@@ -1749,7 +1768,7 @@ async function connectWalletSilent(){
     address  = await signer.getAddress();
     contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
 
-    // WyczyĹ›Ä‡ cache â€” stare dane mogÄ… mieÄ‡ bĹ‚Ä™dnych wĹ‚aĹ›cicieli
+    // WyczyĹ›Ä‡ cache - stare dane mogÄ… mieÄ‡ bĹ‚Ä™dnych wĹ‚aĹ›cicieli
     eventsCache = null;
     _apiCache = null;
     salesCache = null;
@@ -1764,7 +1783,7 @@ async function connectWalletSilent(){
     document.getElementById('refLinkWrap').style.display = 'block';
     await updateStats();
     initMarket();
-    // Ĺaduj wszystko rĂłwnolegle â€” nie czekaj sekwencyjnie
+    // Ĺaduj wszystko rĂłwnolegle - nie czekaj sekwencyjnie
     loadCollection();
     loadTicker();
     loadMarket();
@@ -1777,7 +1796,7 @@ async function connectWalletSilent(){
 }
 
 async function connectWallet(){
-  if(!window.ethereum){showToast('Install MetaMask â€” metamask.io','err');return;}
+  if(!window.ethereum){showToast('Install MetaMask - metamask.io','err');return;}
   try{
     await window.ethereum.request({method:'eth_requestAccounts'});
     const cid=await window.ethereum.request({method:'eth_chainId'});
@@ -1801,7 +1820,7 @@ async function connectWallet(){
     address=await signer.getAddress();
     contract=new ethers.Contract(CONTRACT_ADDRESS,ABI,signer);
 
-    // WyczyĹ›Ä‡ cache â€” stare dane mogÄ… mieÄ‡ bĹ‚Ä™dnych wĹ‚aĹ›cicieli
+    // WyczyĹ›Ä‡ cache - stare dane mogÄ… mieÄ‡ bĹ‚Ä™dnych wĹ‚aĹ›cicieli
     eventsCache = null;
     _apiCache = null;
     salesCache = null;
@@ -1830,7 +1849,7 @@ async function connectWallet(){
     // Show referral notification if came via ref link
     const refParam = new URLSearchParams(window.location.search).get('ref');
     if(refParam && ethers.isAddress(refParam) && refParam.toLowerCase() !== address.toLowerCase()){
-      showToast(`Referral link active â€” ${refParam.slice(0,6)}...${refParam.slice(-4)} gets 2.5% bonus`, 'ok');
+      showToast(`Referral link active - ${refParam.slice(0,6)}...${refParam.slice(-4)} gets 2.5% bonus`, 'ok');
     }
     showToast('Wallet connected','ok');
 
@@ -2114,7 +2133,7 @@ async function loadCollection(){
     // SprawdĹş ile tokenĂłw powinno byÄ‡
     const totalMinted = Number(await contract.totalMinted());
 
-    // Pobierz eventy â€” z retry jeĹ›li liczba siÄ™ nie zgadza
+    // Pobierz eventy - z retry jeĹ›li liczba siÄ™ nie zgadza
     let events = await getAllMintEvents(contract, provider);
     if(events.length < totalMinted){
       console.warn(`loadCollection: got ${events.length} events but totalMinted=${totalMinted}, retrying...`);
@@ -2125,7 +2144,7 @@ async function loadCollection(){
     }
 
     // ĹšledĹş wĹ‚aĹ›ciciela przez Sold eventy
-    const ownerMap = {}; // tokenId â†’ owner
+    const ownerMap = {}; // tokenId -> owner
     events.forEach(ev => {
       ownerMap[Number(ev.args.tokenId)] = {
         owner: ev.args.owner.toLowerCase(),
@@ -2161,7 +2180,7 @@ async function loadCollection(){
     myFigures.sort((a,b)=>parseDNA(b.dna).weight-parseDNA(a.dna).weight);
     buildSquadFilters();
 
-    // Sync localListedFigures â€” only check tokens I own
+    // Sync localListedFigures - only check tokens I own
     localListedFigures.clear();
     if(MARKET_ADDRESS && address && signer && myFigures.length > 0){
       if(!marketContract) initMarket();
@@ -2230,7 +2249,7 @@ function renderCollection(){
     card.innerHTML=`<div class="fig-canvas"><div id="${cid}" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;overflow:hidden;"></div></div>
     <div class="fig-info">
       <div class="fig-name" style="font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${team}</div>
-      <div class="fig-id" style="font-size:10px;">#${String(tid).padStart(4,'0')} Â· ${pos}</div>
+      <div class="fig-id" style="font-size:10px;">#${String(tid).padStart(4,'0')} &middot; ${pos}</div>
       <div style="display:flex;align-items:center;justify-content:space-between;margin-top:4px;">
         <div class="fig-weight" style="font-size:12px;margin-top:0;white-space:nowrap;">&#9889; ${t.weight}<span style="font-size:10px;color:var(--text3);">/100</span></div>
         <span class="rarity-badge rb${t.rarity}">${rn}</span>
@@ -2244,7 +2263,7 @@ function renderCollection(){
     const pag=document.createElement('div');
     pag.style.cssText='grid-column:1/-1;display:flex;align-items:center;justify-content:center;gap:12px;padding:16px 0;';
     const squadTotal2=Math.ceil(filtered.length/SQUAD_PER_PAGE);
-    pag.innerHTML='<button onclick="squadPageChange(-1)" style="padding:6px 16px;background:var(--card);border:1px solid var(--border);color:var(--text2);border-radius:6px;cursor:pointer;font-family:Black Ops One,sans-serif;font-size:12px;" '+(squadPage===0?'disabled':'')+'>â† PREV</button><span style="font-size:12px;color:var(--text3);font-family:Share Tech Mono,monospace;">PAGE '+(squadPage+1)+' / '+squadTotal2+'</span><button onclick="squadPageChange(1)" style="padding:6px 16px;background:var(--card);border:1px solid var(--border);color:var(--text2);border-radius:6px;cursor:pointer;font-family:Black Ops One,sans-serif;font-size:12px;" '+(squadPage>=squadTotal2-1?'disabled':'')+'>NEXT â†’</button>';
+    pag.innerHTML='<button onclick="squadPageChange(-1)" style="padding:6px 16px;background:var(--card);border:1px solid var(--border);color:var(--text2);border-radius:6px;cursor:pointer;font-family:Black Ops One,sans-serif;font-size:12px;" '+(squadPage===0?'disabled':'')+'><- PREV</button><span style="font-size:12px;color:var(--text3);font-family:Share Tech Mono,monospace;">PAGE '+(squadPage+1)+' / '+squadTotal2+'</span><button onclick="squadPageChange(1)" style="padding:6px 16px;background:var(--card);border:1px solid var(--border);color:var(--text2);border-radius:6px;cursor:pointer;font-family:Black Ops One,sans-serif;font-size:12px;" '+(squadPage>=squadTotal2-1?'disabled':'')+'>NEXT -></button>';
     grid.appendChild(pag);
   }
 }
@@ -2265,7 +2284,7 @@ function openModal(tid,dna){
   const t=parseDNA(dna);
   const team=TEAMS[t.teamId%TEAMS.length];
   const pos=POSITION_NAMES[t.position]||'#'+t.position;
-  document.getElementById('modalTitle').textContent=`${team} Â· ${pos}`;
+  document.getElementById('modalTitle').textContent=`${team} - ${pos}`;
   const traits=[
     ['NATION',team],['POSITION',pos],['RARITY',RARITY_NAMES[t.rarity]],
     ['HAIR',HAIR_NAMES[t.hairStyle%8]],['SKIN',SKIN_NAMES[t.skinTone%6]],
@@ -2287,7 +2306,7 @@ function openModal(tid,dna){
     } else if(isListed){
       const myL=(allMarketListings||[]).find(l=>l.tokenId===Number(tid)&&l.seller&&l.seller.toLowerCase()===(address||"").toLowerCase());
       const cancelBtn=myL!==undefined?'<button onclick="doCancelListing('+myL.id+','+tid+')" style="width:100%;margin-top:6px;padding:8px;background:rgba(239,68,68,0.15);border:1px solid var(--red);color:var(--red);border-radius:6px;font-family:Black Ops One,sans-serif;font-size:13px;cursor:pointer;">CANCEL LISTING</button>':'';
-      listBtn.innerHTML='<div style="text-align:center;font-size:12px;color:var(--text3);letter-spacing:1px;padding:8px;">LISTED ON MARKET'+(myL?' Â· '+parseFloat(ethers.formatEther(myL.price)).toFixed(2)+' CHZ':'')+' </div>'+cancelBtn;
+      listBtn.innerHTML='<div style="text-align:center;font-size:12px;color:var(--text3);letter-spacing:1px;padding:8px;">LISTED ON MARKET'+(myL?' &middot; '+parseFloat(ethers.formatEther(myL.price)).toFixed(2)+' CHZ':'')+' </div>'+cancelBtn;
       listBtn.style.display='block';
     } else {
       listBtn.style.display = 'block';
@@ -2323,7 +2342,7 @@ function initHero(){
   // Desktop canvas
   const cv=document.getElementById('heroCanvas');
   if(cv && cv.clientWidth > 0) heroRen=new Figure3D(cv,randDna,true);
-  // Mobile canvas â€” ustaw jawny rozmiar przed inicjalizacjÄ…
+  // Mobile canvas - ustaw jawny rozmiar przed inicjalizacjÄ…
   const cvm=document.getElementById('heroCanvasMobile');
   if(cvm){
     cvm.width=110; cvm.height=140;
@@ -2402,7 +2421,7 @@ async function loadActivityFeed(){
     const filter = feedContract.filters.FigureMinted();
     const current = await feedProvider.getBlockNumber();
     const events = await feedContract.queryFilter(filter, Math.max(DEPLOY_BLOCK, current-2000), current);
-    if(events.length === 0){ feed.textContent = 'No mints yet â€” be the first!'; return; }
+    if(events.length === 0){ feed.textContent = 'No mints yet - be the first!'; return; }
     
     const items = events.slice(-20).reverse().map(ev=>{
       const dna = ev.args.dna;
@@ -2411,13 +2430,13 @@ async function loadActivityFeed(){
       const pos = POSITION_LABELS[t.position] || '#'+t.position;
       const rar = RARITY_LABELS[t.rarity];
       const addr = ev.args.owner.slice(0,6)+'...'+ev.args.owner.slice(-4);
-      return `\u26A1 ${addr} minted ${team} ${pos} \u2014 ${rar}`;
+      return `&#9889; ${addr} minted ${team} ${pos} - ${rar}`;
     });
     
     // Duplicate for infinite scroll
-    const joined = items.join('   Â·   ');
+    const joined = items.join('   &middot;   ');
     // Duplikuj dla infinite scroll
-    feed.innerHTML = '<span>' + joined + '   Â·   </span><span aria-hidden=true>' + joined + '   Â·   </span>';
+    feed.innerHTML = '<span>' + joined + '   &middot;   </span><span aria-hidden=true>' + joined + '   &middot;   </span>';
     // Ustaw animacjÄ™ na podstawie dĹ‚ugoĹ›ci
     const len = items.length;
     const duration = Math.max(20, len * 4);
@@ -2521,7 +2540,7 @@ function simParseDNA(n){
   return{teamId,pos,rarity,weight:w};
 }
 
-// parseDNABig â€” alias dla parseDNA (BigInt input), uĹĽywany w simulatorze
+// parseDNABig - alias dla parseDNA (BigInt input), uĹĽywany w simulatorze
 function parseDNABig(dna){
   const t = parseDNA(dna);
   return { teamId: t.teamId, rarity: t.rarity, weight: t.weight, pos: t.position };
@@ -2529,7 +2548,7 @@ function parseDNABig(dna){
 
 
 // ============================================================
-//  LIVE SIMULATOR â€” uĹĽywa rzeczywistych figurek z blockchaina
+//  LIVE SIMULATOR - uĹĽywa rzeczywistych figurek z blockchaina
 // ============================================================
 // ============================================================
 //  LIVE SIMULATOR
@@ -2577,8 +2596,8 @@ async function runLiveSim(){
     document.getElementById('simTopScore').textContent=figs[0]?.score.toFixed(1)||'0';
     document.getElementById('simWinners').textContent=winners.length;
     document.getElementById('simPrize1').textContent=winners[0]&&totalScore>0?Math.floor((winners[0].score/totalScore)*pool65).toLocaleString()+' CHZ':'0';
-    const simCountryEl=document.getElementById('simCountry'); if(simCountryEl) simCountryEl.textContent=perCountry>0?perCountry.toLocaleString()+' CHZ':'â€”';
-    const simLegEl=document.getElementById('simLeg'); if(simLegEl) simLegEl.textContent=perLeg>0?perLeg.toLocaleString()+' CHZ':'â€”';
+    const simCountryEl=document.getElementById('simCountry'); if(simCountryEl) simCountryEl.textContent=perCountry>0?perCountry.toLocaleString()+' CHZ':'-';
+    const simLegEl=document.getElementById('simLeg'); if(simLegEl) simLegEl.textContent=perLeg>0?perLeg.toLocaleString()+' CHZ':'-';
     const topEl=document.getElementById('simTop'); topEl.innerHTML='';
     const myTids=new Set(myFigures.map(x=>Number(x.tid)));
     figs.slice(0,10).forEach((f,i)=>{
@@ -2595,14 +2614,14 @@ async function runLiveSim(){
         `<span class="sim-name">${SIM_TEAMS[f.teamId]} <span style="font-size:11px;color:var(--text3);">${SIM_RARITY_NAMES[f.rarity]}</span>${isChamp?' &#127941;':''}${f.rarity===3?' &#9889;':''}${isMe?' <span style="color:var(--green);font-size:10px;">YOU</span>':''}</span>`+
         `<span style="font-size:11px;color:var(--text2);">W:${f.weight}</span>`+
         `<span style="font-size:11px;color:var(--text2);">${f.score.toFixed(1)}pts</span>`+
-        `<span class="sim-reward">${total>0?total.toLocaleString()+' CHZ':'â€”'}</span>`;
+        `<span class="sim-reward">${total>0?total.toLocaleString()+' CHZ':'-'}</span>`;
       topEl.appendChild(div);
     });
     const rd=winners.slice(0,20).map(f=>totalScore>0?Math.floor((f.score/totalScore)*pool65):0);
     const lb=winners.slice(0,20).map((_,i)=>`#${i+1}`);
     if(simChart) simChart.destroy();
     simChart=new Chart(document.getElementById('simChart'),{type:'bar',data:{labels:lb,datasets:[{label:'CHZ',data:rd,backgroundColor:'#00ff87',borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{ticks:{callback:v=>v.toLocaleString(),color:'#8892a4'},grid:{color:'rgba(255,255,255,0.05)'}},x:{ticks:{color:'#8892a4'},grid:{display:false}}}}});
-    showToast('Live sim: '+figs.length+' figures Â· '+legendaries.length+' Legendary Â· '+champCount+' countries','ok');
+    showToast('Live sim: '+figs.length+' figures - '+legendaries.length+' Legendary - '+champCount+' countries','ok');
   }catch(e){ showToast('Error: '+e.message,'err'); console.error(e); }
   btn.textContent='\u26A1 LIVE SIM'; btn.disabled=false;
 }
@@ -2631,8 +2650,8 @@ function runSimulator(){
   document.getElementById('simTopScore').textContent=figs[0]?.score.toFixed(1)||'0';
   document.getElementById('simWinners').textContent=winners.length;
   document.getElementById('simPrize1').textContent=winners[0]&&totalScore>0?Math.floor((winners[0].score/totalScore)*pool65).toLocaleString()+' CHZ':'0';
-  const simCountryEl=document.getElementById('simCountry'); if(simCountryEl) simCountryEl.textContent=perCountry>0?perCountry.toLocaleString()+' CHZ':'â€”';
-  const simLegEl=document.getElementById('simLeg'); if(simLegEl) simLegEl.textContent=perLeg>0?perLeg.toLocaleString()+' CHZ':'â€”';
+  const simCountryEl=document.getElementById('simCountry'); if(simCountryEl) simCountryEl.textContent=perCountry>0?perCountry.toLocaleString()+' CHZ':'-';
+  const simLegEl=document.getElementById('simLeg'); if(simLegEl) simLegEl.textContent=perLeg>0?perLeg.toLocaleString()+' CHZ':'-';
   const topEl=document.getElementById('simTop'); topEl.innerHTML='';
   figs.slice(0,10).forEach((f,i)=>{
     const r65=winners.includes(f)&&totalScore>0?Math.floor((f.score/totalScore)*pool65):0;
@@ -2647,7 +2666,7 @@ function runSimulator(){
       `<span style="font-size:11px;color:var(--text2);">W:${f.weight}</span>`+
       `<span style="font-size:11px;color:var(--text2);">${SIM_RESULT_NAMES[f.result]}</span>`+
       `<span style="font-size:11px;color:var(--text2);">${f.score.toFixed(1)}pts</span>`+
-      `<span class="sim-reward">${total>0?total.toLocaleString()+' CHZ':'â€”'}</span>`;
+      `<span class="sim-reward">${total>0?total.toLocaleString()+' CHZ':'-'}</span>`;
     topEl.appendChild(div);
   });
   const rd=winners.slice(0,20).map(f=>totalScore>0?Math.floor((f.score/totalScore)*pool65):0);
@@ -2855,7 +2874,7 @@ async function loadMarket() {
         </div>
         <div class="fig-info">
           <div class="fig-name" style="font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${team}</div>
-          <div class="fig-id" style="font-size:10px;">#${String(l.tokenId).padStart(4,'0')} Â· ${pos}</div>
+          <div class="fig-id" style="font-size:10px;">#${String(l.tokenId).padStart(4,'0')} &middot; ${pos}</div>
           <div style="display:flex;align-items:center;justify-content:space-between;margin-top:4px;">
             <div style="font-family:'Black Ops One',sans-serif;font-size:12px;color:var(--green);white-space:nowrap;">&#9889; ${t.weight}<span style="font-size:10px;color:var(--text3);">/100</span></div>
             <span class="rarity-badge rb${t.rarity}">${rn}</span>
@@ -2879,9 +2898,9 @@ async function loadMarket() {
       const pagDiv = document.createElement('div');
       pagDiv.style.cssText = 'display:flex;align-items:center;justify-content:center;gap:12px;padding:16px;grid-column:1/-1;';
       pagDiv.innerHTML =
-        `<button onclick="mkPageChange(-1)" style="padding:6px 16px;background:var(--card);border:1px solid var(--border);color:var(--text2);border-radius:6px;cursor:pointer;font-family:'Black Ops One',sans-serif;font-size:12px;" ${mkPage===0?'disabled':''}>â† PREV</button>` +
-        `<span style="font-size:12px;color:var(--text3);font-family:'Share Tech Mono',monospace;">PAGE ${mkPage+1} / ${mkTotal} Â· ${filtered.length} listings</span>` +
-        `<button onclick="mkPageChange(1)" style="padding:6px 16px;background:var(--card);border:1px solid var(--border);color:var(--text2);border-radius:6px;cursor:pointer;font-family:'Black Ops One',sans-serif;font-size:12px;" ${mkPage>=mkTotal-1?'disabled':''}>NEXT â†’</button>`;
+        `<button onclick="mkPageChange(-1)" style="padding:6px 16px;background:var(--card);border:1px solid var(--border);color:var(--text2);border-radius:6px;cursor:pointer;font-family:'Black Ops One',sans-serif;font-size:12px;" ${mkPage===0?'disabled':''}><- PREV</button>` +
+        `<span style="font-size:12px;color:var(--text3);font-family:'Share Tech Mono',monospace;">PAGE ${mkPage+1} / ${mkTotal} &middot; ${filtered.length} listings</span>` +
+        `<button onclick="mkPageChange(1)" style="padding:6px 16px;background:var(--card);border:1px solid var(--border);color:var(--text2);border-radius:6px;cursor:pointer;font-family:'Black Ops One',sans-serif;font-size:12px;" ${mkPage>=mkTotal-1?'disabled':''}>NEXT -></button>`;
       list.appendChild(pagDiv);
     }
   } catch(err) {
@@ -2904,7 +2923,7 @@ function openListModal(tid, dna) {
   const t = parseDNA(dna);
   const team = TEAMS[t.teamId % TEAMS.length];
   const pos  = POSITION_NAMES[t.position] || '#' + t.position;
-  document.getElementById('listFigureName').textContent = `${team} Â· ${pos} Â· ${RARITY_NAMES[t.rarity]} Â· W:${t.weight}`;
+  document.getElementById('listFigureName').textContent = `${team} - ${pos} - ${RARITY_NAMES[t.rarity]} - W:${t.weight}`;
   document.getElementById('listPriceInput').value = '';
   document.getElementById('listModal').classList.add('show');
 }
@@ -2947,7 +2966,7 @@ async function doBuyFigure(listingId, priceEth) {
     showToast('Buying...', 'ok');
     await tx.wait();
     showToast('Figure purchased! đźŽ‰', 'ok');
-    // WyczyĹ›Ä‡ wszystkie cache â€” nowa sprzedaĹĽ musi byÄ‡ pobrana od nowa
+    // WyczyĹ›Ä‡ wszystkie cache - nowa sprzedaĹĽ musi byÄ‡ pobrana od nowa
     salesCache = null;
     eventsCache = null;
     _apiCache = null;
@@ -3027,7 +3046,7 @@ async function loadClaimSection(){
           document.getElementById('claimBox').innerHTML = `
             <div class="claim-ended" style="color:var(--red)">âš ď¸Ź TOURNAMENT NOT FINALIZED</div>
             <div class="claim-amount">${depositEth}</div>
-            <div class="claim-sub">CHZ Â· REFUND AVAILABLE</div>
+            <div class="claim-sub">CHZ &middot; REFUND AVAILABLE</div>
             <button class="btn-claim" style="background:linear-gradient(135deg,var(--red),#cc0000)" onclick="doRefund()">CLAIM REFUND</button>`;
         } else {
           document.getElementById('claimBox').innerHTML = `
@@ -3045,7 +3064,7 @@ async function loadClaimSection(){
       return;
     }
 
-    // Tournament ended â€” check if player has proof
+    // Tournament ended - check if player has proof
     const addrLower = address.toLowerCase();
     const proof = MERKLE_PROOFS[addrLower];
 
@@ -3072,7 +3091,7 @@ async function loadClaimSection(){
     document.getElementById('claimBox').innerHTML = `
       <div class="claim-ended">&#127942; YOU WON A REWARD</div>
       <div class="claim-amount">${amountEth}</div>
-      <div class="claim-sub">CHZ Â· READY TO CLAIM</div>
+      <div class="claim-sub">CHZ &middot; READY TO CLAIM</div>
       <button class="btn-claim" id="claimBtn" onclick="doClaim()">CLAIM REWARD</button>`;
 
   }catch(e){ console.error('loadClaimSection:', e); }
@@ -3209,12 +3228,12 @@ function renderLeaderboard(){
       <td class="lb-mini"><div id="${canvasId}" style="width:60px;height:60px;display:flex;align-items:center;justify-content:center;"></div></td>
       <td class="lb-info">
         <div class="lb-name">${team} ${isMe?'<span style="color:var(--green);font-size:10px;">YOU</span>':''}</div>
-        <div class="lb-sub">${pos} Â· #${String(tid).padStart(4,'0')}${isTop?'<span class="top10-badge">TOP 10%</span>':''}</div>
+        <div class="lb-sub">${pos} &middot; #${String(tid).padStart(4,'0')}${isTop?'<span class="top10-badge">TOP 10%</span>':''}</div>
       </td>
       <td class="lb-rarity"><span style="display:inline-block;padding:3px 8px;border-radius:4px;font-size:10px;font-weight:700;letter-spacing:1px;background:${['rgba(107,114,128,0.25)','rgba(59,130,246,0.2)','rgba(168,85,247,0.2)','rgba(255,201,64,0.2)'][t.rarity]};color:${['#9ca3af','#60a5fa','#c084fc','#fbbf24'][t.rarity]};border:1px solid ${['rgba(107,114,128,0.35)','rgba(59,130,246,0.4)','rgba(168,85,247,0.4)','rgba(255,201,64,0.5)'][t.rarity]};">${rn}</span></td>
       <td class="lb-owner">${owner.slice(0,6)}...${owner.slice(-4)}</td>
       <td class="lb-weight ${wCls}">${t.weight}<span style="font-size:11px;color:var(--text3)">/100</span></td>
-      <td style="text-align:right;padding:12px 8px;font-size:12px;color:var(--text3);font-family:'Share Tech Mono',monospace;">${t.weight} Ă— ?</td>
+      <td style="text-align:right;padding:12px 8px;font-size:12px;color:var(--text3);font-family:'Share Tech Mono',monospace;">${t.weight} x ?</td>
     </tr>`;
   });
 
@@ -3226,16 +3245,16 @@ function renderLeaderboard(){
   const fn = document.createElement('div');
   fn.style.cssText='padding:4px 0 12px;';
   fn.className='sec-sub';
-  fn.textContent='* Score = Weight Ă— WC Multiplier (calculated after tournament)';
+  fn.textContent='* Score = Weight x WC Multiplier (calculated after tournament)';
   wrap.appendChild(fn);
 
   if(allFigures.length > LB_PER_PAGE){
     const pagDiv = document.createElement('div');
     pagDiv.style.cssText='display:flex;align-items:center;justify-content:center;gap:12px;padding:16px;';
     pagDiv.innerHTML=`
-      <button onclick="lbPageChange(-1)" style="padding:6px 16px;background:var(--card);border:1px solid var(--border);color:var(--text2);border-radius:6px;cursor:pointer;font-family:'Black Ops One',sans-serif;font-size:12px;" ${lbPage===0?'disabled':''}>â† PREV</button>
+      <button onclick="lbPageChange(-1)" style="padding:6px 16px;background:var(--card);border:1px solid var(--border);color:var(--text2);border-radius:6px;cursor:pointer;font-family:'Black Ops One',sans-serif;font-size:12px;" ${lbPage===0?'disabled':''}><- PREV</button>
       <span style="font-size:12px;color:var(--text3);font-family:'Share Tech Mono',monospace;">PAGE ${lbPage+1} / ${pageTotal}</span>
-      <button onclick="lbPageChange(1)" style="padding:6px 16px;background:var(--card);border:1px solid var(--border);color:var(--text2);border-radius:6px;cursor:pointer;font-family:'Black Ops One',sans-serif;font-size:12px;" ${lbPage>=pageTotal-1?'disabled':''}>NEXT â†’</button>
+      <button onclick="lbPageChange(1)" style="padding:6px 16px;background:var(--card);border:1px solid var(--border);color:var(--text2);border-radius:6px;cursor:pointer;font-family:'Black Ops One',sans-serif;font-size:12px;" ${lbPage>=pageTotal-1?'disabled':''}>NEXT -></button>
     `;
     wrap.appendChild(pagDiv);
   }
@@ -3309,7 +3328,7 @@ async function fetchInitialPrice(){
 // ============================================================
 const POSITION_SHORT = {1:'GK',2:'RB',3:'LB',4:'CB',5:'CB2',6:'CDM',7:'RW',8:'MID',9:'ST',10:'#10',11:'LW'};
 
-// WC 2026 grupy â€” 4 druzyny per grupa (12 grup A-L)
+// WC 2026 grupy - 4 druzyny per grupa (12 grup A-L)
 const WC_GROUPS = [
   { label:'GROUP A', teams:[0,1,2,3] },
   { label:'GROUP B', teams:[4,5,6,7] },
@@ -3405,7 +3424,7 @@ async function loadAlbum(){
       const nqMyPositions = myAddr && wallets[myAddr] && wallets[myAddr][NATION_QUEST.teamId]
         ? wallets[myAddr][NATION_QUEST.teamId] : new Set();
       const nqMyCount = nqMyPositions.size;
-      const nqLeader = nqEntry ? `${nqEntry.count}/11 â€” ${nqEntry.wallet.slice(0,6)}â€¦${nqEntry.wallet.slice(-4)}` : 'No one yet';
+      const nqLeader = nqEntry ? `${nqEntry.count}/11 - ${nqEntry.wallet.slice(0,6)}...${nqEntry.wallet.slice(-4)}` : 'No one yet';
       const banner = document.createElement('div');
       banner.style.cssText = 'background:linear-gradient(135deg,rgba(178,34,52,0.15),rgba(0,40,104,0.15));border:1px solid rgba(178,34,52,0.4);border-radius:12px;padding:16px 20px;margin-bottom:20px;';
       banner.innerHTML =
@@ -3420,14 +3439,14 @@ async function loadAlbum(){
             '<rect y="16.92" width="28" height="1.54" fill="#fff"/>' +
             '<rect width="12" height="10.77" fill="#3C3B6E"/>' +
           '</svg>' +
-          '<div style="font-family:\'Black Ops One\',sans-serif;font-size:16px;flex:1;">NATION QUEST â€” <span style="color:#ffc940;">UNITED STATES</span></div>' +
+          '<div style="font-family:\'Black Ops One\',sans-serif;font-size:16px;flex:1;">NATION QUEST &mdash; <span style="color:#ffc940;">UNITED STATES</span></div>' +
           '<div style="font-family:\'Black Ops One\',sans-serif;font-size:18px;color:#ffc940;">1000 CHZ</div>' +
         '</div>' +
-        '<div style="font-size:13px;color:var(--text2);margin-bottom:10px;line-height:1.5;">First wallet to collect all <strong style="color:#dde4f0;">11 USA positions</strong> wins 1000 CHZ. Mint for 10 CHZ â€” if you land a rare position, list it for 500 CHZ. The collector racing to win will buy it.</div>' +
+        '<div style="font-size:13px;color:var(--text2);margin-bottom:10px;line-height:1.5;">First wallet to collect all <strong style="color:#dde4f0;">11 USA positions</strong> wins 1000 CHZ. Mint for 10 CHZ &mdash; if you land a rare position, list it for 500 CHZ. The collector racing to win will buy it.</div>' +
         '<div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">' +
           '<div style="font-size:12px;color:var(--text3);">&#127942; Leader: <span style="color:var(--text2);">' + nqLeader + '</span></div>' +
           (nqMyCount > 0 ? '<div style="font-size:12px;color:var(--green);">You: ' + nqMyCount + '/11</div>' : '') +
-          '<a href="/nation-quest" style="font-size:11px;color:var(--text3);margin-left:auto;letter-spacing:1px;text-decoration:none;">RULES â†—</a>' +
+          '<a href="/nation-quest" style="font-size:11px;color:var(--text3);margin-left:auto;letter-spacing:1px;text-decoration:none;">RULES</a>' +
         '</div>';
       grid.appendChild(banner);
     }
@@ -3504,14 +3523,14 @@ async function loadAlbum(){
             if(has){
               const mine = myByPos[p];
               if(mine)
-                return '<span class="album-sell-pos" onclick="albumSell('+mine.tid+','+teamId+','+p+')" title="'+(POSITION_NAMES[p]||p)+' W:'+mine.weight+' â€” sell">'+(POSITION_SHORT[p]||p)+'</span>';
+                return '<span class="album-sell-pos" onclick="albumSell('+mine.tid+','+teamId+','+p+')" title="'+(POSITION_NAMES[p]||p)+' W:'+mine.weight+' - sell">'+(POSITION_SHORT[p]||p)+'</span>';
               const s='display:inline-block;width:18px;height:18px;line-height:18px;text-align:center;border-radius:3px;font-size:9px;font-family:Share Tech Mono,monospace;background:'+color+'22;color:'+color+';border:1px solid '+color+'44;margin:1px;';
               return '<span style="'+s+'" title="'+(POSITION_NAMES[p]||p)+'">'+(POSITION_SHORT[p]||p)+'</span>';
             }
             const mkt = marketByPos[p];
             if(mkt){
               const ps=mkt.price>=1000?(mkt.price/1000).toFixed(1).replace(/\.0$/,'')+'K':mkt.price%1===0?mkt.price:mkt.price.toFixed(1);
-              return '<span onclick="albumBuy('+mkt.listingId+',\''+ethers.formatEther(mkt.priceWei)+'\')" title="'+(POSITION_NAMES[p]||p)+' â€” '+ps+' CHZ" class="album-mkt-pos" style="display:inline-block;width:18px;height:18px;line-height:18px;text-align:center;border-radius:3px;font-size:9px;font-family:Share Tech Mono,monospace;background:rgba(255,201,64,0.12);color:var(--gold);border:1px solid rgba(255,201,64,0.4);margin:1px;cursor:pointer;">'+(POSITION_SHORT[p]||p)+'</span>';
+              return '<span onclick="albumBuy('+mkt.listingId+',\''+ethers.formatEther(mkt.priceWei)+'\')" title="'+(POSITION_NAMES[p]||p)+' - '+ps+' CHZ" class="album-mkt-pos" style="display:inline-block;width:18px;height:18px;line-height:18px;text-align:center;border-radius:3px;font-size:9px;font-family:Share Tech Mono,monospace;background:rgba(255,201,64,0.12);color:var(--gold);border:1px solid rgba(255,201,64,0.4);margin:1px;cursor:pointer;">'+(POSITION_SHORT[p]||p)+'</span>';
             }
             const s='display:inline-block;width:18px;height:18px;line-height:18px;text-align:center;border-radius:3px;font-size:9px;font-family:Share Tech Mono,monospace;background:rgba(255,255,255,0.02);color:var(--text3);border:1px solid rgba(255,255,255,0.04);margin:1px;opacity:0.4;';
             return '<span style="'+s+'" title="'+(POSITION_NAMES[p]||p)+'">'+(POSITION_SHORT[p]||p)+'</span>';
@@ -3537,7 +3556,7 @@ async function loadAlbum(){
               '<div style="height:100%;width:'+pct+'%;background:'+color+';border-radius:2px;"></div>' +
             '</div>' +
             '<div style="margin-bottom:4px;line-height:1.3;">'+posHtml+'</div>' +
-            '<div style="font-size:8px;color:var(--text3);font-family:Share Tech Mono,monospace;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">đź‘‘ '+wallet.slice(0,6)+'\u2026'+wallet.slice(-4)+'</div>';
+            '<div style="font-size:8px;color:var(--text3);font-family:Share Tech Mono,monospace;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">LEAD '+wallet.slice(0,6)+'...'+wallet.slice(-4)+'</div>';
         }
         row.appendChild(card);
       });
@@ -3554,15 +3573,15 @@ async function loadAlbum(){
   const legend = document.createElement('div');
   legend.style.cssText = 'display:flex;gap:12px;flex-wrap:wrap;margin-top:8px;padding:8px 4px;font-size:10px;color:var(--text3);font-family:Share Tech Mono,monospace;';
   legend.innerHTML =
-    '<span style="display:flex;align-items:center;gap:4px;"><span style="display:inline-block;width:14px;height:14px;border-radius:2px;background:rgba(0,255,135,0.15);border:1px solid rgba(0,255,135,0.5);"></span> yours â€” sell</span>' +
+    '<span style="display:flex;align-items:center;gap:4px;"><span style="display:inline-block;width:14px;height:14px;border-radius:2px;background:rgba(0,255,135,0.15);border:1px solid rgba(0,255,135,0.5);"></span> yours - sell</span>' +
     '<span style="display:flex;align-items:center;gap:4px;"><span style="display:inline-block;width:14px;height:14px;border-radius:2px;background:rgba(0,255,135,0.08);border:1px solid rgba(0,255,135,0.2);"></span> collected</span>' +
-    '<span style="display:flex;align-items:center;gap:4px;"><span style="display:inline-block;width:14px;height:14px;border-radius:2px;background:rgba(255,201,64,0.12);border:1px solid rgba(255,201,64,0.4);"></span> on market â€” buy</span>' +
+    '<span style="display:flex;align-items:center;gap:4px;"><span style="display:inline-block;width:14px;height:14px;border-radius:2px;background:rgba(255,201,64,0.12);border:1px solid rgba(255,201,64,0.4);"></span> on market - buy</span>' +
     '<span style="display:flex;align-items:center;gap:4px;"><span style="display:inline-block;width:14px;height:14px;border-radius:2px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);opacity:0.5;"></span> not minted</span>' +
     '<div style="width:100%;margin-top:6px;padding-top:6px;border-top:1px solid var(--border);display:flex;gap:14px;flex-wrap:wrap;font-size:10px;">' +
-    '<span><span style="color:var(--green);font-weight:700;">â– </span> 1â€“5/11</span>' +
-    '<span><span style="color:var(--blue);font-weight:700;">â– </span> 6â€“8/11</span>' +
-    '<span><span style="color:#c084fc;font-weight:700;">â– </span> 9â€“10/11 almost!</span>' +
-    '<span><span style="color:var(--gold);font-weight:700;">â– </span> 11/11 complete</span>' +
+    '<span><span style="color:var(--green);font-weight:700;">&#9632;</span> 1-5/11</span>' +
+    '<span><span style="color:var(--blue);font-weight:700;">&#9632;</span> 6-8/11</span>' +
+    '<span><span style="color:#c084fc;font-weight:700;">&#9632;</span> 9-10/11 almost!</span>' +
+    '<span><span style="color:var(--gold);font-weight:700;">&#9632;</span> 11/11 complete</span>' +
     '</div>';
   grid.appendChild(legend);
   // Powiadom ĹĽe album siÄ™ zaĹ‚adowaĹ‚
@@ -3574,11 +3593,11 @@ let _albumSellToken = null;
 function albumSell(tid, teamId, position){
   if(!marketContract){ showToast('Connect wallet first','err'); return; }
   const fig = myFigures.find(f => f.tid === tid);
-  if(!fig){ showToast('Figure not found in squad â€” refresh','err'); console.warn('albumSell: tid not in myFigures:', tid, 'myFigures tids:', myFigures.map(f=>f.tid)); return; }
+  if(!fig){ showToast('Figure not found in squad - refresh','err'); console.warn('albumSell: tid not in myFigures:', tid, 'myFigures tids:', myFigures.map(f=>f.tid)); return; }
   const t = parseDNA(fig.dna);
   const team = TEAMS[t.teamId % TEAMS.length];
   const pos = POSITION_NAMES[t.position] || '#'+t.position;
-  document.getElementById('albumSellName').textContent = `${team} Â· ${pos} Â· ${RARITY_NAMES[t.rarity]} Â· W:${t.weight}`;
+  document.getElementById('albumSellName').textContent = `${team} - ${pos} - ${RARITY_NAMES[t.rarity]} - W:${t.weight}`;
   document.getElementById('albumSellSvg').innerHTML = makeFigureSVG(fig.dna, 80);
   document.getElementById('albumSellPrice').value = '';
   document.getElementById('albumSellConfirmBtn').disabled = false;
@@ -3636,7 +3655,7 @@ function openMintSuccess(tid, dna){
   const rarName = RARITY_NAMES[t.rarity];
   const rarColor = ['var(--text2)','var(--blue)','#c084fc','var(--gold)'][t.rarity];
 
-  document.getElementById('mintPopupName').textContent = team + ' Â· ' + pos;
+  document.getElementById('mintPopupName').textContent = team + ' - ' + pos;
   document.getElementById('mintPopupSvg').innerHTML = makeFigureSVG(dna, 100);
 
   const stats = [
@@ -3690,7 +3709,7 @@ async function albumBuy(listingId, priceEth){
   _albumBuyListing = null;
 
   try{
-    // Pobierz listing LIVE z kontraktu â€” ĹĽadnych cache
+    // Pobierz listing LIVE z kontraktu - ĹĽadnych cache
     const l = await marketContract.getListing(listingId);
     const seller = String(l[0]);
     const tokenId = Number(l[1]);
@@ -3713,18 +3732,18 @@ async function albumBuy(listingId, priceEth){
     const priceStr = priceChz >= 1000 ? (priceChz/1000).toFixed(1).replace(/\.0$/,'')+'K' : priceChz.toFixed(priceChz < 10 ? 2 : 0);
 
     // WypeĹ‚nij popup zweryfikowanymi danymi
-    document.getElementById('buyFigureName').textContent = `${team} Â· ${pos} Â· ${RARITY_NAMES[t.rarity]} Â· W:${t.weight}`;
+    document.getElementById('buyFigureName').textContent = `${team} - ${pos} - ${RARITY_NAMES[t.rarity]} - W:${t.weight}`;
     document.getElementById('buyFigureSvg').innerHTML = makeFigureSVG(dna, 80);
     document.getElementById('buyPrice').textContent = priceStr;
-    document.getElementById('buyPriceUsd').textContent = `Token #${String(tokenId).padStart(4,'0')} Â· Seller: ${seller.slice(0,6)}â€¦${seller.slice(-4)}`;
+    document.getElementById('buyPriceUsd').textContent = `Token #${String(tokenId).padStart(4,'0')} - Seller: ${seller.slice(0,6)}...${seller.slice(-4)}`;
 
-    // Zapisz zweryfikowane dane â€” uĹĽywamy price z kontraktu, nie z cache
+    // Zapisz zweryfikowane dane - uĹĽywamy price z kontraktu, nie z cache
     _albumBuyListing = { listingId, priceEth: ethers.formatEther(price) };
     document.getElementById('buyConfirmBtn').disabled = false;
     document.getElementById('buyConfirmBtn').textContent = 'BUY NOW';
 
   }catch(e){
-    showToast('Failed to load listing â€” try again','err');
+    showToast('Failed to load listing - try again','err');
     closeBuyModal();
     console.error('albumBuy fetch error:', e);
   }
@@ -3767,7 +3786,7 @@ window.addEventListener('load', async () => {
       }
     }catch(e){}
   }
-  // ObsĹ‚uga #hash w URL â€” scrolluj po zaĹ‚adowaniu danych
+  // ObsĹ‚uga #hash w URL - scrolluj po zaĹ‚adowaniu danych
   if(location.hash){
     const targetId = location.hash.slice(1);
     if(targetId === 'album'){
@@ -3807,46 +3826,46 @@ window.addEventListener('load', async () => {
   <!-- TAB: HOW IT WORKS -->
   <div id="htab-content-mechanics">
     <div class="how-grid" style="grid-template-columns:repeat(2,1fr);">
-      <div class="how-card"><div class="how-num">01</div><div class="how-title">MINT A FIGURE</div><div class="how-desc">Pay in CHZ and receive a unique generative football player. Country, position, rarity and accessories are all encoded in DNA on-chain. 95% of every mint goes to the prize vault. Each figure is a unique NFT â€” no two are alike.</div></div>
-      <div class="how-card"><div class="how-num">02</div><div class="how-title">TRADE ON MARKET</div><div class="how-desc">All figures are tradeable on our built-in marketplace. Got a weak figure? Sell it. Want a country you believe in? Buy it. Prices rise as teams advance â€” a France figure is worth more after every win. 5% royalty goes back to the prize pool.</div></div>
+      <div class="how-card"><div class="how-num">01</div><div class="how-title">MINT A FIGURE</div><div class="how-desc">Pay in CHZ and receive a unique generative football player. Country, position, rarity and accessories are all encoded in DNA on-chain. 95% of every mint goes to the prize vault. Each figure is a unique NFT - no two are alike.</div></div>
+      <div class="how-card"><div class="how-num">02</div><div class="how-title">TRADE ON MARKET</div><div class="how-desc">All figures are tradeable on our built-in marketplace. Got a weak figure? Sell it. Want a country you believe in? Buy it. Prices rise as teams advance - a France figure is worth more after every win. 5% royalty goes back to the prize pool.</div></div>
       <div class="how-card"><div class="how-num">03</div><div class="how-title">WATCH THE WORLD CUP</div><div class="how-desc">
-Every match matters. Your score = figure weight Ă— country multiplier:<br><br>
+Every match matters. Your score = figure weight x country multiplier:<br><br>
 <span style="color:var(--gold);font-weight:700">&#127942; Champion &times; 5.0</span><br>
-<span style="color:var(--gold)">đźĄ Finalist Ă— 3.0</span><br>
-<span style="color:var(--cyan)">Semi-final Ă— 2.0</span><br>
-<span style="color:var(--cyan)">Quarter-final Ă— 1.5</span><br>
-<span style="color:var(--text2)">Round of 16 Ă— 1.2</span><br>
-<span style="color:var(--text2)">Round of 32 Ă— 1.0</span><br>
-<span style="color:var(--text3)">Group stage Ă— 0</span><br><br>
-Knowledge beats luck â€” pick the right nation!
+<span style="color:var(--gold)">đźĄ Finalist x 3.0</span><br>
+<span style="color:var(--cyan)">Semi-final x 2.0</span><br>
+<span style="color:var(--cyan)">Quarter-final x 1.5</span><br>
+<span style="color:var(--text2)">Round of 16 x 1.2</span><br>
+<span style="color:var(--text2)">Round of 32 x 1.0</span><br>
+<span style="color:var(--text3)">Group stage x 0</span><br><br>
+Knowledge beats luck - pick the right nation!
 </div></div>
-      <div class="how-card"><div class="how-num">04</div><div class="how-title">MORE FIGURES = MORE REWARDS</div><div class="how-desc">Each figure earns rewards independently. If you hold multiple figures from the same winning country, each one that lands in the TOP 10% earns its own share of the prize pool. A player with 3 Epic France figures wins 3Ă— more than a player with 1.</div></div>
+      <div class="how-card"><div class="how-num">04</div><div class="how-title">MORE FIGURES = MORE REWARDS</div><div class="how-desc">Each figure earns rewards independently. If you hold multiple figures from the same winning country, each one that lands in the TOP 10% earns its own share of the prize pool. A player with 3 Epic France figures wins 3x more than a player with 1.</div></div>
       <div class="how-card" style="border-color:rgba(0,255,135,0.2);background:linear-gradient(135deg,rgba(0,255,135,0.05),var(--card));">
         <div class="how-num">05</div>
         <div class="how-title">3-LAYER REWARD SYSTEM</div>
-        <div class="how-desc" style="margin-bottom:12px;">The prize pool is split 3 ways â€” every figure has a chance:</div>
+        <div class="how-desc" style="margin-bottom:12px;">The prize pool is split 3 ways - every figure has a chance:</div>
         <div style="display:flex;flex-direction:column;gap:8px;">
           <div style="padding:10px 14px;background:rgba(0,255,135,0.07);border:1px solid rgba(0,255,135,0.2);border-radius:8px;">
-            <div style="font-family:'Black Ops One',sans-serif;font-size:13px;color:var(--green);">65% â€” TOP 10% GLOBALLY</div>
-            <div style="font-size:12px;color:var(--text2);margin-top:3px;">Weight Ă— WC Multiplier Â· Strongest figures from winning countries</div>
+            <div style="font-family:'Black Ops One',sans-serif;font-size:13px;color:var(--green);">65% - TOP 10% GLOBALLY</div>
+            <div style="font-size:12px;color:var(--text2);margin-top:3px;">Weight x WC Multiplier - Strongest figures from winning countries</div>
           </div>
           <div style="padding:10px 14px;background:rgba(245,166,35,0.07);border:1px solid rgba(245,166,35,0.2);border-radius:8px;">
             <div style="font-family:'Black Ops One',sans-serif;font-size:13px;color:var(--gold);">25% &mdash; COUNTRY CHAMPION &#127942;</div>
-            <div style="font-size:12px;color:var(--text2);margin-top:3px;">Best figure of each country wins â€” 48 countries = 48 winners<br>Even if your country exits in the group stage!</div>
+            <div style="font-size:12px;color:var(--text2);margin-top:3px;">Best figure of each country wins - 48 countries = 48 winners<br>Even if your country exits in the group stage!</div>
           </div>
           <div style="padding:10px 14px;background:rgba(168,85,247,0.07);border:1px solid rgba(168,85,247,0.2);border-radius:8px;">
             <div style="font-family:'Black Ops One',sans-serif;font-size:13px;color:#c084fc;">10% &mdash; LEGENDARY JACKPOT &#9889;</div>
-            <div style="font-size:12px;color:var(--text2);margin-top:3px;">All Legendary figures split this pool equally â€” the rarest cards rewarded</div>
+            <div style="font-size:12px;color:var(--text2);margin-top:3px;">All Legendary figures split this pool equally - the rarest cards rewarded</div>
           </div>
         </div>
       </div>
-      <div class="how-card"><div class="how-num">06</div><div class="how-title">CLAIM YOUR PRIZE</div><div class="how-desc">After the final on July 19, scores are calculated across all 3 layers. Claim directly to your wallet in CHZ â€” no intermediary, smart contract handles everything.</div></div>
+      <div class="how-card"><div class="how-num">06</div><div class="how-title">CLAIM YOUR PRIZE</div><div class="how-desc">After the final on July 19, scores are calculated across all 3 layers. Claim directly to your wallet in CHZ - no intermediary, smart contract handles everything.</div></div>
     </div>
   </div>
 
   <!-- TAB: RARITY -->
   <div id="htab-content-rarity" style="display:none;">
-    <div class="sec-sub" style="margin-bottom:16px;">MAX WEIGHT = 100 PTS (#10) Â· 102 PTS (#1 GOALKEEPER)</div>
+    <div class="sec-sub" style="margin-bottom:16px;">MAX WEIGHT = 100 PTS (#10) - 102 PTS (#1 GOALKEEPER)</div>
     <div class="rar-grid">
       <div class="rar-card r3"><div class="rar-name r3">LEGENDARY</div><div class="rar-pct" style="color:var(--gold)">1%</div><div style="font-size:11px;color:var(--text3);margin-bottom:6px;">chance per mint</div><div class="rar-weight">Base weight: 82</div></div>
       <div class="rar-card r2"><div class="rar-name r2">EPIC</div><div class="rar-pct" style="color:var(--purple)">9%</div><div style="font-size:11px;color:var(--text3);margin-bottom:6px;">chance per mint</div><div class="rar-weight">Base weight: 36</div></div>
@@ -3864,12 +3883,12 @@ Knowledge beats luck â€” pick the right nation!
       </div>
       <div style="font-size:13px;color:var(--text3);line-height:1.8;">
         <span style="color:var(--gold)">Example:</span> Legendary #10 + Golden Boots + Tattoo + Earring + Headband = <span style="color:var(--green);font-weight:700;">100 pts</span><br>
-        <span style="color:var(--text3)">Score = Weight Ă— WC Multiplier Â· Top 10% split the prize pool</span>
+        <span style="color:var(--text3)">Score = Weight x WC Multiplier - Top 10% split the prize pool</span>
       </div>
       <div style="margin-top:12px;background:rgba(0,255,135,0.06);border:1px solid rgba(0,255,135,0.2);border-radius:8px;padding:12px 14px;font-size:14px;line-height:1.7;">
         đź’ˇ <span style="color:var(--green);font-weight:700;">Even a COMMON figure can win the prize pool.</span><br>
-        <span style="color:var(--text2)">A Common figure (10 pts) from the Champion nation scores <strong style="color:var(--green)">10 Ă— 5.0 = 50 pts</strong>.<br>
-        A Legendary figure (82 pts) from a team eliminated in the group stage scores <strong style="color:var(--red)">82 Ă— 0 = 0 pts</strong>.<br>
+        <span style="color:var(--text2)">A Common figure (10 pts) from the Champion nation scores <strong style="color:var(--green)">10 x 5.0 = 50 pts</strong>.<br>
+        A Legendary figure (82 pts) from a team eliminated in the group stage scores <strong style="color:var(--red)">82 x 0 = 0 pts</strong>.<br>
         Picking the right country matters more than rarity.</span>
       </div>
     </div>
@@ -3877,41 +3896,41 @@ Knowledge beats luck â€” pick the right nation!
 
   <!-- TAB: REAL EXAMPLE -->
   <div id="htab-content-example" style="display:none;">
-    <div class="sec-sub" style="margin-bottom:16px;">FROM MINT TO PRIZE Â· 3-LAYER REWARDS</div>
+    <div class="sec-sub" style="margin-bottom:16px;">FROM MINT TO PRIZE - 3-LAYER REWARDS</div>
     <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;">
       <div style="display:grid;grid-template-columns:auto 1fr;gap:0;border-bottom:1px solid var(--border);">
         <div style="background:rgba(0,255,135,0.08);padding:24px 28px;display:flex;align-items:center;justify-content:center;min-width:80px;"><span style="font-family:'Black Ops One',sans-serif;font-size:28px;color:var(--green);">1</span></div>
         <div style="padding:20px 24px;">
           <div style="font-family:'Black Ops One',sans-serif;font-size:16px;margin-bottom:6px;">YOU MINT A FIGURE</div>
-          <div style="font-size:15px;color:var(--text2);line-height:1.7;">You pay <span style="color:var(--gold);font-weight:700;">10 CHZ</span> â†’ get a random figure.<br>Result: <span style="color:var(--green);">France Â· Epic Â· Golden Boots</span><br>Weight: <span style="color:var(--green);font-weight:700;">36 + 8 = 44 pts</span><br><span style="color:var(--text3);font-size:13px;">9.5 CHZ goes to prize vault Â· 0.5 CHZ to creator</span></div>
+          <div style="font-size:15px;color:var(--text2);line-height:1.7;">You pay <span style="color:var(--gold);font-weight:700;">10 CHZ</span> -> get a random figure.<br>Result: <span style="color:var(--green);">France - Epic - Golden Boots</span><br>Weight: <span style="color:var(--green);font-weight:700;">36 + 8 = 44 pts</span><br><span style="color:var(--text3);font-size:13px;">9.5 CHZ goes to prize vault - 0.5 CHZ to creator</span></div>
         </div>
       </div>
       <div style="display:grid;grid-template-columns:auto 1fr;gap:0;border-bottom:1px solid var(--border);">
         <div style="background:rgba(0,255,135,0.05);padding:24px 28px;display:flex;align-items:center;justify-content:center;min-width:80px;"><span style="font-family:'Black Ops One',sans-serif;font-size:28px;color:var(--green);">2</span></div>
         <div style="padding:20px 24px;">
           <div style="font-family:'Black Ops One',sans-serif;font-size:16px;margin-bottom:6px;">WORLD CUP BEGINS</div>
-          <div style="font-size:15px;color:var(--text2);line-height:1.7;">Price rises from 10 to 100 CHZ. Prize vault reaches <span style="color:var(--gold);font-weight:700;">200,000 CHZ</span><br>Split: <span style="color:var(--green);">130,000 CHZ</span> TOP 10% Â· <span style="color:var(--gold);">50,000 CHZ</span> Country Champions Â· <span style="color:#c084fc;">20,000 CHZ</span> Legendary Jackpot<br>France advances â†’ your figure score grows with every win đź‘€</div>
+          <div style="font-size:15px;color:var(--text2);line-height:1.7;">Price rises from 10 to 100 CHZ. Prize vault reaches <span style="color:var(--gold);font-weight:700;">200,000 CHZ</span><br>Split: <span style="color:var(--green);">130,000 CHZ</span> TOP 10% - <span style="color:var(--gold);">50,000 CHZ</span> Country Champions - <span style="color:#c084fc;">20,000 CHZ</span> Legendary Jackpot<br>France advances -> your figure score grows with every win đź‘€</div>
         </div>
       </div>
       <div style="display:grid;grid-template-columns:auto 1fr;gap:0;border-bottom:1px solid var(--border);">
         <div style="background:rgba(0,255,135,0.05);padding:24px 28px;display:flex;align-items:center;justify-content:center;min-width:80px;"><span style="font-family:'Black Ops One',sans-serif;font-size:28px;color:var(--green);">3</span></div>
         <div style="padding:20px 24px;">
           <div style="font-family:'Black Ops One',sans-serif;font-size:16px;margin-bottom:6px;">COUNTRY CHAMPION SECURED</div>
-          <div style="font-size:15px;color:var(--text2);line-height:1.7;">Your France Epic W:44 is the best France figure in the game.<br><span style="color:var(--gold);font-weight:700;">You are the France Country Champion.</span><br>Guaranteed prize: <span style="color:var(--gold);font-weight:700;">~1,042 CHZ</span> â€” regardless of tournament result.<br><span style="color:var(--text3);font-size:13px;">France exits early? You still win ~1,042 CHZ.<br><span style="color:var(--green);">France wins? You get this PLUS TOP 10% share.</span></span></div>
+          <div style="font-size:15px;color:var(--text2);line-height:1.7;">Your France Epic W:44 is the best France figure in the game.<br><span style="color:var(--gold);font-weight:700;">You are the France Country Champion.</span><br>Guaranteed prize: <span style="color:var(--gold);font-weight:700;">~1,042 CHZ</span> - regardless of tournament result.<br><span style="color:var(--text3);font-size:13px;">France exits early? You still win ~1,042 CHZ.<br><span style="color:var(--green);">France wins? You get this PLUS TOP 10% share.</span></span></div>
         </div>
       </div>
       <div style="display:grid;grid-template-columns:auto 1fr;gap:0;border-bottom:1px solid var(--border);">
         <div style="background:rgba(255,201,64,0.08);padding:24px 28px;display:flex;align-items:center;justify-content:center;min-width:80px;"><span style="font-family:'Black Ops One',sans-serif;font-size:28px;color:var(--gold);">4</span></div>
         <div style="padding:20px 24px;">
           <div style="font-family:'Black Ops One',sans-serif;font-size:16px;margin-bottom:6px;">&#127942; FRANCE WINS THE WORLD CUP</div>
-          <div style="font-size:15px;color:var(--text2);line-height:1.7;">Champion multiplier: <span style="color:var(--gold);font-weight:700;">Ă—5.0</span><br>Your final score: <span style="color:var(--gold);font-weight:700;">44 Ă— 5.0 = 220 pts</span><br>You're in <span style="color:var(--green);font-weight:700;">TOP 10%</span> â†’ share of 130,000 CHZ pool<br><span style="color:var(--text3);font-size:13px;">Plus Country Champion bonus: ~1,042 CHZ guaranteed</span></div>
+          <div style="font-size:15px;color:var(--text2);line-height:1.7;">Champion multiplier: <span style="color:var(--gold);font-weight:700;">x5.0</span><br>Your final score: <span style="color:var(--gold);font-weight:700;">44 x 5.0 = 220 pts</span><br>You're in <span style="color:var(--green);font-weight:700;">TOP 10%</span> -> share of 130,000 CHZ pool<br><span style="color:var(--text3);font-size:13px;">Plus Country Champion bonus: ~1,042 CHZ guaranteed</span></div>
         </div>
       </div>
       <div style="display:grid;grid-template-columns:auto 1fr;gap:0;">
         <div style="background:rgba(0,255,135,0.12);padding:24px 28px;display:flex;align-items:center;justify-content:center;min-width:80px;"><span style="font-family:'Black Ops One',sans-serif;font-size:28px;color:var(--green);">5</span></div>
         <div style="padding:20px 24px;">
           <div style="font-family:'Black Ops One',sans-serif;font-size:16px;margin-bottom:6px;">CLAIM YOUR REWARD</div>
-          <div style="font-size:15px;color:var(--text2);line-height:1.7;">TOP 10% share: <span style="color:var(--green);font-weight:700;">~3,200 CHZ</span><br>Country Champion: <span style="color:var(--gold);font-weight:700;">~1,042 CHZ</span><br><span style="color:var(--green);font-weight:700;">Total: ~4,242 CHZ</span><br><span style="color:var(--text3);font-size:13px;">Paid: 10 CHZ Â· Received: ~4,242 CHZ Â· ROI: ~42,320%</span></div>
+          <div style="font-size:15px;color:var(--text2);line-height:1.7;">TOP 10% share: <span style="color:var(--green);font-weight:700;">~3,200 CHZ</span><br>Country Champion: <span style="color:var(--gold);font-weight:700;">~1,042 CHZ</span><br><span style="color:var(--green);font-weight:700;">Total: ~4,242 CHZ</span><br><span style="color:var(--text3);font-size:13px;">Paid: 10 CHZ - Received: ~4,242 CHZ - ROI: ~42,320%</span></div>
         </div>
       </div>
     </div>
@@ -3924,7 +3943,7 @@ Knowledge beats luck â€” pick the right nation!
   <div class="sec-header">
     <div>
       <div class="sec-title">PRIZE <span class="acc">SIMULATOR</span></div>
-      <div style="font-size:14px;color:var(--text2);margin-top:4px;">Live data from blockchain Â· Real figures Â· Real vault</div>
+      <div style="font-size:14px;color:var(--text2);margin-top:4px;">Live data from blockchain - Real figures - Real vault</div>
     </div>
     <div id="simBtns" style="display:flex;gap:8px;flex-wrap:wrap;">
       <button class="btn-sim" style="background:rgba(0,255,135,0.15);border:1px solid rgba(0,255,135,0.4);" onclick="runLiveSim()" id="liveSimBtn">&#9889; LIVE SIM</button>
@@ -3932,12 +3951,12 @@ Knowledge beats luck â€” pick the right nation!
   </div>
 
   <div class="sim-grid" style="grid-template-columns:repeat(auto-fit,minmax(130px,1fr));">
-    <div class="sim-stat"><div class="sim-stat-label">Vault (CHZ)</div><div class="sim-stat-val" id="simVault">â€”</div></div>
-    <div class="sim-stat"><div class="sim-stat-label">Top Score</div><div class="sim-stat-val" id="simTopScore">â€”</div></div>
-    <div class="sim-stat"><div class="sim-stat-label">đźĄ‡ Prize #1<br><span style="font-size:9px;color:var(--text3);">TOP 10% (65%)</span></div><div class="sim-stat-val" id="simPrize1">â€”</div></div>
+    <div class="sim-stat"><div class="sim-stat-label">Vault (CHZ)</div><div class="sim-stat-val" id="simVault">-</div></div>
+    <div class="sim-stat"><div class="sim-stat-label">Top Score</div><div class="sim-stat-val" id="simTopScore">-</div></div>
+    <div class="sim-stat"><div class="sim-stat-label">đźĄ‡ Prize #1<br><span style="font-size:9px;color:var(--text3);">TOP 10% (65%)</span></div><div class="sim-stat-val" id="simPrize1">-</div></div>
     <div class="sim-stat"><div class="sim-stat-label">&#127941; Country<br><span style="font-size:9px;color:var(--text3);">per champion (25%)</span></div><div class="sim-stat-val" style="color:#ffc940;" id="simCountry">&mdash;</div></div>
     <div class="sim-stat"><div class="sim-stat-label">&#9889; Legendary<br><span style="font-size:9px;color:var(--text3);">per figure (10%)</span></div><div class="sim-stat-val" style="color:#c084fc;" id="simLeg">&mdash;</div></div>
-    <div class="sim-stat"><div class="sim-stat-label">Winners</div><div class="sim-stat-val" id="simWinners">â€”</div></div>
+    <div class="sim-stat"><div class="sim-stat-label">Winners</div><div class="sim-stat-val" id="simWinners">-</div></div>
   </div>
 
   <div id="liveSimInfo" style="display:none;font-size:11px;color:var(--green);letter-spacing:1px;margin-bottom:12px;padding:8px 12px;background:rgba(0,255,135,0.06);border:1px solid rgba(0,255,135,0.2);border-radius:6px;">&#9889; LIVE: Using real figures from blockchain</div>
@@ -3946,7 +3965,7 @@ Knowledge beats luck â€” pick the right nation!
   <div class="sim-top" id="simTop"></div>
 
   <div class="sim-chart-wrap">
-    <div class="sim-results-label" style="margin-bottom:12px;">PRIZE DISTRIBUTION â€” TOP 20 WINNERS</div>
+    <div class="sim-results-label" style="margin-bottom:12px;">PRIZE DISTRIBUTION - TOP 20 WINNERS</div>
     <div style="position:relative;height:200px;">
       <canvas id="simChart" role="img" aria-label="Prize distribution chart">Prize pool distribution among top winners.</canvas>
     </div>
@@ -3960,13 +3979,13 @@ Knowledge beats luck â€” pick the right nation!
   <div class="sec-header">
     <div>
       <div class="sec-title">PATH TO <span class="acc">FINAL</span></div>
-      <div class="sec-sub">Click a team to see their potential road to MetLife Stadium Â· July 19, 2026</div>
+      <div class="sec-sub">Click a team to see their potential road to MetLife Stadium - July 19, 2026</div>
     </div>
   </div>
   <div id="ptfGrid" style="display:grid;grid-template-columns:220px 1fr;gap:16px;margin-top:16px;min-height:400px;">
     <div id="ptfTeams" style="border:1px solid var(--border);border-radius:10px;overflow-y:auto;max-height:520px;padding:8px;scrollbar-width:thin;scrollbar-color:var(--border) transparent;"></div>
     <div id="ptfPath" style="border:1px solid var(--border);border-radius:10px;padding:20px;">
-      <div style="display:flex;align-items:center;justify-content:center;height:100%;color:var(--text3);letter-spacing:2px;font-size:13px;">â† SELECT A TEAM</div>
+      <div style="display:flex;align-items:center;justify-content:center;height:100%;color:var(--text3);letter-spacing:2px;font-size:13px;"><- SELECT A TEAM</div>
     </div>
   </div>
 </div>
@@ -3976,7 +3995,7 @@ Knowledge beats luck â€” pick the right nation!
   <div class="sec-header">
     <div>
       <div class="sec-title">WC <span class="acc">2026</span> GROUPS</div>
-      <div class="sec-sub">June 11 â€“ July 19 Â· 48 teams Â· 12 groups Â· Final at MetLife Stadium Â· <span style="color:#f59e0b;">â…</span> = tournament favourite</div>
+      <div class="sec-sub">June 11 - July 19 - 48 teams - 12 groups - Final at MetLife Stadium - <span style="color:#f59e0b;">*</span> = tournament favourite</div>
     </div>
   </div>
   <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-top:16px;">
@@ -3994,7 +4013,7 @@ Knowledge beats luck â€” pick the right nation!
       <div style="background:rgba(0,255,135,0.06);padding:10px 14px;border-bottom:1px solid var(--border);">
         <span style="font-family:'Black Ops One',sans-serif;font-size:18px;color:var(--green);">GROUP C</span>
       </div>
-      <div style="display:flex;align-items:center;gap:10px;padding:8px 12px;border-bottom:1px solid rgba(255,255,255,0.04);"><div style="width:26px;height:26px;border-radius:50%;background:#009C3B;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff;">1</div><span style="font-size:13px;color:var(--text1);flex:1;">Brazil</span>&nbsp;<span style="font-size:9px;color:#f59e0b;">â…</span></div><div style="display:flex;align-items:center;gap:10px;padding:8px 12px;border-bottom:1px solid rgba(255,255,255,0.04);"><div style="width:26px;height:26px;border-radius:50%;background:#C1272D;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff;">2</div><span style="font-size:13px;color:var(--text1);flex:1;">Morocco</span></div><div style="display:flex;align-items:center;gap:10px;padding:8px 12px;border-bottom:1px solid rgba(255,255,255,0.04);"><div style="width:26px;height:26px;border-radius:50%;background:#00209F;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff;">3</div><span style="font-size:13px;color:var(--text1);flex:1;">Haiti</span></div><div style="display:flex;align-items:center;gap:10px;padding:8px 12px;"><div style="width:26px;height:26px;border-radius:50%;background:#003087;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff;">4</div><span style="font-size:13px;color:var(--text1);flex:1;">Scotland</span></div>
+      <div style="display:flex;align-items:center;gap:10px;padding:8px 12px;border-bottom:1px solid rgba(255,255,255,0.04);"><div style="width:26px;height:26px;border-radius:50%;background:#009C3B;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff;">1</div><span style="font-size:13px;color:var(--text1);flex:1;">Brazil</span>&nbsp;<span style="font-size:9px;color:#f59e0b;">*</span></div><div style="display:flex;align-items:center;gap:10px;padding:8px 12px;border-bottom:1px solid rgba(255,255,255,0.04);"><div style="width:26px;height:26px;border-radius:50%;background:#C1272D;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff;">2</div><span style="font-size:13px;color:var(--text1);flex:1;">Morocco</span></div><div style="display:flex;align-items:center;gap:10px;padding:8px 12px;border-bottom:1px solid rgba(255,255,255,0.04);"><div style="width:26px;height:26px;border-radius:50%;background:#00209F;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff;">3</div><span style="font-size:13px;color:var(--text1);flex:1;">Haiti</span></div><div style="display:flex;align-items:center;gap:10px;padding:8px 12px;"><div style="width:26px;height:26px;border-radius:50%;background:#003087;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff;">4</div><span style="font-size:13px;color:var(--text1);flex:1;">Scotland</span></div>
     </div><div style="background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;">
       <div style="background:rgba(0,255,135,0.06);padding:10px 14px;border-bottom:1px solid var(--border);">
         <span style="font-family:'Black Ops One',sans-serif;font-size:18px;color:var(--green);">GROUP D</span>
@@ -4004,12 +4023,12 @@ Knowledge beats luck â€” pick the right nation!
       <div style="background:rgba(0,255,135,0.06);padding:10px 14px;border-bottom:1px solid var(--border);">
         <span style="font-family:'Black Ops One',sans-serif;font-size:18px;color:var(--green);">GROUP E</span>
       </div>
-      <div style="display:flex;align-items:center;gap:10px;padding:8px 12px;border-bottom:1px solid rgba(255,255,255,0.04);"><div style="width:26px;height:26px;border-radius:50%;background:#111111;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff;">1</div><span style="font-size:13px;color:var(--text1);flex:1;">Germany</span>&nbsp;<span style="font-size:9px;color:#f59e0b;">â…</span></div><div style="display:flex;align-items:center;gap:10px;padding:8px 12px;border-bottom:1px solid rgba(255,255,255,0.04);"><div style="width:26px;height:26px;border-radius:50%;background:#002B7F;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff;">2</div><span style="font-size:13px;color:var(--text1);flex:1;">Curacao</span></div><div style="display:flex;align-items:center;gap:10px;padding:8px 12px;border-bottom:1px solid rgba(255,255,255,0.04);"><div style="width:26px;height:26px;border-radius:50%;background:#F77F00;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff;">3</div><span style="font-size:13px;color:var(--text1);flex:1;">Ivory Coast</span></div><div style="display:flex;align-items:center;gap:10px;padding:8px 12px;"><div style="width:26px;height:26px;border-radius:50%;background:#FFD100;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#000;">4</div><span style="font-size:13px;color:var(--text1);flex:1;">Ecuador</span></div>
+      <div style="display:flex;align-items:center;gap:10px;padding:8px 12px;border-bottom:1px solid rgba(255,255,255,0.04);"><div style="width:26px;height:26px;border-radius:50%;background:#111111;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff;">1</div><span style="font-size:13px;color:var(--text1);flex:1;">Germany</span>&nbsp;<span style="font-size:9px;color:#f59e0b;">*</span></div><div style="display:flex;align-items:center;gap:10px;padding:8px 12px;border-bottom:1px solid rgba(255,255,255,0.04);"><div style="width:26px;height:26px;border-radius:50%;background:#002B7F;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff;">2</div><span style="font-size:13px;color:var(--text1);flex:1;">Curacao</span></div><div style="display:flex;align-items:center;gap:10px;padding:8px 12px;border-bottom:1px solid rgba(255,255,255,0.04);"><div style="width:26px;height:26px;border-radius:50%;background:#F77F00;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff;">3</div><span style="font-size:13px;color:var(--text1);flex:1;">Ivory Coast</span></div><div style="display:flex;align-items:center;gap:10px;padding:8px 12px;"><div style="width:26px;height:26px;border-radius:50%;background:#FFD100;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#000;">4</div><span style="font-size:13px;color:var(--text1);flex:1;">Ecuador</span></div>
     </div><div style="background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;">
       <div style="background:rgba(0,255,135,0.06);padding:10px 14px;border-bottom:1px solid var(--border);">
         <span style="font-family:'Black Ops One',sans-serif;font-size:18px;color:var(--green);">GROUP F</span>
       </div>
-      <div style="display:flex;align-items:center;gap:10px;padding:8px 12px;border-bottom:1px solid rgba(255,255,255,0.04);"><div style="width:26px;height:26px;border-radius:50%;background:#FF6600;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff;">1</div><span style="font-size:13px;color:var(--text1);flex:1;">Netherlands</span>&nbsp;<span style="font-size:9px;color:#f59e0b;">â…</span></div><div style="display:flex;align-items:center;gap:10px;padding:8px 12px;border-bottom:1px solid rgba(255,255,255,0.04);"><div style="width:26px;height:26px;border-radius:50%;background:#BC002D;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff;">2</div><span style="font-size:13px;color:var(--text1);flex:1;">Japan</span></div><div style="display:flex;align-items:center;gap:10px;padding:8px 12px;border-bottom:1px solid rgba(255,255,255,0.04);"><div style="width:26px;height:26px;border-radius:50%;background:#006AA7;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff;">3</div><span style="font-size:13px;color:var(--text1);flex:1;">Sweden</span></div><div style="display:flex;align-items:center;gap:10px;padding:8px 12px;"><div style="width:26px;height:26px;border-radius:50%;background:#E70013;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff;">4</div><span style="font-size:13px;color:var(--text1);flex:1;">Tunisia</span></div>
+      <div style="display:flex;align-items:center;gap:10px;padding:8px 12px;border-bottom:1px solid rgba(255,255,255,0.04);"><div style="width:26px;height:26px;border-radius:50%;background:#FF6600;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff;">1</div><span style="font-size:13px;color:var(--text1);flex:1;">Netherlands</span>&nbsp;<span style="font-size:9px;color:#f59e0b;">*</span></div><div style="display:flex;align-items:center;gap:10px;padding:8px 12px;border-bottom:1px solid rgba(255,255,255,0.04);"><div style="width:26px;height:26px;border-radius:50%;background:#BC002D;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff;">2</div><span style="font-size:13px;color:var(--text1);flex:1;">Japan</span></div><div style="display:flex;align-items:center;gap:10px;padding:8px 12px;border-bottom:1px solid rgba(255,255,255,0.04);"><div style="width:26px;height:26px;border-radius:50%;background:#006AA7;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff;">3</div><span style="font-size:13px;color:var(--text1);flex:1;">Sweden</span></div><div style="display:flex;align-items:center;gap:10px;padding:8px 12px;"><div style="width:26px;height:26px;border-radius:50%;background:#E70013;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff;">4</div><span style="font-size:13px;color:var(--text1);flex:1;">Tunisia</span></div>
     </div><div style="background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;">
       <div style="background:rgba(0,255,135,0.06);padding:10px 14px;border-bottom:1px solid var(--border);">
         <span style="font-family:'Black Ops One',sans-serif;font-size:18px;color:var(--green);">GROUP G</span>
@@ -4019,27 +4038,27 @@ Knowledge beats luck â€” pick the right nation!
       <div style="background:rgba(0,255,135,0.06);padding:10px 14px;border-bottom:1px solid var(--border);">
         <span style="font-family:'Black Ops One',sans-serif;font-size:18px;color:var(--green);">GROUP H</span>
       </div>
-      <div style="display:flex;align-items:center;gap:10px;padding:8px 12px;border-bottom:1px solid rgba(255,255,255,0.04);"><div style="width:26px;height:26px;border-radius:50%;background:#AA151B;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff;">1</div><span style="font-size:13px;color:var(--text1);flex:1;">Spain</span>&nbsp;<span style="font-size:9px;color:#f59e0b;">â…</span></div><div style="display:flex;align-items:center;gap:10px;padding:8px 12px;border-bottom:1px solid rgba(255,255,255,0.04);"><div style="width:26px;height:26px;border-radius:50%;background:#003893;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff;">2</div><span style="font-size:13px;color:var(--text1);flex:1;">Cape Verde</span></div><div style="display:flex;align-items:center;gap:10px;padding:8px 12px;border-bottom:1px solid rgba(255,255,255,0.04);"><div style="width:26px;height:26px;border-radius:50%;background:#006C35;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff;">3</div><span style="font-size:13px;color:var(--text1);flex:1;">Saudi Arabia</span></div><div style="display:flex;align-items:center;gap:10px;padding:8px 12px;"><div style="width:26px;height:26px;border-radius:50%;background:#5EB6E4;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff;">4</div><span style="font-size:13px;color:var(--text1);flex:1;">Uruguay</span></div>
+      <div style="display:flex;align-items:center;gap:10px;padding:8px 12px;border-bottom:1px solid rgba(255,255,255,0.04);"><div style="width:26px;height:26px;border-radius:50%;background:#AA151B;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff;">1</div><span style="font-size:13px;color:var(--text1);flex:1;">Spain</span>&nbsp;<span style="font-size:9px;color:#f59e0b;">*</span></div><div style="display:flex;align-items:center;gap:10px;padding:8px 12px;border-bottom:1px solid rgba(255,255,255,0.04);"><div style="width:26px;height:26px;border-radius:50%;background:#003893;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff;">2</div><span style="font-size:13px;color:var(--text1);flex:1;">Cape Verde</span></div><div style="display:flex;align-items:center;gap:10px;padding:8px 12px;border-bottom:1px solid rgba(255,255,255,0.04);"><div style="width:26px;height:26px;border-radius:50%;background:#006C35;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff;">3</div><span style="font-size:13px;color:var(--text1);flex:1;">Saudi Arabia</span></div><div style="display:flex;align-items:center;gap:10px;padding:8px 12px;"><div style="width:26px;height:26px;border-radius:50%;background:#5EB6E4;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff;">4</div><span style="font-size:13px;color:var(--text1);flex:1;">Uruguay</span></div>
     </div><div style="background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;">
       <div style="background:rgba(0,255,135,0.06);padding:10px 14px;border-bottom:1px solid var(--border);">
         <span style="font-family:'Black Ops One',sans-serif;font-size:18px;color:var(--green);">GROUP I</span>
       </div>
-      <div style="display:flex;align-items:center;gap:10px;padding:8px 12px;border-bottom:1px solid rgba(255,255,255,0.04);"><div style="width:26px;height:26px;border-radius:50%;background:#002395;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff;">1</div><span style="font-size:13px;color:var(--text1);flex:1;">France</span>&nbsp;<span style="font-size:9px;color:#f59e0b;">â…</span></div><div style="display:flex;align-items:center;gap:10px;padding:8px 12px;border-bottom:1px solid rgba(255,255,255,0.04);"><div style="width:26px;height:26px;border-radius:50%;background:#00853F;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff;">2</div><span style="font-size:13px;color:var(--text1);flex:1;">Senegal</span></div><div style="display:flex;align-items:center;gap:10px;padding:8px 12px;border-bottom:1px solid rgba(255,255,255,0.04);"><div style="width:26px;height:26px;border-radius:50%;background:#CC0001;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff;">3</div><span style="font-size:13px;color:var(--text1);flex:1;">Iraq</span></div><div style="display:flex;align-items:center;gap:10px;padding:8px 12px;"><div style="width:26px;height:26px;border-radius:50%;background:#EF2B2D;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff;">4</div><span style="font-size:13px;color:var(--text1);flex:1;">Norway</span></div>
+      <div style="display:flex;align-items:center;gap:10px;padding:8px 12px;border-bottom:1px solid rgba(255,255,255,0.04);"><div style="width:26px;height:26px;border-radius:50%;background:#002395;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff;">1</div><span style="font-size:13px;color:var(--text1);flex:1;">France</span>&nbsp;<span style="font-size:9px;color:#f59e0b;">*</span></div><div style="display:flex;align-items:center;gap:10px;padding:8px 12px;border-bottom:1px solid rgba(255,255,255,0.04);"><div style="width:26px;height:26px;border-radius:50%;background:#00853F;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff;">2</div><span style="font-size:13px;color:var(--text1);flex:1;">Senegal</span></div><div style="display:flex;align-items:center;gap:10px;padding:8px 12px;border-bottom:1px solid rgba(255,255,255,0.04);"><div style="width:26px;height:26px;border-radius:50%;background:#CC0001;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff;">3</div><span style="font-size:13px;color:var(--text1);flex:1;">Iraq</span></div><div style="display:flex;align-items:center;gap:10px;padding:8px 12px;"><div style="width:26px;height:26px;border-radius:50%;background:#EF2B2D;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff;">4</div><span style="font-size:13px;color:var(--text1);flex:1;">Norway</span></div>
     </div><div style="background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;">
       <div style="background:rgba(0,255,135,0.06);padding:10px 14px;border-bottom:1px solid var(--border);">
         <span style="font-family:'Black Ops One',sans-serif;font-size:18px;color:var(--green);">GROUP J</span>
       </div>
-      <div style="display:flex;align-items:center;gap:10px;padding:8px 12px;border-bottom:1px solid rgba(255,255,255,0.04);"><div style="width:26px;height:26px;border-radius:50%;background:#74ACDF;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff;">1</div><span style="font-size:13px;color:var(--text1);flex:1;">Argentina</span>&nbsp;<span style="font-size:9px;color:#f59e0b;">â…</span></div><div style="display:flex;align-items:center;gap:10px;padding:8px 12px;border-bottom:1px solid rgba(255,255,255,0.04);"><div style="width:26px;height:26px;border-radius:50%;background:#006233;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff;">2</div><span style="font-size:13px;color:var(--text1);flex:1;">Algeria</span></div><div style="display:flex;align-items:center;gap:10px;padding:8px 12px;border-bottom:1px solid rgba(255,255,255,0.04);"><div style="width:26px;height:26px;border-radius:50%;background:#ED2939;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff;">3</div><span style="font-size:13px;color:var(--text1);flex:1;">Austria</span></div><div style="display:flex;align-items:center;gap:10px;padding:8px 12px;"><div style="width:26px;height:26px;border-radius:50%;background:#007A3D;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff;">4</div><span style="font-size:13px;color:var(--text1);flex:1;">Jordan</span></div>
+      <div style="display:flex;align-items:center;gap:10px;padding:8px 12px;border-bottom:1px solid rgba(255,255,255,0.04);"><div style="width:26px;height:26px;border-radius:50%;background:#74ACDF;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff;">1</div><span style="font-size:13px;color:var(--text1);flex:1;">Argentina</span>&nbsp;<span style="font-size:9px;color:#f59e0b;">*</span></div><div style="display:flex;align-items:center;gap:10px;padding:8px 12px;border-bottom:1px solid rgba(255,255,255,0.04);"><div style="width:26px;height:26px;border-radius:50%;background:#006233;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff;">2</div><span style="font-size:13px;color:var(--text1);flex:1;">Algeria</span></div><div style="display:flex;align-items:center;gap:10px;padding:8px 12px;border-bottom:1px solid rgba(255,255,255,0.04);"><div style="width:26px;height:26px;border-radius:50%;background:#ED2939;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff;">3</div><span style="font-size:13px;color:var(--text1);flex:1;">Austria</span></div><div style="display:flex;align-items:center;gap:10px;padding:8px 12px;"><div style="width:26px;height:26px;border-radius:50%;background:#007A3D;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff;">4</div><span style="font-size:13px;color:var(--text1);flex:1;">Jordan</span></div>
     </div><div style="background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;">
       <div style="background:rgba(0,255,135,0.06);padding:10px 14px;border-bottom:1px solid var(--border);">
         <span style="font-family:'Black Ops One',sans-serif;font-size:18px;color:var(--green);">GROUP K</span>
       </div>
-      <div style="display:flex;align-items:center;gap:10px;padding:8px 12px;border-bottom:1px solid rgba(255,255,255,0.04);"><div style="width:26px;height:26px;border-radius:50%;background:#006600;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff;">1</div><span style="font-size:13px;color:var(--text1);flex:1;">Portugal</span>&nbsp;<span style="font-size:9px;color:#f59e0b;">â…</span></div><div style="display:flex;align-items:center;gap:10px;padding:8px 12px;border-bottom:1px solid rgba(255,255,255,0.04);"><div style="width:26px;height:26px;border-radius:50%;background:#007FFF;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff;">2</div><span style="font-size:13px;color:var(--text1);flex:1;">DR Congo</span></div><div style="display:flex;align-items:center;gap:10px;padding:8px 12px;border-bottom:1px solid rgba(255,255,255,0.04);"><div style="width:26px;height:26px;border-radius:50%;background:#1EB53A;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff;">3</div><span style="font-size:13px;color:var(--text1);flex:1;">Uzbekistan</span></div><div style="display:flex;align-items:center;gap:10px;padding:8px 12px;"><div style="width:26px;height:26px;border-radius:50%;background:#FCD116;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#000;">4</div><span style="font-size:13px;color:var(--text1);flex:1;">Colombia</span></div>
+      <div style="display:flex;align-items:center;gap:10px;padding:8px 12px;border-bottom:1px solid rgba(255,255,255,0.04);"><div style="width:26px;height:26px;border-radius:50%;background:#006600;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff;">1</div><span style="font-size:13px;color:var(--text1);flex:1;">Portugal</span>&nbsp;<span style="font-size:9px;color:#f59e0b;">*</span></div><div style="display:flex;align-items:center;gap:10px;padding:8px 12px;border-bottom:1px solid rgba(255,255,255,0.04);"><div style="width:26px;height:26px;border-radius:50%;background:#007FFF;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff;">2</div><span style="font-size:13px;color:var(--text1);flex:1;">DR Congo</span></div><div style="display:flex;align-items:center;gap:10px;padding:8px 12px;border-bottom:1px solid rgba(255,255,255,0.04);"><div style="width:26px;height:26px;border-radius:50%;background:#1EB53A;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff;">3</div><span style="font-size:13px;color:var(--text1);flex:1;">Uzbekistan</span></div><div style="display:flex;align-items:center;gap:10px;padding:8px 12px;"><div style="width:26px;height:26px;border-radius:50%;background:#FCD116;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#000;">4</div><span style="font-size:13px;color:var(--text1);flex:1;">Colombia</span></div>
     </div><div style="background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;">
       <div style="background:rgba(0,255,135,0.06);padding:10px 14px;border-bottom:1px solid var(--border);">
         <span style="font-family:'Black Ops One',sans-serif;font-size:18px;color:var(--green);">GROUP L</span>
       </div>
-      <div style="display:flex;align-items:center;gap:10px;padding:8px 12px;border-bottom:1px solid rgba(255,255,255,0.04);"><div style="width:26px;height:26px;border-radius:50%;background:#EEEEEE;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#000;">1</div><span style="font-size:13px;color:var(--text1);flex:1;">England</span>&nbsp;<span style="font-size:9px;color:#f59e0b;">â…</span></div><div style="display:flex;align-items:center;gap:10px;padding:8px 12px;border-bottom:1px solid rgba(255,255,255,0.04);"><div style="width:26px;height:26px;border-radius:50%;background:#FF0000;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff;">2</div><span style="font-size:13px;color:var(--text1);flex:1;">Croatia</span></div><div style="display:flex;align-items:center;gap:10px;padding:8px 12px;border-bottom:1px solid rgba(255,255,255,0.04);"><div style="width:26px;height:26px;border-radius:50%;background:#006B3F;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff;">3</div><span style="font-size:13px;color:var(--text1);flex:1;">Ghana</span></div><div style="display:flex;align-items:center;gap:10px;padding:8px 12px;"><div style="width:26px;height:26px;border-radius:50%;background:#DA121A;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff;">4</div><span style="font-size:13px;color:var(--text1);flex:1;">Panama</span></div>
+      <div style="display:flex;align-items:center;gap:10px;padding:8px 12px;border-bottom:1px solid rgba(255,255,255,0.04);"><div style="width:26px;height:26px;border-radius:50%;background:#EEEEEE;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#000;">1</div><span style="font-size:13px;color:var(--text1);flex:1;">England</span>&nbsp;<span style="font-size:9px;color:#f59e0b;">*</span></div><div style="display:flex;align-items:center;gap:10px;padding:8px 12px;border-bottom:1px solid rgba(255,255,255,0.04);"><div style="width:26px;height:26px;border-radius:50%;background:#FF0000;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff;">2</div><span style="font-size:13px;color:var(--text1);flex:1;">Croatia</span></div><div style="display:flex;align-items:center;gap:10px;padding:8px 12px;border-bottom:1px solid rgba(255,255,255,0.04);"><div style="width:26px;height:26px;border-radius:50%;background:#006B3F;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff;">3</div><span style="font-size:13px;color:var(--text1);flex:1;">Ghana</span></div><div style="display:flex;align-items:center;gap:10px;padding:8px 12px;"><div style="width:26px;height:26px;border-radius:50%;background:#DA121A;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff;">4</div><span style="font-size:13px;color:var(--text1);flex:1;">Panama</span></div>
     </div>
   </div>
 </div>
@@ -4078,7 +4097,7 @@ Knowledge beats luck â€” pick the right nation!
   <div class="sec-header">
     <div>
       <div class="sec-title">WC <span class="acc">ALBUM</span></div>
-      <div class="sec-sub">Public progress Â· Who is closest to completing a nation?</div>
+      <div class="sec-sub">Public progress - Who is closest to completing a nation?</div>
     </div>
     <button onclick="loadAlbum()" style="background:var(--green-dim);border:1px solid rgba(0,255,135,0.3);color:var(--green);padding:8px 18px;border-radius:6px;font-family:'Black Ops One',sans-serif;font-size:11px;letter-spacing:1px;cursor:pointer;">REFRESH</button>
   </div>
@@ -4163,9 +4182,9 @@ Knowledge beats luck â€” pick the right nation!
     const ls='font-size:13px;color:var(--text1);margin-bottom:3px;';
     document.getElementById('ptfPath').innerHTML=`
       <div style="font-family:'Black Ops One',sans-serif;font-size:20px;margin-bottom:2px;"><span style="color:${color}">${team}</span></div>
-      <div style="font-size:11px;color:var(--text2);letter-spacing:1px;margin-bottom:20px;">GROUP ${gl} Â· ${g.p}${isFav?' Â· <span style="color:var(--gold);">â… FAVOURITE</span>':''}</div>
+      <div style="font-size:11px;color:var(--text2);letter-spacing:1px;margin-bottom:20px;">GROUP ${gl} - ${g.p}${isFav?' - <span style="color:var(--gold);">* FAVOURITE</span>':''}</div>
       <div style="display:flex;flex-direction:column;">
-        <div style="${ss}"><div style="${rs}color:var(--green);">GROUP<br>STAGE</div><div style="${cs}"><div style="${ls}">Group ${gl}: ${g.t.join(' Â· ')}</div><div style="font-size:11px;color:var(--text2);">Opponents: <strong>${opp.join(', ')}</strong><br>Top 2 advance + 8 best 3rd-place</div><div style="margin-top:6px;">${dc(isFav?'easy':'medium')}</div></div></div>
+        <div style="${ss}"><div style="${rs}color:var(--green);">GROUP<br>STAGE</div><div style="${cs}"><div style="${ls}">Group ${gl}: ${g.t.join(' - ')}</div><div style="font-size:11px;color:var(--text2);">Opponents: <strong>${opp.join(', ')}</strong><br>Top 2 advance + 8 best 3rd-place</div><div style="margin-top:6px;">${dc(isFav?'easy':'medium')}</div></div></div>
         <div style="${ss}"><div style="${rs}">R32<br>Jun 28-Jul 3</div><div style="${cs}"><div style="${ls}">${p.r32}</div><div style="margin-top:6px;">${dc(gd(team,'r32'))}</div></div></div>
         <div style="${ss}"><div style="${rs}">R16<br>Jul 4-7</div><div style="${cs}"><div style="${ls}">${p.r16}</div><div style="margin-top:6px;">${dc(gd(team,'r16'))}</div></div></div>
         <div style="${ss}"><div style="${rs}">QF<br>Jul 9-11</div><div style="${cs}"><div style="${ls}">${p.qf}</div><div style="margin-top:6px;">${dc(gd(team,'qf'))}</div></div></div>
@@ -4217,7 +4236,7 @@ Knowledge beats luck â€” pick the right nation!
         const nm=document.createElement('span');
         nm.textContent=team;
         btn.appendChild(nm);
-        if(FV.includes(team)){const st=document.createElement('span');st.style.cssText='color:var(--gold);font-size:9px;margin-left:auto;';st.textContent='â…';btn.appendChild(st);}
+        if(FV.includes(team)){const st=document.createElement('span');st.style.cssText='color:var(--gold);font-size:9px;margin-left:auto;';st.textContent='*';btn.appendChild(st);}
         panel.appendChild(btn);
       });
     });
@@ -4243,7 +4262,7 @@ function updateCountryDashboardSummary(countryBest, perCountry){
   const topTeam = top ? TEAMS[top.teamId % TEAMS.length] : 'No leader yet';
   const leadValue = leaders.length ? `${leaders.length} COUNTRY${leaders.length === 1 ? '' : 'IES'}` : 'NO LEAD';
   const leadNote = leaders.length
-    ? leaders.slice(0, 3).map(c => `${TEAMS[c.teamId % TEAMS.length]} W:${c.weight}`).join(' Â· ')
+    ? leaders.slice(0, 3).map(c => `${TEAMS[c.teamId % TEAMS.length]} W:${c.weight}`).join(' &middot; ')
     : 'Own the highest-weight card in any country to lead its reward race.';
 
   box.innerHTML = `
@@ -4259,7 +4278,7 @@ function updateCountryDashboardSummary(countryBest, perCountry){
     </div>
     <div class="country-dash-card" style="grid-column:1/-1;">
       <div class="country-dash-label">Highest Country Card</div>
-      <div class="country-dash-value" style="font-size:15px;color:var(--text);">${topTeam}${top ? ` Â· W:${top.weight}` : ''}</div>
+      <div class="country-dash-value" style="font-size:15px;color:var(--text);">${topTeam}${top ? ` &middot; W:${top.weight}` : ''}</div>
       <div class="country-dash-note">${top ? `${top.owner.slice(0,6)}...${top.owner.slice(-4)} is leading that country.` : 'Mint or buy a strong country card to start the race.'}</div>
     </div>`;
 }
@@ -4334,7 +4353,7 @@ async function loadCountryLb(){
             '<div style="display:inline-block;padding:1px 5px;border-radius:3px;font-size:9px;background:'+best.rarColor+'22;color:'+best.rarColor+';border:1px solid '+best.rarColor+'44;margin-bottom:3px;">'+best.rarity+'</div>' +
             '<div style="font-size:11px;color:var(--green);font-weight:700;">W:'+best.weight+'</div>' +
             '<div style="font-size:9px;color:var(--gold);">~'+perCountry.toFixed(0)+' CHZ</div>' +
-            '<div style="font-size:8px;color:var(--text3);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+best.owner.slice(0,6)+'â€¦'+best.owner.slice(-3)+'</div>';
+            '<div style="font-size:8px;color:var(--text3);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+best.owner.slice(0,6)+'...'+best.owner.slice(-3)+'</div>';
         } else {
           card.innerHTML =
             '<div style="display:flex;align-items:center;gap:4px;margin-bottom:4px;">' +
@@ -4362,7 +4381,7 @@ async function loadCountryLb(){
     Block Kickers 2026 is a skill-based NFT game on Chiliz Chain. Participation involves risk of loss.
     Smart contracts are public and verifiable. Not financial advice. 18+ only.
     Not intended for residents of jurisdictions where such activities are prohibited.
-    Prize pool distribution is handled entirely by smart contract â€” no intermediary.
+    Prize pool distribution is handled entirely by smart contract - no intermediary.
   </p>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
