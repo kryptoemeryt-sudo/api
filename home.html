@@ -4,8 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
 <title>BLOCK KICKERS 2026</title>
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%2306080a'/><text x='16' y='22' text-anchor='middle' font-size='20' font-family='Arial Black'>&amp;#9917;</text></svg>">
-<link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%2306080a'/><text x='16' y='22' text-anchor='middle' font-size='20' font-family='Arial Black'>&amp;#9917;</text></svg>">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%2306080a'/%3E%3Ccircle cx='32' cy='32' r='21' fill='%23dde4f0'/%3E%3Cpath d='M32 12l8 8-3 10H27l-3-10 8-8zM16 29l9 1 4 9-7 7-9-4 3-13zM48 29l3 13-9 4-7-7 4-9 9-1zM25 49l7-6 7 6-2 8H27l-2-8z' fill='%2306080a'/%3E%3Cpath d='M9 9h46v12H9z' fill='%2300ff87' opacity='.18'/%3E%3C/svg%3E">
+<link rel="shortcut icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%2306080a'/%3E%3Ccircle cx='32' cy='32' r='21' fill='%23dde4f0'/%3E%3Cpath d='M32 12l8 8-3 10H27l-3-10 8-8zM16 29l9 1 4 9-7 7-9-4 3-13zM48 29l3 13-9 4-7-7 4-9 9-1zM25 49l7-6 7 6-2 8H27l-2-8z' fill='%2306080a'/%3E%3Cpath d='M9 9h46v12H9z' fill='%2300ff87' opacity='.18'/%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%2306080a'/%3E%3Ccircle cx='32' cy='32' r='21' fill='%23dde4f0'/%3E%3Cpath d='M32 12l8 8-3 10H27l-3-10 8-8zM16 29l9 1 4 9-7 7-9-4 3-13zM48 29l3 13-9 4-7-7 4-9 9-1zM25 49l7-6 7 6-2 8H27l-2-8z' fill='%2306080a'/%3E%3Cpath d='M9 9h46v12H9z' fill='%2300ff87' opacity='.18'/%3E%3C/svg%3E">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.7.0/ethers.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <style>
@@ -255,15 +256,24 @@ h1 .accent{color:var(--green);text-shadow:0 0 30px var(--green-glow);}
 .rar-pct{font-size:26px;font-weight:700;margin-bottom:4px;}
 .rar-weight{font-size:14px;color:var(--text2);}
 .quest-launcher{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;}
-.quest-link{display:flex;align-items:center;gap:8px;min-width:0;padding:10px 11px;border-radius:9px;border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.025);text-decoration:none;color:var(--text);transition:all .18s;}
-.quest-link:hover{border-color:rgba(0,255,135,0.35);background:rgba(0,255,135,0.06);transform:translateY(-1px);}
+.quest-link{display:flex;align-items:center;gap:8px;min-width:0;padding:10px 11px;border-radius:9px;border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.025);text-decoration:none;color:var(--text);transition:all .18s;position:relative;overflow:hidden;}
+.quest-link::before{content:'';position:absolute;inset:-1px;opacity:.42;pointer-events:none;}
+.quest-link.quest-dream{border-color:rgba(88,210,255,0.34);box-shadow:0 0 22px rgba(88,210,255,0.08), inset 0 0 18px rgba(88,210,255,0.035);}
+.quest-link.quest-dream::before{background:radial-gradient(circle at 20% 20%,rgba(88,210,255,0.28),transparent 48%);}
+.quest-link.quest-nation{border-color:rgba(255,201,64,0.38);box-shadow:0 0 24px rgba(255,201,64,0.12), inset 0 0 18px rgba(255,201,64,0.045);}
+.quest-link.quest-nation::before{background:radial-gradient(circle at 20% 20%,rgba(255,201,64,0.32),transparent 48%);}
+.quest-link:hover{border-color:rgba(0,255,135,0.45);background:rgba(0,255,135,0.06);transform:translateY(-1px);}
 .quest-icon{font-size:18px;line-height:1;flex-shrink:0;}
 .quest-flag-us{width:20px;height:14px;border-radius:2px;flex-shrink:0;box-shadow:0 0 0 1px rgba(255,255,255,0.12);}
-.quest-title{font-family:'Black Ops One',sans-serif;font-size:10px;letter-spacing:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.quest-sub{font-size:10px;color:var(--text3);line-height:1.2;margin-top:2px;}
-.flow-earn-card{background:rgba(0,255,135,0.045);border:1px solid rgba(0,255,135,0.18);border-radius:9px;padding:10px 11px;margin-bottom:10px;}
-.flow-earn-title{font-family:'Black Ops One',sans-serif;font-size:12px;color:var(--green);letter-spacing:1px;margin-bottom:4px;}
-.flow-earn-text{font-size:13px;color:var(--text2);line-height:1.35;}
+.quest-title{display:block;font-family:'Black Ops One',sans-serif;font-size:10px;letter-spacing:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;position:relative;z-index:1;}
+.quest-sub{display:block;font-size:10px;color:var(--text3);line-height:1.2;margin-top:2px;position:relative;z-index:1;}
+.quest-prize{font-family:'Black Ops One',sans-serif;font-size:13px;line-height:1;margin-top:5px;position:relative;z-index:1;}
+.quest-dream .quest-prize{color:#58d2ff;text-shadow:0 0 12px rgba(88,210,255,.35);}
+.quest-nation .quest-prize{color:var(--gold);text-shadow:0 0 12px rgba(255,201,64,.35);}
+.flow-earn-card{background:linear-gradient(135deg,rgba(0,255,135,0.11),rgba(88,210,255,0.035));border:1px solid rgba(0,255,135,0.34);border-radius:10px;padding:13px 14px;margin-bottom:10px;box-shadow:0 0 24px rgba(0,255,135,0.08), inset 0 0 22px rgba(0,255,135,0.035);}
+.flow-earn-title{font-family:'Black Ops One',sans-serif;font-size:14px;color:var(--green);letter-spacing:1px;margin-bottom:6px;text-shadow:0 0 16px rgba(0,255,135,.25);}
+.flow-earn-text{font-size:15px;color:var(--text);line-height:1.32;}
+.flow-earn-text strong{font-family:'Black Ops One',sans-serif;color:var(--gold);font-size:14px;letter-spacing:1px;}
 .reward-lanes{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:10px;}
 .reward-lane{border-radius:8px;padding:9px;border:1px solid rgba(255,255,255,0.07);background:rgba(255,255,255,0.025);min-width:0;}
 .reward-pct{font-family:'Black Ops One',sans-serif;font-size:20px;line-height:1;margin-bottom:3px;}
@@ -460,6 +470,7 @@ h1 .accent{color:var(--green);text-shadow:0 0 30px var(--green-glow);}
   body.dash-active .quest-icon{font-size:16px;}
   body.dash-active .quest-title{font-size:9px;}
   body.dash-active .quest-sub{font-size:9px;}
+  body.dash-active .quest-prize{font-size:10px;margin-top:4px;}
   body.dash-active .flow-earn-card{padding:8px;margin:8px 0 0;}
   body.dash-active .flow-earn-title{font-size:10px;}
   body.dash-active .flow-earn-text{font-size:11px;}
@@ -756,22 +767,24 @@ document.addEventListener('DOMContentLoaded', setupDesktopDashboardLayout);
       <div class="stat" style="text-align:center;"><div class="stat-n">&infin;</div><div class="stat-l">SUPPLY</div></div>
     </div>
     <div class="quest-launcher">
-      <a class="quest-link" href="/dream-xi">
+      <a class="quest-link quest-dream" href="/dream-xi">
         <span class="quest-icon">&#127942;</span>
         <span style="min-width:0;">
-          <span class="quest-title">LIVE: DREAM XI</span>
+          <span class="quest-title">DREAM XI</span>
           <span class="quest-sub">score then sell cards</span>
+          <span class="quest-prize" id="questDreamPrize">- CHZ POOL</span>
         </span>
       </a>
-      <a class="quest-link" href="/nation-quest">
+      <a class="quest-link quest-nation" href="/nation-quest">
         <svg class="quest-flag-us" viewBox="0 0 28 20" aria-hidden="true">
           <rect width="28" height="20" fill="#B22234"/>
           <path d="M0 1.54h28v1.54H0zm0 3.08h28v1.54H0zm0 3.08h28v1.54H0zm0 3.08h28v1.54H0zm0 3.08h28v1.54H0zm0 3.08h28v1.54H0" fill="#fff"/>
           <rect width="12.2" height="10.77" fill="#3C3B6E"/>
         </svg>
         <span style="min-width:0;">
-          <span class="quest-title">LIVE: NATION QUEST</span>
+          <span class="quest-title">NATION QUEST</span>
           <span class="quest-sub">USA 1,000 CHZ race</span>
+          <span class="quest-prize" id="questNationPrize">1,000 CHZ PRIZE</span>
         </span>
       </a>
     </div>
@@ -814,7 +827,7 @@ document.addEventListener('DOMContentLoaded', setupDesktopDashboardLayout);
       </div>
       <div class="flow-earn-card" style="margin-top:14px;margin-bottom:0;">
         <div class="flow-earn-title">FLOW TO EARN: SCORE THEN SELL</div>
-        <div class="flow-earn-text">Mint or buy a card. It scores when it enters your wallet. Then list it, trade it, and hunt the next upgrade.</div>
+        <div class="flow-earn-text"><strong>No need to HODL.</strong> Mint or buy a card, score it when it enters your wallet, then sell it and move to the next hunt. A new fantasy flow: score first, trade next.</div>
       </div>
     </div>
   </div>
@@ -836,7 +849,7 @@ document.addEventListener('DOMContentLoaded', setupDesktopDashboardLayout);
           <div class="reward-value" id="rewardCountry">- CHZ</div>
         </div>
         <div class="reward-lane legendary">
-          <div class="reward-pct">15%</div>
+          <div class="reward-pct">10%</div>
           <div class="reward-title">LEGENDARY</div>
           <div class="reward-copy">guaranteed reward lane</div>
           <div class="reward-value" id="rewardLegendary">- CHZ</div>
@@ -1982,17 +1995,19 @@ function updateRewardPreview(vaultWeiOrChz, legendaryCount = null){
   }catch(e){ vaultChz = 0; }
   const globalPool = vaultChz * 0.65;
   const countryEach = vaultChz * 0.25 / 48;
-  const legendaryPool = vaultChz * 0.15;
+  const legendaryPool = vaultChz * 0.10;
   const legendaryEach = legendaryCount && legendaryCount > 0 ? legendaryPool / legendaryCount : legendaryPool;
 
   const g = document.getElementById('rewardGlobal');
   const c = document.getElementById('rewardCountry');
   const l = document.getElementById('rewardLegendary');
+  const qDream = document.getElementById('questDreamPrize');
   if(g) g.textContent = formatGameChz(globalPool, { compact: true });
   if(c) c.textContent = formatGameChz(countryEach);
   if(l) l.textContent = legendaryCount && legendaryCount > 0
     ? formatGameChz(legendaryEach) + ' / LEG'
     : formatGameChz(legendaryPool, { compact: true });
+  if(qDream) qDream.textContent = formatGameChz(vaultChz, { compact: true }) + ' POOL';
 }
 
 async function loadTicker(){
