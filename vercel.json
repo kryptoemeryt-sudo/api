@@ -9,6 +9,7 @@
     { "source": "/dashboard", "destination": "/test.html" },
     { "source": "/", "destination": "/home.html" },
     { "source": "/testt", "destination": "/test.html" },
+    { "source": "/dream-xi-old", "destination": "/ARG%20Dashboard.html" },
     { "source": "/dream-xi-wc", "destination": "/dream-xi-wc.html" }
   ]
 }
