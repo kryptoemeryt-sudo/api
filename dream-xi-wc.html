@@ -1405,17 +1405,17 @@ function renderStats() {
   const myData = window.dreamScores[myAddr] || {};
   
   let compGlobalCount = 0;
-  let totalCardsHandled = 0;
   
   TEAMS.forEach(team => {
     const pData = myData[team.id] || {};
     const count = Object.keys(pData).length;
     if (count > 0) compGlobalCount++;
-    totalCardsHandled += count;
   });
+
+  const actualCardsOwned = Object.values(ownerMap || {}).filter(fig => fig.owner === myAddr).length;
   
   document.getElementById('myCompGlobal').textContent = `${compGlobalCount} / 48`;
-  document.getElementById('myTotalCards').textContent = totalCardsHandled;
+  document.getElementById('myTotalCards').textContent = actualCardsOwned;
 
   // Resolving global position
   const players = getGlobalLeaderboardData();
