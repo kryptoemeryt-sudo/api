@@ -22,6 +22,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
 .topnav-logo span{color:#00ff87;}
 .btn-connect{background:rgba(0,255,135,0.1);border:1px solid rgba(0,255,135,0.3);color:#00ff87;padding:8px 16px;border-radius:6px;font-family:'Black Ops One',sans-serif;font-size:11px;letter-spacing:1px;cursor:pointer;}
 .btn-connect.connected{background:rgba(0,255,135,0.15);border-color:#00ff87;}
+
 /* SEKCJA HERO I NAGĹĂ“WEK */
 .hero{padding:48px 24px 40px;text-align:center;border-bottom:1px solid #1c2028;position:relative;overflow:hidden;}
 .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 0%,rgba(116,172,223,0.15),transparent);pointer-events:none;}
@@ -34,6 +35,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
 }
 .trophy{font-size:clamp(54px,10vw,86px);line-height:1;margin-bottom:16px;display:block;filter:drop-shadow(0 0 20px rgba(116,172,223,0.5));}
 .hero-title{font-family:'Black Ops One',sans-serif;font-size:clamp(32px,6vw,64px);line-height:0.95;margin-bottom:12px;position:relative;z-index:1;}
+
 /* GRADIENTY BARW FLAGI ARGENTYNY DLA NAGĹĂ“WKA */
 .hero-title .sky {
   color: #74ACDF;
@@ -1174,6 +1176,7 @@ body.game-mode #statsRow{
 }
 body.game-mode #statsRow .stat-card{padding:8px 10px;border-radius:8px;}
 body.game-mode #statsRow .stat-val{font-size:clamp(18px,2.2vw,26px);margin-bottom:1px;}
+body.game-mode #myEstPayout{font-size:clamp(16px,1.7vw,21px) !important;padding-top:2px !important;}
 body.game-mode #statsRow .stat-lbl{font-size:9px;letter-spacing:1px;}
 body.game-mode #gameSection{
   min-height:0;
@@ -1198,15 +1201,32 @@ body.game-mode .right-col.pitch-container{grid-area:pitch;min-height:0;overflow:
 body.game-mode .desk-section{height:100%;min-height:0;display:flex;flex-direction:column;border-radius:10px;}
 body.game-mode .desk-tabs{flex-shrink:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));}
 body.game-mode .desk-tab-btn{font-size:8px;padding:9px 4px;letter-spacing:.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-body.game-mode .desk-tab-content{flex:1;min-height:0;overflow:hidden;padding:9px;display:none;}
-body.game-mode #deskTabSnipe{display:block;}
+body.game-mode .desk-tab-content{flex:1;min-height:0;overflow:hidden;padding:9px;display:none;flex-direction:column;}
+body.game-mode #deskTabSnipe{display:flex;}
 body.game-mode .desk-tab-content .live-feed-section,
 body.game-mode .desk-tab-content .lb-section,
 body.game-mode .desk-tab-content .info-section{height:100%;min-height:0;display:flex;flex-direction:column;overflow:hidden;padding:0;border:0;background:transparent;}
 body.game-mode .snipe-list,
 body.game-mode .ledger-container,
 body.game-mode .feed-container,
-body.game-mode .leaderboard-list{flex:1;min-height:0;max-height:none;overflow:auto;}
+body.game-mode .leaderboard-list{flex:1;min-height:0;max-height:none;overflow-y:auto;overflow-x:hidden;}
+body.game-mode .desk-tab-content::-webkit-scrollbar,
+body.game-mode .snipe-list::-webkit-scrollbar,
+body.game-mode .ledger-container::-webkit-scrollbar,
+body.game-mode .feed-container::-webkit-scrollbar,
+body.game-mode .leaderboard-list::-webkit-scrollbar{width:5px;}
+body.game-mode .desk-tab-content::-webkit-scrollbar-track,
+body.game-mode .snipe-list::-webkit-scrollbar-track,
+body.game-mode .ledger-container::-webkit-scrollbar-track,
+body.game-mode .feed-container::-webkit-scrollbar-track,
+body.game-mode .leaderboard-list::-webkit-scrollbar-track{background:rgba(6,8,10,0.65);border-radius:5px;}
+body.game-mode .desk-tab-content::-webkit-scrollbar-thumb,
+body.game-mode .snipe-list::-webkit-scrollbar-thumb,
+body.game-mode .ledger-container::-webkit-scrollbar-thumb,
+body.game-mode .feed-container::-webkit-scrollbar-thumb,
+body.game-mode .leaderboard-list::-webkit-scrollbar-thumb{background:rgba(0,255,135,0.34);border-radius:5px;border:1px solid rgba(0,255,135,0.18);}
+body.game-mode #deskTabPortfolio,
+body.game-mode #deskTabInfo{overflow-y:auto;overflow-x:hidden;}
 body.game-mode .snipe-title-row{padding-bottom:7px;margin-bottom:7px;gap:8px;}
 body.game-mode .snipe-title{font-size:9px;letter-spacing:1px;}
 body.game-mode .snipe-title-row span{font-size:9px !important;}
@@ -1219,7 +1239,15 @@ body.game-mode .snipe-price{font-size:12px;}
 body.game-mode .btn-snipe{font-size:8px;padding:4px 7px;}
 body.game-mode .pitch-container{padding:10px;border-radius:10px;display:flex;flex-direction:column;}
 body.game-mode .pitch-title-row{margin-bottom:7px;flex-shrink:0;}
-body.game-mode .pitch-wrap{flex:1;min-height:0;padding:14px 8px;border-radius:12px;}
+body.game-mode .pitch-wrap{
+  flex:1;
+  min-height:0;
+  padding:14px 8px;
+  border-radius:12px;
+  background:
+    linear-gradient(to bottom, rgba(255,255,255,0.035) 0 20%, transparent 20% 40%, rgba(255,255,255,0.026) 40% 60%, transparent 60% 80%, rgba(255,255,255,0.032) 80% 100%),
+    linear-gradient(to bottom, #113018, #0b1f10);
+}
 body.game-mode .formation{height:100%;display:flex;flex-direction:column;justify-content:space-between;gap:6px;}
 body.game-mode .legend{padding:0 0 5px;font-size:9px;gap:7px;}
 body.game-mode .form-row{gap:7px;}
@@ -1240,14 +1268,15 @@ body.game-mode .btn-card-action{font-size:6px;padding:3px 2px;}
   }
   body.game-mode #statsRow{
     grid-template-columns:repeat(4,minmax(0,1fr));
-    gap:4px;
+    gap:3px;
   }
-  body.game-mode #statsRow .stat-card{padding:5px 4px;border-radius:6px;}
-  body.game-mode #statsRow .stat-val{font-size:13px;}
-  body.game-mode #statsRow .stat-lbl{font-size:6px;letter-spacing:.3px;}
+  body.game-mode #statsRow .stat-card{padding:4px 3px;border-radius:6px;min-height:46px;}
+  body.game-mode #statsRow .stat-val{font-size:12px;}
+  body.game-mode #myEstPayout{font-size:13px !important;line-height:.95 !important;padding-top:0 !important;word-break:break-word;}
+  body.game-mode #statsRow .stat-lbl{font-size:5px;letter-spacing:.2px;line-height:1.05;}
   body.game-mode #gameSection{
     grid-template-columns:1fr;
-    grid-template-rows:auto minmax(0,1fr) 220px;
+    grid-template-rows:auto minmax(0,1fr) 190px;
     grid-template-areas:
       "actions"
       "pitch"
@@ -1272,8 +1301,8 @@ body.game-mode .btn-card-action{font-size:6px;padding:3px 2px;}
   body.game-mode .pitch-title{font-size:8px;letter-spacing:1px;}
   body.game-mode .pitch-title-actions span{font-size:8px !important;}
   body.game-mode .btn-pitch-mint{padding:4px 7px;font-size:8px;}
-  body.game-mode .pitch-wrap{padding:8px 5px;border-radius:9px;}
-  body.game-mode .formation{gap:4px;}
+  body.game-mode .pitch-wrap{padding:7px 5px;border-radius:9px;}
+  body.game-mode .formation{gap:3px;}
   body.game-mode .legend{display:none;}
   body.game-mode .form-row{gap:4px;}
   body.game-mode .form-row.row-wings{padding:0 19%;}
@@ -1282,10 +1311,10 @@ body.game-mode .btn-card-action{font-size:6px;padding:3px 2px;}
   body.game-mode .form-row.row-attack .pos-card{transform:translateY(4px);}
   body.game-mode .form-row.row-wings .pos-card:first-child{transform:translate(-5px,-1px);}
   body.game-mode .form-row.row-wings .pos-card:last-child{transform:translate(5px,-1px);}
-  body.game-mode .pos-card{width:52px;min-height:66px;padding:3px 2px;border-radius:5px;}
+  body.game-mode .pos-card{width:48px;min-height:60px;padding:3px 2px;border-radius:5px;}
   body.game-mode .pos-name{font-size:6px;}
   body.game-mode .pos-ball{font-size:12px;margin:0;}
-  body.game-mode .pos-weight{font-size:12px;}
+  body.game-mode .pos-weight{font-size:11px;}
   body.game-mode .pos-rarity{font-size:5px;}
   body.game-mode .btn-card-action{font-size:5px;padding:2px 1px;margin-top:2px;}
   body.game-mode .pitch-center-circle{width:54px;height:54px;}
@@ -2143,14 +2172,14 @@ function switchDeskTab(tab) {
   document.getElementById('btnDeskFeed')?.classList.toggle('active', tab === 'feed');
   document.getElementById('btnDeskRanks')?.classList.toggle('active', tab === 'ranks');
   document.getElementById('btnDeskInfo')?.classList.toggle('active', tab === 'info');
-  document.getElementById('deskTabSnipe').style.display = tab === 'snipe' ? 'block' : 'none';
-  document.getElementById('deskTabPortfolio').style.display = tab === 'portfolio' ? 'block' : 'none';
+  document.getElementById('deskTabSnipe').style.display = tab === 'snipe' ? 'flex' : 'none';
+  document.getElementById('deskTabPortfolio').style.display = tab === 'portfolio' ? 'flex' : 'none';
   const feedTab = document.getElementById('deskTabFeed');
   const ranksTab = document.getElementById('deskTabRanks');
   const infoTab = document.getElementById('deskTabInfo');
-  if (feedTab) feedTab.style.display = tab === 'feed' ? 'block' : 'none';
-  if (ranksTab) ranksTab.style.display = tab === 'ranks' ? 'block' : 'none';
-  if (infoTab) infoTab.style.display = tab === 'info' ? 'block' : 'none';
+  if (feedTab) feedTab.style.display = tab === 'feed' ? 'flex' : 'none';
+  if (ranksTab) ranksTab.style.display = tab === 'ranks' ? 'flex' : 'none';
+  if (infoTab) infoTab.style.display = tab === 'info' ? 'flex' : 'none';
 }
 
 function openSellModal(tokenId, pos, weight, rarity) {
