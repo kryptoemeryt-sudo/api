@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- Browser tab title -->
 <title>ARGENTINA DREAM XI - Block Kickers</title>
-<!-- Argentina flag favicon -->
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 9 6'%3E%3Cpath fill='%2374acdf' d='M0 0h9v6H0z'/%3E%3Cpath fill='%23fff' d='M0 2h9v2H0z'/%3E%3Ccircle cx='4.5' cy='3' r='.5' fill='%23f1b42f'/%3E%3C/svg%3E">
+<!-- Browser tab icon -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 64 64%27%3E%3Crect width=%2764%27 height=%2764%27 rx=%2714%27 fill=%27%2300ff87%27/%3E%3Cpath fill=%27%2306080a%27 d=%27M12 14h20c7 0 11 3 11 9 0 4-2 7-6 8 5 1 8 4 8 9 0 7-5 10-13 10H12V14zm12 9v6h6c3 0 5-1 5-3s-2-3-5-3h-6zm0 15v6h8c3 0 5-1 5-3s-2-3-5-3h-8z%27/%3E%3Cpath fill=%27%2306080a%27 d=%27M45 14h7v14l8-14h7L56 31l12 19h-8l-8-14v14h-7V14z%27 transform=%27translate(-8 0)%27/%3E%3C/svg%3E">
 <link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Barlow+Condensed:wght@400;600;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.7.0/ethers.umd.min.js"></script>
 <style>
@@ -1428,6 +1428,21 @@ body.game-mode .btn-snipe{width:58px;min-height:26px;padding:4px 0;text-align:ce
   body.game-mode .snipe-price{width:54px;font-size:10px;}
   body.game-mode .btn-snipe{width:48px;font-size:7px;min-height:24px;}
 }
+
+/* Fill stat-card empty space with live micro data */
+body.game-mode #statsRow .stat-info-card{display:grid;grid-template-rows:auto auto 1fr;align-items:start;gap:3px;}
+body.game-mode .stat-mini-grid{align-self:end;margin-top:6px;display:grid;grid-template-columns:1fr auto;gap:3px 8px;padding-top:7px;border-top:1px solid rgba(255,255,255,.06);font-family:'Share Tech Mono',monospace;font-size:10px;line-height:1.05;text-align:left;color:#64748b;}
+body.game-mode .stat-mini-grid b{color:#00ff87;text-align:right;font-weight:700;white-space:nowrap;}
+body.game-mode .stat-info-card:nth-child(2) .stat-mini-grid b{color:#ffc940;}
+body.game-mode .stat-info-card:nth-child(3) .stat-mini-grid b{color:#aeb7ff;}
+body.game-mode .quest-link-card{min-height:82px;}
+body.game-mode .quest-link-copy{margin-bottom:2px;}
+@media(max-width:700px){
+  body.game-mode #statsRow{grid-template-columns:1fr 1fr;}
+  body.game-mode #statsRow .stat-card{min-height:66px;}
+  body.game-mode .stat-mini-grid{font-size:7px;gap:2px 4px;margin-top:4px;padding-top:4px;}
+  body.game-mode .quest-link-card{min-height:66px;}
+}
 </style>
 </head>
 <body>
@@ -1520,17 +1535,29 @@ body.game-mode .btn-snipe{width:58px;min-height:26px;padding:4px 0;text-align:ce
 
   <!-- STATYSTYKI DRUĹ»YNY GRACZA -->
   <div class="stats-container" id="statsRow" style="display:none;">
-    <div class="stat-card">
+    <div class="stat-card stat-info-card">
       <div class="stat-val highlight" id="myCompCount">0 / 11</div>
       <div class="stat-lbl">Positions Scored</div>
+      <div class="stat-mini-grid">
+        <span>Players</span><b id="topPlayersInfo">0</b>
+        <span>Paid</span><b id="topPaidInfo">1</b>
+      </div>
     </div>
-    <div class="stat-card">
+    <div class="stat-card stat-info-card">
       <div class="stat-val gold" id="myScoreText">0 pts</div>
       <div class="stat-lbl">Active Lineup Weight</div>
+      <div class="stat-mini-grid">
+        <span>Total minted</span><b id="topMintedInfo">0</b>
+        <span>ARG supply</span><b id="topArgSupplyInfo">0</b>
+      </div>
     </div>
-    <div class="stat-card">
+    <div class="stat-card stat-info-card">
       <div class="stat-val" id="myGlobalRank" style="color:#818cf8;">-</div>
       <div class="stat-lbl">Leaderboard Rank</div>
+      <div class="stat-mini-grid">
+        <span>To 50 CHZ</span><b id="price50Countdown">--</b>
+        <span>To 100 CHZ</span><b id="price100Countdown">--</b>
+      </div>
     </div>
     <div class="stat-card quest-link-card">
       <div class="quest-topline"><span id="topPoolInfo">10,000 CHZ POOL</span><span id="topDeadlineInfo">--D --H</span></div>
@@ -2091,6 +2118,7 @@ let circulationByPos = {};
 let currentMarketListings = [];
 let snipeFilterMode = 'all';
 let currentMintPrice = ethers.parseEther("10");
+let totalMintedGlobal = 0;
 let localMintEvents = [];
 let localSaleEvents = [];
 
@@ -2890,6 +2918,8 @@ async function loadData(){
     try {
       const p = await contract.mintPrice();
       currentMintPrice = p;
+      const tm = await contract.totalMinted();
+      totalMintedGlobal = Number(tm);
     } catch(e) {
       console.warn("Could not query dynamic mint price:", e);
     }
@@ -3016,6 +3046,7 @@ async function loadData(){
     }
   }catch(e){ console.warn('Marketplace read error:', e); }
 
+  if (!totalMintedGlobal) totalMintedGlobal = Object.keys(ownerMap).length || mints.length;
   const playerCount = getLeaderboardData().length;
   const paidPlaces = getPaidPlaces(playerCount);
   document.getElementById('poolInfo').textContent = `Quest Prize Pool: ${PRIZE_POOL_CHZ.toLocaleString()} CHZ - ${paidPlaces || 1} paid ranks from ${playerCount} collectors`;
@@ -3337,6 +3368,14 @@ function renderStats() {
   }
   
   document.getElementById('myGlobalRank').textContent = myGlobalRankVal;
+  const paidPlacesVal = getPaidPlaces(playerCount) || 1;
+  const argSupply = Object.values(circulationByPos).reduce((sum, n) => sum + n, 0);
+  const setText = (id, value) => { const el = document.getElementById(id); if (el) el.textContent = value; };
+  setText('topPlayersInfo', playerCount.toLocaleString());
+  setText('topPaidInfo', paidPlacesVal.toLocaleString());
+  setText('topMintedInfo', formatCompactNumber(totalMintedGlobal));
+  setText('topArgSupplyInfo', argSupply.toLocaleString());
+  updatePriceCountdowns();
   document.getElementById('myEstPayout').textContent = `${myEstPayoutVal.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})} CHZ`;
 }
 
@@ -3753,6 +3792,32 @@ function shareOnX(){
   window.open('https://twitter.com/intent/tweet?text='+encodeURIComponent(text),'_blank');
 }
 
+function formatCompactNumber(value) {
+  const n = Number(value || 0);
+  if (n >= 1000000) return (n / 1000000).toFixed(n >= 10000000 ? 0 : 1).replace(/\.0$/, '') + 'M';
+  if (n >= 10000) return (n / 1000).toFixed(n >= 100000 ? 0 : 1).replace(/\.0$/, '') + 'k';
+  return n.toLocaleString();
+}
+
+const PRICE_STEP_50_AT = new Date('2026-06-01T00:00:00+02:00').getTime();
+const PRICE_STEP_100_AT = new Date('2026-06-11T00:00:00+02:00').getTime();
+
+function formatShortCountdown(targetMs) {
+  const ms = targetMs - Date.now();
+  if (ms <= 0) return 'LIVE';
+  const totalMinutes = Math.floor(ms / 60000);
+  const days = Math.floor(totalMinutes / 1440);
+  const hours = Math.floor((totalMinutes % 1440) / 60);
+  if (days > 0) return `${days}D ${String(hours).padStart(2, '0')}H`;
+  const minutes = totalMinutes % 60;
+  return `${hours}H ${String(minutes).padStart(2, '0')}M`;
+}
+
+function updatePriceCountdowns() {
+  const setText = (id, value) => { const el = document.getElementById(id); if (el) el.textContent = value; };
+  setText('price50Countdown', formatShortCountdown(PRICE_STEP_50_AT));
+  setText('price100Countdown', formatShortCountdown(PRICE_STEP_100_AT));
+}
 /* HARMONOGRAM I LICZNIK BLOKĂ“W SYSTEMOWYCH */
 const BLOCK_TIME_MS = 3000;
 const DEADLINE_DAYS = 60;
@@ -3791,6 +3856,7 @@ function getEstimatedBlock(){
 }
 
 function updateCountdown(){
+  updatePriceCountdowns();
   const estimated = getEstimatedBlock();
   const blocksLeft = Math.max(0, DEADLINE_BLOCK - estimated);
   if(blocksLeft === 0){
