@@ -1181,20 +1181,15 @@ body.game-mode #statsRow .stat-lbl{font-size:9px;letter-spacing:1px;}
 body.game-mode #gameSection{
   min-height:0;
   display:grid !important;
-  grid-template-columns:minmax(560px,1fr) minmax(330px,420px);
-  grid-template-rows:auto minmax(0,1fr);
-  grid-template-areas:
-    "actions actions"
-    "pitch panel";
+  grid-template-columns:minmax(560px,1.9fr) minmax(330px,420px);
+  grid-template-rows:minmax(0,1fr);
+  grid-template-areas:"pitch panel";
   gap:8px;
   overflow:hidden;
 }
-body.game-mode #gameSection > div:first-child{
-  grid-area:actions;
-  padding:0 !important;
-  min-height:32px;
+body.game-mode .legacy-action-row{
+  display:none !important;
 }
-body.game-mode #gameSection > div:first-child .btn-share{padding:7px 10px;font-size:9px;border-radius:6px;}
 body.game-mode .game-grid{display:contents;padding:0;}
 body.game-mode .left-control-panel{grid-area:panel;min-height:0;display:block;overflow:hidden;}
 body.game-mode .right-col.pitch-container{grid-area:pitch;min-height:0;overflow:hidden;}
@@ -1233,6 +1228,17 @@ body.game-mode #deskTabInfo .how-card{padding:9px;}
 body.game-mode #deskTabInfo .how-n{font-size:18px;margin-bottom:2px;}
 body.game-mode #deskTabInfo .how-title{font-size:10px;}
 body.game-mode #deskTabInfo .how-desc{font-size:11px;line-height:1.25;}
+body.game-mode .btn-pitch-refresh{background:rgba(129,140,248,.1);border-color:rgba(129,140,248,.38);color:#aeb7ff;}
+body.game-mode .info-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px;}
+body.game-mode .info-action-btn{border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.035);color:#dde4f0;border-radius:7px;padding:9px 7px;font-family:'Black Ops One',sans-serif;font-size:9px;letter-spacing:.8px;cursor:pointer;transition:.2s;}
+body.game-mode .info-action-btn:hover{border-color:#00ff87;color:#00ff87;background:rgba(0,255,135,.08);}
+body.game-mode .info-action-btn.rules{border-color:rgba(255,201,64,.35);color:#ffc940;}
+body.game-mode .info-mini-stats{margin-top:9px;border:1px solid rgba(0,255,135,.18);background:rgba(0,255,135,.045);border-radius:7px;padding:8px;display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;font-family:'Share Tech Mono',monospace;font-size:10px;color:#8fa4bb;}
+body.game-mode .info-mini-stats b{font-family:'Black Ops One',sans-serif;color:#00ff87;font-size:13px;letter-spacing:.5px;}
+body.game-mode .quest-link-card{border-color:rgba(129,140,248,.32)!important;background:linear-gradient(135deg,rgba(129,140,248,.1),rgba(15,19,24,.94))!important;text-align:left;display:flex;flex-direction:column;justify-content:center;gap:2px;}
+body.game-mode .quest-link-title{font-family:'Black Ops One',sans-serif;font-size:11px;color:#aeb7ff;letter-spacing:1px;}
+body.game-mode .quest-link-copy{font-family:'Share Tech Mono',monospace;font-size:10px;color:#8fa4bb;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+body.game-mode .quest-soon-btn{margin-top:3px;align-self:flex-start;border:1px solid rgba(129,140,248,.35);background:rgba(129,140,248,.08);color:#818cf8;border-radius:999px;padding:3px 8px;font-family:'Black Ops One',sans-serif;font-size:8px;letter-spacing:1px;opacity:.85;}
 body.game-mode .lb-row{
   display:grid;
   grid-template-columns:34px minmax(0,1fr) 52px 86px 68px;
@@ -1302,26 +1308,13 @@ body.game-mode .btn-card-action{font-size:6px;padding:3px 2px;}
   body.game-mode #statsRow .stat-lbl{font-size:5px;letter-spacing:.2px;line-height:1.05;}
   body.game-mode #gameSection{
     grid-template-columns:1fr;
-    grid-template-rows:auto minmax(0,1fr) 190px;
-    grid-template-areas:
-      "actions"
-      "pitch"
-      "panel";
+    grid-template-rows:minmax(0,1fr) 190px;
+    grid-template-areas:"pitch" "panel";
     gap:6px;
   }
-  body.game-mode #gameSection > div:first-child{
-    min-height:28px;
-    gap:5px !important;
-    flex-wrap:nowrap !important;
-    overflow:hidden;
-  }
-  body.game-mode #gameSection > div:first-child .btn-share{
-    padding:5px 7px;
-    font-size:7px;
-    letter-spacing:.4px;
-    min-width:0;
-    white-space:nowrap;
-  }
+  body.game-mode .legacy-action-row{
+  display:none !important;
+}
   body.game-mode .pitch-container{padding:6px;border-radius:8px;}
   body.game-mode .pitch-title-row{margin-bottom:4px;gap:6px;}
   body.game-mode .pitch-title{font-size:8px;letter-spacing:1px;}
@@ -1372,6 +1365,13 @@ body.game-mode .btn-card-action{font-size:6px;padding:3px 2px;}
   body.game-mode #deskTabInfo .how-n{font-size:14px;margin:0;}
   body.game-mode #deskTabInfo .how-title{font-size:8px;margin-bottom:2px;}
   body.game-mode #deskTabInfo .how-desc{font-size:9px;line-height:1.15;}
+  body.game-mode .info-actions{grid-template-columns:1fr 1fr;gap:5px;margin-top:6px;}
+  body.game-mode .info-action-btn{font-size:7px;padding:6px 4px;border-radius:5px;}
+  body.game-mode .info-mini-stats{font-size:8px;padding:6px;margin-top:6px;}
+  body.game-mode .info-mini-stats b{font-size:10px;}
+  body.game-mode .quest-link-title{font-size:8px;}
+  body.game-mode .quest-link-copy{font-size:7px;}
+  body.game-mode .quest-soon-btn{font-size:6px;padding:2px 5px;}
   body.game-mode .lb-row{grid-template-columns:24px minmax(0,1fr) 34px 58px 45px;gap:4px;}
   body.game-mode .lb-pos{font-size:9px;}
   body.game-mode .lb-addr{font-size:8px;}
@@ -1482,9 +1482,10 @@ body.game-mode .btn-card-action{font-size:6px;padding:3px 2px;}
       <div class="stat-val" id="myGlobalRank" style="color:#818cf8;">-</div>
       <div class="stat-lbl">Leaderboard Rank</div>
     </div>
-    <div class="stat-card" style="background:rgba(0,255,135,0.03); border-color:rgba(0,255,135,0.2);">
-      <div class="stat-val" id="myEstPayout" style="color:#00ff87; font-size:24px; padding-top:6px;">0.00 CHZ</div>
-      <div class="stat-lbl">Est. Quest Reward (Sponsor)</div>
+    <div class="stat-card quest-link-card">
+      <div class="quest-link-title">QUESTS</div>
+      <div class="quest-link-copy">World Cup Album</div>
+      <button class="quest-soon-btn" type="button" disabled>SOON</button>
     </div>
   </div>
 
@@ -1497,7 +1498,7 @@ body.game-mode .btn-card-action{font-size:6px;padding:3px 2px;}
   <!-- PANEL GĹĂ“WNY ROZGRYWKI -->
   <div id="gameSection" style="display:none;">
 
-    <div style="display:flex; justify-content:space-between; align-items:center; padding:0 24px 16px; flex-wrap:wrap; gap:12px;">
+    <div class="legacy-action-row" style="display:flex; justify-content:space-between; align-items:center; padding:0 24px 16px; flex-wrap:wrap; gap:12px;">
       <button class="btn-share" onclick="shareOnX()">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
         &#128257; SHARE LINEUP ON X
@@ -1625,6 +1626,14 @@ body.game-mode .btn-card-action{font-size:6px;padding:3px 2px;}
                   <div class="how-desc">Your score stays saved. Sell cards, recycle CHZ, and hunt upgrades.</div>
                 </div>
               </div>
+              <div class="info-mini-stats">
+                <span>Est. quest reward</span>
+                <b id="myEstPayout">0.00 CHZ</b>
+              </div>
+              <div class="info-actions">
+                <button class="info-action-btn rules" onclick="toggleRulesModal(true)">&#8505; RULES</button>
+                <button class="info-action-btn" onclick="shareOnX()">SHARE ON X</button>
+              </div>
             </div>
           </div>
         </div>
@@ -1640,6 +1649,7 @@ body.game-mode .btn-card-action{font-size:6px;padding:3px 2px;}
           </div>
           <div class="pitch-title-actions">
             <span style="font-family:'Share Tech Mono',monospace; color:#818cf8; font-size:12px;" id="selectedCountryCompletion">0/11 COMPLETED</span>
+            <button class="btn-pitch-mint btn-pitch-refresh" onclick="loadData()">&#8635; Refresh</button>
             <button class="btn-pitch-mint" onclick="directMint()">&#127922; Mint</button>
           </div>
         </div>
