@@ -8,6 +8,7 @@
     { "source": "/info", "destination": "/how-to-play-dream-ii.html" },
     { "source": "/dashboard", "destination": "/ARG%20Dashboard2.html" },
     { "source": "/", "destination": "/home.html" },
+      { "source": "/testt", "destination": "/test.html" },
     { "source": "/dream-xi-wc", "destination": "/dream-xi-wc.html" }
   ]
 }
