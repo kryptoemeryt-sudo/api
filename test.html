@@ -15,9 +15,9 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
 .page{max-width:1200px;margin:0 auto;padding:0 0 60px;}
 
 /* NAWIGACJA GĹĂ“WNA */
-.topnav{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;border-bottom:1px solid #1c2028;background:rgba(6,8,10,0.97);position:sticky;top:0;z-index:100;backdrop-filter:blur(10px);}
-.topnav-left{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
-.wallet-pill{font-family:'Share Tech Mono',monospace;font-size:12px;display:none;background:rgba(0,255,135,0.06);border:1px solid rgba(0,255,135,0.2);padding:6px 10px;border-radius:6px;letter-spacing:0.3px;white-space:nowrap;}
+.topnav{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 24px;border-bottom:1px solid #1c2028;background:rgba(6,8,10,0.97);position:sticky;top:0;z-index:100;backdrop-filter:blur(10px);}
+.topnav-left{display:flex;align-items:center;gap:8px;flex-wrap:nowrap;min-width:0;overflow:hidden;}
+.wallet-pill{font-family:'Share Tech Mono',monospace;font-size:11px;display:none;background:rgba(0,255,135,0.06);border:1px solid rgba(0,255,135,0.2);padding:4px 7px;border-radius:5px;letter-spacing:0;white-space:nowrap;line-height:1;}
 .topnav-logo{font-family:'Black Ops One',sans-serif;font-size:13px;letter-spacing:2px;color:#dde4f0;}
 .topnav-logo span{color:#00ff87;}
 .btn-connect{background:rgba(0,255,135,0.1);border:1px solid rgba(0,255,135,0.3);color:#00ff87;padding:8px 16px;border-radius:6px;font-family:'Black Ops One',sans-serif;font-size:11px;letter-spacing:1px;cursor:pointer;}
@@ -1227,6 +1227,24 @@ body.game-mode .feed-container::-webkit-scrollbar-thumb,
 body.game-mode .leaderboard-list::-webkit-scrollbar-thumb{background:rgba(0,255,135,0.34);border-radius:5px;border:1px solid rgba(0,255,135,0.18);}
 body.game-mode #deskTabPortfolio,
 body.game-mode #deskTabInfo{overflow-y:auto;overflow-x:hidden;}
+body.game-mode #deskTabInfo .side-info-section{height:auto;overflow:visible;}
+body.game-mode #deskTabInfo .how-grid{grid-template-columns:1fr;gap:8px;}
+body.game-mode #deskTabInfo .how-card{padding:9px;}
+body.game-mode #deskTabInfo .how-n{font-size:18px;margin-bottom:2px;}
+body.game-mode #deskTabInfo .how-title{font-size:10px;}
+body.game-mode #deskTabInfo .how-desc{font-size:11px;line-height:1.25;}
+body.game-mode .lb-row{
+  display:grid;
+  grid-template-columns:34px minmax(0,1fr) 52px 86px 68px;
+  gap:6px;
+  align-items:center;
+  padding:7px 8px;
+  margin-bottom:5px;
+}
+body.game-mode .lb-pos{font-size:12px;width:auto;}
+body.game-mode .lb-addr{font-size:10px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+body.game-mode .lb-completion{font-size:9px;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+body.game-mode .lb-score{font-size:12px;text-align:right;white-space:nowrap;}
 body.game-mode .snipe-title-row{padding-bottom:7px;margin-bottom:7px;gap:8px;}
 body.game-mode .snipe-title{font-size:9px;letter-spacing:1px;}
 body.game-mode .snipe-title-row span{font-size:9px !important;}
@@ -1242,13 +1260,17 @@ body.game-mode .pitch-title-row{margin-bottom:7px;flex-shrink:0;}
 body.game-mode .pitch-wrap{
   flex:1;
   min-height:0;
+  overflow:auto;
   padding:14px 8px;
   border-radius:12px;
   background:
     linear-gradient(to bottom, rgba(255,255,255,0.035) 0 20%, transparent 20% 40%, rgba(255,255,255,0.026) 40% 60%, transparent 60% 80%, rgba(255,255,255,0.032) 80% 100%),
     linear-gradient(to bottom, #113018, #0b1f10);
 }
-body.game-mode .formation{height:100%;display:flex;flex-direction:column;justify-content:space-between;gap:6px;}
+body.game-mode .pitch-wrap::-webkit-scrollbar{width:5px;height:5px;}
+body.game-mode .pitch-wrap::-webkit-scrollbar-track{background:rgba(6,8,10,0.65);border-radius:5px;}
+body.game-mode .pitch-wrap::-webkit-scrollbar-thumb{background:rgba(116,172,223,0.36);border-radius:5px;border:1px solid rgba(116,172,223,0.2);}
+body.game-mode .formation{height:100%;min-height:520px;min-width:520px;display:flex;flex-direction:column;justify-content:space-between;gap:6px;}
 body.game-mode .legend{padding:0 0 5px;font-size:9px;gap:7px;}
 body.game-mode .form-row{gap:7px;}
 body.game-mode .form-row.row-wings{padding:0 23%;}
@@ -1260,6 +1282,10 @@ body.game-mode .btn-card-action{font-size:6px;padding:3px 2px;}
 
 @media(max-width:700px){
   body.game-mode .topnav{height:44px;padding:7px 9px;}
+  body.game-mode .topnav-left{gap:4px;}
+  body.game-mode .topnav-logo{font-size:10px;letter-spacing:1px;flex-shrink:0;}
+  body.game-mode .wallet-pill{font-size:7px;padding:3px 4px;border-radius:4px;max-width:86px;overflow:hidden;text-overflow:ellipsis;}
+  body.game-mode .btn-connect{font-size:8px;padding:6px 7px;letter-spacing:.5px;flex-shrink:0;}
   body.game-mode .page{
     height:calc(100vh - 44px);
     padding:6px;
@@ -1301,8 +1327,8 @@ body.game-mode .btn-card-action{font-size:6px;padding:3px 2px;}
   body.game-mode .pitch-title{font-size:8px;letter-spacing:1px;}
   body.game-mode .pitch-title-actions span{font-size:8px !important;}
   body.game-mode .btn-pitch-mint{padding:4px 7px;font-size:8px;}
-  body.game-mode .pitch-wrap{padding:7px 5px;border-radius:9px;}
-  body.game-mode .formation{gap:3px;}
+  body.game-mode .pitch-wrap{padding:7px 5px;border-radius:9px;overflow:auto;}
+  body.game-mode .formation{gap:3px;min-height:390px;min-width:348px;}
   body.game-mode .legend{display:none;}
   body.game-mode .form-row{gap:4px;}
   body.game-mode .form-row.row-wings{padding:0 19%;}
@@ -1341,6 +1367,16 @@ body.game-mode .btn-card-action{font-size:6px;padding:3px 2px;}
   body.game-mode .ledger-row,
   body.game-mode .feed-item,
   body.game-mode .lb-row{font-size:8px;padding:5px;}
+  body.game-mode #deskTabInfo .how-grid{grid-template-columns:1fr;gap:6px;}
+  body.game-mode #deskTabInfo .how-card{padding:7px;}
+  body.game-mode #deskTabInfo .how-n{font-size:14px;margin:0;}
+  body.game-mode #deskTabInfo .how-title{font-size:8px;margin-bottom:2px;}
+  body.game-mode #deskTabInfo .how-desc{font-size:9px;line-height:1.15;}
+  body.game-mode .lb-row{grid-template-columns:24px minmax(0,1fr) 34px 58px 45px;gap:4px;}
+  body.game-mode .lb-pos{font-size:9px;}
+  body.game-mode .lb-addr{font-size:8px;}
+  body.game-mode .lb-completion{font-size:7px;}
+  body.game-mode .lb-score{font-size:8px;}
 }
 </style>
 </head>
