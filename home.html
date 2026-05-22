@@ -79,8 +79,11 @@ h1 .accent{color:var(--green);text-shadow:0 0 30px var(--green-glow);}
 .btn-connect-hero:hover{background:var(--green-dim);}
 
 /* HERO CANVAS */
-.hero-right{position:relative;display:flex;align-items:center;justify-content:center;align-self:stretch;overflow:hidden;}
+.hero-right{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;align-self:stretch;overflow:hidden;padding:28px 24px 34px;gap:14px;min-width:0;}
+.hero-figure-stage{position:relative;width:100%;flex:1;min-height:360px;}
 #heroCanvas{width:100%;height:100%;min-height:100%;position:absolute;top:0;left:0;}
+.figure-caption{background:rgba(0,0,0,0.7);border:1px solid rgba(255,255,255,0.1);padding:4px 12px;border-radius:20px;font-size:11px;color:var(--text3);white-space:nowrap;font-family:monospace;}
+.figure-side-panel{width:min(100%,420px);position:relative;z-index:2;}
 
 /* SECTION */
 .section{padding:64px calc((100vw - 1100px) / 2 + 32px);}
@@ -292,7 +295,9 @@ h1 .accent{color:var(--green);text-shadow:0 0 30px var(--green-glow);}
   .hero{display:flex;flex-direction:column;min-height:auto;width:100%;}
   .hero-left{padding:12px 12px 0;order:1;width:100%;}
   .hero-center{padding:0 12px 12px!important;width:100%!important;order:2;max-width:100%!important;}
-  .hero-right{display:none!important;}
+  .hero-right{display:flex!important;order:3;width:100%;padding:0 12px 14px;min-height:auto;}
+  .hero-figure-stage,.figure-caption{display:none!important;}
+  .figure-side-panel{width:100%;}
 
   /* MOBILE HERO HEADER */
   .hero-top-mobile{display:flex;align-items:center;gap:4px;margin-bottom:12px;width:100%;overflow:hidden;}
@@ -313,6 +318,7 @@ h1 .accent{color:var(--green);text-shadow:0 0 30px var(--green-glow);}
   /* MINT BOX */
   .mint-box{max-width:100%!important;width:100%!important;}
   .price-val{font-size:26px;}
+  .flow-earn-card{margin-top:10px;}
 
   /* GRIDS */
   .how-grid{grid-template-columns:1fr!important;}
@@ -427,7 +433,7 @@ h1 .accent{color:var(--green);text-shadow:0 0 30px var(--green-glow);}
   body.dash-active .hero{display:flex;flex-direction:column;position:relative;}
   body.dash-active .hero::before{opacity:0.75;}
   body.dash-active .hero-left{padding:0!important;width:100%;}
-  body.dash-active .hero-center{padding:0!important;width:100%!important;max-width:100%!important;}
+  body.dash-active .hero-center{display:none!important;}
   body.dash-active .hero-right{
     display:block!important;
     position:absolute!important;
@@ -438,8 +444,10 @@ h1 .accent{color:var(--green);text-shadow:0 0 30px var(--green-glow);}
     opacity:.96;
     pointer-events:none;
   }
+  body.dash-active .hero-figure-stage{display:block!important;width:118px!important;height:142px!important;min-height:0!important;}
   body.dash-active .hero-right #heroCanvas{position:static!important;width:118px!important;height:142px!important;min-height:0!important;}
-  body.dash-active .hero-right > div{display:none!important;}
+  body.dash-active .figure-caption,
+  body.dash-active .figure-side-panel{display:none!important;}
   body.dash-active .badge{margin-bottom:8px;font-size:9px;padding:4px 8px;}
   body.dash-active .hero-title-desktop{font-size:31px;line-height:0.92;margin:0 118px 8px 0;letter-spacing:0;}
   body.dash-active .hero-desc{display:none;}
@@ -452,7 +460,7 @@ h1 .accent{color:var(--green);text-shadow:0 0 30px var(--green-glow);}
   body.dash-active .quest-icon{font-size:16px;}
   body.dash-active .quest-title{font-size:9px;}
   body.dash-active .quest-sub{font-size:9px;}
-  body.dash-active .flow-earn-card{padding:8px;margin-bottom:8px;}
+  body.dash-active .flow-earn-card{padding:8px;margin:8px 0 0;}
   body.dash-active .flow-earn-title{font-size:10px;}
   body.dash-active .flow-earn-text{font-size:11px;}
   body.dash-active .reward-lanes{gap:6px;margin-bottom:8px;}
@@ -767,30 +775,6 @@ document.addEventListener('DOMContentLoaded', setupDesktopDashboardLayout);
         </span>
       </a>
     </div>
-    <div class="flow-earn-card">
-      <div class="flow-earn-title">FLOW TO EARN: SCORE THEN SELL</div>
-      <div class="flow-earn-text">Mint or buy a card. It scores when it enters your wallet. Then list it, trade it, and hunt the next upgrade.</div>
-    </div>
-    <div class="reward-lanes">
-      <div class="reward-lane global">
-        <div class="reward-pct">65%</div>
-        <div class="reward-title">GLOBAL TOP</div>
-        <div class="reward-copy">main prize race</div>
-        <div class="reward-value" id="rewardGlobal">- CHZ</div>
-      </div>
-      <div class="reward-lane country">
-        <div class="reward-pct">25%</div>
-        <div class="reward-title">COUNTRY WINNERS</div>
-        <div class="reward-copy">best card per nation</div>
-        <div class="reward-value" id="rewardCountry">- CHZ</div>
-      </div>
-      <div class="reward-lane legendary">
-        <div class="reward-pct">15%</div>
-        <div class="reward-title">LEGENDARY</div>
-        <div class="reward-copy">guaranteed reward lane</div>
-        <div class="reward-value" id="rewardLegendary">- CHZ</div>
-      </div>
-    </div>
   </div>
   <div class="hero-center" style="padding:32px 16px;z-index:2;width:340px;flex-shrink:0;">
     <div class="mint-box" style="max-width:340px;">
@@ -828,9 +812,38 @@ document.addEventListener('DOMContentLoaded', setupDesktopDashboardLayout);
           </div>
         </div>
       </div>
+      <div class="flow-earn-card" style="margin-top:14px;margin-bottom:0;">
+        <div class="flow-earn-title">FLOW TO EARN: SCORE THEN SELL</div>
+        <div class="flow-earn-text">Mint or buy a card. It scores when it enters your wallet. Then list it, trade it, and hunt the next upgrade.</div>
+      </div>
     </div>
   </div>
-  <div class="hero-right" style="position:relative;"><canvas id="heroCanvas"></canvas><div style="position:absolute;bottom:16px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,0.7);border:1px solid rgba(255,255,255,0.1);padding:4px 12px;border-radius:20px;font-size:11px;color:var(--text3);white-space:nowrap;font-family:monospace;">&#10024; EXAMPLE FIGURE</div></div>
+  <div class="hero-right">
+    <div class="hero-figure-stage"><canvas id="heroCanvas"></canvas></div>
+    <div class="figure-caption">&#10024; EXAMPLE FIGURE</div>
+    <div class="figure-side-panel">
+      <div class="reward-lanes">
+        <div class="reward-lane global">
+          <div class="reward-pct">65%</div>
+          <div class="reward-title">GLOBAL TOP</div>
+          <div class="reward-copy">main prize race</div>
+          <div class="reward-value" id="rewardGlobal">- CHZ</div>
+        </div>
+        <div class="reward-lane country">
+          <div class="reward-pct">25%</div>
+          <div class="reward-title">COUNTRY WINNERS</div>
+          <div class="reward-copy">best card per nation</div>
+          <div class="reward-value" id="rewardCountry">- CHZ</div>
+        </div>
+        <div class="reward-lane legendary">
+          <div class="reward-pct">15%</div>
+          <div class="reward-title">LEGENDARY</div>
+          <div class="reward-copy">guaranteed reward lane</div>
+          <div class="reward-value" id="rewardLegendary">- CHZ</div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 
