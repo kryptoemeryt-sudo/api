@@ -78,6 +78,50 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
 .prize-box.b{background:rgba(180,120,60,0.07);border-color:rgba(180,120,60,0.3);}
 .prize-box.b .prize-num{color:#cd7f32;}
 .prize-box.b .prize-chz{color:#cd7f32;}
+.quest-flow{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:10px;
+  max-width:780px;
+  margin:0 auto 24px;
+  position:relative;
+  z-index:1;
+}
+.flow-card{
+  background:rgba(15,19,24,0.82);
+  border:1px solid rgba(116,172,223,0.18);
+  border-radius:10px;
+  padding:12px 13px;
+  text-align:left;
+  min-width:0;
+}
+.flow-card.score{
+  border-color:rgba(0,255,135,0.35);
+  background:linear-gradient(135deg,rgba(0,255,135,0.09),rgba(15,19,24,0.82));
+  box-shadow:0 0 18px rgba(0,255,135,0.06);
+}
+.flow-kicker{
+  font-family:'Share Tech Mono',monospace;
+  color:#5a6a7a;
+  font-size:10px;
+  letter-spacing:2px;
+  margin-bottom:5px;
+}
+.flow-title{
+  font-family:'Black Ops One',sans-serif;
+  font-size:14px;
+  color:#dde4f0;
+  letter-spacing:1px;
+  margin-bottom:5px;
+}
+.flow-card.score .flow-title{color:#00ff87;}
+.flow-text{
+  color:#7a8899;
+  font-size:13px;
+  line-height:1.25;
+}
+.flow-text strong{color:#ffc940;}
+.hero-actions{margin-bottom:24px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap;position:relative;z-index:1;}
 
 /* ASYMETRYCZNY UKĹAD ROZGRYWKI (BOISKO PO PRAWEJ JEST SZERSZE) */
 .game-grid {
@@ -108,7 +152,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
 }
 .how-grid{display:grid;grid-template-columns:1fr;gap:10px;}
 @media (min-width: 500px) {
-  .how-grid { grid-template-columns: 1fr 1fr; }
+  .how-grid { grid-template-columns: repeat(3,1fr); }
 }
 .how-card{background:#0f1318;border:1px solid #1c2028;border-radius:8px;padding:14px;}
 .how-n{font-family:'Black Ops One',sans-serif;font-size:24px;color:#1c2028;line-height:1;margin-bottom:4px;}
@@ -894,9 +938,11 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
   .guide-step-text{font-size:12px;line-height:1.2;}
   .tip-box{font-size:12px;line-height:1.25;padding:8px;margin-top:8px;}
   .tip-box strong{font-size:10px;}
-  .hero{padding:28px 10px 24px;}
-  .hero-title{font-size:32px;}
-  .hero-sub{font-size:14px;padding:0 4px;}
+  .hero{padding:22px 10px 18px;}
+  .trophy{font-size:46px;margin-bottom:8px;}
+  .arg-flag{margin-bottom:14px;}
+  .hero-title{font-size:30px;margin-bottom:8px;}
+  .hero-sub{display:none;}
   .prize-row{gap:6px;margin-bottom:18px;align-items:stretch;}
   .prize-box{min-width:96px;padding:10px 8px;}
   .prize-box.main{width:100%;min-width:0;padding:14px 12px;}
@@ -904,6 +950,12 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
   .prize-side-notes{width:100%;min-width:0;gap:6px;}
   .prize-note{text-align:center;padding:7px 8px;font-size:10px;}
   .prize-num{font-size:20px;}
+  .quest-flow{grid-template-columns:1fr;gap:6px;margin-bottom:14px;}
+  .flow-card{padding:7px 9px;border-radius:7px;}
+  .flow-kicker{font-size:8px;margin-bottom:2px;}
+  .flow-title{font-size:11px;margin-bottom:2px;}
+  .flow-text{font-size:12px;line-height:1.2;}
+  .hero-actions{margin-bottom:16px;gap:8px;}
   .btn-mint-hero{padding:11px 12px;font-size:11px;letter-spacing:1px;}
   .game-grid{padding:0 6px 20px;gap:12px;}
   .pitch-container{padding:8px;border-radius:8px;}
@@ -969,7 +1021,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
     border:1px solid #1c2028;
     border-radius:10px;
     display:grid;
-    grid-template-columns:minmax(150px,0.55fr) minmax(240px,0.95fr) minmax(300px,1fr) minmax(300px,1.1fr);
+    grid-template-columns:minmax(150px,0.48fr) minmax(235px,0.82fr) minmax(360px,1.2fr) minmax(230px,0.74fr);
     align-items:center;
     gap:12px;
     text-align:left;
@@ -986,10 +1038,15 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
   .prize-chz{font-size:12px;}
   .prize-side-notes{min-width:0;gap:5px;}
   .prize-note{font-size:9px;padding:5px 8px;}
-  .hero > div[style*="margin-bottom:24px"]{margin:0 !important;justify-content:stretch !important;gap:0 !important;min-width:0;}
-  .hero > div[style*="margin-bottom:24px"] .btn-mint-hero{width:100%;min-width:0;max-width:360px;padding:13px 18px;font-size:12px;letter-spacing:1px;border-radius:8px;white-space:nowrap;}
-  .hero > div[style*="margin-bottom:24px"] .btn-mint-hero + .btn-mint-hero{display:none;}
-  .countdown-wrap{min-width:240px;width:100%;padding:8px 10px;gap:2px;justify-self:end;}
+  .quest-flow{margin:0;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;max-width:none;}
+  .flow-card{padding:7px 8px;border-radius:7px;}
+  .flow-kicker{font-size:8px;letter-spacing:1px;margin-bottom:2px;}
+  .flow-title{font-size:10px;margin-bottom:3px;}
+  .flow-text{font-size:9px;line-height:1.15;}
+  .hero-actions{margin:0;justify-content:stretch;gap:6px;min-width:0;display:grid;grid-template-columns:1fr;}
+  .hero-actions .btn-mint-hero{width:100%;min-width:0;max-width:none;padding:11px 12px;font-size:11px;letter-spacing:1px;border-radius:8px;white-space:nowrap;}
+  .hero-actions .btn-mint-hero + .btn-mint-hero{display:none;}
+  .countdown-wrap{display:none;}
   .countdown-label{font-size:8px;letter-spacing:1px;}
   .countdown-timer{gap:5px !important;margin:4px auto 2px !important;}
   .countdown-unit{min-width:34px !important;}
@@ -1030,7 +1087,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
   .lb-section{grid-area:board;min-height:0;overflow:hidden;padding:10px;border:1px solid #1c2028;border-radius:12px;background:#0a0e14;display:flex;flex-direction:column;gap:8px;}
   .info-section{padding:10px;border-radius:8px;}
   .side-info-section{flex-shrink:0;padding:8px;}
-  .how-grid{grid-template-columns:1fr 1fr;gap:6px;}
+  .how-grid{grid-template-columns:repeat(3,1fr);gap:6px;}
   .how-card{padding:7px;}
   .how-n{font-size:13px;margin:0;}
   .how-title{font-size:8px;margin-bottom:2px;}
@@ -1129,7 +1186,25 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
       </div>
     </div>
 
-    <div style="margin-bottom:24px; display:flex; justify-content:center; gap:12px; flex-wrap:wrap;">
+    <div class="quest-flow">
+      <div class="flow-card">
+        <div class="flow-kicker">01</div>
+        <div class="flow-title">MINT OR BUY</div>
+        <div class="flow-text">Mint a random WC card or buy Argentina cards from the market.</div>
+      </div>
+      <div class="flow-card score">
+        <div class="flow-kicker">02</div>
+        <div class="flow-title">SCORE</div>
+        <div class="flow-text">Argentina cards score when they enter your wallet. <strong>No need to HODL.</strong></div>
+      </div>
+      <div class="flow-card">
+        <div class="flow-kicker">03</div>
+        <div class="flow-title">SELL</div>
+        <div class="flow-text">Your score stays saved. Sell, recycle CHZ, and hunt upgrades.</div>
+      </div>
+    </div>
+
+    <div class="hero-actions">
       <button class="btn-mint-hero" style="background:rgba(0,255,135,0.1); border:1px solid #00ff87; color:#00ff87;" onclick="directMint()">&#127922; MINT RANDOM WC CARD</button>
       <button class="btn-mint-hero" onclick="scrollToSquad()">&#9917; GO TO SQUAD</button>
     </div>
@@ -1322,30 +1397,25 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
 
       <div class="info-section side-info-section">
         <div class="pitch-title">
-          <span>HOW IT WORKS - ROTATION MODEL</span>
-          <span style="font-family:'Share Tech Mono',monospace; color:#818cf8;">ARGENTINA HUB</span>
+          <span>MINT - SCORE - SELL</span>
+          <span style="font-family:'Share Tech Mono',monospace; color:#818cf8;">FLOW TO EARN</span>
         </div>
 
         <div class="how-grid">
           <div class="how-card">
             <div class="how-n">01</div>
             <div class="how-title">&#127922; MINT OR BUY</div>
-            <div class="how-desc">Minting costs <span class="g">10 CHZ</span> and gives a random card from one of <span class="a">48 World Cup teams</span>. Buy Argentina cards on the market to complete this squad.</div>
+            <div class="how-desc">Mint for <span class="g">10 CHZ</span> or buy Argentina cards from the market.</div>
           </div>
-          <div class="how-card" style="border-color: rgba(239, 68, 68, 0.35); background: rgba(239, 68, 68, 0.03);">
-            <div class="how-n" style="color: #ef4444;">02</div>
-            <div class="how-title" style="color: #ef4444;">&#9888; NO P2P</div>
-            <div class="how-desc">Direct wallet-to-wallet transfers <span style="color: #ef4444; font-weight: bold;">DO NOT SCORE</span>. Only marketplace buys and mints count!</div>
+          <div class="how-card" style="border-color: rgba(0,255,135,0.35); background: rgba(0,255,135,0.05);">
+            <div class="how-n" style="color: rgba(0,255,135,0.28);">02</div>
+            <div class="how-title" style="color: #00ff87;">&#9917; SCORE</div>
+            <div class="how-desc">Argentina cards score when they enter your wallet. <span class="a">No HODL required.</span></div>
           </div>
           <div class="how-card">
             <div class="how-n">03</div>
-            <div class="how-title">&#9851; RECYCLE LIQUIDITY</div>
-            <div class="how-desc">Scored the stamp? <span class="p">Sell the card</span> on the marketplace and recover your CHZ liquidity.</div>
-          </div>
-          <div class="how-card" style="border-color:rgba(255,201,64,0.3); background:rgba(255,201,64,0.04);">
-            <div class="how-n" style="color:rgba(255,201,64,0.2);">04</div>
-            <div class="how-title" style="color:#ffc940;">&#127942; PRIZE PLACES</div>
-            <div class="how-desc">The prize pool is <span class="a">10,000 CHZ</span>. More unique collectors on the leaderboard means more paid ranks.</div>
+            <div class="how-title">&#9851; SELL & HUNT</div>
+            <div class="how-desc">Your score stays saved. Sell cards, recycle CHZ, and hunt upgrades.</div>
           </div>
         </div>
       </div>
@@ -1358,35 +1428,28 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
 <div id="onboardingModal" class="modal-overlay">
   <div class="modal-content" style="max-width:560px;">
     <button onclick="toggleOnboardingModal(false, true)" class="modal-close">&times;</button>
-    <h2 style="font-family:'Black Ops One',sans-serif; font-size:24px; color:#00ff87; margin-bottom:8px;">HOW ARGENTINA DREAM XI WORKS</h2>
-    <p style="color:#7a8899;line-height:1.4;">Build your Argentina squad with on-chain cards. A card scores as soon as it passes through your wallet, so you can keep it, sell it, or trade for the next upgrade.</p>
+    <h2 style="font-family:'Black Ops One',sans-serif; font-size:24px; color:#00ff87; margin-bottom:8px;">MINT. SCORE. SELL.</h2>
+    <p style="color:#7a8899;line-height:1.4;">Argentina Dream XI is a rotation quest. Score cards when they enter your wallet, then decide if you hold, sell, or hunt the next upgrade.</p>
     <div class="guide-steps">
       <div class="guide-step">
         <div class="guide-step-num">01</div>
         <div>
-          <div class="guide-step-title">MINT A RANDOM WC CARD</div>
-          <div class="guide-step-text">Every mint gives one random card from the 48 World Cup teams. Argentina cards count in this quest.</div>
+          <div class="guide-step-title">MINT OR BUY</div>
+          <div class="guide-step-text">Mint a random WC card for 10 CHZ or buy Argentina cards from the market.</div>
         </div>
       </div>
       <div class="guide-step">
         <div class="guide-step-num">02</div>
         <div>
-          <div class="guide-step-title">FILL 11 POSITIONS</div>
-          <div class="guide-step-text">Your best Argentina card for each position is saved to the squad score. Higher weight means more points.</div>
+          <div class="guide-step-title">SCORE</div>
+          <div class="guide-step-text">Argentina cards score when they enter your wallet. Your best card per position becomes your squad weight.</div>
         </div>
       </div>
       <div class="guide-step">
         <div class="guide-step-num">03</div>
         <div>
-          <div class="guide-step-title">TRADE SMART</div>
-          <div class="guide-step-text">You do not need to hold a card forever. Once it is recorded for your wallet, you can sell reserves and hunt missing positions.</div>
-        </div>
-      </div>
-      <div class="guide-step">
-        <div class="guide-step-num">04</div>
-        <div>
-          <div class="guide-step-title">WATCH SCARCITY</div>
-          <div class="guide-step-text">The small x-number on squad cards shows detected circulation. If only one or two exist, the market price can be much higher.</div>
+          <div class="guide-step-title">SELL & HUNT</div>
+          <div class="guide-step-text">No need to HODL. Your score stays saved, so you can sell, recycle CHZ, and chase missing or stronger positions.</div>
         </div>
       </div>
     </div>
