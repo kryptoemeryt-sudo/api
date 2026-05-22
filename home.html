@@ -256,7 +256,7 @@ h1 .accent{color:var(--green);text-shadow:0 0 30px var(--green-glow);}
 .rar-pct{font-size:26px;font-weight:700;margin-bottom:4px;}
 .rar-weight{font-size:14px;color:var(--text2);}
 .quest-launcher{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;}
-.quest-link{display:grid;grid-template-columns:42px minmax(0,1fr);align-items:center;gap:10px;min-width:0;min-height:108px;padding:13px 14px;border-radius:9px;border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.025);text-decoration:none;color:var(--text);transition:all .18s;position:relative;overflow:hidden;}
+.quest-link{display:grid;grid-template-columns:42px minmax(0,1fr);align-items:center;gap:12px;min-width:0;min-height:112px;padding:15px 18px;border-radius:9px;border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.025);text-decoration:none;color:var(--text);transition:all .18s;position:relative;overflow:hidden;}
 .quest-link::before{content:'';position:absolute;inset:-1px;opacity:.42;pointer-events:none;}
 .quest-link.quest-dream{border-color:rgba(88,210,255,0.34);box-shadow:0 0 22px rgba(88,210,255,0.08), inset 0 0 18px rgba(88,210,255,0.035);}
 .quest-link.quest-dream::before{background:radial-gradient(circle at 20% 20%,rgba(88,210,255,0.28),transparent 48%);}
@@ -267,11 +267,11 @@ h1 .accent{color:var(--green);text-shadow:0 0 30px var(--green-glow);}
 .quest-icon{font-size:25px;line-height:1;filter:drop-shadow(0 0 10px rgba(255,201,64,.32));}
 .quest-flag-us{width:28px;height:20px;border-radius:2px;box-shadow:0 0 0 1px rgba(255,255,255,0.12),0 0 12px rgba(255,255,255,0.1);}
 .quest-title{display:block;font-family:'Black Ops One',sans-serif;font-size:11px;letter-spacing:.3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;position:relative;z-index:1;}
-.quest-sub{display:block;font-size:10px;color:var(--text3);line-height:1.2;margin-top:2px;position:relative;z-index:1;}
-.quest-prize{display:block;font-family:'Black Ops One',sans-serif;line-height:1;margin-top:9px;position:relative;z-index:1;}
-.quest-amount{display:block;font-size:17px;white-space:nowrap;}
-.quest-amount span{font-size:13px;}
-.quest-label{display:block;font-size:13px;margin-top:5px;letter-spacing:1px;}
+.quest-sub{display:block;font-size:10px;color:var(--text3);line-height:1.2;margin-top:3px;position:relative;z-index:1;}
+.quest-prize{display:block;font-family:'Black Ops One',sans-serif;line-height:1;margin-top:10px;position:relative;z-index:1;}
+.quest-amount{display:inline-flex;align-items:baseline;gap:5px;max-width:100%;font-size:17px;white-space:normal;}
+.quest-amount span{font-size:12px;letter-spacing:.8px;opacity:.92;}
+.quest-label{display:block;font-size:12px;margin-top:6px;letter-spacing:1px;}
 .quest-dream .quest-prize{color:#58d2ff;text-shadow:0 0 12px rgba(88,210,255,.35);}
 .quest-nation .quest-prize{color:var(--gold);text-shadow:0 0 12px rgba(255,201,64,.35);}
 .flow-earn-card{background:linear-gradient(135deg,rgba(0,255,135,0.11),rgba(88,210,255,0.035));border:1px solid rgba(0,255,135,0.34);border-radius:10px;padding:13px 14px;margin-bottom:10px;box-shadow:0 0 24px rgba(0,255,135,0.08), inset 0 0 22px rgba(0,255,135,0.035);}
@@ -476,8 +476,8 @@ h1 .accent{color:var(--green);text-shadow:0 0 30px var(--green-glow);}
   body.dash-active .quest-flag-us{width:20px;height:14px;}
   body.dash-active .quest-title{font-size:9px;}
   body.dash-active .quest-sub{font-size:9px;}
-  body.dash-active .quest-prize{margin-top:4px;}
-  body.dash-active .quest-amount{font-size:10px;}
+  body.dash-active .quest-prize{margin-top:5px;}
+  body.dash-active .quest-amount{font-size:12px;gap:3px;}
   body.dash-active .quest-amount span{font-size:8px;}
   body.dash-active .quest-label{font-size:9px;margin-top:3px;}
   body.dash-active .flow-earn-card{padding:8px;margin:8px 0 0;}
@@ -576,6 +576,63 @@ h1 .accent{color:var(--green);text-shadow:0 0 30px var(--green-glow);}
 #ptfTeams::-webkit-scrollbar-track { background: transparent; }
 #ptfTeams::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
 #ptfTeams::-webkit-scrollbar-thumb:hover { background: var(--text3); }
+
+
+/* QUEST CARD FIT FIX - keeps CHZ values inside narrow home cards */
+.quest-link{
+  gap:12px !important;
+  min-height:112px !important;
+  padding:15px 18px !important;
+}
+.quest-prize{
+  max-width:100%;
+}
+.quest-amount{
+  display:inline-flex !important;
+  align-items:baseline;
+  gap:5px;
+  max-width:100%;
+  white-space:normal !important;
+  overflow-wrap:normal;
+}
+.quest-amount span{
+  font-size:12px !important;
+  letter-spacing:.8px;
+  opacity:.92;
+}
+.quest-label{
+  font-size:12px !important;
+  margin-top:6px !important;
+}
+@media (max-width: 768px){
+  .quest-link{
+    min-height:98px !important;
+    padding:12px 14px !important;
+    gap:10px !important;
+  }
+  .quest-amount{
+    font-size:14px !important;
+    gap:4px;
+  }
+  .quest-amount span{
+    font-size:10px !important;
+  }
+}
+@media (min-width: 1200px) and (min-height: 720px){
+  body.dash-active .quest-link{
+    min-height:80px !important;
+    padding:9px 10px !important;
+    gap:7px !important;
+  }
+  body.dash-active .quest-amount{
+    font-size:12px !important;
+    gap:3px;
+  }
+  body.dash-active .quest-amount span{
+    font-size:8px !important;
+  }
+}
+
 </style>
 </head>
 <body>
