@@ -1457,6 +1457,64 @@ body.game-mode .snipe-pos small{display:none;font-family:'Share Tech Mono',monos
   body.game-mode .snipe-info-text br:first-of-type{display:none;}
   body.game-mode .upgrade-chip{margin-top:0;align-self:flex-start;}
 }
+
+/* Network waiting overlay for blockchain actions */
+#networkOverlay{
+  position:fixed;
+  inset:0;
+  z-index:6000;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  background:rgba(2,6,8,.78);
+  backdrop-filter:blur(7px);
+  padding:max(16px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-right)) max(16px,env(safe-area-inset-bottom)) max(16px,env(safe-area-inset-left));
+}
+#networkOverlay.show{display:flex;}
+.network-wait-card{
+  width:min(88vw,340px);
+  border:1px solid rgba(0,255,135,.35);
+  background:linear-gradient(180deg,rgba(15,19,24,.98),rgba(6,8,10,.96));
+  border-radius:12px;
+  padding:24px 18px 20px;
+  text-align:center;
+  box-shadow:0 24px 80px rgba(0,0,0,.68),0 0 28px rgba(0,255,135,.08);
+}
+.network-ball{
+  width:58px;
+  height:58px;
+  margin:0 auto 14px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  color:#06080a;
+  background:radial-gradient(circle at 34% 30%,#fff 0 14%,#dde4f0 15% 42%,#00ff87 43% 100%);
+  box-shadow:0 0 0 5px rgba(0,255,135,.08),0 0 26px rgba(0,255,135,.38);
+  font-size:30px;
+  animation:networkBallSpin 1.05s linear infinite;
+}
+@keyframes networkBallSpin{to{transform:rotate(360deg)}}
+.network-wait-title{
+  font-family:'Black Ops One',sans-serif;
+  color:#00ff87;
+  font-size:15px;
+  letter-spacing:1.4px;
+  margin-bottom:7px;
+  text-transform:uppercase;
+}
+.network-wait-text{
+  font-family:'Share Tech Mono',monospace;
+  color:#9fb0c4;
+  font-size:12px;
+  line-height:1.35;
+}
+body.network-busy{cursor:progress;}
+@media(max-width:700px){
+  .network-wait-card{width:min(90vw,300px);padding:20px 14px 16px;}
+  .network-ball{width:50px;height:50px;font-size:25px;}
+  .network-wait-title{font-size:13px;}
+  .network-wait-text{font-size:11px;}
+}
 </style>
 </head>
 <body>
@@ -1862,6 +1920,13 @@ body.game-mode .snipe-pos small{display:none;font-family:'Share Tech Mono',monos
 
 <!-- POWIADOMIENIE TOAST -->
 <div id="toast">System Notification</div>
+<div id="networkOverlay" aria-live="polite" aria-busy="true">
+  <div class="network-wait-card">
+    <div class="network-ball">&#9917;</div>
+    <div class="network-wait-title">Waiting for network</div>
+    <div class="network-wait-text" id="networkOverlayText">Please confirm in your wallet and wait for Chiliz Chain.</div>
+  </div>
+</div>
 
 <script>
 // Konfiguracja kontraktĂłw on-chain dla sieci Chiliz Chain (Mainnet)
@@ -2325,6 +2390,30 @@ const RULES_TRANSLATIONS_CLEAN = {
     ]
   }
 };
+
+let networkOverlayDepth = 0;
+function showNetworkOverlay(message = 'Please confirm in your wallet and wait for Chiliz Chain.') {
+  networkOverlayDepth += 1;
+  const overlay = document.getElementById('networkOverlay');
+  const text = document.getElementById('networkOverlayText');
+  if (text) text.textContent = message;
+  if (overlay) overlay.classList.add('show');
+  document.body.classList.add('network-busy');
+}
+function updateNetworkOverlay(message) {
+  const text = document.getElementById('networkOverlayText');
+  if (text && message) text.textContent = message;
+}
+function hideNetworkOverlay() {
+  networkOverlayDepth = Math.max(0, networkOverlayDepth - 1);
+  if (networkOverlayDepth > 0) return;
+  const overlay = document.getElementById('networkOverlay');
+  if (overlay) overlay.classList.remove('show');
+  document.body.classList.remove('network-busy');
+}
+function isNetworkOverlayVisible() {
+  return networkOverlayDepth > 0;
+}
 function toggleRulesModal(show) {
   const modal = document.getElementById('rulesModal');
   modal.style.display = show ? 'flex' : 'none';
@@ -2854,7 +2943,7 @@ function setSnipeFilter(mode) {
   renderSnipeMarket(currentMarketListings);
 }
 
-async function loadData(){
+async function loadDataCore(){
   document.getElementById('pitchFormationGrid').innerHTML = '<div style="text-align:center;color:#3d4a5a;padding:40px;grid-column:1/-1;"><span class="spin"></span> Querying Chiliz Blockchain data...</div>';
 
   let mints=[], sales=[], listed=[];
@@ -3076,6 +3165,16 @@ async function loadData(){
   renderPortfolioAndLedger(mints, sales, listDetails);
 }
 
+async function loadData() {
+  const startedOverlay = !isNetworkOverlayVisible();
+  if (startedOverlay) showNetworkOverlay('Refreshing blockchain data...');
+  else updateNetworkOverlay('Refreshing blockchain data...');
+  try {
+    return await loadDataCore();
+  } finally {
+    if (startedOverlay) hideNetworkOverlay();
+  }
+}
 // Renderowanie snajpera gieĹ‚dy okazji (Snipe deals)
 function renderSnipeMarket(listings) {
   const container = document.getElementById('snipeListContainer');
@@ -3553,13 +3652,17 @@ function renderLeaderboard(){
 
 async function cancelListing(listingId) {
   if (!signer || !marketContract) { showHeaderToast('Connect wallet first.', true); return; }
+  showNetworkOverlay('Cancelling listing on Chiliz Chain...');
   try {
     showHeaderToast('Cancelling listing...');
+    updateNetworkOverlay('Waiting for wallet confirmation...');
     const tx = await marketContract.cancelListing(listingId);
+    updateNetworkOverlay('Cancel sent. Waiting for block confirmation...');
     await tx.wait();
     showHeaderToast('Listing cancelled!');
     await loadData();
   } catch(e) { showHeaderToast('Cancellation failed.', true); }
+  finally { hideNetworkOverlay(); }
 }
 
 async function buyFromMarket(listingId, priceChz, priceWeiRaw){
@@ -3567,6 +3670,7 @@ async function buyFromMarket(listingId, priceChz, priceWeiRaw){
     showHeaderToast('Connect your wallet to purchase on the marketplace.', true);
     return;
   }
+  showNetworkOverlay(`Buying card for ${priceChz} CHZ...`);
   try {
     showHeaderToast(`Initializing marketplace buy: Listing #${listingId} for ${priceChz} CHZ...`);
     const listing = await marketContract.getListing(listingId);
@@ -3600,9 +3704,10 @@ async function buyFromMarket(listingId, priceChz, priceWeiRaw){
       showHeaderToast('Not enough CHZ in your wallet for card price + gas.', true);
       return;
     }
-
+    updateNetworkOverlay('Waiting for wallet confirmation and transaction hash...');
     const tx = await marketContract.buyFigure(listingId, { value: priceWei });
     showHeaderToast('Transaction sent to Chiliz Chain. Awaiting blockchain confirmation...');
+    updateNetworkOverlay('Transaction sent. Waiting for block confirmation...');
     
     const receipt = await tx.wait();
     if (boughtFig && myAddr) {
@@ -3635,6 +3740,8 @@ async function buyFromMarket(listingId, priceChz, priceWeiRaw){
   } catch (error) {
     console.error(error);
     showHeaderToast(getUserFriendlyTxError(error, 'Transaction failed. Ensure you have sufficient CHZ for gas and purchase price.'), true);
+  } finally {
+    hideNetworkOverlay();
   }
 }
 
@@ -3649,6 +3756,7 @@ async function sellFigure(tokenId, priceChz) {
     renderPitch();
     return;
   }
+  showNetworkOverlay('Preparing marketplace listing...');
   try {
     const figContract = new ethers.Contract(CONTRACT_ADDRESS, [
       "function isApprovedForAll(address account, address operator) external view returns (bool)",
@@ -3659,6 +3767,7 @@ async function sellFigure(tokenId, priceChz) {
     const isApproved = await figContract.isApprovedForAll(address, MARKET_ADDRESS);
     if (!isApproved) {
       showHeaderToast('One-time marketplace authorization required...');
+      updateNetworkOverlay('Waiting for marketplace approval in your wallet...');
       const txApprove = await figContract.setApprovalForAll(MARKET_ADDRESS, true);
       await txApprove.wait();
       showHeaderToast('Approved! Creating marketplace listing...');
@@ -3666,7 +3775,9 @@ async function sellFigure(tokenId, priceChz) {
 
     const priceWei = ethers.parseEther(priceChz);
     showHeaderToast(`Listing card #${tokenId} for ${priceChz} CHZ...`);
+    updateNetworkOverlay(`Listing card for ${priceChz} CHZ...`);
     const txList = await marketContract.listFigure(tokenId, priceWei);
+    updateNetworkOverlay('Listing sent. Waiting for block confirmation...');
     await txList.wait();
     showHeaderToast('Card successfully listed on the marketplace!');
     toggleSellModal(false);
@@ -3681,6 +3792,8 @@ async function sellFigure(tokenId, priceChz) {
       return;
     }
     showHeaderToast('Failed to list card on marketplace.', true);
+  } finally {
+    hideNetworkOverlay();
   }
 }
 
@@ -3689,6 +3802,7 @@ async function directMint() {
     showHeaderToast('Connect your wallet to mint cards.', true);
     return;
   }
+  showNetworkOverlay('Preparing card mint...');
   try {
     const referrer = getReferrer();
     const walletBalance = await provider.getBalance(address);
@@ -3697,9 +3811,10 @@ async function directMint() {
       return;
     }
     showHeaderToast(`Initializing card mint for ${ethers.formatEther(currentMintPrice)} CHZ...`);
-    
+    updateNetworkOverlay(`Minting random WC card for ${ethers.formatEther(currentMintPrice)} CHZ...`);
     const tx = await contract.mint(referrer, { value: currentMintPrice });
     showHeaderToast('Mint transaction sent. Awaiting block confirmation...');
+    updateNetworkOverlay('Mint sent. Waiting for block confirmation...');
     
     const receipt = await tx.wait();
     showHeaderToast('Generative card minted successfully!');
@@ -3796,6 +3911,8 @@ async function directMint() {
   } catch (error) {
     console.error(error);
     showHeaderToast(getUserFriendlyTxError(error, 'Minting failed. Verify your balance and try again.'), true);
+  } finally {
+    hideNetworkOverlay();
   }
 }
 
