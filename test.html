@@ -1443,6 +1443,20 @@ body.game-mode .quest-link-copy{margin-bottom:2px;}
   body.game-mode .stat-mini-grid{font-size:7px;gap:2px 4px;margin-top:4px;padding-top:4px;}
   body.game-mode .quest-link-card{min-height:66px;}
 }
+
+/* Mobile snipe density: rarity lives on the position chip */
+body.game-mode .snipe-pos{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;border-color:var(--rar,#1c2028);box-shadow:inset 0 0 0 1px color-mix(in srgb, var(--rar,#7a8899) 45%, transparent);}
+body.game-mode .snipe-pos span{line-height:1;}
+body.game-mode .snipe-pos small{display:none;font-family:'Share Tech Mono',monospace;color:var(--rar,#7a8899);font-size:8px;line-height:1;white-space:nowrap;}
+@media(max-width:700px){
+  body.game-mode .snipe-row{grid-template-columns:38px minmax(0,1fr) 54px 48px;}
+  body.game-mode .snipe-pos{width:38px;min-height:36px;padding:3px 0;background:rgba(255,255,255,.025);}
+  body.game-mode .snipe-pos small{display:block;}
+  body.game-mode .desktop-deal-main{display:none;}
+  body.game-mode .snipe-info-text{display:flex;flex-direction:column;justify-content:center;gap:2px;}
+  body.game-mode .snipe-info-text br:first-of-type{display:none;}
+  body.game-mode .upgrade-chip{margin-top:0;align-self:flex-start;}
+}
 </style>
 </head>
 <body>
@@ -3103,9 +3117,9 @@ function renderSnipeMarket(listings) {
     html += `
       <div class="snipe-row">
         <div class="snipe-details">
-          <div class="snipe-pos">${POSITION_SHORT[deal.pos]}</div>
+          <div class="snipe-pos rarity-${deal.rarity}" style="--rar:${rarColor};"><span>${POSITION_SHORT[deal.pos]}</span><small>${deal.weight} pts</small></div>
           <div class="snipe-info-text">
-            <span style="color:${rarColor}; font-weight:600;">${rarName}</span> <span class="deal-points">${deal.weight} pts</span>${upgradeLabel ? `<br>${upgradeLabel}` : ``}
+            <span class="desktop-deal-main" style="color:${rarColor}; font-weight:600;">${rarName}</span> <span class="desktop-deal-main deal-points">${deal.weight} pts</span>${upgradeLabel ? `<br>${upgradeLabel}` : ``}
             ${badgesHtml}
             ${pressureLine}
           </div>
