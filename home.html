@@ -256,18 +256,22 @@ h1 .accent{color:var(--green);text-shadow:0 0 30px var(--green-glow);}
 .rar-pct{font-size:26px;font-weight:700;margin-bottom:4px;}
 .rar-weight{font-size:14px;color:var(--text2);}
 .quest-launcher{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;}
-.quest-link{display:flex;align-items:center;gap:8px;min-width:0;padding:10px 11px;border-radius:9px;border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.025);text-decoration:none;color:var(--text);transition:all .18s;position:relative;overflow:hidden;}
+.quest-link{display:grid;grid-template-columns:42px minmax(0,1fr);align-items:center;gap:10px;min-width:0;min-height:108px;padding:13px 14px;border-radius:9px;border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.025);text-decoration:none;color:var(--text);transition:all .18s;position:relative;overflow:hidden;}
 .quest-link::before{content:'';position:absolute;inset:-1px;opacity:.42;pointer-events:none;}
 .quest-link.quest-dream{border-color:rgba(88,210,255,0.34);box-shadow:0 0 22px rgba(88,210,255,0.08), inset 0 0 18px rgba(88,210,255,0.035);}
 .quest-link.quest-dream::before{background:radial-gradient(circle at 20% 20%,rgba(88,210,255,0.28),transparent 48%);}
 .quest-link.quest-nation{border-color:rgba(255,201,64,0.38);box-shadow:0 0 24px rgba(255,201,64,0.12), inset 0 0 18px rgba(255,201,64,0.045);}
 .quest-link.quest-nation::before{background:radial-gradient(circle at 20% 20%,rgba(255,201,64,0.32),transparent 48%);}
 .quest-link:hover{border-color:rgba(0,255,135,0.45);background:rgba(0,255,135,0.06);transform:translateY(-1px);}
-.quest-icon{font-size:18px;line-height:1;flex-shrink:0;}
-.quest-flag-us{width:20px;height:14px;border-radius:2px;flex-shrink:0;box-shadow:0 0 0 1px rgba(255,255,255,0.12);}
-.quest-title{display:block;font-family:'Black Ops One',sans-serif;font-size:10px;letter-spacing:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;position:relative;z-index:1;}
+.quest-icon-cell{position:relative;z-index:1;display:flex;align-items:center;justify-content:center;width:42px;min-width:42px;}
+.quest-icon{font-size:25px;line-height:1;filter:drop-shadow(0 0 10px rgba(255,201,64,.32));}
+.quest-flag-us{width:28px;height:20px;border-radius:2px;box-shadow:0 0 0 1px rgba(255,255,255,0.12),0 0 12px rgba(255,255,255,0.1);}
+.quest-title{display:block;font-family:'Black Ops One',sans-serif;font-size:11px;letter-spacing:.3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;position:relative;z-index:1;}
 .quest-sub{display:block;font-size:10px;color:var(--text3);line-height:1.2;margin-top:2px;position:relative;z-index:1;}
-.quest-prize{font-family:'Black Ops One',sans-serif;font-size:13px;line-height:1;margin-top:5px;position:relative;z-index:1;}
+.quest-prize{display:block;font-family:'Black Ops One',sans-serif;line-height:1;margin-top:9px;position:relative;z-index:1;}
+.quest-amount{display:block;font-size:17px;white-space:nowrap;}
+.quest-amount span{font-size:13px;}
+.quest-label{display:block;font-size:13px;margin-top:5px;letter-spacing:1px;}
 .quest-dream .quest-prize{color:#58d2ff;text-shadow:0 0 12px rgba(88,210,255,.35);}
 .quest-nation .quest-prize{color:var(--gold);text-shadow:0 0 12px rgba(255,201,64,.35);}
 .flow-earn-card{background:linear-gradient(135deg,rgba(0,255,135,0.11),rgba(88,210,255,0.035));border:1px solid rgba(0,255,135,0.34);border-radius:10px;padding:13px 14px;margin-bottom:10px;box-shadow:0 0 24px rgba(0,255,135,0.08), inset 0 0 22px rgba(0,255,135,0.035);}
@@ -466,11 +470,16 @@ h1 .accent{color:var(--green);text-shadow:0 0 30px var(--green-glow);}
   body.dash-active .stat-n{font-size:21px;}
   body.dash-active .stat-l{font-size:9px;letter-spacing:1px;text-align:center;}
   body.dash-active .quest-launcher{margin-bottom:10px;}
-  body.dash-active .quest-link{padding:8px;}
+  body.dash-active .quest-link{min-height:72px;padding:8px;grid-template-columns:28px minmax(0,1fr);gap:6px;}
+  body.dash-active .quest-icon-cell{width:28px;min-width:28px;}
   body.dash-active .quest-icon{font-size:16px;}
+  body.dash-active .quest-flag-us{width:20px;height:14px;}
   body.dash-active .quest-title{font-size:9px;}
   body.dash-active .quest-sub{font-size:9px;}
-  body.dash-active .quest-prize{font-size:10px;margin-top:4px;}
+  body.dash-active .quest-prize{margin-top:4px;}
+  body.dash-active .quest-amount{font-size:10px;}
+  body.dash-active .quest-amount span{font-size:8px;}
+  body.dash-active .quest-label{font-size:9px;margin-top:3px;}
   body.dash-active .flow-earn-card{padding:8px;margin:8px 0 0;}
   body.dash-active .flow-earn-title{font-size:10px;}
   body.dash-active .flow-earn-text{font-size:11px;}
@@ -768,23 +777,25 @@ document.addEventListener('DOMContentLoaded', setupDesktopDashboardLayout);
     </div>
     <div class="quest-launcher">
       <a class="quest-link quest-dream" href="/dream-xi">
-        <span class="quest-icon">&#127942;</span>
+        <span class="quest-icon-cell"><span class="quest-icon">&#127942;</span></span>
         <span style="min-width:0;">
           <span class="quest-title">DREAM XI</span>
           <span class="quest-sub">score then sell cards</span>
-          <span class="quest-prize" id="questDreamPrize">- CHZ POOL</span>
+          <span class="quest-prize" id="questDreamPrize"><span class="quest-amount">- <span>CHZ</span></span><span class="quest-label">POOL</span></span>
         </span>
       </a>
       <a class="quest-link quest-nation" href="/nation-quest">
-        <svg class="quest-flag-us" viewBox="0 0 28 20" aria-hidden="true">
-          <rect width="28" height="20" fill="#B22234"/>
-          <path d="M0 1.54h28v1.54H0zm0 3.08h28v1.54H0zm0 3.08h28v1.54H0zm0 3.08h28v1.54H0zm0 3.08h28v1.54H0zm0 3.08h28v1.54H0" fill="#fff"/>
-          <rect width="12.2" height="10.77" fill="#3C3B6E"/>
-        </svg>
+        <span class="quest-icon-cell">
+          <svg class="quest-flag-us" viewBox="0 0 28 20" aria-hidden="true">
+            <rect width="28" height="20" fill="#B22234"/>
+            <path d="M0 1.54h28v1.54H0zm0 3.08h28v1.54H0zm0 3.08h28v1.54H0zm0 3.08h28v1.54H0zm0 3.08h28v1.54H0zm0 3.08h28v1.54H0" fill="#fff"/>
+            <rect width="12.2" height="10.77" fill="#3C3B6E"/>
+          </svg>
+        </span>
         <span style="min-width:0;">
           <span class="quest-title">NATION QUEST</span>
           <span class="quest-sub">USA 1,000 CHZ race</span>
-          <span class="quest-prize" id="questNationPrize">1,000 CHZ PRIZE</span>
+          <span class="quest-prize" id="questNationPrize"><span class="quest-amount">1,000 <span>CHZ</span></span><span class="quest-label">PRIZE</span></span>
         </span>
       </a>
     </div>
@@ -2007,7 +2018,10 @@ function updateRewardPreview(vaultWeiOrChz, legendaryCount = null){
   if(l) l.textContent = legendaryCount && legendaryCount > 0
     ? formatGameChz(legendaryEach) + ' / LEG'
     : formatGameChz(legendaryPool, { compact: true });
-  if(qDream) qDream.textContent = formatGameChz(vaultChz, { compact: true }) + ' POOL';
+  if(qDream){
+    const poolText = formatGameChz(vaultChz, { compact: true }).replace(' CHZ', '');
+    qDream.innerHTML = '<span class="quest-amount">' + poolText + ' <span>CHZ</span></span><span class="quest-label">POOL</span>';
+  }
 }
 
 async function loadTicker(){
