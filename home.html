@@ -781,7 +781,7 @@ document.addEventListener('DOMContentLoaded', setupDesktopDashboardLayout);
         <span style="min-width:0;">
           <span class="quest-title">DREAM XI</span>
           <span class="quest-sub">score then sell cards</span>
-          <span class="quest-prize" id="questDreamPrize"><span class="quest-amount">- <span>CHZ</span></span><span class="quest-label">POOL</span></span>
+          <span class="quest-prize" id="questDreamPrize"><span class="quest-amount">10,000+ <span>CHZ</span></span><span class="quest-label">POOL</span></span>
         </span>
       </a>
       <a class="quest-link quest-nation" href="/nation-quest">
@@ -2012,16 +2012,11 @@ function updateRewardPreview(vaultWeiOrChz, legendaryCount = null){
   const g = document.getElementById('rewardGlobal');
   const c = document.getElementById('rewardCountry');
   const l = document.getElementById('rewardLegendary');
-  const qDream = document.getElementById('questDreamPrize');
   if(g) g.textContent = formatGameChz(globalPool, { compact: true });
   if(c) c.textContent = formatGameChz(countryEach);
   if(l) l.textContent = legendaryCount && legendaryCount > 0
     ? formatGameChz(legendaryEach) + ' / LEG'
     : formatGameChz(legendaryPool, { compact: true });
-  if(qDream){
-    const poolText = formatGameChz(vaultChz, { compact: true }).replace(' CHZ', '');
-    qDream.innerHTML = '<span class="quest-amount">' + poolText + ' <span>CHZ</span></span><span class="quest-label">POOL</span>';
-  }
 }
 
 async function loadTicker(){
