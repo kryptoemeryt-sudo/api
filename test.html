@@ -1378,6 +1378,56 @@ body.game-mode .btn-card-action{font-size:6px;padding:3px 2px;}
   body.game-mode .lb-completion{font-size:7px;}
   body.game-mode .lb-score{font-size:8px;}
 }
+
+/* Compact dashboard polish */
+body.game-mode #statsRow{grid-template-columns:minmax(90px,.72fr) minmax(82px,.62fr) minmax(76px,.52fr) minmax(170px,1fr);}
+body.game-mode .quest-link-card{gap:3px;align-items:stretch;}
+body.game-mode .quest-topline{display:grid;grid-template-columns:1fr auto;gap:6px;align-items:center;font-family:'Share Tech Mono',monospace;font-size:10px;color:#ffc940;white-space:nowrap;}
+body.game-mode .quest-topline span:last-child{color:#00ff87;text-align:right;}
+body.game-mode .quest-link-title{margin-top:1px;}
+body.game-mode .quest-soon-btn{padding:2px 7px;margin-top:1px;}
+body.game-mode .pitch-title-row{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:8px;}
+body.game-mode .pitch-title-actions{display:flex;align-items:center;justify-content:flex-end;gap:6px;flex-wrap:nowrap;min-width:0;}
+body.game-mode .pitch-title-actions span{white-space:nowrap;}
+body.game-mode .market-filters{display:grid;grid-template-columns:1fr 1fr;gap:6px;}
+body.game-mode .market-filter-btn{min-height:28px;width:100%;display:flex;align-items:center;justify-content:center;text-align:center;}
+body.game-mode .snipe-row{display:grid;grid-template-columns:44px minmax(0,1fr) 72px 58px;align-items:center;gap:7px;}
+body.game-mode .snipe-details{display:contents;}
+body.game-mode .snipe-pos{min-width:0;width:44px;padding:4px 0;}
+body.game-mode .snipe-info-text{min-width:0;overflow:hidden;}
+body.game-mode .deal-points{color:#dde4f0;font-family:'Share Tech Mono',monospace;font-size:10px;white-space:nowrap;}
+body.game-mode .upgrade-chip{display:inline-flex;margin-top:3px;color:#00ff87;border:1px solid rgba(0,255,135,.35);background:rgba(0,255,135,.08);border-radius:4px;padding:2px 5px;font-family:'Black Ops One',sans-serif;font-size:8px;letter-spacing:.5px;white-space:nowrap;}
+body.game-mode .snipe-action{display:contents;}
+body.game-mode .snipe-price{width:72px;text-align:right;font-size:12px;white-space:nowrap;}
+body.game-mode .btn-snipe{width:58px;min-height:26px;padding:4px 0;text-align:center;}
+@media(max-width:700px){
+  body.game-mode #statsRow{grid-template-columns:.9fr .75fr .62fr 1.25fr;}
+  body.game-mode #statsRow .stat-card{min-height:50px;}
+  body.game-mode #statsRow .stat-val{font-size:14px;line-height:1;}
+  body.game-mode #statsRow .stat-lbl{font-size:6px;line-height:1.05;}
+  body.game-mode .quest-topline{font-size:7px;gap:3px;}
+  body.game-mode .quest-link-title{font-size:8px;}
+  body.game-mode .quest-link-copy{font-size:7px;line-height:1;}
+  body.game-mode .quest-soon-btn{font-size:6px;padding:2px 5px;}
+  body.game-mode .pitch-title-row{grid-template-columns:minmax(0,1fr) auto;gap:4px;}
+  body.game-mode .pitch-title{font-size:9px;letter-spacing:.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  body.game-mode .pitch-title-actions{gap:3px;}
+  body.game-mode .pitch-title-actions span{font-size:7px !important;max-width:58px;overflow:hidden;text-overflow:ellipsis;}
+  body.game-mode .btn-pitch-mint{font-size:7px;padding:4px 5px;min-height:24px;}
+  body.game-mode .desk-tab-btn{font-size:7px;padding:8px 2px;}
+  body.game-mode .snipe-title{font-size:9px;}
+  body.game-mode .market-filter-btn{font-size:7px;min-height:27px;padding:4px 2px;}
+  body.game-mode .snipe-row{grid-template-columns:34px minmax(0,1fr) 54px 48px;gap:5px;padding:6px;}
+  body.game-mode .snipe-pos{width:34px;font-size:9px;}
+  body.game-mode .snipe-info-text{font-size:9px;line-height:1.15;}
+  body.game-mode .deal-points{font-size:8px;}
+  body.game-mode .upgrade-chip{font-size:6px;padding:1px 3px;}
+  body.game-mode .mini-badges{gap:3px;margin-top:3px;}
+  body.game-mode .mini-badge{font-size:6px;padding:1px 3px;}
+  body.game-mode .pressure-line{font-size:6px;}
+  body.game-mode .snipe-price{width:54px;font-size:10px;}
+  body.game-mode .btn-snipe{width:48px;font-size:7px;min-height:24px;}
+}
 </style>
 </head>
 <body>
@@ -1483,6 +1533,7 @@ body.game-mode .btn-card-action{font-size:6px;padding:3px 2px;}
       <div class="stat-lbl">Leaderboard Rank</div>
     </div>
     <div class="stat-card quest-link-card">
+      <div class="quest-topline"><span id="topPoolInfo">10,000 CHZ POOL</span><span id="topDeadlineInfo">--D --H</span></div>
       <div class="quest-link-title">QUESTS</div>
       <div class="quest-link-copy">World Cup Album</div>
       <button class="quest-soon-btn" type="button" disabled>SOON</button>
@@ -1505,7 +1556,7 @@ body.game-mode .btn-card-action{font-size:6px;padding:3px 2px;}
       </button>
       <div style="display:flex; gap:8px;">
         <button class="btn-share" onclick="toggleRulesModal(true)" style="border-color:#ffc940; color:#ffc940;">
-          &#8505; RULES & INFO
+          &#8505; RULES
         </button>
         <button class="btn-share" onclick="loadData()" style="border-color:rgba(99,102,241,0.3); color:#818cf8;">
           &#8635; REFRESH DATA
@@ -1539,7 +1590,7 @@ body.game-mode .btn-card-action{font-size:6px;padding:3px 2px;}
             <div id="marketMissingAlert"></div>
             <div class="market-filters">
               <button class="market-filter-btn active" id="filterAllDeals" onclick="setSnipeFilter('all')">ALL DEALS</button>
-              <button class="market-filter-btn" id="filterMissingDeals" onclick="setSnipeFilter('missing')">MY MISSING POSITIONS</button>
+              <button class="market-filter-btn" id="filterMissingDeals" onclick="setSnipeFilter('missing')">MISSING POSITIONS</button>
             </div>
             <div class="snipe-list" id="snipeListContainer">
               <div style="text-align:center;color:#3d4a5a;padding:15px;font-size:12px;"><span class="spin"></span> Sourcing marketplace deals...</div>
@@ -1708,25 +1759,25 @@ body.game-mode .btn-card-action{font-size:6px;padding:3px 2px;}
 <div id="rulesModal" class="modal-overlay">
   <div class="modal-content" style="max-width:550px;">
     <button onclick="toggleRulesModal(false)" class="modal-close">&times;</button>
-    <h2 style="font-family:'Black Ops One',sans-serif; font-size:24px; color:#ffc940; margin-bottom:16px;display:flex;align-items:center;"><span class="rules-icon">&#8505;</span><span id="rulesTitle">How to Play & Rules</span></h2>
+    <h2 style="font-family:'Black Ops One',sans-serif; font-size:24px; color:#ffc940; margin-bottom:16px;display:flex;align-items:center;"><span class="rules-icon">&#8505;</span><span id="rulesTitle">Rules</span></h2>
     
     <div style="display:flex; gap:6px; margin-bottom:20px; flex-wrap:wrap; border-bottom:1px solid #1c2028; padding-bottom:12px;">
-      <button class="tab-btn active" id="lang-en" onclick="setRulesLanguage('en')"><img src="https://flagcdn.com/w20/gb.png" alt="">EN</button>
-      <button class="tab-btn" id="lang-de" onclick="setRulesLanguage('de')"><img src="https://flagcdn.com/w20/de.png" alt="">DE</button>
-      <button class="tab-btn" id="lang-fr" onclick="setRulesLanguage('fr')"><img src="https://flagcdn.com/w20/fr.png" alt="">FR</button>
-      <button class="tab-btn" id="lang-es" onclick="setRulesLanguage('es')"><img src="https://flagcdn.com/w20/es.png" alt="">ES</button>
-      <button class="tab-btn" id="lang-it" onclick="setRulesLanguage('it')"><img src="https://flagcdn.com/w20/it.png" alt="">ITA</button>
-      <button class="tab-btn" id="lang-pt" onclick="setRulesLanguage('pt')"><img src="https://flagcdn.com/w20/pt.png" alt="">POR</button>
-      <button class="tab-btn" id="lang-ja" onclick="setRulesLanguage('ja')"><img src="https://flagcdn.com/w20/jp.png" alt="">JAP</button>
-      <button class="tab-btn" id="lang-uk" onclick="setRulesLanguage('uk')"><img src="https://flagcdn.com/w20/ua.png" alt="">UKR</button>
-      <button class="tab-btn" id="lang-pl" onclick="setRulesLanguage('pl')"><img src="https://flagcdn.com/w20/pl.png" alt="">PL</button>
+      <button class="tab-btn active" id="lang-en" onclick="setRulesLanguage('en')"><img src="https://flagcdn.com/w20/gb.png" alt="">English</button>
+      <button class="tab-btn" id="lang-de" onclick="setRulesLanguage('de')"><img src="https://flagcdn.com/w20/de.png" alt="">Deutsch</button>
+      <button class="tab-btn" id="lang-fr" onclick="setRulesLanguage('fr')"><img src="https://flagcdn.com/w20/fr.png" alt="">Fran&ccedil;ais</button>
+      <button class="tab-btn" id="lang-es" onclick="setRulesLanguage('es')"><img src="https://flagcdn.com/w20/es.png" alt="">Espa&ntilde;ol</button>
+      <button class="tab-btn" id="lang-it" onclick="setRulesLanguage('it')"><img src="https://flagcdn.com/w20/it.png" alt="">Italiano</button>
+      <button class="tab-btn" id="lang-pt" onclick="setRulesLanguage('pt')"><img src="https://flagcdn.com/w20/pt.png" alt="">Portugu&ecirc;s</button>
+      <button class="tab-btn" id="lang-ja" onclick="setRulesLanguage('ja')"><img src="https://flagcdn.com/w20/jp.png" alt="">&#26085;&#26412;&#35486;</button>
+      <button class="tab-btn" id="lang-uk" onclick="setRulesLanguage('uk')"><img src="https://flagcdn.com/w20/ua.png" alt="">&#1059;&#1082;&#1088;&#1072;&#1111;&#1085;&#1089;&#1100;&#1082;&#1072;</button>
+      <button class="tab-btn" id="lang-pl" onclick="setRulesLanguage('pl')"><img src="https://flagcdn.com/w20/pl.png" alt="">Polski</button>
     </div>
     
     <ul id="rulesContent" style="list-style:none; display:flex; flex-direction:column; gap:12px; font-family:'Barlow Condensed',sans-serif; font-size:16px; color:#dde4f0; line-height:1.4;">
       <!-- TreĹ›Ä‡ Ĺ‚adowana dynamicznie przez JS -->
     </ul>
     
-    <button class="btn-card-action" onclick="toggleRulesModal(false)" style="margin-top:24px; padding:10px; font-size:11px;">CLOSE RULES</button>
+    <button class="btn-card-action" onclick="toggleRulesModal(false)" style="margin-top:24px; padding:10px; font-size:11px;">CLOSE</button>
   </div>
 </div>
 
@@ -1824,7 +1875,7 @@ const ARGENTINA_TEAM_DATA = {id: 25, name: "Argentina", flag:"UN", code:"ar", fe
 // WielojÄ™zyczne tĹ‚umaczenia zasad gry (9 jÄ™zykĂłw: EN, DE, FR, ES, IT, PT, JA, PL, UK)
 const RULES_TRANSLATIONS_LEGACY = {
   en: {
-    title: "How to Play & Rules",
+    title: "Rules",
     items: [
       "Connect your Chiliz Wallet to activate your personal Argentina squad and check live progress.",
       "Mint cards for 10 CHZ. Each mint gives a random card from one of the 48 World Cup teams.",
@@ -1926,7 +1977,7 @@ const RULES_TRANSLATIONS_LEGACY = {
 
 const RULES_TRANSLATIONS = {
   en: {
-    title: "How to Play & Rules",
+    title: "Rules",
     items: [
       "Connect your Chiliz Wallet to activate your personal Argentina squad and check live progress.",
       "Mint cards for 10 CHZ. Each mint gives a random card from one of the 48 World Cup teams.",
@@ -2130,6 +2181,108 @@ async function updateWalletBalance() {
   }
 }
 
+
+const RULES_TRANSLATIONS_CLEAN = {
+  en: {
+    title: "Rules",
+    items: [
+      "Connect your Chiliz Wallet to activate your Argentina Dream XI squad.",
+      "Mint costs 10 CHZ and returns a random national card from 48 World Cup teams.",
+      "Argentina cards score when they are minted by you or bought on the marketplace.",
+      "Your score is saved when the card enters your wallet. You do not need to hold it forever.",
+      "Only your best card for each of the 11 positions counts toward the squad score.",
+      "The sponsored 10,000 CHZ pool is paid by leaderboard rank. More unique collectors can unlock more paid places."
+    ]
+  },
+  de: {
+    title: "Regeln",
+    items: [
+      "Verbinde dein Chiliz Wallet, um dein Argentina Dream XI Team zu aktivieren.",
+      "Ein Mint kostet 10 CHZ und gibt eine zufällige Nationalkarte aus 48 World-Cup-Teams.",
+      "Argentinien-Karten punkten, wenn du sie mintest oder auf dem Marktplatz kaufst.",
+      "Dein Score bleibt gespeichert, sobald die Karte in dein Wallet kommt. Du musst sie nicht dauerhaft halten.",
+      "Nur deine beste Karte auf jeder der 11 Positionen zählt für den Squad Score.",
+      "Der gesponserte Pool von 10,000 CHZ wird nach Rangliste ausgezahlt. Mehr einzigartige Sammler können mehr bezahlte Plätze freischalten."
+    ]
+  },
+  fr: {
+    title: "Règles",
+    items: [
+      "Connecte ton wallet Chiliz pour activer ton Argentina Dream XI.",
+      "Le mint coûte 10 CHZ et donne une carte nationale aléatoire parmi 48 équipes de Coupe du monde.",
+      "Les cartes d'Argentine marquent si tu les mintes ou si tu les achètes sur le marketplace.",
+      "Ton score reste enregistré dès que la carte entre dans ton wallet. Tu n'as pas besoin de la garder pour toujours.",
+      "Seule ta meilleure carte sur chacune des 11 positions compte dans le score.",
+      "Le pool sponsorisé de 10,000 CHZ est payé selon le classement. Plus de collectionneurs uniques peuvent débloquer plus de places payées."
+    ]
+  },
+  es: {
+    title: "Reglas",
+    items: [
+      "Conecta tu Chiliz Wallet para activar tu Argentina Dream XI.",
+      "El mint cuesta 10 CHZ y entrega una carta nacional aleatoria de 48 equipos del Mundial.",
+      "Las cartas de Argentina puntúan si las minteas o si las compras en el marketplace.",
+      "Tu score queda guardado cuando la carta entra en tu wallet. No necesitas holdearla para siempre.",
+      "Solo tu mejor carta en cada una de las 11 posiciones cuenta para el score.",
+      "El pool patrocinado de 10,000 CHZ se paga por ranking. Más coleccionistas únicos pueden desbloquear más puestos pagados."
+    ]
+  },
+  it: {
+    title: "Regole",
+    items: [
+      "Collega il tuo Chiliz Wallet per attivare il tuo Argentina Dream XI.",
+      "Il mint costa 10 CHZ e assegna una carta nazionale casuale tra 48 squadre World Cup.",
+      "Le carte Argentina fanno punti se le minti tu o se le compri sul marketplace.",
+      "Il tuo score resta salvato quando la carta entra nel wallet. Non devi tenerla per sempre.",
+      "Conta solo la tua carta migliore per ognuna delle 11 posizioni.",
+      "Il pool sponsorizzato da 10,000 CHZ viene pagato in base alla classifica. Più collezionisti unici possono sbloccare più posizioni pagate."
+    ]
+  },
+  pt: {
+    title: "Regras",
+    items: [
+      "Liga a tua Chiliz Wallet para ativar o teu Argentina Dream XI.",
+      "O mint custa 10 CHZ e dá uma carta nacional aleatória entre 48 equipas do World Cup.",
+      "As cartas da Argentina pontuam se forem mintadas por ti ou compradas no marketplace.",
+      "A tua pontuação fica guardada quando a carta entra na tua wallet. Não precisas de a guardar para sempre.",
+      "Só a tua melhor carta em cada uma das 11 posições conta para o score.",
+      "O pool patrocinado de 10,000 CHZ é pago por ranking. Mais colecionadores únicos podem desbloquear mais lugares pagos."
+    ]
+  },
+  ja: {
+    title: "ルール",
+    items: [
+      "Chiliz Wallet を接続して Argentina Dream XI を有効にします。",
+      "ミントは 10 CHZ。48 のワールドカップ代表チームからランダムなカードが出ます。",
+      "アルゼンチンのカードは、自分でミントするかマーケットで購入するとスコアになります。",
+      "カードがウォレットに入るとスコアは保存されます。ずっと保有する必要はありません。",
+      "11 ポジションそれぞれで一番強いカードだけがスコアに入ります。",
+      "スポンサー付きの 10,000 CHZ プールはランキングで支払われます。ユニークな参加者が増えるほど有料順位が増える可能性があります。"
+    ]
+  },
+  uk: {
+    title: "Правила",
+    items: [
+      "Підключи Chiliz Wallet, щоб активувати свій Argentina Dream XI.",
+      "Mint коштує 10 CHZ і дає випадкову національну картку з 48 команд World Cup.",
+      "Картки Аргентини дають очки, якщо ти їх змінтив або купив на marketplace.",
+      "Score зберігається, коли картка потрапляє у твій wallet. Тримати її назавжди не потрібно.",
+      "У score рахується тільки найкраща картка на кожній з 11 позицій.",
+      "Спонсорський пул 10,000 CHZ виплачується за рейтингом. Більше унікальних колекціонерів може відкрити більше оплачуваних місць."
+    ]
+  },
+  pl: {
+    title: "Zasady",
+    items: [
+      "Połącz Chiliz Wallet, aby aktywować swój skład Argentina Dream XI.",
+      "Mint kosztuje 10 CHZ i daje losową kartę narodową z 48 drużyn World Cup.",
+      "Karty Argentyny punktują, gdy je wymintujesz albo kupisz na marketplace.",
+      "Score zapisuje się, gdy karta trafi do Twojego walleta. Nie musisz jej trzymać na zawsze.",
+      "Do wyniku liczy się tylko najlepsza karta na każdej z 11 pozycji.",
+      "Sponsorowana pula 10,000 CHZ jest wypłacana według rankingu. Więcej unikalnych kolekcjonerów może odblokować więcej płatnych miejsc."
+    ]
+  }
+};
 function toggleRulesModal(show) {
   const modal = document.getElementById('rulesModal');
   modal.style.display = show ? 'flex' : 'none';
@@ -2137,7 +2290,7 @@ function toggleRulesModal(show) {
 }
 
 function setRulesLanguage(lang) {
-  const data = RULES_TRANSLATIONS[lang] || RULES_TRANSLATIONS['en'];
+  const data = RULES_TRANSLATIONS_CLEAN[lang] || RULES_TRANSLATIONS_CLEAN['en'];
   document.getElementById('rulesTitle').textContent = data.title;
   
   const langs = ['en', 'de', 'fr', 'es', 'it', 'pt', 'ja', 'uk', 'pl'];
@@ -2909,7 +3062,7 @@ function renderSnipeMarket(listings) {
   bestDeals.forEach(deal => {
     const scored = myTeamPositions[deal.pos];
     const isUpgrade = !scored || deal.weight > scored.weight;
-    const upgradeLabel = isUpgrade ? `<span style="color:#00ff87; font-weight:bold;">(+${scored ? deal.weight - scored.weight : deal.weight} pts!)</span>` : '<span style="color:#5a6a7a;">(Reserve)</span>';
+    const upgradeLabel = isUpgrade ? `<span class="upgrade-chip">UPGRADE +${scored ? deal.weight - scored.weight : deal.weight} PTS</span>` : '';
     const rarName = ['Common', 'Rare', 'Epic', 'Legendary'][deal.rarity];
     const rarColor = ['#7a8899','#3b82f6','#c084fc','#ffc940'][deal.rarity];
     const floor = marketFloorByPos[deal.pos] || null;
@@ -2921,8 +3074,7 @@ function renderSnipeMarket(listings) {
         <div class="snipe-details">
           <div class="snipe-pos">${POSITION_SHORT[deal.pos]}</div>
           <div class="snipe-info-text">
-            <span style="color:${rarColor}; font-weight:600;">${rarName}</span> (${deal.weight} pts)<br>
-            Status: ${upgradeLabel}
+            <span style="color:${rarColor}; font-weight:600;">${rarName}</span> <span class="deal-points">${deal.weight} pts</span>${upgradeLabel ? `<br>${upgradeLabel}` : ``}
             ${badgesHtml}
             ${pressureLine}
           </div>
@@ -3647,6 +3799,8 @@ function updateCountdown(){
     document.getElementById('cdM').textContent = '00';
     document.getElementById('cdS').textContent = '00';
     document.getElementById('cdBlock').textContent = 'QUEST CONCLUDED AT BLOCK #'+DEADLINE_BLOCK.toLocaleString();
+    const topDeadlineDone = document.getElementById('topDeadlineInfo');
+    if (topDeadlineDone) topDeadlineDone.textContent = 'ENDED';
     return;
   }
   const secsLeft = blocksLeft * 3;
@@ -3659,6 +3813,8 @@ function updateCountdown(){
   document.getElementById('cdH').textContent = String(h).padStart(2,'0');
   document.getElementById('cdM').textContent = String(m).padStart(2,'0');
   document.getElementById('cdS').textContent = String(s).padStart(2,'0');
+  const topDeadline = document.getElementById('topDeadlineInfo');
+  if (topDeadline) topDeadline.textContent = String(d).padStart(2,'0')+'D '+String(h).padStart(2,'0')+'H';
   document.getElementById('cdBlock').innerHTML = 'Deadline block: <a href="https://scan.chiliz.com/block/'+DEADLINE_BLOCK+'" target="_blank" style="color:#00ff87;text-decoration:none;">#'+DEADLINE_BLOCK.toLocaleString()+'</a> - Estimated current: ~#'+estimated.toLocaleString()+' - remaining: '+blocksLeft.toLocaleString()+' blocks';
 }
 
