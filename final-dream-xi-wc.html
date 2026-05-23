@@ -282,11 +282,31 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
   position: relative;
   z-index: 2;
 }
+.formation.album-horizontal{
+  display:grid;
+  grid-template-columns:.8fr 1.25fr 1fr 1fr;
+  align-items:center;
+  gap:12px;
+  min-width:0;
+}
 .form-row {
   display: flex;
   justify-content: center;
   gap: 12px;
 }
+.formation.album-horizontal .form-row{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  min-width:0;
+}
+.formation.album-horizontal .row-defense{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.formation.album-horizontal .row-mid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;}
+.formation.album-horizontal .row-attack{display:grid;grid-template-columns:1fr;gap:8px;}
+.formation.album-horizontal .row-wings{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.formation.album-horizontal .row-keeper{display:grid;grid-template-columns:1fr;gap:8px;}
 
 .pos-card{
   background: rgba(15, 19, 24, 0.9);
@@ -398,12 +418,16 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
 
 .lb-row{display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:8px;margin-bottom:6px;background:#0f1318;border:1px solid #1c2028;position:relative;}
 .lb-row.me{border-color:rgba(0,255,135,0.3);background:rgba(0,255,135,0.04);}
+.lb-row.prize-row{border-color:rgba(255,201,64,.42);background:linear-gradient(90deg,rgba(255,201,64,.11),rgba(15,19,24,.96));box-shadow:inset 4px 0 0 rgba(255,201,64,.85),0 0 14px rgba(255,201,64,.08);}
 .lb-pos{font-family:'Black Ops One',sans-serif;font-size:16px;color:#5a6a7a;width:32px;flex-shrink:0;}
 .lb-pos.winner{color:#ffc940;} 
 .lb-addr{font-family:'Share Tech Mono',monospace;font-size:13px;color:#dde4f0;flex:1;}
 .lb-completion{font-size:12px;color:#7a8899;font-family:'Share Tech Mono',monospace;margin-right:12px;}
 .lb-score{font-family:'Black Ops One',sans-serif;font-size:16px;color:#818cf8;}
 .lb-you{font-size:10px;color:#00ff87;letter-spacing:1px;background:rgba(0,255,135,0.1);padding:2px 6px;border-radius:4px;margin-left:8px;}
+.lb-prize{font-family:'Black Ops One',sans-serif;color:#00ff87;font-size:14px;text-align:right;white-space:nowrap;text-shadow:0 0 10px rgba(0,255,135,.16);}
+.lb-prize.none{font-family:'Share Tech Mono',monospace;color:#5a6a7a;font-size:11px;text-shadow:none;}
+.prize-cell{margin-left:0!important;font-weight:700;text-align:right;}
 
 /* CUTOFF STANDINGS DIVIDERS */
 .cutoff-line{display:flex;align-items:center;justify-content:center;gap:12px;margin:12px 0;padding:8px;background:rgba(239,68,68,0.05);border:1px dotted rgba(239,68,68,0.4);border-radius:6px;font-size:11px;font-family:'Share Tech Mono',monospace;color:#ef4444;letter-spacing:1px;}
@@ -590,10 +614,17 @@ body.game-mode .pitch-title-row{margin-bottom:7px;flex-shrink:0;}
 body.game-mode .pitch-title{font-size:10px;letter-spacing:1.4px;margin-bottom:7px;}
 body.game-mode .pitch-wrap{flex:1;min-height:0;overflow:auto;padding:14px 8px;border-radius:12px;background:linear-gradient(to bottom,#113018,#0b1f10);}
 body.game-mode .formation{height:100%;min-height:520px;min-width:520px;gap:6px;justify-content:space-between;}
+body.game-mode .formation.album-horizontal{height:100%;min-height:0;min-width:0;grid-template-columns:.75fr 1.22fr 1.05fr 1fr;gap:8px;}
 body.game-mode .form-row{gap:7px;}
 body.game-mode .form-row.row-wings{padding:0 23%;}
 body.game-mode .form-row.row-mid{padding:0 15%;}
 body.game-mode .form-row.row-defense{padding:0 8%;}
+body.game-mode .formation.album-horizontal .form-row{padding:0;gap:7px;}
+body.game-mode .formation.album-horizontal .row-defense,
+body.game-mode .formation.album-horizontal .row-mid,
+body.game-mode .formation.album-horizontal .row-attack,
+body.game-mode .formation.album-horizontal .row-wings,
+body.game-mode .formation.album-horizontal .row-keeper{padding:0;}
 body.game-mode .pos-card{width:clamp(62px,7.2vh,78px);min-height:clamp(78px,10vh,98px);padding:5px 4px;border-radius:6px;}
 body.game-mode .pos-ball{font-size:15px;margin:0;}
 body.game-mode .pos-name{font-size:7px;}
@@ -608,7 +639,7 @@ body.game-mode .lb-title-row{margin-bottom:7px;display:grid;grid-template-column
 body.game-mode .lb-toggle-container{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:7px;flex-shrink:0;}
 body.game-mode .lb-toggle-btn{font-size:8px;padding:7px 5px;}
 body.game-mode .leaderboard-list{flex:1;min-height:0;overflow:auto;padding:8px;}
-body.game-mode .lb-row{display:grid;grid-template-columns:34px minmax(0,1fr) 120px 70px;gap:7px;align-items:center;padding:7px 8px;margin-bottom:5px;}
+body.game-mode .lb-row{display:grid;grid-template-columns:34px minmax(0,1fr) 92px 110px 70px;gap:7px;align-items:center;padding:7px 8px;margin-bottom:5px;}
 body.game-mode .lb-addr{font-size:10px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 body.game-mode .lb-completion{font-size:9px;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 body.game-mode .lb-score{font-size:12px;text-align:right;white-space:nowrap;}
@@ -650,10 +681,17 @@ body.game-mode .lb-score{font-size:12px;text-align:right;white-space:nowrap;}
   body.game-mode #selectedCountryCompletion{font-size:8px!important;}
   body.game-mode .pitch-wrap{padding:7px 5px;border-radius:9px;}
   body.game-mode .formation{gap:3px;min-height:360px;min-width:330px;}
+  body.game-mode .formation.album-horizontal{min-height:0;min-width:0;grid-template-columns:.72fr 1.2fr 1fr .92fr;gap:4px;}
   body.game-mode .form-row{gap:4px;}
   body.game-mode .form-row.row-wings{padding:0 19%;}
   body.game-mode .form-row.row-mid{padding:0 8%;}
   body.game-mode .form-row.row-defense{padding:0 1%;}
+  body.game-mode .formation.album-horizontal .form-row{padding:0;gap:4px;}
+  body.game-mode .formation.album-horizontal .row-defense,
+  body.game-mode .formation.album-horizontal .row-mid,
+  body.game-mode .formation.album-horizontal .row-attack,
+  body.game-mode .formation.album-horizontal .row-wings,
+  body.game-mode .formation.album-horizontal .row-keeper{padding:0;}
   body.game-mode .pos-card{width:46px;min-height:56px;padding:3px 2px;border-radius:5px;}
   body.game-mode .pos-name{font-size:6px;}
   body.game-mode .pos-ball{font-size:12px;}
@@ -665,11 +703,13 @@ body.game-mode .lb-score{font-size:12px;text-align:right;white-space:nowrap;}
   body.game-mode .pitch-penalty-area-bottom{width:120px;height:34px;}
   body.game-mode .lb-toggle-btn{font-size:6px;padding:5px 2px;}
   body.game-mode .leaderboard-list{padding:5px;}
-  body.game-mode .lb-row{grid-template-columns:22px minmax(0,1fr) 56px 42px;gap:4px;padding:5px;}
+  body.game-mode .lb-row{grid-template-columns:22px minmax(0,1fr) 44px 58px 42px;gap:4px;padding:5px;}
   body.game-mode .lb-pos{font-size:9px;width:auto;}
   body.game-mode .lb-addr{font-size:8px;}
   body.game-mode .lb-completion{font-size:7px;}
   body.game-mode .lb-score{font-size:8px;}
+  body.game-mode .lb-prize{font-size:8px;}
+  body.game-mode .lb-prize.none{font-size:7px;}
 }
 </style>
 </head>
@@ -1877,6 +1917,7 @@ function renderCountryHub() {
 function renderPitch() {
   const grid = document.getElementById('pitchFormationGrid');
   grid.innerHTML = '';
+  grid.classList.add('album-horizontal');
   const myAddr = address?.toLowerCase();
   
   const selectedTeam = TEAMS.find(t => t.id === selectedTeamId);
@@ -1886,9 +1927,14 @@ function renderPitch() {
   const currentCompCount = Object.keys(myTeamPositions).length;
   document.getElementById('selectedCountryCompletion').textContent = `${currentCompCount}/11 POSITIONS COMPLETED`;
 
-  FORMATION.forEach(row => {
+  const horizontalFormation = [[1], [2,3,4,5], [6,7,8], [9,10,11]];
+  horizontalFormation.forEach(row => {
     const rowEl = document.createElement('div');
-    rowEl.className = 'form-row';
+    const rowClass = row.length === 1 && row[0] === 1 ? 'row-keeper'
+      : row[0] === 2 ? 'row-defense'
+      : row[0] === 6 ? 'row-mid'
+      : 'row-attack';
+    rowEl.className = `form-row ${rowClass}`;
 
     row.forEach(pos => {
       const card = document.createElement('div');
@@ -1997,14 +2043,14 @@ function renderLeaderboard(){
       const posClass = isWinner ? 'winner' : '';
       const medal = rank === 1 ? '🥇' : rank === 2 ? '🥈' : rank === 3 ? '🥉' : '';
       const prizeAmount = getPrizeForRank(rank);
-      const prizeDisplay = prizeAmount > 0 ? `<span style="color:#00ff87;">Prize: ${prizeAmount.toLocaleString()} CHZ</span>` : '<span style="color:#5a6a7a;">No Prize</span>';
+      const prizeDisplay = prizeAmount > 0 ? `<span class="lb-prize">${prizeAmount.toLocaleString()} CHZ</span>` : '<span class="lb-prize none">NO PRIZE</span>';
 
       return `
-        <div class="lb-row ${isMe ? 'me' : ''}">
+        <div class="lb-row ${isMe ? 'me' : ''} ${prizeAmount > 0 ? 'prize-row' : ''}">
           <div class="lb-pos ${posClass}">${medal || '#' + rank}</div>
           <div class="lb-addr">${player.wallet.slice(0,6)}…${player.wallet.slice(-4)} ${isMe ? '<span class="lb-you">YOU</span>' : ''}</div>
           <div class="lb-completion">Active Albums: ${player.filled}/48</div>
-          <div class="lb-completion" style="margin-left: 12px; font-weight: 700;">${prizeDisplay}</div>
+          <div class="lb-completion prize-cell">${prizeDisplay}</div>
           <div class="lb-score">${player.score} pts</div>
         </div>
       `;
