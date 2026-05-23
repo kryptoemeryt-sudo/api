@@ -146,7 +146,7 @@ body.game-mode .wallet-actions #connectBtn.connected{display:none;}
 }
 .country-card:hover {
   border-color: #818cf8;
-  transform: translateY(-2px);
+  transform: none;
 }
 .country-card.selected {
   border-color: #00ff87;
@@ -658,15 +658,18 @@ body.game-mode .lb-section{background:#0a0e14;border:1px solid #1c2028;border-ra
 body.game-mode .country-section{display:flex;flex-direction:column;order:2;width:100%;grid-column:1 / -1;grid-row:2 / 3;}
 body.game-mode .filter-tabs{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px;margin-bottom:8px;flex-shrink:0;}
 body.game-mode .tab-btn{font-size:8px;padding:6px 4px;letter-spacing:.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-body.game-mode .country-grid{flex:1;min-height:0;max-height:none;overflow:auto;grid-template-columns:repeat(auto-fit,minmax(112px,1fr));gap:7px;padding-right:3px;}
+body.game-mode .country-grid{flex:1;min-height:0;max-height:none;overflow:hidden;grid-template-columns:repeat(8,minmax(0,1fr));grid-template-rows:repeat(6,minmax(0,1fr));gap:7px;padding-right:0;}
 body.game-mode .country-card{min-height:76px;padding:8px 6px;border-radius:7px;align-items:center;text-align:center;justify-content:center;gap:4px;background:radial-gradient(circle at 50% 0%,rgba(116,172,223,.08),transparent 60%),#0f1318;}
+body.game-mode .country-card,
+body.game-mode .country-card:hover,
+body.game-mode .country-card.selected{transform:none!important;}
 body.game-mode .country-card > div{width:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;}
 body.game-mode .country-card-flag{font-size:20px;margin:0;min-height:20px;width:100%;display:flex;justify-content:center;}
 body.game-mode .country-card-name{font-size:13.2px;line-height:1.05;margin-top:5px!important;text-align:center;width:100%;}
 body.game-mode .country-card-fed{display:none;}
 body.game-mode .country-card-score{font-size:15.6px;margin-top:5px;}
 body.game-mode .country-card-completion{font-size:9px;font-family:'Black Ops One',sans-serif;letter-spacing:.5px;}
-body.game-mode .country-card.selected{box-shadow:0 0 0 1px rgba(0,255,135,.72),0 0 18px rgba(0,255,135,.18),inset 0 0 20px rgba(0,255,135,.08);}
+body.game-mode .country-card.selected{border-color:#00ff87;box-shadow:inset 0 0 18px rgba(0,255,135,.12);}
 body.game-mode .country-card:has(.country-card-crown){border-color:rgba(255,201,64,.42);box-shadow:inset 0 0 18px rgba(255,201,64,.08);}
 body.game-mode .pitch-container{display:flex;flex-direction:column;order:1;width:100%;grid-column:1 / -1;grid-row:1 / 2;}
 body.game-mode .pitch-title-row{margin-bottom:7px;flex-shrink:0;}
