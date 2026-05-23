@@ -2052,6 +2052,7 @@ body.network-busy{cursor:progress;}
     <div class="network-ball">&#9917;</div>
     <div class="network-wait-title">Waiting for network</div>
     <div class="network-wait-text" id="networkOverlayText">Please confirm in your wallet and wait for Chiliz Chain.</div>
+    <button id="walletOpenBtn" type="button" onclick="openWalletConnectApp()" style="display:none;margin-top:12px;border:1px solid rgba(0,255,135,.42);background:rgba(0,255,135,.10);color:#00ff87;border-radius:7px;padding:9px 12px;font-family:'Black Ops One',sans-serif;font-size:10px;letter-spacing:1px;">OPEN WALLET APP</button>
   </div>
 </div>
 
@@ -2737,15 +2738,51 @@ function updateNetworkOverlay(message) {
   const text = document.getElementById('networkOverlayText');
   if (text && message) text.textContent = message;
 }
+function setWalletOpenButton(show) {
+  const btn = document.getElementById('walletOpenBtn');
+  if (btn) btn.style.display = show ? 'inline-flex' : 'none';
+}
 function hideNetworkOverlay() {
   networkOverlayDepth = Math.max(0, networkOverlayDepth - 1);
   if (networkOverlayDepth > 0) return;
   const overlay = document.getElementById('networkOverlay');
   if (overlay) overlay.classList.remove('show');
+  setWalletOpenButton(false);
   document.body.classList.remove('network-busy');
 }
 function isNetworkOverlayVisible() {
   return networkOverlayDepth > 0;
+}
+
+function getWalletConnectRedirectUrl() {
+  const meta = walletConnectProvider?.session?.peer?.metadata || {};
+  const redirect = meta.redirect || {};
+  let url = redirect.native || redirect.universal || '';
+  const name = String(meta.name || '').toLowerCase();
+  if (!url && name.includes('socios')) url = 'socios-mob://';
+  if (!url && name.includes('trust')) url = 'trust://';
+  if (!url && name.includes('metamask')) url = 'metamask://';
+  return url;
+}
+
+function openWalletConnectApp() {
+  const url = getWalletConnectRedirectUrl();
+  if (!url) {
+    showHeaderToast('Open your connected wallet app to confirm this WalletConnect request.', true);
+    return;
+  }
+  try {
+    window.location.href = url;
+  } catch(e) {
+    showHeaderToast('Open your connected wallet app to confirm this request.', true);
+  }
+}
+
+function promptWalletConnectConfirmation(message = 'Confirm this request in your connected wallet app.') {
+  if (activeWalletType !== 'WalletConnect') return;
+  updateNetworkOverlay(message + ' If the app does not open, tap OPEN WALLET APP.');
+  setWalletOpenButton(true);
+  setTimeout(openWalletConnectApp, 350);
 }
 function toggleRulesModal(show) {
   const modal = document.getElementById('rulesModal');
@@ -4099,6 +4136,7 @@ async function cancelListing(listingId) {
   try {
     showHeaderToast('Cancelling listing...');
     updateNetworkOverlay('Waiting for wallet confirmation...');
+    promptWalletConnectConfirmation('Open your wallet app and confirm cancel listing.');
     const tx = await marketContract.cancelListing(listingId);
     updateNetworkOverlay('Cancel sent. Waiting for block confirmation...');
     await tx.wait();
@@ -4148,6 +4186,7 @@ async function buyFromMarket(listingId, priceChz, priceWeiRaw){
       return;
     }
     updateNetworkOverlay('Waiting for wallet confirmation and transaction hash...');
+    promptWalletConnectConfirmation('Open your wallet app and confirm marketplace buy.');
     const tx = await marketContract.buyFigure(listingId, { value: priceWei });
     showHeaderToast('Transaction sent to Chiliz Chain. Awaiting blockchain confirmation...');
     updateNetworkOverlay('Transaction sent. Waiting for block confirmation...');
@@ -4211,6 +4250,7 @@ async function sellFigure(tokenId, priceChz) {
     if (!isApproved) {
       showHeaderToast('One-time marketplace authorization required...');
       updateNetworkOverlay('Waiting for marketplace approval in your wallet...');
+      promptWalletConnectConfirmation('Open your wallet app and approve marketplace access.');
       const txApprove = await figContract.setApprovalForAll(MARKET_ADDRESS, true);
       await txApprove.wait();
       showHeaderToast('Approved! Creating marketplace listing...');
@@ -4219,6 +4259,7 @@ async function sellFigure(tokenId, priceChz) {
     const priceWei = ethers.parseEther(priceChz);
     showHeaderToast(`Listing card #${tokenId} for ${priceChz} CHZ...`);
     updateNetworkOverlay(`Listing card for ${priceChz} CHZ...`);
+    promptWalletConnectConfirmation('Open your wallet app and confirm listing.');
     const txList = await marketContract.listFigure(tokenId, priceWei);
     updateNetworkOverlay('Listing sent. Waiting for block confirmation...');
     await txList.wait();
@@ -4300,6 +4341,7 @@ async function directMint() {
         console.warn('Mint gas estimate skipped:', err);
       }
     }
+      promptWalletConnectConfirmation('Open your wallet app and confirm mint.');
       tx = await contract.mint(referrer, txOptions);
     }
     showHeaderToast('Mint transaction sent. Awaiting block confirmation...');
