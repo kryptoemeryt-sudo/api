@@ -2754,6 +2754,23 @@ function isNetworkOverlayVisible() {
   return networkOverlayDepth > 0;
 }
 
+async function waitForTxOrFail(tx, label = 'Transaction') {
+  const hash = typeof tx === 'string' ? tx : tx?.hash;
+  const waitPromise = typeof tx?.wait === 'function'
+    ? tx.wait()
+    : provider.waitForTransaction(hash);
+  const timeoutMs = activeWalletType === 'WalletConnect' ? 90000 : 150000;
+  const timeoutPromise = new Promise((_, reject) => {
+    setTimeout(() => reject(new Error(`${label} confirmation timed out. Check wallet history or ChilizScan, then refresh.`)), timeoutMs);
+  });
+  const receipt = await Promise.race([waitPromise, timeoutPromise]);
+  if (!receipt) throw new Error(`${label} was not confirmed yet. Refresh in a moment.`);
+  if (Number(receipt.status) === 0) {
+    throw new Error(`${label} reverted on-chain. No card was minted or updated.`);
+  }
+  return receipt;
+}
+
 function getWalletConnectRedirectUrl() {
   const meta = walletConnectProvider?.session?.peer?.metadata || {};
   const redirect = meta.redirect || {};
@@ -4139,7 +4156,7 @@ async function cancelListing(listingId) {
     promptWalletConnectConfirmation('Open your wallet app and confirm cancel listing.');
     const tx = await marketContract.cancelListing(listingId);
     updateNetworkOverlay('Cancel sent. Waiting for block confirmation...');
-    await tx.wait();
+    await waitForTxOrFail(tx, 'Cancel listing');
     showHeaderToast('Listing cancelled!');
     await loadData();
   } catch(e) { showHeaderToast('Cancellation failed.', true); }
@@ -4191,7 +4208,7 @@ async function buyFromMarket(listingId, priceChz, priceWeiRaw){
     showHeaderToast('Transaction sent to Chiliz Chain. Awaiting blockchain confirmation...');
     updateNetworkOverlay('Transaction sent. Waiting for block confirmation...');
     
-    const receipt = await tx.wait();
+    const receipt = await waitForTxOrFail(tx, 'Marketplace buy');
     if (boughtFig && myAddr) {
       localSaleEvents = localSaleEvents.filter(s => Number(s.listingId) !== Number(listingId));
       localSaleEvents.push({
@@ -4252,7 +4269,7 @@ async function sellFigure(tokenId, priceChz) {
       updateNetworkOverlay('Waiting for marketplace approval in your wallet...');
       promptWalletConnectConfirmation('Open your wallet app and approve marketplace access.');
       const txApprove = await figContract.setApprovalForAll(MARKET_ADDRESS, true);
-      await txApprove.wait();
+      await waitForTxOrFail(txApprove, 'Marketplace approval');
       showHeaderToast('Approved! Creating marketplace listing...');
     }
 
@@ -4262,7 +4279,7 @@ async function sellFigure(tokenId, priceChz) {
     promptWalletConnectConfirmation('Open your wallet app and confirm listing.');
     const txList = await marketContract.listFigure(tokenId, priceWei);
     updateNetworkOverlay('Listing sent. Waiting for block confirmation...');
-    await txList.wait();
+    await waitForTxOrFail(txList, 'List card');
     showHeaderToast('Card successfully listed on the marketplace!');
     toggleSellModal(false);
     await loadData();
@@ -4348,7 +4365,7 @@ async function directMint() {
     showHeaderToast('Mint transaction sent. Awaiting block confirmation...');
     updateNetworkOverlay('Mint sent. Waiting for block confirmation...');
     
-    const receipt = await tx.wait();
+    const receipt = await waitForTxOrFail(tx, 'Mint');
     showHeaderToast('Generative card minted successfully!');
 
     let mintedCard = null;
