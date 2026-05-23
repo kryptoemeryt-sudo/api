@@ -854,6 +854,105 @@ body.game-mode .lb-score{font-size:12px;text-align:right;white-space:nowrap;}
   body.game-mode .leaderboard-list{padding:4px;}
   body.game-mode .lb-row{grid-template-columns:18px minmax(0,1fr) 40px 50px 36px;gap:3px;padding:4px;margin-bottom:3px;}
 }
+
+@media(max-width:700px) and (min-aspect-ratio:2/5) and (max-aspect-ratio:3/5){
+  body.game-mode{height:100dvh;min-height:100dvh;}
+  body.game-mode .topnav{
+    min-height:clamp(34px,5.4dvh,48px);
+    padding:clamp(4px,.8dvh,8px) clamp(6px,1.7vw,10px);
+  }
+  body.game-mode .topnav-logo{font-size:clamp(9px,2.6vw,12px);}
+  body.game-mode .wallet-pill{font-size:clamp(6px,1.85vw,8px);padding:clamp(2px,.45dvh,4px) clamp(3px,1vw,5px);}
+
+  body.game-mode .page{
+    padding:clamp(3px,1vw,6px);
+    gap:clamp(3px,.65dvh,6px);
+    grid-template-rows:
+      minmax(42px,7.2dvh)
+      minmax(38px,5.9dvh)
+      minmax(104px,15.2dvh)
+      minmax(0,1fr)
+      minmax(108px,17.5dvh);
+  }
+
+  body.game-mode #statsRow{gap:clamp(2px,.8vw,4px);}
+  body.game-mode #statsRow .stat-card{
+    min-height:0;
+    padding:clamp(3px,.8dvh,7px) clamp(2px,.8vw,5px);
+    border-radius:clamp(6px,1.8vw,9px);
+  }
+  body.game-mode #statsRow .stat-val,
+  body.game-mode #statsRow #myEstPayout{
+    font-size:clamp(12px,4.1vw,18px)!important;
+  }
+  body.game-mode #statsRow .stat-lbl{font-size:clamp(4.5px,1.55vw,6px);}
+
+  body.game-mode .dashboard-prize-strip{
+    padding:clamp(4px,.75dvh,7px) clamp(6px,1.8vw,9px);
+    gap:clamp(4px,1.2vw,8px);
+    border-radius:clamp(6px,1.8vw,9px);
+  }
+  body.game-mode .dash-prize-title{font-size:clamp(6px,1.9vw,9px);}
+  body.game-mode .dash-prize-value{font-size:clamp(13px,4.2vw,19px);}
+  body.game-mode .dash-deadline{font-size:clamp(10px,3.2vw,14px);}
+  body.game-mode .dash-deadline span{min-width:clamp(15px,4.5vw,22px);}
+
+  body.game-mode .game-grid{gap:clamp(3px,.7dvh,6px);}
+  body.game-mode .country-section,
+  body.game-mode .pitch-container,
+  body.game-mode .lb-section{
+    padding:clamp(4px,1.2vw,7px);
+    border-radius:clamp(7px,2vw,10px);
+  }
+  body.game-mode .pitch-title-row{margin-bottom:clamp(3px,.55dvh,5px);}
+  body.game-mode .pitch-title{font-size:clamp(6px,2vw,9px);letter-spacing:clamp(.4px,.22vw,1px);}
+  body.game-mode .squad-score{font-size:clamp(6px,1.9vw,8px);}
+  body.game-mode #selectedCountryCompletion{font-size:clamp(6px,2vw,8px)!important;}
+  body.game-mode .pitch-wrap{padding:clamp(4px,1.2vw,7px);border-radius:clamp(7px,2vw,10px);}
+  body.game-mode .formation.album-horizontal .row-single{gap:clamp(1px,.55vw,3px);}
+  body.game-mode .formation.album-horizontal .row-single .pos-card{
+    min-height:clamp(48px,7.5dvh,66px);
+    padding:clamp(2px,.55dvh,4px) 1px;
+  }
+  body.game-mode .pos-name{font-size:clamp(5px,1.6vw,7px);}
+  body.game-mode .pos-ball{font-size:clamp(10px,3vw,13px);}
+  body.game-mode .pos-weight{font-size:clamp(10px,3.3vw,14px);}
+  body.game-mode .pos-rarity{font-size:clamp(4.5px,1.45vw,6px);}
+
+  body.game-mode .filter-tabs{
+    gap:clamp(2px,.65vw,4px);
+    margin-bottom:clamp(3px,.6dvh,5px);
+  }
+  body.game-mode .tab-btn{
+    font-size:clamp(4.6px,1.55vw,6px);
+    padding:clamp(3px,.55dvh,5px) 1px;
+  }
+  body.game-mode .country-grid{
+    grid-template-columns:repeat(8,minmax(0,1fr));
+    grid-template-rows:repeat(6,minmax(0,1fr));
+    gap:clamp(2px,.75vw,4px);
+    overflow:hidden;
+    padding-right:0;
+  }
+  body.game-mode .country-card{
+    min-height:0;
+    padding:clamp(1px,.35dvh,3px) 1px;
+    border-radius:clamp(5px,1.5vw,8px);
+  }
+  body.game-mode .country-card .flag-img{width:clamp(18px,6vw,26px);height:clamp(12px,4vw,18px);}
+  body.game-mode .country-card-name{font-size:clamp(4.6px,1.55vw,6.2px);}
+  body.game-mode .country-card-score{font-size:clamp(5px,1.7vw,7px);}
+  body.game-mode .country-card-completion{font-size:clamp(4.5px,1.45vw,5.6px);}
+
+  body.game-mode .lb-toggle-container{margin-bottom:clamp(3px,.55dvh,5px);}
+  body.game-mode .lb-toggle-btn{font-size:clamp(5px,1.55vw,6.5px);padding:clamp(4px,.65dvh,6px) 2px;}
+  body.game-mode .leaderboard-list{padding:clamp(4px,1vw,6px);}
+  body.game-mode .lb-row{
+    grid-template-columns:clamp(18px,5vw,24px) minmax(0,1fr) clamp(38px,12vw,52px) clamp(50px,15vw,68px) clamp(40px,12vw,52px);
+    gap:clamp(3px,.8vw,5px);
+    padding:clamp(4px,.75dvh,6px);
+  }
+}
 </style>
 </head>
 <body>
