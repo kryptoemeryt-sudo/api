@@ -649,26 +649,26 @@ body.game-mode #statsRow{display:grid !important;margin:0;grid-template-columns:
 body.game-mode #statsRow .stat-card{padding:6px 10px;border-radius:8px;min-height:48px;display:flex;flex-direction:column;align-items:center;justify-content:center;}
 body.game-mode #statsRow .stat-val{font-size:clamp(17px,1.65vw,22px);line-height:1;}
 body.game-mode #statsRow #myEstPayout{font-size:clamp(17px,1.65vw,22px)!important;padding-top:0!important;}
-body.game-mode #statsRow .stat-lbl{font-size:8px;letter-spacing:.8px;}
+body.game-mode #statsRow .stat-lbl{font-size:9px;letter-spacing:.8px;color:#8fa4bb;font-weight:700;text-shadow:0 0 8px rgba(116,172,223,.18);}
 body.game-mode #gameSection{display:contents !important;min-height:0;overflow:hidden;}
-body.game-mode .game-grid{grid-row:3 / 5;display:grid;grid-template-columns:1fr;grid-template-rows:auto minmax(0,1fr);gap:8px;padding:0;min-height:0;overflow:hidden;width:100%;}
+body.game-mode .game-grid{grid-row:3 / 5;display:grid;grid-template-columns:minmax(0,1.28fr) minmax(0,.92fr);grid-template-rows:auto minmax(0,1fr);gap:8px;padding:0;min-height:0;overflow:hidden;width:100%;}
 body.game-mode .country-section,
 body.game-mode .pitch-container,
 body.game-mode .lb-section{background:#0a0e14;border:1px solid #1c2028;border-radius:10px;padding:10px;min-height:0;overflow:hidden;}
-body.game-mode .country-section{display:flex;flex-direction:column;order:2;width:100%;}
+body.game-mode .country-section{display:flex;flex-direction:column;order:2;width:100%;grid-column:1 / 2;grid-row:1 / 3;}
 body.game-mode .filter-tabs{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px;margin-bottom:8px;flex-shrink:0;}
 body.game-mode .tab-btn{font-size:8px;padding:6px 4px;letter-spacing:.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 body.game-mode .country-grid{flex:1;min-height:0;max-height:none;overflow:auto;grid-template-columns:repeat(auto-fill,minmax(132px,1fr));gap:7px;padding-right:3px;}
 body.game-mode .country-card{min-height:76px;padding:8px 6px;border-radius:7px;align-items:center;text-align:center;justify-content:center;gap:4px;background:radial-gradient(circle at 50% 0%,rgba(116,172,223,.08),transparent 60%),#0f1318;}
 body.game-mode .country-card > div{width:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;}
 body.game-mode .country-card-flag{font-size:20px;margin:0;min-height:20px;width:100%;display:flex;justify-content:center;}
-body.game-mode .country-card-name{font-size:11px;line-height:1.05;margin-top:4px!important;text-align:center;width:100%;}
+body.game-mode .country-card-name{font-size:13.2px;line-height:1.05;margin-top:5px!important;text-align:center;width:100%;}
 body.game-mode .country-card-fed{display:none;}
-body.game-mode .country-card-score{font-size:13px;margin-top:4px;}
+body.game-mode .country-card-score{font-size:15.6px;margin-top:5px;}
 body.game-mode .country-card-completion{font-size:9px;font-family:'Black Ops One',sans-serif;letter-spacing:.5px;}
 body.game-mode .country-card.selected{box-shadow:0 0 0 1px rgba(0,255,135,.72),0 0 18px rgba(0,255,135,.18),inset 0 0 20px rgba(0,255,135,.08);}
 body.game-mode .country-card:has(.country-card-crown){border-color:rgba(255,201,64,.42);box-shadow:inset 0 0 18px rgba(255,201,64,.08);}
-body.game-mode .pitch-container{display:flex;flex-direction:column;order:1;width:100%;}
+body.game-mode .pitch-container{display:flex;flex-direction:column;order:1;width:100%;grid-column:2 / 3;grid-row:1 / 2;}
 body.game-mode .pitch-title-row{margin-bottom:7px;flex-shrink:0;}
 body.game-mode .pitch-title{font-size:10px;letter-spacing:1.4px;margin-bottom:7px;}
 body.game-mode .squad-score{display:inline-block;margin-left:8px;color:#00ff87;font-family:'Black Ops One',sans-serif;font-size:11px;letter-spacing:1px;}
@@ -746,8 +746,10 @@ body.game-mode .lb-score{font-size:12px;text-align:right;white-space:nowrap;}
   body.game-mode #statsRow .stat-card{min-height:58px;padding:6px 3px;}
   body.game-mode #statsRow .stat-val{font-size:15px;}
   body.game-mode #statsRow #myEstPayout{font-size:15px!important;}
-  body.game-mode #statsRow .stat-lbl{font-size:5px;letter-spacing:.2px;line-height:1.05;}
+  body.game-mode #statsRow .stat-lbl{font-size:6px;letter-spacing:.2px;line-height:1.05;color:#9fb0c4;font-weight:700;}
   body.game-mode .game-grid{grid-template-columns:1fr;grid-template-rows:auto minmax(0,1fr);gap:6px;}
+  body.game-mode .country-section{grid-column:auto;grid-row:auto;}
+  body.game-mode .pitch-container{grid-column:auto;grid-row:auto;}
   body.game-mode .country-section,
   body.game-mode .pitch-container,
   body.game-mode .lb-section{padding:6px;border-radius:8px;}
@@ -757,10 +759,10 @@ body.game-mode .lb-score{font-size:12px;text-align:right;white-space:nowrap;}
   body.game-mode .country-card{min-height:0;padding:3px 1px;justify-content:center;gap:1px;}
   body.game-mode .country-card-flag{font-size:12px;min-height:13px;}
   body.game-mode .country-card .flag-img{width:22px;height:15px;}
-  body.game-mode .country-card-name{font-size:5.8px;line-height:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;}
+  body.game-mode .country-card-name{font-size:7px;line-height:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;}
   body.game-mode .country-card-fed,
   body.game-mode .country-card-completion{font-size:6px;}
-  body.game-mode .country-card-score{font-size:6px;margin-top:1px;}
+  body.game-mode .country-card-score{font-size:7.2px;margin-top:1px;}
   body.game-mode .country-card-completion{font-size:5px;}
   body.game-mode .pitch-title-row{margin-bottom:4px;}
   body.game-mode .pitch-title{font-size:8px;letter-spacing:.7px;margin-bottom:4px;}
@@ -814,7 +816,7 @@ body.game-mode .lb-score{font-size:12px;text-align:right;white-space:nowrap;}
   body.game-mode #statsRow .stat-card{min-height:44px;padding:4px 5px;}
   body.game-mode #statsRow .stat-val,
   body.game-mode #statsRow #myEstPayout{font-size:12px!important;}
-  body.game-mode #statsRow .stat-lbl{font-size:4.5px;letter-spacing:.2px;}
+  body.game-mode #statsRow .stat-lbl{font-size:5.4px;letter-spacing:.2px;color:#9fb0c4;font-weight:700;}
   body.game-mode .dashboard-prize-strip{grid-template-columns:auto 1fr auto;padding:4px 7px;gap:6px;}
   body.game-mode .dash-prize-title{font-size:6px;letter-spacing:.5px;grid-column:auto;}
   body.game-mode .dash-prize-value{font-size:12px;text-align:center;grid-column:auto;}
@@ -830,8 +832,8 @@ body.game-mode .lb-score{font-size:12px;text-align:right;white-space:nowrap;}
   body.game-mode .country-card{min-height:0;padding:2px 1px;gap:1px;}
   body.game-mode .country-card-flag{font-size:11px;min-height:12px;}
   body.game-mode .country-card .flag-img{width:21px;height:14px;}
-  body.game-mode .country-card-name{font-size:5.3px;line-height:1;margin-top:1px!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;}
-  body.game-mode .country-card-score{font-size:5.5px;margin-top:1px;}
+  body.game-mode .country-card-name{font-size:6.4px;line-height:1;margin-top:1px!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;}
+  body.game-mode .country-card-score{font-size:6.6px;margin-top:1px;}
   body.game-mode .country-card-completion{font-size:4.8px;}
   body.game-mode .pitch-title-row{margin-bottom:3px;}
   body.game-mode .pitch-title{font-size:6px;letter-spacing:.6px;margin-bottom:3px;}
@@ -886,6 +888,7 @@ body.game-mode .lb-score{font-size:12px;text-align:right;white-space:nowrap;}
     font-size:clamp(12px,4.1vw,18px)!important;
   }
   body.game-mode #statsRow .stat-lbl{font-size:clamp(4.5px,1.55vw,6px);}
+  body.game-mode #statsRow .stat-lbl{color:#9fb0c4;font-weight:700;}
 
   body.game-mode .dashboard-prize-strip{
     padding:clamp(4px,.75dvh,7px) clamp(6px,1.8vw,9px);
@@ -898,6 +901,8 @@ body.game-mode .lb-score{font-size:12px;text-align:right;white-space:nowrap;}
   body.game-mode .dash-deadline span{min-width:clamp(15px,4.5vw,22px);}
 
   body.game-mode .game-grid{gap:clamp(3px,.7dvh,6px);}
+  body.game-mode .country-section{grid-column:auto;grid-row:auto;}
+  body.game-mode .pitch-container{grid-column:auto;grid-row:auto;}
   body.game-mode .country-section,
   body.game-mode .pitch-container,
   body.game-mode .lb-section{
@@ -940,8 +945,8 @@ body.game-mode .lb-score{font-size:12px;text-align:right;white-space:nowrap;}
     border-radius:clamp(5px,1.5vw,8px);
   }
   body.game-mode .country-card .flag-img{width:clamp(18px,6vw,26px);height:clamp(12px,4vw,18px);}
-  body.game-mode .country-card-name{font-size:clamp(4.6px,1.55vw,6.2px);}
-  body.game-mode .country-card-score{font-size:clamp(5px,1.7vw,7px);}
+  body.game-mode .country-card-name{font-size:clamp(5.5px,1.86vw,7.4px);}
+  body.game-mode .country-card-score{font-size:clamp(6px,2.04vw,8.4px);}
   body.game-mode .country-card-completion{font-size:clamp(4.5px,1.45vw,5.6px);}
 
   body.game-mode .lb-toggle-container{margin-bottom:clamp(3px,.55dvh,5px);}
@@ -2155,7 +2160,7 @@ function renderCountryHub() {
     let compDisplay = `${userStats.completed}/11`;
     const compRatio = userStats.completed / 11;
     const compColor = compRatio >= 1 ? '#00ff87' : compRatio >= .55 ? '#ffc940' : compRatio > 0 ? '#f97316' : '#ef4444';
-    let crownDisplay = isMeLeader ? '<span class="country-card-crown">👑</span>' : '';
+    let crownDisplay = '';
 
     card.innerHTML = `
       <div>
