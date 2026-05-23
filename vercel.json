@@ -13,6 +13,7 @@
     { "source": "/dream-xi-old", "destination": "/ARG%20Dashboard.html" },
     { "source": "/ftfr", "destination": "/fan-token-flow-radar.html" },
     { "source": "/soli", "destination": "/solana-smart-money-radar.html" },
+    { "source": "/wallet", "destination": "/dream-xi-walletconnect.html" },
     { "source": "/dream-xi-wc", "destination": "/dream-xi-wc.html" }
   ]
 }
