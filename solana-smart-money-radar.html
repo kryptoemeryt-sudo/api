@@ -364,214 +364,245 @@ const busy = show => {
 };
 
 // ─── RPC via Vercel proxy ─────────────────────────────────────────────────────
-const sleep = ms => new Promise(r=>setTimeout(r,ms));
+const sleep = ms => new Promise(r => setTimeout(r, ms));
 
-async function rpc(method, params=[], retries=3) {
+// Token bucket: max 4 concurrent proxy calls, refill 1 every 300ms
+const _queue = [];
+let _inflight = 0;
+const MAX_INFLIGHT = 4;
+const CALL_GAP_MS = 280;
+let _lastCall = 0;
+
+async function rpc(method, params = [], retries = 4) {
+  // Throttle: never fire faster than CALL_GAP_MS apart
+  const now = Date.now();
+  const wait = Math.max(0, _lastCall + CALL_GAP_MS - now);
+  if (wait > 0) await sleep(wait);
+  _lastCall = Date.now();
+
   let lastErr;
-  for(let r=0; r<retries; r++) {
+  for (let r = 0; r < retries; r++) {
     try {
       const resp = await fetch(SOLANA_PROXY, {
-        method:'POST',
-        headers:{'Content-Type':'application/json'},
-        body: JSON.stringify({jsonrpc:'2.0',id:Date.now(),method,params})
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ jsonrpc: '2.0', id: Date.now(), method, params })
       });
-      if(resp.status === 429) { await sleep(1000*(r+1)); continue; }
-      if(!resp.ok) throw new Error('Proxy HTTP ' + resp.status);
+      if (resp.status === 429) {
+        const backoff = 2000 * (r + 1);
+        setSpinner(`Rate limit — czekam ${backoff / 1000}s...`);
+        await sleep(backoff);
+        continue;
+      }
+      if (!resp.ok) throw new Error('Proxy HTTP ' + resp.status);
       const json = await resp.json();
-      if(json.error) throw new Error(json.error.message || 'RPC error');
+      if (json.error) {
+        if (json.error.code === -32429 || String(json.error.message).includes('limit')) {
+          await sleep(2000 * (r + 1));
+          continue;
+        }
+        throw new Error(json.error.message || 'RPC error');
+      }
       return json.result;
-    } catch(e) {
+    } catch (e) {
       lastErr = e;
-      if(r < retries-1) await sleep(600*(r+1));
+      if (r < retries - 1) await sleep(800 * (r + 1));
     }
   }
   throw lastErr || new Error('Proxy niedostepny');
 }
 
-
-// ─── FETCH TOKEN TRANSACTIONS via getSignaturesForAddress ────────────────────
-async function fetchSignatures(mint, limit=1000) {
+// ─── FETCH SIGNATURES (one request per page, 1000 sigs each) ─────────────────
+async function fetchSignatures(mint, limit = 300) {
   const sigs = [];
   let before = null;
   let pages = 0;
-  while(pages < 20) {
-    const params = [mint, {limit:1000, commitment:'confirmed', ...(before?{before}:{})}];
-    setSpinner(`Pobieram historię transakcji… (${sigs.length} znalezionych)`);
+  while (pages < 5) {                     // max 5 pages × 1000 = 5000 sigs
+    const params = [mint, { limit: 1000, commitment: 'confirmed', ...(before ? { before } : {}) }];
+    setSpinner(`Sygnatury: strona ${pages + 1} (${sigs.length} znalezionych)`);
     const res = await rpc('getSignaturesForAddress', params);
-    if(!res || !res.length) break;
+    if (!res || !res.length) break;
     sigs.push(...res);
-    if(res.length < 1000) break;
-    before = res[res.length-1].signature;
+    if (res.length < 1000 || sigs.length >= limit) break;
+    before = res[res.length - 1].signature;
     pages++;
-    if(sigs.length >= limit) break;
+    await sleep(400);
   }
-  return sigs;
+  return sigs.slice(0, limit);
 }
 
-// ─── PARSE TRANSACTION FOR SPL TRANSFERS ─────────────────────────────────────
+// ─── PARSE TX (standard jsonParsed format) ────────────────────────────────────
 function parseTx(tx) {
-  if(!tx || tx.meta?.err) return null;
+  if (!tx || tx.meta?.err) return null;
   const sig = tx.transaction?.signatures?.[0] || '';
   const blockTime = tx.blockTime || 0;
-  const payer = tx.transaction?.message?.accountKeys?.[0] || '';
   const preBalances  = tx.meta?.preTokenBalances  || [];
   const postBalances = tx.meta?.postTokenBalances || [];
-  // build delta map: owner -> mint -> delta
   const delta = {};
-  const allIdx = new Set([...preBalances.map(b=>b.accountIndex), ...postBalances.map(b=>b.accountIndex)]);
-  for(const idx of allIdx) {
-    const pre  = preBalances.find(b=>b.accountIndex===idx);
-    const post = postBalances.find(b=>b.accountIndex===idx);
-    const mint   = (post||pre)?.mint;
-    const owner  = (post||pre)?.owner;
-    if(!mint || !owner) continue;
+  const allIdx = new Set([...preBalances.map(b => b.accountIndex), ...postBalances.map(b => b.accountIndex)]);
+  for (const idx of allIdx) {
+    const pre  = preBalances.find(b => b.accountIndex === idx);
+    const post = postBalances.find(b => b.accountIndex === idx);
+    const mint  = (post || pre)?.mint;
+    const owner = (post || pre)?.owner;
+    if (!mint || !owner) continue;
     const preAmt  = Number((pre?.uiTokenAmount?.amount  || 0));
     const postAmt = Number((post?.uiTokenAmount?.amount || 0));
-    const decimals = (post||pre)?.uiTokenAmount?.decimals ?? 9;
+    const decimals = (post || pre)?.uiTokenAmount?.decimals ?? 9;
     const diff = (postAmt - preAmt) / Math.pow(10, decimals);
-    if(!delta[owner]) delta[owner] = {};
-    delta[owner][mint] = (delta[owner][mint]||0) + diff;
+    if (!delta[owner]) delta[owner] = {};
+    delta[owner][mint] = (delta[owner][mint] || 0) + diff;
   }
-  // SOL deltas (pre/postBalances)
-  const accts = tx.transaction?.message?.accountKeys || [];
+  const accts   = tx.transaction?.message?.accountKeys || [];
   const preSol  = tx.meta?.preBalances  || [];
   const postSol = tx.meta?.postBalances || [];
   const solDelta = {};
-  accts.forEach((a,i)=>{ solDelta[a] = ((postSol[i]||0)-(preSol[i]||0)) / 1e9; });
-  return {sig, blockTime, payer, delta, solDelta};
+  accts.forEach((a, i) => {
+    const key = typeof a === 'string' ? a : (a?.pubkey || '');
+    solDelta[key] = ((postSol[i] || 0) - (preSol[i] || 0)) / 1e9;
+  });
+  return { sig, blockTime, delta, solDelta };
 }
 
-// ─── BUILD SWAP RECORDS FROM PARSED TX ───────────────────────────────────────
+// ─── EXTRACT SWAPS FROM PARSED TX ────────────────────────────────────────────
 function extractSwaps(parsed, targetMint) {
-  if(!parsed) return [];
-  const {sig, blockTime, delta, solDelta} = parsed;
+  if (!parsed) return [];
+  const { sig, blockTime, delta, solDelta } = parsed;
   const swaps = [];
-  for(const [owner, tokens] of Object.entries(delta)) {
+  for (const [owner, tokens] of Object.entries(delta)) {
     const tokenDelta = tokens[targetMint];
-    if(!tokenDelta || Math.abs(tokenDelta) < 1e-9) continue;
-    // find quote: wsol change or SOL change for this owner
-    const wsolDelta = tokens[WSOL_MINT] || 0;
-    const rawSolDelta = solDelta[owner] || 0;
+    if (!tokenDelta || Math.abs(tokenDelta) < 1e-9) continue;
+    const wsolDelta   = tokens[WSOL_MINT] || 0;
+    const rawSolDelta = solDelta[owner]   || 0;
     let quote = 0;
-    if(Math.abs(wsolDelta) > 0.00001) quote = -wsolDelta;
-    else if(Math.abs(rawSolDelta) > 0.001) quote = -rawSolDelta;
-    const side = tokenDelta > 0 ? 'BUY' : 'SELL';
+    if (Math.abs(wsolDelta)   > 0.000001) quote = -wsolDelta;
+    else if (Math.abs(rawSolDelta) > 0.0005) quote = -rawSolDelta;
     swaps.push({
-      sig, blockTime, wallet: owner, side,
+      sig, blockTime, wallet: owner,
+      side: tokenDelta > 0 ? 'BUY' : 'SELL',
       units: Math.abs(tokenDelta),
       quote: Math.abs(quote),
-      quoteSigned: quote
+      quoteSigned: quote,
+      symbol: 'TOKEN'
     });
   }
   return swaps;
 }
 
-// ─── FETCH & PARSE TRANSACTIONS (batch) ──────────────────────────────────────
+// ─── FETCH TRANSACTIONS — sequential, throttled, max 200 ─────────────────────
 async function fetchTransactions(signatures) {
-  const BATCH = 10; // smaller batches = fewer rate limit hits
+  const BATCH = 5;                         // 5 per call = safe for free RPC
+  const GAP   = 600;                       // ms between batches
   const txList = [];
   const sigStrings = signatures.map(s => s.signature || s).filter(Boolean);
-  for(let i=0; i<sigStrings.length; i+=BATCH) {
-    setSpinner(`Pobieram transakcje ${i+1}–${Math.min(i+BATCH,sigStrings.length)} / ${sigStrings.length}`);
-    const chunk = sigStrings.slice(i,i+BATCH);
+  const total = Math.min(sigStrings.length, 200);
+
+  for (let i = 0; i < total; i += BATCH) {
+    const chunk = sigStrings.slice(i, i + BATCH);
+    setSpinner(`Pobieram TX ${i + 1}–${Math.min(i + BATCH, total)} z ${total}`);
     try {
-      // getTransactions is the correct batch method
-      const results = await rpc('getTransactions',[chunk,{encoding:'jsonParsed',maxSupportedTransactionVersion:0,commitment:'confirmed'}]);
-      if(Array.isArray(results)) txList.push(...results.filter(Boolean));
-    } catch(e) {
-      // fallback: single fetches
-      for(const sig of chunk) {
+      // getTransactions batch (Helius & standard RPC support it)
+      const results = await rpc('getTransactions', [chunk, {
+        encoding: 'jsonParsed',
+        maxSupportedTransactionVersion: 0,
+        commitment: 'confirmed'
+      }]);
+      if (Array.isArray(results)) txList.push(...results.filter(Boolean));
+    } catch (e) {
+      // If batch fails (some RPCs don't support it), fall back to singles
+      for (const sig of chunk) {
         try {
-          const tx = await rpc('getTransaction',[sig,{encoding:'jsonParsed',maxSupportedTransactionVersion:0,commitment:'confirmed'}]);
-          if(tx) txList.push(tx);
-        } catch(err) {}
-        await sleep(80);
+          const tx = await rpc('getTransaction', [sig, {
+            encoding: 'jsonParsed',
+            maxSupportedTransactionVersion: 0,
+            commitment: 'confirmed'
+          }]);
+          if (tx) txList.push(tx);
+        } catch (_) {}
+        await sleep(500);
       }
     }
-    await sleep(200);
+    await sleep(GAP);
   }
   return txList;
 }
 
-// ─── AGGREGATE WALLETS ────────────────────────────────────────────────────────
+// ─── AGGREGATE WALLETS ───────────────────────────────────────────────────────
 function aggregateWallets(swaps) {
   const map = {};
   swaps.forEach(s => {
-    if(!map[s.wallet]) map[s.wallet] = {
-      wallet:s.wallet, buys:0, sells:0, spent:0, received:0,
-      swaps:[], firstBuy:Infinity, knownQuotes:0
+    if (!map[s.wallet]) map[s.wallet] = {
+      wallet: s.wallet, buys: 0, sells: 0, spent: 0, received: 0,
+      swaps: [], firstBuy: Infinity, knownQuotes: 0
     };
     const w = map[s.wallet];
     w.swaps.push(s);
-    if(s.side==='BUY'){
+    if (s.side === 'BUY') {
       w.buys++;
-      if(s.quote){ w.spent += s.quote; w.knownQuotes++; }
-      if(s.blockTime < w.firstBuy) w.firstBuy = s.blockTime;
+      if (s.quote) { w.spent += s.quote; w.knownQuotes++; }
+      if (s.blockTime < w.firstBuy) w.firstBuy = s.blockTime;
     } else {
       w.sells++;
-      if(s.quote){ w.received += s.quote; w.knownQuotes++; }
+      if (s.quote) { w.received += s.quote; w.knownQuotes++; }
     }
   });
-  // compute derived fields
   return Object.values(map).map(w => {
     const pnl = w.received - w.spent;
     const efficiency = w.spent > 0.001 ? (pnl / w.spent) * 100 : 0;
-    const sellCoverage = w.buys > 0 ? w.sells / w.buys : 0;
     const tags = [];
-    if(efficiency >= 150 && w.sells >= 2) tags.push('SMART');
-    if(w.spent >= 5) tags.push('WHALE');
-    if(w.swaps.length >= 20) tags.push('DEGEN');
-    if(efficiency < -30) tags.push('RISKY');
-    return {...w, pnl, efficiency, sellCoverage, tags};
+    if (efficiency >= 150 && w.sells >= 2) tags.push('SMART');
+    if (w.spent >= 5) tags.push('WHALE');
+    if (w.swaps.length >= 20) tags.push('DEGEN');
+    if (efficiency < -30) tags.push('RISKY');
+    return { ...w, pnl, efficiency, tags };
   });
 }
 
-// ─── FILTERS & SORT ───────────────────────────────────────────────────────────
+// ─── FILTERS & SORT ──────────────────────────────────────────────────────────
 function applyFilters(traders) {
-  let result = [...traders];
-  if(activeFilters.has('smart'))     result = result.filter(t => t.tags.includes('SMART') || t.efficiency >= 100);
-  if(activeFilters.has('profitable'))result = result.filter(t => t.pnl > 0);
-  if(activeFilters.has('whales'))    result = result.filter(t => t.tags.includes('WHALE'));
-  if(activeFilters.has('early'))     result = result.filter(t => t.isEarly);
-  return result;
+  let r = [...traders];
+  if (activeFilters.has('smart'))      r = r.filter(t => t.tags.includes('SMART') || t.efficiency >= 100);
+  if (activeFilters.has('profitable')) r = r.filter(t => t.pnl > 0);
+  if (activeFilters.has('whales'))     r = r.filter(t => t.tags.includes('WHALE'));
+  if (activeFilters.has('early'))      r = r.filter(t => t.isEarly);
+  return r;
 }
 function toggleFilter(btn) {
   const f = btn.dataset.filter;
-  if(activeFilters.has(f)) activeFilters.delete(f); else activeFilters.add(f);
+  if (activeFilters.has(f)) activeFilters.delete(f); else activeFilters.add(f);
   btn.classList.toggle('on', activeFilters.has(f));
   rerender();
 }
 function sortBy(field) {
   sortField = field;
-  document.querySelectorAll('.sort-head').forEach(el => el.classList.toggle('active', el.getAttribute('onclick').includes(field)));
+  document.querySelectorAll('.sort-head').forEach(el =>
+    el.classList.toggle('active', el.getAttribute('onclick').includes(field)));
   rerender();
 }
 
 let _allTraders = [], _allSwaps = [];
 function rerender() {
   let filtered = applyFilters(_allTraders);
-  filtered.sort((a,b) => sortField==='pnl' ? b.pnl-a.pnl : b.efficiency-a.efficiency);
+  filtered.sort((a, b) => sortField === 'pnl' ? b.pnl - a.pnl : b.efficiency - a.efficiency);
   renderRanking(filtered);
 }
 
-// ─── RENDER RANKING ───────────────────────────────────────────────────────────
+// ─── RENDER RANKING ──────────────────────────────────────────────────────────
 function renderRanking(traders) {
-  lastTraders = Object.fromEntries(traders.map(t=>[t.wallet,t]));
+  lastTraders = Object.fromEntries(traders.map(t => [t.wallet, t]));
   document.getElementById('walletCount').textContent = traders.length.toLocaleString('pl');
   const tbody = document.getElementById('rankRows');
-  if(!traders.length) {
-    tbody.innerHTML = '<tr><td class="empty" colspan="5">BRAK WYNIKÓW DLA AKTYWNYCH FILTRÓW</td></tr>';
+  if (!traders.length) {
+    tbody.innerHTML = '<tr><td class="empty" colspan="5">BRAK WYNIKÓW — zmień filtry lub skanuj ponownie</td></tr>';
     return;
   }
-  // avg eff
-  const avgE = traders.slice(0,20).reduce((s,t)=>s+t.efficiency,0)/Math.min(traders.length,20);
-  document.getElementById('avgEff').textContent = fmt(avgE,0)+'%';
-
-  tbody.innerHTML = traders.slice(0,80).map((t,i) => {
-    const pnlCls = t.pnl>=0?'pos':'neg';
-    const effPct = Math.min(100, Math.max(0, t.efficiency / 5));
-    const watched = watchList.some(a=>a===t.wallet);
-    const tagHtml = t.tags.map(tag=>`<span class="tag ${tag.toLowerCase()}">${tag}</span>`).join('');
+  const avgE = traders.slice(0, 20).reduce((s, t) => s + t.efficiency, 0) / Math.min(traders.length, 20);
+  document.getElementById('avgEff').textContent = fmt(avgE, 0) + '%';
+  tbody.innerHTML = traders.slice(0, 80).map((t, i) => {
+    const pnlCls   = t.pnl >= 0 ? 'pos' : 'neg';
+    const effPct   = Math.min(100, Math.max(0, t.efficiency / 5));
+    const watched  = watchList.some(a => a === t.wallet);
+    const tagHtml  = t.tags.map(tag => `<span class="tag ${tag.toLowerCase()}">${tag}</span>`).join('');
     return `<tr>
       <td class="rank-num">${String(i+1).padStart(2,'0')}</td>
       <td>
@@ -598,14 +629,16 @@ function renderRanking(traders) {
   }).join('');
 }
 
-// ─── RENDER FEED ──────────────────────────────────────────────────────────────
+// ─── RENDER FEED ─────────────────────────────────────────────────────────────
 function renderFeed(swaps) {
   document.getElementById('txCount').textContent = swaps.length.toLocaleString('pl');
   const box = document.getElementById('tradeFeed');
-  if(!swaps.length) { box.innerHTML='<div class="empty">BRAK ROZPOZNANYCH SWAPÓW</div>'; return; }
-  const sorted = [...swaps].sort((a,b)=>b.blockTime-a.blockTime);
-  box.innerHTML = sorted.slice(0,100).map(s => {
-    const dt = s.blockTime ? new Date(s.blockTime*1000).toLocaleString('pl-PL',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'}) : '—';
+  if (!swaps.length) { box.innerHTML = '<div class="empty">BRAK ROZPOZNANYCH SWAPÓW</div>'; return; }
+  const sorted = [...swaps].sort((a, b) => b.blockTime - a.blockTime);
+  box.innerHTML = sorted.slice(0, 100).map(s => {
+    const dt = s.blockTime
+      ? new Date(s.blockTime*1000).toLocaleString('pl-PL',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'})
+      : '—';
     return `<div class="trade-card">
       <div class="side-label ${s.side.toLowerCase()}">${s.side}</div>
       <div>
@@ -614,15 +647,15 @@ function renderFeed(swaps) {
         <div class="trade-wallet">${dt}</div>
       </div>
       <div class="trade-amt">${fmt(s.units,2)} TKN</div>
-      <div class="trade-val">${s.quote?fmtSol(s.quote):'—'}</div>
+      <div class="trade-val">${s.quote ? fmtSol(s.quote) : '—'}</div>
     </div>`;
   }).join('');
 }
 
-// ─── WATCHLIST ────────────────────────────────────────────────────────────────
+// ─── WATCHLIST HELPERS ───────────────────────────────────────────────────────
 function renderWatch() {
   const box = document.getElementById('watchList');
-  if(!watchList.length) { box.innerHTML='<div class="empty" style="padding:20px 8px">DODAJ PORTFEL Z RANKINGU</div>'; return; }
+  if (!watchList.length) { box.innerHTML='<div class="empty" style="padding:20px 8px">DODAJ PORTFEL Z RANKINGU</div>'; return; }
   box.innerHTML = watchList.map(addr => {
     const t = lastTraders[addr];
     const line = t ? `PnL: ${t.pnl>=0?'+':''}${fmt(t.pnl,3)} ◎ · Eff: ${fmt(t.efficiency,0)}%` : 'oczekiwanie na skan';
@@ -638,34 +671,34 @@ function renderWatch() {
 function addWatch(addr) {
   const input = document.getElementById('watchInput');
   const v = (addr || input.value || '').trim();
-  if(!v || v.length < 32) { setStatus('rankStatus','BŁĘDNY ADRES','err'); return; }
-  if(!watchList.includes(v)) watchList.unshift(v);
+  if (!v || v.length < 32) { setStatus('rankStatus','BŁĘDNY ADRES','err'); return; }
+  if (!watchList.includes(v)) watchList.unshift(v);
   localStorage.setItem('smr-watch', JSON.stringify(watchList));
   input.value = '';
   renderWatch();
 }
 function removeWatch(a) {
-  watchList = watchList.filter(w=>w!==a);
+  watchList = watchList.filter(w => w !== a);
   localStorage.setItem('smr-watch', JSON.stringify(watchList));
   renderWatch();
 }
 function toggleWatch(addr) {
-  if(watchList.includes(addr)) removeWatch(addr); else addWatch(addr);
+  if (watchList.includes(addr)) removeWatch(addr); else addWatch(addr);
   rerender();
 }
-function copyWallet(a) { navigator.clipboard.writeText(a).then(()=>setStatus('rankStatus','SKOPIOWANY','ok')); }
+function copyWallet(a) { navigator.clipboard.writeText(a).then(() => setStatus('rankStatus','SKOPIOWANY','ok')); }
 
 function setStatus(id, text, cls) {
   const el = document.getElementById(id);
   el.textContent = text;
-  el.className = 'status-badge' + (cls?' '+cls:'');
-  if(cls==='ok' || cls==='err') setTimeout(()=>{ if(el.textContent===text) el.className='status-badge'; },3000);
+  el.className = 'status-badge' + (cls ? ' ' + cls : '');
+  if (cls === 'ok' || cls === 'err') setTimeout(() => { if (el.textContent === text) el.className = 'status-badge'; }, 3500);
 }
 
 // ─── MAIN SCAN ────────────────────────────────────────────────────────────────
 async function startScan() {
   const mint = document.getElementById('mintInput').value.trim();
-  if(!mint || mint.length < 32) { setStatus('rankStatus','WKLEJ ADRES TOKENA','err'); return; }
+  if (!mint || mint.length < 32) { setStatus('rankStatus','WKLEJ ADRES TOKENA','err'); return; }
 
   busy(true);
   setStatus('rankStatus','SKANOWANIE','scanning');
@@ -674,38 +707,35 @@ async function startScan() {
   _allTraders = []; _allSwaps = [];
 
   try {
-    // 1. Fetch signatures
-    setSpinner('Pobieram listę transakcji dla tokena...');
-    const sigs = await fetchSignatures(mint, 2000);
-    if(!sigs.length) throw new Error('Brak transakcji dla tego adresu mint.');
+    // 1. Sygnatury — max 300 (1 request na stronę, do 5 stron)
+    setSpinner('Pobieram sygnatury transakcji...');
+    const sigs = await fetchSignatures(mint, 300);
+    if (!sigs.length) throw new Error('Brak transakcji dla tego tokena.');
 
-    // 2. Identify earliest transactions for "early buyer" detection
-    const sortedSigs = [...sigs].sort((a,b)=>(a.blockTime||0)-(b.blockTime||0));
-    const earlyThreshold = sortedSigs[Math.floor(sortedSigs.length*0.2)]?.blockTime || 0;
+    // 2. Próg "early buyer" = pierwsze 20% sygnatur (wg blockTime)
+    const sorted = [...sigs].sort((a, b) => (a.blockTime||0) - (b.blockTime||0));
+    const earlyThreshold = sorted[Math.floor(sorted.length * 0.2)]?.blockTime || 0;
 
-    // 3. Fetch & parse transactions
-    setSpinner(`Pobieram ${Math.min(sigs.length,500)} transakcji...`);
-    const txs = await fetchTransactions(sigs.slice(0,500));
+    // 3. Pobierz max 200 TX (40 requestów × 5 TX = ~24s przy 600ms gap)
+    const txs = await fetchTransactions(sigs);
 
-    // 4. Extract swaps
-    setSpinner('Rekonstrowanie swapów...');
-    const parsed = txs.map(parseTx).filter(Boolean);
-    let allSwaps = parsed.flatMap(p => extractSwaps(p, mint));
-    allSwaps.forEach(s => { s.symbol = 'TOKEN'; }); // could fetch symbol via API
+    // 4. Parsuj i wyciągnij swapy
+    setSpinner('Analizuję swapy...');
+    const allSwaps = txs.map(parseTx).filter(Boolean).flatMap(p => extractSwaps(p, mint));
     _allSwaps = allSwaps;
 
-    // 5. Aggregate
-    let traders = aggregateWallets(allSwaps);
+    // 5. Agreguj portfele
+    const traders = aggregateWallets(allSwaps);
     traders.forEach(t => { t.isEarly = t.firstBuy <= earlyThreshold && t.firstBuy !== Infinity; });
     _allTraders = traders;
 
     renderFeed(allSwaps);
-    setStatus('feedStatus', `${txs.length} TX`, 'ok');
+    setStatus('feedStatus', `${txs.length} TX / ${allSwaps.length} swapów`, 'ok');
     setStatus('rankStatus', `${traders.length} portfeli`, 'ok');
     rerender();
     renderWatch();
 
-  } catch(e) {
+  } catch (e) {
     setStatus('rankStatus','BŁĄD SKANU','err');
     document.getElementById('rankRows').innerHTML = `<tr><td class="empty" colspan="5">BŁĄD: ${esc(e.message||'Spróbuj ponownie')}</td></tr>`;
     document.getElementById('tradeFeed').innerHTML = `<div class="empty">SKAN NIEUDANY<br>${esc(e.message||'')}</div>`;
