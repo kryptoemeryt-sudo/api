@@ -381,8 +381,16 @@ function knownFanAddress(address){
 function isFanAsset(token, address){
   const name = String(token.name || '').toLowerCase();
   const symbol = String(token.symbol || '').toUpperCase();
-  return knownFanAddress(address) || name.includes('fan token') ||
-    ['AFC','WAFC','WPOR','WPSG','WARG','WBAR','WJUV','WACM','WATM','WCITY','WMENGO','WGAL'].includes(symbol);
+  const KNOWN_FAN_SYMBOLS = [
+    'AFC','WAFC','WPOR','WPSG','WARG','WBAR','WJUV','WACM','WATM','WCITY','WMENGO','WGAL',
+    'BAR','PSG','ARG','POR','JUV','CITY','ACM','ATM','MENGO','GAL',
+    'WLEG','LEG','WLAZ','LAZ','WBVB','BVB','WROM','ROM','WINT','INT','WCHE','CHE',
+    'WMAN','MAN','WNAP','NAP','WSEV','SEV','WVAL','VAL','WBET','BET',
+    'WOLY','OLY','WPORT','PORT','WSPO','SPO','WBRA','BRA'
+  ];
+  return knownFanAddress(address) ||
+    name.includes('fan token') || name.includes('fan-token') ||
+    KNOWN_FAN_SYMBOLS.includes(symbol);
 }
 function transferAmount(item){
   const token = item.token || {};
@@ -392,6 +400,7 @@ function transferAmount(item){
 }
 async function fetchWalletHistory(wallet, cutoff){
   const items = [];
+  const seen = new Set(); // deduplicate transfers
   let next = {type:'ERC-20'};
   let pages = 0;
   while(next){
@@ -405,6 +414,10 @@ async function fetchWalletHistory(wallet, cutoff){
     for(const item of batch){
       const timestamp = Date.parse(item.timestamp || '');
       if(cutoff && Number.isFinite(timestamp) && timestamp < cutoff) return items;
+      // Deduplicate by tx hash + log_index
+      const uid = `${item.transaction_hash}|${item.log_index}`;
+      if(seen.has(uid)) continue;
+      seen.add(uid);
       items.push(item);
     }
     next = json.next_page_params ? {...json.next_page_params,type:'ERC-20'} : null;
@@ -439,7 +452,9 @@ function analyseWalletTransactions(wallet, items){
   const lower = wallet.toLowerCase();
   const groups = new Map();
   items.forEach(item => {
-    const hash = item.transaction_hash || `${item.block_number}-${item.log_index}`;
+    // Only group by real transaction hash — log_index fallback causes wrong grouping
+    const hash = item.transaction_hash;
+    if(!hash) return;
     if(!groups.has(hash)) groups.set(hash,{hash,timestamp:item.timestamp,assets:new Map()});
     const group = groups.get(hash);
     const token = item.token || {};
@@ -719,13 +734,25 @@ function historicalMove(item, token){
   const fromHash = String(from.hash || '').toLowerCase();
   const toHash = String(to.hash || '').toLowerCase();
   if(!fromHash || !toHash || fromHash === ZERO || toHash === ZERO) return null;
-  const isPublicWallet = (address, data) => {
-    try{ return !data.is_contract && BigInt(address) > 65535n; }catch(e){ return false; }
+  // is_contract may be null/undefined in some Blockscout responses — treat null as unknown (not a contract)
+  const isContract = (data) => data.is_contract === true;
+  const isWallet = (address, data) => {
+    try{ return data.is_contract === false && BigInt(address) > 65535n; }
+    catch(e){ return false; }
+  };
+  const isWalletLoose = (address, data) => {
+    // fallback: if is_contract is not explicitly true, treat as a potential wallet
+    try{ return data.is_contract !== true && BigInt(address) > 65535n; }
+    catch(e){ return false; }
   };
   let wallet = null;
   let side = null;
-  if(from.is_contract && isPublicWallet(toHash,to)){ wallet=toHash; side='BUY'; }
-  if(isPublicWallet(fromHash,from) && to.is_contract){ wallet=fromHash; side='SELL'; }
+  // Strict: contract → wallet (BUY) or wallet → contract (SELL)
+  if(isContract(from) && isWallet(toHash, to)){ wallet = toHash; side = 'BUY'; }
+  else if(isWallet(fromHash, from) && isContract(to)){ wallet = fromHash; side = 'SELL'; }
+  // Loose fallback when is_contract flags are absent
+  else if(isContract(from) && isWalletLoose(toHash, to)){ wallet = toHash; side = 'BUY'; }
+  else if(isWalletLoose(fromHash, from) && isContract(to)){ wallet = fromHash; side = 'SELL'; }
   if(!wallet || !side) return null;
   const total = item.total || {};
   const decimals = Number(total.decimals ?? token.decimals ?? 18);
@@ -742,7 +769,8 @@ function historicalMove(item, token){
 function consolidateMoves(moves){
   const combined = new Map();
   moves.forEach(move => {
-    const key = `${move.hash}|${move.wallet}|${move.symbol}|${move.side}`;
+    // Include block in key so same-symbol same-side swaps in different transactions are NOT merged
+    const key = `${move.hash}|${move.wallet}|${move.symbol}|${move.side}|${move.block}`;
     if(!combined.has(key)){ combined.set(key,{...move}); return; }
     combined.get(key).units += move.units;
   });
@@ -750,7 +778,7 @@ function consolidateMoves(moves){
 }
 
 async function priceRecentMoves(p, moves, tokenMap){
-  const latest = moves.slice(0,160);
+  const latest = moves.slice(0,400); // was 160 — too low, left many moves unpriced
   const byHash = new Map();
   latest.forEach(m => {
     if(!byHash.has(m.hash)) byHash.set(m.hash, []);
