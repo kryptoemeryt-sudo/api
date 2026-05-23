@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>WORLD CUP DREAM XI - Block Kickers</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%2306080a'/%3E%3Cpath d='M12 44h40v8H12z' fill='%2300ff87'/%3E%3Ctext x='32' y='37' text-anchor='middle' font-family='Arial Black,Impact,sans-serif' font-size='24' fill='%23dde4f0'%3EBK%3C/text%3E%3Ccircle cx='49' cy='15' r='7' fill='%23ffc940'/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%2306080a'/%3E%3Cpath d='M16 12h25c4 0 7 3 7 7v34H23c-4 0-7-3-7-7V12z' fill='%2300ff87'/%3E%3Cpath d='M22 12h26v36H24c-1 0-2 1-2 2V12z' fill='%23101822' stroke='%23ffc940' stroke-width='3'/%3E%3Cpath d='M28 23h14M28 31h14M28 39h10' stroke='%23dde4f0' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E">
 <link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Barlow+Condensed:wght@400;600;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.7.0/ethers.umd.min.js"></script>
 <style>
@@ -288,7 +288,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
 }
 .formation.album-horizontal{
   display:grid;
-  grid-template-columns:.8fr 1.25fr 1fr 1fr;
+  grid-template-columns:.72fr 1.22fr 1fr .82fr .72fr;
   align-items:center;
   gap:12px;
   min-width:0;
@@ -308,6 +308,8 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
 }
 .formation.album-horizontal .row-defense{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
 .formation.album-horizontal .row-mid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;}
+.formation.album-horizontal .row-wide-attack,
+.formation.album-horizontal .row-striker{display:grid;grid-template-columns:1fr;gap:8px;}
 .formation.album-horizontal .row-attack{display:grid;grid-template-columns:1fr;gap:8px;}
 .formation.album-horizontal .row-wings{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
 .formation.album-horizontal .row-keeper{display:grid;grid-template-columns:1fr;gap:8px;}
@@ -393,6 +395,37 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
 .btn-card-action.upgrade{background:rgba(0,255,135,0.1);border-color:rgba(0,255,135,0.3);color:#00ff87;}
 .btn-card-action.upgrade:hover{background:#00ff87;color:#000;}
 .btn-card-action[style*="239,68,68"]:hover{background:#ef4444!important;color:#fff!important;border-color:#ef4444!important;}
+.card-hover-actions{
+  position:absolute;
+  inset:4px;
+  z-index:5;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  gap:4px;
+  padding:4px;
+  border-radius:5px;
+  background:rgba(6,8,10,.94);
+  border:1px solid rgba(0,255,135,.22);
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .16s ease, transform .16s ease;
+  transform:scale(.98);
+}
+.pos-card:hover .card-hover-actions,
+.pos-card:focus-within .card-hover-actions{
+  opacity:1;
+  pointer-events:auto;
+  transform:scale(1);
+}
+.card-hover-note{
+  font-family:'Share Tech Mono',monospace;
+  font-size:7px;
+  color:#ffc940;
+  line-height:1.05;
+  text-transform:uppercase;
+}
+.card-hover-actions .btn-card-action{margin-top:0;}
 
 /* LEADERBOARD STANDINGS */
 .lb-section{padding: 0 24px 24px;}
@@ -632,7 +665,7 @@ body.game-mode .pitch-center-circle{width:78px;height:78px;}
 body.game-mode .pitch-penalty-area-top{left:10px;top:50%;width:58px;height:170px;border:1px dashed rgba(255,255,255,.13);border-left:none;transform:translateY(-50%);}
 body.game-mode .pitch-penalty-area-bottom{right:10px;left:auto;bottom:auto;top:50%;width:58px;height:170px;border:1px dashed rgba(255,255,255,.13);border-right:none;transform:translateY(-50%);}
 body.game-mode .formation{height:100%;min-height:520px;min-width:520px;gap:6px;justify-content:space-between;}
-body.game-mode .formation.album-horizontal{height:100%;min-height:0;min-width:0;grid-template-columns:.75fr 1.22fr 1.05fr 1fr;gap:8px;}
+body.game-mode .formation.album-horizontal{height:100%;min-height:0;min-width:0;grid-template-columns:.72fr 1.18fr 1fr .78fr .68fr;gap:8px;}
 body.game-mode .form-row{gap:7px;}
 body.game-mode .form-row.row-wings{padding:0 23%;}
 body.game-mode .form-row.row-mid{padding:0 15%;}
@@ -641,6 +674,8 @@ body.game-mode .formation.album-horizontal .form-row{padding:0;gap:7px;}
 body.game-mode .formation.album-horizontal .row-defense,
 body.game-mode .formation.album-horizontal .row-mid,
 body.game-mode .formation.album-horizontal .row-attack,
+body.game-mode .formation.album-horizontal .row-wide-attack,
+body.game-mode .formation.album-horizontal .row-striker,
 body.game-mode .formation.album-horizontal .row-wings,
 body.game-mode .formation.album-horizontal .row-keeper{padding:0;}
 body.game-mode .pos-card{width:clamp(62px,7.2vh,78px);min-height:clamp(78px,10vh,98px);padding:5px 4px;border-radius:6px;}
@@ -712,7 +747,7 @@ body.game-mode .lb-score{font-size:12px;text-align:right;white-space:nowrap;}
   body.game-mode #selectedCountryCompletion{font-size:8px!important;}
   body.game-mode .pitch-wrap{padding:7px 5px;border-radius:9px;}
   body.game-mode .formation{gap:3px;min-height:360px;min-width:330px;}
-  body.game-mode .formation.album-horizontal{min-height:0;min-width:0;grid-template-columns:.72fr 1.2fr 1fr .92fr;gap:4px;}
+  body.game-mode .formation.album-horizontal{min-height:0;min-width:0;grid-template-columns:.64fr 1.12fr .94fr .72fr .62fr;gap:3px;}
   body.game-mode .form-row{gap:4px;}
   body.game-mode .form-row.row-wings{padding:0 19%;}
   body.game-mode .form-row.row-mid{padding:0 8%;}
@@ -721,6 +756,8 @@ body.game-mode .lb-score{font-size:12px;text-align:right;white-space:nowrap;}
   body.game-mode .formation.album-horizontal .row-defense,
   body.game-mode .formation.album-horizontal .row-mid,
   body.game-mode .formation.album-horizontal .row-attack,
+  body.game-mode .formation.album-horizontal .row-wide-attack,
+  body.game-mode .formation.album-horizontal .row-striker,
   body.game-mode .formation.album-horizontal .row-wings,
   body.game-mode .formation.album-horizontal .row-keeper{padding:0;}
   body.game-mode .pos-card{width:46px;min-height:56px;padding:3px 2px;border-radius:5px;}
@@ -729,6 +766,8 @@ body.game-mode .lb-score{font-size:12px;text-align:right;white-space:nowrap;}
   body.game-mode .pos-weight{font-size:11px;}
   body.game-mode .pos-rarity{font-size:5px;}
   body.game-mode .btn-card-action{font-size:5px;padding:2px 1px;margin-top:2px;}
+  body.game-mode .card-hover-actions{inset:2px;padding:2px;gap:2px;}
+  body.game-mode .card-hover-note{font-size:5px;}
   body.game-mode .pitch-center-circle{width:54px;height:54px;}
   body.game-mode .pitch-penalty-area-top,
   body.game-mode .pitch-penalty-area-bottom{width:36px;height:112px;}
@@ -1971,14 +2010,17 @@ function renderPitch() {
   const currentCompCount = Object.keys(myTeamPositions).length;
   document.getElementById('selectedCountryCompletion').textContent = `${currentCompCount}/11 POSITIONS COMPLETED`;
 
-  const horizontalFormation = [[1], [2,3,4,5], [6,7,8], [9,10,11]];
-  horizontalFormation.forEach(row => {
+  const horizontalFormation = [
+    { cls: 'row-keeper', positions: [1] },
+    { cls: 'row-defense', positions: [2,3,4,5] },
+    { cls: 'row-mid', positions: [6,7,8] },
+    { cls: 'row-wide-attack', positions: [9,11] },
+    { cls: 'row-striker', positions: [10] }
+  ];
+  horizontalFormation.forEach(group => {
+    const row = group.positions;
     const rowEl = document.createElement('div');
-    const rowClass = row.length === 1 && row[0] === 1 ? 'row-keeper'
-      : row[0] === 2 ? 'row-defense'
-      : row[0] === 6 ? 'row-mid'
-      : 'row-attack';
-    rowEl.className = `form-row ${rowClass}`;
+    rowEl.className = `form-row ${group.cls}`;
 
     row.forEach(pos => {
       const card = document.createElement('div');
@@ -1989,12 +2031,6 @@ function renderPitch() {
       const floorTeam = marketFloorByTeamPosition[selectedTeamId] || {};
       const floor = floorTeam[pos];
 
-      // Format lowest price info (Shown only for owned slots)
-      let floorHtml = '';
-      if (scored && floor) {
-        floorHtml = `<div style="font-size:9px; color:#ffc940; font-family:'Share Tech Mono',monospace; margin-top:2px;">Floor: ${floor.price} CHZ</div>`;
-      }
-
       if (scored) {
         const rarColor = ['#7a8899','#3b82f6','#c084fc','#ffc940'][scored.rarity];
         card.className = `pos-card owned rarity-${scored.rarity}`;
@@ -2002,8 +2038,6 @@ function renderPitch() {
         let actionHtml = '';
         if (mkt && mkt.weight > scored.weight) {
           actionHtml = `<button onclick="buyFromMarket(${mkt.listingId}, '${mkt.price}')" class="btn-card-action upgrade">UPGRADE +${mkt.weight - scored.weight}<br>${mkt.price} CHZ</button>`;
-        } else {
-          actionHtml = `<div style="margin-top:4px;font-size:8px;color:#5a6a7a;font-family:Share Tech Mono,monospace;letter-spacing:0.3px;">BEST WEIGHT</div>`;
         }
 
         // Sell Button if user currently owns the scored card
@@ -2011,21 +2045,21 @@ function renderPitch() {
         const currentOwnerInfo = ownerMap[scored.tid];
         const currentlyOwnsScored = myAddr && currentOwnerInfo && currentOwnerInfo.owner === myAddr;
         if (currentlyOwnsScored) {
-          sellBtnHtml = `<button onclick="openSellModal(${scored.tid}, ${pos}, ${scored.weight}, ${scored.rarity})" class="btn-card-action" style="background:rgba(239,68,68,0.1); border-color:rgba(239,68,68,0.3); color:#ef4444; margin-top:4px;">SELL CARD</button>`;
+          sellBtnHtml = `<button onclick="openSellModal(${scored.tid}, ${pos}, ${scored.weight}, ${scored.rarity})" class="btn-card-action" style="background:rgba(239,68,68,0.1); border-color:rgba(239,68,68,0.3); color:#ef4444;">SELL CARD</button>`;
         }
+        const floorNote = floor ? `<div class="card-hover-note">Floor ${floor.price} CHZ</div>` : '';
+        const hoverHtml = (floorNote || actionHtml || sellBtnHtml) ? `<div class="card-hover-actions">${floorNote}${actionHtml}${sellBtnHtml}</div>` : '';
 
         card.innerHTML = `
           <div>
             <div class="pos-name">${POSITION_SHORT[pos]}</div>
-            <span class="pos-ball">⚽</span>
+            <span class="pos-ball">&#9917;</span>
           </div>
           <div>
             <div class="pos-weight ${scored.rarity === 3 ? 'gold' : ''}">${scored.weight}</div>
             <div class="pos-rarity" style="color:${rarColor}">${['Common','Rare','Epic','Legendary'][scored.rarity]}</div>
-            ${floorHtml}
-            ${actionHtml}
-            ${sellBtnHtml}
           </div>
+          ${hoverHtml}
         `;
       } else {
         card.className = 'pos-card empty';
@@ -2034,19 +2068,19 @@ function renderPitch() {
         if (floor) {
           actionHtml = `<button onclick="buyFromMarket(${floor.listingId}, '${floor.price}')" class="btn-card-action">BUY<br>${floor.price} CHZ</button>`;
         } else {
-          actionHtml = `<div style="margin-top:4px;font-size:8px;color:#5a6a7a;font-family:Share Tech Mono,monospace;">NO LISTINGS</div>`;
+          actionHtml = `<div class="card-hover-note" style="color:#5a6a7a;">NO LISTINGS</div>`;
         }
 
         card.innerHTML = `
           <div>
             <div class="pos-name" style="color:#5a6a7a;">${POSITION_SHORT[pos]}</div>
-            <span class="pos-ball" style="opacity: 0.15">⚽</span>
+            <span class="pos-ball" style="opacity: 0.15">&#9917;</span>
           </div>
           <div>
-            <div class="pos-weight empty">—</div>
+            <div class="pos-weight empty">&mdash;</div>
             <div class="pos-rarity" style="color:#5a6a7a;">EMPTY</div>
-            ${actionHtml}
           </div>
+          <div class="card-hover-actions">${actionHtml}</div>
         `;
       }
       rowEl.appendChild(card);
