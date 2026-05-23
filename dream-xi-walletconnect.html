@@ -2288,6 +2288,19 @@ function showHeaderToast(message, isError = false) {
   }, 6000);
 }
 
+function readableError(error) {
+  if (!error) return 'Unknown error';
+  if (typeof error === 'string') return error;
+  const parts = [
+    error.shortMessage,
+    error.reason,
+    error.message,
+    error.code ? `code ${error.code}` : '',
+    error.data && error.data.message ? error.data.message : ''
+  ].filter(Boolean);
+  return parts.join(' | ') || 'Unknown error';
+}
+
 function getInjectedWalletProvider() {
   const eth = window.ethereum;
   if (!eth) return null;
@@ -2363,6 +2376,9 @@ function getChilizPrivyChain() {
 
 async function getPrivyClient() {
   if (privyClient) return privyClient;
+  if (location.protocol === 'file:') {
+    throw new Error('Privy requires a hosted HTTPS origin. Upload to Vercel and add that domain in Privy Allowed origins.');
+  }
   const sdk = await import('https://esm.sh/@privy-io/js-sdk-core@latest');
   privySdk = sdk;
   const Privy = sdk.default;
@@ -2834,13 +2850,17 @@ async function connectPrivyWallet(){
     if (connected) showHeaderToast('Privy wallet connected.');
   }catch(e){
     console.error('Privy connect failed:', e);
-    const msg = String(e && e.message ? e.message : e);
+    const msg = readableError(e);
     if (msg.toLowerCase().includes('client')) {
-      showHeaderToast('Privy app ID is set, but this setup may also need clientId from your Privy dashboard.', true);
+      showHeaderToast('Privy client error: '+msg.slice(0, 170), true);
+    } else if (msg.toLowerCase().includes('origin') || msg.toLowerCase().includes('domain')) {
+      showHeaderToast('Privy domain/origin error: add this site URL in Privy Allowed origins. '+msg.slice(0, 90), true);
     } else if (msg.toLowerCase().includes('email')) {
-      showHeaderToast('Privy email login failed. Check the code and try again.', true);
+      showHeaderToast('Privy email login failed: '+msg.slice(0, 170), true);
+    } else if (msg.toLowerCase().includes('embedded')) {
+      showHeaderToast('Privy embedded wallet error: '+msg.slice(0, 170), true);
     } else {
-      showHeaderToast('Privy connection failed. MetaMask and Trust Wallet still work.', true);
+      showHeaderToast('Privy failed: '+msg.slice(0, 190), true);
     }
   }finally{
     hideNetworkOverlay();
