@@ -197,10 +197,14 @@ body::before{
   <section class="toolbar">
     <div class="control-group" style="grid-column:1">
       <div class="ctrl-label">Token Mint Address (SPL)</div>
-      <div class="rpc-wrap">
-        <input class="field field-wide" id="mintInput" placeholder="Wklej adres tokena np. token z pump.fun lub Raydium...">
+      <div class="rpc-wrap" style="margin-bottom:7px;">
+        <input class="field field-wide" id="mintInput" placeholder="Wklej adres tokena np. z pump.fun lub Raydium...">
       </div>
-      <div style="margin-top:7px;">
+      <div style="display:flex;gap:6px;align-items:center;margin-bottom:7px;">
+        <input class="field" id="heliusKey" placeholder="Helius API key (opcjonalnie, darmowy na helius.dev)" style="flex:1;font-size:10px;" oninput="saveHeliusKey(this.value)">
+        <span style="font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);white-space:nowrap;">bez klucza = wolniej</span>
+      </div>
+      <div>
         <div class="ctrl-label">Filtr — pokaż tylko</div>
         <div class="filters">
           <button class="filter-btn on" data-filter="smart" onclick="toggleFilter(this)">SMART MONEY</button>
@@ -290,7 +294,7 @@ body::before{
           <p><b>Efficiency Score</b> = (zysk w SOL) ÷ (wydane SOL) × 100. Wartości powyżej 200 oznaczają 3x+ zwrot.</p>
           <p><b>Early Buyer</b> = kupił w pierwszych 20% transakcji od startu tokena.</p>
           <p><b>Smart Money</b> = Eff. Score &gt; 150 + przynajmniej 3 trafne wyjścia.</p>
-          <p><b>SCAN</b> pobiera dane przez publiczny Solana RPC (getLogs + getTransaction). Dla nowych tokenów jest szybszy.</p>
+          <p><b>Helius API key</b> — darmowy na <b>helius.dev</b> (Developer plan, 10k req/dzień). Bez klucza narzędzie korzysta z publicznych RPC demo które mają limity i mogą być wolne.</p>
           <p>Kopiowanie tradera może być spóźnione, płynność mała lub ruch sztuczny. Sprawdź liquidity i price impact przed wejściem.</p>
         </div>
       </div>
@@ -340,16 +344,14 @@ body::before{
 
 <script>
 // ─── CONFIG ───────────────────────────────────────────────────────────────────
-const SOLANA_RPCS = [
-  'https://api.mainnet-beta.solana.com',
-  'https://solana-api.projectserum.com',
+// RPC-s z włączonym CORS (działają z przeglądarki bez proxy)
+const CORS_RPCS = [
+  'https://solana-mainnet.g.alchemy.com/v2/demo',
+  'https://mainnet.helius-rpc.com/?api-key=demo',
+  'https://rpc.ankr.com/solana',
 ];
-const HELIUS_API   = 'https://api.helius.xyz/v0';
-const SOLSCAN_API  = 'https://public-api.solscan.io';
 const SOL_DECIMALS = 9;
 const WSOL_MINT    = 'So11111111111111111111111111111111111111112';
-const RAY_V4       = '675kPX9MHTjS2zt1qfr1NYHuzeLXfQM9H24wFSUt1Mp8';
-const PUMP_PROG    = '6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P';
 
 // ─── STATE ───────────────────────────────────────────────────────────────────
 let watchList = JSON.parse(localStorage.getItem('smr-watch') || '[]');
@@ -357,6 +359,7 @@ let lastTraders = {};
 let sortField = 'efficiency';
 let activeFilters = new Set(['smart','early','profitable']);
 let rpcIndex = 0;
+let customHeliusKey = localStorage.getItem('smr-helius-key') || '';
 
 // ─── UTILS ───────────────────────────────────────────────────────────────────
 const short = a => a ? a.slice(0,4)+'…'+a.slice(-4) : '—';
@@ -370,23 +373,46 @@ const busy = show => {
 };
 
 // ─── RPC HELPER ──────────────────────────────────────────────────────────────
-async function rpc(method, params=[]) {
-  for(let attempt=0; attempt<SOLANA_RPCS.length; attempt++) {
-    const url = SOLANA_RPCS[(rpcIndex + attempt) % SOLANA_RPCS.length];
-    try {
-      const resp = await fetch(url, {
-        method:'POST', headers:{'Content-Type':'application/json'},
-        body: JSON.stringify({jsonrpc:'2.0',id:1,method,params})
-      });
-      if(!resp.ok) continue;
-      const json = await resp.json();
-      if(json.error) throw new Error(json.error.message || 'RPC error');
-      return json.result;
-    } catch(e) {
-      if(attempt === SOLANA_RPCS.length-1) throw e;
+function getRpcList() {
+  const list = [...CORS_RPCS];
+  if(customHeliusKey && customHeliusKey.length > 10) {
+    list.unshift(`https://mainnet.helius-rpc.com/?api-key=${customHeliusKey}`);
+  }
+  return list;
+}
+
+async function rpc(method, params=[], retries=2) {
+  const list = getRpcList();
+  let lastErr;
+  for(let attempt=0; attempt<list.length; attempt++) {
+    const url = list[(rpcIndex + attempt) % list.length];
+    for(let r=0; r<retries; r++) {
+      try {
+        const resp = await fetch(url, {
+          method:'POST',
+          headers:{'Content-Type':'application/json','Accept':'application/json'},
+          body: JSON.stringify({jsonrpc:'2.0',id:Date.now(),method,params})
+        });
+        if(resp.status === 429) { await sleep(800*(r+1)); continue; }
+        if(!resp.ok) break;
+        const json = await resp.json();
+        if(json.error) {
+          // rate limit or node error — try next RPC
+          if(json.error.code === 429 || json.error.code === -32005) break;
+          throw new Error(json.error.message || 'RPC error');
+        }
+        rpcIndex = attempt; // remember working RPC
+        return json.result;
+      } catch(e) {
+        lastErr = e;
+        if(r < retries-1) await sleep(400);
+      }
     }
   }
+  throw lastErr || new Error('Wszystkie RPC niedostępne — sprawdź połączenie lub dodaj własny Helius API key.');
 }
+
+const sleep = ms => new Promise(r=>setTimeout(r,ms));
 
 // ─── FETCH TOKEN TRANSACTIONS via getSignaturesForAddress ────────────────────
 async function fetchSignatures(mint, limit=1000) {
@@ -467,24 +493,27 @@ function extractSwaps(parsed, targetMint) {
 
 // ─── FETCH & PARSE TRANSACTIONS (batch) ──────────────────────────────────────
 async function fetchTransactions(signatures) {
-  const BATCH = 25;
+  const BATCH = 10; // smaller batches = fewer rate limit hits
   const txList = [];
-  for(let i=0; i<signatures.length; i+=BATCH) {
-    setSpinner(`Pobieram transakcje ${i+1}–${Math.min(i+BATCH,signatures.length)} / ${signatures.length}`);
-    const chunk = signatures.slice(i,i+BATCH).map(s=>s.signature||s);
+  const sigStrings = signatures.map(s => s.signature || s).filter(Boolean);
+  for(let i=0; i<sigStrings.length; i+=BATCH) {
+    setSpinner(`Pobieram transakcje ${i+1}–${Math.min(i+BATCH,sigStrings.length)} / ${sigStrings.length}`);
+    const chunk = sigStrings.slice(i,i+BATCH);
     try {
-      const results = await rpc('getMultipleTransactions',[chunk,{encoding:'jsonParsed',maxSupportedTransactionVersion:0}]);
+      // getTransactions is the correct batch method
+      const results = await rpc('getTransactions',[chunk,{encoding:'jsonParsed',maxSupportedTransactionVersion:0,commitment:'confirmed'}]);
       if(Array.isArray(results)) txList.push(...results.filter(Boolean));
     } catch(e) {
       // fallback: single fetches
       for(const sig of chunk) {
         try {
-          const tx = await rpc('getTransaction',[sig,{encoding:'jsonParsed',maxSupportedTransactionVersion:0}]);
+          const tx = await rpc('getTransaction',[sig,{encoding:'jsonParsed',maxSupportedTransactionVersion:0,commitment:'confirmed'}]);
           if(tx) txList.push(tx);
         } catch(err) {}
+        await sleep(80);
       }
     }
-    await new Promise(r=>setTimeout(r,120));
+    await sleep(200);
   }
   return txList;
 }
@@ -762,7 +791,14 @@ async function inspectWallet(wallet) {
 function closeInspector() { document.getElementById('inspector').classList.remove('show'); }
 
 // ─── INIT ─────────────────────────────────────────────────────────────────────
+function saveHeliusKey(val) {
+  customHeliusKey = val.trim();
+  localStorage.setItem('smr-helius-key', customHeliusKey);
+}
+
 renderWatch();
+// restore saved key
+if(customHeliusKey) document.getElementById('heliusKey').value = customHeliusKey;
 
 // URL params
 const p = new URLSearchParams(location.search);
