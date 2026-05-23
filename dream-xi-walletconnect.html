@@ -1637,7 +1637,7 @@ body.network-busy{cursor:progress;}
       <span class="wallet-option-icon">&#128279;</span>
       <span>
         <span class="wallet-option-name">WalletConnect</span>
-        <span class="wallet-option-desc">Pick Trust Wallet or MetaMask Mobile. Use a wallet that supports Chiliz Chain.</span>
+        <span class="wallet-option-desc">Use Trust Wallet or MetaMask Mobile. Avoid Socios for mint/buy on mobile because it may revert transactions.</span>
       </span>
       <span class="wallet-option-tag">QR</span>
     </button>
@@ -1649,7 +1649,7 @@ body.network-busy{cursor:progress;}
       </span>
       <span class="wallet-option-tag">NEW</span>
     </button>
-    <div class="wallet-note">Privy creates its own embedded wallet. WalletConnect is the option for choosing an external mobile app.</div>
+    <div class="wallet-note">Recommended on mobile: Privy, Trust Wallet, or MetaMask Mobile. Socios Wallet may connect, but mint/buy transactions can revert.</div>
   </div>
 </div>
 
@@ -2587,6 +2587,7 @@ async function connectWalletConnect() {
   }
   showNetworkOverlay('Opening WalletConnect...');
   try {
+    showHeaderToast('WalletConnect tip: use Trust Wallet or MetaMask Mobile. Socios may revert mint/buy transactions.', true);
     const mod = await import('https://esm.sh/@walletconnect/ethereum-provider@2');
     const EthereumProvider = mod.default || mod.EthereumProvider;
     walletConnectProvider = await EthereumProvider.init({
