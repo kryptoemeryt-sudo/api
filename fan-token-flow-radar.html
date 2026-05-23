@@ -59,6 +59,7 @@ body{font-family:'Barlow Condensed',Arial,sans-serif;padding:16px;font-size:18px
 .n{font:14px 'Black Ops One';color:var(--green);text-align:right;white-space:nowrap;}
 .profit{color:var(--gold)}.profit.neg{color:var(--red)}.unknown{color:var(--faint)}
 .copy{background:none;border:0;color:var(--blue);font:10px 'Share Tech Mono';cursor:pointer;margin-left:4px;}
+.scan-wallet{background:rgba(0,255,135,.11);border:1px solid rgba(0,255,135,.28);border-radius:3px;color:var(--green);font:9px 'Black Ops One';cursor:pointer;padding:3px 5px;margin-left:5px;}
 .feed{display:flex;flex-direction:column;gap:6px;}
 .move{display:grid;grid-template-columns:55px minmax(86px,1fr) 68px 92px;align-items:center;gap:7px;padding:9px 8px;border:1px solid rgba(255,255,255,.055);border-radius:6px;background:var(--panel2);font-size:13px;}
 .side{font:10px 'Black Ops One';padding:4px 5px;text-align:center;border-radius:4px;}
@@ -81,6 +82,24 @@ body{font-family:'Barlow Condensed',Arial,sans-serif;padding:16px;font-size:18px
 .status.good{color:var(--green)}.status.bad{color:var(--red)}
 .overlay{position:fixed;inset:0;z-index:20;display:none;align-items:center;justify-content:center;background:rgba(3,6,8,.8);backdrop-filter:blur(5px);}
 .overlay.show{display:flex;}
+.inspector{position:fixed;inset:0;z-index:18;display:none;align-items:center;justify-content:center;background:rgba(3,6,8,.84);backdrop-filter:blur(5px);padding:15px;}
+.inspector.show{display:flex;}
+.inspect-box{width:min(1120px,96vw);height:min(760px,92vh);background:var(--panel);border:1px solid rgba(0,255,135,.24);border-radius:10px;display:grid;grid-template-rows:62px auto 1fr;overflow:hidden;}
+.inspect-head{display:flex;align-items:center;justify-content:space-between;gap:10px;border-bottom:1px solid var(--border);padding:10px 16px;}
+.inspect-head h2{font:19px 'Black Ops One';}.inspect-head h2 span{color:var(--green);}
+.close{width:34px;height:34px;background:transparent;border:1px solid var(--border);color:var(--muted);border-radius:5px;cursor:pointer;font-size:18px;}
+.inspect-metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;padding:10px;}
+.inspect-grid{display:grid;grid-template-columns:1fr 1.2fr;min-height:0;border-top:1px solid var(--border);}
+.inspect-section{min-height:0;overflow:auto;padding:10px;border-right:1px solid var(--border);}
+.inspect-section:last-child{border-right:0;}
+.inspect-title{font:12px 'Black Ops One';color:var(--green);margin-bottom:9px;}
+.asset-row{display:grid;grid-template-columns:minmax(70px,1fr) 72px 82px 90px;gap:6px;padding:8px 6px;border-top:1px solid rgba(255,255,255,.045);align-items:center;}
+.asset-symbol{font:13px 'Black Ops One';color:var(--blue);}
+.asset-sub{font-size:10px;color:var(--muted);}
+.asset-number{text-align:right;font:12px 'Share Tech Mono';color:var(--text);}
+.asset-net.pos{color:var(--green)}.asset-net.neg{color:var(--red)}
+.wallet-move{display:grid;grid-template-columns:104px 53px minmax(70px,1fr) 85px;gap:7px;padding:8px 5px;border-top:1px solid rgba(255,255,255,.045);align-items:center;font-size:12px;}
+.when{font:10px 'Share Tech Mono';color:var(--muted);}
 .wait{padding:24px 34px;background:var(--panel);border:1px solid rgba(0,255,135,.35);border-radius:10px;text-align:center;}
 .ball{font-size:30px;animation:rotate .8s linear infinite;margin-bottom:10px;}
 .wait-title{font:15px 'Black Ops One';color:var(--green);}.wait-text{font:11px 'Share Tech Mono';color:var(--muted);margin-top:7px;}
@@ -99,6 +118,13 @@ body{font-family:'Barlow Condensed',Arial,sans-serif;padding:16px;font-size:18px
   .panel{height:340px;margin-bottom:8px;}
   .panel.traders{height:400px}.panel.moves{height:390px}.panel.watchers{height:auto;min-height:340px;}
   .move{grid-template-columns:49px minmax(68px,1fr) 62px 84px;padding:8px 6px;gap:5px;}
+  .inspector{padding:7px;}
+  .inspect-box{width:100%;height:94vh;grid-template-rows:58px auto 1fr;}
+  .inspect-metrics{grid-template-columns:repeat(2,minmax(0,1fr));}
+  .inspect-grid{display:block;overflow:auto;}
+  .inspect-section{border-right:0;border-bottom:1px solid var(--border);overflow:visible;}
+  .asset-row{grid-template-columns:minmax(62px,1fr) 58px 68px 78px;}
+  .wallet-move{grid-template-columns:90px 48px minmax(60px,1fr) 72px;}
 }
 </style>
 </head>
@@ -173,6 +199,34 @@ body{font-family:'Barlow Condensed',Arial,sans-serif;padding:16px;font-size:18px
     </aside>
   </section>
 </main>
+
+<div class="inspector" id="inspector">
+  <section class="inspect-box">
+    <header class="inspect-head">
+      <div>
+        <h2>WALLET <span>SCAN</span></h2>
+        <div class="sub" id="inspectAddress">-</div>
+      </div>
+      <button class="close" onclick="closeInspector()">&times;</button>
+    </header>
+    <div class="inspect-metrics">
+      <div class="metric"><div class="label">Range</div><div class="metric-val gold" id="inspectRange">-</div></div>
+      <div class="metric"><div class="label">All Token Moves</div><div class="metric-val" id="inspectTransfers">-</div></div>
+      <div class="metric"><div class="label">Fan Tokens Seen</div><div class="metric-val blue" id="inspectFanTokens">-</div></div>
+      <div class="metric"><div class="label">Last Activity</div><div class="metric-val" id="inspectLast" style="font-size:17px">-</div></div>
+    </div>
+    <div class="inspect-grid">
+      <div class="inspect-section">
+        <div class="inspect-title">TOKEN FOOTPRINT</div>
+        <div id="inspectAssets"><div class="empty">SCANNING WALLET TOKEN HISTORY...</div></div>
+      </div>
+      <div class="inspect-section">
+        <div class="inspect-title">LATEST WALLET MOVES</div>
+        <div id="inspectMoves"><div class="empty">WAITING FOR MOVEMENTS...</div></div>
+      </div>
+    </div>
+  </section>
+</div>
 
 <div class="overlay" id="overlay">
   <div class="wait">
@@ -267,7 +321,7 @@ function renderWatch(){
   box.innerHTML = watch.map(a => {
     const data = lastTraders[a.toLowerCase()];
     const signal = data ? `${data.moves.length} moves / ${pnlText(data)}` : 'waiting for next scan';
-    return `<div class="watch-card"><div class="watch-line"><span class="addr watch">${shortAddress(a)}</span><button class="remove" onclick="removeWatch('${a}')">X</button></div><span class="mini">${signal}</span></div>`;
+    return `<div class="watch-card"><div class="watch-line"><span class="addr watch">${shortAddress(a)} <button class="scan-wallet" onclick="inspectWallet('${a}')">SCAN</button></span><button class="remove" onclick="removeWatch('${a}')">X</button></div><span class="mini">${signal}</span></div>`;
   }).join('');
 }
 function addWatch(addressValue){
@@ -286,6 +340,109 @@ function removeWatch(a){
 }
 function copyWallet(a){
   navigator.clipboard.writeText(a).then(() => toast('ADDRESS COPIED'));
+}
+function closeInspector(){
+  document.getElementById('inspector').classList.remove('show');
+}
+function dateShort(timestamp){
+  if(!timestamp) return '-';
+  const d = new Date(timestamp);
+  return d.toLocaleDateString('en-GB',{day:'2-digit',month:'short'}) + ' ' +
+    d.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
+}
+function knownFanAddress(address){
+  const lower = String(address || '').toLowerCase();
+  return TOKENS.some(t => t.address.toLowerCase() === lower);
+}
+async function fetchWalletHistory(wallet, cutoff){
+  const items = [];
+  let next = {type:'ERC-20'};
+  let pages = 0;
+  while(next){
+    const query = '?' + new URLSearchParams(next).toString();
+    setWait(`Wallet ${shortAddress(wallet)} / history page ${pages + 1}`);
+    const response = await fetch(`${BLOCKSCOUT_API}/addresses/${wallet}/token-transfers${query}`);
+    if(!response.ok) throw new Error(`Wallet API ${response.status}`);
+    const json = await response.json();
+    const batch = Array.isArray(json.items) ? json.items : [];
+    pages++;
+    for(const item of batch){
+      const timestamp = Date.parse(item.timestamp || '');
+      if(cutoff && Number.isFinite(timestamp) && timestamp < cutoff) return items;
+      items.push(item);
+    }
+    next = json.next_page_params ? {...json.next_page_params,type:'ERC-20'} : null;
+    if(!batch.length || pages >= 2000) break;
+  }
+  return items;
+}
+function aggregateWalletAssets(wallet, items){
+  const lower = wallet.toLowerCase();
+  const map = {};
+  items.forEach(item => {
+    const token = item.token || {};
+    const address = String(token.address_hash || '').toLowerCase();
+    if(!address) return;
+    const decimals = Number((item.total || {}).decimals ?? token.decimals ?? 18);
+    let amount = 0;
+    try{ amount = Number(ethers.formatUnits(BigInt((item.total || {}).value || '0'), decimals)); }catch(e){}
+    const incoming = String((item.to || {}).hash || '').toLowerCase() === lower;
+    const outgoing = String((item.from || {}).hash || '').toLowerCase() === lower;
+    if(!incoming && !outgoing) return;
+    if(!map[address]) map[address] = {
+      address, symbol:token.symbol || '?', name:token.name || 'Token',
+      inCount:0,outCount:0,inAmount:0,outAmount:0,fan:knownFanAddress(address),wchz:address===WCHZ.toLowerCase()
+    };
+    if(incoming){ map[address].inCount++; map[address].inAmount += amount; }
+    if(outgoing){ map[address].outCount++; map[address].outAmount += amount; }
+  });
+  return Object.values(map).sort((a,b) =>
+    Number(b.fan || b.wchz) - Number(a.fan || a.wchz) ||
+    (b.inCount+b.outCount) - (a.inCount+a.outCount)
+  );
+}
+async function inspectWallet(wallet){
+  document.getElementById('inspector').classList.add('show');
+  document.getElementById('inspectAddress').textContent = wallet;
+  document.getElementById('inspectAssets').innerHTML='<div class="empty">SCANNING WALLET TOKEN HISTORY...</div>';
+  document.getElementById('inspectMoves').innerHTML='<div class="empty">WAITING FOR MOVEMENTS...</div>';
+  ['inspectTransfers','inspectFanTokens','inspectLast'].forEach(id => document.getElementById(id).textContent='-');
+  const periodText = selectedDays ? `${selectedDays}D` : 'ALL';
+  document.getElementById('inspectRange').textContent=periodText;
+  const cutoff = selectedDays ? Date.now() - selectedDays * 86400000 : null;
+  busy(true);
+  try{
+    const items = await fetchWalletHistory(wallet,cutoff);
+    const assets = aggregateWalletAssets(wallet,items);
+    const relevant = assets.filter(a => a.fan || a.wchz);
+    document.getElementById('inspectTransfers').textContent=items.length.toLocaleString();
+    document.getElementById('inspectFanTokens').textContent=assets.filter(a=>a.fan).length.toLocaleString();
+    document.getElementById('inspectLast').textContent=items[0] ? dateShort(items[0].timestamp) : '-';
+    document.getElementById('inspectAssets').innerHTML = (relevant.length ? relevant : assets).slice(0,80).map(asset => {
+      const net=asset.inAmount-asset.outAmount;
+      const badge=asset.wchz?'wCHZ':asset.fan?'FAN':'TOKEN';
+      return `<div class="asset-row">
+        <div><div class="asset-symbol">${escapeHtml(asset.symbol)}</div><div class="asset-sub">${badge}</div></div>
+        <div class="asset-number">${asset.inCount} IN</div>
+        <div class="asset-number">${asset.outCount} OUT</div>
+        <div class="asset-number asset-net ${net>=0?'pos':'neg'}">${net>=0?'+':''}${fmt(net)}</div>
+      </div>`;
+    }).join('') || '<div class="empty">NO TOKEN TRANSFERS IN RANGE</div>';
+    document.getElementById('inspectMoves').innerHTML = items.slice(0,100).map(item => {
+      const token=item.token || {};
+      const incoming=String((item.to||{}).hash||'').toLowerCase()===wallet.toLowerCase();
+      let amount=0;
+      try{ amount=Number(ethers.formatUnits(BigInt((item.total||{}).value||'0'),Number((item.total||{}).decimals ?? token.decimals ?? 18))); }catch(e){}
+      return `<div class="wallet-move">
+        <div class="when">${dateShort(item.timestamp)}</div>
+        <div class="side ${incoming?'buy':'sell'}">${incoming?'IN':'OUT'}</div>
+        <div class="symbol">${escapeHtml(token.symbol || '?')}</div>
+        <div class="amount">${fmtUnits(amount)}</div>
+      </div>`;
+    }).join('') || '<div class="empty">NO MOVEMENTS IN RANGE</div>';
+  }catch(e){
+    document.getElementById('inspectAssets').innerHTML=`<div class="empty">WALLET SCAN FAILED<br>${escapeHtml(e.message||'Try again')}</div>`;
+  }finally{ busy(false); }
 }
 
 async function getProvider(){
@@ -486,7 +643,7 @@ function renderTraders(traders){
     const cls = !t.known ? 'unknown' : p < 0 ? 'profit neg' : 'profit';
     return `<tr>
       <td class="rank">${String(i+1).padStart(2,'0')}</td>
-      <td><span class="addr ${watched?'watch':''}">${shortAddress(t.wallet)} <button class="copy" onclick="copyWallet('${t.wallet}')">COPY</button></span><span class="mini">${t.buys} buy / ${t.sells} sell</span></td>
+      <td><span class="addr ${watched?'watch':''}">${shortAddress(t.wallet)} <button class="copy" onclick="copyWallet('${t.wallet}')">COPY</button><button class="scan-wallet" onclick="inspectWallet('${t.wallet}')">SCAN</button></span><span class="mini">${t.buys} buy / ${t.sells} sell</span></td>
       <td class="n">${t.moves.length}</td>
       <td class="n ${cls}">${escapeHtml(pnlText(t))}</td>
     </tr>`;
@@ -557,6 +714,7 @@ if(startParams.has('period')){
   if(periodButton) setPeriod(periodButton);
 }
 if(startParams.has('scan')) setTimeout(scanRadar, 250);
+if(startParams.has('wallet') && ethers.isAddress(startParams.get('wallet'))) setTimeout(() => inspectWallet(startParams.get('wallet')), 300);
 </script>
 </body>
 </html>
