@@ -41,6 +41,8 @@
 </script>
 <script src="https://cdn.jsdelivr.net/npm/@walletconnect/ethereum-provider@2.10.0/dist/index.umd.js"
   onerror="window._wcLoadError=true"></script>
+<!-- QR code generator for inline Socios connect -->
+<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
 body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;font-size:16px;min-height:100vh;}
@@ -1055,29 +1057,36 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
     <p>Connect your wallet to explore the tactical pitch, find the best deals, and start scoring.</p>
     <div style="display:flex;flex-direction:column;align-items:center;gap:10px;width:100%;max-width:360px;margin:0 auto;">
 
-      <!-- MetaMask / browser -->
+      <!-- MetaMask / browser wallet -->
       <button class="btn-connect-big" onclick="connectWalletMM()" style="display:flex;align-items:center;justify-content:center;gap:10px;width:100%;">
         <img src="https://upload.wikimedia.org/wikipedia/commons/3/36/MetaMask_Fox.svg" style="width:22px;height:22px;" alt="MetaMask"/>
         METAMASK / BROWSER WALLET
       </button>
 
-      <!-- Socios — direct deep link on mobile, WC modal on desktop -->
-      <button class="btn-connect-big" onclick="connectWalletDeeplink('socios')" style="display:flex;align-items:center;justify-content:center;gap:10px;width:100%;background:linear-gradient(135deg,rgba(229,57,53,0.15),rgba(229,57,53,0.05));border-color:rgba(229,57,53,0.5);color:#ef5350;">
-        <img src="https://cdn.socios.com/assets/logo-mark.png" onerror="this.style.display='none'" style="width:22px;height:22px;border-radius:4px;" alt="Socios"/>
-        SOCIOS WALLET
-      </button>
-
-      <!-- Trust Wallet — direct deep link on mobile -->
+      <!-- Trust Wallet — deeplink on mobile (works reliably) -->
       <button class="btn-connect-big" onclick="connectWalletDeeplink('trust')" style="display:flex;align-items:center;justify-content:center;gap:10px;width:100%;background:linear-gradient(135deg,rgba(51,117,255,0.15),rgba(51,117,255,0.05));border-color:rgba(51,117,255,0.4);color:#3375ff;">
         <img src="https://trustwallet.com/assets/images/media/assets/TWT.png" onerror="this.style.display='none'" style="width:22px;height:22px;border-radius:50%;" alt="Trust"/>
         TRUST WALLET
       </button>
 
-      <!-- Generic WC QR for desktop / other wallets -->
-      <button class="btn-connect-big" onclick="connectWalletWC()" style="display:flex;align-items:center;justify-content:center;gap:10px;width:100%;background:linear-gradient(135deg,rgba(116,172,223,0.12),rgba(116,172,223,0.04));border-color:rgba(116,172,223,0.35);color:#74ACDF;">
-        <svg width="20" height="20" viewBox="0 0 300 185" fill="none"><path d="M61.4 36.6C107.6-7.7 181.6-7.7 227.8 36.6l5.5 5.3c2.3 2.2 2.3 5.7 0 7.9l-18.8 18.1c-1.1 1.1-2.9 1.1-4 0l-7.6-7.3c-32-30.7-83.8-30.7-115.7 0l-8.1 7.8c-1.1 1.1-2.9 1.1-4 0L56.3 49.8c-2.3-2.2-2.3-5.7 0-7.9l5.1-5.3zm205.4 38.3 16.7 16.1c2.3 2.2 2.3 5.7 0 7.9L199.2 175c-2.3 2.2-5.9 2.2-8.1 0l-56.2-54.1c-.6-.5-1.5-.5-2 0L76.7 175c-2.3 2.2-5.9 2.2-8.1 0L-16 98.9c-2.3-2.2-2.3-5.7 0-7.9l16.7-16.1c2.3-2.2 5.9-2.2 8.1 0l56.2 54.1c.6.5 1.5.5 2 0l56.2-54.1c2.3-2.2 5.9-2.2 8.1 0l56.2 54.1c.6.5 1.5.5 2 0l56.2-54.1c2.1-2.2 5.8-2.2 8 0z" fill="#74ACDF"/></svg>
-        OTHER WALLET (QR CODE)
+      <!-- Socios + all other wallets — inline QR code to scan -->
+      <button class="btn-connect-big" onclick="connectWalletQR()" style="display:flex;align-items:center;justify-content:center;gap:10px;width:100%;background:linear-gradient(135deg,rgba(229,57,53,0.12),rgba(116,172,223,0.08));border-color:rgba(229,57,53,0.4);color:#ef5350;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M14 14h3v3h-3zM17 17h3v3h-3zM14 20h3"/></svg>
+        SOCIOS &amp; OTHER WALLETS — SCAN QR
       </button>
+
+      <!-- QR display area (hidden until connectWalletQR is called) -->
+      <div id="wcQRBox" style="display:none;flex-direction:column;align-items:center;gap:10px;width:100%;background:#0a0e14;border:1px solid #1c2028;border-radius:12px;padding:20px;">
+        <div style="font-family:'Black Ops One',sans-serif;font-size:11px;letter-spacing:2px;color:#ef5350;">SCAN WITH SOCIOS OR ANY WALLET</div>
+        <canvas id="wcQRCanvas" style="border-radius:8px;background:#fff;padding:8px;"></canvas>
+        <div style="font-family:'Share Tech Mono',monospace;font-size:10px;color:#3d4a5a;text-align:center;">
+          Open Socios Wallet → WalletConnect → Scan
+        </div>
+        <button onclick="document.getElementById('wcQRBox').style.display='none';_destroyWCProvider();" 
+          style="font-family:'Black Ops One',sans-serif;font-size:10px;letter-spacing:1px;color:#5a6a7a;background:none;border:none;cursor:pointer;padding:4px;">
+          CANCEL
+        </button>
+      </div>
 
       <div style="font-family:'Share Tech Mono',monospace;font-size:10px;color:#3d4a5a;letter-spacing:1px;margin-top:2px;text-align:center;">
         Coinbase &middot; Rainbow &middot; Zerion &middot; Ledger &middot; +300 more via QR
@@ -1774,19 +1783,21 @@ async function _afterConnect(rawProvider) {
 
     provider = readProv;
 
-    // Signer from WC BrowserProvider (for tx signing only)
-    const wcBrowserProv = new ethers.BrowserProvider(rawProvider);
+    // Create signer — avoid WC relay getSigner call which is slow on Chrome
+    // ethers v6: JsonRpcSigner can be constructed directly with provider + address
     try {
-      signer = await wcBrowserProv.getSigner(address);
+      const wcBrowserProv = new ethers.BrowserProvider(rawProvider);
+      // Use send() directly to avoid network round-trip for signer creation
+      signer = new ethers.JsonRpcSigner(wcBrowserProv, address);
     } catch(e) {
+      // Fallback
       try {
+        const wcBrowserProv = new ethers.BrowserProvider(rawProvider);
         signer = await wcBrowserProv.getSigner();
         address = (await signer.getAddress()).toLowerCase();
       } catch(e2) {
-        // Last resort: use read provider with a dummy signer placeholder
-        // Transactions will fail but data loading works
-        console.warn('[WC] getSigner failed, read-only mode:', e2.message);
-        signer = provider; // will be replaced on first tx attempt
+        console.warn('[WC] signer fallback failed:', e2.message);
+        signer = readProv; // read-only until first tx
       }
     }
 
@@ -1920,7 +1931,68 @@ async function _getWCProvider() {
   return _wcEthProvider;
 }
 
-// Direct deep-link connect for specific wallets (Socios, Trust) on mobile
+// Show inline QR for Socios and other wallets that don't support deep links
+async function connectWalletQR() {
+  const qrBox = document.getElementById('wcQRBox');
+  const canvas = document.getElementById('wcQRCanvas');
+  qrBox.style.display = 'flex';
+  showHeaderToast('Generating QR — scan with Socios or any WalletConnect wallet…', false);
+
+  try {
+    const wcProv = await _getWCProvider();
+
+    // Kill old session first
+    if (wcProv.session) {
+      try { await wcProv.disconnect(); } catch(e) {}
+      _wcEthProvider = null;
+      const fresh = await _getWCProvider();
+      return connectWalletQRWithProvider(fresh, qrBox, canvas);
+    }
+    return connectWalletQRWithProvider(wcProv, qrBox, canvas);
+
+  } catch(e) {
+    qrBox.style.display = 'none';
+    showHeaderToast('QR error: ' + (e?.message || e), true);
+  }
+}
+
+async function connectWalletQRWithProvider(wcProv, qrBox, canvas) {
+  await new Promise((resolve, reject) => {
+    const timeout = setTimeout(() => { reject(new Error('Connection timed out.')); }, 180000);
+
+    wcProv.once('display_uri', async (uri) => {
+      // Render QR on canvas
+      try {
+        await QRCode.toCanvas(canvas, uri, { width: 220, margin: 1, color: { dark: '#000', light: '#fff' } });
+      } catch(e) { console.warn('QR render:', e); }
+    });
+
+    wcProv.once('connect', () => {
+      clearTimeout(timeout);
+      qrBox.style.display = 'none';
+      resolve();
+    });
+
+    wcProv.connect().catch(e => { clearTimeout(timeout); reject(e); });
+  });
+
+  // Verify chain via session
+  const sessionChains   = wcProv.session?.namespaces?.eip155?.chains   || [];
+  const sessionAccounts = wcProv.session?.namespaces?.eip155?.accounts || [];
+  const onChiliz = sessionChains.some(c => c === `eip155:${CHAIN_ID}`)
+    || sessionAccounts.some(a => a.startsWith(`eip155:${CHAIN_ID}:`));
+
+  if (!onChiliz) {
+    showHeaderToast('Please switch to Chiliz Chain (ID: 88888) in your wallet and scan again.', true);
+    _destroyWCProvider();
+    return;
+  }
+
+  await _afterConnect(wcProv);
+  wcProv.on('disconnect', () => location.reload());
+  wcProv.on('accountsChanged', accs => { if (!accs.length) location.reload(); });
+}
+
 async function connectWalletDeeplink(walletId) {
   const isMobile = /iPhone|iPad|Android/i.test(navigator.userAgent);
   const walletName = walletId === 'socios' ? 'Socios Wallet' : 'Trust Wallet';
