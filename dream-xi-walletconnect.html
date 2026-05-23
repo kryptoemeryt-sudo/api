@@ -4305,6 +4305,12 @@ async function directMint() {
     }
     showHeaderToast(`Initializing card mint for ${ethers.formatEther(currentMintPrice)} CHZ...`);
     updateNetworkOverlay(`Minting random WC card for ${ethers.formatEther(currentMintPrice)} CHZ...`);
+    if (activeWalletType === 'WalletConnect') {
+      updateNetworkOverlay('Checking mint on Chiliz Chain before opening wallet...');
+      await contract.mint.staticCall(referrer, { value: currentMintPrice }).catch(err => {
+        throw new Error('Mint pre-check failed: '+readableError(err));
+      });
+    }
     let tx;
     if (activeWalletType === 'Privy') {
       const iface = new ethers.Interface(ABI);
@@ -4328,12 +4334,7 @@ async function directMint() {
       tx = { hash: txHash, wait: () => provider.waitForTransaction(txHash) };
     } else {
       const txOptions = { value: currentMintPrice };
-    if (activeWalletType === 'Privy' || activeWalletType === 'WalletConnect') {
-      txOptions.gasLimit = 650000n;
-      txOptions.type = 0;
-      const feeData = await provider.getFeeData().catch(() => null);
-      txOptions.gasPrice = feeData?.gasPrice || 2500000000000n;
-    } else {
+    if (activeWalletType !== 'WalletConnect') {
       try {
         const gasEstimate = await contract.mint.estimateGas(referrer, { value: currentMintPrice });
         txOptions.gasLimit = gasEstimate + (gasEstimate / 5n);
