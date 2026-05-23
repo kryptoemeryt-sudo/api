@@ -2326,6 +2326,7 @@ async function ensureChilizChain(walletProvider) {
   const wantedChainId = '0x' + CHAIN_ID.toString(16);
   let cid = await walletProvider.request({method:'eth_chainId'});
   if (parseInt(cid,16) === CHAIN_ID) return true;
+  console.warn('Wallet is on chain', cid, 'trying to switch to', wantedChainId);
 
   try {
     await walletProvider.request({
@@ -2356,6 +2357,12 @@ async function ensureChilizChain(walletProvider) {
     }
     console.warn('Could not switch to Chiliz Chain', e);
   }
+  try {
+    cid = await walletProvider.request({method:'eth_chainId'});
+    throw new Error(`Wallet stayed on chain ${cid}; expected ${wantedChainId}`);
+  } catch(chainError) {
+    if (String(chainError.message || '').includes('Wallet stayed')) throw chainError;
+  }
   return false;
 }
 
@@ -2376,6 +2383,7 @@ function getChilizPrivyChain() {
   return {
     id: CHAIN_ID,
     name: 'Chiliz Chain',
+    network: 'chiliz',
     nativeCurrency: { name: 'CHZ', symbol: 'CHZ', decimals: 18 },
     rpcUrls: { default: { http: PUBLIC_RPCS }, public: { http: PUBLIC_RPCS } },
     blockExplorers: { default: { name: 'ChilizScan', url: 'https://scan.chiliz.com' } }
@@ -2396,9 +2404,12 @@ async function getPrivyClient() {
     del: key => Promise.resolve(localStorage.removeItem(key)),
     getKeys: () => Promise.resolve(Object.keys(localStorage))
   };
+  const chilizChain = getChilizPrivyChain();
   privyClient = new Privy({
     appId: PRIVY_APP_ID,
     clientId: PRIVY_CLIENT_ID,
+    defaultChain: chilizChain,
+    supportedChains: [chilizChain],
     storage
   });
 
