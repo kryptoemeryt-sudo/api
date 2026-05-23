@@ -1619,6 +1619,22 @@ const PUBLIC_RPCS = [
   'https://rpc.chiliz.com'
 ];
 
+async function getReadProvider(){
+  for(const url of PUBLIC_RPCS){
+    try{
+      const p = new ethers.JsonRpcProvider(url);
+      // Short timeout — don't wait 60s for a dead RPC
+      const blockNum = await Promise.race([
+        p.getBlockNumber(),
+        new Promise((_,reject) => setTimeout(() => reject(new Error('timeout')), 4000))
+      ]);
+      console.log('[RPC] connected to', url, 'block:', blockNum);
+      return p;
+    } catch(e){ console.warn('[RPC] failed:', url, e.message); }
+  }
+  throw new Error('All Chiliz RPCs failed. Check your internet connection.');
+}
+
 let provider, signer, address;
 let contract, marketContract;
 let activeSellTokenId = null;
@@ -1914,28 +1930,64 @@ async function connectWalletDeeplink(walletId) {
     const wcProv = await _getWCProvider();
 
     if (isMobile) {
+      // Get the WC URI first, then redirect to wallet
+      // When user comes back, poll for session establishment
+      const wcUri = await new Promise((resolve, reject) => {
+        const t = setTimeout(() => reject(new Error('URI timeout')), 15000);
+        wcProv.once('display_uri', (uri) => { clearTimeout(t); resolve(uri); });
+        wcProv.connect().catch(e => { clearTimeout(t); reject(e); });
+      });
+
+      // Store provider so we can resume after page comes back from background
+      window._pendingWCProvider = wcProv;
+      window._pendingWalletName = walletName;
+
+      const deeplink = walletId === 'socios'
+        ? 'https://wallet.socios.com/wc?uri=' + encodeURIComponent(wcUri)
+        : 'https://link.trustwallet.com/wc?uri=' + encodeURIComponent(wcUri);
+
+      // Show instructions in case auto-redirect is blocked
+      showHeaderToast('Opening ' + walletName + '… Approve the connection, then return here.', false);
+
+      // Redirect to wallet app
+      window.location.href = deeplink;
+
+      // visibilitychange fires when user returns to this tab/page
+      // At that point wcProv.session should be populated
       await new Promise((resolve, reject) => {
         const timeout = setTimeout(() => reject(new Error('Connection timed out.')), 180000);
 
-        // Resolve when WC session is established
-        wcProv.once('connect', () => { clearTimeout(timeout); resolve(); });
+        const onVisible = async () => {
+          if (document.visibilityState !== 'visible') return;
+          document.removeEventListener('visibilitychange', onVisible);
 
-        // Get URI and deep-link into wallet app
-        wcProv.once('display_uri', (wcUri) => {
-          const deeplink = walletId === 'socios'
-            ? 'https://wallet.socios.com/wc?uri=' + encodeURIComponent(wcUri)
-            : 'https://link.trustwallet.com/wc?uri=' + encodeURIComponent(wcUri);
+          // Poll for session — wallet may take a moment to complete handshake
+          let attempts = 0;
+          const poll = setInterval(async () => {
+            attempts++;
+            if (wcProv.session) {
+              clearInterval(poll);
+              clearTimeout(timeout);
+              resolve();
+            } else if (attempts > 20) {
+              clearInterval(poll);
+              clearTimeout(timeout);
+              reject(new Error('Wallet did not connect. Please try again.'));
+            }
+          }, 500);
+        };
 
-          // Use location.href — more reliable than window.open on mobile Chrome
-          // The page stays alive in background while wallet app is open
-          setTimeout(() => { window.location.href = deeplink; }, 300);
+        // Also listen for connect event (fires if page wasn't fully unloaded)
+        wcProv.once('connect', () => {
+          clearTimeout(timeout);
+          resolve();
         });
 
-        wcProv.connect().catch(e => { clearTimeout(timeout); reject(e); });
+        document.addEventListener('visibilitychange', onVisible);
       });
 
     } else {
-      // Desktop: standard QR modal
+      // Desktop: QR modal
       await new Promise((resolve, reject) => {
         const timeout = setTimeout(() => reject(new Error('Connection timed out.')), 180000);
         wcProv.once('connect', () => { clearTimeout(timeout); resolve(); });
@@ -1944,8 +1996,8 @@ async function connectWalletDeeplink(walletId) {
     }
 
     console.log('[deeplink] connected, session:', wcProv.session);
+    window._pendingWCProvider = null;
 
-    // Verify Chiliz chain via session
     const sessionChains   = wcProv.session?.namespaces?.eip155?.chains   || [];
     const sessionAccounts = wcProv.session?.namespaces?.eip155?.accounts || [];
     const onChiliz = sessionChains.some(c => c === `eip155:${CHAIN_ID}`)
@@ -1963,13 +2015,15 @@ async function connectWalletDeeplink(walletId) {
 
   } catch(e) {
     console.error('[deeplink] error:', e);
+    window._pendingWCProvider = null;
     _destroyWCProvider();
     const msg = e?.message || '';
-    if (msg.includes('User rejected') || e?.code === 4001 || msg.includes('Modal closed') || msg.includes('timed out')) {
-      showHeaderToast(msg.includes('timed out') ? 'Connection timed out. Please try again.' : 'Connection cancelled.', false);
-    } else {
-      showHeaderToast('Connection failed: ' + msg, true);
-    }
+    showHeaderToast(
+      msg.includes('timed out') || msg.includes('did not connect') ? msg :
+      (msg.includes('User rejected') || e?.code === 4001) ? 'Connection cancelled.' :
+      'Connection failed: ' + msg,
+      !msg.includes('cancelled')
+    );
   }
 }
 
@@ -2256,12 +2310,7 @@ function getReferrer() {
   return "0x0000000000000000000000000000000000000000";
 }
 
-async function getReadProvider(){
-  for(const url of PUBLIC_RPCS){
-    try{ const p = new ethers.JsonRpcProvider(url); await p.getBlockNumber(); return p; }
-    catch(e){}
-  }
-}
+// getReadProvider defined above with timeout
 
 // connectWallet() is now defined above in the wallet helpers section
 
@@ -3584,6 +3633,8 @@ setInterval(fetchCurrentBlock, 30000);
 // PrzywrĂłcenie poĹ‚Ä…czenia portfela po przeĹ‚adowaniu strony
 window.addEventListener('load', async () => {
   maybeShowOnboarding();
+
+  // Auto-resume MetaMask if already connected
   const walletProvider = getWalletProvider();
   if(walletProvider){
     try{
@@ -3595,6 +3646,47 @@ window.addEventListener('load', async () => {
         }
       }
     }catch(e){}
+    return; // MM connected, skip WC check
+  }
+
+  // Auto-resume WalletConnect session if page was reloaded after mobile deep link
+  // WC stores session in localStorage — if it exists, reconnect silently
+  try {
+    const wcModule = window['@walletconnect/ethereum-provider'];
+    if (!wcModule?.EthereumProvider) return;
+
+    // Check if there's a stored WC session without initing a full provider
+    const hasSession = Object.keys(localStorage).some(k => k.startsWith('wc@2:client'));
+    if (!hasSession) return;
+
+    console.log('[WC] Found stored session, attempting auto-resume...');
+    const wcProv = await wcModule.EthereumProvider.init({
+      projectId: WC_PROJECT_ID,
+      chains: [1],
+      optionalChains: [88888],
+      rpcMap: { 1: 'https://cloudflare-eth.com', 88888: 'https://rpc.ankr.com/chiliz' },
+      showQrModal: false, // don't show QR on auto-resume
+      metadata: {
+        name: 'Argentina Dream XI',
+        description: 'Block Kickers – Argentina Quest on Chiliz Chain',
+        url: window.location.href,
+        icons: ['https://block-kickers.vercel.app/favicon.ico']
+      }
+    });
+
+    if (wcProv.session) {
+      const sessionAccounts = wcProv.session?.namespaces?.eip155?.accounts || [];
+      const onChiliz = sessionAccounts.some(a => a.startsWith(`eip155:${CHAIN_ID}:`));
+      if (onChiliz) {
+        console.log('[WC] Auto-resuming session...');
+        _wcEthProvider = wcProv;
+        await _afterConnect(wcProv);
+        wcProv.on('disconnect', () => location.reload());
+        wcProv.on('accountsChanged', accs => { if (!accs.length) location.reload(); });
+      }
+    }
+  } catch(e) {
+    console.warn('[WC] Auto-resume failed:', e.message);
   }
 });
 </script>
