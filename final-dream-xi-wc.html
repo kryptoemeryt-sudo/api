@@ -634,20 +634,21 @@ body.game-mode{overflow:hidden;}
 body.game-mode .hero,
 body.game-mode #connectSection,
 body.game-mode #gameSection > div:first-child{display:none !important;}
-body.game-mode .page{max-width:none;height:calc(100vh - 52px);padding:8px;display:grid;grid-template-rows:auto auto minmax(0,1fr) minmax(150px,22vh);gap:8px;overflow:hidden;}
+body.game-mode .page{max-width:none;height:calc(100vh - 52px);padding:8px;display:grid;grid-template-rows:auto auto minmax(0,1fr) minmax(120px,18vh);gap:7px;overflow:hidden;}
 .dashboard-prize-strip{display:none;}
-body.game-mode .dashboard-prize-strip{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:12px;border:1px solid rgba(255,201,64,.42);background:linear-gradient(90deg,rgba(255,201,64,.16),rgba(0,255,135,.065),rgba(116,172,223,.08));border-radius:10px;padding:9px 13px;box-shadow:0 0 22px rgba(255,201,64,.08);}
+body.game-mode .dashboard-prize-strip{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:12px;border:1px solid rgba(255,201,64,.42);background:linear-gradient(90deg,rgba(255,201,64,.16),rgba(0,255,135,.065),rgba(116,172,223,.08));border-radius:10px;padding:7px 12px;box-shadow:0 0 22px rgba(255,201,64,.08);}
 .dash-prize-title{font-family:'Black Ops One',sans-serif;color:#ffc940;font-size:12px;letter-spacing:1.5px;white-space:nowrap;}
 .dash-prize-value{font-family:'Black Ops One',sans-serif;color:#00ff87;font-size:22px;line-height:1;text-align:center;text-shadow:0 0 12px rgba(0,255,135,.2);}
 .dash-deadline{display:flex;align-items:center;gap:5px;font-family:'Black Ops One',sans-serif;color:#dde4f0;font-size:15px;letter-spacing:1px;white-space:nowrap;}
 .dash-deadline span{min-width:27px;text-align:center;color:#74ACDF;}
 .dash-deadline small{font-family:'Share Tech Mono',monospace;font-size:8px;color:#5a6a7a;margin-left:2px;}
 body.game-mode #statsRow{display:grid !important;margin:0;grid-template-columns:.8fr .7fr .65fr 1fr;gap:8px;min-height:0;}
-body.game-mode #statsRow .stat-card{padding:8px 10px;border-radius:8px;min-height:70px;}
-body.game-mode #statsRow .stat-val{font-size:clamp(18px,2vw,25px);line-height:1;}
-body.game-mode #statsRow .stat-lbl{font-size:9px;letter-spacing:1px;}
+body.game-mode #statsRow .stat-card{padding:6px 10px;border-radius:8px;min-height:48px;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+body.game-mode #statsRow .stat-val{font-size:clamp(17px,1.65vw,22px);line-height:1;}
+body.game-mode #statsRow #myEstPayout{font-size:clamp(17px,1.65vw,22px)!important;padding-top:0!important;}
+body.game-mode #statsRow .stat-lbl{font-size:8px;letter-spacing:.8px;}
 body.game-mode #gameSection{display:contents !important;min-height:0;overflow:hidden;}
-body.game-mode .game-grid{grid-row:3;display:grid;grid-template-columns:minmax(320px,380px) minmax(520px,1fr);gap:8px;padding:0;min-height:0;overflow:hidden;}
+body.game-mode .game-grid{grid-row:3;display:grid;grid-template-columns:minmax(380px,31vw) minmax(560px,1fr);gap:8px;padding:0;min-height:0;overflow:hidden;}
 body.game-mode .country-section,
 body.game-mode .pitch-container,
 body.game-mode .lb-section{background:#0a0e14;border:1px solid #1c2028;border-radius:10px;padding:10px;min-height:0;overflow:hidden;}
@@ -793,6 +794,52 @@ body.game-mode .lb-score{font-size:12px;text-align:right;white-space:nowrap;}
   body.game-mode .lb-score{font-size:8px;}
   body.game-mode .lb-prize{font-size:8px;}
   body.game-mode .lb-prize.none{font-size:7px;}
+}
+
+@media(max-width:700px) and (pointer:fine){
+  body.game-mode .topnav{height:36px;padding:5px 8px;}
+  body.game-mode .page{height:calc(100vh - 36px);padding:4px;grid-template-rows:auto auto minmax(0,1fr) minmax(80px,17vh);gap:4px;}
+  body.game-mode #statsRow{grid-template-columns:.75fr .65fr .62fr .9fr;gap:4px;}
+  body.game-mode #statsRow .stat-card{min-height:34px;padding:3px 5px;}
+  body.game-mode #statsRow .stat-val,
+  body.game-mode #statsRow #myEstPayout{font-size:10px!important;}
+  body.game-mode #statsRow .stat-lbl{font-size:4.5px;letter-spacing:.2px;}
+  body.game-mode .dashboard-prize-strip{grid-template-columns:auto 1fr auto;padding:4px 7px;gap:6px;}
+  body.game-mode .dash-prize-title{font-size:6px;letter-spacing:.5px;grid-column:auto;}
+  body.game-mode .dash-prize-value{font-size:12px;text-align:center;grid-column:auto;}
+  body.game-mode .dash-deadline{grid-column:auto;grid-row:auto;font-size:9px;gap:2px;}
+  body.game-mode .dash-deadline span{min-width:14px;}
+  body.game-mode .game-grid{grid-template-columns:minmax(190px,34vw) minmax(0,1fr);gap:4px;}
+  body.game-mode .country-section,
+  body.game-mode .pitch-container,
+  body.game-mode .lb-section{padding:5px;border-radius:7px;}
+  body.game-mode .filter-tabs{grid-template-columns:repeat(3,minmax(0,1fr));gap:3px;margin-bottom:5px;}
+  body.game-mode .tab-btn{font-size:5px;padding:3px 2px;}
+  body.game-mode .country-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:4px;}
+  body.game-mode .country-card{min-height:42px;padding:3px;}
+  body.game-mode .country-card-flag{font-size:13px;min-height:14px;}
+  body.game-mode .country-card-name{font-size:7px;margin-top:2px!important;}
+  body.game-mode .country-card-score{font-size:8px;margin-top:2px;}
+  body.game-mode .country-card-completion{font-size:5.5px;}
+  body.game-mode .pitch-title-row{margin-bottom:3px;}
+  body.game-mode .pitch-title{font-size:6px;letter-spacing:.6px;margin-bottom:3px;}
+  body.game-mode #selectedCountryCompletion{font-size:6px!important;}
+  body.game-mode .pitch-wrap{padding:5px;border-radius:8px;}
+  body.game-mode .formation{min-height:0;min-width:0;}
+  body.game-mode .formation.album-horizontal .row-single{gap:2px;}
+  body.game-mode .formation.album-horizontal .row-single .pos-card{min-height:50px;padding:2px 1px;}
+  body.game-mode .pos-name{font-size:5px;}
+  body.game-mode .pos-ball{font-size:10px;}
+  body.game-mode .pos-weight{font-size:10px;}
+  body.game-mode .pos-rarity{font-size:4.5px;}
+  body.game-mode .pitch-center-circle{width:42px;height:42px;}
+  body.game-mode .pitch-penalty-area-top,
+  body.game-mode .pitch-penalty-area-bottom{width:28px;height:84px;}
+  body.game-mode .lb-title-row{margin-bottom:3px;}
+  body.game-mode .lb-toggle-container{gap:4px;margin-bottom:4px;}
+  body.game-mode .lb-toggle-btn{font-size:5px;padding:4px 2px;}
+  body.game-mode .leaderboard-list{padding:4px;}
+  body.game-mode .lb-row{grid-template-columns:18px minmax(0,1fr) 40px 50px 36px;gap:3px;padding:4px;margin-bottom:3px;}
 }
 </style>
 </head>
