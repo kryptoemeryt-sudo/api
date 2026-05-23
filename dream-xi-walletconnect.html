@@ -1224,10 +1224,27 @@ body.game-mode .page{
   height:calc(100vh - 54px);
   padding:8px;
   display:grid;
-  grid-template-rows:auto minmax(0,1fr);
+  grid-template-rows:auto auto minmax(0,1fr);
   gap:8px;
   overflow:hidden;
 }
+.dashboard-prize-strip{display:none;}
+body.game-mode .dashboard-prize-strip{
+  display:grid;
+  grid-template-columns:auto 1fr auto;
+  align-items:center;
+  gap:12px;
+  border:1px solid rgba(255,201,64,.42);
+  background:linear-gradient(90deg,rgba(255,201,64,.16),rgba(0,255,135,.065),rgba(116,172,223,.08));
+  border-radius:10px;
+  padding:9px 13px;
+  box-shadow:0 0 22px rgba(255,201,64,.08);
+}
+.dash-prize-title{font-family:'Black Ops One',sans-serif;color:#ffc940;font-size:12px;letter-spacing:1.5px;white-space:nowrap;}
+.dash-prize-value{font-family:'Black Ops One',sans-serif;color:#00ff87;font-size:22px;line-height:1;text-align:center;text-shadow:0 0 12px rgba(0,255,135,.2);}
+.dash-deadline{display:flex;align-items:center;gap:5px;font-family:'Black Ops One',sans-serif;color:#dde4f0;font-size:15px;letter-spacing:1px;white-space:nowrap;}
+.dash-deadline span{min-width:27px;text-align:center;color:#74ACDF;}
+.dash-deadline small{font-family:'Share Tech Mono',monospace;font-size:8px;color:#5a6a7a;margin-left:2px;}
 body.game-mode #statsRow{
   margin:0;
   min-height:0;
@@ -1357,9 +1374,15 @@ body.game-mode .btn-card-action{font-size:6px;padding:3px 2px;}
   body.game-mode .page{
     height:calc(100vh - 44px);
     padding:6px;
-    grid-template-rows:auto minmax(0,1fr);
-    gap:6px;
+    grid-template-rows:auto auto minmax(0,1fr);
+    gap:5px;
   }
+  body.game-mode .dashboard-prize-strip{grid-template-columns:1fr auto;padding:6px 8px;border-radius:8px;gap:6px;}
+  body.game-mode .dash-prize-title{font-size:8px;letter-spacing:.8px;grid-column:1/2;}
+  body.game-mode .dash-prize-value{font-size:15px;text-align:left;grid-column:1/2;}
+  body.game-mode .dash-deadline{grid-column:2/3;grid-row:1/3;font-size:12px;gap:3px;letter-spacing:.5px;}
+  body.game-mode .dash-deadline span{min-width:18px;}
+  body.game-mode .dash-deadline small{display:none;}
   body.game-mode #statsRow{
     grid-template-columns:repeat(4,minmax(0,1fr));
     gap:3px;
@@ -1757,7 +1780,7 @@ body.network-busy{cursor:progress;}
       </div>
     </div>
     <div class="stat-card quest-link-card">
-      <div class="quest-topline"><span id="topPoolInfo">10,000 CHZ POOL</span><span id="topDeadlineInfo">--D --H</span></div>
+      <div class="quest-topline"><span>QUESTS</span><span>SOON</span></div>
       <div class="quest-link-title">QUESTS</div>
       <div class="quest-link-copy">World Cup Album</div>
       <button class="quest-soon-btn" type="button" disabled>SOON</button>
@@ -1765,6 +1788,17 @@ body.network-busy{cursor:progress;}
   </div>
 
   <!-- MONIT POĹÄ„CZENIA PORTFELA -->
+  <div class="dashboard-prize-strip" id="dashboardPrizeStrip">
+    <div class="dash-prize-title">&#127942; DREAM XI PRIZE POOL</div>
+    <div class="dash-prize-value" id="topPoolInfo">10,000 CHZ</div>
+    <div class="dash-deadline" aria-label="Quest countdown">
+      <span id="dashCdD">--</span><small>D</small>:
+      <span id="dashCdH">--</span><small>H</small>:
+      <span id="dashCdM">--</span><small>M</small>:
+      <span id="dashCdS">--</span><small>S</small>
+    </div>
+  </div>
+
   <div id="connectSection" class="connect-prompt">
     <p>Connect your Chiliz Wallet to explore the tactical pitch, find the best deals, and start scoring.</p>
     <div class="wallet-choice">
@@ -3045,6 +3079,8 @@ async function finalizeWalletConnection(walletProvider, walletType = 'wallet') {
   document.getElementById('connectSection').style.display = 'none';
   document.getElementById('gameSection').style.display = 'block';
   document.getElementById('statsRow').style.display = 'grid';
+  const prizeStrip = document.getElementById('dashboardPrizeStrip');
+  if (prizeStrip) prizeStrip.style.display = 'grid';
   document.body.classList.add('game-mode');
 
   await loadData();
@@ -3651,6 +3687,8 @@ async function loadDataCore(){
   const playerCount = getLeaderboardData().length;
   const paidPlaces = getPaidPlaces(playerCount);
   document.getElementById('poolInfo').textContent = `Quest Prize Pool: ${PRIZE_POOL_CHZ.toLocaleString()} CHZ - ${paidPlaces || 1} paid ranks from ${playerCount} collectors`;
+  const topPool = document.getElementById('topPoolInfo');
+  if (topPool) topPool.textContent = `${PRIZE_POOL_CHZ.toLocaleString()} CHZ`;
 
   currentMarketListings = rawMarketListings;
   renderStats();
@@ -4545,9 +4583,11 @@ function updateCountdown(){
     document.getElementById('cdH').textContent = '00';
     document.getElementById('cdM').textContent = '00';
     document.getElementById('cdS').textContent = '00';
+    ['dashCdD','dashCdH','dashCdM','dashCdS'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = '00';
+    });
     document.getElementById('cdBlock').textContent = 'QUEST CONCLUDED AT BLOCK #'+DEADLINE_BLOCK.toLocaleString();
-    const topDeadlineDone = document.getElementById('topDeadlineInfo');
-    if (topDeadlineDone) topDeadlineDone.textContent = 'ENDED';
     return;
   }
   const secsLeft = blocksLeft * 3;
@@ -4560,8 +4600,11 @@ function updateCountdown(){
   document.getElementById('cdH').textContent = String(h).padStart(2,'0');
   document.getElementById('cdM').textContent = String(m).padStart(2,'0');
   document.getElementById('cdS').textContent = String(s).padStart(2,'0');
-  const topDeadline = document.getElementById('topDeadlineInfo');
-  if (topDeadline) topDeadline.textContent = String(d).padStart(2,'0')+'D '+String(h).padStart(2,'0')+'H';
+  const setDashCd = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = String(val).padStart(2,'0'); };
+  setDashCd('dashCdD', d);
+  setDashCd('dashCdH', h);
+  setDashCd('dashCdM', m);
+  setDashCd('dashCdS', s);
   document.getElementById('cdBlock').innerHTML = 'Deadline block: <a href="https://scan.chiliz.com/block/'+DEADLINE_BLOCK+'" target="_blank" style="color:#00ff87;text-decoration:none;">#'+DEADLINE_BLOCK.toLocaleString()+'</a> - Estimated current: ~#'+estimated.toLocaleString()+' - remaining: '+blocksLeft.toLocaleString()+' blocks';
 }
 
