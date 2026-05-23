@@ -4195,7 +4195,29 @@ async function directMint() {
     }
     showHeaderToast(`Initializing card mint for ${ethers.formatEther(currentMintPrice)} CHZ...`);
     updateNetworkOverlay(`Minting random WC card for ${ethers.formatEther(currentMintPrice)} CHZ...`);
-    const txOptions = { value: currentMintPrice };
+    let tx;
+    if (activeWalletType === 'Privy') {
+      const iface = new ethers.Interface(ABI);
+      const feeData = await provider.getFeeData().catch(() => null);
+      const gasPrice = feeData?.gasPrice || 2500000000000n;
+      const gasHex = ethers.toQuantity(650000n);
+      const txHash = await walletProvider.request({
+        method: 'eth_sendTransaction',
+        params: [{
+          from: address,
+          to: CONTRACT_ADDRESS,
+          data: iface.encodeFunctionData('mint', [referrer]),
+          value: ethers.toQuantity(currentMintPrice),
+          gas: gasHex,
+          gasLimit: gasHex,
+          gasPrice: ethers.toQuantity(gasPrice),
+          chainId: '0x' + CHAIN_ID.toString(16),
+          type: '0x0'
+        }]
+      });
+      tx = { hash: txHash, wait: () => provider.waitForTransaction(txHash) };
+    } else {
+      const txOptions = { value: currentMintPrice };
     if (activeWalletType === 'Privy' || activeWalletType === 'WalletConnect') {
       txOptions.gasLimit = 650000n;
       txOptions.type = 0;
@@ -4209,7 +4231,8 @@ async function directMint() {
         console.warn('Mint gas estimate skipped:', err);
       }
     }
-    const tx = await contract.mint(referrer, txOptions);
+      tx = await contract.mint(referrer, txOptions);
+    }
     showHeaderToast('Mint transaction sent. Awaiting block confirmation...');
     updateNetworkOverlay('Mint sent. Waiting for block confirmation...');
     
