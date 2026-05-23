@@ -25,6 +25,19 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
 .wallet-actions{display:flex;align-items:center;justify-content:flex-end;gap:8px;flex-shrink:0;}
 .btn-privy{background:rgba(129,140,248,0.1);border-color:rgba(129,140,248,0.42);color:#a5b4fc;}
 .btn-privy.connected{background:rgba(129,140,248,0.16);border-color:#a5b4fc;color:#dde4f0;}
+.wallet-modal{position:fixed;inset:0;background:rgba(0,0,0,0.72);backdrop-filter:blur(8px);z-index:5000;display:none;align-items:center;justify-content:center;padding:18px;}
+.wallet-modal.active{display:flex;}
+.wallet-panel{width:min(440px,100%);background:linear-gradient(180deg,#111820,#090d12);border:1px solid rgba(0,255,135,0.28);border-radius:12px;box-shadow:0 24px 80px rgba(0,0,0,0.55),0 0 32px rgba(0,255,135,0.08);padding:16px;}
+.wallet-panel-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px;}
+.wallet-panel-title{font-family:'Black Ops One',sans-serif;color:#dde4f0;font-size:17px;letter-spacing:1px;}
+.wallet-close{width:32px;height:32px;border-radius:8px;border:1px solid rgba(255,255,255,0.12);background:rgba(255,255,255,0.04);color:#dde4f0;cursor:pointer;font-size:18px;line-height:1;}
+.wallet-option{width:100%;display:grid;grid-template-columns:42px 1fr auto;align-items:center;gap:12px;text-align:left;border:1px solid rgba(255,255,255,0.09);background:rgba(255,255,255,0.035);border-radius:10px;padding:12px;margin-top:10px;cursor:pointer;color:#dde4f0;}
+.wallet-option:hover{border-color:rgba(0,255,135,0.35);background:rgba(0,255,135,0.055);}
+.wallet-option-icon{font-size:23px;width:42px;height:42px;display:grid;place-items:center;border-radius:9px;background:rgba(0,255,135,0.08);}
+.wallet-option-name{font-family:'Black Ops One',sans-serif;font-size:13px;letter-spacing:1px;color:#fff;}
+.wallet-option-desc{font-size:11px;color:#8da0b7;margin-top:4px;line-height:1.25;}
+.wallet-option-tag{font-family:'Share Tech Mono',monospace;font-size:10px;color:#00ff87;border:1px solid rgba(0,255,135,0.24);border-radius:999px;padding:3px 7px;white-space:nowrap;}
+.wallet-note{font-size:11px;color:#6f7f92;line-height:1.35;margin-top:12px;}
 
 /* SEKCJA HERO I NAGĹĂ“WEK */
 .hero{padding:48px 24px 40px;text-align:center;border-bottom:1px solid #1c2028;position:relative;overflow:hidden;}
@@ -1533,10 +1546,43 @@ body.network-busy{cursor:progress;}
     <span id="walletBalance" class="wallet-pill" style="color:#00ff87;">0.0 CHZ</span>
   </div>
   <div class="wallet-actions">
-    <button class="btn-connect" id="connectBtn" onclick="connectWallet()">CONNECT WALLET</button>
-    <button class="btn-connect btn-privy" id="privyBtn" onclick="connectPrivyWallet()">PRIVY</button>
+    <button class="btn-connect" id="connectBtn" onclick="openWalletChoice()">CONNECT WALLET</button>
   </div>
 </nav>
+
+<div class="wallet-modal" id="walletChoiceModal" onclick="closeWalletChoice(event)">
+  <div class="wallet-panel" onclick="event.stopPropagation()">
+    <div class="wallet-panel-head">
+      <div class="wallet-panel-title">Choose Wallet</div>
+      <button class="wallet-close" type="button" onclick="closeWalletChoice()">x</button>
+    </div>
+    <button class="wallet-option" type="button" onclick="connectInjectedFromChoice()">
+      <span class="wallet-option-icon">&#128188;</span>
+      <span>
+        <span class="wallet-option-name">MetaMask / Trust Browser</span>
+        <span class="wallet-option-desc">Use the wallet already injected into this browser.</span>
+      </span>
+      <span class="wallet-option-tag">APP</span>
+    </button>
+    <button class="wallet-option" type="button" onclick="connectWalletConnect()">
+      <span class="wallet-option-icon">&#128279;</span>
+      <span>
+        <span class="wallet-option-name">WalletConnect</span>
+        <span class="wallet-option-desc">Pick Trust Wallet, MetaMask Mobile, or another wallet app.</span>
+      </span>
+      <span class="wallet-option-tag">QR</span>
+    </button>
+    <button class="wallet-option" type="button" onclick="connectPrivyFromChoice()">
+      <span class="wallet-option-icon">&#9993;</span>
+      <span>
+        <span class="wallet-option-name">Privy Email Wallet</span>
+        <span class="wallet-option-desc">Create or restore an embedded wallet by email code.</span>
+      </span>
+      <span class="wallet-option-tag">NEW</span>
+    </button>
+    <div class="wallet-note">Privy creates its own embedded wallet. WalletConnect is the option for choosing an external mobile app.</div>
+  </div>
+</div>
 
 <div class="page">
 
@@ -1653,8 +1699,7 @@ body.network-busy{cursor:progress;}
   <div id="connectSection" class="connect-prompt">
     <p>Connect your Chiliz Wallet to explore the tactical pitch, find the best deals, and start scoring.</p>
     <div class="wallet-choice">
-      <button class="btn-connect-big" onclick="connectWallet()">CONNECT WALLET</button>
-      <button class="btn-connect-big privy-big" onclick="connectPrivyWallet()">CONNECT WITH PRIVY</button>
+      <button class="btn-connect-big" onclick="openWalletChoice()">CHOOSE WALLET</button>
     </div>
   </div>
 
@@ -2200,6 +2245,7 @@ const PUBLIC_RPCS = ['https://chiliz-rpc.publicnode.com','https://rpc.chiliz.com
 const PRIVY_APP_ID = "cmpil29vr000r0cl27mvi078e";
 const PRIVY_CLIENT_ID = "client-WY6ZYpnr2u5M5Jusp4enZTZBmqhrikkMGUCjvgwWymidE";
 const PRIVY_MOBILE_CLIENT_ID = "client-WY6ZYpnr2u5M5Jusp4enZTZBmqhrikkMGUDTCFM16jcp4";
+const WALLETCONNECT_PROJECT_ID = "15671485110825e18107d31b379d9df6";
 
 let provider, signer, address;
 let contract, marketContract;
@@ -2209,6 +2255,7 @@ let privyClient = null;
 let privyIframe = null;
 let privyMessageListener = null;
 let privySdk = null;
+let walletConnectProvider = null;
 let activeSellTokenId = null;
 
 window.dreamScores = {}; // portfel -> { teamId -> { pozycja -> {weight, tid, rarity, dna} } }
@@ -2431,6 +2478,69 @@ async function getPrivyClient() {
   }
 
   return privyClient;
+}
+
+function openWalletChoice() {
+  const modal = document.getElementById('walletChoiceModal');
+  if (modal) modal.classList.add('active');
+}
+
+function closeWalletChoice(event) {
+  if (event && event.target && event.currentTarget && event.target !== event.currentTarget) return;
+  const modal = document.getElementById('walletChoiceModal');
+  if (modal) modal.classList.remove('active');
+}
+
+async function connectInjectedFromChoice() {
+  closeWalletChoice();
+  await connectWallet();
+}
+
+async function connectPrivyFromChoice() {
+  closeWalletChoice();
+  await connectPrivyWallet();
+}
+
+async function connectWalletConnect() {
+  closeWalletChoice();
+  if (!WALLETCONNECT_PROJECT_ID) {
+    showHeaderToast('WalletConnect needs a Reown Project ID. Create one at cloud.reown.com and send it to me.', true);
+    return;
+  }
+  showNetworkOverlay('Opening WalletConnect...');
+  try {
+    const mod = await import('https://esm.sh/@walletconnect/ethereum-provider@2');
+    const EthereumProvider = mod.default || mod.EthereumProvider;
+    walletConnectProvider = await EthereumProvider.init({
+      projectId: WALLETCONNECT_PROJECT_ID,
+      chains: [CHAIN_ID],
+      optionalChains: [CHAIN_ID],
+      rpcMap: { [CHAIN_ID]: PUBLIC_RPCS[0] },
+      showQrModal: true,
+      methods: [
+        'eth_sendTransaction',
+        'personal_sign',
+        'eth_signTypedData',
+        'wallet_switchEthereumChain',
+        'wallet_addEthereumChain'
+      ],
+      events: ['chainChanged', 'accountsChanged', 'disconnect'],
+      metadata: {
+        name: 'Block Kickers Dream XI',
+        description: 'Block Kickers Dream XI on Chiliz Chain',
+        url: location.origin,
+        icons: [location.origin + '/favicon.ico']
+      }
+    });
+    await walletConnectProvider.connect({ chains: [CHAIN_ID] });
+    const connected = await finalizeWalletConnection(walletConnectProvider, 'WalletConnect');
+    if (connected) showHeaderToast('WalletConnect wallet connected.');
+  } catch(e) {
+    console.error('WalletConnect failed:', e);
+    showHeaderToast('WalletConnect failed: '+readableError(e).slice(0, 170), true);
+  } finally {
+    hideNetworkOverlay();
+  }
 }
 
 
