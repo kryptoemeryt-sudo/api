@@ -1712,22 +1712,33 @@ function getWalletProvider() {
 
 // Shared post-connect setup (works for both MetaMask and WalletConnect)
 async function _afterConnect(rawProvider) {
-  // For WalletConnect: use public RPC for reads (avoids WC relay CORS issues in Chrome)
-  // and WC provider only for signing transactions
-  const isWC = !!(rawProvider.session !== undefined || rawProvider.connect);
+  const isWC = typeof rawProvider.session !== 'undefined'; // WC providers have .session
 
   if (isWC) {
-    // Get address from WC provider
-    let accounts;
+    // After wcProv.connect() resolves, accounts are available via eth_accounts
+    // Some WC versions need eth_requestAccounts to flush them
+    let accounts = [];
     try {
       accounts = await rawProvider.request({ method: 'eth_accounts' });
-    } catch(e) {
+    } catch(e) {}
+
+    if (!accounts || accounts.length === 0) {
+      try {
+        accounts = await rawProvider.request({ method: 'eth_requestAccounts' });
+      } catch(e) {}
+    }
+
+    // Final fallback: read from provider object directly
+    if (!accounts || accounts.length === 0) {
       accounts = rawProvider.accounts || [];
     }
-    if (!accounts || accounts.length === 0) throw new Error('No accounts returned from wallet');
-    address = accounts[0];
 
-    // Use public RPC provider for all blockchain reads — avoids WC relay latency and CORS
+    if (!accounts || accounts.length === 0) {
+      throw new Error('No accounts returned from wallet. Make sure your wallet is unlocked and try again.');
+    }
+    address = accounts[0].toLowerCase();
+
+    // Use public RPC for all reads — avoids WC relay CORS issues in Chrome
     let readProv = null;
     for (const url of PUBLIC_RPCS) {
       try {
@@ -1737,32 +1748,42 @@ async function _afterConnect(rawProvider) {
         break;
       } catch(e) {}
     }
-    if (!readProv) throw new Error('Cannot connect to Chiliz Chain RPC. Check your internet connection.');
+    if (!readProv) throw new Error('Cannot reach Chiliz Chain RPC. Check your internet connection.');
 
-    // Wrap WC provider in BrowserProvider only for signing
+    provider = readProv;
+
+    // Signer from WC BrowserProvider (for tx signing only)
     const wcBrowserProv = new ethers.BrowserProvider(rawProvider);
-    provider = readProv; // reads go to public RPC
-    signer   = await wcBrowserProv.getSigner(address).catch(async () => {
-      // Fallback: try getSigner without address arg
-      return await wcBrowserProv.getSigner();
-    });
+    try {
+      signer = await wcBrowserProv.getSigner(address);
+    } catch(e) {
+      try {
+        signer = await wcBrowserProv.getSigner();
+        address = (await signer.getAddress()).toLowerCase();
+      } catch(e2) {
+        // Last resort: use read provider with a dummy signer placeholder
+        // Transactions will fail but data loading works
+        console.warn('[WC] getSigner failed, read-only mode:', e2.message);
+        signer = provider; // will be replaced on first tx attempt
+      }
+    }
 
   } else {
-    // MetaMask / injected wallet — BrowserProvider handles everything
+    // MetaMask / injected wallet
     provider = new ethers.BrowserProvider(rawProvider);
     try {
       signer  = await provider.getSigner();
-      address = await signer.getAddress();
+      address = (await signer.getAddress()).toLowerCase();
     } catch(e) {
       const accounts = await rawProvider.request({ method: 'eth_accounts' });
       if (!accounts || accounts.length === 0) throw new Error('No accounts returned from wallet');
-      address = accounts[0];
+      address = accounts[0].toLowerCase();
       signer  = await provider.getSigner(address);
     }
   }
 
-  // Store raw provider reference for balance polling
   window._rawWalletProvider = rawProvider;
+  console.log('[connect] address:', address, '| provider:', provider);
 
   contract       = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
   marketContract = new ethers.Contract(MARKET_ADDRESS, MARKET_ABI, signer);
@@ -1880,35 +1901,57 @@ async function _getWCProvider() {
 // Direct deep-link connect for specific wallets (Socios, Trust) on mobile
 async function connectWalletDeeplink(walletId) {
   const isMobile = /iPhone|iPad|Android/i.test(navigator.userAgent);
-  showHeaderToast('Connecting to ' + (walletId === 'socios' ? 'Socios Wallet' : 'Trust Wallet') + '…', false);
+  const walletName = walletId === 'socios' ? 'Socios Wallet' : 'Trust Wallet';
+  showHeaderToast('Opening ' + walletName + '…', false);
 
   try {
     const wcProv = await _getWCProvider();
 
-    // Capture WC URI for deep linking before connect resolves
-    wcProv.on('display_uri', (wcUri) => {
-      if (isMobile) {
-        const deeplink = walletId === 'socios'
-          ? 'https://wallet.socios.com/wc?uri=' + encodeURIComponent(wcUri)
-          : 'https://link.trustwallet.com/wc?uri='  + encodeURIComponent(wcUri);
-        window.location.href = deeplink;
-      }
-      // Desktop: WC modal shows QR automatically
-    });
+    if (isMobile) {
+      // On mobile: listen for the WC URI, deep-link into the wallet app,
+      // then wait for the session_update / connect event when the app returns
+      await new Promise((resolve, reject) => {
+        // Timeout after 3 minutes
+        const timeout = setTimeout(() => reject(new Error('Connection timed out. Please try again.')), 180000);
 
-    await wcProv.connect();
+        wcProv.on('display_uri', (wcUri) => {
+          const deeplink = walletId === 'socios'
+            ? 'https://wallet.socios.com/wc?uri=' + encodeURIComponent(wcUri)
+            : 'https://link.trustwallet.com/wc?uri='  + encodeURIComponent(wcUri);
 
-    // Chain verification
-    const rawChainId = await wcProv.request({ method: 'eth_chainId' });
-    const chainId = typeof rawChainId === 'number' ? rawChainId
-      : rawChainId.startsWith('0x') ? parseInt(rawChainId, 16) : parseInt(rawChainId, 10);
+          // Open wallet app via deep link
+          window.open(deeplink, '_blank') || (window.location.href = deeplink);
+        });
 
+        wcProv.once('connect', () => {
+          clearTimeout(timeout);
+          resolve();
+        });
+
+        // Start connect — emits display_uri, then waits for wallet to respond
+        wcProv.connect().catch(e => {
+          clearTimeout(timeout);
+          reject(e);
+        });
+      });
+
+    } else {
+      // Desktop: standard modal with QR
+      await wcProv.connect();
+    }
+
+    // Verify chain
+    const rawChainId = await wcProv.request({ method: 'eth_chainId' }).catch(() => null);
     const sessionChains = wcProv.session?.namespaces?.eip155?.chains || [];
     const sessionHasChiliz = sessionChains.some(c => c === 'eip155:88888');
-    const onChiliz = chainId === CHAIN_ID || sessionHasChiliz;
-
-    if (!onChiliz) {
-      showHeaderToast('Please switch to Chiliz Chain (ID: 88888) in your wallet and try again.', true);
+    let chainOk = sessionHasChiliz;
+    if (!chainOk && rawChainId != null) {
+      const cid = typeof rawChainId === 'number' ? rawChainId
+        : rawChainId.startsWith('0x') ? parseInt(rawChainId, 16) : parseInt(rawChainId, 10);
+      chainOk = cid === CHAIN_ID;
+    }
+    if (!chainOk) {
+      showHeaderToast('Please switch to Chiliz Chain (ID: 88888) in your wallet.', true);
       _destroyWCProvider();
       return;
     }
@@ -1920,8 +1963,8 @@ async function connectWalletDeeplink(walletId) {
   } catch(e) {
     console.error('Deeplink connect error:', e);
     _destroyWCProvider();
-    if (e?.message?.includes('User rejected') || e?.code === 4001 || e?.message?.includes('Modal closed')) {
-      showHeaderToast('Connection cancelled.', false);
+    if (e?.message?.includes('User rejected') || e?.code === 4001 || e?.message?.includes('Modal closed') || e?.message?.includes('timed out')) {
+      showHeaderToast(e.message.includes('timed out') ? e.message : 'Connection cancelled.', false);
     } else {
       showHeaderToast('Connection failed: ' + (e?.message || 'unknown error'), true);
     }
