@@ -34,6 +34,9 @@ body{font-family:'Barlow Condensed',Arial,sans-serif;padding:16px;font-size:18px
 .tokens{display:flex;flex-wrap:wrap;gap:5px;}
 .token-toggle{cursor:pointer;border:1px solid var(--border);background:transparent;color:var(--muted);padding:5px 8px;border-radius:5px;font:11px 'Black Ops One';}
 .token-toggle.active{border-color:rgba(0,255,135,.4);color:var(--green);background:var(--green-soft);}
+.periods{display:flex;gap:5px;flex-wrap:wrap;}
+.period{flex:1;min-width:42px;height:34px;border-radius:5px;border:1px solid var(--border);background:#080c10;color:var(--muted);font:12px 'Black Ops One';cursor:pointer;}
+.period.active{border-color:rgba(255,201,64,.5);background:rgba(255,201,64,.1);color:var(--gold);}
 .field{width:100%;height:34px;background:#080c10;border:1px solid var(--border);border-radius:5px;color:var(--text);font:13px 'Share Tech Mono';padding:0 9px;outline:none;}
 .field:focus{border-color:rgba(0,255,135,.4);}
 .metric-val{font:24px 'Black Ops One';color:var(--green);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
@@ -112,13 +115,13 @@ body{font-family:'Barlow Condensed',Arial,sans-serif;padding:16px;font-size:18px
       <div class="tokens" id="tokenToggles"></div>
     </div>
     <div class="control range-control">
-      <div class="label">Lookback Blocks</div>
-      <select class="field" id="blockRange">
-        <option value="1000">1,000 / approx 50 min</option>
-        <option value="5000">5,000 / approx 4 h</option>
-        <option value="20000">20,000 / approx 17 h</option>
-        <option value="50000" selected>50,000 / approx 42 h</option>
-      </select>
+      <div class="label">History Range</div>
+      <div class="periods" id="periods">
+        <button class="period active" data-days="7" onclick="setPeriod(this)">7D</button>
+        <button class="period" data-days="30" onclick="setPeriod(this)">30D</button>
+        <button class="period" data-days="90" onclick="setPeriod(this)">90D</button>
+        <button class="period" data-days="all" onclick="setPeriod(this)">ALL</button>
+      </div>
     </div>
     <div class="metric"><div class="label">Wallets Found</div><div class="metric-val" id="walletCount">-</div></div>
     <div class="metric"><div class="label">Recognized Trades</div><div class="metric-val blue" id="tradeCount">-</div></div>
@@ -134,7 +137,7 @@ body{font-family:'Barlow Condensed',Arial,sans-serif;padding:16px;font-size:18px
       <div class="body">
         <table class="table">
           <thead><tr><th style="width:36px">#</th><th>Wallet</th><th style="width:58px;text-align:right">Moves</th><th style="width:92px;text-align:right">Flow*</th></tr></thead>
-          <tbody id="walletRows"><tr><td class="empty" colspan="4">SELECT TOKENS AND SCAN RECENT BLOCKS</td></tr></tbody>
+          <tbody id="walletRows"><tr><td class="empty" colspan="4">CHOOSE RANGE AND SCAN TOKEN HISTORY</td></tr></tbody>
         </table>
       </div>
     </article>
@@ -161,8 +164,9 @@ body{font-family:'Barlow Condensed',Arial,sans-serif;padding:16px;font-size:18px
         <div id="watchList"></div>
         <div class="guide">
           <h3>HOW TO READ THIS</h3>
-          <p><b style="color:var(--green)">MOVES</b> ranks repeat buyers and sellers, not guaranteed winners.</p>
-          <p><b style="color:var(--gold)">FLOW*</b> is received minus spent wCHZ visible only inside this scan window. It is not proven lifetime profit.</p>
+          <p><b style="color:var(--green)">MOVES</b> ranks repeated contract-to-wallet flows in your selected history: 7D, 30D, 90D or ALL.</p>
+          <p><b style="color:var(--gold)">FLOW*</b> is priced only for recently reconstructed wCHZ swaps. Complete lifetime profit needs indexed price reconstruction.</p>
+          <p><b style="color:var(--blue)">ALL</b> may take longer on first scan because the explorer history is paged back to token launch.</p>
           <p>Copy-trading can be late, illiquid or manipulated. Check liquidity and price impact before any trade.</p>
         </div>
       </div>
@@ -184,6 +188,7 @@ const RPCS = [
   'https://rpc.chiliz.com',
   'https://rpc.ankr.com/chiliz'
 ];
+const BLOCKSCOUT_API = 'https://scan-api.chiliz.com/api/v2';
 const WCHZ = '0x677F7e16C7Dd57be1D4C8aD1244883214953DC47';
 const TRANSFER_TOPIC = ethers.id('Transfer(address,address,uint256)');
 const ZERO = '0x0000000000000000000000000000000000000000';
@@ -202,13 +207,23 @@ const TOKENS = [
 let provider = null;
 let watch = JSON.parse(localStorage.getItem('bk-radar-watch') || '[]');
 let lastTraders = {};
+let selectedDays = 7;
 
 function shortAddress(a){ return a ? a.slice(0,6) + '...' + a.slice(-4) : '-'; }
 function fmt(n, digits=2){
   if(!Number.isFinite(Number(n))) return '-';
   return Number(n).toLocaleString('en-US',{minimumFractionDigits:0,maximumFractionDigits:digits});
 }
+function fmtUnits(n){
+  const value = Number(n || 0);
+  if(value > 0 && value < 0.01) return '<0.01';
+  return fmt(value);
+}
 function selectedTokens(){ return TOKENS.filter(t => t.active); }
+function setPeriod(button){
+  document.querySelectorAll('.period').forEach(el => el.classList.toggle('active',el === button));
+  selectedDays = button.dataset.days === 'all' ? null : Number(button.dataset.days);
+}
 function setWait(text){ document.getElementById('waitText').textContent = text; }
 function busy(show){
   document.getElementById('overlay').classList.toggle('show',show);
@@ -325,6 +340,91 @@ function toFloat(value, decimals=18){
   return Number(ethers.formatUnits(value < 0n ? -value : value, decimals)) * (value < 0n ? -1 : 1);
 }
 
+async function fetchHistory(token, cutoff){
+  const items = [];
+  let next = null;
+  let pages = 0;
+  while(true){
+    const query = next ? '?' + new URLSearchParams(next).toString() : '';
+    setWait(`${token.symbol}: history page ${pages + 1} / ${items.length.toLocaleString()} transfers`);
+    const response = await fetch(`${BLOCKSCOUT_API}/tokens/${token.address}/transfers${query}`);
+    if(!response.ok) throw new Error(`Explorer API ${response.status} for ${token.symbol}`);
+    const json = await response.json();
+    const batch = Array.isArray(json.items) ? json.items : [];
+    pages++;
+    for(const item of batch){
+      const timestamp = Date.parse(item.timestamp || '');
+      if(cutoff && Number.isFinite(timestamp) && timestamp < cutoff) return items;
+      items.push(item);
+    }
+    next = json.next_page_params || null;
+    if(!next || !batch.length) return items;
+    if(pages >= 5000) throw new Error(`History too large for browser scan: ${token.symbol}`);
+  }
+}
+function historicalMove(item, token){
+  const from = item.from || {};
+  const to = item.to || {};
+  const fromHash = String(from.hash || '').toLowerCase();
+  const toHash = String(to.hash || '').toLowerCase();
+  if(!fromHash || !toHash || fromHash === ZERO || toHash === ZERO) return null;
+  const isPublicWallet = (address, data) => {
+    try{ return !data.is_contract && BigInt(address) > 65535n; }catch(e){ return false; }
+  };
+  let wallet = null;
+  let side = null;
+  if(from.is_contract && isPublicWallet(toHash,to)){ wallet=toHash; side='BUY'; }
+  if(isPublicWallet(fromHash,from) && to.is_contract){ wallet=fromHash; side='SELL'; }
+  if(!wallet || !side) return null;
+  const total = item.total || {};
+  const decimals = Number(total.decimals ?? token.decimals ?? 18);
+  const raw = total.value ?? '0';
+  let units = 0;
+  try{ units = Number(ethers.formatUnits(BigInt(raw), decimals)); }catch(e){}
+  return {
+    hash:item.transaction_hash,
+    block:Number(item.block_number || 0),
+    timestamp:item.timestamp,
+    wallet,symbol:token.symbol,side,units,quote:null,quoteSigned:null
+  };
+}
+function consolidateMoves(moves){
+  const combined = new Map();
+  moves.forEach(move => {
+    const key = `${move.hash}|${move.wallet}|${move.symbol}|${move.side}`;
+    if(!combined.has(key)){ combined.set(key,{...move}); return; }
+    combined.get(key).units += move.units;
+  });
+  return [...combined.values()];
+}
+
+async function priceRecentMoves(p, moves, tokenMap){
+  const latest = moves.slice(0,160);
+  const byHash = new Map();
+  latest.forEach(m => {
+    if(!byHash.has(m.hash)) byHash.set(m.hash, []);
+    byHash.get(m.hash).push(m);
+  });
+  let count = 0;
+  for(const [hash, related] of byHash){
+    count++;
+    if(count % 8 === 0) setWait(`Pricing recent wCHZ legs ${count} / ${byHash.size}`);
+    try{
+      const receipt = await p.getTransactionReceipt(hash);
+      if(!receipt) continue;
+      const transfers = receipt.logs.filter(l => l.topics && l.topics[0] === TRANSFER_TOPIC).map(decodeTransfer).filter(Boolean);
+      related.forEach(move => {
+        const quoteNet = netFor(transfers, move.wallet, WCHZ);
+        if(quoteNet !== 0n){
+          move.quote = Math.abs(toFloat(quoteNet,18));
+          move.quoteSigned = toFloat(quoteNet,18);
+        }
+      });
+    }catch(e){}
+  }
+  return moves;
+}
+
 async function buildMoves(p, logs, tokenMap){
   const hashes = [...new Set(logs.map(l => l.transactionHash))].slice(-280);
   const moves = [];
@@ -401,7 +501,7 @@ function renderMoves(moves){
     <div class="move">
       <div class="side ${m.side.toLowerCase()}">${m.side}</div>
       <div><div class="symbol">${m.symbol}</div><div class="tx-wallet">${shortAddress(m.wallet)}</div></div>
-      <div class="amount">${fmt(m.units)} FT</div>
+      <div class="amount">${fmtUnits(m.units)} FT</div>
       <div class="amount ${m.quote !== null?'known':''}">${m.quote !== null ? fmt(m.quote)+' wCHZ' : 'unpriced'}</div>
     </div>`).join('');
 }
@@ -415,18 +515,25 @@ async function scanRadar(){
   try{
     const p = await getProvider();
     const latest = await p.getBlockNumber();
-    const range = Number(document.getElementById('blockRange').value);
-    const from = Math.max(0,latest-range);
     const tokenMap = new Map(chosen.map(t => [t.address.toLowerCase(), {...t,address:t.address.toLowerCase()}]));
-    const groups = await Promise.all(chosen.map(t => getLogsChunked(p,t.address,from,latest)));
-    const logs = groups.flat();
-    setWait(`${logs.length.toLocaleString()} transfers found. Matching wallet flows...`);
-    const moves = await buildMoves(p,logs,tokenMap);
+    const cutoff = selectedDays ? Date.now() - selectedDays * 86400000 : null;
+    const periodText = selectedDays ? `${selectedDays}D` : 'ALL';
+    const historyGroups = [];
+    for(const token of chosen) historyGroups.push(await fetchHistory(token,cutoff));
+    const transferCount = historyGroups.reduce((sum,items) => sum + items.length, 0);
+    setWait(`${transferCount.toLocaleString()} transfers found. Detecting trading wallets...`);
+    let moves = [];
+    historyGroups.forEach((items,index) => {
+      moves.push(...items.map(item => historicalMove(item,chosen[index])).filter(Boolean));
+    });
+    moves = consolidateMoves(moves);
+    moves.sort((a,b) => Date.parse(b.timestamp || '') - Date.parse(a.timestamp || ''));
+    moves = await priceRecentMoves(p,moves,tokenMap);
     const traders = aggregate(moves);
     renderTraders(traders);
     renderMoves(moves);
-    document.getElementById('blockInfo').textContent = `${from.toLocaleString()} - ${latest.toLocaleString()}`;
-    document.getElementById('scanStatus').textContent = 'LIVE RESULT';
+    document.getElementById('blockInfo').textContent = `${periodText} / BLOCK ${latest.toLocaleString()}`;
+    document.getElementById('scanStatus').textContent = `${periodText} RESULT`;
     document.getElementById('scanStatus').className='status good';
   }catch(e){
     document.getElementById('scanStatus').textContent='RPC ERROR';
@@ -444,6 +551,12 @@ async function scanRadar(){
 });
 renderToggles();
 renderWatch();
+const startParams = new URLSearchParams(location.search);
+if(startParams.has('period')){
+  const periodButton = [...document.querySelectorAll('.period')].find(el => el.dataset.days === startParams.get('period'));
+  if(periodButton) setPeriod(periodButton);
+}
+if(startParams.has('scan')) setTimeout(scanRadar, 250);
 </script>
 </body>
 </html>
