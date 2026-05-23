@@ -9,39 +9,16 @@
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 9 6'%3E%3Cpath fill='%2374acdf' d='M0 0h9v6H0z'/%3E%3Cpath fill='%23fff' d='M0 2h9v2H0z'/%3E%3Ccircle cx='4.5' cy='3' r='.5' fill='%23f1b42f'/%3E%3C/svg%3E">
 <link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Barlow+Condensed:wght@400;600;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.7.0/ethers.umd.min.js"></script>
-<!-- WalletConnect EthereumProvider v2 via jsDelivr CDN -->
 <script>
-  // Fix: WalletConnect internally calls localStorage which crashes in some Chrome contexts
-  // Provide a safe in-memory fallback
   window.process = { env: { NODE_ENV: 'production' } };
   window.global = window;
-  try {
-    localStorage.setItem('__wc_test', '1');
-    localStorage.removeItem('__wc_test');
-  } catch(e) {
-    // localStorage blocked — provide in-memory shim
-    const _store = {};
-    window.localStorage = {
-      getItem:    k => _store[k] ?? null,
-      setItem:    (k,v) => { _store[k] = String(v); },
-      removeItem: k => { delete _store[k]; },
-      clear:      () => { Object.keys(_store).forEach(k => delete _store[k]); },
-      key:        i => Object.keys(_store)[i] ?? null,
-      get length(){ return Object.keys(_store).length; }
-    };
+  try { localStorage.setItem('__wc_test','1'); localStorage.removeItem('__wc_test'); } catch(e) {
+    const _s={};
+    window.localStorage={getItem:k=>_s[k]??null,setItem:(k,v)=>{_s[k]=String(v);},removeItem:k=>{delete _s[k];},clear:()=>{Object.keys(_s).forEach(k=>delete _s[k]);},key:i=>Object.keys(_s)[i]??null,get length(){return Object.keys(_s).length;}};
   }
-  // Clear any stale WalletConnect sessions so user always gets fresh wallet picker
-  try {
-    Object.keys(localStorage).forEach(k => {
-      if (k.startsWith('wc@') || k.startsWith('W3M') || k.startsWith('walletconnect')) {
-        localStorage.removeItem(k);
-      }
-    });
-  } catch(e) {}
+  try { Object.keys(localStorage).forEach(k=>{ if(k.startsWith('wc@')||k.startsWith('W3M')||k.startsWith('walletconnect')) localStorage.removeItem(k); }); } catch(e) {}
 </script>
-<script src="https://cdn.jsdelivr.net/npm/@walletconnect/ethereum-provider@2.10.0/dist/index.umd.js"
-  onerror="window._wcLoadError=true"></script>
-<!-- QR code generator for inline Socios connect -->
+<script src="https://cdn.jsdelivr.net/npm/@walletconnect/ethereum-provider@2.10.0/dist/index.umd.js" onerror="window._wcLoadError=true"></script>
 <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
@@ -1052,44 +1029,42 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
   </div>
 
   <!-- MONIT POĹÄ„CZENIA PORTFELA -->
-  <!-- WALLET SELECTION -->
   <div id="connectSection" class="connect-prompt">
-    <p>Connect your wallet to explore the tactical pitch, find the best deals, and start scoring.</p>
+    <p>Connect your Chiliz wallet to explore the tactical pitch, find the best deals, and start scoring.</p>
     <div style="display:flex;flex-direction:column;align-items:center;gap:10px;width:100%;max-width:360px;margin:0 auto;">
 
-      <!-- MetaMask / browser wallet -->
       <button class="btn-connect-big" onclick="connectWalletMM()" style="display:flex;align-items:center;justify-content:center;gap:10px;width:100%;">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/3/36/MetaMask_Fox.svg" style="width:22px;height:22px;" alt="MetaMask"/>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/3/36/MetaMask_Fox.svg" style="width:20px;height:20px;" alt=""/>
         METAMASK / BROWSER WALLET
       </button>
 
-      <!-- Trust Wallet — deeplink on mobile (works reliably) -->
-      <button class="btn-connect-big" onclick="connectWalletDeeplink('trust')" style="display:flex;align-items:center;justify-content:center;gap:10px;width:100%;background:linear-gradient(135deg,rgba(51,117,255,0.15),rgba(51,117,255,0.05));border-color:rgba(51,117,255,0.4);color:#3375ff;">
-        <img src="https://trustwallet.com/assets/images/media/assets/TWT.png" onerror="this.style.display='none'" style="width:22px;height:22px;border-radius:50%;" alt="Trust"/>
+      <button class="btn-connect-big" onclick="connectWalletDeeplink('trust')"
+        style="display:flex;align-items:center;justify-content:center;gap:10px;width:100%;background:linear-gradient(135deg,rgba(51,117,255,0.15),rgba(51,117,255,0.05));border-color:rgba(51,117,255,0.5);color:#3375ff;">
+        <img src="https://trustwallet.com/assets/images/media/assets/TWT.png" onerror="this.style.display='none'" style="width:20px;height:20px;border-radius:50%;" alt=""/>
         TRUST WALLET
       </button>
 
-      <!-- Socios + all other wallets — inline QR code to scan -->
-      <button class="btn-connect-big" onclick="connectWalletQR()" style="display:flex;align-items:center;justify-content:center;gap:10px;width:100%;background:linear-gradient(135deg,rgba(229,57,53,0.12),rgba(116,172,223,0.08));border-color:rgba(229,57,53,0.4);color:#ef5350;">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M14 14h3v3h-3zM17 17h3v3h-3zM14 20h3"/></svg>
-        SOCIOS &amp; OTHER WALLETS — SCAN QR
+      <button class="btn-connect-big" onclick="connectWalletWC()"
+        style="display:flex;align-items:center;justify-content:center;gap:10px;width:100%;background:linear-gradient(135deg,rgba(116,172,223,0.15),rgba(116,172,223,0.05));border-color:rgba(116,172,223,0.5);color:#74ACDF;">
+        <svg width="20" height="20" viewBox="0 0 300 185" fill="none"><path d="M61.4 36.6C107.6-7.7 181.6-7.7 227.8 36.6l5.5 5.3c2.3 2.2 2.3 5.7 0 7.9l-18.8 18.1c-1.1 1.1-2.9 1.1-4 0l-7.6-7.3c-32-30.7-83.8-30.7-115.7 0l-8.1 7.8c-1.1 1.1-2.9 1.1-4 0L56.3 49.8c-2.3-2.2-2.3-5.7 0-7.9l5.1-5.3zm205.4 38.3 16.7 16.1c2.3 2.2 2.3 5.7 0 7.9L199.2 175c-2.3 2.2-5.9 2.2-8.1 0l-56.2-54.1c-.6-.5-1.5-.5-2 0L76.7 175c-2.3 2.2-5.9 2.2-8.1 0L-16 98.9c-2.3-2.2-2.3-5.7 0-7.9l16.7-16.1c2.3-2.2 5.9-2.2 8.1 0l56.2 54.1c.6.5 1.5.5 2 0l56.2-54.1c2.3-2.2 5.9-2.2 8.1 0l56.2 54.1c.6.5 1.5.5 2 0l56.2-54.1c2.1-2.2 5.8-2.2 8 0z" fill="#74ACDF"/></svg>
+        WALLETCONNECT / SOCIOS
+        <span style="font-size:9px;background:rgba(116,172,223,0.2);border-radius:3px;padding:1px 5px;letter-spacing:1px;">&#9733; BRAVE</span>
       </button>
 
-      <!-- QR display area (hidden until connectWalletQR is called) -->
-      <div id="wcQRBox" style="display:none;flex-direction:column;align-items:center;gap:10px;width:100%;background:#0a0e14;border:1px solid #1c2028;border-radius:12px;padding:20px;">
-        <div style="font-family:'Black Ops One',sans-serif;font-size:11px;letter-spacing:2px;color:#ef5350;">SCAN WITH SOCIOS OR ANY WALLET</div>
+      <div id="wcQRBox" style="display:none;flex-direction:column;align-items:center;gap:10px;width:100%;background:#0a0e14;border:1px solid rgba(116,172,223,0.3);border-radius:12px;padding:20px;">
+        <div style="font-family:'Black Ops One',sans-serif;font-size:11px;letter-spacing:2px;color:#74ACDF;">SCAN WITH SOCIOS OR ANY WALLET</div>
         <canvas id="wcQRCanvas" style="border-radius:8px;background:#fff;padding:8px;"></canvas>
-        <div style="font-family:'Share Tech Mono',monospace;font-size:10px;color:#3d4a5a;text-align:center;">
-          Open Socios Wallet → WalletConnect → Scan
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:13px;color:#5a7a6a;text-align:center;line-height:1.4;">
+          Open <strong style="color:#dde4f0;">Socios Wallet</strong> &#8594; WalletConnect &#8594; Scan
         </div>
-        <button onclick="document.getElementById('wcQRBox').style.display='none';_destroyWCProvider();" 
-          style="font-family:'Black Ops One',sans-serif;font-size:10px;letter-spacing:1px;color:#5a6a7a;background:none;border:none;cursor:pointer;padding:4px;">
+        <button onclick="document.getElementById('wcQRBox').style.display='none';_destroyWCProvider();"
+          style="font-family:'Black Ops One',sans-serif;font-size:10px;letter-spacing:1px;color:#5a6a7a;background:none;border:1px solid #1c2028;border-radius:4px;cursor:pointer;padding:6px 14px;">
           CANCEL
         </button>
       </div>
 
-      <div style="font-family:'Share Tech Mono',monospace;font-size:10px;color:#3d4a5a;letter-spacing:1px;margin-top:2px;text-align:center;">
-        Coinbase &middot; Rainbow &middot; Zerion &middot; Ledger &middot; +300 more via QR
+      <div style="font-family:'Share Tech Mono',monospace;font-size:10px;color:#3d4a5a;letter-spacing:1px;margin-top:4px;text-align:center;">
+        &#9733; Recommended browser: <strong style="color:#5a6a7a;">Brave</strong> &nbsp;&middot;&nbsp; Coinbase &middot; Rainbow &middot; Zerion &middot; +300 more
       </div>
     </div>
   </div>
@@ -1622,6 +1597,7 @@ const RULES_TRANSLATIONS = {
   }
 };
 
+// PUBLIC_RPCS defined above
 const PUBLIC_RPCS = [
   'https://rpc.ankr.com/chiliz',
   'https://chiliz-rpc.publicnode.com',
@@ -1632,7 +1608,6 @@ async function getReadProvider(){
   for(const url of PUBLIC_RPCS){
     try{
       const p = new ethers.JsonRpcProvider(url);
-      // Short timeout — don't wait 60s for a dead RPC
       const blockNum = await Promise.race([
         p.getBlockNumber(),
         new Promise((_,reject) => setTimeout(() => reject(new Error('timeout')), 4000))
@@ -2100,25 +2075,49 @@ async function connectWalletDeeplink(walletId) {
 }
 
 async function connectWalletWC() {
+  const isMobile = /iPhone|iPad|Android/i.test(navigator.userAgent);
+
   try {
     showHeaderToast('Opening WalletConnect — scan QR with your wallet app…', false);
 
     let wcProv = await _getWCProvider();
 
-    // Kill any old session so user always gets fresh wallet picker
+    // Kill old session so user gets fresh picker
     if (wcProv.session) {
       try { await wcProv.disconnect(); } catch(e) {}
       _wcEthProvider = null;
       wcProv = await _getWCProvider();
     }
 
-    // Wait for the 'connect' event which fires AFTER wallet approves
-    // Don't read accounts/chainId before this — they're empty until session is established
-    await new Promise((resolve, reject) => {
-      const timeout = setTimeout(() => reject(new Error('Connection timed out.')), 180000);
-      wcProv.once('connect', () => { clearTimeout(timeout); resolve(); });
-      wcProv.connect().catch(e => { clearTimeout(timeout); reject(e); });
-    });
+    // On mobile, WC modal is often blocked by the browser
+    // Show inline QR instead so user can scan with Socios or any WC wallet
+    if (isMobile) {
+      // Show inline QR box and render QR when URI is ready
+      const qrBox = document.getElementById('wcQRBox');
+      const canvas = document.getElementById('wcQRCanvas');
+      if (qrBox) qrBox.style.display = 'flex';
+
+      await new Promise((resolve, reject) => {
+        const timeout = setTimeout(() => { if(qrBox) qrBox.style.display='none'; reject(new Error('Connection timed out.')); }, 180000);
+
+        wcProv.once('display_uri', async (uri) => {
+          if (canvas && window.QRCode) {
+            try { await QRCode.toCanvas(canvas, uri, { width: 220, margin: 1, color: { dark: '#000', light: '#fff' } }); } catch(e) {}
+          }
+        });
+
+        wcProv.once('connect', () => { clearTimeout(timeout); if(qrBox) qrBox.style.display='none'; resolve(); });
+        wcProv.connect().catch(e => { clearTimeout(timeout); if(qrBox) qrBox.style.display='none'; reject(e); });
+      });
+
+    } else {
+      // Desktop — WC modal works fine, just wait for connect event
+      await new Promise((resolve, reject) => {
+        const timeout = setTimeout(() => reject(new Error('Connection timed out.')), 180000);
+        wcProv.once('connect', () => { clearTimeout(timeout); resolve(); });
+        wcProv.connect().catch(e => { clearTimeout(timeout); reject(e); });
+      });
+    }
 
     console.log('[WC] connected, session:', wcProv.session);
 
@@ -3705,8 +3704,6 @@ setInterval(fetchCurrentBlock, 30000);
 // PrzywrĂłcenie poĹ‚Ä…czenia portfela po przeĹ‚adowaniu strony
 window.addEventListener('load', async () => {
   maybeShowOnboarding();
-
-  // Auto-resume MetaMask if already connected
   const walletProvider = getWalletProvider();
   if(walletProvider){
     try{
@@ -3718,47 +3715,6 @@ window.addEventListener('load', async () => {
         }
       }
     }catch(e){}
-    return; // MM connected, skip WC check
-  }
-
-  // Auto-resume WalletConnect session if page was reloaded after mobile deep link
-  // WC stores session in localStorage — if it exists, reconnect silently
-  try {
-    const wcModule = window['@walletconnect/ethereum-provider'];
-    if (!wcModule?.EthereumProvider) return;
-
-    // Check if there's a stored WC session without initing a full provider
-    const hasSession = Object.keys(localStorage).some(k => k.startsWith('wc@2:client'));
-    if (!hasSession) return;
-
-    console.log('[WC] Found stored session, attempting auto-resume...');
-    const wcProv = await wcModule.EthereumProvider.init({
-      projectId: WC_PROJECT_ID,
-      chains: [1],
-      optionalChains: [88888],
-      rpcMap: { 1: 'https://cloudflare-eth.com', 88888: 'https://rpc.ankr.com/chiliz' },
-      showQrModal: false, // don't show QR on auto-resume
-      metadata: {
-        name: 'Argentina Dream XI',
-        description: 'Block Kickers – Argentina Quest on Chiliz Chain',
-        url: window.location.href,
-        icons: ['https://block-kickers.vercel.app/favicon.ico']
-      }
-    });
-
-    if (wcProv.session) {
-      const sessionAccounts = wcProv.session?.namespaces?.eip155?.accounts || [];
-      const onChiliz = sessionAccounts.some(a => a.startsWith(`eip155:${CHAIN_ID}:`));
-      if (onChiliz) {
-        console.log('[WC] Auto-resuming session...');
-        _wcEthProvider = wcProv;
-        await _afterConnect(wcProv);
-        wcProv.on('disconnect', () => location.reload());
-        wcProv.on('accountsChanged', accs => { if (!accs.length) location.reload(); });
-      }
-    }
-  } catch(e) {
-    console.warn('[WC] Auto-resume failed:', e.message);
   }
 });
 </script>
