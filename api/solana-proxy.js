@@ -1,122 +1,78 @@
-// Deploy as /api/solana-proxy.js on Vercel.
-// Routes to Solscan public REST API (no credits, no RPC limits).
-// Optional env: HELIUS_API_KEY for faster parseTransactions path.
+// /api/solana-proxy.js — Vercel serverless proxy
+// Forwards requests to GMGN.ai (smart money data) and DexScreener (token info)
+// Eliminates CORS issues for browser clients.
 
-const SOLSCAN_BASE = 'https://public-api.solscan.io';
-const HELIUS_KEY   = process.env.HELIUS_API_KEY || '';
+const GMGN   = 'https://gmgn.ai';
+const DS     = 'https://api.dexscreener.com';
 
-async function solscanGet(path, params = {}) {
-  const qs = new URLSearchParams(params).toString();
-  const url = `${SOLSCAN_BASE}${path}${qs ? '?' + qs : ''}`;
-  const resp = await fetch(url, {
-    headers: {
-      'Accept': 'application/json',
-      'User-Agent': 'block-kickers-radar/1.0',
-    },
-  });
-  if (resp.status === 429) { const e = new Error('rate_limited'); e.status = 429; throw e; }
-  if (!resp.ok) { const e = new Error(`Solscan ${resp.status}`); e.status = resp.status; throw e; }
-  return resp.json();
+// Allowed upstream paths (whitelist for security)
+function getAllowedBase(action) {
+  const map = {
+    // GMGN — token top traders / smart money
+    'gmgn_top_traders':  GMGN,
+    'gmgn_wallet_stat':  GMGN,
+    'gmgn_wallet_txs':   GMGN,
+    'gmgn_token_info':   GMGN,
+    'gmgn_trending':     GMGN,
+    // DexScreener — token pairs / price
+    'ds_pairs':          DS,
+    'ds_search':         DS,
+  };
+  return map[action] || null;
 }
 
-async function heliusParsed(signatures) {
-  if (!HELIUS_KEY) return null;
-  const url = `https://api.helius.xyz/v0/transactions/?api-key=${HELIUS_KEY}`;
-  const resp = await fetch(url, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ transactions: signatures.slice(0, 100) }),
-  });
-  if (!resp.ok) return null;
-  const data = await resp.json();
-  return Array.isArray(data) ? data : null;
+function buildPath(action, params) {
+  switch(action) {
+    // Top traders for a token  → wallet list with PnL + win_rate
+    case 'gmgn_top_traders':
+      return `/defi/quotation/v1/tokens/top_traders/sol/${params.mint}?orderby=${params.orderby||'profit'}&direction=${params.direction||'desc'}&limit=${params.limit||50}`;
+    // Wallet stats (PnL, win rate, 30d summary)
+    case 'gmgn_wallet_stat':
+      return `/api/v1/wallet_stat/sol/${params.wallet}?period=${params.period||'30d'}`;
+    // Wallet recent transactions
+    case 'gmgn_wallet_txs':
+      return `/api/v1/wallet_activity/sol?wallet=${params.wallet}&limit=${params.limit||20}`;
+    // Token info (security, holders)
+    case 'gmgn_token_info':
+      return `/api/v1/mutil_window_token_link_info/sol?token_address=${params.mint}`;
+    // Trending tokens
+    case 'gmgn_trending':
+      return `/defi/quotation/v1/rank/sol/swaps/${params.period||'1h'}?orderby=${params.orderby||'swaps'}&direction=desc&limit=20`;
+    // DexScreener token pairs
+    case 'ds_pairs':
+      return `/token-pairs/v1/solana/${params.mint}`;
+    case 'ds_search':
+      return `/latest/dex/search?q=${encodeURIComponent(params.q||'')}`;
+    default: return null;
+  }
 }
 
 module.exports = async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
   if (req.method === 'OPTIONS') return res.status(200).end();
 
-  let body = {};
-  if (req.method === 'POST') {
-    try { body = typeof req.body === 'string' ? JSON.parse(req.body) : (req.body || {}); }
-    catch { return res.status(400).json({ error: 'Invalid JSON' }); }
-  }
+  const action = String(req.query.action || '');
+  const base   = getAllowedBase(action);
+  if (!base) return res.status(400).json({ error: 'Unknown action' });
 
-  // Merge GET params and POST body into one params object
-  const p = { ...req.query, ...body };
-  const action = String(p.action || '');
+  const path = buildPath(action, req.query);
+  if (!path) return res.status(400).json({ error: 'Bad params' });
 
   try {
-    // ── 1. Token transfer list (replaces getSignaturesForAddress) ──────────────
-    // Returns list of transfer signatures for a token mint.
-    // action=transfers&mint=<mint>&offset=0&limit=50
-    if (action === 'transfers') {
-      const mint   = String(p.mint   || '');
-      const offset = Math.max(0, Number(p.offset || 0));
-      const limit  = Math.min(50, Math.max(10, Number(p.limit || 50)));
-      if (!mint) return res.status(400).json({ error: 'mint required' });
-
-      const data = await solscanGet('/token/transfer', { tokenAddress: mint, offset, limit });
-      res.setHeader('Cache-Control', 's-maxage=60, stale-while-revalidate=120');
-      return res.status(200).json({ transfers: Array.isArray(data.data) ? data.data : (Array.isArray(data) ? data : []) });
-    }
-
-    // ── 2. Single transaction detail ──────────────────────────────────────────
-    // action=tx&sig=<signature>
-    if (action === 'tx') {
-      const sig = String(p.sig || '');
-      if (!sig) return res.status(400).json({ error: 'sig required' });
-
-      const data = await solscanGet(`/transaction/${sig}`);
-      res.setHeader('Cache-Control', 's-maxage=120, stale-while-revalidate=300');
-      return res.status(200).json({ tx: data });
-    }
-
-    // ── 3. Wallet token transactions ──────────────────────────────────────────
-    // action=wallet&address=<address>&mint=<mint>&offset=0&limit=50
-    if (action === 'wallet') {
-      const address = String(p.address || '');
-      const mint    = String(p.mint    || '');
-      const offset  = Math.max(0, Number(p.offset || 0));
-      const limit   = Math.min(50, Math.max(10, Number(p.limit || 50)));
-      if (!address) return res.status(400).json({ error: 'address required' });
-
-      const params = { account: address, offset, limit };
-      if (mint) params.tokenAddress = mint;
-      const data = await solscanGet('/account/token/txs', params);
-      res.setHeader('Cache-Control', 's-maxage=30, stale-while-revalidate=60');
-      return res.status(200).json({ txs: Array.isArray(data.data) ? data.data : [] });
-    }
-
-    // ── 4. Batch parse via Helius (optional, when key is set) ─────────────────
-    // action=parse&signatures=[...]
-    if (action === 'parse') {
-      const sigs = Array.isArray(p.signatures) ? p.signatures : [];
-      if (!sigs.length) return res.status(200).json({ transactions: [] });
-      const result = await heliusParsed(sigs);
-      if (!result) return res.status(200).json({ transactions: [], noKey: true });
-      res.setHeader('Cache-Control', 's-maxage=120, stale-while-revalidate=300');
-      return res.status(200).json({ transactions: result });
-    }
-
-    // ── 5. Token holders top list ─────────────────────────────────────────────
-    // action=holders&mint=<mint>&limit=20
-    if (action === 'holders') {
-      const mint  = String(p.mint  || '');
-      const limit = Math.min(20, Number(p.limit || 20));
-      if (!mint) return res.status(400).json({ error: 'mint required' });
-
-      const data = await solscanGet('/token/holders', { tokenAddress: mint, offset: 0, limit });
-      res.setHeader('Cache-Control', 's-maxage=120, stale-while-revalidate=300');
-      return res.status(200).json({ holders: Array.isArray(data.data) ? data.data : [] });
-    }
-
-    return res.status(400).json({ error: 'Unknown action' });
-
-  } catch (err) {
-    const status = err.status === 429 ? 429 : 502;
-    return res.status(status).json({ error: err.message });
+    const upstream = await fetch(base + path, {
+      headers: {
+        'Accept': 'application/json',
+        'User-Agent': 'Mozilla/5.0 (compatible; block-kickers/1.0)',
+        'Referer': 'https://gmgn.ai/',
+      }
+    });
+    const text = await upstream.text();
+    res.setHeader('Cache-Control', 's-maxage=30, stale-while-revalidate=60');
+    res.setHeader('Content-Type', 'application/json');
+    return res.status(upstream.ok ? 200 : upstream.status).send(text);
+  } catch(e) {
+    return res.status(502).json({ error: e.message });
   }
 };
