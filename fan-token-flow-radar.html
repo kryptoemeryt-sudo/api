@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fan Token Flow Radar | Block Kickers</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 64 64%27%3E%3Crect width=%2764%27 height=%2764%27 rx=%2714%27 fill=%27%2300ff87%27/%3E%3Cpath fill=%27%2306080a%27 d=%27M12 14h20c7 0 11 3 11 9 0 4-2 7-6 8 5 1 8 4 8 9 0 7-5 10-13 10H12V14zm12 9v6h6c3 0 5-1 5-3s-2-3-5-3h-6zm0 15v6h8c3 0 5-1 5-3s-2-3-5-3h-8z%27/%3E%3Cpath fill=%27%2306080a%27 d=%27M45 14h7v14l8-14h7L56 31l12 19h-8l-8-14v14h-7V14z%27 transform=%27translate(-8 0)%27/%3E%3C/svg%3E">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.7.0/ethers.umd.min.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Barlow+Condensed:wght@400;600;700;900&family=Share+Tech+Mono&display=swap');
+:root{
+  --bg:#06080a;--panel:#0f1318;--panel2:#0b1015;--border:#1d2530;
+  --green:#00ff87;--green-soft:rgba(0,255,135,.1);--gold:#ffc940;
+  --blue:#58d2ff;--red:#ff5470;--purple:#a855f7;--text:#dde4f0;
+  --muted:#8293a8;--faint:#435266;
+}
+*{box-sizing:border-box;margin:0;padding:0;letter-spacing:0;}
+html,body{min-height:100%;background:var(--bg);color:var(--text);}
+body{font-family:'Barlow Condensed',Arial,sans-serif;padding:16px;font-size:18px;}
+*{scrollbar-width:thin;scrollbar-color:rgba(0,255,135,.4) rgba(255,255,255,.04);}
+::-webkit-scrollbar{width:7px;height:7px}::-webkit-scrollbar-track{background:rgba(255,255,255,.04)}
+::-webkit-scrollbar-thumb{background:rgba(0,255,135,.45);border-radius:8px}
+.app{height:calc(100vh - 32px);min-height:650px;display:grid;grid-template-rows:58px auto 1fr;gap:10px;max-width:1600px;margin:0 auto;}
+.top{display:flex;align-items:center;justify-content:space-between;border:1px solid rgba(0,255,135,.15);background:rgba(10,13,16,.9);border-radius:8px;padding:0 18px;gap:14px;}
+.brand{display:flex;align-items:center;gap:10px;min-width:0;}
+.bk{background:var(--green);color:#06100c;border-radius:5px;padding:5px 7px;font-family:'Black Ops One';font-size:15px;}
+.brand h1{font-family:'Black Ops One';font-size:21px;white-space:nowrap;}
+.brand h1 span{color:var(--green);}
+.chain{display:flex;align-items:center;gap:8px;font:11px 'Share Tech Mono';color:var(--muted);white-space:nowrap;}
+.live{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 10px var(--green);}
+.toolbar{display:grid;grid-template-columns:minmax(330px,1.5fr) repeat(3,minmax(130px,.5fr)) auto;gap:8px;}
+.control,.metric{background:var(--panel);border:1px solid var(--border);border-radius:8px;padding:10px 12px;min-width:0;}
+.label{font:10px 'Share Tech Mono';color:var(--faint);text-transform:uppercase;margin-bottom:5px;}
+.tokens{display:flex;flex-wrap:wrap;gap:5px;}
+.token-toggle{cursor:pointer;border:1px solid var(--border);background:transparent;color:var(--muted);padding:5px 8px;border-radius:5px;font:11px 'Black Ops One';}
+.token-toggle.active{border-color:rgba(0,255,135,.4);color:var(--green);background:var(--green-soft);}
+.field{width:100%;height:34px;background:#080c10;border:1px solid var(--border);border-radius:5px;color:var(--text);font:13px 'Share Tech Mono';padding:0 9px;outline:none;}
+.field:focus{border-color:rgba(0,255,135,.4);}
+.metric-val{font:24px 'Black Ops One';color:var(--green);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.metric-val.gold{color:var(--gold)}.metric-val.blue{color:var(--blue)}
+.btn{border:1px solid rgba(0,255,135,.45);background:var(--green-soft);color:var(--green);border-radius:7px;padding:0 20px;font:13px 'Black Ops One';cursor:pointer;min-height:62px;}
+.btn:hover{background:rgba(0,255,135,.18)}.btn:disabled{opacity:.45;cursor:wait}
+.workspace{display:grid;grid-template-columns:1.15fr 1.4fr .9fr;gap:10px;min-height:0;}
+.panel{display:flex;flex-direction:column;min-height:0;background:var(--panel);border:1px solid var(--border);border-radius:9px;overflow:hidden;}
+.panel-head{height:56px;padding:11px 14px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;gap:8px;flex-shrink:0;}
+.title{font:18px 'Black Ops One';}.title span{color:var(--green);}
+.sub{font:11px 'Share Tech Mono';color:var(--muted);margin-top:3px;}
+.body{min-height:0;overflow:auto;padding:10px;}
+.table{width:100%;border-collapse:collapse;table-layout:fixed;}
+.table th{font:9px 'Share Tech Mono';color:var(--faint);text-align:left;padding:0 7px 8px;text-transform:uppercase;}
+.table td{padding:9px 7px;border-top:1px solid rgba(255,255,255,.045);vertical-align:middle;}
+.rank{font:15px 'Black Ops One';color:var(--faint);width:34px;}
+.addr{font:12px 'Share Tech Mono';color:var(--text);display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.addr.watch{color:var(--gold)}
+.mini{display:block;font-size:11px;color:var(--muted);margin-top:2px;}
+.n{font:14px 'Black Ops One';color:var(--green);text-align:right;white-space:nowrap;}
+.profit{color:var(--gold)}.profit.neg{color:var(--red)}.unknown{color:var(--faint)}
+.copy{background:none;border:0;color:var(--blue);font:10px 'Share Tech Mono';cursor:pointer;margin-left:4px;}
+.feed{display:flex;flex-direction:column;gap:6px;}
+.move{display:grid;grid-template-columns:55px minmax(86px,1fr) 68px 92px;align-items:center;gap:7px;padding:9px 8px;border:1px solid rgba(255,255,255,.055);border-radius:6px;background:var(--panel2);font-size:13px;}
+.side{font:10px 'Black Ops One';padding:4px 5px;text-align:center;border-radius:4px;}
+.side.buy{color:var(--green);background:rgba(0,255,135,.12)}.side.sell{color:var(--red);background:rgba(255,84,112,.11)}
+.symbol{font:13px 'Black Ops One';color:var(--blue)}
+.tx-wallet{font:11px 'Share Tech Mono';color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.amount{text-align:right;font:12px 'Black Ops One';white-space:nowrap}.amount.known{color:var(--gold)}
+.watch-form{display:flex;gap:6px;margin-bottom:10px;}
+.watch-form .field{flex:1;min-width:0;}
+.icon-btn{height:34px;padding:0 10px;background:var(--green-soft);border:1px solid rgba(0,255,135,.35);color:var(--green);border-radius:5px;font:11px 'Black Ops One';cursor:pointer;}
+.watch-card{padding:10px;border:1px solid rgba(255,255,255,.06);border-radius:6px;margin-bottom:6px;background:var(--panel2);}
+.watch-line{display:flex;justify-content:space-between;gap:8px;}
+.remove{color:var(--red);background:none;border:0;cursor:pointer;}
+.guide{margin-top:10px;border:1px solid rgba(255,201,64,.22);background:rgba(255,201,64,.05);border-radius:7px;padding:11px;}
+.guide h3{font:12px 'Black Ops One';color:var(--gold);margin-bottom:7px;}
+.guide p{font-size:13px;line-height:1.35;color:var(--muted);margin-bottom:6px;}
+.guide p:last-child{margin-bottom:0;}
+.empty{padding:42px 16px;text-align:center;color:var(--faint);font:12px 'Share Tech Mono';line-height:1.6;}
+.status{color:var(--muted);font:11px 'Share Tech Mono';}
+.status.good{color:var(--green)}.status.bad{color:var(--red)}
+.overlay{position:fixed;inset:0;z-index:20;display:none;align-items:center;justify-content:center;background:rgba(3,6,8,.8);backdrop-filter:blur(5px);}
+.overlay.show{display:flex;}
+.wait{padding:24px 34px;background:var(--panel);border:1px solid rgba(0,255,135,.35);border-radius:10px;text-align:center;}
+.ball{font-size:30px;animation:rotate .8s linear infinite;margin-bottom:10px;}
+.wait-title{font:15px 'Black Ops One';color:var(--green);}.wait-text{font:11px 'Share Tech Mono';color:var(--muted);margin-top:7px;}
+@keyframes rotate{to{transform:rotate(360deg)}}
+@media(max-width:980px){
+  body{padding:8px;}
+  .app{height:auto;min-height:calc(100vh - 16px);display:block;}
+  .top{height:52px;margin-bottom:8px;padding:0 10px;}
+  .brand h1{font-size:15px}.chain{display:none}
+  .toolbar{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin-bottom:8px;}
+  .control.tokens-control{grid-column:1/-1;}
+  .control.range-control{grid-column:1/3;}
+  .btn{grid-column:3;min-height:55px;padding:0 7px;font-size:11px;}
+  .metric{padding:8px}.metric-val{font-size:18px;}
+  .workspace{display:block;}
+  .panel{height:340px;margin-bottom:8px;}
+  .panel.traders{height:400px}.panel.moves{height:390px}.panel.watchers{height:auto;min-height:340px;}
+  .move{grid-template-columns:49px minmax(68px,1fr) 62px 84px;padding:8px 6px;gap:5px;}
+}
+</style>
+</head>
+<body>
+<main class="app">
+  <header class="top">
+    <div class="brand"><div class="bk">BK</div><h1>FAN TOKEN <span>FLOW RADAR</span></h1></div>
+    <div class="chain"><span class="live"></span> CHILIZ CHAIN MAINNET / READ ONLY / NO WALLET REQUIRED</div>
+  </header>
+
+  <section class="toolbar">
+    <div class="control tokens-control">
+      <div class="label">Wrapped Fan Tokens To Scan</div>
+      <div class="tokens" id="tokenToggles"></div>
+    </div>
+    <div class="control range-control">
+      <div class="label">Lookback Blocks</div>
+      <select class="field" id="blockRange">
+        <option value="1000">1,000 / approx 50 min</option>
+        <option value="5000">5,000 / approx 4 h</option>
+        <option value="20000">20,000 / approx 17 h</option>
+        <option value="50000" selected>50,000 / approx 42 h</option>
+      </select>
+    </div>
+    <div class="metric"><div class="label">Wallets Found</div><div class="metric-val" id="walletCount">-</div></div>
+    <div class="metric"><div class="label">Recognized Trades</div><div class="metric-val blue" id="tradeCount">-</div></div>
+    <button class="btn" id="scanBtn" onclick="scanRadar()">SCAN FLOW</button>
+  </section>
+
+  <section class="workspace">
+    <article class="panel traders">
+      <div class="panel-head">
+        <div><div class="title">TRADER <span>RANK</span></div><div class="sub">activity + visible wCHZ net flow in scan window</div></div>
+        <div class="status" id="scanStatus">READY</div>
+      </div>
+      <div class="body">
+        <table class="table">
+          <thead><tr><th style="width:36px">#</th><th>Wallet</th><th style="width:58px;text-align:right">Moves</th><th style="width:92px;text-align:right">Flow*</th></tr></thead>
+          <tbody id="walletRows"><tr><td class="empty" colspan="4">SELECT TOKENS AND SCAN RECENT BLOCKS</td></tr></tbody>
+        </table>
+      </div>
+    </article>
+
+    <article class="panel moves">
+      <div class="panel-head">
+        <div><div class="title">LATEST <span>MOVES</span></div><div class="sub">buy / sell signals reconstructed from transfers</div></div>
+        <div class="status" id="blockInfo">-</div>
+      </div>
+      <div class="body">
+        <div class="feed" id="moveFeed"><div class="empty">RECOGNIZED DEX FLOWS WILL APPEAR HERE</div></div>
+      </div>
+    </article>
+
+    <aside class="panel watchers">
+      <div class="panel-head">
+        <div><div class="title">WATCH <span>LIST</span></div><div class="sub">follow wallets, never auto-trade</div></div>
+      </div>
+      <div class="body">
+        <div class="watch-form">
+          <input class="field" id="watchInput" placeholder="0x wallet address">
+          <button class="icon-btn" onclick="addWatch()">ADD</button>
+        </div>
+        <div id="watchList"></div>
+        <div class="guide">
+          <h3>HOW TO READ THIS</h3>
+          <p><b style="color:var(--green)">MOVES</b> ranks repeat buyers and sellers, not guaranteed winners.</p>
+          <p><b style="color:var(--gold)">FLOW*</b> is received minus spent wCHZ visible only inside this scan window. It is not proven lifetime profit.</p>
+          <p>Copy-trading can be late, illiquid or manipulated. Check liquidity and price impact before any trade.</p>
+        </div>
+      </div>
+    </aside>
+  </section>
+</main>
+
+<div class="overlay" id="overlay">
+  <div class="wait">
+    <div class="ball">&#9917;</div>
+    <div class="wait-title">SCANNING CHILIZ BLOCKS</div>
+    <div class="wait-text" id="waitText">Connecting to public RPC...</div>
+  </div>
+</div>
+
+<script>
+const RPCS = [
+  'https://chiliz-rpc.publicnode.com',
+  'https://rpc.chiliz.com',
+  'https://rpc.ankr.com/chiliz'
+];
+const WCHZ = '0x677F7e16C7Dd57be1D4C8aD1244883214953DC47';
+const TRANSFER_TOPIC = ethers.id('Transfer(address,address,uint256)');
+const ZERO = '0x0000000000000000000000000000000000000000';
+const TOKENS = [
+  { symbol:'BAR', name:'FC Barcelona', address:'0xbaAAEF59F4A6C11cC87FF75EAa7a386e753b2666', decimals:18, active:false },
+  { symbol:'PSG', name:'Paris Saint-Germain', address:'0x476eF844B3E8318b3bc887a7db07a1A0FEde5557', decimals:18, active:true },
+  { symbol:'ARG', name:'Argentina', address:'0x7475777609CE0Bd8e06b471B95AC5330511e03aE', decimals:18, active:false },
+  { symbol:'POR', name:'Portugal', address:'0x804C701c3d548d68773e4E06c76C03aFa0e32d42', decimals:18, active:true },
+  { symbol:'JUV', name:'Juventus', address:'0xaCf221C4f6C713459981660e3146e64Cba54e0B1', decimals:18, active:false },
+  { symbol:'CITY', name:'Manchester City', address:'0x368F1EB2E4FA30C1C5957980C576Df6163575416', decimals:18, active:false },
+  { symbol:'ACM', name:'AC Milan', address:'0x859DB9e2569bb87990482fC53E2F902E52585Ecb', decimals:18, active:false },
+  { symbol:'ATM', name:'Atletico Madrid', address:'0x7Ac8cAa7c42e13d31247B1F370E2CF0c242957e8', decimals:18, active:false },
+  { symbol:'MENGO', name:'Flamengo', address:'0xa8732Dbb1985a570a1d98F57001E3c837046F618', decimals:18, active:false },
+  { symbol:'GAL', name:'Galatasaray', address:'0xCFc896fe8C791B6d1c085e69451E4B2f675a4927', decimals:18, active:false }
+];
+let provider = null;
+let watch = JSON.parse(localStorage.getItem('bk-radar-watch') || '[]');
+let lastTraders = {};
+
+function shortAddress(a){ return a ? a.slice(0,6) + '...' + a.slice(-4) : '-'; }
+function fmt(n, digits=2){
+  if(!Number.isFinite(Number(n))) return '-';
+  return Number(n).toLocaleString('en-US',{minimumFractionDigits:0,maximumFractionDigits:digits});
+}
+function selectedTokens(){ return TOKENS.filter(t => t.active); }
+function setWait(text){ document.getElementById('waitText').textContent = text; }
+function busy(show){
+  document.getElementById('overlay').classList.toggle('show',show);
+  document.getElementById('scanBtn').disabled = show;
+}
+function toast(text){
+  const el = document.getElementById('scanStatus');
+  el.textContent = text;
+  el.className = 'status good';
+  setTimeout(() => { if(el.textContent === text) el.className='status'; }, 3500);
+}
+function escapeHtml(value){
+  return String(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+function renderToggles(){
+  document.getElementById('tokenToggles').innerHTML = TOKENS.map((t,i) =>
+    `<button class="token-toggle ${t.active?'active':''}" onclick="toggleToken(${i})" title="${escapeHtml(t.name)}">${t.symbol}</button>`
+  ).join('') + '<button class="token-toggle" onclick="addCustomToken()">+ TOKEN</button>';
+}
+function toggleToken(index){
+  TOKENS[index].active = !TOKENS[index].active;
+  if(selectedTokens().length === 0) TOKENS[index].active = true;
+  renderToggles();
+}
+function addCustomToken(){
+  const symbol = (prompt('Wrapped fan token symbol, for example WLEG:') || '').trim().toUpperCase().slice(0,12);
+  if(!symbol) return;
+  const addressValue = (prompt('Wrapped token contract address on Chiliz Chain:') || '').trim();
+  if(!ethers.isAddress(addressValue)){ toast('INVALID TOKEN ADDRESS'); return; }
+  if(TOKENS.some(t => t.address.toLowerCase() === addressValue.toLowerCase())){ toast('TOKEN ALREADY ADDED'); return; }
+  const token = {symbol,name:'Custom wrapped token',address:addressValue,decimals:18,active:true,custom:true};
+  TOKENS.push(token);
+  const saved = TOKENS.filter(t => t.custom).map(t => ({symbol:t.symbol,address:t.address}));
+  localStorage.setItem('bk-radar-custom-tokens',JSON.stringify(saved));
+  renderToggles();
+}
+function renderWatch(){
+  const box = document.getElementById('watchList');
+  if(!watch.length){ box.innerHTML='<div class="empty" style="padding:24px 8px">ADD A WALLET FROM THE RANKING</div>'; return; }
+  box.innerHTML = watch.map(a => {
+    const data = lastTraders[a.toLowerCase()];
+    const signal = data ? `${data.moves.length} moves / ${pnlText(data)}` : 'waiting for next scan';
+    return `<div class="watch-card"><div class="watch-line"><span class="addr watch">${shortAddress(a)}</span><button class="remove" onclick="removeWatch('${a}')">X</button></div><span class="mini">${signal}</span></div>`;
+  }).join('');
+}
+function addWatch(addressValue){
+  const input = document.getElementById('watchInput');
+  const value = (addressValue || input.value || '').trim();
+  if(!ethers.isAddress(value)){ document.getElementById('scanStatus').textContent='INVALID ADDRESS'; document.getElementById('scanStatus').className='status bad'; return; }
+  if(!watch.some(a => a.toLowerCase() === value.toLowerCase())) watch.unshift(value);
+  localStorage.setItem('bk-radar-watch',JSON.stringify(watch));
+  input.value = '';
+  renderWatch();
+}
+function removeWatch(a){
+  watch = watch.filter(w => w.toLowerCase() !== a.toLowerCase());
+  localStorage.setItem('bk-radar-watch',JSON.stringify(watch));
+  renderWatch();
+}
+function copyWallet(a){
+  navigator.clipboard.writeText(a).then(() => toast('ADDRESS COPIED'));
+}
+
+async function getProvider(){
+  if(provider) return provider;
+  for(const url of RPCS){
+    try{
+      const candidate = new ethers.JsonRpcProvider(url);
+      await candidate.getBlockNumber();
+      provider = candidate;
+      return provider;
+    }catch(e){}
+  }
+  throw new Error('Public Chiliz RPC unavailable');
+}
+async function getLogsChunked(p, tokenAddress, fromBlock, toBlock){
+  const logs = [];
+  const chunk = 1500;
+  for(let from=fromBlock; from<=toBlock; from+=chunk){
+    const to = Math.min(from+chunk-1,toBlock);
+    setWait(`Reading ${shortAddress(tokenAddress)} / blocks ${from.toLocaleString()}-${to.toLocaleString()}`);
+    try{
+      logs.push(...await p.getLogs({ address:tokenAddress, topics:[TRANSFER_TOPIC], fromBlock:from, toBlock:to }));
+    }catch(e){
+      if(to-from > 200){
+        const mid = Math.floor((from+to)/2);
+        logs.push(...await p.getLogs({ address:tokenAddress, topics:[TRANSFER_TOPIC], fromBlock:from, toBlock:mid }));
+        logs.push(...await p.getLogs({ address:tokenAddress, topics:[TRANSFER_TOPIC], fromBlock:mid+1, toBlock:to }));
+      }
+    }
+  }
+  return logs;
+}
+function decodeTransfer(log){
+  if(!log.topics || log.topics.length < 3) return null;
+  return {
+    address: log.address.toLowerCase(),
+    from: ethers.getAddress('0x'+log.topics[1].slice(26)).toLowerCase(),
+    to: ethers.getAddress('0x'+log.topics[2].slice(26)).toLowerCase(),
+    amount: BigInt(log.data),
+    hash: log.transactionHash,
+    block: log.blockNumber
+  };
+}
+function netFor(transfers, wallet, address){
+  return transfers.filter(x => x.address === address.toLowerCase()).reduce((net,x) => {
+    if(x.to === wallet) net += x.amount;
+    if(x.from === wallet) net -= x.amount;
+    return net;
+  }, 0n);
+}
+function toFloat(value, decimals=18){
+  return Number(ethers.formatUnits(value < 0n ? -value : value, decimals)) * (value < 0n ? -1 : 1);
+}
+
+async function buildMoves(p, logs, tokenMap){
+  const hashes = [...new Set(logs.map(l => l.transactionHash))].slice(-280);
+  const moves = [];
+  for(let i=0; i<hashes.length; i++){
+    if(i % 8 === 0) setWait(`Reconstructing swaps ${i+1} / ${hashes.length}`);
+    const hash = hashes[i];
+    try{
+      const [receipt, tx] = await Promise.all([p.getTransactionReceipt(hash), p.getTransaction(hash)]);
+      if(!receipt || !tx || !tx.from) continue;
+      const wallet = tx.from.toLowerCase();
+      const transfers = receipt.logs.filter(l => l.topics && l.topics[0] === TRANSFER_TOPIC).map(decodeTransfer).filter(Boolean);
+      const quoteNet = netFor(transfers, wallet, WCHZ);
+      for(const token of tokenMap.values()){
+        const tokenNet = netFor(transfers, wallet, token.address);
+        if(tokenNet === 0n) continue;
+        const isBuy = tokenNet > 0n;
+        let quote = quoteNet;
+        if(isBuy && quote === 0n && tx.value && tx.value > 0n) quote = -tx.value;
+        moves.push({
+          hash, block:receipt.blockNumber, wallet, symbol:token.symbol,
+          side:isBuy ? 'BUY':'SELL', units:Math.abs(toFloat(tokenNet,token.decimals)),
+          quote: quote === 0n ? null : Math.abs(toFloat(quote,18)),
+          quoteSigned: quote === 0n ? null : toFloat(quote,18)
+        });
+      }
+    }catch(e){}
+  }
+  return moves.sort((a,b) => b.block - a.block);
+}
+function aggregate(moves){
+  const map = {};
+  moves.forEach(m => {
+    if(!map[m.wallet]) map[m.wallet] = {wallet:m.wallet,moves:[],buys:0,sells:0,spent:0,received:0,known:0};
+    const w = map[m.wallet];
+    w.moves.push(m);
+    if(m.side === 'BUY'){ w.buys++; if(m.quote !== null){w.spent += m.quote;w.known++;} }
+    else { w.sells++; if(m.quote !== null){w.received += m.quote;w.known++;} }
+  });
+  return Object.values(map).sort((a,b) =>
+    Math.min(b.buys,b.sells)-Math.min(a.buys,a.sells) ||
+    b.moves.length-a.moves.length ||
+    (b.received-b.spent)-(a.received-a.spent)
+  );
+}
+function pnlValue(t){ return t.received - t.spent; }
+function pnlText(t){
+  if(!t.known) return 'unpriced';
+  const p = pnlValue(t);
+  return `${p>=0?'+':''}${fmt(p)} wCHZ*`;
+}
+function renderTraders(traders){
+  lastTraders = Object.fromEntries(traders.map(t => [t.wallet,t]));
+  document.getElementById('walletCount').textContent = traders.length.toLocaleString();
+  const tbody = document.getElementById('walletRows');
+  if(!traders.length){ tbody.innerHTML='<tr><td class="empty" colspan="4">NO RECOGNIZED WALLET MOVES IN THIS RANGE</td></tr>'; renderWatch(); return; }
+  tbody.innerHTML = traders.slice(0,60).map((t,i) => {
+    const watched = watch.some(a=>a.toLowerCase()===t.wallet);
+    const p = pnlValue(t);
+    const cls = !t.known ? 'unknown' : p < 0 ? 'profit neg' : 'profit';
+    return `<tr>
+      <td class="rank">${String(i+1).padStart(2,'0')}</td>
+      <td><span class="addr ${watched?'watch':''}">${shortAddress(t.wallet)} <button class="copy" onclick="copyWallet('${t.wallet}')">COPY</button></span><span class="mini">${t.buys} buy / ${t.sells} sell</span></td>
+      <td class="n">${t.moves.length}</td>
+      <td class="n ${cls}">${escapeHtml(pnlText(t))}</td>
+    </tr>`;
+  }).join('');
+  renderWatch();
+}
+function renderMoves(moves){
+  document.getElementById('tradeCount').textContent = moves.length.toLocaleString();
+  const box = document.getElementById('moveFeed');
+  if(!moves.length){ box.innerHTML='<div class="empty">NO BUY OR SELL FLOW RECOGNIZED IN SELECTED RANGE</div>'; return; }
+  box.innerHTML = moves.slice(0,120).map(m => `
+    <div class="move">
+      <div class="side ${m.side.toLowerCase()}">${m.side}</div>
+      <div><div class="symbol">${m.symbol}</div><div class="tx-wallet">${shortAddress(m.wallet)}</div></div>
+      <div class="amount">${fmt(m.units)} FT</div>
+      <div class="amount ${m.quote !== null?'known':''}">${m.quote !== null ? fmt(m.quote)+' wCHZ' : 'unpriced'}</div>
+    </div>`).join('');
+}
+
+async function scanRadar(){
+  const chosen = selectedTokens();
+  if(!chosen.length) return;
+  busy(true);
+  document.getElementById('scanStatus').textContent='SCANNING';
+  document.getElementById('scanStatus').className='status';
+  try{
+    const p = await getProvider();
+    const latest = await p.getBlockNumber();
+    const range = Number(document.getElementById('blockRange').value);
+    const from = Math.max(0,latest-range);
+    const tokenMap = new Map(chosen.map(t => [t.address.toLowerCase(), {...t,address:t.address.toLowerCase()}]));
+    const groups = await Promise.all(chosen.map(t => getLogsChunked(p,t.address,from,latest)));
+    const logs = groups.flat();
+    setWait(`${logs.length.toLocaleString()} transfers found. Matching wallet flows...`);
+    const moves = await buildMoves(p,logs,tokenMap);
+    const traders = aggregate(moves);
+    renderTraders(traders);
+    renderMoves(moves);
+    document.getElementById('blockInfo').textContent = `${from.toLocaleString()} - ${latest.toLocaleString()}`;
+    document.getElementById('scanStatus').textContent = 'LIVE RESULT';
+    document.getElementById('scanStatus').className='status good';
+  }catch(e){
+    document.getElementById('scanStatus').textContent='RPC ERROR';
+    document.getElementById('scanStatus').className='status bad';
+    document.getElementById('moveFeed').innerHTML = `<div class="empty">SCAN FAILED<br>${escapeHtml(e.message || 'Try a shorter range')}</div>`;
+  }finally{
+    busy(false);
+  }
+}
+
+(JSON.parse(localStorage.getItem('bk-radar-custom-tokens') || '[]')).forEach(t => {
+  if(t.symbol && ethers.isAddress(t.address) && !TOKENS.some(x => x.address.toLowerCase() === t.address.toLowerCase())){
+    TOKENS.push({symbol:t.symbol,name:'Custom wrapped token',address:t.address,decimals:18,active:false,custom:true});
+  }
+});
+renderToggles();
+renderWatch();
+</script>
+</body>
+</html>
