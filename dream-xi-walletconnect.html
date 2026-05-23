@@ -2369,10 +2369,18 @@ function getWalletProvider() {
   return activeWalletProvider || getInjectedWalletProvider();
 }
 
+function parseWalletChainId(chainId) {
+  if (typeof chainId === 'number') return chainId;
+  if (typeof chainId === 'bigint') return Number(chainId);
+  const text = String(chainId || '').trim();
+  if (!text) return NaN;
+  return text.toLowerCase().startsWith('0x') ? parseInt(text, 16) : parseInt(text, 10);
+}
+
 async function ensureChilizChain(walletProvider) {
   const wantedChainId = '0x' + CHAIN_ID.toString(16);
   let cid = await walletProvider.request({method:'eth_chainId'});
-  if (parseInt(cid,16) === CHAIN_ID) return true;
+  if (parseWalletChainId(cid) === CHAIN_ID) return true;
   console.warn('Wallet is on chain', cid, 'trying to switch to', wantedChainId);
 
   try {
@@ -2381,7 +2389,7 @@ async function ensureChilizChain(walletProvider) {
       params: [{ chainId: wantedChainId }]
     });
     cid = await walletProvider.request({method:'eth_chainId'});
-    return parseInt(cid,16) === CHAIN_ID;
+    return parseWalletChainId(cid) === CHAIN_ID;
   } catch(e) {
     const code = e && (e.code || e.data?.originalError?.code);
     if (code === 4902 || String(e && e.message || '').toLowerCase().includes('unrecognized')) {
@@ -2397,7 +2405,7 @@ async function ensureChilizChain(walletProvider) {
           }]
         });
         cid = await walletProvider.request({method:'eth_chainId'});
-        return parseInt(cid,16) === CHAIN_ID;
+        return parseWalletChainId(cid) === CHAIN_ID;
       } catch(addError) {
         console.warn('Could not add Chiliz Chain', addError);
       }
@@ -4190,6 +4198,9 @@ async function directMint() {
     const txOptions = { value: currentMintPrice };
     if (activeWalletType === 'Privy' || activeWalletType === 'WalletConnect') {
       txOptions.gasLimit = 650000n;
+      txOptions.type = 0;
+      const feeData = await provider.getFeeData().catch(() => null);
+      txOptions.gasPrice = feeData?.gasPrice || 2500000000000n;
     } else {
       try {
         const gasEstimate = await contract.mint.estimateGas(referrer, { value: currentMintPrice });
