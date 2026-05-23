@@ -9,51 +9,8 @@
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 9 6'%3E%3Cpath fill='%2374acdf' d='M0 0h9v6H0z'/%3E%3Cpath fill='%23fff' d='M0 2h9v2H0z'/%3E%3Ccircle cx='4.5' cy='3' r='.5' fill='%23f1b42f'/%3E%3C/svg%3E">
 <link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Barlow+Condensed:wght@400;600;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.7.0/ethers.umd.min.js"></script>
-<!-- WalletConnect Web3Modal v3 -->
-<script type="module">
-  import { createWeb3Modal, defaultConfig } from 'https://esm.sh/@web3modal/ethers5@3.3.1';
-  // Expose globally so non-module scripts can call it
-  const projectId = 'b56e18d47c72ab683b10814fe9495694'; // public demo key – replace with your own from cloud.walletconnect.com
-
-  const chilizChain = {
-    chainId: 88888,
-    name: 'Chiliz Chain',
-    currency: 'CHZ',
-    explorerUrl: 'https://scan.chiliz.com',
-    rpcUrl: 'https://rpc.ankr.com/chiliz'
-  };
-
-  const metadata = {
-    name: 'Argentina Dream XI',
-    description: 'Block Kickers – Argentina Quest',
-    url: window.location.origin,
-    icons: ['https://avatars.githubusercontent.com/u/37784886']
-  };
-
-  const modal = createWeb3Modal({
-    ethersConfig: defaultConfig({ metadata }),
-    chains: [chilizChain],
-    projectId,
-    themeMode: 'dark',
-    themeVariables: {
-      '--w3m-color-mix': '#00ff87',
-      '--w3m-color-mix-strength': 20,
-      '--w3m-accent': '#00ff87',
-      '--w3m-border-radius-master': '8px',
-      '--w3m-font-family': "'Barlow Condensed', sans-serif"
-    }
-  });
-
-  window._w3modal = modal;
-
-  modal.subscribeProvider(({ provider, address: addr, isConnected }) => {
-    if (isConnected && provider && addr) {
-      window._wcProvider = provider;
-      window._wcAddress  = addr;
-      window.dispatchEvent(new CustomEvent('wc:connected', { detail: { provider, address: addr } }));
-    }
-  });
-</script>
+<!-- WalletConnect EthereumProvider — works with Trust Wallet, Coinbase, Rainbow, Ledger etc -->
+<script src="https://unpkg.com/@walletconnect/ethereum-provider@2.17.0/dist/index.umd.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
 body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;font-size:16px;min-height:100vh;}
@@ -1703,19 +1660,35 @@ function getWalletProvider() {
 // ── WALLET CONNECTION HELPERS ─────────────────────────────────────────────────
 
 // Shared post-connect setup (works for both MetaMask and WalletConnect)
-async function _afterConnect(walletProvider) {
-  provider = new ethers.BrowserProvider(walletProvider);
-  signer   = await provider.getSigner();
-  address  = await signer.getAddress();
+async function _afterConnect(rawProvider) {
+  // rawProvider can be window.ethereum (MetaMask) or WalletConnect EthereumProvider
+  // Both are EIP-1193 compatible — wrap in ethers.BrowserProvider
+  provider = new ethers.BrowserProvider(rawProvider);
+
+  // getSigner can fail on some WC providers — fallback to accounts call
+  try {
+    signer  = await provider.getSigner();
+    address = await signer.getAddress();
+  } catch(e) {
+    // WalletConnect fallback: get accounts directly from raw provider
+    const accounts = await rawProvider.request({ method: 'eth_accounts' });
+    if (!accounts || accounts.length === 0) throw new Error('No accounts returned from wallet');
+    address = accounts[0];
+    signer  = await provider.getSigner(address);
+  }
+
+  // Store raw provider reference for balance polling
+  window._rawWalletProvider = rawProvider;
 
   contract       = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
   marketContract = new ethers.Contract(MARKET_ADDRESS, MARKET_ABI, signer);
 
-  document.getElementById('connectBtn').textContent = address.slice(0,6)+'...'+address.slice(-4);
+  const short = address.slice(0,6)+'...'+address.slice(-4);
+  document.getElementById('connectBtn').textContent = short;
   document.getElementById('connectBtn').classList.add('connected');
   const walletAddressEl = document.getElementById('walletAddress');
   if (walletAddressEl) {
-    walletAddressEl.textContent = address.slice(0,6)+'...'+address.slice(-4);
+    walletAddressEl.textContent = short;
     walletAddressEl.style.display = 'inline-block';
   }
   await updateWalletBalance();
@@ -1746,32 +1719,99 @@ async function connectWalletMM() {
   }
 }
 
-// WalletConnect via Web3Modal (300+ wallets: Trust, Coinbase, Rainbow, Zerion, Ledger…)
-async function connectWalletWC() {
-  if (!window._w3modal) {
-    showHeaderToast('WalletConnect is loading, please try again in a moment.', true);
-    return;
-  }
-  // Listen for successful connection from the module script
-  window.addEventListener('wc:connected', async (e) => {
-    const { provider: wcProv, address: wcAddr } = e.detail;
-    try {
-      // Wrap in ethers
-      const wcEthersProvider = new ethers.BrowserProvider(wcProv);
-      const network = await wcEthersProvider.getNetwork();
-      if (Number(network.chainId) !== CHAIN_ID) {
-        showHeaderToast('Wrong network! Please switch to Chiliz Chain (ID: 88888) in your wallet.', true);
-        return;
-      }
-      await _afterConnect(wcProv);
-    } catch(e) {
-      console.error(e);
-      showHeaderToast('Error after WalletConnect. Please try again.', true);
-    }
-  }, { once: true });
+// WalletConnect EthereumProvider — supports Trust Wallet, Coinbase, Rainbow, Zerion, Ledger, +300 more
+let _wcEthProvider = null; // singleton
 
-  // Open the modal — user picks their wallet
-  window._w3modal.open();
+async function _getWCProvider() {
+  if (_wcEthProvider) return _wcEthProvider;
+
+  // Replace with your own free key from https://cloud.walletconnect.com
+  const WC_PROJECT_ID = 'b56e18d47c72ab683b10814fe9495694';
+
+  _wcEthProvider = await window.EthereumProvider.init({
+    projectId: WC_PROJECT_ID,
+    chains: [CHAIN_ID],          // 88888 Chiliz Chain
+    optionalChains: [88888],
+    showQrModal: true,
+    metadata: {
+      name: 'Argentina Dream XI',
+      description: 'Block Kickers – Argentina Quest on Chiliz Chain',
+      url: window.location.href,
+      icons: ['https://block-kickers.vercel.app/favicon.ico']
+    },
+    qrModalOptions: {
+      themeMode: 'dark',
+      themeVariables: {
+        '--wcm-accent-color': '#00ff87',
+        '--wcm-background-color': '#06080a',
+        '--wcm-font-family': "'Barlow Condensed', sans-serif"
+      }
+    }
+  });
+
+  return _wcEthProvider;
+}
+
+async function connectWalletWC() {
+  try {
+    showHeaderToast('Opening WalletConnect — scan QR with your wallet app…', false);
+
+    const wcProv = await _getWCProvider();
+
+    // Connect — this opens the QR modal
+    await wcProv.connect();
+
+    // Verify we're on Chiliz Chain
+    const chainIdHex = await wcProv.request({ method: 'eth_chainId' });
+    if (parseInt(chainIdHex, 16) !== CHAIN_ID) {
+      // Try to switch chain automatically
+      try {
+        await wcProv.request({
+          method: 'wallet_switchEthereumChain',
+          params: [{ chainId: '0x' + CHAIN_ID.toString(16) }]
+        });
+      } catch (switchErr) {
+        // Chain not added yet — add it
+        if (switchErr.code === 4902) {
+          await wcProv.request({
+            method: 'wallet_addEthereumChain',
+            params: [{
+              chainId: '0x' + CHAIN_ID.toString(16),
+              chainName: 'Chiliz Chain',
+              nativeCurrency: { name: 'CHZ', symbol: 'CHZ', decimals: 18 },
+              rpcUrls: ['https://rpc.ankr.com/chiliz', 'https://chiliz.publicnode.com'],
+              blockExplorerUrls: ['https://scan.chiliz.com']
+            }]
+          });
+        } else {
+          showHeaderToast('Please switch your wallet to Chiliz Chain (ID: 88888).', true);
+          return;
+        }
+      }
+    }
+
+    // Wrap raw WC provider in ethers.BrowserProvider
+    await _afterConnect(wcProv);
+
+    // Listen for disconnect
+    wcProv.on('disconnect', () => {
+      showHeaderToast('WalletConnect disconnected.', true);
+      location.reload();
+    });
+
+    // Listen for account / chain changes
+    wcProv.on('accountsChanged', (accounts) => {
+      if (accounts.length === 0) location.reload();
+    });
+
+  } catch(e) {
+    console.error('WalletConnect error:', e);
+    if (e?.message?.includes('User rejected') || e?.code === 4001) {
+      showHeaderToast('Connection cancelled.', true);
+    } else {
+      showHeaderToast('WalletConnect failed — please try again.', true);
+    }
+  }
 }
 
 // Legacy entry point (called from nav button) — shows choice modal if no injected wallet
@@ -1787,16 +1827,28 @@ async function connectWallet() {
 }
 
 async function updateWalletBalance() {
-  // Works for both MetaMask (provider set) and WalletConnect (window._wcProvider)
-  const prov = provider || (window._wcProvider ? new ethers.BrowserProvider(window._wcProvider) : null);
-  const addr = address || window._wcAddress;
-  if (prov && addr) {
-    try {
-      const bal = await prov.getBalance(addr);
+  if (!address) return;
+  try {
+    // Use the raw provider directly for balance — avoids ethers.BrowserProvider quirks with WC
+    const rawProv = window._rawWalletProvider;
+    let balHex;
+    if (rawProv) {
+      balHex = await rawProv.request({ method: 'eth_getBalance', params: [address, 'latest'] });
+    } else if (provider) {
+      const bal = await provider.getBalance(address);
       const formatted = parseFloat(ethers.formatEther(bal)).toFixed(1);
       const el = document.getElementById('walletBalance');
       if(el){ el.textContent = formatted+' CHZ'; el.style.display='inline-block'; }
-    } catch(e) {}
+      return;
+    }
+    if (balHex) {
+      const balBig = BigInt(balHex);
+      const formatted = parseFloat(ethers.formatEther(balBig)).toFixed(1);
+      const el = document.getElementById('walletBalance');
+      if(el){ el.textContent = formatted+' CHZ'; el.style.display='inline-block'; }
+    }
+  } catch(e) {
+    console.warn('Balance fetch failed:', e);
   }
 }
 
