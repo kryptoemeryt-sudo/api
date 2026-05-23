@@ -1715,20 +1715,25 @@ async function _afterConnect(rawProvider) {
   const isWC = typeof rawProvider.session !== 'undefined'; // WC providers have .session
 
   if (isWC) {
-    // After wcProv.connect() resolves, accounts are available via eth_accounts
-    // Some WC versions need eth_requestAccounts to flush them
-    let accounts = [];
-    try {
-      accounts = await rawProvider.request({ method: 'eth_accounts' });
-    } catch(e) {}
+    // Extract address from WC session namespace — most reliable, available immediately after connect
+    const sessionAccounts = rawProvider.session?.namespaces?.eip155?.accounts || [];
+    let accounts = sessionAccounts
+      .filter(a => a.startsWith(`eip155:${CHAIN_ID}:`) || a.startsWith('eip155:1:'))
+      .map(a => a.split(':')[2]);
 
+    // Prefer Chiliz chain accounts
+    const chilizAccounts = sessionAccounts
+      .filter(a => a.startsWith(`eip155:${CHAIN_ID}:`))
+      .map(a => a.split(':')[2]);
+    if (chilizAccounts.length > 0) accounts = chilizAccounts;
+
+    // Fallback to RPC if session accounts empty
     if (!accounts || accounts.length === 0) {
-      try {
-        accounts = await rawProvider.request({ method: 'eth_requestAccounts' });
-      } catch(e) {}
+      try { accounts = await rawProvider.request({ method: 'eth_accounts' }); } catch(e) {}
     }
-
-    // Final fallback: read from provider object directly
+    if (!accounts || accounts.length === 0) {
+      try { accounts = await rawProvider.request({ method: 'eth_requestAccounts' }); } catch(e) {}
+    }
     if (!accounts || accounts.length === 0) {
       accounts = rawProvider.accounts || [];
     }
@@ -1737,6 +1742,7 @@ async function _afterConnect(rawProvider) {
       throw new Error('No accounts returned from wallet. Make sure your wallet is unlocked and try again.');
     }
     address = accounts[0].toLowerCase();
+    console.log('[WC] address from session:', address);
 
     // Use public RPC for all reads — avoids WC relay CORS issues in Chrome
     let readProv = null;
@@ -1902,71 +1908,67 @@ async function _getWCProvider() {
 async function connectWalletDeeplink(walletId) {
   const isMobile = /iPhone|iPad|Android/i.test(navigator.userAgent);
   const walletName = walletId === 'socios' ? 'Socios Wallet' : 'Trust Wallet';
-  showHeaderToast('Opening ' + walletName + '…', false);
+  showHeaderToast('Connecting to ' + walletName + '…', false);
 
   try {
     const wcProv = await _getWCProvider();
 
     if (isMobile) {
-      // On mobile: listen for the WC URI, deep-link into the wallet app,
-      // then wait for the session_update / connect event when the app returns
       await new Promise((resolve, reject) => {
-        // Timeout after 3 minutes
-        const timeout = setTimeout(() => reject(new Error('Connection timed out. Please try again.')), 180000);
+        const timeout = setTimeout(() => reject(new Error('Connection timed out.')), 180000);
 
-        wcProv.on('display_uri', (wcUri) => {
+        // Resolve when WC session is established
+        wcProv.once('connect', () => { clearTimeout(timeout); resolve(); });
+
+        // Get URI and deep-link into wallet app
+        wcProv.once('display_uri', (wcUri) => {
           const deeplink = walletId === 'socios'
             ? 'https://wallet.socios.com/wc?uri=' + encodeURIComponent(wcUri)
-            : 'https://link.trustwallet.com/wc?uri='  + encodeURIComponent(wcUri);
+            : 'https://link.trustwallet.com/wc?uri=' + encodeURIComponent(wcUri);
 
-          // Open wallet app via deep link
-          window.open(deeplink, '_blank') || (window.location.href = deeplink);
+          // Use location.href — more reliable than window.open on mobile Chrome
+          // The page stays alive in background while wallet app is open
+          setTimeout(() => { window.location.href = deeplink; }, 300);
         });
 
-        wcProv.once('connect', () => {
-          clearTimeout(timeout);
-          resolve();
-        });
-
-        // Start connect — emits display_uri, then waits for wallet to respond
-        wcProv.connect().catch(e => {
-          clearTimeout(timeout);
-          reject(e);
-        });
+        wcProv.connect().catch(e => { clearTimeout(timeout); reject(e); });
       });
 
     } else {
-      // Desktop: standard modal with QR
-      await wcProv.connect();
+      // Desktop: standard QR modal
+      await new Promise((resolve, reject) => {
+        const timeout = setTimeout(() => reject(new Error('Connection timed out.')), 180000);
+        wcProv.once('connect', () => { clearTimeout(timeout); resolve(); });
+        wcProv.connect().catch(e => { clearTimeout(timeout); reject(e); });
+      });
     }
 
-    // Verify chain
-    const rawChainId = await wcProv.request({ method: 'eth_chainId' }).catch(() => null);
-    const sessionChains = wcProv.session?.namespaces?.eip155?.chains || [];
-    const sessionHasChiliz = sessionChains.some(c => c === 'eip155:88888');
-    let chainOk = sessionHasChiliz;
-    if (!chainOk && rawChainId != null) {
-      const cid = typeof rawChainId === 'number' ? rawChainId
-        : rawChainId.startsWith('0x') ? parseInt(rawChainId, 16) : parseInt(rawChainId, 10);
-      chainOk = cid === CHAIN_ID;
-    }
-    if (!chainOk) {
-      showHeaderToast('Please switch to Chiliz Chain (ID: 88888) in your wallet.', true);
+    console.log('[deeplink] connected, session:', wcProv.session);
+
+    // Verify Chiliz chain via session
+    const sessionChains   = wcProv.session?.namespaces?.eip155?.chains   || [];
+    const sessionAccounts = wcProv.session?.namespaces?.eip155?.accounts || [];
+    const onChiliz = sessionChains.some(c => c === `eip155:${CHAIN_ID}`)
+      || sessionAccounts.some(a => a.startsWith(`eip155:${CHAIN_ID}:`));
+
+    if (!onChiliz) {
+      showHeaderToast('Please switch to Chiliz Chain (ID: 88888) in ' + walletName + ' and try again.', true);
       _destroyWCProvider();
       return;
     }
 
     await _afterConnect(wcProv);
-    wcProv.on('disconnect', () => { location.reload(); });
-    wcProv.on('accountsChanged', (accs) => { if (!accs.length) location.reload(); });
+    wcProv.on('disconnect', () => location.reload());
+    wcProv.on('accountsChanged', accs => { if (!accs.length) location.reload(); });
 
   } catch(e) {
-    console.error('Deeplink connect error:', e);
+    console.error('[deeplink] error:', e);
     _destroyWCProvider();
-    if (e?.message?.includes('User rejected') || e?.code === 4001 || e?.message?.includes('Modal closed') || e?.message?.includes('timed out')) {
-      showHeaderToast(e.message.includes('timed out') ? e.message : 'Connection cancelled.', false);
+    const msg = e?.message || '';
+    if (msg.includes('User rejected') || e?.code === 4001 || msg.includes('Modal closed') || msg.includes('timed out')) {
+      showHeaderToast(msg.includes('timed out') ? 'Connection timed out. Please try again.' : 'Connection cancelled.', false);
     } else {
-      showHeaderToast('Connection failed: ' + (e?.message || 'unknown error'), true);
+      showHeaderToast('Connection failed: ' + msg, true);
     }
   }
 }
@@ -1975,126 +1977,60 @@ async function connectWalletWC() {
   try {
     showHeaderToast('Opening WalletConnect — scan QR with your wallet app…', false);
 
-    // Always fresh provider
     let wcProv = await _getWCProvider();
 
-    // If old session exists, clear it so user gets wallet picker not auto-reconnect
+    // Kill any old session so user always gets fresh wallet picker
     if (wcProv.session) {
       try { await wcProv.disconnect(); } catch(e) {}
-      // Reinit after disconnect — provider is invalidated
       _wcEthProvider = null;
       wcProv = await _getWCProvider();
     }
 
-    // Opens QR modal / wallet picker
-    await wcProv.connect();
-
-    // Check which chain the wallet is on
-    // Some wallets (Socios, Trust) return chainId as integer or hex — normalise both
-    const rawChainId = await wcProv.request({ method: 'eth_chainId' });
-    console.log('[WC] raw eth_chainId:', rawChainId, typeof rawChainId);
-
-    let connectedChainId;
-    if (typeof rawChainId === 'number') {
-      connectedChainId = rawChainId;
-    } else if (typeof rawChainId === 'string') {
-      // Could be "0x15b38" (hex) or "88888" (decimal string)
-      connectedChainId = rawChainId.startsWith('0x')
-        ? parseInt(rawChainId, 16)
-        : parseInt(rawChainId, 10);
-    } else {
-      connectedChainId = Number(rawChainId);
-    }
-
-    console.log('[WC] parsed chainId:', connectedChainId, '| expected:', CHAIN_ID, '| match:', connectedChainId === CHAIN_ID);
-
-    // Also check chainId from WC provider accounts directly as fallback
-    // (some wallets set chainId correctly in session but eth_chainId returns wrong value)
-    if (connectedChainId !== CHAIN_ID) {
-      // Check if WC session itself has the right chain
-      const sessionChains = wcProv.session?.namespaces?.eip155?.chains || [];
-      console.log('[WC] session chains:', sessionChains);
-      const sessionHasChiliz = sessionChains.some(c => c === `eip155:${CHAIN_ID}`);
-      if (sessionHasChiliz) {
-        console.log('[WC] session has Chiliz — eth_chainId unreliable, proceeding anyway');
-        connectedChainId = CHAIN_ID; // trust the session
-      }
-    }
-
-    if (connectedChainId !== CHAIN_ID) {
-      // Try wallet_switchEthereumChain — works on MetaMask, Coinbase etc.
-      let switched = false;
-      try {
-        await wcProv.request({
-          method: 'wallet_switchEthereumChain',
-          params: [{ chainId: '0x' + CHAIN_ID.toString(16) }]
-        });
-        switched = true;
-      } catch(switchErr) {
-        console.warn('wallet_switchEthereumChain:', switchErr.message);
-      }
-
-      if (!switched) {
-        showHeaderToast(
-          'Please add Chiliz Chain (ID: 88888, RPC: https://rpc.ankr.com/chiliz) to your wallet manually, then reconnect.',
-          true
-        );
-        const sec = document.getElementById('connectSection');
-        if (sec) {
-          const warn = document.createElement('div');
-          warn.style.cssText = 'margin-top:16px;padding:14px 18px;background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.4);border-radius:8px;font-size:14px;color:#ef4444;line-height:1.5;max-width:380px;text-align:left;';
-          warn.innerHTML = `
-            <strong style="display:block;font-family:'Black Ops One',sans-serif;letter-spacing:1px;margin-bottom:6px;">⚠ ADD CHILIZ CHAIN FIRST</strong>
-            In your wallet app go to <strong>Settings → Networks → Add Network</strong> and enter:<br><br>
-            <span style="font-family:'Share Tech Mono',monospace;font-size:12px;color:#ffc940;">
-              Name: Chiliz Chain<br>
-              Chain ID: 88888<br>
-              RPC: https://rpc.ankr.com/chiliz<br>
-              Symbol: CHZ<br>
-              Explorer: https://scan.chiliz.com
-            </span><br><br>
-            Then tap <strong>WALLETCONNECT</strong> again.
-          `;
-          const existing = sec.querySelector('.chain-warning');
-          if (existing) existing.remove();
-          warn.className = 'chain-warning';
-          sec.appendChild(warn);
-        }
-        _destroyWCProvider();
-        return;
-      }
-
-      // Re-check after switch
-      const newRaw = await wcProv.request({ method: 'eth_chainId' });
-      const newChainId = typeof newRaw === 'number' ? newRaw
-        : newRaw.startsWith('0x') ? parseInt(newRaw, 16) : parseInt(newRaw, 10);
-      if (newChainId !== CHAIN_ID) {
-        showHeaderToast('Still on wrong network. Switch to Chiliz Chain (ID: 88888) in your wallet.', true);
-        _destroyWCProvider();
-        return;
-      }
-    }
-
-    // All good — boot the game
-    await _afterConnect(wcProv);
-
-    wcProv.on('disconnect', () => { location.reload(); });
-    wcProv.on('accountsChanged', (accs) => { if (!accs.length) location.reload(); });
-    wcProv.on('chainChanged', (cid) => {
-      if (parseInt(cid, 16) !== CHAIN_ID) {
-        showHeaderToast('Chain changed — please switch back to Chiliz Chain (ID: 88888).', true);
-      }
+    // Wait for the 'connect' event which fires AFTER wallet approves
+    // Don't read accounts/chainId before this — they're empty until session is established
+    await new Promise((resolve, reject) => {
+      const timeout = setTimeout(() => reject(new Error('Connection timed out.')), 180000);
+      wcProv.once('connect', () => { clearTimeout(timeout); resolve(); });
+      wcProv.connect().catch(e => { clearTimeout(timeout); reject(e); });
     });
 
+    console.log('[WC] connected, session:', wcProv.session);
+
+    // Check chain via session namespace (most reliable cross-wallet method)
+    const sessionChains = wcProv.session?.namespaces?.eip155?.chains || [];
+    const sessionAccounts = wcProv.session?.namespaces?.eip155?.accounts || [];
+    console.log('[WC] session chains:', sessionChains, '| accounts:', sessionAccounts);
+
+    const onChiliz = sessionChains.some(c => c === `eip155:${CHAIN_ID}`)
+      || sessionAccounts.some(a => a.startsWith(`eip155:${CHAIN_ID}:`));
+
+    if (!onChiliz) {
+      // Try switch
+      let switched = false;
+      try {
+        await wcProv.request({ method: 'wallet_switchEthereumChain', params: [{ chainId: '0x' + CHAIN_ID.toString(16) }] });
+        switched = true;
+      } catch(e) { console.warn('switchChain:', e.message); }
+
+      if (!switched) {
+        showHeaderToast('Please switch your wallet to Chiliz Chain (ID: 88888) and reconnect.', true);
+        _destroyWCProvider();
+        return;
+      }
+    }
+
+    await _afterConnect(wcProv);
+    wcProv.on('disconnect', () => location.reload());
+    wcProv.on('accountsChanged', accs => { if (!accs.length) location.reload(); });
+
   } catch(e) {
-    console.error('WalletConnect error:', e);
+    console.error('[WC] error:', e);
     _destroyWCProvider();
-    if (e?.message?.includes('User rejected') || e?.code === 4001 || e?.message?.includes('Modal closed')) {
-      showHeaderToast('Connection cancelled.', false);
-    } else if (e?.message?.includes('not loaded')) {
-      showHeaderToast(e.message, true);
+    const msg = e?.message || '';
+    if (msg.includes('User rejected') || e?.code === 4001 || msg.includes('Modal closed') || msg.includes('timed out')) {
+      showHeaderToast(msg.includes('timed out') ? 'Connection timed out.' : 'Connection cancelled.', false);
     } else {
-      showHeaderToast('WalletConnect error: ' + (e?.message || 'unknown error'), true);
+      showHeaderToast('WalletConnect error: ' + msg, true);
     }
   }
 }
