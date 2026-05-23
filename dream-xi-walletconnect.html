@@ -1720,29 +1720,29 @@ async function connectWalletMM() {
   }
 }
 
-// WalletConnect EthereumProvider — supports Trust Wallet, Coinbase, Rainbow, Zerion, Ledger, +300 more
-let _wcEthProvider = null; // singleton
+// WalletConnect EthereumProvider — supports Trust Wallet, Socios, Coinbase, Rainbow, Ledger, +300 more
+const WC_PROJECT_ID = '15671485110825e18107d31b379d9df6';
+let _wcEthProvider = null;
+
+function _destroyWCProvider() {
+  try { if (_wcEthProvider) _wcEthProvider.disconnect(); } catch(e) {}
+  _wcEthProvider = null;
+}
 
 async function _getWCProvider() {
-  if (_wcEthProvider) return _wcEthProvider;
+  // Always create a fresh instance — reusing broken/stale provider causes
+  // "Cannot convert undefined or null to object" errors on subsequent attempts
+  _destroyWCProvider();
 
-  // ⚠ Replace with your own free key from https://cloud.reown.com
-  const WC_PROJECT_ID = '15671485110825e18107d31b379d9df6';
-
-  // WalletConnect UMD exposes EthereumProvider under WalletConnectEthereumProvider global
-  // UMD bundle exports under global["@walletconnect/ethereum-provider"].EthereumProvider
   const wcModule = window['@walletconnect/ethereum-provider'];
   if (!wcModule || !wcModule.EthereumProvider) {
     throw new Error('WalletConnect library not loaded. Check internet connection and reload the page.');
   }
-  const EthProvider = wcModule.EthereumProvider;
 
-  _wcEthProvider = await EthProvider.init({
+  _wcEthProvider = await wcModule.EthereumProvider.init({
     projectId: WC_PROJECT_ID,
-    // Chiliz (88888) is not in WC default registry — list ETH as required, CHZ as optional
-    // wallet_addEthereumChain + wallet_switchEthereumChain handles the rest after connect
-    chains: [1],
-    optionalChains: [88888],
+    chains: [1],           // ETH as required base (WC relay needs a known chain)
+    optionalChains: [88888], // Chiliz Chain — we verify/switch after connect
     rpcMap: {
       1:     'https://cloudflare-eth.com',
       88888: 'https://rpc.ankr.com/chiliz'
@@ -1771,18 +1771,53 @@ async function connectWalletWC() {
   try {
     showHeaderToast('Opening WalletConnect — scan QR with your wallet app…', false);
 
-    const wcProv = await _getWCProvider();
+    // Init fresh provider (destroys any broken previous session)
+    let wcProv = await _getWCProvider();
 
-    // Connect — opens QR modal / deep link
+    // If a previous session exists, kill it so user gets wallet picker
+    // then reinit because the provider object is invalidated after disconnect
+    if (wcProv.session) {
+      try { await wcProv.disconnect(); } catch(e) {}
+      wcProv = await _getWCProvider();
+    }
+
+    // Opens QR modal / wallet picker
     await wcProv.connect();
 
     // Check which chain the wallet is on
-    const chainIdHex = await wcProv.request({ method: 'eth_chainId' });
-    const connectedChainId = parseInt(chainIdHex, 16);
+    // Some wallets (Socios, Trust) return chainId as integer or hex — normalise both
+    const rawChainId = await wcProv.request({ method: 'eth_chainId' });
+    console.log('[WC] raw eth_chainId:', rawChainId, typeof rawChainId);
+
+    let connectedChainId;
+    if (typeof rawChainId === 'number') {
+      connectedChainId = rawChainId;
+    } else if (typeof rawChainId === 'string') {
+      // Could be "0x15b38" (hex) or "88888" (decimal string)
+      connectedChainId = rawChainId.startsWith('0x')
+        ? parseInt(rawChainId, 16)
+        : parseInt(rawChainId, 10);
+    } else {
+      connectedChainId = Number(rawChainId);
+    }
+
+    console.log('[WC] parsed chainId:', connectedChainId, '| expected:', CHAIN_ID, '| match:', connectedChainId === CHAIN_ID);
+
+    // Also check chainId from WC provider accounts directly as fallback
+    // (some wallets set chainId correctly in session but eth_chainId returns wrong value)
+    if (connectedChainId !== CHAIN_ID) {
+      // Check if WC session itself has the right chain
+      const sessionChains = wcProv.session?.namespaces?.eip155?.chains || [];
+      console.log('[WC] session chains:', sessionChains);
+      const sessionHasChiliz = sessionChains.some(c => c === `eip155:${CHAIN_ID}`);
+      if (sessionHasChiliz) {
+        console.log('[WC] session has Chiliz — eth_chainId unreliable, proceeding anyway');
+        connectedChainId = CHAIN_ID; // trust the session
+      }
+    }
 
     if (connectedChainId !== CHAIN_ID) {
       // Try wallet_switchEthereumChain — works on MetaMask, Coinbase etc.
-      // Trust Wallet via WC does NOT support wallet_addEthereumChain — skip it entirely
       let switched = false;
       try {
         await wcProv.request({
@@ -1795,12 +1830,10 @@ async function connectWalletWC() {
       }
 
       if (!switched) {
-        // Show clear instructions — user must add Chiliz Chain manually in their wallet
         showHeaderToast(
           'Please add Chiliz Chain (ID: 88888, RPC: https://rpc.ankr.com/chiliz) to your wallet manually, then reconnect.',
           true
         );
-        // Also show a persistent banner in the connect section
         const sec = document.getElementById('connectSection');
         if (sec) {
           const warn = document.createElement('div');
@@ -1817,21 +1850,22 @@ async function connectWalletWC() {
             </span><br><br>
             Then tap <strong>WALLETCONNECT</strong> again.
           `;
-          // Remove existing warning if any
           const existing = sec.querySelector('.chain-warning');
           if (existing) existing.remove();
           warn.className = 'chain-warning';
           sec.appendChild(warn);
         }
-        _wcEthProvider = null; // reset for next attempt
+        _destroyWCProvider();
         return;
       }
 
       // Re-check after switch
-      const newChainHex = await wcProv.request({ method: 'eth_chainId' });
-      if (parseInt(newChainHex, 16) !== CHAIN_ID) {
+      const newRaw = await wcProv.request({ method: 'eth_chainId' });
+      const newChainId = typeof newRaw === 'number' ? newRaw
+        : newRaw.startsWith('0x') ? parseInt(newRaw, 16) : parseInt(newRaw, 10);
+      if (newChainId !== CHAIN_ID) {
         showHeaderToast('Still on wrong network. Switch to Chiliz Chain (ID: 88888) in your wallet.', true);
-        _wcEthProvider = null;
+        _destroyWCProvider();
         return;
       }
     }
@@ -1849,7 +1883,7 @@ async function connectWalletWC() {
 
   } catch(e) {
     console.error('WalletConnect error:', e);
-    _wcEthProvider = null;
+    _destroyWCProvider();
     if (e?.message?.includes('User rejected') || e?.code === 4001 || e?.message?.includes('Modal closed')) {
       showHeaderToast('Connection cancelled.', false);
     } else if (e?.message?.includes('not loaded')) {
