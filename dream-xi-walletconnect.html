@@ -282,6 +282,21 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
   border-radius: 6px;
   padding: 8px 12px;
 }
+.snipe-row.rarity-1{
+  border-color:rgba(59,130,246,.52);
+  background:linear-gradient(90deg,rgba(59,130,246,.20),#0f1318 42%);
+  box-shadow:inset 3px 0 0 rgba(59,130,246,.85);
+}
+.snipe-row.rarity-2{
+  border-color:rgba(192,132,252,.56);
+  background:linear-gradient(90deg,rgba(192,132,252,.22),#0f1318 42%);
+  box-shadow:inset 3px 0 0 rgba(192,132,252,.9);
+}
+.snipe-row.rarity-3{
+  border-color:rgba(255,201,64,.62);
+  background:linear-gradient(90deg,rgba(255,201,64,.24),#15130d 46%);
+  box-shadow:inset 3px 0 0 rgba(255,201,64,.95),0 0 14px rgba(255,201,64,.12);
+}
 .snipe-details {
   display: flex;
   align-items: center;
@@ -297,6 +312,9 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
   min-width: 45px;
   text-align: center;
 }
+.snipe-pos.rarity-1{border-color:rgba(59,130,246,.72);background:rgba(59,130,246,.18);color:#bfdbfe;}
+.snipe-pos.rarity-2{border-color:rgba(192,132,252,.76);background:rgba(192,132,252,.18);color:#e9d5ff;}
+.snipe-pos.rarity-3{border-color:rgba(255,201,64,.82);background:rgba(255,201,64,.18);color:#ffe08a;}
 .snipe-info-text {
   font-size: 12px;
   color: #7a8899;
@@ -1710,7 +1728,7 @@ body.network-busy{cursor:progress;}
       </div>
     </div>
     <div class="stat-card quest-link-card">
-      <div class="quest-topline"><span id="topPoolInfo">10,000 CHZ POOL</span><span id="topDeadlineInfo">--D --H --M --S</span></div>
+      <div class="quest-topline"><span id="topPoolInfo">10,000 CHZ POOL</span><span id="topDeadlineInfo">--D --H</span></div>
       <div class="quest-link-title">QUESTS</div>
       <div class="quest-link-copy">World Cup Album</div>
       <button class="quest-soon-btn" type="button" disabled>SOON</button>
@@ -3610,7 +3628,7 @@ function renderSnipeMarket(listings) {
     const pressureLine = getPressureLine(deal.pos);
 
     html += `
-      <div class="snipe-row">
+      <div class="snipe-row rarity-${deal.rarity}">
         <div class="snipe-details">
           <div class="snipe-pos rarity-${deal.rarity}" style="--rar:${rarColor};"><span>${POSITION_SHORT[deal.pos]}</span><small>${deal.weight} pts</small></div>
           <div class="snipe-info-text">
@@ -4453,7 +4471,7 @@ function updateCountdown(){
   document.getElementById('cdM').textContent = String(m).padStart(2,'0');
   document.getElementById('cdS').textContent = String(s).padStart(2,'0');
   const topDeadline = document.getElementById('topDeadlineInfo');
-  if (topDeadline) topDeadline.textContent = String(d).padStart(2,'0')+'D '+String(h).padStart(2,'0')+'H '+String(m).padStart(2,'0')+'M '+String(s).padStart(2,'0')+'S';
+  if (topDeadline) topDeadline.textContent = String(d).padStart(2,'0')+'D '+String(h).padStart(2,'0')+'H';
   document.getElementById('cdBlock').innerHTML = 'Deadline block: <a href="https://scan.chiliz.com/block/'+DEADLINE_BLOCK+'" target="_blank" style="color:#00ff87;text-decoration:none;">#'+DEADLINE_BLOCK.toLocaleString()+'</a> - Estimated current: ~#'+estimated.toLocaleString()+' - remaining: '+blocksLeft.toLocaleString()+' blocks';
 }
 
