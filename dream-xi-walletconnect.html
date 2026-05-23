@@ -1322,13 +1322,13 @@ body.game-mode .btn-card-action{font-size:6px;padding:3px 2px;}
     grid-template-columns:repeat(4,minmax(0,1fr));
     gap:3px;
   }
-  body.game-mode #statsRow .stat-card{padding:4px 3px;border-radius:6px;min-height:46px;}
+  body.game-mode #statsRow .stat-card{padding:4px 4px;border-radius:6px;min-height:42px;}
   body.game-mode #statsRow .stat-val{font-size:12px;}
   body.game-mode #myEstPayout{font-size:13px !important;line-height:.95 !important;padding-top:0 !important;word-break:break-word;}
   body.game-mode #statsRow .stat-lbl{font-size:5px;letter-spacing:.2px;line-height:1.05;}
   body.game-mode #gameSection{
     grid-template-columns:1fr;
-    grid-template-rows:minmax(0,1fr) 190px;
+    grid-template-rows:minmax(0,1fr) minmax(230px,34vh);
     grid-template-areas:"pitch" "panel";
     gap:6px;
   }
@@ -1341,7 +1341,7 @@ body.game-mode .btn-card-action{font-size:6px;padding:3px 2px;}
   body.game-mode .pitch-title-actions span{font-size:8px !important;}
   body.game-mode .btn-pitch-mint{padding:4px 7px;font-size:8px;}
   body.game-mode .pitch-wrap{padding:7px 5px;border-radius:9px;overflow:auto;}
-  body.game-mode .formation{gap:3px;min-height:390px;min-width:348px;}
+  body.game-mode .formation{gap:3px;min-height:360px;min-width:330px;}
   body.game-mode .legend{display:none;}
   body.game-mode .form-row{gap:4px;}
   body.game-mode .form-row.row-wings{padding:0 19%;}
@@ -1350,7 +1350,7 @@ body.game-mode .btn-card-action{font-size:6px;padding:3px 2px;}
   body.game-mode .form-row.row-attack .pos-card{transform:translateY(4px);}
   body.game-mode .form-row.row-wings .pos-card:first-child{transform:translate(-5px,-1px);}
   body.game-mode .form-row.row-wings .pos-card:last-child{transform:translate(5px,-1px);}
-  body.game-mode .pos-card{width:48px;min-height:60px;padding:3px 2px;border-radius:5px;}
+  body.game-mode .pos-card{width:46px;min-height:56px;padding:3px 2px;border-radius:5px;}
   body.game-mode .pos-name{font-size:6px;}
   body.game-mode .pos-ball{font-size:12px;margin:0;}
   body.game-mode .pos-weight{font-size:11px;}
@@ -1360,8 +1360,8 @@ body.game-mode .btn-card-action{font-size:6px;padding:3px 2px;}
   body.game-mode .pitch-penalty-area-top,
   body.game-mode .pitch-penalty-area-bottom{width:120px;height:34px;}
   body.game-mode .desk-tabs{grid-template-columns:repeat(5,minmax(0,1fr));}
-  body.game-mode .desk-tab-btn{font-size:6px;padding:7px 2px;letter-spacing:0;}
-  body.game-mode .desk-tab-content{padding:6px;}
+  body.game-mode .desk-tab-btn{font-size:7px;padding:6px 2px;letter-spacing:0;}
+  body.game-mode .desk-tab-content{padding:5px;}
   body.game-mode .snipe-title-row span{display:none;}
   body.game-mode .snipe-title{font-size:8px;}
   body.game-mode .market-alert{display:none;}
@@ -1421,10 +1421,10 @@ body.game-mode .snipe-action{display:contents;}
 body.game-mode .snipe-price{width:72px;text-align:right;font-size:12px;white-space:nowrap;}
 body.game-mode .btn-snipe{width:58px;min-height:26px;padding:4px 0;text-align:center;}
 @media(max-width:700px){
-  body.game-mode #statsRow{grid-template-columns:.9fr .75fr .62fr 1.25fr;}
-  body.game-mode #statsRow .stat-card{min-height:50px;}
-  body.game-mode #statsRow .stat-val{font-size:14px;line-height:1;}
-  body.game-mode #statsRow .stat-lbl{font-size:6px;line-height:1.05;}
+  body.game-mode #statsRow{grid-template-columns:.82fr .72fr .58fr 1.18fr;}
+  body.game-mode #statsRow .stat-card{min-height:44px;padding:4px 3px;}
+  body.game-mode #statsRow .stat-val{font-size:13px;line-height:1;}
+  body.game-mode #statsRow .stat-lbl{font-size:5px;line-height:1.05;}
   body.game-mode .quest-topline{font-size:7px;gap:3px;}
   body.game-mode .quest-link-title{font-size:8px;}
   body.game-mode .quest-link-copy{font-size:7px;line-height:1;}
@@ -1434,19 +1434,19 @@ body.game-mode .btn-snipe{width:58px;min-height:26px;padding:4px 0;text-align:ce
   body.game-mode .pitch-title-actions{gap:3px;}
   body.game-mode .pitch-title-actions span{font-size:7px !important;max-width:58px;overflow:hidden;text-overflow:ellipsis;}
   body.game-mode .btn-pitch-mint{font-size:7px;padding:4px 5px;min-height:24px;}
-  body.game-mode .desk-tab-btn{font-size:7px;padding:8px 2px;}
+  body.game-mode .desk-tab-btn{font-size:7px;padding:6px 2px;}
   body.game-mode .snipe-title{font-size:9px;}
   body.game-mode .market-filter-btn{font-size:7px;min-height:27px;padding:4px 2px;}
-  body.game-mode .snipe-row{grid-template-columns:34px minmax(0,1fr) 54px 48px;gap:5px;padding:6px;}
-  body.game-mode .snipe-pos{width:34px;font-size:9px;}
-  body.game-mode .snipe-info-text{font-size:9px;line-height:1.15;}
+  body.game-mode .snipe-row{grid-template-columns:38px minmax(0,1fr) 58px 52px;gap:5px;padding:5px 6px;min-height:42px;}
+  body.game-mode .snipe-pos{width:38px;font-size:9px;}
+  body.game-mode .snipe-info-text{font-size:9px;line-height:1.1;}
   body.game-mode .deal-points{font-size:8px;}
   body.game-mode .upgrade-chip{font-size:6px;padding:1px 3px;}
   body.game-mode .mini-badges{gap:3px;margin-top:3px;}
   body.game-mode .mini-badge{font-size:6px;padding:1px 3px;}
   body.game-mode .pressure-line{font-size:6px;}
-  body.game-mode .snipe-price{width:54px;font-size:10px;}
-  body.game-mode .btn-snipe{width:48px;font-size:7px;min-height:24px;}
+  body.game-mode .snipe-price{width:58px;font-size:10px;}
+  body.game-mode .btn-snipe{width:52px;font-size:7px;min-height:24px;}
 }
 
 /* Fill stat-card empty space with live micro data */
@@ -1458,10 +1458,10 @@ body.game-mode .stat-info-card:nth-child(3) .stat-mini-grid b{color:#aeb7ff;}
 body.game-mode .quest-link-card{min-height:82px;}
 body.game-mode .quest-link-copy{margin-bottom:2px;}
 @media(max-width:700px){
-  body.game-mode #statsRow{grid-template-columns:1fr 1fr;}
-  body.game-mode #statsRow .stat-card{min-height:66px;}
-  body.game-mode .stat-mini-grid{font-size:7px;gap:2px 4px;margin-top:4px;padding-top:4px;}
-  body.game-mode .quest-link-card{min-height:66px;}
+  body.game-mode #statsRow{grid-template-columns:repeat(4,minmax(0,1fr));}
+  body.game-mode #statsRow .stat-card{min-height:48px;}
+  body.game-mode .stat-mini-grid{font-size:6px;gap:1px 3px;margin-top:3px;padding-top:3px;}
+  body.game-mode .quest-link-card{min-height:48px;}
 }
 
 /* Mobile snipe density: rarity lives on the position chip */
@@ -1469,13 +1469,17 @@ body.game-mode .snipe-pos{display:flex;flex-direction:column;align-items:center;
 body.game-mode .snipe-pos span{line-height:1;}
 body.game-mode .snipe-pos small{display:none;font-family:'Share Tech Mono',monospace;color:var(--rar,#7a8899);font-size:8px;line-height:1;white-space:nowrap;}
 @media(max-width:700px){
-  body.game-mode .snipe-row{grid-template-columns:38px minmax(0,1fr) 54px 48px;}
+  body.game-mode .snipe-row{grid-template-columns:38px minmax(0,1fr) 58px 52px;}
   body.game-mode .snipe-pos{width:38px;min-height:36px;padding:3px 0;background:rgba(255,255,255,.025);}
   body.game-mode .snipe-pos small{display:block;}
   body.game-mode .desktop-deal-main{display:none;}
   body.game-mode .snipe-info-text{display:flex;flex-direction:column;justify-content:center;gap:2px;}
   body.game-mode .snipe-info-text br:first-of-type{display:none;}
   body.game-mode .upgrade-chip{margin-top:0;align-self:flex-start;}
+  body.game-mode .market-filters{grid-template-columns:1fr 1fr;margin-bottom:4px;}
+  body.game-mode .market-filter-btn{min-height:24px;font-size:6px;}
+  body.game-mode .snipe-title-row{display:none;}
+  body.game-mode .snipe-list{gap:4px;}
 }
 
 /* Network waiting overlay for blockchain actions */
@@ -1667,7 +1671,7 @@ body.network-busy{cursor:progress;}
       <div class="stat-val highlight" id="myCompCount">0 / 11</div>
       <div class="stat-lbl">Positions Scored</div>
       <div class="stat-mini-grid">
-        <span>Players</span><b id="topPlayersInfo">0</b>
+        <span>Scored</span><b id="topPlayersInfo">0</b>
         <span>Paid</span><b id="topPaidInfo">1</b>
       </div>
     </div>
