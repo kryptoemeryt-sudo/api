@@ -200,10 +200,7 @@ body::before{
       <div class="rpc-wrap" style="margin-bottom:7px;">
         <input class="field field-wide" id="mintInput" placeholder="Wklej adres tokena np. z pump.fun lub Raydium...">
       </div>
-      <div style="display:flex;gap:6px;align-items:center;margin-bottom:7px;">
-        <input class="field" id="heliusKey" placeholder="Helius API key (opcjonalnie, darmowy na helius.dev)" style="flex:1;font-size:10px;" oninput="saveHeliusKey(this.value)">
-        <span style="font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);white-space:nowrap;">bez klucza = wolniej</span>
-      </div>
+
       <div>
         <div class="ctrl-label">Filtr — pokaż tylko</div>
         <div class="filters">
@@ -294,7 +291,7 @@ body::before{
           <p><b>Efficiency Score</b> = (zysk w SOL) ÷ (wydane SOL) × 100. Wartości powyżej 200 oznaczają 3x+ zwrot.</p>
           <p><b>Early Buyer</b> = kupił w pierwszych 20% transakcji od startu tokena.</p>
           <p><b>Smart Money</b> = Eff. Score &gt; 150 + przynajmniej 3 trafne wyjścia.</p>
-          <p><b>Helius API key</b> — darmowy na <b>helius.dev</b> (Developer plan, 10k req/dzień). Bez klucza narzędzie korzysta z publicznych RPC demo które mają limity i mogą być wolne.</p>
+          <p><b>Backend proxy</b> — narzędzie używa <b>/api/solana-proxy.js</b> na Vercelu (ten sam projekt). Wdróż ten plik razem z HTML. Opcjonalnie ustaw zmienną środowiskową <b>HELIUS_API_KEY</b> w Vercel Dashboard dla wyższych limitów.</p>
           <p>Kopiowanie tradera może być spóźnione, płynność mała lub ruch sztuczny. Sprawdź liquidity i price impact przed wejściem.</p>
         </div>
       </div>
@@ -344,12 +341,8 @@ body::before{
 
 <script>
 // ─── CONFIG ───────────────────────────────────────────────────────────────────
-// RPC-s z włączonym CORS (działają z przeglądarki bez proxy)
-const CORS_RPCS = [
-  'https://solana-mainnet.g.alchemy.com/v2/demo',
-  'https://mainnet.helius-rpc.com/?api-key=demo',
-  'https://rpc.ankr.com/solana',
-];
+// Requesty idą przez /api/solana-proxy.js na tym samym Vercelu → zero CORS.
+const SOLANA_PROXY = '/api/solana-proxy';
 const SOL_DECIMALS = 9;
 const WSOL_MINT    = 'So11111111111111111111111111111111111111112';
 
@@ -358,13 +351,11 @@ let watchList = JSON.parse(localStorage.getItem('smr-watch') || '[]');
 let lastTraders = {};
 let sortField = 'efficiency';
 let activeFilters = new Set(['smart','early','profitable']);
-let rpcIndex = 0;
-let customHeliusKey = localStorage.getItem('smr-helius-key') || '';
 
 // ─── UTILS ───────────────────────────────────────────────────────────────────
-const short = a => a ? a.slice(0,4)+'…'+a.slice(-4) : '—';
-const fmt = (n,d=2) => Number.isFinite(+n) ? (+n).toLocaleString('pl-PL',{minimumFractionDigits:0,maximumFractionDigits:d}) : '—';
-const fmtSol = n => fmt(n,3) + ' ◎';
+const short = a => a ? a.slice(0,4)+'\u2026'+a.slice(-4) : '\u2014';
+const fmt = (n,d=2) => Number.isFinite(+n) ? (+n).toLocaleString('pl-PL',{minimumFractionDigits:0,maximumFractionDigits:d}) : '\u2014';
+const fmtSol = n => fmt(n,3) + ' \u25ce';
 const esc = s => String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const setSpinner = t => { document.getElementById('spinText').textContent = t; };
 const busy = show => {
@@ -372,47 +363,31 @@ const busy = show => {
   document.getElementById('scanBtn').disabled = show;
 };
 
-// ─── RPC HELPER ──────────────────────────────────────────────────────────────
-function getRpcList() {
-  const list = [...CORS_RPCS];
-  if(customHeliusKey && customHeliusKey.length > 10) {
-    list.unshift(`https://mainnet.helius-rpc.com/?api-key=${customHeliusKey}`);
-  }
-  return list;
-}
+// ─── RPC via Vercel proxy ─────────────────────────────────────────────────────
+const sleep = ms => new Promise(r=>setTimeout(r,ms));
 
-async function rpc(method, params=[], retries=2) {
-  const list = getRpcList();
+async function rpc(method, params=[], retries=3) {
   let lastErr;
-  for(let attempt=0; attempt<list.length; attempt++) {
-    const url = list[(rpcIndex + attempt) % list.length];
-    for(let r=0; r<retries; r++) {
-      try {
-        const resp = await fetch(url, {
-          method:'POST',
-          headers:{'Content-Type':'application/json','Accept':'application/json'},
-          body: JSON.stringify({jsonrpc:'2.0',id:Date.now(),method,params})
-        });
-        if(resp.status === 429) { await sleep(800*(r+1)); continue; }
-        if(!resp.ok) break;
-        const json = await resp.json();
-        if(json.error) {
-          // rate limit or node error — try next RPC
-          if(json.error.code === 429 || json.error.code === -32005) break;
-          throw new Error(json.error.message || 'RPC error');
-        }
-        rpcIndex = attempt; // remember working RPC
-        return json.result;
-      } catch(e) {
-        lastErr = e;
-        if(r < retries-1) await sleep(400);
-      }
+  for(let r=0; r<retries; r++) {
+    try {
+      const resp = await fetch(SOLANA_PROXY, {
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({jsonrpc:'2.0',id:Date.now(),method,params})
+      });
+      if(resp.status === 429) { await sleep(1000*(r+1)); continue; }
+      if(!resp.ok) throw new Error('Proxy HTTP ' + resp.status);
+      const json = await resp.json();
+      if(json.error) throw new Error(json.error.message || 'RPC error');
+      return json.result;
+    } catch(e) {
+      lastErr = e;
+      if(r < retries-1) await sleep(600*(r+1));
     }
   }
-  throw lastErr || new Error('Wszystkie RPC niedostępne — sprawdź połączenie lub dodaj własny Helius API key.');
+  throw lastErr || new Error('Proxy niedostepny');
 }
 
-const sleep = ms => new Promise(r=>setTimeout(r,ms));
 
 // ─── FETCH TOKEN TRANSACTIONS via getSignaturesForAddress ────────────────────
 async function fetchSignatures(mint, limit=1000) {
@@ -791,14 +766,7 @@ async function inspectWallet(wallet) {
 function closeInspector() { document.getElementById('inspector').classList.remove('show'); }
 
 // ─── INIT ─────────────────────────────────────────────────────────────────────
-function saveHeliusKey(val) {
-  customHeliusKey = val.trim();
-  localStorage.setItem('smr-helius-key', customHeliusKey);
-}
-
 renderWatch();
-// restore saved key
-if(customHeliusKey) document.getElementById('heliusKey').value = customHeliusKey;
 
 // URL params
 const p = new URLSearchParams(location.search);
