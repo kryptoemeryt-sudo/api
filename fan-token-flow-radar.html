@@ -84,21 +84,27 @@ body{font-family:'Barlow Condensed',Arial,sans-serif;padding:16px;font-size:18px
 .overlay.show{display:flex;}
 .inspector{position:fixed;inset:0;z-index:18;display:none;align-items:center;justify-content:center;background:rgba(3,6,8,.84);backdrop-filter:blur(5px);padding:15px;}
 .inspector.show{display:flex;}
-.inspect-box{width:min(1120px,96vw);height:min(760px,92vh);background:var(--panel);border:1px solid rgba(0,255,135,.24);border-radius:10px;display:grid;grid-template-rows:62px auto 1fr;overflow:hidden;}
+.inspect-box{width:min(1120px,96vw);height:min(760px,92vh);background:var(--panel);border:1px solid rgba(0,255,135,.24);border-radius:10px;display:grid;grid-template-rows:62px auto auto 1fr;overflow:hidden;}
 .inspect-head{display:flex;align-items:center;justify-content:space-between;gap:10px;border-bottom:1px solid var(--border);padding:10px 16px;}
 .inspect-head h2{font:19px 'Black Ops One';}.inspect-head h2 span{color:var(--green);}
+.inspect-head .sub{max-width:calc(100vw - 92px);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .close{width:34px;height:34px;background:transparent;border:1px solid var(--border);color:var(--muted);border-radius:5px;cursor:pointer;font-size:18px;}
-.inspect-metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;padding:10px;}
+.inspect-metrics{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:7px;padding:10px;}
+.inspect-summary{margin:0 10px 10px;padding:9px 11px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;border:1px solid rgba(255,201,64,.2);border-radius:7px;background:rgba(255,201,64,.045);font:11px 'Share Tech Mono';color:var(--muted);}
+.inspect-tag{padding:5px 8px;border:1px solid rgba(0,255,135,.35);background:rgba(0,255,135,.09);color:var(--green);border-radius:4px;font:10px 'Black Ops One';}
+.inspect-summary b{font-family:'Black Ops One';color:var(--gold);font-size:12px;}
 .inspect-grid{display:grid;grid-template-columns:1fr 1.2fr;min-height:0;border-top:1px solid var(--border);}
 .inspect-section{min-height:0;overflow:auto;padding:10px;border-right:1px solid var(--border);}
 .inspect-section:last-child{border-right:0;}
 .inspect-title{font:12px 'Black Ops One';color:var(--green);margin-bottom:9px;}
+.inspect-section .empty{white-space:normal;overflow-wrap:anywhere;max-width:100%;}
 .asset-row{display:grid;grid-template-columns:minmax(70px,1fr) 72px 82px 90px;gap:6px;padding:8px 6px;border-top:1px solid rgba(255,255,255,.045);align-items:center;}
 .asset-symbol{font:13px 'Black Ops One';color:var(--blue);}
 .asset-sub{font-size:10px;color:var(--muted);}
 .asset-number{text-align:right;font:12px 'Share Tech Mono';color:var(--text);}
 .asset-net.pos{color:var(--green)}.asset-net.neg{color:var(--red)}
 .wallet-move{display:grid;grid-template-columns:104px 53px minmax(70px,1fr) 85px;gap:7px;padding:8px 5px;border-top:1px solid rgba(255,255,255,.045);align-items:center;font-size:12px;}
+.wallet-swap{display:grid;grid-template-columns:92px 48px minmax(58px,1fr) 82px 105px;gap:7px;padding:8px 5px;border-top:1px solid rgba(255,255,255,.045);align-items:center;font-size:12px;}
 .when{font:10px 'Share Tech Mono';color:var(--muted);}
 .wait{padding:24px 34px;background:var(--panel);border:1px solid rgba(0,255,135,.35);border-radius:10px;text-align:center;}
 .ball{font-size:30px;animation:rotate .8s linear infinite;margin-bottom:10px;}
@@ -119,12 +125,14 @@ body{font-family:'Barlow Condensed',Arial,sans-serif;padding:16px;font-size:18px
   .panel.traders{height:400px}.panel.moves{height:390px}.panel.watchers{height:auto;min-height:340px;}
   .move{grid-template-columns:49px minmax(68px,1fr) 62px 84px;padding:8px 6px;gap:5px;}
   .inspector{padding:7px;}
-  .inspect-box{width:100%;height:94vh;grid-template-rows:58px auto 1fr;}
+  .inspect-box{width:100%;height:94vh;grid-template-rows:58px auto auto 1fr;}
   .inspect-metrics{grid-template-columns:repeat(2,minmax(0,1fr));}
+  .inspect-summary{gap:8px;padding:8px;margin:0 10px 8px;}
   .inspect-grid{display:block;overflow:auto;}
   .inspect-section{border-right:0;border-bottom:1px solid var(--border);overflow:visible;}
   .asset-row{grid-template-columns:minmax(62px,1fr) 58px 68px 78px;}
   .wallet-move{grid-template-columns:90px 48px minmax(60px,1fr) 72px;}
+  .wallet-swap{grid-template-columns:78px 42px minmax(48px,1fr) 64px 85px;gap:4px;}
 }
 </style>
 </head>
@@ -211,17 +219,20 @@ body{font-family:'Barlow Condensed',Arial,sans-serif;padding:16px;font-size:18px
     </header>
     <div class="inspect-metrics">
       <div class="metric"><div class="label">Range</div><div class="metric-val gold" id="inspectRange">-</div></div>
-      <div class="metric"><div class="label">All Token Moves</div><div class="metric-val" id="inspectTransfers">-</div></div>
+      <div class="metric"><div class="label">Raw Transfers</div><div class="metric-val" id="inspectTransfers">-</div></div>
+      <div class="metric"><div class="label">Unique TX</div><div class="metric-val" id="inspectUniqueTx">-</div></div>
+      <div class="metric"><div class="label">Matched Swaps</div><div class="metric-val gold" id="inspectSwaps">-</div></div>
       <div class="metric"><div class="label">Fan Tokens Seen</div><div class="metric-val blue" id="inspectFanTokens">-</div></div>
-      <div class="metric"><div class="label">Last Activity</div><div class="metric-val" id="inspectLast" style="font-size:17px">-</div></div>
+      <div class="metric"><div class="label">Swap Flow wCHZ</div><div class="metric-val" id="inspectFlow" style="font-size:17px">-</div></div>
     </div>
+    <div class="inspect-summary" id="inspectSummary">A matched swap needs a fan token and wCHZ moving in opposite directions inside one transaction.</div>
     <div class="inspect-grid">
       <div class="inspect-section">
-        <div class="inspect-title">TOKEN FOOTPRINT</div>
+        <div class="inspect-title">TOKEN INVENTORY FLOW</div>
         <div id="inspectAssets"><div class="empty">SCANNING WALLET TOKEN HISTORY...</div></div>
       </div>
       <div class="inspect-section">
-        <div class="inspect-title">LATEST WALLET MOVES</div>
+        <div class="inspect-title">MATCHED FAN / wCHZ SWAPS</div>
         <div id="inspectMoves"><div class="empty">WAITING FOR MOVEMENTS...</div></div>
       </div>
     </div>
@@ -354,6 +365,18 @@ function knownFanAddress(address){
   const lower = String(address || '').toLowerCase();
   return TOKENS.some(t => t.address.toLowerCase() === lower);
 }
+function isFanAsset(token, address){
+  const name = String(token.name || '').toLowerCase();
+  const symbol = String(token.symbol || '').toUpperCase();
+  return knownFanAddress(address) || name.includes('fan token') ||
+    ['AFC','WAFC','WPOR','WPSG','WARG','WBAR','WJUV','WACM','WATM','WCITY','WMENGO','WGAL'].includes(symbol);
+}
+function transferAmount(item){
+  const token = item.token || {};
+  const decimals = Number((item.total || {}).decimals ?? token.decimals ?? 18);
+  try{ return Number(ethers.formatUnits(BigInt((item.total || {}).value || '0'), decimals)); }
+  catch(e){ return 0; }
+}
 async function fetchWalletHistory(wallet, cutoff){
   const items = [];
   let next = {type:'ERC-20'};
@@ -383,15 +406,13 @@ function aggregateWalletAssets(wallet, items){
     const token = item.token || {};
     const address = String(token.address_hash || '').toLowerCase();
     if(!address) return;
-    const decimals = Number((item.total || {}).decimals ?? token.decimals ?? 18);
-    let amount = 0;
-    try{ amount = Number(ethers.formatUnits(BigInt((item.total || {}).value || '0'), decimals)); }catch(e){}
+    const amount = transferAmount(item);
     const incoming = String((item.to || {}).hash || '').toLowerCase() === lower;
     const outgoing = String((item.from || {}).hash || '').toLowerCase() === lower;
     if(!incoming && !outgoing) return;
     if(!map[address]) map[address] = {
       address, symbol:token.symbol || '?', name:token.name || 'Token',
-      inCount:0,outCount:0,inAmount:0,outAmount:0,fan:knownFanAddress(address),wchz:address===WCHZ.toLowerCase()
+      inCount:0,outCount:0,inAmount:0,outAmount:0,fan:isFanAsset(token,address),wchz:address===WCHZ.toLowerCase()
     };
     if(incoming){ map[address].inCount++; map[address].inAmount += amount; }
     if(outgoing){ map[address].outCount++; map[address].outAmount += amount; }
@@ -401,12 +422,63 @@ function aggregateWalletAssets(wallet, items){
     (b.inCount+b.outCount) - (a.inCount+a.outCount)
   );
 }
+function analyseWalletTransactions(wallet, items){
+  const lower = wallet.toLowerCase();
+  const groups = new Map();
+  items.forEach(item => {
+    const hash = item.transaction_hash || `${item.block_number}-${item.log_index}`;
+    if(!groups.has(hash)) groups.set(hash,{hash,timestamp:item.timestamp,assets:new Map()});
+    const group = groups.get(hash);
+    const token = item.token || {};
+    const address = String(token.address_hash || '').toLowerCase();
+    if(!address) return;
+    const incoming = String((item.to || {}).hash || '').toLowerCase() === lower;
+    const outgoing = String((item.from || {}).hash || '').toLowerCase() === lower;
+    if(!incoming && !outgoing) return;
+    const signed = transferAmount(item) * (incoming ? 1 : -1);
+    if(!group.assets.has(address)){
+      group.assets.set(address,{address,symbol:token.symbol || '?',name:token.name || '',fan:isFanAsset(token,address),wchz:address===WCHZ.toLowerCase(),net:0});
+    }
+    group.assets.get(address).net += signed;
+  });
+  const swaps = [];
+  groups.forEach(group => {
+    const assets = [...group.assets.values()];
+    const quote = assets.find(asset => asset.wchz);
+    if(!quote || quote.net === 0) return;
+    assets.filter(asset => asset.fan && asset.net !== 0 && Math.sign(asset.net) !== Math.sign(quote.net)).forEach(asset => {
+      swaps.push({
+        hash:group.hash,timestamp:group.timestamp,symbol:asset.symbol,
+        side:asset.net > 0 ? 'BUY':'SELL',units:Math.abs(asset.net),
+        quote:Math.abs(quote.net),signedQuote:quote.net
+      });
+    });
+  });
+  swaps.sort((a,b) => Date.parse(b.timestamp || '') - Date.parse(a.timestamp || ''));
+  const bought = swaps.filter(s => s.side === 'BUY');
+  const sold = swaps.filter(s => s.side === 'SELL');
+  const spent = bought.reduce((sum,s) => sum+s.quote,0);
+  const received = sold.reduce((sum,s) => sum+s.quote,0);
+  const symbols = new Set(swaps.map(s => s.symbol));
+  const cycleBySymbol = {};
+  swaps.forEach(s => {
+    if(!cycleBySymbol[s.symbol]) cycleBySymbol[s.symbol]={buys:0,sells:0};
+    cycleBySymbol[s.symbol][s.side === 'BUY' ? 'buys':'sells']++;
+  });
+  const cycles = Object.values(cycleBySymbol).reduce((sum,v) => sum+Math.min(v.buys,v.sells),0);
+  let type = 'TRANSFER-HEAVY';
+  if(swaps.length >= 50) type = 'HIGH-ACTIVITY SWAPPER';
+  else if(swaps.length >= 10 && symbols.size >= 2) type = 'MULTI-TOKEN TRADER';
+  else if(swaps.length >= 3) type = 'ACTIVE TRADER';
+  return {uniqueTx:groups.size,swaps,spent,received,flow:received-spent,cycles,symbols,type};
+}
 async function inspectWallet(wallet){
   document.getElementById('inspector').classList.add('show');
   document.getElementById('inspectAddress').textContent = wallet;
   document.getElementById('inspectAssets').innerHTML='<div class="empty">SCANNING WALLET TOKEN HISTORY...</div>';
   document.getElementById('inspectMoves').innerHTML='<div class="empty">WAITING FOR MOVEMENTS...</div>';
-  ['inspectTransfers','inspectFanTokens','inspectLast'].forEach(id => document.getElementById(id).textContent='-');
+  ['inspectTransfers','inspectUniqueTx','inspectSwaps','inspectFanTokens','inspectFlow'].forEach(id => document.getElementById(id).textContent='-');
+  document.getElementById('inspectSummary').textContent='A matched swap needs a fan token and wCHZ moving in opposite directions inside one transaction.';
   const periodText = selectedDays ? `${selectedDays}D` : 'ALL';
   document.getElementById('inspectRange').textContent=periodText;
   const cutoff = selectedDays ? Date.now() - selectedDays * 86400000 : null;
@@ -415,9 +487,21 @@ async function inspectWallet(wallet){
     const items = await fetchWalletHistory(wallet,cutoff);
     const assets = aggregateWalletAssets(wallet,items);
     const relevant = assets.filter(a => a.fan || a.wchz);
+    const analysis = analyseWalletTransactions(wallet,items);
     document.getElementById('inspectTransfers').textContent=items.length.toLocaleString();
+    document.getElementById('inspectUniqueTx').textContent=analysis.uniqueTx.toLocaleString();
+    document.getElementById('inspectSwaps').textContent=analysis.swaps.length.toLocaleString();
     document.getElementById('inspectFanTokens').textContent=assets.filter(a=>a.fan).length.toLocaleString();
-    document.getElementById('inspectLast').textContent=items[0] ? dateShort(items[0].timestamp) : '-';
+    const flow = analysis.flow;
+    const flowEl = document.getElementById('inspectFlow');
+    flowEl.textContent=(flow>=0?'+':'')+fmt(flow);
+    flowEl.style.color=flow >= 0 ? 'var(--green)' : 'var(--red)';
+    document.getElementById('inspectSummary').innerHTML =
+      `<span class="inspect-tag">${analysis.type}</span>` +
+      `<span>SWAP SPENT <b>${fmt(analysis.spent)} wCHZ</b></span>` +
+      `<span>RECEIVED <b>${fmt(analysis.received)} wCHZ</b></span>` +
+      `<span>CLOSED PAIRS <b>${analysis.cycles}</b></span>` +
+      `<span>LAST MOVE <b>${items[0] ? dateShort(items[0].timestamp) : '-'}</b></span>`;
     document.getElementById('inspectAssets').innerHTML = (relevant.length ? relevant : assets).slice(0,80).map(asset => {
       const net=asset.inAmount-asset.outAmount;
       const badge=asset.wchz?'wCHZ':asset.fan?'FAN':'TOKEN';
@@ -428,18 +512,15 @@ async function inspectWallet(wallet){
         <div class="asset-number asset-net ${net>=0?'pos':'neg'}">${net>=0?'+':''}${fmt(net)}</div>
       </div>`;
     }).join('') || '<div class="empty">NO TOKEN TRANSFERS IN RANGE</div>';
-    document.getElementById('inspectMoves').innerHTML = items.slice(0,100).map(item => {
-      const token=item.token || {};
-      const incoming=String((item.to||{}).hash||'').toLowerCase()===wallet.toLowerCase();
-      let amount=0;
-      try{ amount=Number(ethers.formatUnits(BigInt((item.total||{}).value||'0'),Number((item.total||{}).decimals ?? token.decimals ?? 18))); }catch(e){}
-      return `<div class="wallet-move">
-        <div class="when">${dateShort(item.timestamp)}</div>
-        <div class="side ${incoming?'buy':'sell'}">${incoming?'IN':'OUT'}</div>
-        <div class="symbol">${escapeHtml(token.symbol || '?')}</div>
-        <div class="amount">${fmtUnits(amount)}</div>
+    document.getElementById('inspectMoves').innerHTML = analysis.swaps.slice(0,100).map(swap => {
+      return `<div class="wallet-swap">
+        <div class="when">${dateShort(swap.timestamp)}</div>
+        <div class="side ${swap.side.toLowerCase()}">${swap.side}</div>
+        <div class="symbol">${escapeHtml(swap.symbol)}</div>
+        <div class="amount">${fmtUnits(swap.units)} FT</div>
+        <div class="amount known">${fmt(swap.quote)} wCHZ</div>
       </div>`;
-    }).join('') || '<div class="empty">NO MOVEMENTS IN RANGE</div>';
+    }).join('') || '<div class="empty">NO MATCHED FAN / wCHZ SWAPS IN RANGE<br>THE WALLET MAY STILL HAVE TRANSFERS OR USE OTHER ROUTES</div>';
   }catch(e){
     document.getElementById('inspectAssets').innerHTML=`<div class="empty">WALLET SCAN FAILED<br>${escapeHtml(e.message||'Try again')}</div>`;
   }finally{ busy(false); }
