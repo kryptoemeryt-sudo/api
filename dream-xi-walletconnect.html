@@ -9,8 +9,9 @@
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 9 6'%3E%3Cpath fill='%2374acdf' d='M0 0h9v6H0z'/%3E%3Cpath fill='%23fff' d='M0 2h9v2H0z'/%3E%3Ccircle cx='4.5' cy='3' r='.5' fill='%23f1b42f'/%3E%3C/svg%3E">
 <link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Barlow+Condensed:wght@400;600;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.7.0/ethers.umd.min.js"></script>
-<!-- WalletConnect EthereumProvider — works with Trust Wallet, Coinbase, Rainbow, Ledger etc -->
-<script src="https://unpkg.com/@walletconnect/ethereum-provider@2.17.0/dist/index.umd.js"></script>
+<!-- WalletConnect EthereumProvider v2 via jsDelivr CDN -->
+<script>window.process = { env: { NODE_ENV: 'production' } }; window.global = window;</script>
+<script src="https://cdn.jsdelivr.net/npm/@walletconnect/ethereum-provider@2.10.0/dist/index.umd.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
 body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;font-size:16px;min-height:100vh;}
@@ -1725,13 +1726,27 @@ let _wcEthProvider = null; // singleton
 async function _getWCProvider() {
   if (_wcEthProvider) return _wcEthProvider;
 
-  // Replace with your own free key from https://cloud.walletconnect.com
+  // ⚠ Replace with your own free key from https://cloud.reown.com
   const WC_PROJECT_ID = '15671485110825e18107d31b379d9df6';
 
-  _wcEthProvider = await window.EthereumProvider.init({
+  // WalletConnect UMD exposes EthereumProvider under WalletConnectEthereumProvider global
+  // UMD bundle exports under global["@walletconnect/ethereum-provider"].EthereumProvider
+  const wcModule = window['@walletconnect/ethereum-provider'];
+  if (!wcModule || !wcModule.EthereumProvider) {
+    throw new Error('WalletConnect library not loaded. Check internet connection and reload the page.');
+  }
+  const EthProvider = wcModule.EthereumProvider;
+
+  _wcEthProvider = await EthProvider.init({
     projectId: WC_PROJECT_ID,
-    chains: [CHAIN_ID],          // 88888 Chiliz Chain
+    // Chiliz (88888) is not in WC default registry — list ETH as required, CHZ as optional
+    // wallet_addEthereumChain + wallet_switchEthereumChain handles the rest after connect
+    chains: [1],
     optionalChains: [88888],
+    rpcMap: {
+      1:     'https://cloudflare-eth.com',
+      88888: 'https://rpc.ankr.com/chiliz'
+    },
     showQrModal: true,
     metadata: {
       name: 'Argentina Dream XI',
@@ -1758,58 +1773,65 @@ async function connectWalletWC() {
 
     const wcProv = await _getWCProvider();
 
-    // Connect — this opens the QR modal
+    // Connect — opens QR modal / deep link
     await wcProv.connect();
 
-    // Verify we're on Chiliz Chain
-    const chainIdHex = await wcProv.request({ method: 'eth_chainId' });
-    if (parseInt(chainIdHex, 16) !== CHAIN_ID) {
-      // Try to switch chain automatically
-      try {
-        await wcProv.request({
-          method: 'wallet_switchEthereumChain',
-          params: [{ chainId: '0x' + CHAIN_ID.toString(16) }]
-        });
-      } catch (switchErr) {
-        // Chain not added yet — add it
-        if (switchErr.code === 4902) {
-          await wcProv.request({
-            method: 'wallet_addEthereumChain',
-            params: [{
-              chainId: '0x' + CHAIN_ID.toString(16),
-              chainName: 'Chiliz Chain',
-              nativeCurrency: { name: 'CHZ', symbol: 'CHZ', decimals: 18 },
-              rpcUrls: ['https://rpc.ankr.com/chiliz', 'https://chiliz.publicnode.com'],
-              blockExplorerUrls: ['https://scan.chiliz.com']
-            }]
-          });
-        } else {
-          showHeaderToast('Please switch your wallet to Chiliz Chain (ID: 88888).', true);
-          return;
-        }
-      }
+    // Always try to add Chiliz Chain first (safe even if already added)
+    const CHILIZ_CHAIN_PARAMS = {
+      chainId: '0x' + CHAIN_ID.toString(16),   // 0x15b38
+      chainName: 'Chiliz Chain',
+      nativeCurrency: { name: 'Chiliz', symbol: 'CHZ', decimals: 18 },
+      rpcUrls: ['https://rpc.ankr.com/chiliz', 'https://chiliz.publicnode.com'],
+      blockExplorerUrls: ['https://scan.chiliz.com']
+    };
+
+    try {
+      await wcProv.request({
+        method: 'wallet_addEthereumChain',
+        params: [CHILIZ_CHAIN_PARAMS]
+      });
+    } catch(addErr) {
+      console.warn('wallet_addEthereumChain:', addErr.message);
+      // Not fatal — wallet may already have it
     }
 
-    // Wrap raw WC provider in ethers.BrowserProvider
+    // Now switch to Chiliz Chain
+    try {
+      await wcProv.request({
+        method: 'wallet_switchEthereumChain',
+        params: [{ chainId: '0x' + CHAIN_ID.toString(16) }]
+      });
+    } catch(switchErr) {
+      console.warn('wallet_switchEthereumChain:', switchErr.message);
+    }
+
+    // Final chain check
+    const chainIdHex = await wcProv.request({ method: 'eth_chainId' });
+    if (parseInt(chainIdHex, 16) !== CHAIN_ID) {
+      showHeaderToast('Could not switch to Chiliz Chain. Please switch manually in your wallet to Chain ID 88888.', true);
+      return;
+    }
+
+    // All good — boot the game
     await _afterConnect(wcProv);
 
-    // Listen for disconnect
-    wcProv.on('disconnect', () => {
-      showHeaderToast('WalletConnect disconnected.', true);
-      location.reload();
-    });
-
-    // Listen for account / chain changes
-    wcProv.on('accountsChanged', (accounts) => {
-      if (accounts.length === 0) location.reload();
+    wcProv.on('disconnect', () => { location.reload(); });
+    wcProv.on('accountsChanged', (accs) => { if (!accs.length) location.reload(); });
+    wcProv.on('chainChanged', (cid) => {
+      if (parseInt(cid, 16) !== CHAIN_ID) {
+        showHeaderToast('Chain changed — please switch back to Chiliz Chain.', true);
+      }
     });
 
   } catch(e) {
     console.error('WalletConnect error:', e);
-    if (e?.message?.includes('User rejected') || e?.code === 4001) {
-      showHeaderToast('Connection cancelled.', true);
+    _wcEthProvider = null; // reset so next attempt reinitialises
+    if (e?.message?.includes('User rejected') || e?.code === 4001 || e?.message?.includes('Modal closed')) {
+      showHeaderToast('Connection cancelled.', false);
+    } else if (e?.message?.includes('not loaded')) {
+      showHeaderToast(e.message, true);
     } else {
-      showHeaderToast('WalletConnect failed — please try again.', true);
+      showHeaderToast('WalletConnect failed: ' + (e?.message || 'unknown error'), true);
     }
   }
 }
