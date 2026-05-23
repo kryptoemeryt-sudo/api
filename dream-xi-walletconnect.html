@@ -2301,6 +2301,14 @@ function readableError(error) {
   return parts.join(' | ') || 'Unknown error';
 }
 
+function isMissingPrivySession(error) {
+  const msg = readableError(error).toLowerCase();
+  return msg.includes('missing_or_invalid_token') ||
+         msg.includes('no tokens found') ||
+         msg.includes('not authenticated') ||
+         msg.includes('unauthorized');
+}
+
 function getInjectedWalletProvider() {
   const eth = window.ethereum;
   if (!eth) return null;
@@ -2807,7 +2815,15 @@ async function connectPrivyWallet(){
   try{
     const client = await getPrivyClient();
 
-    let { user } = await client.user.get();
+    let user = null;
+    try {
+      const current = await client.user.get();
+      user = current && current.user ? current.user : null;
+    } catch(sessionError) {
+      if (!isMissingPrivySession(sessionError)) throw sessionError;
+      user = null;
+    }
+
     if (!user) {
       hideNetworkOverlay();
       const email = window.prompt('Enter email for Privy wallet login:');
