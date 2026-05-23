@@ -5,57 +5,26 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- Browser tab title -->
 <title>ARGENTINA DREAM XI - Block Kickers</title>
-<!-- Argentina flag favicon -->
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 9 6'%3E%3Cpath fill='%2374acdf' d='M0 0h9v6H0z'/%3E%3Cpath fill='%23fff' d='M0 2h9v2H0z'/%3E%3Ccircle cx='4.5' cy='3' r='.5' fill='%23f1b42f'/%3E%3C/svg%3E">
+<!-- Browser tab icon -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 64 64%27%3E%3Crect width=%2764%27 height=%2764%27 rx=%2714%27 fill=%27%2300ff87%27/%3E%3Cpath fill=%27%2306080a%27 d=%27M12 14h20c7 0 11 3 11 9 0 4-2 7-6 8 5 1 8 4 8 9 0 7-5 10-13 10H12V14zm12 9v6h6c3 0 5-1 5-3s-2-3-5-3h-6zm0 15v6h8c3 0 5-1 5-3s-2-3-5-3h-8z%27/%3E%3Cpath fill=%27%2306080a%27 d=%27M45 14h7v14l8-14h7L56 31l12 19h-8l-8-14v14h-7V14z%27 transform=%27translate(-8 0)%27/%3E%3C/svg%3E">
 <link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Barlow+Condensed:wght@400;600;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.7.0/ethers.umd.min.js"></script>
-<!-- WalletConnect EthereumProvider v2 via jsDelivr CDN -->
-<script>
-  // Fix: WalletConnect internally calls localStorage which crashes in some Chrome contexts
-  // Provide a safe in-memory fallback
-  window.process = { env: { NODE_ENV: 'production' } };
-  window.global = window;
-  try {
-    localStorage.setItem('__wc_test', '1');
-    localStorage.removeItem('__wc_test');
-  } catch(e) {
-    // localStorage blocked — provide in-memory shim
-    const _store = {};
-    window.localStorage = {
-      getItem:    k => _store[k] ?? null,
-      setItem:    (k,v) => { _store[k] = String(v); },
-      removeItem: k => { delete _store[k]; },
-      clear:      () => { Object.keys(_store).forEach(k => delete _store[k]); },
-      key:        i => Object.keys(_store)[i] ?? null,
-      get length(){ return Object.keys(_store).length; }
-    };
-  }
-  // Clear any stale WalletConnect sessions so user always gets fresh wallet picker
-  try {
-    Object.keys(localStorage).forEach(k => {
-      if (k.startsWith('wc@') || k.startsWith('W3M') || k.startsWith('walletconnect')) {
-        localStorage.removeItem(k);
-      }
-    });
-  } catch(e) {}
-</script>
-<script src="https://cdn.jsdelivr.net/npm/@walletconnect/ethereum-provider@2.10.0/dist/index.umd.js"
-  onerror="window._wcLoadError=true"></script>
-<!-- QR code generator for inline Socios connect -->
-<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
 body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;font-size:16px;min-height:100vh;}
 .page{max-width:1200px;margin:0 auto;padding:0 0 60px;}
 
 /* NAWIGACJA GĹĂ“WNA */
-.topnav{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;border-bottom:1px solid #1c2028;background:rgba(6,8,10,0.97);position:sticky;top:0;z-index:100;backdrop-filter:blur(10px);}
-.topnav-left{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
-.wallet-pill{font-family:'Share Tech Mono',monospace;font-size:12px;display:none;background:rgba(0,255,135,0.06);border:1px solid rgba(0,255,135,0.2);padding:6px 10px;border-radius:6px;letter-spacing:0.3px;white-space:nowrap;}
+.topnav{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 24px;border-bottom:1px solid #1c2028;background:rgba(6,8,10,0.97);position:sticky;top:0;z-index:100;backdrop-filter:blur(10px);}
+.topnav-left{display:flex;align-items:center;gap:8px;flex-wrap:nowrap;min-width:0;overflow:hidden;}
+.wallet-pill{font-family:'Share Tech Mono',monospace;font-size:11px;display:none;background:rgba(0,255,135,0.06);border:1px solid rgba(0,255,135,0.2);padding:4px 7px;border-radius:5px;letter-spacing:0;white-space:nowrap;line-height:1;}
 .topnav-logo{font-family:'Black Ops One',sans-serif;font-size:13px;letter-spacing:2px;color:#dde4f0;}
 .topnav-logo span{color:#00ff87;}
 .btn-connect{background:rgba(0,255,135,0.1);border:1px solid rgba(0,255,135,0.3);color:#00ff87;padding:8px 16px;border-radius:6px;font-family:'Black Ops One',sans-serif;font-size:11px;letter-spacing:1px;cursor:pointer;}
 .btn-connect.connected{background:rgba(0,255,135,0.15);border-color:#00ff87;}
+.wallet-actions{display:flex;align-items:center;justify-content:flex-end;gap:8px;flex-shrink:0;}
+.btn-privy{background:rgba(129,140,248,0.1);border-color:rgba(129,140,248,0.42);color:#a5b4fc;}
+.btn-privy.connected{background:rgba(129,140,248,0.16);border-color:#a5b4fc;color:#dde4f0;}
 
 /* SEKCJA HERO I NAGĹĂ“WEK */
 .hero{padding:48px 24px 40px;text-align:center;border-bottom:1px solid #1c2028;position:relative;overflow:hidden;}
@@ -112,6 +81,50 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
 .prize-box.b{background:rgba(180,120,60,0.07);border-color:rgba(180,120,60,0.3);}
 .prize-box.b .prize-num{color:#cd7f32;}
 .prize-box.b .prize-chz{color:#cd7f32;}
+.quest-flow{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:10px;
+  max-width:780px;
+  margin:0 auto 24px;
+  position:relative;
+  z-index:1;
+}
+.flow-card{
+  background:rgba(15,19,24,0.82);
+  border:1px solid rgba(116,172,223,0.18);
+  border-radius:10px;
+  padding:12px 13px;
+  text-align:left;
+  min-width:0;
+}
+.flow-card.score{
+  border-color:rgba(0,255,135,0.35);
+  background:linear-gradient(135deg,rgba(0,255,135,0.09),rgba(15,19,24,0.82));
+  box-shadow:0 0 18px rgba(0,255,135,0.06);
+}
+.flow-kicker{
+  font-family:'Share Tech Mono',monospace;
+  color:#5a6a7a;
+  font-size:10px;
+  letter-spacing:2px;
+  margin-bottom:5px;
+}
+.flow-title{
+  font-family:'Black Ops One',sans-serif;
+  font-size:14px;
+  color:#dde4f0;
+  letter-spacing:1px;
+  margin-bottom:5px;
+}
+.flow-card.score .flow-title{color:#00ff87;}
+.flow-text{
+  color:#7a8899;
+  font-size:13px;
+  line-height:1.25;
+}
+.flow-text strong{color:#ffc940;}
+.hero-actions{margin-bottom:24px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap;position:relative;z-index:1;}
 
 /* ASYMETRYCZNY UKĹAD ROZGRYWKI (BOISKO PO PRAWEJ JEST SZERSZE) */
 .game-grid {
@@ -142,7 +155,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
 }
 .how-grid{display:grid;grid-template-columns:1fr;gap:10px;}
 @media (min-width: 500px) {
-  .how-grid { grid-template-columns: 1fr 1fr; }
+  .how-grid { grid-template-columns: repeat(3,1fr); }
 }
 .how-card{background:#0f1318;border:1px solid #1c2028;border-radius:8px;padding:14px;}
 .how-n{font-family:'Black Ops One',sans-serif;font-size:24px;color:#1c2028;line-height:1;margin-bottom:4px;}
@@ -591,6 +604,22 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
   justify-content: center;
   gap: 12px;
 }
+.form-row.row-attack{justify-content:center;}
+.form-row.row-wings{justify-content:space-around;padding:0 18%;}
+.form-row.row-mid{justify-content:space-around;padding:0 11%;}
+.form-row.row-defense{justify-content:space-between;padding:0 7%;}
+.form-row.row-keeper{justify-content:center;}
+.form-row.row-attack .pos-card{transform:translateY(8px);}
+.form-row.row-wings .pos-card:first-child{transform:translate(-10px,-3px);}
+.form-row.row-wings .pos-card:last-child{transform:translate(10px,-3px);}
+.form-row.row-mid .pos-card:first-child{transform:translateX(-6px);}
+.form-row.row-mid .pos-card:nth-child(2){transform:translateY(5px);}
+.form-row.row-mid .pos-card:last-child{transform:translateX(6px);}
+.form-row.row-defense .pos-card:nth-child(1){transform:translateX(-4px);}
+.form-row.row-defense .pos-card:nth-child(2){transform:translateY(4px);}
+.form-row.row-defense .pos-card:nth-child(3){transform:translateY(4px);}
+.form-row.row-defense .pos-card:nth-child(4){transform:translateX(4px);}
+.form-row.row-keeper .pos-card{transform:translateY(-4px);}
 
 /* KARTA POZYCJI */
 .pos-card{
@@ -648,6 +677,11 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
   color: #7a8899;
   letter-spacing: 0.3px;
   text-transform: uppercase;
+}
+.pos-ball {
+  font-size: 16px;
+  margin: 1px 0;
+  display: block;
 }
 .pos-card-meta {
   font-family: 'Share Tech Mono', monospace;
@@ -894,6 +928,8 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
 .connect-prompt{padding:40px 24px;text-align:center;}
 .connect-prompt p{font-size:16px;color:#7a8899;margin-bottom:20px;}
 .btn-connect-big{background:linear-gradient(135deg,rgba(0,255,135,0.15),rgba(0,255,135,0.05));border:1px solid rgba(0,255,135,0.4);color:#00ff87;padding:14px 32px;border-radius:8px;font-family:'Black Ops One',sans-serif;font-size:14px;letter-spacing:2px;cursor:pointer;width:100%;max-width:300px;}
+.wallet-choice{display:flex;flex-direction:column;align-items:center;gap:10px;width:100%;}
+.btn-connect-big.privy-big{background:linear-gradient(135deg,rgba(129,140,248,0.16),rgba(0,255,135,0.04));border-color:rgba(129,140,248,0.45);color:#a5b4fc;}
 
 .spin{display:inline-block;width:16px;height:16px;border:2px solid rgba(0,255,135,0.3);border-top-color:#00ff87;border-radius:50%;animation:spin 0.8s linear infinite;vertical-align:middle;}
 @keyframes spin{to{transform:rotate(360deg)}}
@@ -912,9 +948,11 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
   .guide-step-text{font-size:12px;line-height:1.2;}
   .tip-box{font-size:12px;line-height:1.25;padding:8px;margin-top:8px;}
   .tip-box strong{font-size:10px;}
-  .hero{padding:28px 10px 24px;}
-  .hero-title{font-size:32px;}
-  .hero-sub{font-size:14px;padding:0 4px;}
+  .hero{padding:22px 10px 18px;}
+  .trophy{font-size:46px;margin-bottom:8px;}
+  .arg-flag{margin-bottom:14px;}
+  .hero-title{font-size:30px;margin-bottom:8px;}
+  .hero-sub{display:none;}
   .prize-row{gap:6px;margin-bottom:18px;align-items:stretch;}
   .prize-box{min-width:96px;padding:10px 8px;}
   .prize-box.main{width:100%;min-width:0;padding:14px 12px;}
@@ -922,6 +960,12 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
   .prize-side-notes{width:100%;min-width:0;gap:6px;}
   .prize-note{text-align:center;padding:7px 8px;font-size:10px;}
   .prize-num{font-size:20px;}
+  .quest-flow{grid-template-columns:1fr;gap:6px;margin-bottom:14px;}
+  .flow-card{padding:7px 9px;border-radius:7px;}
+  .flow-kicker{font-size:8px;margin-bottom:2px;}
+  .flow-title{font-size:11px;margin-bottom:2px;}
+  .flow-text{font-size:12px;line-height:1.2;}
+  .hero-actions{margin-bottom:16px;gap:8px;}
   .btn-mint-hero{padding:11px 12px;font-size:11px;letter-spacing:1px;}
   .game-grid{padding:0 6px 20px;gap:12px;}
   .pitch-container{padding:8px;border-radius:8px;}
@@ -933,6 +977,16 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
   .formation{gap:8px;}
   .stats-container{grid-template-columns:1fr 1fr;}
   .form-row{gap:3px;}
+  .form-row.row-wings{padding:0 10%;}
+  .form-row.row-mid{padding:0 4%;}
+  .form-row.row-defense{padding:0;}
+  .form-row.row-attack .pos-card{transform:translateY(4px);}
+  .form-row.row-wings .pos-card:first-child{transform:translate(-4px,-2px);}
+  .form-row.row-wings .pos-card:last-child{transform:translate(4px,-2px);}
+  .form-row.row-mid .pos-card:first-child,
+  .form-row.row-mid .pos-card:last-child,
+  .form-row.row-defense .pos-card:nth-child(1),
+  .form-row.row-defense .pos-card:nth-child(4){transform:none;}
   .pos-card{width:58px;padding:4px 2px;min-height:78px;border-radius:5px;}
   .pos-card-count{font-size:6px;left:3px;padding:1px 3px;}
   .mini-badges{gap:2px;margin-top:3px;justify-content:center;}
@@ -959,6 +1013,515 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
   .lb-score{font-size:13px;white-space:nowrap;text-align:right;}
   .lb-you{display:inline-block;margin-left:4px;padding:1px 4px;}
 }
+
+@media (min-width:1200px) and (min-height:720px){
+  html, body {height:100%; overflow:hidden;}
+  .topnav{height:54px;padding:8px 16px;}
+  .page{
+    max-width:none;
+    height:calc(100vh - 54px);
+    padding:8px 10px 10px;
+    display:grid;
+    grid-template-rows:auto auto minmax(0,1fr);
+    gap:8px;
+    overflow:hidden;
+  }
+  .hero{
+    padding:8px 12px;
+    border:1px solid #1c2028;
+    border-radius:10px;
+    display:grid;
+    grid-template-columns:minmax(150px,0.48fr) minmax(235px,0.82fr) minmax(360px,1.2fr) minmax(230px,0.74fr);
+    align-items:center;
+    gap:12px;
+    text-align:left;
+    min-height:96px;
+  }
+  .hero::before{opacity:0.35;}
+  .hero .trophy,.hero .arg-flag,.hero .badge,.hero-sub{display:none;}
+  .hero-title{font-size:26px;margin:0;line-height:0.92;}
+  .hero-title br{display:none;}
+  .hero-title .sky{margin-right:8px;}
+  .prize-row{margin:0;justify-content:flex-start;gap:8px;flex-wrap:nowrap;}
+  .prize-box.main{min-width:150px;padding:8px 14px;}
+  .prize-box.main .prize-num{font-size:28px;}
+  .prize-chz{font-size:12px;}
+  .prize-side-notes{min-width:0;gap:5px;}
+  .prize-note{font-size:9px;padding:5px 8px;}
+  .quest-flow{margin:0;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;max-width:none;}
+  .flow-card{padding:7px 8px;border-radius:7px;}
+  .flow-kicker{font-size:8px;letter-spacing:1px;margin-bottom:2px;}
+  .flow-title{font-size:10px;margin-bottom:3px;}
+  .flow-text{font-size:9px;line-height:1.15;}
+  .hero-actions{margin:0;justify-content:stretch;gap:6px;min-width:0;display:grid;grid-template-columns:1fr;}
+  .hero-actions .btn-mint-hero{width:100%;min-width:0;max-width:none;padding:11px 12px;font-size:11px;letter-spacing:1px;border-radius:8px;white-space:nowrap;}
+  .hero-actions .btn-mint-hero + .btn-mint-hero{display:none;}
+  .countdown-wrap{display:none;}
+  .countdown-label{font-size:8px;letter-spacing:1px;}
+  .countdown-timer{gap:5px !important;margin:4px auto 2px !important;}
+  .countdown-unit{min-width:34px !important;}
+  .countdown-num{font-size:22px !important;}
+  .countdown-sub{font-size:7px !important;letter-spacing:1px !important;}
+  .countdown-divider{font-size:16px !important;height:22px !important;}
+  .countdown-block{font-size:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;}
+  .stats-container{
+    grid-template-columns:repeat(4,1fr);
+    gap:8px;
+    margin:0;
+    min-height:58px;
+  }
+  .stat-card{padding:8px 10px;border-radius:8px;}
+  .stat-val{font-size:22px;margin-bottom:2px;}
+  .stat-lbl{font-size:9px;letter-spacing:1px;}
+  #connectSection{align-self:center;max-width:520px;justify-self:center;margin:0;}
+  #gameSection[style*="block"]{
+    min-height:0;
+    display:grid !important;
+    grid-template-columns:360px minmax(520px,1fr) 340px;
+    grid-template-rows:auto minmax(0,1fr);
+    grid-template-areas:
+      "actions actions actions"
+      "left pitch board";
+    gap:8px;
+    overflow:hidden;
+  }
+  #gameSection > div:first-child{
+    grid-area:actions;
+    padding:0 !important;
+    min-height:34px;
+  }
+  .btn-share{padding:7px 10px;font-size:9px;border-radius:6px;}
+  .game-grid{display:contents;padding:0;}
+  .left-control-panel{grid-area:left;min-height:0;gap:8px;overflow:hidden;display:grid;grid-template-rows:minmax(0,1fr) 210px;}
+  .right-col.pitch-container{grid-area:pitch;min-height:0;overflow:hidden;}
+  .lb-section{grid-area:board;min-height:0;overflow:hidden;padding:10px;border:1px solid #1c2028;border-radius:12px;background:#0a0e14;display:flex;flex-direction:column;gap:8px;}
+  .info-section{padding:10px;border-radius:8px;}
+  .side-info-section{flex-shrink:0;padding:8px;}
+  .how-grid{grid-template-columns:repeat(3,1fr);gap:6px;}
+  .how-card{padding:7px;}
+  .how-n{font-size:13px;margin:0;}
+  .how-title{font-size:8px;margin-bottom:2px;}
+  .how-desc{font-size:9px;line-height:1.15;}
+  .desk-section{min-height:0;display:flex;flex-direction:column;}
+  .desk-tabs{flex-shrink:0;}
+  .desk-tab-btn{font-size:9px;padding:9px 6px;}
+  .desk-tab-content{padding:8px;min-height:0;overflow:hidden;}
+  #deskTabSnipe{display:block;flex:1;}
+  .snipe-title-row{padding-bottom:6px;margin-bottom:7px;gap:8px;}
+  .snipe-title{font-size:9px;letter-spacing:1px;}
+  .snipe-title-row span{font-size:9px !important;}
+  .market-alert{padding:6px 7px;font-size:10px;margin-bottom:6px;}
+  .market-filters{gap:4px;margin-bottom:6px;}
+  .market-filter-btn{font-size:8px;padding:5px 6px;}
+  .snipe-list{gap:5px;max-height:none;height:100%;overflow:auto;padding-right:2px;}
+  .snipe-row{padding:6px 7px;border-radius:5px;gap:7px;}
+  .snipe-details{gap:7px;min-width:0;}
+  .snipe-pos{font-size:11px;min-width:36px;padding:3px 5px;}
+  .snipe-info-text{font-size:10px;line-height:1.15;}
+  .snipe-action{gap:6px;}
+  .snipe-price{font-size:12px;}
+  .btn-snipe{font-size:8px;padding:4px 7px;}
+  .live-feed-section{padding:9px;border-radius:8px;min-height:0;max-height:none;display:flex;flex-direction:column;overflow:hidden;}
+  .live-feed-section .feed-header{padding-bottom:6px;margin-bottom:7px;flex-shrink:0;}
+  .live-feed-section .feed-title{font-size:9px;letter-spacing:1px;}
+  .feed-container{max-height:none;flex:1;min-height:0;overflow-y:auto;gap:5px;}
+  .feed-item{font-size:10px;padding:5px 6px;white-space:normal;overflow:visible;text-overflow:clip;line-height:1.2;}
+  .pitch-container{padding:10px;border-radius:10px;display:flex;flex-direction:column;}
+  .pitch-title-row{margin-bottom:7px;flex-shrink:0;}
+  .pitch-wrap{flex:1;min-height:0;padding:14px 8px;border-radius:12px;}
+  .formation{height:100%;display:flex;flex-direction:column;justify-content:space-between;gap:6px;}
+  .legend{padding:0 0 5px;font-size:9px;gap:7px;}
+  .form-row{gap:7px;}
+  .form-row.row-wings{padding:0 22%;}
+  .form-row.row-mid{padding:0 14%;}
+  .form-row.row-defense{padding:0 8%;}
+  .form-row.row-attack .pos-card{transform:translateY(7px);}
+  .form-row.row-wings .pos-card:first-child{transform:translate(-14px,-2px);}
+  .form-row.row-wings .pos-card:last-child{transform:translate(14px,-2px);}
+  .pos-card{width:68px;min-height:86px;padding:5px 4px;border-radius:6px;}
+  .pos-card-count{font-size:7px;padding:1px 4px;}
+  .pos-name{font-size:8px;}
+  .pos-card-meta{font-size:6px;min-height:14px;}
+  .pos-weight{font-size:18px;}
+  .pos-rarity{font-size:7px;}
+  .mini-badge{font-size:6px;padding:1px 3px;}
+  .btn-card-action{font-size:6px;padding:3px 2px;}
+  .pitch-penalty-area-top,.pitch-penalty-area-bottom{width:170px;height:48px;}
+  .pitch-center-circle{width:74px;height:74px;}
+  .lb-section .pitch-title{margin-bottom:8px;font-size:9px;letter-spacing:1px;gap:8px;}
+  .leaderboard-list{flex:1;min-height:0;overflow:auto;padding:6px;border-radius:8px;}
+  .lb-row{gap:7px;padding:6px 8px;margin-bottom:5px;border-radius:6px;}
+  .lb-pos{font-size:12px;width:24px;}
+  .lb-addr{font-size:10px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .lb-completion{font-size:9px;margin-right:4px;}
+  .lb-score{font-size:12px;white-space:nowrap;}
+  .cutoff-line{font-size:9px;padding:5px;margin:7px 0;}
+}
+
+/* CONNECTED SINGLE-SCREEN COCKPIT */
+body.game-mode{overflow:hidden;}
+body.game-mode .hero,
+body.game-mode #connectSection,
+body.game-mode .left-control-panel > .live-feed-section,
+body.game-mode #gameSection > .lb-section{display:none !important;}
+body.game-mode .page{
+  max-width:none;
+  height:calc(100vh - 54px);
+  padding:8px;
+  display:grid;
+  grid-template-rows:auto minmax(0,1fr);
+  gap:8px;
+  overflow:hidden;
+}
+body.game-mode #statsRow{
+  margin:0;
+  min-height:0;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:8px;
+}
+body.game-mode #statsRow .stat-card{padding:8px 10px;border-radius:8px;}
+body.game-mode #statsRow .stat-val{font-size:clamp(18px,2.2vw,26px);margin-bottom:1px;}
+body.game-mode #myEstPayout{font-size:clamp(16px,1.7vw,21px) !important;padding-top:2px !important;}
+body.game-mode #statsRow .stat-lbl{font-size:9px;letter-spacing:1px;}
+body.game-mode #gameSection{
+  min-height:0;
+  display:grid !important;
+  grid-template-columns:minmax(560px,1.9fr) minmax(330px,420px);
+  grid-template-rows:minmax(0,1fr);
+  grid-template-areas:"pitch panel";
+  gap:8px;
+  overflow:hidden;
+}
+body.game-mode .legacy-action-row{
+  display:none !important;
+}
+body.game-mode .game-grid{display:contents;padding:0;}
+body.game-mode .left-control-panel{grid-area:panel;min-height:0;display:block;overflow:hidden;}
+body.game-mode .right-col.pitch-container{grid-area:pitch;min-height:0;overflow:hidden;}
+body.game-mode .desk-section{height:100%;min-height:0;display:flex;flex-direction:column;border-radius:10px;}
+body.game-mode .desk-tabs{flex-shrink:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));}
+body.game-mode .desk-tab-btn{font-size:8px;padding:9px 4px;letter-spacing:.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+body.game-mode .desk-tab-content{flex:1;min-height:0;overflow:hidden;padding:9px;display:none;flex-direction:column;}
+body.game-mode #deskTabSnipe{display:flex;}
+body.game-mode .desk-tab-content .live-feed-section,
+body.game-mode .desk-tab-content .lb-section,
+body.game-mode .desk-tab-content .info-section{height:100%;min-height:0;display:flex;flex-direction:column;overflow:hidden;padding:0;border:0;background:transparent;}
+body.game-mode .snipe-list,
+body.game-mode .ledger-container,
+body.game-mode .feed-container,
+body.game-mode .leaderboard-list{flex:1;min-height:0;max-height:none;overflow-y:auto;overflow-x:hidden;}
+body.game-mode .desk-tab-content::-webkit-scrollbar,
+body.game-mode .snipe-list::-webkit-scrollbar,
+body.game-mode .ledger-container::-webkit-scrollbar,
+body.game-mode .feed-container::-webkit-scrollbar,
+body.game-mode .leaderboard-list::-webkit-scrollbar{width:5px;}
+body.game-mode .desk-tab-content::-webkit-scrollbar-track,
+body.game-mode .snipe-list::-webkit-scrollbar-track,
+body.game-mode .ledger-container::-webkit-scrollbar-track,
+body.game-mode .feed-container::-webkit-scrollbar-track,
+body.game-mode .leaderboard-list::-webkit-scrollbar-track{background:rgba(6,8,10,0.65);border-radius:5px;}
+body.game-mode .desk-tab-content::-webkit-scrollbar-thumb,
+body.game-mode .snipe-list::-webkit-scrollbar-thumb,
+body.game-mode .ledger-container::-webkit-scrollbar-thumb,
+body.game-mode .feed-container::-webkit-scrollbar-thumb,
+body.game-mode .leaderboard-list::-webkit-scrollbar-thumb{background:rgba(0,255,135,0.34);border-radius:5px;border:1px solid rgba(0,255,135,0.18);}
+body.game-mode #deskTabPortfolio,
+body.game-mode #deskTabInfo{overflow-y:auto;overflow-x:hidden;}
+body.game-mode #deskTabInfo .side-info-section{height:auto;overflow:visible;}
+body.game-mode #deskTabInfo .how-grid{grid-template-columns:1fr;gap:8px;}
+body.game-mode #deskTabInfo .how-card{padding:9px;}
+body.game-mode #deskTabInfo .how-n{font-size:18px;margin-bottom:2px;}
+body.game-mode #deskTabInfo .how-title{font-size:10px;}
+body.game-mode #deskTabInfo .how-desc{font-size:11px;line-height:1.25;}
+body.game-mode .btn-pitch-refresh{background:rgba(129,140,248,.1);border-color:rgba(129,140,248,.38);color:#aeb7ff;}
+body.game-mode .info-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px;}
+body.game-mode .info-action-btn{border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.035);color:#dde4f0;border-radius:7px;padding:9px 7px;font-family:'Black Ops One',sans-serif;font-size:9px;letter-spacing:.8px;cursor:pointer;transition:.2s;}
+body.game-mode .info-action-btn:hover{border-color:#00ff87;color:#00ff87;background:rgba(0,255,135,.08);}
+body.game-mode .info-action-btn.rules{border-color:rgba(255,201,64,.35);color:#ffc940;}
+body.game-mode .info-mini-stats{margin-top:9px;border:1px solid rgba(0,255,135,.18);background:rgba(0,255,135,.045);border-radius:7px;padding:8px;display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;font-family:'Share Tech Mono',monospace;font-size:10px;color:#8fa4bb;}
+body.game-mode .info-mini-stats b{font-family:'Black Ops One',sans-serif;color:#00ff87;font-size:13px;letter-spacing:.5px;}
+body.game-mode .quest-link-card{border-color:rgba(129,140,248,.32)!important;background:linear-gradient(135deg,rgba(129,140,248,.1),rgba(15,19,24,.94))!important;text-align:left;display:flex;flex-direction:column;justify-content:center;gap:2px;}
+body.game-mode .quest-link-title{font-family:'Black Ops One',sans-serif;font-size:11px;color:#aeb7ff;letter-spacing:1px;}
+body.game-mode .quest-link-copy{font-family:'Share Tech Mono',monospace;font-size:10px;color:#8fa4bb;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+body.game-mode .quest-soon-btn{margin-top:3px;align-self:flex-start;border:1px solid rgba(129,140,248,.35);background:rgba(129,140,248,.08);color:#818cf8;border-radius:999px;padding:3px 8px;font-family:'Black Ops One',sans-serif;font-size:8px;letter-spacing:1px;opacity:.85;}
+body.game-mode .lb-row{
+  display:grid;
+  grid-template-columns:34px minmax(0,1fr) 52px 86px 68px;
+  gap:6px;
+  align-items:center;
+  padding:7px 8px;
+  margin-bottom:5px;
+}
+body.game-mode .lb-pos{font-size:12px;width:auto;}
+body.game-mode .lb-addr{font-size:10px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+body.game-mode .lb-completion{font-size:9px;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+body.game-mode .lb-score{font-size:12px;text-align:right;white-space:nowrap;}
+body.game-mode .snipe-title-row{padding-bottom:7px;margin-bottom:7px;gap:8px;}
+body.game-mode .snipe-title{font-size:9px;letter-spacing:1px;}
+body.game-mode .snipe-title-row span{font-size:9px !important;}
+body.game-mode .market-alert{padding:6px 7px;font-size:10px;margin-bottom:6px;}
+body.game-mode .market-filters{gap:4px;margin-bottom:6px;}
+body.game-mode .market-filter-btn{font-size:8px;padding:5px 6px;}
+body.game-mode .snipe-row{padding:6px 7px;border-radius:5px;gap:6px;}
+body.game-mode .snipe-info-text{font-size:10px;line-height:1.15;}
+body.game-mode .snipe-price{font-size:12px;}
+body.game-mode .btn-snipe{font-size:8px;padding:4px 7px;}
+body.game-mode .pitch-container{padding:10px;border-radius:10px;display:flex;flex-direction:column;}
+body.game-mode .pitch-title-row{margin-bottom:7px;flex-shrink:0;}
+body.game-mode .pitch-wrap{
+  flex:1;
+  min-height:0;
+  overflow:auto;
+  padding:14px 8px;
+  border-radius:12px;
+  background:
+    linear-gradient(to bottom, rgba(255,255,255,0.035) 0 20%, transparent 20% 40%, rgba(255,255,255,0.026) 40% 60%, transparent 60% 80%, rgba(255,255,255,0.032) 80% 100%),
+    linear-gradient(to bottom, #113018, #0b1f10);
+}
+body.game-mode .pitch-wrap::-webkit-scrollbar{width:5px;height:5px;}
+body.game-mode .pitch-wrap::-webkit-scrollbar-track{background:rgba(6,8,10,0.65);border-radius:5px;}
+body.game-mode .pitch-wrap::-webkit-scrollbar-thumb{background:rgba(116,172,223,0.36);border-radius:5px;border:1px solid rgba(116,172,223,0.2);}
+body.game-mode .formation{height:100%;min-height:520px;min-width:520px;display:flex;flex-direction:column;justify-content:space-between;gap:6px;}
+body.game-mode .legend{padding:0 0 5px;font-size:9px;gap:7px;}
+body.game-mode .form-row{gap:7px;}
+body.game-mode .form-row.row-wings{padding:0 23%;}
+body.game-mode .form-row.row-mid{padding:0 15%;}
+body.game-mode .form-row.row-defense{padding:0 8%;}
+body.game-mode .pos-card{width:clamp(62px,7.2vh,78px);min-height:clamp(78px,10vh,98px);padding:5px 4px;}
+body.game-mode .pos-weight{font-size:clamp(16px,2.3vh,20px);}
+body.game-mode .btn-card-action{font-size:6px;padding:3px 2px;}
+
+@media(max-width:700px){
+  body.game-mode .topnav{height:44px;padding:7px 9px;}
+  body.game-mode .topnav-left{gap:4px;}
+  body.game-mode .topnav-logo{font-size:10px;letter-spacing:1px;flex-shrink:0;}
+  body.game-mode .wallet-pill{font-size:7px;padding:3px 4px;border-radius:4px;max-width:86px;overflow:hidden;text-overflow:ellipsis;}
+  body.game-mode .btn-connect{font-size:8px;padding:6px 7px;letter-spacing:.5px;flex-shrink:0;}
+  body.game-mode .wallet-actions{gap:5px;}
+  body.game-mode .btn-privy{padding:6px 7px;}
+  body.game-mode .page{
+    height:calc(100vh - 44px);
+    padding:6px;
+    grid-template-rows:auto minmax(0,1fr);
+    gap:6px;
+  }
+  body.game-mode #statsRow{
+    grid-template-columns:repeat(4,minmax(0,1fr));
+    gap:3px;
+  }
+  body.game-mode #statsRow .stat-card{padding:4px 3px;border-radius:6px;min-height:46px;}
+  body.game-mode #statsRow .stat-val{font-size:12px;}
+  body.game-mode #myEstPayout{font-size:13px !important;line-height:.95 !important;padding-top:0 !important;word-break:break-word;}
+  body.game-mode #statsRow .stat-lbl{font-size:5px;letter-spacing:.2px;line-height:1.05;}
+  body.game-mode #gameSection{
+    grid-template-columns:1fr;
+    grid-template-rows:minmax(0,1fr) 190px;
+    grid-template-areas:"pitch" "panel";
+    gap:6px;
+  }
+  body.game-mode .legacy-action-row{
+  display:none !important;
+}
+  body.game-mode .pitch-container{padding:6px;border-radius:8px;}
+  body.game-mode .pitch-title-row{margin-bottom:4px;gap:6px;}
+  body.game-mode .pitch-title{font-size:8px;letter-spacing:1px;}
+  body.game-mode .pitch-title-actions span{font-size:8px !important;}
+  body.game-mode .btn-pitch-mint{padding:4px 7px;font-size:8px;}
+  body.game-mode .pitch-wrap{padding:7px 5px;border-radius:9px;overflow:auto;}
+  body.game-mode .formation{gap:3px;min-height:390px;min-width:348px;}
+  body.game-mode .legend{display:none;}
+  body.game-mode .form-row{gap:4px;}
+  body.game-mode .form-row.row-wings{padding:0 19%;}
+  body.game-mode .form-row.row-mid{padding:0 8%;}
+  body.game-mode .form-row.row-defense{padding:0 1%;}
+  body.game-mode .form-row.row-attack .pos-card{transform:translateY(4px);}
+  body.game-mode .form-row.row-wings .pos-card:first-child{transform:translate(-5px,-1px);}
+  body.game-mode .form-row.row-wings .pos-card:last-child{transform:translate(5px,-1px);}
+  body.game-mode .pos-card{width:48px;min-height:60px;padding:3px 2px;border-radius:5px;}
+  body.game-mode .pos-name{font-size:6px;}
+  body.game-mode .pos-ball{font-size:12px;margin:0;}
+  body.game-mode .pos-weight{font-size:11px;}
+  body.game-mode .pos-rarity{font-size:5px;}
+  body.game-mode .btn-card-action{font-size:5px;padding:2px 1px;margin-top:2px;}
+  body.game-mode .pitch-center-circle{width:54px;height:54px;}
+  body.game-mode .pitch-penalty-area-top,
+  body.game-mode .pitch-penalty-area-bottom{width:120px;height:34px;}
+  body.game-mode .desk-tabs{grid-template-columns:repeat(5,minmax(0,1fr));}
+  body.game-mode .desk-tab-btn{font-size:6px;padding:7px 2px;letter-spacing:0;}
+  body.game-mode .desk-tab-content{padding:6px;}
+  body.game-mode .snipe-title-row span{display:none;}
+  body.game-mode .snipe-title{font-size:8px;}
+  body.game-mode .market-alert{display:none;}
+  body.game-mode .market-filter-btn{font-size:6px;padding:4px;}
+  body.game-mode .snipe-row{padding:5px;gap:4px;}
+  body.game-mode .snipe-pos{font-size:9px;min-width:30px;padding:3px;}
+  body.game-mode .snipe-info-text{font-size:8px;}
+  body.game-mode .mini-badge{font-size:5px;padding:1px 2px;}
+  body.game-mode .snipe-action{gap:4px;}
+  body.game-mode .snipe-price{font-size:9px;}
+  body.game-mode .btn-snipe{font-size:6px;padding:3px 5px;}
+  body.game-mode .portfolio-grid{grid-template-columns:repeat(4,1fr);gap:4px;margin-bottom:6px;}
+  body.game-mode .p-stat-card{padding:5px 3px;}
+  body.game-mode .p-stat-val{font-size:10px;}
+  body.game-mode .p-stat-lbl{font-size:6px;}
+  body.game-mode .ledger-row,
+  body.game-mode .feed-item,
+  body.game-mode .lb-row{font-size:8px;padding:5px;}
+  body.game-mode #deskTabInfo .how-grid{grid-template-columns:1fr;gap:6px;}
+  body.game-mode #deskTabInfo .how-card{padding:7px;}
+  body.game-mode #deskTabInfo .how-n{font-size:14px;margin:0;}
+  body.game-mode #deskTabInfo .how-title{font-size:8px;margin-bottom:2px;}
+  body.game-mode #deskTabInfo .how-desc{font-size:9px;line-height:1.15;}
+  body.game-mode .info-actions{grid-template-columns:1fr 1fr;gap:5px;margin-top:6px;}
+  body.game-mode .info-action-btn{font-size:7px;padding:6px 4px;border-radius:5px;}
+  body.game-mode .info-mini-stats{font-size:8px;padding:6px;margin-top:6px;}
+  body.game-mode .info-mini-stats b{font-size:10px;}
+  body.game-mode .quest-link-title{font-size:8px;}
+  body.game-mode .quest-link-copy{font-size:7px;}
+  body.game-mode .quest-soon-btn{font-size:6px;padding:2px 5px;}
+  body.game-mode .lb-row{grid-template-columns:24px minmax(0,1fr) 34px 58px 45px;gap:4px;}
+  body.game-mode .lb-pos{font-size:9px;}
+  body.game-mode .lb-addr{font-size:8px;}
+  body.game-mode .lb-completion{font-size:7px;}
+  body.game-mode .lb-score{font-size:8px;}
+}
+
+/* Compact dashboard polish */
+body.game-mode #statsRow{grid-template-columns:minmax(90px,.72fr) minmax(82px,.62fr) minmax(76px,.52fr) minmax(170px,1fr);}
+body.game-mode .quest-link-card{gap:3px;align-items:stretch;}
+body.game-mode .quest-topline{display:grid;grid-template-columns:1fr auto;gap:6px;align-items:center;font-family:'Share Tech Mono',monospace;font-size:10px;color:#ffc940;white-space:nowrap;}
+body.game-mode .quest-topline span:last-child{color:#00ff87;text-align:right;}
+body.game-mode .quest-link-title{margin-top:1px;}
+body.game-mode .quest-soon-btn{padding:2px 7px;margin-top:1px;}
+body.game-mode .pitch-title-row{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:8px;}
+body.game-mode .pitch-title-actions{display:flex;align-items:center;justify-content:flex-end;gap:6px;flex-wrap:nowrap;min-width:0;}
+body.game-mode .pitch-title-actions span{white-space:nowrap;}
+body.game-mode .market-filters{display:grid;grid-template-columns:1fr 1fr;gap:6px;}
+body.game-mode .market-filter-btn{min-height:28px;width:100%;display:flex;align-items:center;justify-content:center;text-align:center;}
+body.game-mode .snipe-row{display:grid;grid-template-columns:44px minmax(0,1fr) 72px 58px;align-items:center;gap:7px;}
+body.game-mode .snipe-details{display:contents;}
+body.game-mode .snipe-pos{min-width:0;width:44px;padding:4px 0;}
+body.game-mode .snipe-info-text{min-width:0;overflow:hidden;}
+body.game-mode .deal-points{color:#dde4f0;font-family:'Share Tech Mono',monospace;font-size:10px;white-space:nowrap;}
+body.game-mode .upgrade-chip{display:inline-flex;margin-top:3px;color:#00ff87;border:1px solid rgba(0,255,135,.35);background:rgba(0,255,135,.08);border-radius:4px;padding:2px 5px;font-family:'Black Ops One',sans-serif;font-size:8px;letter-spacing:.5px;white-space:nowrap;}
+body.game-mode .snipe-action{display:contents;}
+body.game-mode .snipe-price{width:72px;text-align:right;font-size:12px;white-space:nowrap;}
+body.game-mode .btn-snipe{width:58px;min-height:26px;padding:4px 0;text-align:center;}
+@media(max-width:700px){
+  body.game-mode #statsRow{grid-template-columns:.9fr .75fr .62fr 1.25fr;}
+  body.game-mode #statsRow .stat-card{min-height:50px;}
+  body.game-mode #statsRow .stat-val{font-size:14px;line-height:1;}
+  body.game-mode #statsRow .stat-lbl{font-size:6px;line-height:1.05;}
+  body.game-mode .quest-topline{font-size:7px;gap:3px;}
+  body.game-mode .quest-link-title{font-size:8px;}
+  body.game-mode .quest-link-copy{font-size:7px;line-height:1;}
+  body.game-mode .quest-soon-btn{font-size:6px;padding:2px 5px;}
+  body.game-mode .pitch-title-row{grid-template-columns:minmax(0,1fr) auto;gap:4px;}
+  body.game-mode .pitch-title{font-size:9px;letter-spacing:.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  body.game-mode .pitch-title-actions{gap:3px;}
+  body.game-mode .pitch-title-actions span{font-size:7px !important;max-width:58px;overflow:hidden;text-overflow:ellipsis;}
+  body.game-mode .btn-pitch-mint{font-size:7px;padding:4px 5px;min-height:24px;}
+  body.game-mode .desk-tab-btn{font-size:7px;padding:8px 2px;}
+  body.game-mode .snipe-title{font-size:9px;}
+  body.game-mode .market-filter-btn{font-size:7px;min-height:27px;padding:4px 2px;}
+  body.game-mode .snipe-row{grid-template-columns:34px minmax(0,1fr) 54px 48px;gap:5px;padding:6px;}
+  body.game-mode .snipe-pos{width:34px;font-size:9px;}
+  body.game-mode .snipe-info-text{font-size:9px;line-height:1.15;}
+  body.game-mode .deal-points{font-size:8px;}
+  body.game-mode .upgrade-chip{font-size:6px;padding:1px 3px;}
+  body.game-mode .mini-badges{gap:3px;margin-top:3px;}
+  body.game-mode .mini-badge{font-size:6px;padding:1px 3px;}
+  body.game-mode .pressure-line{font-size:6px;}
+  body.game-mode .snipe-price{width:54px;font-size:10px;}
+  body.game-mode .btn-snipe{width:48px;font-size:7px;min-height:24px;}
+}
+
+/* Fill stat-card empty space with live micro data */
+body.game-mode #statsRow .stat-info-card{display:grid;grid-template-rows:auto auto 1fr;align-items:start;gap:3px;}
+body.game-mode .stat-mini-grid{align-self:end;margin-top:6px;display:grid;grid-template-columns:1fr auto;gap:3px 8px;padding-top:7px;border-top:1px solid rgba(255,255,255,.06);font-family:'Share Tech Mono',monospace;font-size:10px;line-height:1.05;text-align:left;color:#64748b;}
+body.game-mode .stat-mini-grid b{color:#00ff87;text-align:right;font-weight:700;white-space:nowrap;}
+body.game-mode .stat-info-card:nth-child(2) .stat-mini-grid b{color:#ffc940;}
+body.game-mode .stat-info-card:nth-child(3) .stat-mini-grid b{color:#aeb7ff;}
+body.game-mode .quest-link-card{min-height:82px;}
+body.game-mode .quest-link-copy{margin-bottom:2px;}
+@media(max-width:700px){
+  body.game-mode #statsRow{grid-template-columns:1fr 1fr;}
+  body.game-mode #statsRow .stat-card{min-height:66px;}
+  body.game-mode .stat-mini-grid{font-size:7px;gap:2px 4px;margin-top:4px;padding-top:4px;}
+  body.game-mode .quest-link-card{min-height:66px;}
+}
+
+/* Mobile snipe density: rarity lives on the position chip */
+body.game-mode .snipe-pos{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;border-color:var(--rar,#1c2028);box-shadow:inset 0 0 0 1px color-mix(in srgb, var(--rar,#7a8899) 45%, transparent);}
+body.game-mode .snipe-pos span{line-height:1;}
+body.game-mode .snipe-pos small{display:none;font-family:'Share Tech Mono',monospace;color:var(--rar,#7a8899);font-size:8px;line-height:1;white-space:nowrap;}
+@media(max-width:700px){
+  body.game-mode .snipe-row{grid-template-columns:38px minmax(0,1fr) 54px 48px;}
+  body.game-mode .snipe-pos{width:38px;min-height:36px;padding:3px 0;background:rgba(255,255,255,.025);}
+  body.game-mode .snipe-pos small{display:block;}
+  body.game-mode .desktop-deal-main{display:none;}
+  body.game-mode .snipe-info-text{display:flex;flex-direction:column;justify-content:center;gap:2px;}
+  body.game-mode .snipe-info-text br:first-of-type{display:none;}
+  body.game-mode .upgrade-chip{margin-top:0;align-self:flex-start;}
+}
+
+/* Network waiting overlay for blockchain actions */
+#networkOverlay{
+  position:fixed;
+  inset:0;
+  z-index:6000;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  background:rgba(2,6,8,.78);
+  backdrop-filter:blur(7px);
+  padding:max(16px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-right)) max(16px,env(safe-area-inset-bottom)) max(16px,env(safe-area-inset-left));
+}
+#networkOverlay.show{display:flex;}
+.network-wait-card{
+  width:min(88vw,340px);
+  border:1px solid rgba(0,255,135,.35);
+  background:linear-gradient(180deg,rgba(15,19,24,.98),rgba(6,8,10,.96));
+  border-radius:12px;
+  padding:24px 18px 20px;
+  text-align:center;
+  box-shadow:0 24px 80px rgba(0,0,0,.68),0 0 28px rgba(0,255,135,.08);
+}
+.network-ball{
+  width:58px;
+  height:58px;
+  margin:0 auto 14px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  color:#06080a;
+  background:radial-gradient(circle at 34% 30%,#fff 0 14%,#dde4f0 15% 42%,#00ff87 43% 100%);
+  box-shadow:0 0 0 5px rgba(0,255,135,.08),0 0 26px rgba(0,255,135,.38);
+  font-size:30px;
+  animation:networkBallSpin 1.05s linear infinite;
+}
+@keyframes networkBallSpin{to{transform:rotate(360deg)}}
+.network-wait-title{
+  font-family:'Black Ops One',sans-serif;
+  color:#00ff87;
+  font-size:15px;
+  letter-spacing:1.4px;
+  margin-bottom:7px;
+  text-transform:uppercase;
+}
+.network-wait-text{
+  font-family:'Share Tech Mono',monospace;
+  color:#9fb0c4;
+  font-size:12px;
+  line-height:1.35;
+}
+body.network-busy{cursor:progress;}
+@media(max-width:700px){
+  .network-wait-card{width:min(90vw,300px);padding:20px 14px 16px;}
+  .network-ball{width:50px;height:50px;font-size:25px;}
+  .network-wait-title{font-size:13px;}
+  .network-wait-text{font-size:11px;}
+}
 </style>
 </head>
 <body>
@@ -969,7 +1532,10 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
     <span id="walletAddress" class="wallet-pill" style="color:#dde4f0;">0x0000...0000</span>
     <span id="walletBalance" class="wallet-pill" style="color:#00ff87;">0.0 CHZ</span>
   </div>
-  <button class="btn-connect" id="connectBtn" onclick="connectWallet()">CONNECT WALLET</button>
+  <div class="wallet-actions">
+    <button class="btn-connect" id="connectBtn" onclick="connectWallet()">CONNECT WALLET</button>
+    <button class="btn-connect btn-privy" id="privyBtn" onclick="connectPrivyWallet()">PRIVY</button>
+  </div>
 </nav>
 
 <div class="page">
@@ -998,7 +1564,25 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
       </div>
     </div>
 
-    <div style="margin-bottom:24px; display:flex; justify-content:center; gap:12px; flex-wrap:wrap;">
+    <div class="quest-flow">
+      <div class="flow-card">
+        <div class="flow-kicker">01</div>
+        <div class="flow-title">MINT OR BUY</div>
+        <div class="flow-text">Mint a random WC card or buy Argentina cards from the market.</div>
+      </div>
+      <div class="flow-card score">
+        <div class="flow-kicker">02</div>
+        <div class="flow-title">SCORE</div>
+        <div class="flow-text">Argentina cards score when they enter your wallet. <strong>No need to HODL.</strong></div>
+      </div>
+      <div class="flow-card">
+        <div class="flow-kicker">03</div>
+        <div class="flow-title">SELL</div>
+        <div class="flow-text">Your score stays saved. Sell, recycle CHZ, and hunt upgrades.</div>
+      </div>
+    </div>
+
+    <div class="hero-actions">
       <button class="btn-mint-hero" style="background:rgba(0,255,135,0.1); border:1px solid #00ff87; color:#00ff87;" onclick="directMint()">&#127922; MINT RANDOM WC CARD</button>
       <button class="btn-mint-hero" onclick="scrollToSquad()">&#9917; GO TO SQUAD</button>
     </div>
@@ -1033,83 +1617,58 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
 
   <!-- STATYSTYKI DRUĹ»YNY GRACZA -->
   <div class="stats-container" id="statsRow" style="display:none;">
-    <div class="stat-card">
+    <div class="stat-card stat-info-card">
       <div class="stat-val highlight" id="myCompCount">0 / 11</div>
       <div class="stat-lbl">Positions Scored</div>
+      <div class="stat-mini-grid">
+        <span>Players</span><b id="topPlayersInfo">0</b>
+        <span>Paid</span><b id="topPaidInfo">1</b>
+      </div>
     </div>
-    <div class="stat-card">
+    <div class="stat-card stat-info-card">
       <div class="stat-val gold" id="myScoreText">0 pts</div>
       <div class="stat-lbl">Active Lineup Weight</div>
+      <div class="stat-mini-grid">
+        <span>Total minted</span><b id="topMintedInfo">0</b>
+        <span>ARG supply</span><b id="topArgSupplyInfo">0</b>
+      </div>
     </div>
-    <div class="stat-card">
+    <div class="stat-card stat-info-card">
       <div class="stat-val" id="myGlobalRank" style="color:#818cf8;">-</div>
       <div class="stat-lbl">Leaderboard Rank</div>
+      <div class="stat-mini-grid">
+        <span>To 50 CHZ</span><b id="price50Countdown">--</b>
+        <span>To 100 CHZ</span><b id="price100Countdown">--</b>
+      </div>
     </div>
-    <div class="stat-card" style="background:rgba(0,255,135,0.03); border-color:rgba(0,255,135,0.2);">
-      <div class="stat-val" id="myEstPayout" style="color:#00ff87; font-size:24px; padding-top:6px;">0.00 CHZ</div>
-      <div class="stat-lbl">Est. Quest Reward (Sponsor)</div>
+    <div class="stat-card quest-link-card">
+      <div class="quest-topline"><span id="topPoolInfo">10,000 CHZ POOL</span><span id="topDeadlineInfo">--D --H</span></div>
+      <div class="quest-link-title">QUESTS</div>
+      <div class="quest-link-copy">World Cup Album</div>
+      <button class="quest-soon-btn" type="button" disabled>SOON</button>
     </div>
   </div>
 
   <!-- MONIT POĹÄ„CZENIA PORTFELA -->
-  <!-- WALLET SELECTION -->
   <div id="connectSection" class="connect-prompt">
-    <p>Connect your Chiliz wallet to explore the tactical pitch, find the best deals, and start scoring.</p>
-    <div style="display:flex;flex-direction:column;align-items:center;gap:10px;width:100%;max-width:360px;margin:0 auto;">
-
-      <!-- MetaMask / any browser extension -->
-      <button class="btn-connect-big" onclick="connectWalletMM()" style="display:flex;align-items:center;justify-content:center;gap:10px;width:100%;">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/3/36/MetaMask_Fox.svg" style="width:20px;height:20px;" alt=""/>
-        METAMASK / BROWSER WALLET
-      </button>
-
-      <!-- Trust Wallet — deep link (proven to work on mobile) -->
-      <button class="btn-connect-big" onclick="connectWalletDeeplink('trust')"
-        style="display:flex;align-items:center;justify-content:center;gap:10px;width:100%;background:linear-gradient(135deg,rgba(51,117,255,0.15),rgba(51,117,255,0.05));border-color:rgba(51,117,255,0.5);color:#3375ff;">
-        <img src="https://trustwallet.com/assets/images/media/assets/TWT.png" onerror="this.style.display='none'" style="width:20px;height:20px;border-radius:50%;" alt=""/>
-        TRUST WALLET
-      </button>
-
-      <!-- WalletConnect QR — desktop recommended via Brave, mobile shows inline QR for Socios -->
-      <button class="btn-connect-big" onclick="connectWalletWC()"
-        style="display:flex;align-items:center;justify-content:center;gap:10px;width:100%;background:linear-gradient(135deg,rgba(116,172,223,0.15),rgba(116,172,223,0.05));border-color:rgba(116,172,223,0.5);color:#74ACDF;">
-        <svg width="20" height="20" viewBox="0 0 300 185" fill="none"><path d="M61.4 36.6C107.6-7.7 181.6-7.7 227.8 36.6l5.5 5.3c2.3 2.2 2.3 5.7 0 7.9l-18.8 18.1c-1.1 1.1-2.9 1.1-4 0l-7.6-7.3c-32-30.7-83.8-30.7-115.7 0l-8.1 7.8c-1.1 1.1-2.9 1.1-4 0L56.3 49.8c-2.3-2.2-2.3-5.7 0-7.9l5.1-5.3zm205.4 38.3 16.7 16.1c2.3 2.2 2.3 5.7 0 7.9L199.2 175c-2.3 2.2-5.9 2.2-8.1 0l-56.2-54.1c-.6-.5-1.5-.5-2 0L76.7 175c-2.3 2.2-5.9 2.2-8.1 0L-16 98.9c-2.3-2.2-2.3-5.7 0-7.9l16.7-16.1c2.3-2.2 5.9-2.2 8.1 0l56.2 54.1c.6.5 1.5.5 2 0l56.2-54.1c2.3-2.2 5.9-2.2 8.1 0l56.2 54.1c.6.5 1.5.5 2 0l56.2-54.1c2.1-2.2 5.8-2.2 8 0z" fill="#74ACDF"/></svg>
-        WALLETCONNECT / SOCIOS
-        <span style="font-size:9px;background:rgba(116,172,223,0.2);border-radius:3px;padding:1px 5px;letter-spacing:1px;">★ BRAVE</span>
-      </button>
-
-      <!-- Inline QR — shown as fallback when WC modal is blocked (mobile Chrome) -->
-      <div id="wcQRBox" style="display:none;flex-direction:column;align-items:center;gap:10px;width:100%;background:#0a0e14;border:1px solid rgba(116,172,223,0.3);border-radius:12px;padding:20px;">
-        <div style="font-family:'Black Ops One',sans-serif;font-size:11px;letter-spacing:2px;color:#74ACDF;">SCAN WITH SOCIOS OR ANY WALLET</div>
-        <canvas id="wcQRCanvas" style="border-radius:8px;background:#fff;padding:8px;"></canvas>
-        <div style="font-family:'Barlow Condensed',sans-serif;font-size:13px;color:#5a7a6a;text-align:center;line-height:1.4;">
-          Open <strong style="color:#dde4f0;">Socios Wallet</strong> &#8594; WalletConnect &#8594; Scan<br>
-          or any wallet app that supports WalletConnect
-        </div>
-        <button onclick="document.getElementById('wcQRBox').style.display='none';_destroyWCProvider();"
-          style="font-family:'Black Ops One',sans-serif;font-size:10px;letter-spacing:1px;color:#5a6a7a;background:none;border:1px solid #1c2028;border-radius:4px;cursor:pointer;padding:6px 14px;">
-          CANCEL
-        </button>
-      </div>
-
-      <div style="font-family:'Share Tech Mono',monospace;font-size:10px;color:#3d4a5a;letter-spacing:1px;margin-top:4px;text-align:center;">
-        &#9733; Recommended browser: <strong style="color:#5a6a7a;">Brave</strong> &nbsp;&middot;&nbsp;
-        Coinbase &middot; Rainbow &middot; Zerion &middot; Ledger &middot; +300 more
-      </div>
+    <p>Connect your Chiliz Wallet to explore the tactical pitch, find the best deals, and start scoring.</p>
+    <div class="wallet-choice">
+      <button class="btn-connect-big" onclick="connectWallet()">CONNECT WALLET</button>
+      <button class="btn-connect-big privy-big" onclick="connectPrivyWallet()">CONNECT WITH PRIVY</button>
     </div>
   </div>
 
   <!-- PANEL GĹĂ“WNY ROZGRYWKI -->
   <div id="gameSection" style="display:none;">
 
-    <div style="display:flex; justify-content:space-between; align-items:center; padding:0 24px 16px; flex-wrap:wrap; gap:12px;">
+    <div class="legacy-action-row" style="display:flex; justify-content:space-between; align-items:center; padding:0 24px 16px; flex-wrap:wrap; gap:12px;">
       <button class="btn-share" onclick="shareOnX()">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
         &#128257; SHARE LINEUP ON X
       </button>
       <div style="display:flex; gap:8px;">
         <button class="btn-share" onclick="toggleRulesModal(true)" style="border-color:#ffc940; color:#ffc940;">
-          &#8505; RULES & INFO
+          &#8505; RULES
         </button>
         <button class="btn-share" onclick="loadData()" style="border-color:rgba(99,102,241,0.3); color:#818cf8;">
           &#8635; REFRESH DATA
@@ -1124,41 +1683,14 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
       <div class="left-control-panel">
         
         <!-- JAK TO DZIAĹA -->
-        <div class="info-section">
-          <div class="pitch-title">
-            <span>HOW IT WORKS - ROTATION MODEL</span>
-            <span style="font-family:'Share Tech Mono',monospace; color:#818cf8;">ARGENTINA HUB</span>
-          </div>
-
-          <div class="how-grid">
-            <div class="how-card">
-              <div class="how-n">01</div>
-              <div class="how-title">&#127922; MINT OR BUY</div>
-              <div class="how-desc">Minting costs <span class="g">10 CHZ</span> and gives a random card from one of <span class="a">48 World Cup teams</span>. Buy Argentina cards on the market to complete this squad.</div>
-            </div>
-            <div class="how-card" style="border-color: rgba(239, 68, 68, 0.35); background: rgba(239, 68, 68, 0.03);">
-              <div class="how-n" style="color: #ef4444;">02</div>
-              <div class="how-title" style="color: #ef4444;">&#9888; NO P2P</div>
-              <div class="how-desc">Direct wallet-to-wallet transfers <span style="color: #ef4444; font-weight: bold;">DO NOT SCORE</span>. Only marketplace buys and mints count!</div>
-            </div>
-            <div class="how-card">
-              <div class="how-n">03</div>
-              <div class="how-title">&#9851; RECYCLE LIQUIDITY</div>
-              <div class="how-desc">Scored the stamp? <span class="p">Sell the card</span> on the marketplace and recover your CHZ liquidity.</div>
-            </div>
-            <div class="how-card" style="border-color:rgba(255,201,64,0.3); background:rgba(255,201,64,0.04);">
-              <div class="how-n" style="color:rgba(255,201,64,0.2);">04</div>
-              <div class="how-title" style="color:#ffc940;">&#127942; PRIZE PLACES</div>
-              <div class="how-desc">The prize pool is <span class="a">10,000 CHZ</span>. More unique collectors on the leaderboard means more paid ranks.</div>
-            </div>
-          </div>
-        </div>
-
         <!-- PRZEĹÄ„CZALNE KARTY (TABS: SNIPE / MY TRADING DESK) -->
         <div class="desk-section">
           <div class="desk-tabs">
             <button class="desk-tab-btn active" id="btnDeskSnipe" onclick="switchDeskTab('snipe')">&#127919; SNIPE DEALS</button>
             <button class="desk-tab-btn" id="btnDeskPortfolio" onclick="switchDeskTab('portfolio')">&#128202; MY TRADING DESK</button>
+            <button class="desk-tab-btn" id="btnDeskFeed" onclick="switchDeskTab('feed')">LIVE FEED</button>
+            <button class="desk-tab-btn" id="btnDeskRanks" onclick="switchDeskTab('ranks')">RANKS</button>
+            <button class="desk-tab-btn" id="btnDeskInfo" onclick="switchDeskTab('info')">INFO</button>
           </div>
           
           <!-- ZAKĹADKA 1: SNIPE DEALS -->
@@ -1170,7 +1702,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
             <div id="marketMissingAlert"></div>
             <div class="market-filters">
               <button class="market-filter-btn active" id="filterAllDeals" onclick="setSnipeFilter('all')">ALL DEALS</button>
-              <button class="market-filter-btn" id="filterMissingDeals" onclick="setSnipeFilter('missing')">MY MISSING POSITIONS</button>
+              <button class="market-filter-btn" id="filterMissingDeals" onclick="setSnipeFilter('missing')">MISSING POSITIONS</button>
             </div>
             <div class="snipe-list" id="snipeListContainer">
               <div style="text-align:center;color:#3d4a5a;padding:15px;font-size:12px;"><span class="spin"></span> Sourcing marketplace deals...</div>
@@ -1209,19 +1741,67 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
               </div>
             </div>
           </div>
+
+          <div id="deskTabFeed" class="desk-tab-content" style="display:none;">
+            <div class="live-feed-section">
+              <div class="feed-header">
+                <div class="feed-title">RECENT TRANSACTIONS (LIVE FEED)</div>
+                <div class="feed-pulse"></div>
+              </div>
+              <div class="feed-container" id="liveActivityFeed">
+                <div style="text-align:center;color:#3d4a5a;padding:10px;font-size:12px;"><span class="spin"></span> Listening for live transactions...</div>
+              </div>
+            </div>
+          </div>
+
+          <div id="deskTabRanks" class="desk-tab-content" style="display:none;">
+            <div class="lb-section">
+              <div class="pitch-title">
+                <span>COLLECTORS STANDINGS</span>
+                <span style="font-family:'Share Tech Mono',monospace; color:#ffc940;" id="poolInfo">Prize Pool: 10,000 CHZ</span>
+              </div>
+              <div class="leaderboard-list" id="leaderboard">
+                <div style="text-align:center;color:#3d4a5a;padding:20px;font-size:13px;"><span class="spin"></span> Loading standings...</div>
+              </div>
+            </div>
+          </div>
+
+          <div id="deskTabInfo" class="desk-tab-content" style="display:none;">
+            <div class="info-section side-info-section">
+              <div class="pitch-title">
+                <span>MINT - SCORE - SELL</span>
+                <span style="font-family:'Share Tech Mono',monospace; color:#818cf8;">FLOW TO EARN</span>
+              </div>
+              <div class="how-grid">
+                <div class="how-card">
+                  <div class="how-n">01</div>
+                  <div class="how-title">&#127922; MINT OR BUY</div>
+                  <div class="how-desc">Mint for <span class="g">10 CHZ</span> or buy Argentina cards from the market.</div>
+                </div>
+                <div class="how-card" style="border-color: rgba(0,255,135,0.35); background: rgba(0,255,135,0.05);">
+                  <div class="how-n" style="color: rgba(0,255,135,0.28);">02</div>
+                  <div class="how-title" style="color: #00ff87;">&#9917; SCORE</div>
+                  <div class="how-desc">Argentina cards score when they enter your wallet. <span class="a">No HODL required.</span></div>
+                </div>
+                <div class="how-card">
+                  <div class="how-n">03</div>
+                  <div class="how-title">&#9851; SELL & HUNT</div>
+                  <div class="how-desc">Your score stays saved. Sell cards, recycle CHZ, and hunt upgrades.</div>
+                </div>
+              </div>
+              <div class="info-mini-stats">
+                <span>Est. quest reward</span>
+                <b id="myEstPayout">0.00 CHZ</b>
+              </div>
+              <div class="info-actions">
+                <button class="info-action-btn rules" onclick="toggleRulesModal(true)">&#8505; RULES</button>
+                <button class="info-action-btn" onclick="shareOnX()">SHARE ON X</button>
+              </div>
+            </div>
+          </div>
         </div>
 
         <!-- DZIENNIK TRANSAKCJI GĹĂ“WNYCH (LIVE FEED) -->
-        <div class="live-feed-section">
-          <div class="feed-header">
-            <div class="feed-title">RECENT TRANSACTIONS (LIVE FEED)</div>
-            <div class="feed-pulse"></div>
-          </div>
-          <div class="feed-container" id="liveActivityFeed">
-            <div style="text-align:center;color:#3d4a5a;padding:10px;font-size:12px;"><span class="spin"></span> Listening for live transactions...</div>
-          </div>
-        </div>
-
       </div>
 
       <!-- PRAWA KOLUMNA: POSZERZONE BOISKO TAKTYCZNE -->
@@ -1232,6 +1812,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
           </div>
           <div class="pitch-title-actions">
             <span style="font-family:'Share Tech Mono',monospace; color:#818cf8; font-size:12px;" id="selectedCountryCompletion">0/11 COMPLETED</span>
+            <button class="btn-pitch-mint btn-pitch-refresh" onclick="loadData()">&#8635; Refresh</button>
             <button class="btn-pitch-mint" onclick="directMint()">&#127922; Mint</button>
           </div>
         </div>
@@ -1250,18 +1831,6 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
 
     </div>
 
-    <!-- SEKCJA RANKINGOWA -->
-    <div class="lb-section">
-      <div class="pitch-title">
-        <span>COLLECTORS STANDINGS - ARGENTINA QUEST</span>
-        <span style="font-family:'Share Tech Mono',monospace; color:#ffc940;" id="poolInfo">Prize Pool: 10,000 CHZ</span>
-      </div>
-
-      <div class="leaderboard-list" id="leaderboard">
-        <div style="text-align:center;color:#3d4a5a;padding:20px;font-size:13px;"><span class="spin"></span> Loading standings...</div>
-      </div>
-    </div>
-
   </div>
 </div>
 
@@ -1269,35 +1838,28 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
 <div id="onboardingModal" class="modal-overlay">
   <div class="modal-content" style="max-width:560px;">
     <button onclick="toggleOnboardingModal(false, true)" class="modal-close">&times;</button>
-    <h2 style="font-family:'Black Ops One',sans-serif; font-size:24px; color:#00ff87; margin-bottom:8px;">HOW ARGENTINA DREAM XI WORKS</h2>
-    <p style="color:#7a8899;line-height:1.4;">Build your Argentina squad with on-chain cards. A card scores as soon as it passes through your wallet, so you can keep it, sell it, or trade for the next upgrade.</p>
+    <h2 style="font-family:'Black Ops One',sans-serif; font-size:24px; color:#00ff87; margin-bottom:8px;">MINT. SCORE. SELL.</h2>
+    <p style="color:#7a8899;line-height:1.4;">Argentina Dream XI is a rotation quest. Score cards when they enter your wallet, then decide if you hold, sell, or hunt the next upgrade.</p>
     <div class="guide-steps">
       <div class="guide-step">
         <div class="guide-step-num">01</div>
         <div>
-          <div class="guide-step-title">MINT A RANDOM WC CARD</div>
-          <div class="guide-step-text">Every mint gives one random card from the 48 World Cup teams. Argentina cards count in this quest.</div>
+          <div class="guide-step-title">MINT OR BUY</div>
+          <div class="guide-step-text">Mint a random WC card for 10 CHZ or buy Argentina cards from the market.</div>
         </div>
       </div>
       <div class="guide-step">
         <div class="guide-step-num">02</div>
         <div>
-          <div class="guide-step-title">FILL 11 POSITIONS</div>
-          <div class="guide-step-text">Your best Argentina card for each position is saved to the squad score. Higher weight means more points.</div>
+          <div class="guide-step-title">SCORE</div>
+          <div class="guide-step-text">Argentina cards score when they enter your wallet. Your best card per position becomes your squad weight.</div>
         </div>
       </div>
       <div class="guide-step">
         <div class="guide-step-num">03</div>
         <div>
-          <div class="guide-step-title">TRADE SMART</div>
-          <div class="guide-step-text">You do not need to hold a card forever. Once it is recorded for your wallet, you can sell reserves and hunt missing positions.</div>
-        </div>
-      </div>
-      <div class="guide-step">
-        <div class="guide-step-num">04</div>
-        <div>
-          <div class="guide-step-title">WATCH SCARCITY</div>
-          <div class="guide-step-text">The small x-number on squad cards shows detected circulation. If only one or two exist, the market price can be much higher.</div>
+          <div class="guide-step-title">SELL & HUNT</div>
+          <div class="guide-step-text">No need to HODL. Your score stays saved, so you can sell, recycle CHZ, and chase missing or stronger positions.</div>
         </div>
       </div>
     </div>
@@ -1309,25 +1871,25 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
 <div id="rulesModal" class="modal-overlay">
   <div class="modal-content" style="max-width:550px;">
     <button onclick="toggleRulesModal(false)" class="modal-close">&times;</button>
-    <h2 style="font-family:'Black Ops One',sans-serif; font-size:24px; color:#ffc940; margin-bottom:16px;display:flex;align-items:center;"><span class="rules-icon">&#8505;</span><span id="rulesTitle">How to Play & Rules</span></h2>
+    <h2 style="font-family:'Black Ops One',sans-serif; font-size:24px; color:#ffc940; margin-bottom:16px;display:flex;align-items:center;"><span class="rules-icon">&#8505;</span><span id="rulesTitle">Rules</span></h2>
     
     <div style="display:flex; gap:6px; margin-bottom:20px; flex-wrap:wrap; border-bottom:1px solid #1c2028; padding-bottom:12px;">
-      <button class="tab-btn active" id="lang-en" onclick="setRulesLanguage('en')"><img src="https://flagcdn.com/w20/gb.png" alt="">EN</button>
-      <button class="tab-btn" id="lang-de" onclick="setRulesLanguage('de')"><img src="https://flagcdn.com/w20/de.png" alt="">DE</button>
-      <button class="tab-btn" id="lang-fr" onclick="setRulesLanguage('fr')"><img src="https://flagcdn.com/w20/fr.png" alt="">FR</button>
-      <button class="tab-btn" id="lang-es" onclick="setRulesLanguage('es')"><img src="https://flagcdn.com/w20/es.png" alt="">ES</button>
-      <button class="tab-btn" id="lang-it" onclick="setRulesLanguage('it')"><img src="https://flagcdn.com/w20/it.png" alt="">ITA</button>
-      <button class="tab-btn" id="lang-pt" onclick="setRulesLanguage('pt')"><img src="https://flagcdn.com/w20/pt.png" alt="">POR</button>
-      <button class="tab-btn" id="lang-ja" onclick="setRulesLanguage('ja')"><img src="https://flagcdn.com/w20/jp.png" alt="">JAP</button>
-      <button class="tab-btn" id="lang-uk" onclick="setRulesLanguage('uk')"><img src="https://flagcdn.com/w20/ua.png" alt="">UKR</button>
-      <button class="tab-btn" id="lang-pl" onclick="setRulesLanguage('pl')"><img src="https://flagcdn.com/w20/pl.png" alt="">PL</button>
+      <button class="tab-btn active" id="lang-en" onclick="setRulesLanguage('en')"><img src="https://flagcdn.com/w20/gb.png" alt="">English</button>
+      <button class="tab-btn" id="lang-de" onclick="setRulesLanguage('de')"><img src="https://flagcdn.com/w20/de.png" alt="">Deutsch</button>
+      <button class="tab-btn" id="lang-fr" onclick="setRulesLanguage('fr')"><img src="https://flagcdn.com/w20/fr.png" alt="">Fran&ccedil;ais</button>
+      <button class="tab-btn" id="lang-es" onclick="setRulesLanguage('es')"><img src="https://flagcdn.com/w20/es.png" alt="">Espa&ntilde;ol</button>
+      <button class="tab-btn" id="lang-it" onclick="setRulesLanguage('it')"><img src="https://flagcdn.com/w20/it.png" alt="">Italiano</button>
+      <button class="tab-btn" id="lang-pt" onclick="setRulesLanguage('pt')"><img src="https://flagcdn.com/w20/pt.png" alt="">Portugu&ecirc;s</button>
+      <button class="tab-btn" id="lang-ja" onclick="setRulesLanguage('ja')"><img src="https://flagcdn.com/w20/jp.png" alt="">&#26085;&#26412;&#35486;</button>
+      <button class="tab-btn" id="lang-uk" onclick="setRulesLanguage('uk')"><img src="https://flagcdn.com/w20/ua.png" alt="">&#1059;&#1082;&#1088;&#1072;&#1111;&#1085;&#1089;&#1100;&#1082;&#1072;</button>
+      <button class="tab-btn" id="lang-pl" onclick="setRulesLanguage('pl')"><img src="https://flagcdn.com/w20/pl.png" alt="">Polski</button>
     </div>
     
     <ul id="rulesContent" style="list-style:none; display:flex; flex-direction:column; gap:12px; font-family:'Barlow Condensed',sans-serif; font-size:16px; color:#dde4f0; line-height:1.4;">
       <!-- TreĹ›Ä‡ Ĺ‚adowana dynamicznie przez JS -->
     </ul>
     
-    <button class="btn-card-action" onclick="toggleRulesModal(false)" style="margin-top:24px; padding:10px; font-size:11px;">CLOSE RULES</button>
+    <button class="btn-card-action" onclick="toggleRulesModal(false)" style="margin-top:24px; padding:10px; font-size:11px;">CLOSE</button>
   </div>
 </div>
 
@@ -1371,6 +1933,13 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
 
 <!-- POWIADOMIENIE TOAST -->
 <div id="toast">System Notification</div>
+<div id="networkOverlay" aria-live="polite" aria-busy="true">
+  <div class="network-wait-card">
+    <div class="network-ball">&#9917;</div>
+    <div class="network-wait-title">Waiting for network</div>
+    <div class="network-wait-text" id="networkOverlayText">Please confirm in your wallet and wait for Chiliz Chain.</div>
+  </div>
+</div>
 
 <script>
 // Konfiguracja kontraktĂłw on-chain dla sieci Chiliz Chain (Mainnet)
@@ -1425,7 +1994,7 @@ const ARGENTINA_TEAM_DATA = {id: 25, name: "Argentina", flag:"UN", code:"ar", fe
 // WielojÄ™zyczne tĹ‚umaczenia zasad gry (9 jÄ™zykĂłw: EN, DE, FR, ES, IT, PT, JA, PL, UK)
 const RULES_TRANSLATIONS_LEGACY = {
   en: {
-    title: "How to Play & Rules",
+    title: "Rules",
     items: [
       "Connect your Chiliz Wallet to activate your personal Argentina squad and check live progress.",
       "Mint cards for 10 CHZ. Each mint gives a random card from one of the 48 World Cup teams.",
@@ -1527,7 +2096,7 @@ const RULES_TRANSLATIONS_LEGACY = {
 
 const RULES_TRANSLATIONS = {
   en: {
-    title: "How to Play & Rules",
+    title: "Rules",
     items: [
       "Connect your Chiliz Wallet to activate your personal Argentina squad and check live progress.",
       "Mint cards for 10 CHZ. Each mint gives a random card from one of the 48 World Cup teams.",
@@ -1627,30 +2196,15 @@ const RULES_TRANSLATIONS = {
   }
 };
 
-const PUBLIC_RPCS = [
-  'https://rpc.ankr.com/chiliz',
-  'https://chiliz-rpc.publicnode.com',
-  'https://rpc.chiliz.com'
-];
-
-async function getReadProvider(){
-  for(const url of PUBLIC_RPCS){
-    try{
-      const p = new ethers.JsonRpcProvider(url);
-      // Short timeout — don't wait 60s for a dead RPC
-      const blockNum = await Promise.race([
-        p.getBlockNumber(),
-        new Promise((_,reject) => setTimeout(() => reject(new Error('timeout')), 4000))
-      ]);
-      console.log('[RPC] connected to', url, 'block:', blockNum);
-      return p;
-    } catch(e){ console.warn('[RPC] failed:', url, e.message); }
-  }
-  throw new Error('All Chiliz RPCs failed. Check your internet connection.');
-}
+const PUBLIC_RPCS = ['https://chiliz-rpc.publicnode.com','https://rpc.chiliz.com'];
+const PRIVY_APP_ID = "cmpil29vr000r0cl27mvi078e";
+const PRIVY_CLIENT_ID = "";
 
 let provider, signer, address;
 let contract, marketContract;
+let activeWalletProvider = null;
+let activeWalletType = '';
+let privyClient = null;
 let activeSellTokenId = null;
 
 window.dreamScores = {}; // portfel -> { teamId -> { pozycja -> {weight, tid, rarity, dna} } }
@@ -1661,6 +2215,7 @@ let circulationByPos = {};
 let currentMarketListings = [];
 let snipeFilterMode = 'all';
 let currentMintPrice = ethers.parseEther("10");
+let totalMintedGlobal = 0;
 let localMintEvents = [];
 let localSaleEvents = [];
 
@@ -1729,7 +2284,7 @@ function showHeaderToast(message, isError = false) {
   }, 6000);
 }
 
-function getWalletProvider() {
+function getInjectedWalletProvider() {
   const eth = window.ethereum;
   if (!eth) return null;
   if (Array.isArray(eth.providers) && eth.providers.length) {
@@ -1738,504 +2293,178 @@ function getWalletProvider() {
   return eth;
 }
 
-// ── WALLET CONNECTION HELPERS ─────────────────────────────────────────────────
-
-// Shared post-connect setup (works for both MetaMask and WalletConnect)
-async function _afterConnect(rawProvider) {
-  const isWC = typeof rawProvider.session !== 'undefined'; // WC providers have .session
-
-  if (isWC) {
-    // Extract address from WC session namespace — most reliable, available immediately after connect
-    const sessionAccounts = rawProvider.session?.namespaces?.eip155?.accounts || [];
-    let accounts = sessionAccounts
-      .filter(a => a.startsWith(`eip155:${CHAIN_ID}:`) || a.startsWith('eip155:1:'))
-      .map(a => a.split(':')[2]);
-
-    // Prefer Chiliz chain accounts
-    const chilizAccounts = sessionAccounts
-      .filter(a => a.startsWith(`eip155:${CHAIN_ID}:`))
-      .map(a => a.split(':')[2]);
-    if (chilizAccounts.length > 0) accounts = chilizAccounts;
-
-    // Fallback to RPC if session accounts empty
-    if (!accounts || accounts.length === 0) {
-      try { accounts = await rawProvider.request({ method: 'eth_accounts' }); } catch(e) {}
-    }
-    if (!accounts || accounts.length === 0) {
-      try { accounts = await rawProvider.request({ method: 'eth_requestAccounts' }); } catch(e) {}
-    }
-    if (!accounts || accounts.length === 0) {
-      accounts = rawProvider.accounts || [];
-    }
-
-    if (!accounts || accounts.length === 0) {
-      throw new Error('No accounts returned from wallet. Make sure your wallet is unlocked and try again.');
-    }
-    address = accounts[0].toLowerCase();
-    console.log('[WC] address from session:', address);
-
-    // Use public RPC for all reads — avoids WC relay CORS issues in Chrome
-    let readProv = null;
-    for (const url of PUBLIC_RPCS) {
-      try {
-        const p = new ethers.JsonRpcProvider(url);
-        await p.getBlockNumber();
-        readProv = p;
-        break;
-      } catch(e) {}
-    }
-    if (!readProv) throw new Error('Cannot reach Chiliz Chain RPC. Check your internet connection.');
-
-    provider = readProv;
-
-    // Create signer — avoid WC relay getSigner call which is slow on Chrome
-    // ethers v6: JsonRpcSigner can be constructed directly with provider + address
-    try {
-      const wcBrowserProv = new ethers.BrowserProvider(rawProvider);
-      // Use send() directly to avoid network round-trip for signer creation
-      signer = new ethers.JsonRpcSigner(wcBrowserProv, address);
-    } catch(e) {
-      // Fallback
-      try {
-        const wcBrowserProv = new ethers.BrowserProvider(rawProvider);
-        signer = await wcBrowserProv.getSigner();
-        address = (await signer.getAddress()).toLowerCase();
-      } catch(e2) {
-        console.warn('[WC] signer fallback failed:', e2.message);
-        signer = readProv; // read-only until first tx
-      }
-    }
-
-  } else {
-    // MetaMask / injected wallet
-    provider = new ethers.BrowserProvider(rawProvider);
-    try {
-      signer  = await provider.getSigner();
-      address = (await signer.getAddress()).toLowerCase();
-    } catch(e) {
-      const accounts = await rawProvider.request({ method: 'eth_accounts' });
-      if (!accounts || accounts.length === 0) throw new Error('No accounts returned from wallet');
-      address = accounts[0].toLowerCase();
-      signer  = await provider.getSigner(address);
-    }
-  }
-
-  window._rawWalletProvider = rawProvider;
-  console.log('[connect] address:', address, '| provider:', provider);
-
-  contract       = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
-  marketContract = new ethers.Contract(MARKET_ADDRESS, MARKET_ABI, signer);
-
-  const short = address.slice(0,6)+'...'+address.slice(-4);
-  document.getElementById('connectBtn').textContent = short;
-  document.getElementById('connectBtn').classList.add('connected');
-  const walletAddressEl = document.getElementById('walletAddress');
-  if (walletAddressEl) {
-    walletAddressEl.textContent = short;
-    walletAddressEl.style.display = 'inline-block';
-  }
-  await updateWalletBalance();
-  document.getElementById('connectSection').style.display = 'none';
-  document.getElementById('gameSection').style.display   = 'block';
-  document.getElementById('statsRow').style.display      = 'grid';
-  await loadData();
-}
-
-// MetaMask / any injected EIP-1193 browser wallet
-async function connectWalletMM() {
-  const walletProvider = getWalletProvider();
-  if (!walletProvider) {
-    showHeaderToast('No browser wallet detected. Install MetaMask or open in Trust Wallet browser, then try again. Or use WalletConnect below.', true);
-    return;
-  }
-  try {
-    await walletProvider.request({ method: 'eth_requestAccounts' });
-    const cid = await walletProvider.request({ method: 'eth_chainId' });
-    if (parseInt(cid, 16) !== CHAIN_ID) {
-      showHeaderToast('Wrong network! Please switch to Chiliz Chain (ID: 88888) in your wallet.', true);
-      return;
-    }
-    await _afterConnect(walletProvider);
-  } catch(e) {
-    console.error(e);
-    showHeaderToast('Error connecting browser wallet.', true);
-  }
-}
-
-// WalletConnect EthereumProvider — supports Trust Wallet, Socios, Coinbase, Rainbow, Ledger, +300 more
-const WC_PROJECT_ID = '15671485110825e18107d31b379d9df6';
-let _wcEthProvider = null;
-
-function _destroyWCProvider() {
-  if (_wcEthProvider) {
-    try {
-      // Only disconnect if session exists and provider is functional
-      if (_wcEthProvider.session && typeof _wcEthProvider.disconnect === 'function') {
-        _wcEthProvider.disconnect().catch(() => {});
-      }
-    } catch(e) {}
-  }
-  _wcEthProvider = null;
-}
-
-async function _getWCProvider() {
-  // Always create fresh — never reuse stale provider
-  _wcEthProvider = null;
-
-  if (window._wcLoadError) {
-    throw new Error('WalletConnect library failed to load. Check internet connection and reload.');
-  }
-
-  const wcModule = window['@walletconnect/ethereum-provider'];
-  if (!wcModule || !wcModule.EthereumProvider) {
-    throw new Error('WalletConnect library not loaded. Check internet connection and reload the page.');
-  }
-
-  // Clear stale sessions from localStorage — forces wallet picker instead of auto-reconnect
-  try {
-    Object.keys(localStorage).forEach(k => {
-      if (k.startsWith('wc@') || k.startsWith('W3M') || k.startsWith('walletconnect') || k.startsWith('WCM')) {
-        localStorage.removeItem(k);
-      }
-    });
-  } catch(e) {}
-
-  console.log('[WC] Starting EthereumProvider.init...');
-  try {
-    _wcEthProvider = await wcModule.EthereumProvider.init({
-      projectId: WC_PROJECT_ID,
-      chains: [1],
-      optionalChains: [88888],
-      rpcMap: {
-        1:     'https://cloudflare-eth.com',
-        88888: 'https://rpc.ankr.com/chiliz'
-      },
-      showQrModal: true,
-      metadata: {
-        name: 'Argentina Dream XI',
-        description: 'Block Kickers – Argentina Quest on Chiliz Chain',
-        url: window.location.href,
-        icons: ['https://block-kickers.vercel.app/favicon.ico']
-      },
-      qrModalOptions: {
-        themeMode: 'dark',
-        themeVariables: {
-          '--wcm-accent-color': '#00ff87',
-          '--wcm-background-color': '#06080a',
-          '--wcm-font-family': "'Barlow Condensed', sans-serif"
-        }
-      }
-    });
-  } catch(initErr) {
-    console.error('[WC] EthereumProvider.init failed:', initErr);
-    _wcEthProvider = null;
-    throw new Error('WalletConnect init failed: ' + (initErr?.message || String(initErr)));
-  }
-
-  console.log('[WC] Provider ready:', _wcEthProvider);
-  return _wcEthProvider;
-}
-
-// Show inline QR for Socios and other wallets that don't support deep links
-async function connectWalletQR() {
-  const qrBox = document.getElementById('wcQRBox');
-  const canvas = document.getElementById('wcQRCanvas');
-  qrBox.style.display = 'flex';
-  showHeaderToast('Generating QR — scan with Socios or any WalletConnect wallet…', false);
-
-  try {
-    const wcProv = await _getWCProvider();
-
-    // Kill old session first
-    if (wcProv.session) {
-      try { await wcProv.disconnect(); } catch(e) {}
-      _wcEthProvider = null;
-      const fresh = await _getWCProvider();
-      return connectWalletQRWithProvider(fresh, qrBox, canvas);
-    }
-    return connectWalletQRWithProvider(wcProv, qrBox, canvas);
-
-  } catch(e) {
-    qrBox.style.display = 'none';
-    showHeaderToast('QR error: ' + (e?.message || e), true);
-  }
-}
-
-async function connectWalletQRWithProvider(wcProv, qrBox, canvas) {
-  await new Promise((resolve, reject) => {
-    const timeout = setTimeout(() => { reject(new Error('Connection timed out.')); }, 180000);
-
-    wcProv.once('display_uri', async (uri) => {
-      // Render QR on canvas
-      try {
-        await QRCode.toCanvas(canvas, uri, { width: 220, margin: 1, color: { dark: '#000', light: '#fff' } });
-      } catch(e) { console.warn('QR render:', e); }
-    });
-
-    wcProv.once('connect', () => {
-      clearTimeout(timeout);
-      qrBox.style.display = 'none';
-      resolve();
-    });
-
-    wcProv.connect().catch(e => { clearTimeout(timeout); reject(e); });
-  });
-
-  // Verify chain via session
-  const sessionChains   = wcProv.session?.namespaces?.eip155?.chains   || [];
-  const sessionAccounts = wcProv.session?.namespaces?.eip155?.accounts || [];
-  const onChiliz = sessionChains.some(c => c === `eip155:${CHAIN_ID}`)
-    || sessionAccounts.some(a => a.startsWith(`eip155:${CHAIN_ID}:`));
-
-  if (!onChiliz) {
-    showHeaderToast('Please switch to Chiliz Chain (ID: 88888) in your wallet and scan again.', true);
-    _destroyWCProvider();
-    return;
-  }
-
-  await _afterConnect(wcProv);
-  wcProv.on('disconnect', () => location.reload());
-  wcProv.on('accountsChanged', accs => { if (!accs.length) location.reload(); });
-}
-
-async function connectWalletDeeplink(walletId) {
-  const isMobile = /iPhone|iPad|Android/i.test(navigator.userAgent);
-  const walletName = walletId === 'socios' ? 'Socios Wallet' : 'Trust Wallet';
-  showHeaderToast('Connecting to ' + walletName + '…', false);
-
-  try {
-    const wcProv = await _getWCProvider();
-
-    if (isMobile) {
-      // Get the WC URI first, then redirect to wallet
-      // When user comes back, poll for session establishment
-      const wcUri = await new Promise((resolve, reject) => {
-        const t = setTimeout(() => reject(new Error('URI timeout')), 15000);
-        wcProv.once('display_uri', (uri) => { clearTimeout(t); resolve(uri); });
-        wcProv.connect().catch(e => { clearTimeout(t); reject(e); });
-      });
-
-      // Store provider so we can resume after page comes back from background
-      window._pendingWCProvider = wcProv;
-      window._pendingWalletName = walletName;
-
-      const deeplink = walletId === 'socios'
-        ? 'https://wallet.socios.com/wc?uri=' + encodeURIComponent(wcUri)
-        : 'https://link.trustwallet.com/wc?uri=' + encodeURIComponent(wcUri);
-
-      // Show instructions in case auto-redirect is blocked
-      showHeaderToast('Opening ' + walletName + '… Approve the connection, then return here.', false);
-
-      // Redirect to wallet app
-      window.location.href = deeplink;
-
-      // visibilitychange fires when user returns to this tab/page
-      // At that point wcProv.session should be populated
-      await new Promise((resolve, reject) => {
-        const timeout = setTimeout(() => reject(new Error('Connection timed out.')), 180000);
-
-        const onVisible = async () => {
-          if (document.visibilityState !== 'visible') return;
-          document.removeEventListener('visibilitychange', onVisible);
-
-          // Poll for session — wallet may take a moment to complete handshake
-          let attempts = 0;
-          const poll = setInterval(async () => {
-            attempts++;
-            if (wcProv.session) {
-              clearInterval(poll);
-              clearTimeout(timeout);
-              resolve();
-            } else if (attempts > 20) {
-              clearInterval(poll);
-              clearTimeout(timeout);
-              reject(new Error('Wallet did not connect. Please try again.'));
-            }
-          }, 500);
-        };
-
-        // Also listen for connect event (fires if page wasn't fully unloaded)
-        wcProv.once('connect', () => {
-          clearTimeout(timeout);
-          resolve();
-        });
-
-        document.addEventListener('visibilitychange', onVisible);
-      });
-
-    } else {
-      // Desktop: QR modal
-      await new Promise((resolve, reject) => {
-        const timeout = setTimeout(() => reject(new Error('Connection timed out.')), 180000);
-        wcProv.once('connect', () => { clearTimeout(timeout); resolve(); });
-        wcProv.connect().catch(e => { clearTimeout(timeout); reject(e); });
-      });
-    }
-
-    console.log('[deeplink] connected, session:', wcProv.session);
-    window._pendingWCProvider = null;
-
-    const sessionChains   = wcProv.session?.namespaces?.eip155?.chains   || [];
-    const sessionAccounts = wcProv.session?.namespaces?.eip155?.accounts || [];
-    const onChiliz = sessionChains.some(c => c === `eip155:${CHAIN_ID}`)
-      || sessionAccounts.some(a => a.startsWith(`eip155:${CHAIN_ID}:`));
-
-    if (!onChiliz) {
-      showHeaderToast('Please switch to Chiliz Chain (ID: 88888) in ' + walletName + ' and try again.', true);
-      _destroyWCProvider();
-      return;
-    }
-
-    await _afterConnect(wcProv);
-    wcProv.on('disconnect', () => location.reload());
-    wcProv.on('accountsChanged', accs => { if (!accs.length) location.reload(); });
-
-  } catch(e) {
-    console.error('[deeplink] error:', e);
-    window._pendingWCProvider = null;
-    _destroyWCProvider();
-    const msg = e?.message || '';
-    showHeaderToast(
-      msg.includes('timed out') || msg.includes('did not connect') ? msg :
-      (msg.includes('User rejected') || e?.code === 4001) ? 'Connection cancelled.' :
-      'Connection failed: ' + msg,
-      !msg.includes('cancelled')
-    );
-  }
-}
-
-async function connectWalletWC() {
-  const isMobile = /iPhone|iPad|Android/i.test(navigator.userAgent);
-
-  try {
-    showHeaderToast('Opening WalletConnect — scan QR with your wallet app…', false);
-
-    let wcProv = await _getWCProvider();
-
-    // Kill old session so user gets fresh picker
-    if (wcProv.session) {
-      try { await wcProv.disconnect(); } catch(e) {}
-      _wcEthProvider = null;
-      wcProv = await _getWCProvider();
-    }
-
-    // On mobile, WC modal is often blocked by the browser
-    // Show inline QR instead so user can scan with Socios or any WC wallet
-    if (isMobile) {
-      // Show inline QR box and render QR when URI is ready
-      const qrBox = document.getElementById('wcQRBox');
-      const canvas = document.getElementById('wcQRCanvas');
-      if (qrBox) qrBox.style.display = 'flex';
-
-      await new Promise((resolve, reject) => {
-        const timeout = setTimeout(() => { if(qrBox) qrBox.style.display='none'; reject(new Error('Connection timed out.')); }, 180000);
-
-        wcProv.once('display_uri', async (uri) => {
-          if (canvas && window.QRCode) {
-            try { await QRCode.toCanvas(canvas, uri, { width: 220, margin: 1, color: { dark: '#000', light: '#fff' } }); } catch(e) {}
-          }
-        });
-
-        wcProv.once('connect', () => { clearTimeout(timeout); if(qrBox) qrBox.style.display='none'; resolve(); });
-        wcProv.connect().catch(e => { clearTimeout(timeout); if(qrBox) qrBox.style.display='none'; reject(e); });
-      });
-
-    } else {
-      // Desktop — WC modal works fine, just wait for connect event
-      await new Promise((resolve, reject) => {
-        const timeout = setTimeout(() => reject(new Error('Connection timed out.')), 180000);
-        wcProv.once('connect', () => { clearTimeout(timeout); resolve(); });
-        wcProv.connect().catch(e => { clearTimeout(timeout); reject(e); });
-      });
-    }
-
-    console.log('[WC] connected, session:', wcProv.session);
-
-    // Check chain via session namespace (most reliable cross-wallet method)
-    const sessionChains = wcProv.session?.namespaces?.eip155?.chains || [];
-    const sessionAccounts = wcProv.session?.namespaces?.eip155?.accounts || [];
-    console.log('[WC] session chains:', sessionChains, '| accounts:', sessionAccounts);
-
-    const onChiliz = sessionChains.some(c => c === `eip155:${CHAIN_ID}`)
-      || sessionAccounts.some(a => a.startsWith(`eip155:${CHAIN_ID}:`));
-
-    if (!onChiliz) {
-      // Try switch
-      let switched = false;
-      try {
-        await wcProv.request({ method: 'wallet_switchEthereumChain', params: [{ chainId: '0x' + CHAIN_ID.toString(16) }] });
-        switched = true;
-      } catch(e) { console.warn('switchChain:', e.message); }
-
-      if (!switched) {
-        showHeaderToast('Please switch your wallet to Chiliz Chain (ID: 88888) and reconnect.', true);
-        _destroyWCProvider();
-        return;
-      }
-    }
-
-    await _afterConnect(wcProv);
-    wcProv.on('disconnect', () => location.reload());
-    wcProv.on('accountsChanged', accs => { if (!accs.length) location.reload(); });
-
-  } catch(e) {
-    console.error('[WC] error:', e);
-    _destroyWCProvider();
-    const msg = e?.message || '';
-    if (msg.includes('User rejected') || e?.code === 4001 || msg.includes('Modal closed') || msg.includes('timed out')) {
-      showHeaderToast(msg.includes('timed out') ? 'Connection timed out.' : 'Connection cancelled.', false);
-    } else {
-      showHeaderToast('WalletConnect error: ' + msg, true);
-    }
-  }
-}
-
-// Legacy entry point (called from nav button) — shows choice modal if no injected wallet
-async function connectWallet() {
-  if (getWalletProvider()) {
-    await connectWalletMM();
-  } else {
-    // Scroll to connect section so buttons are visible
-    const sec = document.getElementById('connectSection');
-    if (sec) sec.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    showHeaderToast('Choose a connection method below.', false);
-  }
+function getWalletProvider() {
+  return activeWalletProvider || getInjectedWalletProvider();
 }
 
 async function updateWalletBalance() {
-  if (!address) return;
-  try {
-    // First try via raw wallet provider
-    const rawProv = window._rawWalletProvider;
-    let balHex;
-    if (rawProv) {
-      try {
-        balHex = await rawProv.request({ method: 'eth_getBalance', params: [address, 'latest'] });
-      } catch(e) {
-        console.warn('[balance] wallet RPC failed, falling back to public RPC:', e.message);
-        balHex = null;
-      }
-    }
-    // Fallback: query public Chiliz RPC directly (works even if wallet doesn't support the chain)
-    if (!balHex) {
-      const resp = await fetch('https://rpc.ankr.com/chiliz', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ jsonrpc:'2.0', method:'eth_getBalance', params:[address,'latest'], id:1 })
-      });
-      const json = await resp.json();
-      balHex = json?.result;
-    }
-    if (balHex) {
-      const formatted = parseFloat(ethers.formatEther(BigInt(balHex))).toFixed(2);
+  const walletProvider = getWalletProvider();
+  if (walletProvider && address) {
+    try {
+      const p = new ethers.BrowserProvider(walletProvider);
+      const bal = await p.getBalance(address);
+      const formatted = parseFloat(ethers.formatEther(bal)).toFixed(1);
       const el = document.getElementById('walletBalance');
-      if (el) { el.textContent = formatted + ' CHZ'; el.style.display = 'inline-block'; }
-    }
-  } catch(e) {
-    console.warn('[balance] fetch failed:', e);
+      if(el){ el.textContent = formatted+' CHZ'; el.style.display='inline-block'; }
+    } catch(e) {}
   }
 }
 
+function getChilizPrivyChain() {
+  return {
+    id: CHAIN_ID,
+    name: 'Chiliz Chain',
+    nativeCurrency: { name: 'CHZ', symbol: 'CHZ', decimals: 18 },
+    rpcUrls: { default: { http: PUBLIC_RPCS }, public: { http: PUBLIC_RPCS } },
+    blockExplorers: { default: { name: 'ChilizScan', url: 'https://scan.chiliz.com' } }
+  };
+}
+
+async function getPrivyClient() {
+  if (privyClient) return privyClient;
+  const { createPrivyClient } = await import('https://esm.sh/@privy-io/js-sdk-core@latest');
+  const storage = {
+    get: key => Promise.resolve(localStorage.getItem(key)),
+    put: (key, value) => Promise.resolve(localStorage.setItem(key, value)),
+    del: key => Promise.resolve(localStorage.removeItem(key)),
+    getKeys: () => Promise.resolve(Object.keys(localStorage))
+  };
+  const config = {
+    appId: PRIVY_APP_ID,
+    supportedChains: [getChilizPrivyChain()],
+    storage
+  };
+  if (PRIVY_CLIENT_ID) config.clientId = PRIVY_CLIENT_ID;
+  privyClient = createPrivyClient(config);
+  return privyClient;
+}
+
+
+const RULES_TRANSLATIONS_CLEAN = {
+  en: {
+    title: "Rules",
+    items: [
+      "Connect your Chiliz Wallet to activate your Argentina Dream XI squad.",
+      "Mint costs 10 CHZ and returns a random national card from 48 World Cup teams.",
+      "Argentina cards score when they are minted by you or bought on the marketplace.",
+      "Your score is saved when the card enters your wallet. You do not need to hold it forever.",
+      "Only your best card for each of the 11 positions counts toward the squad score.",
+      "The sponsored 10,000 CHZ pool is paid by leaderboard rank. More unique collectors can unlock more paid places."
+    ]
+  },
+  de: {
+    title: "Regeln",
+    items: [
+      "Verbinde dein Chiliz Wallet, um dein Argentina Dream XI Team zu aktivieren.",
+      "Ein Mint kostet 10 CHZ und gibt eine zufällige Nationalkarte aus 48 World-Cup-Teams.",
+      "Argentinien-Karten punkten, wenn du sie mintest oder auf dem Marktplatz kaufst.",
+      "Dein Score bleibt gespeichert, sobald die Karte in dein Wallet kommt. Du musst sie nicht dauerhaft halten.",
+      "Nur deine beste Karte auf jeder der 11 Positionen zählt für den Squad Score.",
+      "Der gesponserte Pool von 10,000 CHZ wird nach Rangliste ausgezahlt. Mehr einzigartige Sammler können mehr bezahlte Plätze freischalten."
+    ]
+  },
+  fr: {
+    title: "Règles",
+    items: [
+      "Connecte ton wallet Chiliz pour activer ton Argentina Dream XI.",
+      "Le mint coûte 10 CHZ et donne une carte nationale aléatoire parmi 48 équipes de Coupe du monde.",
+      "Les cartes d'Argentine marquent si tu les mintes ou si tu les achètes sur le marketplace.",
+      "Ton score reste enregistré dès que la carte entre dans ton wallet. Tu n'as pas besoin de la garder pour toujours.",
+      "Seule ta meilleure carte sur chacune des 11 positions compte dans le score.",
+      "Le pool sponsorisé de 10,000 CHZ est payé selon le classement. Plus de collectionneurs uniques peuvent débloquer plus de places payées."
+    ]
+  },
+  es: {
+    title: "Reglas",
+    items: [
+      "Conecta tu Chiliz Wallet para activar tu Argentina Dream XI.",
+      "El mint cuesta 10 CHZ y entrega una carta nacional aleatoria de 48 equipos del Mundial.",
+      "Las cartas de Argentina puntúan si las minteas o si las compras en el marketplace.",
+      "Tu score queda guardado cuando la carta entra en tu wallet. No necesitas holdearla para siempre.",
+      "Solo tu mejor carta en cada una de las 11 posiciones cuenta para el score.",
+      "El pool patrocinado de 10,000 CHZ se paga por ranking. Más coleccionistas únicos pueden desbloquear más puestos pagados."
+    ]
+  },
+  it: {
+    title: "Regole",
+    items: [
+      "Collega il tuo Chiliz Wallet per attivare il tuo Argentina Dream XI.",
+      "Il mint costa 10 CHZ e assegna una carta nazionale casuale tra 48 squadre World Cup.",
+      "Le carte Argentina fanno punti se le minti tu o se le compri sul marketplace.",
+      "Il tuo score resta salvato quando la carta entra nel wallet. Non devi tenerla per sempre.",
+      "Conta solo la tua carta migliore per ognuna delle 11 posizioni.",
+      "Il pool sponsorizzato da 10,000 CHZ viene pagato in base alla classifica. Più collezionisti unici possono sbloccare più posizioni pagate."
+    ]
+  },
+  pt: {
+    title: "Regras",
+    items: [
+      "Liga a tua Chiliz Wallet para ativar o teu Argentina Dream XI.",
+      "O mint custa 10 CHZ e dá uma carta nacional aleatória entre 48 equipas do World Cup.",
+      "As cartas da Argentina pontuam se forem mintadas por ti ou compradas no marketplace.",
+      "A tua pontuação fica guardada quando a carta entra na tua wallet. Não precisas de a guardar para sempre.",
+      "Só a tua melhor carta em cada uma das 11 posições conta para o score.",
+      "O pool patrocinado de 10,000 CHZ é pago por ranking. Mais colecionadores únicos podem desbloquear mais lugares pagos."
+    ]
+  },
+  ja: {
+    title: "ルール",
+    items: [
+      "Chiliz Wallet を接続して Argentina Dream XI を有効にします。",
+      "ミントは 10 CHZ。48 のワールドカップ代表チームからランダムなカードが出ます。",
+      "アルゼンチンのカードは、自分でミントするかマーケットで購入するとスコアになります。",
+      "カードがウォレットに入るとスコアは保存されます。ずっと保有する必要はありません。",
+      "11 ポジションそれぞれで一番強いカードだけがスコアに入ります。",
+      "スポンサー付きの 10,000 CHZ プールはランキングで支払われます。ユニークな参加者が増えるほど有料順位が増える可能性があります。"
+    ]
+  },
+  uk: {
+    title: "Правила",
+    items: [
+      "Підключи Chiliz Wallet, щоб активувати свій Argentina Dream XI.",
+      "Mint коштує 10 CHZ і дає випадкову національну картку з 48 команд World Cup.",
+      "Картки Аргентини дають очки, якщо ти їх змінтив або купив на marketplace.",
+      "Score зберігається, коли картка потрапляє у твій wallet. Тримати її назавжди не потрібно.",
+      "У score рахується тільки найкраща картка на кожній з 11 позицій.",
+      "Спонсорський пул 10,000 CHZ виплачується за рейтингом. Більше унікальних колекціонерів може відкрити більше оплачуваних місць."
+    ]
+  },
+  pl: {
+    title: "Zasady",
+    items: [
+      "Połącz Chiliz Wallet, aby aktywować swój skład Argentina Dream XI.",
+      "Mint kosztuje 10 CHZ i daje losową kartę narodową z 48 drużyn World Cup.",
+      "Karty Argentyny punktują, gdy je wymintujesz albo kupisz na marketplace.",
+      "Score zapisuje się, gdy karta trafi do Twojego walleta. Nie musisz jej trzymać na zawsze.",
+      "Do wyniku liczy się tylko najlepsza karta na każdej z 11 pozycji.",
+      "Sponsorowana pula 10,000 CHZ jest wypłacana według rankingu. Więcej unikalnych kolekcjonerów może odblokować więcej płatnych miejsc."
+    ]
+  }
+};
+
+let networkOverlayDepth = 0;
+function showNetworkOverlay(message = 'Please confirm in your wallet and wait for Chiliz Chain.') {
+  networkOverlayDepth += 1;
+  const overlay = document.getElementById('networkOverlay');
+  const text = document.getElementById('networkOverlayText');
+  if (text) text.textContent = message;
+  if (overlay) overlay.classList.add('show');
+  document.body.classList.add('network-busy');
+}
+function updateNetworkOverlay(message) {
+  const text = document.getElementById('networkOverlayText');
+  if (text && message) text.textContent = message;
+}
+function hideNetworkOverlay() {
+  networkOverlayDepth = Math.max(0, networkOverlayDepth - 1);
+  if (networkOverlayDepth > 0) return;
+  const overlay = document.getElementById('networkOverlay');
+  if (overlay) overlay.classList.remove('show');
+  document.body.classList.remove('network-busy');
+}
+function isNetworkOverlayVisible() {
+  return networkOverlayDepth > 0;
+}
 function toggleRulesModal(show) {
   const modal = document.getElementById('rulesModal');
   modal.style.display = show ? 'flex' : 'none';
@@ -2243,7 +2472,7 @@ function toggleRulesModal(show) {
 }
 
 function setRulesLanguage(lang) {
-  const data = RULES_TRANSLATIONS[lang] || RULES_TRANSLATIONS['en'];
+  const data = RULES_TRANSLATIONS_CLEAN[lang] || RULES_TRANSLATIONS_CLEAN['en'];
   document.getElementById('rulesTitle').textContent = data.title;
   
   const langs = ['en', 'de', 'fr', 'es', 'it', 'pt', 'ja', 'uk', 'pl'];
@@ -2321,8 +2550,17 @@ function scrollToSquad() {
 function switchDeskTab(tab) {
   document.getElementById('btnDeskSnipe').classList.toggle('active', tab === 'snipe');
   document.getElementById('btnDeskPortfolio').classList.toggle('active', tab === 'portfolio');
-  document.getElementById('deskTabSnipe').style.display = tab === 'snipe' ? 'block' : 'none';
-  document.getElementById('deskTabPortfolio').style.display = tab === 'portfolio' ? 'block' : 'none';
+  document.getElementById('btnDeskFeed')?.classList.toggle('active', tab === 'feed');
+  document.getElementById('btnDeskRanks')?.classList.toggle('active', tab === 'ranks');
+  document.getElementById('btnDeskInfo')?.classList.toggle('active', tab === 'info');
+  document.getElementById('deskTabSnipe').style.display = tab === 'snipe' ? 'flex' : 'none';
+  document.getElementById('deskTabPortfolio').style.display = tab === 'portfolio' ? 'flex' : 'none';
+  const feedTab = document.getElementById('deskTabFeed');
+  const ranksTab = document.getElementById('deskTabRanks');
+  const infoTab = document.getElementById('deskTabInfo');
+  if (feedTab) feedTab.style.display = tab === 'feed' ? 'flex' : 'none';
+  if (ranksTab) ranksTab.style.display = tab === 'ranks' ? 'flex' : 'none';
+  if (infoTab) infoTab.style.display = tab === 'info' ? 'flex' : 'none';
 }
 
 function openSellModal(tokenId, pos, weight, rarity) {
@@ -2411,9 +2649,109 @@ function getReferrer() {
   return "0x0000000000000000000000000000000000000000";
 }
 
-// getReadProvider defined above with timeout
+async function getReadProvider(){
+  for(const url of PUBLIC_RPCS){
+    try{ const p = new ethers.JsonRpcProvider(url); await p.getBlockNumber(); return p; }
+    catch(e){}
+  }
+}
 
-// connectWallet() is now defined above in the wallet helpers section
+async function finalizeWalletConnection(walletProvider, walletType = 'wallet') {
+  if (!walletProvider || typeof walletProvider.request !== 'function') {
+    throw new Error('Selected wallet did not return a compatible provider.');
+  }
+
+  activeWalletProvider = walletProvider;
+  activeWalletType = walletType;
+
+  let accounts = [];
+  try {
+    accounts = await walletProvider.request({method:'eth_requestAccounts'});
+  } catch(e) {
+    accounts = await walletProvider.request({method:'eth_accounts'});
+  }
+
+  if (!accounts || !accounts.length) {
+    throw new Error('No wallet account selected.');
+  }
+
+  const cid = await walletProvider.request({method:'eth_chainId'});
+  if(parseInt(cid,16) !== CHAIN_ID){
+    showHeaderToast('Wrong network! Please switch your wallet to Chiliz Chain (ID: 88888).', true);
+    return false;
+  }
+
+  provider = new ethers.BrowserProvider(walletProvider);
+  signer = await provider.getSigner();
+  address = await signer.getAddress();
+
+  contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
+  marketContract = new ethers.Contract(MARKET_ADDRESS, MARKET_ABI, signer);
+
+  const connectBtn = document.getElementById('connectBtn');
+  if (connectBtn) {
+    connectBtn.textContent = address.slice(0,6)+'...'+address.slice(-4);
+    connectBtn.classList.add('connected');
+  }
+  const privyBtn = document.getElementById('privyBtn');
+  if (privyBtn && walletType === 'Privy') {
+    privyBtn.textContent = 'PRIVY ON';
+    privyBtn.classList.add('connected');
+  }
+  const walletAddressEl = document.getElementById('walletAddress');
+  if (walletAddressEl) {
+    walletAddressEl.textContent = address.slice(0,6)+'...'+address.slice(-4);
+    walletAddressEl.style.display = 'inline-block';
+  }
+  await updateWalletBalance();
+  document.getElementById('connectSection').style.display = 'none';
+  document.getElementById('gameSection').style.display = 'block';
+  document.getElementById('statsRow').style.display = 'grid';
+  document.body.classList.add('game-mode');
+
+  await loadData();
+  return true;
+}
+
+async function connectWallet(){
+  const walletProvider = getInjectedWalletProvider();
+  if(!walletProvider){
+    showHeaderToast('No compatible Web3 wallet detected. Open in MetaMask, Trust Wallet, or another EIP-1193 wallet browser.', true);
+    return;
+  }
+  try{
+    await finalizeWalletConnection(walletProvider, 'Injected');
+  }catch(e){
+    console.error(e);
+    showHeaderToast('Error connecting wallet.', true);
+  }
+}
+
+async function connectPrivyWallet(){
+  showNetworkOverlay('Opening Privy wallet...');
+  try{
+    const client = await getPrivyClient();
+    if (!client.wallet || typeof client.wallet.connectWallet !== 'function') {
+      throw new Error('Privy wallet connector is unavailable.');
+    }
+    const result = await client.wallet.connectWallet({
+      walletList: ['metamask', 'wallet_connect', 'coinbase_wallet']
+    });
+    const walletProvider = result?.provider || result?.wallet?.provider || result;
+    const connected = await finalizeWalletConnection(walletProvider, 'Privy');
+    if (connected) showHeaderToast('Privy wallet connected.');
+  }catch(e){
+    console.error('Privy connect failed:', e);
+    const msg = String(e && e.message ? e.message : e);
+    if (msg.toLowerCase().includes('client')) {
+      showHeaderToast('Privy app ID is set, but this setup may also need clientId from your Privy dashboard.', true);
+    } else {
+      showHeaderToast('Privy connection failed. MetaMask and Trust Wallet still work.', true);
+    }
+  }finally{
+    hideNetworkOverlay();
+  }
+}
 
 function parseDNA(dna){
   const n = typeof dna === 'bigint' ? dna : BigInt(dna.toString());
@@ -2662,8 +3000,9 @@ function getPressureBadge(pos) {
 function getPositionBadges(pos, floor = null) {
   const count = circulationByPos[pos] || 0;
   const badges = [];
+  badges.push(`<span class="mini-badge">MINTED x${count}</span>`);
   if (count === 1) badges.push(`<span class="mini-badge scarce">ONLY 1</span>`);
-  else if (count > 1 && count <= 3) badges.push(`<span class="mini-badge scarce">LOW SUPPLY x${count}</span>`);
+  else if (count > 1 && count <= 3) badges.push(`<span class="mini-badge scarce">LOW SUPPLY</span>`);
   if (floor) badges.push(`<span class="mini-badge hot">FLOOR ${floor.price} CHZ</span>`);
   const pressureBadge = getPressureBadge(pos);
   if (pressureBadge) badges.push(pressureBadge);
@@ -2711,7 +3050,7 @@ function setSnipeFilter(mode) {
   renderSnipeMarket(currentMarketListings);
 }
 
-async function loadData(){
+async function loadDataCore(){
   document.getElementById('pitchFormationGrid').innerHTML = '<div style="text-align:center;color:#3d4a5a;padding:40px;grid-column:1/-1;"><span class="spin"></span> Querying Chiliz Blockchain data...</div>';
 
   let mints=[], sales=[], listed=[];
@@ -2789,6 +3128,8 @@ async function loadData(){
     try {
       const p = await contract.mintPrice();
       currentMintPrice = p;
+      const tm = await contract.totalMinted();
+      totalMintedGlobal = Number(tm);
     } catch(e) {
       console.warn("Could not query dynamic mint price:", e);
     }
@@ -2915,6 +3256,7 @@ async function loadData(){
     }
   }catch(e){ console.warn('Marketplace read error:', e); }
 
+  if (!totalMintedGlobal) totalMintedGlobal = Object.keys(ownerMap).length || mints.length;
   const playerCount = getLeaderboardData().length;
   const paidPlaces = getPaidPlaces(playerCount);
   document.getElementById('poolInfo').textContent = `Quest Prize Pool: ${PRIZE_POOL_CHZ.toLocaleString()} CHZ - ${paidPlaces || 1} paid ranks from ${playerCount} collectors`;
@@ -2930,6 +3272,16 @@ async function loadData(){
   renderPortfolioAndLedger(mints, sales, listDetails);
 }
 
+async function loadData() {
+  const startedOverlay = !isNetworkOverlayVisible();
+  if (startedOverlay) showNetworkOverlay('Refreshing blockchain data...');
+  else updateNetworkOverlay('Refreshing blockchain data...');
+  try {
+    return await loadDataCore();
+  } finally {
+    if (startedOverlay) hideNetworkOverlay();
+  }
+}
 // Renderowanie snajpera gieĹ‚dy okazji (Snipe deals)
 function renderSnipeMarket(listings) {
   const container = document.getElementById('snipeListContainer');
@@ -2961,7 +3313,7 @@ function renderSnipeMarket(listings) {
   bestDeals.forEach(deal => {
     const scored = myTeamPositions[deal.pos];
     const isUpgrade = !scored || deal.weight > scored.weight;
-    const upgradeLabel = isUpgrade ? `<span style="color:#00ff87; font-weight:bold;">(+${scored ? deal.weight - scored.weight : deal.weight} pts!)</span>` : '<span style="color:#5a6a7a;">(Reserve)</span>';
+    const upgradeLabel = isUpgrade ? `<span class="upgrade-chip">UPGRADE +${scored ? deal.weight - scored.weight : deal.weight} PTS</span>` : '';
     const rarName = ['Common', 'Rare', 'Epic', 'Legendary'][deal.rarity];
     const rarColor = ['#7a8899','#3b82f6','#c084fc','#ffc940'][deal.rarity];
     const floor = marketFloorByPos[deal.pos] || null;
@@ -2971,10 +3323,9 @@ function renderSnipeMarket(listings) {
     html += `
       <div class="snipe-row">
         <div class="snipe-details">
-          <div class="snipe-pos">${POSITION_SHORT[deal.pos]}</div>
+          <div class="snipe-pos rarity-${deal.rarity}" style="--rar:${rarColor};"><span>${POSITION_SHORT[deal.pos]}</span><small>${deal.weight} pts</small></div>
           <div class="snipe-info-text">
-            <span style="color:${rarColor}; font-weight:600;">${rarName}</span> (${deal.weight} pts)<br>
-            Status: ${upgradeLabel}
+            <span class="desktop-deal-main" style="color:${rarColor}; font-weight:600;">${rarName}</span> <span class="desktop-deal-main deal-points">${deal.weight} pts</span>${upgradeLabel ? `<br>${upgradeLabel}` : ``}
             ${badgesHtml}
             ${pressureLine}
           </div>
@@ -3237,6 +3588,14 @@ function renderStats() {
   }
   
   document.getElementById('myGlobalRank').textContent = myGlobalRankVal;
+  const paidPlacesVal = getPaidPlaces(playerCount) || 1;
+  const argSupply = Object.values(circulationByPos).reduce((sum, n) => sum + n, 0);
+  const setText = (id, value) => { const el = document.getElementById(id); if (el) el.textContent = value; };
+  setText('topPlayersInfo', playerCount.toLocaleString());
+  setText('topPaidInfo', paidPlacesVal.toLocaleString());
+  setText('topMintedInfo', formatCompactNumber(totalMintedGlobal));
+  setText('topArgSupplyInfo', argSupply.toLocaleString());
+  updatePriceCountdowns();
   document.getElementById('myEstPayout').textContent = `${myEstPayoutVal.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})} CHZ`;
 }
 
@@ -3262,21 +3621,18 @@ function renderPitch() {
 
   FORMATION.forEach(row => {
     const rowEl = document.createElement('div');
-    rowEl.className = 'form-row';
+    const rowClass = row.length === 1 && row[0] === 9 ? 'row-attack'
+      : row.includes(11) || row.includes(7) ? 'row-wings'
+      : row.includes(6) ? 'row-mid'
+      : row.includes(3) ? 'row-defense'
+      : 'row-keeper';
+    rowEl.className = `form-row ${rowClass}`;
 
     row.forEach(pos => {
       const card = document.createElement('div');
       const scored = myTeamPositions[pos];
       const mkt = marketByPos[pos];
       const floor = marketFloorByPos[pos];
-      const circulationCount = circulationByPos[pos] || 0;
-      const circulationHtml = `<span class="pos-card-count" title="Argentina ${POSITION_SHORT[pos]} cards in circulation">x${circulationCount}</span>`;
-      const badgesHtml = getPitchPriorityBadge(pos, floor);
-
-      let floorHtml = '';
-      if (scored && floor) {
-        floorHtml = `<div style="font-size:9px; color:#ffc940; font-family:'Share Tech Mono',monospace; margin-top:2px;">Floor: ${floor.price} CHZ</div>`;
-      }
 
       if (scored) {
         const rarColor = ['#7a8899','#3b82f6','#c084fc','#ffc940'][scored.rarity];
@@ -3285,8 +3641,6 @@ function renderPitch() {
         let actionHtml = '';
         if (mkt && mkt.weight > scored.weight) {
           actionHtml = `<button onclick="buyFromMarket(${mkt.listingId}, '${mkt.price}', '${mkt.priceWei}')" class="btn-card-action upgrade">UPGRADE +${mkt.weight - scored.weight}<br>${mkt.weight} PTS / ${mkt.price} CHZ</button>`;
-        } else {
-          actionHtml = `<div style="margin-top:4px;font-size:8px;color:#5a6a7a;font-family:Share Tech Mono,monospace;letter-spacing:0.3px;">BEST WEIGHT</div>`;
         }
 
         let sellBtnHtml = '';
@@ -3301,21 +3655,19 @@ function renderPitch() {
           }
         }
         const activeListingIdForMeta = activeListingsByTokenId[scored.tid];
-        const cardMeta = activeListingIdForMeta !== undefined ? `LISTED #${activeListingIdForMeta}` : `TOKEN #${scored.tid}`;
+        const listingMark = activeListingIdForMeta !== undefined ? '<div style="margin-top:4px;font-size:8px;color:#ef4444;font-family:Share Tech Mono,monospace;">LISTED</div>' : '';
 
         card.innerHTML = `
-          ${circulationHtml}
           <div>
             <div class="pos-name">${POSITION_SHORT[pos]}</div>
-            <span class="pos-card-meta">${cardMeta}</span>
+            <span class="pos-ball">&#9917;</span>
           </div>
           <div>
             <div class="pos-weight ${scored.rarity === 3 ? 'gold' : ''}">${scored.weight}</div>
             <div class="pos-rarity" style="color:${rarColor}">${['Common','Rare','Epic','Legendary'][scored.rarity]}</div>
-            ${badgesHtml}
-            ${floorHtml}
             ${actionHtml}
             ${sellBtnHtml}
+            ${listingMark}
           </div>
         `;
       } else {
@@ -3323,21 +3675,16 @@ function renderPitch() {
         let actionHtml = '';
         if (floor) {
           actionHtml = `<button onclick="buyFromMarket(${floor.listingId}, '${floor.price}', '${floor.priceWei}')" class="btn-card-action">BUY ${floor.weight || '-'} PTS<br>${floor.price} CHZ</button>`;
-        } else {
-          actionHtml = `<div style="margin-top:4px;font-size:8px;color:#5a6a7a;font-family:Share Tech Mono,monospace;">NO LISTINGS</div>`;
         }
-        const emptyMeta = floor ? `MARKET #${floor.listingId}` : 'OPEN SLOT';
 
         card.innerHTML = `
-          ${circulationHtml}
           <div>
             <div class="pos-name" style="color:#5a6a7a;">${POSITION_SHORT[pos]}</div>
-            <span class="pos-card-meta" style="opacity:${floor ? '1' : '0.35'}">${emptyMeta}</span>
+            <span class="pos-ball" style="opacity:0.35;">&#9917;</span>
           </div>
           <div>
             <div class="pos-weight empty">-</div>
             <div class="pos-rarity" style="color:#5a6a7a;">EMPTY SLOT</div>
-            ${badgesHtml}
             ${actionHtml}
           </div>
         `;
@@ -3412,13 +3759,17 @@ function renderLeaderboard(){
 
 async function cancelListing(listingId) {
   if (!signer || !marketContract) { showHeaderToast('Connect wallet first.', true); return; }
+  showNetworkOverlay('Cancelling listing on Chiliz Chain...');
   try {
     showHeaderToast('Cancelling listing...');
+    updateNetworkOverlay('Waiting for wallet confirmation...');
     const tx = await marketContract.cancelListing(listingId);
+    updateNetworkOverlay('Cancel sent. Waiting for block confirmation...');
     await tx.wait();
     showHeaderToast('Listing cancelled!');
     await loadData();
   } catch(e) { showHeaderToast('Cancellation failed.', true); }
+  finally { hideNetworkOverlay(); }
 }
 
 async function buyFromMarket(listingId, priceChz, priceWeiRaw){
@@ -3426,6 +3777,7 @@ async function buyFromMarket(listingId, priceChz, priceWeiRaw){
     showHeaderToast('Connect your wallet to purchase on the marketplace.', true);
     return;
   }
+  showNetworkOverlay(`Buying card for ${priceChz} CHZ...`);
   try {
     showHeaderToast(`Initializing marketplace buy: Listing #${listingId} for ${priceChz} CHZ...`);
     const listing = await marketContract.getListing(listingId);
@@ -3459,9 +3811,10 @@ async function buyFromMarket(listingId, priceChz, priceWeiRaw){
       showHeaderToast('Not enough CHZ in your wallet for card price + gas.', true);
       return;
     }
-
+    updateNetworkOverlay('Waiting for wallet confirmation and transaction hash...');
     const tx = await marketContract.buyFigure(listingId, { value: priceWei });
     showHeaderToast('Transaction sent to Chiliz Chain. Awaiting blockchain confirmation...');
+    updateNetworkOverlay('Transaction sent. Waiting for block confirmation...');
     
     const receipt = await tx.wait();
     if (boughtFig && myAddr) {
@@ -3494,6 +3847,8 @@ async function buyFromMarket(listingId, priceChz, priceWeiRaw){
   } catch (error) {
     console.error(error);
     showHeaderToast(getUserFriendlyTxError(error, 'Transaction failed. Ensure you have sufficient CHZ for gas and purchase price.'), true);
+  } finally {
+    hideNetworkOverlay();
   }
 }
 
@@ -3508,6 +3863,7 @@ async function sellFigure(tokenId, priceChz) {
     renderPitch();
     return;
   }
+  showNetworkOverlay('Preparing marketplace listing...');
   try {
     const figContract = new ethers.Contract(CONTRACT_ADDRESS, [
       "function isApprovedForAll(address account, address operator) external view returns (bool)",
@@ -3518,6 +3874,7 @@ async function sellFigure(tokenId, priceChz) {
     const isApproved = await figContract.isApprovedForAll(address, MARKET_ADDRESS);
     if (!isApproved) {
       showHeaderToast('One-time marketplace authorization required...');
+      updateNetworkOverlay('Waiting for marketplace approval in your wallet...');
       const txApprove = await figContract.setApprovalForAll(MARKET_ADDRESS, true);
       await txApprove.wait();
       showHeaderToast('Approved! Creating marketplace listing...');
@@ -3525,7 +3882,9 @@ async function sellFigure(tokenId, priceChz) {
 
     const priceWei = ethers.parseEther(priceChz);
     showHeaderToast(`Listing card #${tokenId} for ${priceChz} CHZ...`);
+    updateNetworkOverlay(`Listing card for ${priceChz} CHZ...`);
     const txList = await marketContract.listFigure(tokenId, priceWei);
+    updateNetworkOverlay('Listing sent. Waiting for block confirmation...');
     await txList.wait();
     showHeaderToast('Card successfully listed on the marketplace!');
     toggleSellModal(false);
@@ -3540,6 +3899,8 @@ async function sellFigure(tokenId, priceChz) {
       return;
     }
     showHeaderToast('Failed to list card on marketplace.', true);
+  } finally {
+    hideNetworkOverlay();
   }
 }
 
@@ -3548,6 +3909,7 @@ async function directMint() {
     showHeaderToast('Connect your wallet to mint cards.', true);
     return;
   }
+  showNetworkOverlay('Preparing card mint...');
   try {
     const referrer = getReferrer();
     const walletBalance = await provider.getBalance(address);
@@ -3556,9 +3918,10 @@ async function directMint() {
       return;
     }
     showHeaderToast(`Initializing card mint for ${ethers.formatEther(currentMintPrice)} CHZ...`);
-    
+    updateNetworkOverlay(`Minting random WC card for ${ethers.formatEther(currentMintPrice)} CHZ...`);
     const tx = await contract.mint(referrer, { value: currentMintPrice });
     showHeaderToast('Mint transaction sent. Awaiting block confirmation...');
+    updateNetworkOverlay('Mint sent. Waiting for block confirmation...');
     
     const receipt = await tx.wait();
     showHeaderToast('Generative card minted successfully!');
@@ -3655,6 +4018,8 @@ async function directMint() {
   } catch (error) {
     console.error(error);
     showHeaderToast(getUserFriendlyTxError(error, 'Minting failed. Verify your balance and try again.'), true);
+  } finally {
+    hideNetworkOverlay();
   }
 }
 
@@ -3665,6 +4030,32 @@ function shareOnX(){
   window.open('https://twitter.com/intent/tweet?text='+encodeURIComponent(text),'_blank');
 }
 
+function formatCompactNumber(value) {
+  const n = Number(value || 0);
+  if (n >= 1000000) return (n / 1000000).toFixed(n >= 10000000 ? 0 : 1).replace(/\.0$/, '') + 'M';
+  if (n >= 10000) return (n / 1000).toFixed(n >= 100000 ? 0 : 1).replace(/\.0$/, '') + 'k';
+  return n.toLocaleString();
+}
+
+const PRICE_STEP_50_AT = new Date('2026-06-01T00:00:00+02:00').getTime();
+const PRICE_STEP_100_AT = new Date('2026-06-11T00:00:00+02:00').getTime();
+
+function formatShortCountdown(targetMs) {
+  const ms = targetMs - Date.now();
+  if (ms <= 0) return 'LIVE';
+  const totalMinutes = Math.floor(ms / 60000);
+  const days = Math.floor(totalMinutes / 1440);
+  const hours = Math.floor((totalMinutes % 1440) / 60);
+  if (days > 0) return `${days}D ${String(hours).padStart(2, '0')}H`;
+  const minutes = totalMinutes % 60;
+  return `${hours}H ${String(minutes).padStart(2, '0')}M`;
+}
+
+function updatePriceCountdowns() {
+  const setText = (id, value) => { const el = document.getElementById(id); if (el) el.textContent = value; };
+  setText('price50Countdown', formatShortCountdown(PRICE_STEP_50_AT));
+  setText('price100Countdown', formatShortCountdown(PRICE_STEP_100_AT));
+}
 /* HARMONOGRAM I LICZNIK BLOKĂ“W SYSTEMOWYCH */
 const BLOCK_TIME_MS = 3000;
 const DEADLINE_DAYS = 60;
@@ -3703,6 +4094,7 @@ function getEstimatedBlock(){
 }
 
 function updateCountdown(){
+  updatePriceCountdowns();
   const estimated = getEstimatedBlock();
   const blocksLeft = Math.max(0, DEADLINE_BLOCK - estimated);
   if(blocksLeft === 0){
@@ -3711,6 +4103,8 @@ function updateCountdown(){
     document.getElementById('cdM').textContent = '00';
     document.getElementById('cdS').textContent = '00';
     document.getElementById('cdBlock').textContent = 'QUEST CONCLUDED AT BLOCK #'+DEADLINE_BLOCK.toLocaleString();
+    const topDeadlineDone = document.getElementById('topDeadlineInfo');
+    if (topDeadlineDone) topDeadlineDone.textContent = 'ENDED';
     return;
   }
   const secsLeft = blocksLeft * 3;
@@ -3723,6 +4117,8 @@ function updateCountdown(){
   document.getElementById('cdH').textContent = String(h).padStart(2,'0');
   document.getElementById('cdM').textContent = String(m).padStart(2,'0');
   document.getElementById('cdS').textContent = String(s).padStart(2,'0');
+  const topDeadline = document.getElementById('topDeadlineInfo');
+  if (topDeadline) topDeadline.textContent = String(d).padStart(2,'0')+'D '+String(h).padStart(2,'0')+'H';
   document.getElementById('cdBlock').innerHTML = 'Deadline block: <a href="https://scan.chiliz.com/block/'+DEADLINE_BLOCK+'" target="_blank" style="color:#00ff87;text-decoration:none;">#'+DEADLINE_BLOCK.toLocaleString()+'</a> - Estimated current: ~#'+estimated.toLocaleString()+' - remaining: '+blocksLeft.toLocaleString()+' blocks';
 }
 
@@ -3734,8 +4130,6 @@ setInterval(fetchCurrentBlock, 30000);
 // PrzywrĂłcenie poĹ‚Ä…czenia portfela po przeĹ‚adowaniu strony
 window.addEventListener('load', async () => {
   maybeShowOnboarding();
-
-  // Auto-resume MetaMask if already connected
   const walletProvider = getWalletProvider();
   if(walletProvider){
     try{
@@ -3747,47 +4141,6 @@ window.addEventListener('load', async () => {
         }
       }
     }catch(e){}
-    return; // MM connected, skip WC check
-  }
-
-  // Auto-resume WalletConnect session if page was reloaded after mobile deep link
-  // WC stores session in localStorage — if it exists, reconnect silently
-  try {
-    const wcModule = window['@walletconnect/ethereum-provider'];
-    if (!wcModule?.EthereumProvider) return;
-
-    // Check if there's a stored WC session without initing a full provider
-    const hasSession = Object.keys(localStorage).some(k => k.startsWith('wc@2:client'));
-    if (!hasSession) return;
-
-    console.log('[WC] Found stored session, attempting auto-resume...');
-    const wcProv = await wcModule.EthereumProvider.init({
-      projectId: WC_PROJECT_ID,
-      chains: [1],
-      optionalChains: [88888],
-      rpcMap: { 1: 'https://cloudflare-eth.com', 88888: 'https://rpc.ankr.com/chiliz' },
-      showQrModal: false, // don't show QR on auto-resume
-      metadata: {
-        name: 'Argentina Dream XI',
-        description: 'Block Kickers – Argentina Quest on Chiliz Chain',
-        url: window.location.href,
-        icons: ['https://block-kickers.vercel.app/favicon.ico']
-      }
-    });
-
-    if (wcProv.session) {
-      const sessionAccounts = wcProv.session?.namespaces?.eip155?.accounts || [];
-      const onChiliz = sessionAccounts.some(a => a.startsWith(`eip155:${CHAIN_ID}:`));
-      if (onChiliz) {
-        console.log('[WC] Auto-resuming session...');
-        _wcEthProvider = wcProv;
-        await _afterConnect(wcProv);
-        wcProv.on('disconnect', () => location.reload());
-        wcProv.on('accountsChanged', accs => { if (!accs.length) location.reload(); });
-      }
-    }
-  } catch(e) {
-    console.warn('[WC] Auto-resume failed:', e.message);
   }
 });
 </script>
