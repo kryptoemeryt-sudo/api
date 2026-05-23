@@ -1524,6 +1524,29 @@ body.game-mode .snipe-pos small{display:none;font-family:'Share Tech Mono',monos
   body.game-mode .snipe-list{gap:4px;}
 }
 
+/* Dashboard market rarity override: keep rarity visible on desktop and mobile */
+body.game-mode .snipe-row.rarity-1{
+  border-color:rgba(59,130,246,.82) !important;
+  background:linear-gradient(90deg,rgba(59,130,246,.38),rgba(59,130,246,.18) 34%,#0f1318 74%) !important;
+  box-shadow:inset 5px 0 0 rgba(59,130,246,1),0 0 18px rgba(59,130,246,.18) !important;
+}
+body.game-mode .snipe-row.rarity-2{
+  border-color:rgba(192,132,252,.86) !important;
+  background:linear-gradient(90deg,rgba(192,132,252,.40),rgba(192,132,252,.19) 36%,#0f1318 74%) !important;
+  box-shadow:inset 5px 0 0 rgba(192,132,252,1),0 0 20px rgba(192,132,252,.20) !important;
+}
+body.game-mode .snipe-row.rarity-3{
+  border-color:rgba(255,201,64,.94) !important;
+  background:linear-gradient(90deg,rgba(255,201,64,.42),rgba(255,201,64,.20) 38%,#15130d 76%) !important;
+  box-shadow:inset 5px 0 0 rgba(255,201,64,1),0 0 24px rgba(255,201,64,.24) !important;
+}
+body.game-mode .snipe-row.rarity-1 .snipe-info-text,
+body.game-mode .snipe-row.rarity-1 .deal-points{color:#bfdbfe !important;}
+body.game-mode .snipe-row.rarity-2 .snipe-info-text,
+body.game-mode .snipe-row.rarity-2 .deal-points{color:#e9d5ff !important;}
+body.game-mode .snipe-row.rarity-3 .snipe-info-text,
+body.game-mode .snipe-row.rarity-3 .deal-points{color:#ffe08a !important;}
+
 /* Network waiting overlay for blockchain actions */
 #networkOverlay{
   position:fixed;
