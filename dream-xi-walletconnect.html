@@ -2404,13 +2404,13 @@ async function ensureChilizChain(walletProvider) {
     }
     console.warn('Could not switch to Chiliz Chain', e);
   }
+  let finalCid = 'unknown';
   try {
-    cid = await walletProvider.request({method:'eth_chainId'});
-    throw new Error(`Wallet stayed on chain ${cid}; expected ${wantedChainId}`);
+    finalCid = await walletProvider.request({method:'eth_chainId'});
   } catch(chainError) {
-    if (String(chainError.message || '').includes('Wallet stayed')) throw chainError;
+    finalCid = readableError(chainError);
   }
-  return false;
+  throw new Error(`Wallet stayed on chain ${finalCid}; expected Chiliz Chain ${wantedChainId}`);
 }
 
 async function updateWalletBalance() {
@@ -2515,6 +2515,7 @@ async function connectWalletConnect() {
       projectId: WALLETCONNECT_PROJECT_ID,
       chains: [CHAIN_ID],
       optionalChains: [CHAIN_ID],
+      chainId: CHAIN_ID,
       rpcMap: { [CHAIN_ID]: PUBLIC_RPCS[0] },
       showQrModal: true,
       methods: [
@@ -3187,6 +3188,12 @@ function getUserFriendlyTxError(error, fallbackMessage) {
   }
   if (reason.includes('user rejected') || reason.includes('user denied') || reason.includes('rejected')) {
     return 'Transaction rejected in wallet.';
+  }
+  if (reason.includes('wrong network') || reason.includes('chain') || reason.includes('unsupported')) {
+    return 'Wrong network/provider: '+String(getErrorReason(error)).slice(0, 150);
+  }
+  if (reason) {
+    return fallbackMessage+' Reason: '+String(getErrorReason(error)).slice(0, 170);
   }
   return fallbackMessage;
 }
@@ -4162,15 +4169,27 @@ async function directMint() {
   }
   showNetworkOverlay('Preparing card mint...');
   try {
+    const walletProvider = getWalletProvider();
+    if (!walletProvider) throw new Error('No active wallet provider.');
+    await ensureChilizChain(walletProvider);
+    provider = new ethers.BrowserProvider(walletProvider);
+    signer = await provider.getSigner();
+    address = await signer.getAddress();
+    contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
+    marketContract = new ethers.Contract(MARKET_ADDRESS, MARKET_ABI, signer);
+
     const referrer = getReferrer();
     const walletBalance = await provider.getBalance(address);
     if (walletBalance <= currentMintPrice) {
       showHeaderToast('Not enough CHZ in your wallet for mint price + gas.', true);
       return;
     }
+    const gasEstimate = await contract.mint.estimateGas(referrer, { value: currentMintPrice }).catch(err => {
+      throw new Error('Mint gas estimate failed: '+readableError(err));
+    });
     showHeaderToast(`Initializing card mint for ${ethers.formatEther(currentMintPrice)} CHZ...`);
     updateNetworkOverlay(`Minting random WC card for ${ethers.formatEther(currentMintPrice)} CHZ...`);
-    const tx = await contract.mint(referrer, { value: currentMintPrice });
+    const tx = await contract.mint(referrer, { value: currentMintPrice, gasLimit: gasEstimate + (gasEstimate / 5n) });
     showHeaderToast('Mint transaction sent. Awaiting block confirmation...');
     updateNetworkOverlay('Mint sent. Waiting for block confirmation...');
     
