@@ -1568,7 +1568,7 @@ body.network-busy{cursor:progress;}
       <span class="wallet-option-icon">&#128279;</span>
       <span>
         <span class="wallet-option-name">WalletConnect</span>
-        <span class="wallet-option-desc">Pick Trust Wallet, MetaMask Mobile, or another wallet app.</span>
+        <span class="wallet-option-desc">Pick Trust Wallet or MetaMask Mobile. Use a wallet that supports Chiliz Chain.</span>
       </span>
       <span class="wallet-option-tag">QR</span>
     </button>
@@ -2882,7 +2882,8 @@ async function finalizeWalletConnection(walletProvider, walletType = 'wallet') {
 
   const onChiliz = await ensureChilizChain(walletProvider);
   if(!onChiliz){
-    showHeaderToast('Wrong network! Please switch your wallet to Chiliz Chain (ID: 88888).', true);
+    const chainText = await walletProvider.request({method:'eth_chainId'}).catch(() => 'unknown');
+    showHeaderToast(`Wrong network (${chainText}). Switch to Chiliz Chain (ID: 88888).`, true);
     return false;
   }
 
@@ -4184,12 +4185,20 @@ async function directMint() {
       showHeaderToast('Not enough CHZ in your wallet for mint price + gas.', true);
       return;
     }
-    const gasEstimate = await contract.mint.estimateGas(referrer, { value: currentMintPrice }).catch(err => {
-      throw new Error('Mint gas estimate failed: '+readableError(err));
-    });
     showHeaderToast(`Initializing card mint for ${ethers.formatEther(currentMintPrice)} CHZ...`);
     updateNetworkOverlay(`Minting random WC card for ${ethers.formatEther(currentMintPrice)} CHZ...`);
-    const tx = await contract.mint(referrer, { value: currentMintPrice, gasLimit: gasEstimate + (gasEstimate / 5n) });
+    const txOptions = { value: currentMintPrice };
+    if (activeWalletType === 'Privy' || activeWalletType === 'WalletConnect') {
+      txOptions.gasLimit = 650000n;
+    } else {
+      try {
+        const gasEstimate = await contract.mint.estimateGas(referrer, { value: currentMintPrice });
+        txOptions.gasLimit = gasEstimate + (gasEstimate / 5n);
+      } catch(err) {
+        console.warn('Mint gas estimate skipped:', err);
+      }
+    }
+    const tx = await contract.mint(referrer, txOptions);
     showHeaderToast('Mint transaction sent. Awaiting block confirmation...');
     updateNetworkOverlay('Mint sent. Waiting for block confirmation...');
     
