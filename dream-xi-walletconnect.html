@@ -10,7 +10,35 @@
 <link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Barlow+Condensed:wght@400;600;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.7.0/ethers.umd.min.js"></script>
 <!-- WalletConnect EthereumProvider v2 via jsDelivr CDN -->
-<script>window.process = { env: { NODE_ENV: 'production' } }; window.global = window;</script>
+<script>
+  // Fix: WalletConnect internally calls localStorage which crashes in some Chrome contexts
+  // Provide a safe in-memory fallback
+  window.process = { env: { NODE_ENV: 'production' } };
+  window.global = window;
+  try {
+    localStorage.setItem('__wc_test', '1');
+    localStorage.removeItem('__wc_test');
+  } catch(e) {
+    // localStorage blocked — provide in-memory shim
+    const _store = {};
+    window.localStorage = {
+      getItem:    k => _store[k] ?? null,
+      setItem:    (k,v) => { _store[k] = String(v); },
+      removeItem: k => { delete _store[k]; },
+      clear:      () => { Object.keys(_store).forEach(k => delete _store[k]); },
+      key:        i => Object.keys(_store)[i] ?? null,
+      get length(){ return Object.keys(_store).length; }
+    };
+  }
+  // Clear any stale WalletConnect sessions so user always gets fresh wallet picker
+  try {
+    Object.keys(localStorage).forEach(k => {
+      if (k.startsWith('wc@') || k.startsWith('W3M') || k.startsWith('walletconnect')) {
+        localStorage.removeItem(k);
+      }
+    });
+  } catch(e) {}
+</script>
 <script src="https://cdn.jsdelivr.net/npm/@walletconnect/ethereum-provider@2.10.0/dist/index.umd.js"
   onerror="window._wcLoadError=true"></script>
 <style>
@@ -1739,7 +1767,7 @@ function _destroyWCProvider() {
 
 async function _getWCProvider() {
   // Always create fresh — never reuse stale provider
-  _wcEthProvider = null; // null directly, no disconnect on fresh init
+  _wcEthProvider = null;
 
   if (window._wcLoadError) {
     throw new Error('WalletConnect library failed to load. Check internet connection and reload.');
@@ -1749,6 +1777,15 @@ async function _getWCProvider() {
   if (!wcModule || !wcModule.EthereumProvider) {
     throw new Error('WalletConnect library not loaded. Check internet connection and reload the page.');
   }
+
+  // Clear stale sessions from localStorage — forces wallet picker instead of auto-reconnect
+  try {
+    Object.keys(localStorage).forEach(k => {
+      if (k.startsWith('wc@') || k.startsWith('W3M') || k.startsWith('walletconnect') || k.startsWith('WCM')) {
+        localStorage.removeItem(k);
+      }
+    });
+  } catch(e) {}
 
   console.log('[WC] Starting EthereumProvider.init...');
   try {
@@ -1929,26 +1966,34 @@ async function connectWallet() {
 async function updateWalletBalance() {
   if (!address) return;
   try {
-    // Use the raw provider directly for balance — avoids ethers.BrowserProvider quirks with WC
+    // First try via raw wallet provider
     const rawProv = window._rawWalletProvider;
     let balHex;
     if (rawProv) {
-      balHex = await rawProv.request({ method: 'eth_getBalance', params: [address, 'latest'] });
-    } else if (provider) {
-      const bal = await provider.getBalance(address);
-      const formatted = parseFloat(ethers.formatEther(bal)).toFixed(1);
-      const el = document.getElementById('walletBalance');
-      if(el){ el.textContent = formatted+' CHZ'; el.style.display='inline-block'; }
-      return;
+      try {
+        balHex = await rawProv.request({ method: 'eth_getBalance', params: [address, 'latest'] });
+      } catch(e) {
+        console.warn('[balance] wallet RPC failed, falling back to public RPC:', e.message);
+        balHex = null;
+      }
+    }
+    // Fallback: query public Chiliz RPC directly (works even if wallet doesn't support the chain)
+    if (!balHex) {
+      const resp = await fetch('https://rpc.ankr.com/chiliz', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ jsonrpc:'2.0', method:'eth_getBalance', params:[address,'latest'], id:1 })
+      });
+      const json = await resp.json();
+      balHex = json?.result;
     }
     if (balHex) {
-      const balBig = BigInt(balHex);
-      const formatted = parseFloat(ethers.formatEther(balBig)).toFixed(1);
+      const formatted = parseFloat(ethers.formatEther(BigInt(balHex))).toFixed(2);
       const el = document.getElementById('walletBalance');
-      if(el){ el.textContent = formatted+' CHZ'; el.style.display='inline-block'; }
+      if (el) { el.textContent = formatted + ' CHZ'; el.style.display = 'inline-block'; }
     }
   } catch(e) {
-    console.warn('Balance fetch failed:', e);
+    console.warn('[balance] fetch failed:', e);
   }
 }
 
