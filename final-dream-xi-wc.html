@@ -288,7 +288,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
 }
 .formation.album-horizontal{
   display:grid;
-  grid-template-columns:.72fr 1.22fr 1fr .82fr .72fr;
+  grid-template-columns:1fr;
   align-items:center;
   gap:12px;
   min-width:0;
@@ -313,6 +313,13 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
 .formation.album-horizontal .row-attack{display:grid;grid-template-columns:1fr;gap:8px;}
 .formation.album-horizontal .row-wings{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
 .formation.album-horizontal .row-keeper{display:grid;grid-template-columns:1fr;gap:8px;}
+.formation.album-horizontal .row-single{
+  display:grid;
+  grid-template-columns:repeat(11,minmax(42px,1fr));
+  width:100%;
+  gap:8px;
+}
+.formation.album-horizontal .row-single .pos-card{width:100%;min-width:0;}
 
 .pos-card{
   background: rgba(15, 19, 24, 0.9);
@@ -664,8 +671,8 @@ body.game-mode .pitch-center-line{top:10px;bottom:10px;left:50%;right:auto;width
 body.game-mode .pitch-center-circle{width:78px;height:78px;}
 body.game-mode .pitch-penalty-area-top{left:10px;top:50%;width:58px;height:170px;border:1px dashed rgba(255,255,255,.13);border-left:none;transform:translateY(-50%);}
 body.game-mode .pitch-penalty-area-bottom{right:10px;left:auto;bottom:auto;top:50%;width:58px;height:170px;border:1px dashed rgba(255,255,255,.13);border-right:none;transform:translateY(-50%);}
-body.game-mode .formation{height:100%;min-height:520px;min-width:520px;gap:6px;justify-content:space-between;}
-body.game-mode .formation.album-horizontal{height:100%;min-height:0;min-width:0;grid-template-columns:.72fr 1.18fr 1fr .78fr .68fr;gap:8px;}
+body.game-mode .formation{height:100%;min-height:520px;min-width:520px;gap:6px;justify-content:center;}
+body.game-mode .formation.album-horizontal{height:100%;min-height:0;min-width:0;grid-template-columns:1fr;gap:8px;align-items:center;}
 body.game-mode .form-row{gap:7px;}
 body.game-mode .form-row.row-wings{padding:0 23%;}
 body.game-mode .form-row.row-mid{padding:0 15%;}
@@ -677,8 +684,11 @@ body.game-mode .formation.album-horizontal .row-attack,
 body.game-mode .formation.album-horizontal .row-wide-attack,
 body.game-mode .formation.album-horizontal .row-striker,
 body.game-mode .formation.album-horizontal .row-wings,
-body.game-mode .formation.album-horizontal .row-keeper{padding:0;}
+body.game-mode .formation.album-horizontal .row-keeper,
+body.game-mode .formation.album-horizontal .row-single{padding:0;}
+body.game-mode .formation.album-horizontal .row-single{grid-template-columns:repeat(11,minmax(0,1fr));gap:6px;width:100%;}
 body.game-mode .pos-card{width:clamp(62px,7.2vh,78px);min-height:clamp(78px,10vh,98px);padding:5px 4px;border-radius:6px;}
+body.game-mode .formation.album-horizontal .row-single .pos-card{width:100%;}
 body.game-mode .pos-ball{font-size:15px;margin:0;}
 body.game-mode .pos-name{font-size:7px;}
 body.game-mode .pos-weight{font-size:clamp(16px,2.3vh,20px);}
@@ -747,7 +757,7 @@ body.game-mode .lb-score{font-size:12px;text-align:right;white-space:nowrap;}
   body.game-mode #selectedCountryCompletion{font-size:8px!important;}
   body.game-mode .pitch-wrap{padding:7px 5px;border-radius:9px;}
   body.game-mode .formation{gap:3px;min-height:360px;min-width:330px;}
-  body.game-mode .formation.album-horizontal{min-height:0;min-width:0;grid-template-columns:.64fr 1.12fr .94fr .72fr .62fr;gap:3px;}
+  body.game-mode .formation.album-horizontal{min-height:0;min-width:0;grid-template-columns:1fr;gap:3px;}
   body.game-mode .form-row{gap:4px;}
   body.game-mode .form-row.row-wings{padding:0 19%;}
   body.game-mode .form-row.row-mid{padding:0 8%;}
@@ -759,8 +769,11 @@ body.game-mode .lb-score{font-size:12px;text-align:right;white-space:nowrap;}
   body.game-mode .formation.album-horizontal .row-wide-attack,
   body.game-mode .formation.album-horizontal .row-striker,
   body.game-mode .formation.album-horizontal .row-wings,
-  body.game-mode .formation.album-horizontal .row-keeper{padding:0;}
+  body.game-mode .formation.album-horizontal .row-keeper,
+  body.game-mode .formation.album-horizontal .row-single{padding:0;}
+  body.game-mode .formation.album-horizontal .row-single{grid-template-columns:repeat(11,minmax(0,1fr));gap:2px;width:100%;}
   body.game-mode .pos-card{width:46px;min-height:56px;padding:3px 2px;border-radius:5px;}
+  body.game-mode .formation.album-horizontal .row-single .pos-card{width:100%;min-height:58px;padding:3px 1px;}
   body.game-mode .pos-name{font-size:6px;}
   body.game-mode .pos-ball{font-size:12px;}
   body.game-mode .pos-weight{font-size:11px;}
@@ -2011,11 +2024,7 @@ function renderPitch() {
   document.getElementById('selectedCountryCompletion').textContent = `${currentCompCount}/11 POSITIONS COMPLETED`;
 
   const horizontalFormation = [
-    { cls: 'row-keeper', positions: [1] },
-    { cls: 'row-defense', positions: [2,3,4,5] },
-    { cls: 'row-mid', positions: [6,7,8] },
-    { cls: 'row-wide-attack', positions: [9,11] },
-    { cls: 'row-striker', positions: [10] }
+    { cls: 'row-single', positions: [1,2,3,4,5,6,7,8,9,10,11] }
   ];
   horizontalFormation.forEach(group => {
     const row = group.positions;
