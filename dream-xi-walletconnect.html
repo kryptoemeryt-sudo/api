@@ -2206,6 +2206,9 @@ let contract, marketContract;
 let activeWalletProvider = null;
 let activeWalletType = '';
 let privyClient = null;
+let privyIframe = null;
+let privyMessageListener = null;
+let privySdk = null;
 let activeSellTokenId = null;
 
 window.dreamScores = {}; // portfel -> { teamId -> { pozycja -> {weight, tid, rarity, dna} } }
@@ -2298,6 +2301,43 @@ function getWalletProvider() {
   return activeWalletProvider || getInjectedWalletProvider();
 }
 
+async function ensureChilizChain(walletProvider) {
+  const wantedChainId = '0x' + CHAIN_ID.toString(16);
+  let cid = await walletProvider.request({method:'eth_chainId'});
+  if (parseInt(cid,16) === CHAIN_ID) return true;
+
+  try {
+    await walletProvider.request({
+      method: 'wallet_switchEthereumChain',
+      params: [{ chainId: wantedChainId }]
+    });
+    cid = await walletProvider.request({method:'eth_chainId'});
+    return parseInt(cid,16) === CHAIN_ID;
+  } catch(e) {
+    const code = e && (e.code || e.data?.originalError?.code);
+    if (code === 4902 || String(e && e.message || '').toLowerCase().includes('unrecognized')) {
+      try {
+        await walletProvider.request({
+          method: 'wallet_addEthereumChain',
+          params: [{
+            chainId: wantedChainId,
+            chainName: 'Chiliz Chain',
+            nativeCurrency: { name: 'CHZ', symbol: 'CHZ', decimals: 18 },
+            rpcUrls: PUBLIC_RPCS,
+            blockExplorerUrls: ['https://scan.chiliz.com']
+          }]
+        });
+        cid = await walletProvider.request({method:'eth_chainId'});
+        return parseInt(cid,16) === CHAIN_ID;
+      } catch(addError) {
+        console.warn('Could not add Chiliz Chain', addError);
+      }
+    }
+    console.warn('Could not switch to Chiliz Chain', e);
+  }
+  return false;
+}
+
 async function updateWalletBalance() {
   const walletProvider = getWalletProvider();
   if (walletProvider && address) {
@@ -2323,20 +2363,38 @@ function getChilizPrivyChain() {
 
 async function getPrivyClient() {
   if (privyClient) return privyClient;
-  const { createPrivyClient } = await import('https://esm.sh/@privy-io/js-sdk-core@latest');
-  const storage = {
+  const sdk = await import('https://esm.sh/@privy-io/js-sdk-core@latest');
+  privySdk = sdk;
+  const Privy = sdk.default;
+  const storage = sdk.LocalStorage ? new sdk.LocalStorage() : {
     get: key => Promise.resolve(localStorage.getItem(key)),
     put: (key, value) => Promise.resolve(localStorage.setItem(key, value)),
     del: key => Promise.resolve(localStorage.removeItem(key)),
     getKeys: () => Promise.resolve(Object.keys(localStorage))
   };
-  const config = {
+  privyClient = new Privy({
     appId: PRIVY_APP_ID,
-    supportedChains: [getChilizPrivyChain()],
+    clientId: PRIVY_CLIENT_ID,
     storage
-  };
-  if (PRIVY_CLIENT_ID) config.clientId = PRIVY_CLIENT_ID;
-  privyClient = createPrivyClient(config);
+  });
+
+  await privyClient.initialize();
+
+  if (privyClient.embeddedWallet && !privyIframe) {
+    privyIframe = document.createElement('iframe');
+    privyIframe.src = privyClient.embeddedWallet.getURL();
+    privyIframe.style.display = 'none';
+    privyIframe.setAttribute('aria-hidden', 'true');
+    document.body.appendChild(privyIframe);
+    privyClient.setMessagePoster(privyIframe.contentWindow);
+    privyMessageListener = event => {
+      if (event.source !== privyIframe.contentWindow) return;
+      const data = typeof event.data === 'string' ? JSON.parse(event.data) : event.data;
+      privyClient.embeddedWallet.onMessage(data);
+    };
+    window.addEventListener('message', privyMessageListener);
+  }
+
   return privyClient;
 }
 
@@ -2676,8 +2734,8 @@ async function finalizeWalletConnection(walletProvider, walletType = 'wallet') {
     throw new Error('No wallet account selected.');
   }
 
-  const cid = await walletProvider.request({method:'eth_chainId'});
-  if(parseInt(cid,16) !== CHAIN_ID){
+  const onChiliz = await ensureChilizChain(walletProvider);
+  if(!onChiliz){
     showHeaderToast('Wrong network! Please switch your wallet to Chiliz Chain (ID: 88888).', true);
     return false;
   }
@@ -2732,13 +2790,46 @@ async function connectPrivyWallet(){
   showNetworkOverlay('Opening Privy wallet...');
   try{
     const client = await getPrivyClient();
-    if (!client.wallet || typeof client.wallet.connectWallet !== 'function') {
-      throw new Error('Privy wallet connector is unavailable.');
+
+    let { user } = await client.user.get();
+    if (!user) {
+      hideNetworkOverlay();
+      const email = window.prompt('Enter email for Privy wallet login:');
+      if (!email) return;
+      showNetworkOverlay('Sending Privy login code...');
+      await client.auth.email.sendCode(email.trim());
+      hideNetworkOverlay();
+      const code = window.prompt('Enter the Privy code from your email:');
+      if (!code) return;
+      showNetworkOverlay('Confirming Privy login...');
+      const session = await client.auth.email.loginWithCode(email.trim(), code.trim());
+      user = session.user;
     }
-    const result = await client.wallet.connectWallet({
-      walletList: ['metamask', 'wallet_connect', 'coinbase_wallet']
+
+    if (!privySdk || !privySdk.getUserEmbeddedEthereumWallet || !privySdk.getEntropyDetailsFromUser) {
+      throw new Error('Privy embedded wallet helpers are unavailable.');
+    }
+
+    let wallet = privySdk.getUserEmbeddedEthereumWallet(user);
+    if (!wallet) {
+      updateNetworkOverlay('Creating Privy embedded wallet...');
+      const created = await client.embeddedWallet.create({});
+      user = created.user;
+      wallet = privySdk.getUserEmbeddedEthereumWallet(user);
+    }
+
+    if (!wallet) {
+      throw new Error('Privy could not create or find an embedded wallet.');
+    }
+
+    updateNetworkOverlay('Preparing Privy wallet provider...');
+    const entropy = privySdk.getEntropyDetailsFromUser(user);
+    const walletProvider = await client.embeddedWallet.getEthereumProvider({
+      wallet,
+      entropyId: entropy.entropyId,
+      entropyIdVerifier: entropy.entropyIdVerifier
     });
-    const walletProvider = result?.provider || result?.wallet?.provider || result;
+
     const connected = await finalizeWalletConnection(walletProvider, 'Privy');
     if (connected) showHeaderToast('Privy wallet connected.');
   }catch(e){
@@ -2746,6 +2837,8 @@ async function connectPrivyWallet(){
     const msg = String(e && e.message ? e.message : e);
     if (msg.toLowerCase().includes('client')) {
       showHeaderToast('Privy app ID is set, but this setup may also need clientId from your Privy dashboard.', true);
+    } else if (msg.toLowerCase().includes('email')) {
+      showHeaderToast('Privy email login failed. Check the code and try again.', true);
     } else {
       showHeaderToast('Privy connection failed. MetaMask and Trust Wallet still work.', true);
     }
