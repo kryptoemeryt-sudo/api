@@ -1053,17 +1053,34 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
   <!-- WALLET SELECTION -->
   <div id="connectSection" class="connect-prompt">
     <p>Connect your wallet to explore the tactical pitch, find the best deals, and start scoring.</p>
-    <div style="display:flex;flex-direction:column;align-items:center;gap:12px;width:100%;max-width:340px;margin:0 auto;">
-      <button class="btn-connect-big" onclick="connectWalletMM()" style="display:flex;align-items:center;justify-content:center;gap:10px;">
+    <div style="display:flex;flex-direction:column;align-items:center;gap:10px;width:100%;max-width:360px;margin:0 auto;">
+
+      <!-- MetaMask / browser -->
+      <button class="btn-connect-big" onclick="connectWalletMM()" style="display:flex;align-items:center;justify-content:center;gap:10px;width:100%;">
         <img src="https://upload.wikimedia.org/wikipedia/commons/3/36/MetaMask_Fox.svg" style="width:22px;height:22px;" alt="MetaMask"/>
         METAMASK / BROWSER WALLET
       </button>
-      <button class="btn-connect-big" onclick="connectWalletWC()" style="display:flex;align-items:center;justify-content:center;gap:10px;background:linear-gradient(135deg,rgba(116,172,223,0.15),rgba(116,172,223,0.05));border-color:rgba(116,172,223,0.4);color:#74ACDF;">
-        <svg width="22" height="22" viewBox="0 0 300 185" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M61.4 36.6C107.6-7.7 181.6-7.7 227.8 36.6l5.5 5.3c2.3 2.2 2.3 5.7 0 7.9l-18.8 18.1c-1.1 1.1-2.9 1.1-4 0l-7.6-7.3c-32-30.7-83.8-30.7-115.7 0l-8.1 7.8c-1.1 1.1-2.9 1.1-4 0L56.3 49.8c-2.3-2.2-2.3-5.7 0-7.9l5.1-5.3zm205.4 38.3 16.7 16.1c2.3 2.2 2.3 5.7 0 7.9L199.2 175c-2.3 2.2-5.9 2.2-8.1 0l-56.2-54.1c-.6-.5-1.5-.5-2 0L76.7 175c-2.3 2.2-5.9 2.2-8.1 0L-16 98.9c-2.3-2.2-2.3-5.7 0-7.9l16.7-16.1c2.3-2.2 5.9-2.2 8.1 0l56.2 54.1c.6.5 1.5.5 2 0l56.2-54.1c2.3-2.2 5.9-2.2 8.1 0l56.2 54.1c.6.5 1.5.5 2 0l56.2-54.1c2.1-2.2 5.8-2.2 8 0z" fill="#74ACDF"/></svg>
-        WALLETCONNECT (300+ WALLETS)
+
+      <!-- Socios — direct deep link on mobile, WC modal on desktop -->
+      <button class="btn-connect-big" onclick="connectWalletDeeplink('socios')" style="display:flex;align-items:center;justify-content:center;gap:10px;width:100%;background:linear-gradient(135deg,rgba(229,57,53,0.15),rgba(229,57,53,0.05));border-color:rgba(229,57,53,0.5);color:#ef5350;">
+        <img src="https://cdn.socios.com/assets/logo-mark.png" onerror="this.style.display='none'" style="width:22px;height:22px;border-radius:4px;" alt="Socios"/>
+        SOCIOS WALLET
       </button>
-      <div style="font-family:'Share Tech Mono',monospace;font-size:11px;color:#3d4a5a;letter-spacing:1px;margin-top:4px;">
-        Trust Wallet &middot; Coinbase &middot; Rainbow &middot; Zerion &middot; Ledger &middot; +300 more
+
+      <!-- Trust Wallet — direct deep link on mobile -->
+      <button class="btn-connect-big" onclick="connectWalletDeeplink('trust')" style="display:flex;align-items:center;justify-content:center;gap:10px;width:100%;background:linear-gradient(135deg,rgba(51,117,255,0.15),rgba(51,117,255,0.05));border-color:rgba(51,117,255,0.4);color:#3375ff;">
+        <img src="https://trustwallet.com/assets/images/media/assets/TWT.png" onerror="this.style.display='none'" style="width:22px;height:22px;border-radius:50%;" alt="Trust"/>
+        TRUST WALLET
+      </button>
+
+      <!-- Generic WC QR for desktop / other wallets -->
+      <button class="btn-connect-big" onclick="connectWalletWC()" style="display:flex;align-items:center;justify-content:center;gap:10px;width:100%;background:linear-gradient(135deg,rgba(116,172,223,0.12),rgba(116,172,223,0.04));border-color:rgba(116,172,223,0.35);color:#74ACDF;">
+        <svg width="20" height="20" viewBox="0 0 300 185" fill="none"><path d="M61.4 36.6C107.6-7.7 181.6-7.7 227.8 36.6l5.5 5.3c2.3 2.2 2.3 5.7 0 7.9l-18.8 18.1c-1.1 1.1-2.9 1.1-4 0l-7.6-7.3c-32-30.7-83.8-30.7-115.7 0l-8.1 7.8c-1.1 1.1-2.9 1.1-4 0L56.3 49.8c-2.3-2.2-2.3-5.7 0-7.9l5.1-5.3zm205.4 38.3 16.7 16.1c2.3 2.2 2.3 5.7 0 7.9L199.2 175c-2.3 2.2-5.9 2.2-8.1 0l-56.2-54.1c-.6-.5-1.5-.5-2 0L76.7 175c-2.3 2.2-5.9 2.2-8.1 0L-16 98.9c-2.3-2.2-2.3-5.7 0-7.9l16.7-16.1c2.3-2.2 5.9-2.2 8.1 0l56.2 54.1c.6.5 1.5.5 2 0l56.2-54.1c2.3-2.2 5.9-2.2 8.1 0l56.2 54.1c.6.5 1.5.5 2 0l56.2-54.1c2.1-2.2 5.8-2.2 8 0z" fill="#74ACDF"/></svg>
+        OTHER WALLET (QR CODE)
+      </button>
+
+      <div style="font-family:'Share Tech Mono',monospace;font-size:10px;color:#3d4a5a;letter-spacing:1px;margin-top:2px;text-align:center;">
+        Coinbase &middot; Rainbow &middot; Zerion &middot; Ledger &middot; +300 more via QR
       </div>
     </div>
   </div>
@@ -1596,7 +1613,11 @@ const RULES_TRANSLATIONS = {
   }
 };
 
-const PUBLIC_RPCS = ['https://chiliz-rpc.publicnode.com','https://rpc.chiliz.com'];
+const PUBLIC_RPCS = [
+  'https://rpc.ankr.com/chiliz',
+  'https://chiliz-rpc.publicnode.com',
+  'https://rpc.chiliz.com'
+];
 
 let provider, signer, address;
 let contract, marketContract;
@@ -1691,20 +1712,53 @@ function getWalletProvider() {
 
 // Shared post-connect setup (works for both MetaMask and WalletConnect)
 async function _afterConnect(rawProvider) {
-  // rawProvider can be window.ethereum (MetaMask) or WalletConnect EthereumProvider
-  // Both are EIP-1193 compatible — wrap in ethers.BrowserProvider
-  provider = new ethers.BrowserProvider(rawProvider);
+  // For WalletConnect: use public RPC for reads (avoids WC relay CORS issues in Chrome)
+  // and WC provider only for signing transactions
+  const isWC = !!(rawProvider.session !== undefined || rawProvider.connect);
 
-  // getSigner can fail on some WC providers — fallback to accounts call
-  try {
-    signer  = await provider.getSigner();
-    address = await signer.getAddress();
-  } catch(e) {
-    // WalletConnect fallback: get accounts directly from raw provider
-    const accounts = await rawProvider.request({ method: 'eth_accounts' });
+  if (isWC) {
+    // Get address from WC provider
+    let accounts;
+    try {
+      accounts = await rawProvider.request({ method: 'eth_accounts' });
+    } catch(e) {
+      accounts = rawProvider.accounts || [];
+    }
     if (!accounts || accounts.length === 0) throw new Error('No accounts returned from wallet');
     address = accounts[0];
-    signer  = await provider.getSigner(address);
+
+    // Use public RPC provider for all blockchain reads — avoids WC relay latency and CORS
+    let readProv = null;
+    for (const url of PUBLIC_RPCS) {
+      try {
+        const p = new ethers.JsonRpcProvider(url);
+        await p.getBlockNumber();
+        readProv = p;
+        break;
+      } catch(e) {}
+    }
+    if (!readProv) throw new Error('Cannot connect to Chiliz Chain RPC. Check your internet connection.');
+
+    // Wrap WC provider in BrowserProvider only for signing
+    const wcBrowserProv = new ethers.BrowserProvider(rawProvider);
+    provider = readProv; // reads go to public RPC
+    signer   = await wcBrowserProv.getSigner(address).catch(async () => {
+      // Fallback: try getSigner without address arg
+      return await wcBrowserProv.getSigner();
+    });
+
+  } else {
+    // MetaMask / injected wallet — BrowserProvider handles everything
+    provider = new ethers.BrowserProvider(rawProvider);
+    try {
+      signer  = await provider.getSigner();
+      address = await signer.getAddress();
+    } catch(e) {
+      const accounts = await rawProvider.request({ method: 'eth_accounts' });
+      if (!accounts || accounts.length === 0) throw new Error('No accounts returned from wallet');
+      address = accounts[0];
+      signer  = await provider.getSigner(address);
+    }
   }
 
   // Store raw provider reference for balance polling
@@ -1821,6 +1875,57 @@ async function _getWCProvider() {
 
   console.log('[WC] Provider ready:', _wcEthProvider);
   return _wcEthProvider;
+}
+
+// Direct deep-link connect for specific wallets (Socios, Trust) on mobile
+async function connectWalletDeeplink(walletId) {
+  const isMobile = /iPhone|iPad|Android/i.test(navigator.userAgent);
+  showHeaderToast('Connecting to ' + (walletId === 'socios' ? 'Socios Wallet' : 'Trust Wallet') + '…', false);
+
+  try {
+    const wcProv = await _getWCProvider();
+
+    // Capture WC URI for deep linking before connect resolves
+    wcProv.on('display_uri', (wcUri) => {
+      if (isMobile) {
+        const deeplink = walletId === 'socios'
+          ? 'https://wallet.socios.com/wc?uri=' + encodeURIComponent(wcUri)
+          : 'https://link.trustwallet.com/wc?uri='  + encodeURIComponent(wcUri);
+        window.location.href = deeplink;
+      }
+      // Desktop: WC modal shows QR automatically
+    });
+
+    await wcProv.connect();
+
+    // Chain verification
+    const rawChainId = await wcProv.request({ method: 'eth_chainId' });
+    const chainId = typeof rawChainId === 'number' ? rawChainId
+      : rawChainId.startsWith('0x') ? parseInt(rawChainId, 16) : parseInt(rawChainId, 10);
+
+    const sessionChains = wcProv.session?.namespaces?.eip155?.chains || [];
+    const sessionHasChiliz = sessionChains.some(c => c === 'eip155:88888');
+    const onChiliz = chainId === CHAIN_ID || sessionHasChiliz;
+
+    if (!onChiliz) {
+      showHeaderToast('Please switch to Chiliz Chain (ID: 88888) in your wallet and try again.', true);
+      _destroyWCProvider();
+      return;
+    }
+
+    await _afterConnect(wcProv);
+    wcProv.on('disconnect', () => { location.reload(); });
+    wcProv.on('accountsChanged', (accs) => { if (!accs.length) location.reload(); });
+
+  } catch(e) {
+    console.error('Deeplink connect error:', e);
+    _destroyWCProvider();
+    if (e?.message?.includes('User rejected') || e?.code === 4001 || e?.message?.includes('Modal closed')) {
+      showHeaderToast('Connection cancelled.', false);
+    } else {
+      showHeaderToast('Connection failed: ' + (e?.message || 'unknown error'), true);
+    }
+  }
 }
 
 async function connectWalletWC() {
