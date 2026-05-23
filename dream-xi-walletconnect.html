@@ -11,7 +11,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.7.0/ethers.umd.min.js"></script>
 <!-- WalletConnect EthereumProvider v2 via jsDelivr CDN -->
 <script>window.process = { env: { NODE_ENV: 'production' } }; window.global = window;</script>
-<script src="https://cdn.jsdelivr.net/npm/@walletconnect/ethereum-provider@2.10.0/dist/index.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@walletconnect/ethereum-provider@2.10.0/dist/index.umd.js"
+  onerror="window._wcLoadError=true"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
 body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;font-size:16px;min-height:100vh;}
@@ -1725,45 +1726,63 @@ const WC_PROJECT_ID = '15671485110825e18107d31b379d9df6';
 let _wcEthProvider = null;
 
 function _destroyWCProvider() {
-  try { if (_wcEthProvider) _wcEthProvider.disconnect(); } catch(e) {}
+  if (_wcEthProvider) {
+    try {
+      // Only disconnect if session exists and provider is functional
+      if (_wcEthProvider.session && typeof _wcEthProvider.disconnect === 'function') {
+        _wcEthProvider.disconnect().catch(() => {});
+      }
+    } catch(e) {}
+  }
   _wcEthProvider = null;
 }
 
 async function _getWCProvider() {
-  // Always create a fresh instance — reusing broken/stale provider causes
-  // "Cannot convert undefined or null to object" errors on subsequent attempts
-  _destroyWCProvider();
+  // Always create fresh — never reuse stale provider
+  _wcEthProvider = null; // null directly, no disconnect on fresh init
+
+  if (window._wcLoadError) {
+    throw new Error('WalletConnect library failed to load. Check internet connection and reload.');
+  }
 
   const wcModule = window['@walletconnect/ethereum-provider'];
   if (!wcModule || !wcModule.EthereumProvider) {
     throw new Error('WalletConnect library not loaded. Check internet connection and reload the page.');
   }
 
-  _wcEthProvider = await wcModule.EthereumProvider.init({
-    projectId: WC_PROJECT_ID,
-    chains: [1],           // ETH as required base (WC relay needs a known chain)
-    optionalChains: [88888], // Chiliz Chain — we verify/switch after connect
-    rpcMap: {
-      1:     'https://cloudflare-eth.com',
-      88888: 'https://rpc.ankr.com/chiliz'
-    },
-    showQrModal: true,
-    metadata: {
-      name: 'Argentina Dream XI',
-      description: 'Block Kickers – Argentina Quest on Chiliz Chain',
-      url: window.location.href,
-      icons: ['https://block-kickers.vercel.app/favicon.ico']
-    },
-    qrModalOptions: {
-      themeMode: 'dark',
-      themeVariables: {
-        '--wcm-accent-color': '#00ff87',
-        '--wcm-background-color': '#06080a',
-        '--wcm-font-family': "'Barlow Condensed', sans-serif"
+  console.log('[WC] Starting EthereumProvider.init...');
+  try {
+    _wcEthProvider = await wcModule.EthereumProvider.init({
+      projectId: WC_PROJECT_ID,
+      chains: [1],
+      optionalChains: [88888],
+      rpcMap: {
+        1:     'https://cloudflare-eth.com',
+        88888: 'https://rpc.ankr.com/chiliz'
+      },
+      showQrModal: true,
+      metadata: {
+        name: 'Argentina Dream XI',
+        description: 'Block Kickers – Argentina Quest on Chiliz Chain',
+        url: window.location.href,
+        icons: ['https://block-kickers.vercel.app/favicon.ico']
+      },
+      qrModalOptions: {
+        themeMode: 'dark',
+        themeVariables: {
+          '--wcm-accent-color': '#00ff87',
+          '--wcm-background-color': '#06080a',
+          '--wcm-font-family': "'Barlow Condensed', sans-serif"
+        }
       }
-    }
-  });
+    });
+  } catch(initErr) {
+    console.error('[WC] EthereumProvider.init failed:', initErr);
+    _wcEthProvider = null;
+    throw new Error('WalletConnect init failed: ' + (initErr?.message || String(initErr)));
+  }
 
+  console.log('[WC] Provider ready:', _wcEthProvider);
   return _wcEthProvider;
 }
 
@@ -1771,13 +1790,14 @@ async function connectWalletWC() {
   try {
     showHeaderToast('Opening WalletConnect — scan QR with your wallet app…', false);
 
-    // Init fresh provider (destroys any broken previous session)
+    // Always fresh provider
     let wcProv = await _getWCProvider();
 
-    // If a previous session exists, kill it so user gets wallet picker
-    // then reinit because the provider object is invalidated after disconnect
+    // If old session exists, clear it so user gets wallet picker not auto-reconnect
     if (wcProv.session) {
       try { await wcProv.disconnect(); } catch(e) {}
+      // Reinit after disconnect — provider is invalidated
+      _wcEthProvider = null;
       wcProv = await _getWCProvider();
     }
 
