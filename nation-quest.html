@@ -149,8 +149,8 @@ a{text-decoration:none;color:inherit}
   <section class="hero">
     <div class="panel">
       <div class="quest-kicker"><span class="dot"></span> Open Nation Quest</div>
-      <h1 class="hero-title">CARD HUNT <span>500 CHZ</span></h1>
-      <p class="hero-copy">Mint the missing USA position first and claim the <strong>500 CHZ card hunt reward</strong>. When the missing card appears, the quest locks automatically.</p>
+      <h1 class="hero-title">USA QUEST <span>1500 CHZ</span></h1>
+      <p class="hero-copy">The missing USA card has been found by the creator wallet, so the reward rolls into the main race. First wallet to complete <strong>11/11 USA positions wins 1500 CHZ</strong>.</p>
       <div class="mint-row">
         <button class="btn" id="heroMintBtn" type="button" onclick="directMint()">MINT RANDOM WC CARD</button>
         <span class="wallet-note" id="mintNote">Connect wallet or mint directly in a Web3 browser.</span>
@@ -164,8 +164,8 @@ a{text-decoration:none;color:inherit}
           <div class="usa-sub">First complete wallet wins the squad prize</div>
         </div>
       </div>
-      <div class="reward">1000 <small>CHZ</small></div>
-      <div class="reward-label">First wallet with all 11 USA positions wins</div>
+      <div class="reward">1500 <small>CHZ</small></div>
+      <div class="reward-label">Rolled-up prize for the first complete USA squad</div>
       <div class="status-line" id="questStatus">Loading live quest status...</div>
     </div>
   </section>
@@ -185,7 +185,7 @@ a{text-decoration:none;color:inherit}
 
     <section class="panel">
       <div class="section-title"><span>My USA Squad</span><span class="live" id="myStatus">Connect wallet</span></div>
-      <div class="squad" id="mySlots"><div class="loading" style="grid-column:1/-1">Connect wallet to track your 1000 CHZ squad race.</div></div>
+      <div class="squad" id="mySlots"><div class="loading" style="grid-column:1/-1">Connect wallet to track your 1500 CHZ squad race.</div></div>
     </section>
 
     <section class="panel market-section">
@@ -195,11 +195,11 @@ a{text-decoration:none;color:inherit}
 
     <aside class="info-grid">
       <div class="callout gold">
-        <h3>500 CHZ Card Hunt</h3>
-        <div class="winner-box" id="cardWinnerBox">Waiting for the missing USA card...</div>
+        <h3>Reward Rolled Up</h3>
+        <div class="winner-box" id="cardWinnerBox">The 500 CHZ card hunt reward is now added to the main USA squad prize.</div>
       </div>
       <div class="callout">
-        <h3>1000 CHZ Squad Prize</h3>
+        <h3>1500 CHZ Squad Prize</h3>
         <div class="winner-box" id="squadWinnerBox">First wallet to complete all 11 USA positions wins.</div>
       </div>
       <div class="panel" style="padding:10px">
@@ -795,8 +795,8 @@ function renderSlots(targetId, filledSet, byPosition, winnerPos = null, mode = "
     const ownListing = myListed[0];
     const el = document.createElement("div");
     el.className = `slot ${done ? "done" : "open"} ${mode === "mine" && best ? `rarity-${best.rarity}` : ""} ${winnerPos === pos.id ? "win" : ""}`;
-    const openCount = mode === "global" ? "500" : (floor ? `${floor.price}` : "-");
-    const openStatus = mode === "global" ? "OPEN CHZ" : (floor ? "BUY CHZ" : "MISSING");
+    const openCount = mode === "global" ? "-" : (floor ? `${floor.price}` : "-");
+    const openStatus = mode === "global" ? "OPEN" : (floor ? "BUY CHZ" : "MISSING");
     const actionHtml = mode === "mine" ? `
         ${floor ? `<button class="slot-action buy" onclick="buyListing(${floor.listingId}, '${floor.price}')">BUY</button>` : ""}
         ${ownListing && !sellable ? `<button class="slot-action sell" onclick="cancelListing(${ownListing.listingId})">CANCEL</button>` : ""}
@@ -839,17 +839,19 @@ function renderQuest(state) {
     const btn = document.getElementById(id);
     btn.disabled = closed;
     btn.classList.toggle("closed", closed);
-    btn.textContent = closed ? "NO REWARDS" : state.cardWinner ? "MINT FOR SQUAD" : (id === "mintBtn" ? "MINT 10 CHZ" : "MINT RANDOM WC CARD");
+    btn.textContent = closed ? "NO REWARDS" : (id === "mintBtn" ? "MINT 10 CHZ" : "MINT FOR 1500 CHZ RACE");
   });
 
   const questStatus = document.getElementById("questStatus");
   questStatus.classList.toggle("win", closed);
-  if (state.cardWinner) {
-    questStatus.textContent = `500 CHZ CARD FOUND: ${posLabel(state.cardWinner.position)} by ${shortAddr(state.cardWinner.wallet)}`;
+  if (closed) {
+    questStatus.textContent = `1500 CHZ SQUAD WINNER: ${shortAddr(state.squadWinner.wallet)}`;
+  } else if (state.cardWinner) {
+    questStatus.textContent = `MISSING CARD FOUND: ${posLabel(state.cardWinner.position)} - 500 CHZ ROLLED INTO 1500 CHZ SQUAD PRIZE`;
   } else if (state.missing.length === 1) {
-    questStatus.textContent = `1 CARD LEFT: ${state.missing[0].label} - first mint wins 500 CHZ`;
+    questStatus.textContent = `1 CARD LEFT: ${state.missing[0].label} - REWARD IS NOW 1500 CHZ FOR FULL SQUAD`;
   } else {
-    questStatus.textContent = `${state.missing.length} CARDS LEFT: ${state.missing.map(p => p.label).join(", ")}`;
+    questStatus.textContent = `${state.missing.length} CARDS LEFT - 1500 CHZ FOR FIRST COMPLETE USA SQUAD`;
   }
 
   renderSlots("globalSlots", state.globalPositions, byPosition, state.cardWinner?.position, "global");
@@ -862,11 +864,11 @@ function renderQuest(state) {
   renderMarket(state);
 
   document.getElementById("cardWinnerBox").innerHTML = state.cardWinner
-    ? `<b>500 CHZ winner</b><br>${shortAddr(state.cardWinner.wallet)} minted ${posLabel(state.cardWinner.position)}<br>Block ${state.cardWinner.block || "pending"} - ${formatTime(state.cardWinner.time)}`
-    : `No winner yet.<br>Missing: <b>${state.missing.map(p => p.label).join(", ") || "none"}</b>`;
+    ? `<b>500 CHZ rolled up</b><br>Missing card was found: ${posLabel(state.cardWinner.position)}<br>Added to the main 1500 CHZ squad prize.`
+    : `Card hunt reward is included in the main prize.<br>Missing: <b>${state.missing.map(p => p.label).join(", ") || "none"}</b>`;
   document.getElementById("squadWinnerBox").innerHTML = state.squadWinner
-    ? `<b>1000 CHZ winner</b><br>${shortAddr(state.squadWinner.wallet)} completed USA squad<br>Block ${state.squadWinner.block || "pending"} - ${formatTime(state.squadWinner.time)}`
-    : `No completed USA squad yet.<br>First wallet with all 11 positions wins <b>1000 CHZ</b>.`;
+    ? `<b>1500 CHZ winner</b><br>${shortAddr(state.squadWinner.wallet)} completed USA squad<br>Block ${state.squadWinner.block || "pending"} - ${formatTime(state.squadWinner.time)}`
+    : `No completed USA squad yet.<br>First wallet with all 11 positions wins <b>1500 CHZ</b>.`;
 
   const latest = state.usaEvents.slice().sort((a,b) => (b.block || 0) - (a.block || 0) || b.tokenId - a.tokenId).slice(0, 12);
   document.getElementById("feedCount").textContent = `${state.usaEvents.length} EVENTS`;
