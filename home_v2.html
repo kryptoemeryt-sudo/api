@@ -1167,6 +1167,298 @@ body.dash-active .quest-label{font-size:8px !important;margin-top:3px !important
   body.dash-active .hero-figure-stage,
   body.dash-active .hero-right #heroCanvas{width:108px !important;height:132px !important;}
 }
+/* DESKTOP WOW DASHBOARD - full re-layout for 100% PC view */
+@media (min-width:1200px) and (min-height:720px){
+  body.dash-active .desktop-dashboard{
+    display:grid !important;
+    grid-template-columns:340px minmax(560px,1fr) 390px !important;
+    grid-template-rows:218px minmax(390px,1fr) 330px !important;
+    grid-template-areas:
+      "hero hero hero"
+      "market market squad"
+      "country leaderboard leaderboard" !important;
+    gap:12px !important;
+    height:calc(100vh - 49px) !important;
+    padding:12px !important;
+    min-height:0 !important;
+  }
+  body.dash-active .dash-column{display:contents !important;}
+  body.dash-active #mint{grid-area:hero !important;}
+  body.dash-active #market{grid-area:market !important;}
+  body.dash-active #squad{grid-area:squad !important;}
+  body.dash-active #countryLb{grid-area:country !important;}
+  body.dash-active #leaderboard{grid-area:leaderboard !important;}
+
+  body.dash-active .section,
+  body.dash-active .hero{
+    min-height:0 !important;
+    max-height:none !important;
+    overflow:hidden !important;
+    border-radius:12px !important;
+    border-color:rgba(255,255,255,.095) !important;
+    background:
+      radial-gradient(circle at 18% 12%,rgba(0,255,135,.055),transparent 28%),
+      linear-gradient(180deg,rgba(15,19,24,.985),rgba(8,11,15,.985)) !important;
+    box-shadow:0 18px 46px rgba(0,0,0,.24),inset 0 0 0 1px rgba(255,255,255,.018) !important;
+  }
+
+  /* Top hero becomes a compact command strip */
+  body.dash-active #mint{
+    display:grid !important;
+    grid-template-columns:290px 1fr 310px !important;
+    gap:14px !important;
+    align-items:stretch !important;
+    padding:14px !important;
+  }
+  body.dash-active #mint .hero-left{
+    display:grid !important;
+    grid-template-rows:auto 1fr auto !important;
+    padding:0 !important;
+    min-width:0 !important;
+  }
+  body.dash-active #mint .badge{margin:0 0 8px !important;width:max-content !important;max-width:100% !important;}
+  body.dash-active #mint .hero-title-desktop{
+    font-size:34px !important;
+    line-height:.88 !important;
+    margin:0 !important;
+    align-self:center !important;
+  }
+  body.dash-active #mint .stats-row{
+    grid-template-columns:repeat(4,minmax(0,1fr)) !important;
+    gap:7px !important;
+    margin:8px 0 0 !important;
+  }
+  body.dash-active #mint .stat{padding:7px 5px !important;}
+  body.dash-active #mint .stat-n{font-size:19px !important;}
+  body.dash-active #mint .stat-l{font-size:8px !important;}
+  body.dash-active #mint .hero-right{
+    display:flex !important;
+    position:relative !important;
+    inset:auto !important;
+    width:auto !important;
+    height:auto !important;
+    opacity:1 !important;
+    align-items:center !important;
+    justify-content:center !important;
+    padding:0 !important;
+    pointer-events:none !important;
+  }
+  body.dash-active #mint .hero-figure-stage{
+    display:block !important;
+    width:150px !important;
+    height:180px !important;
+    min-height:0 !important;
+    flex:none !important;
+  }
+  body.dash-active #mint #heroCanvas{width:150px !important;height:180px !important;min-height:0 !important;position:static !important;}
+  body.dash-active #mint .quest-launcher{
+    display:grid !important;
+    grid-template-columns:1fr !important;
+    gap:10px !important;
+    margin:0 !important;
+    align-self:center !important;
+  }
+  body.dash-active #mint .quest-link{
+    min-height:78px !important;
+    grid-template-columns:54px minmax(0,1fr) !important;
+    padding:10px 12px !important;
+    border-radius:10px !important;
+  }
+  body.dash-active #mint .quest-icon-cell{width:54px !important;min-width:54px !important;height:54px !important;}
+  body.dash-active #mint .quest-icon{font-size:31px !important;}
+  body.dash-active #mint .quest-flag-us{width:38px !important;height:27px !important;}
+  body.dash-active #mint .quest-title{font-size:12px !important;}
+  body.dash-active #mint .quest-amount{font-size:20px !important;}
+
+  /* Market gets the main stage, but no endless empty wall */
+  body.dash-active #market{
+    display:flex !important;
+    flex-direction:column !important;
+    padding:15px !important;
+  }
+  body.dash-active #market .sec-header{margin-bottom:10px !important;}
+  body.dash-active #market .market-tabs{margin-bottom:8px !important;}
+  body.dash-active #marketFilters{margin-bottom:10px !important;}
+  body.dash-active #marketList{
+    grid-template-columns:repeat(auto-fill,minmax(124px,1fr)) !important;
+    gap:10px !important;
+    overflow:auto !important;
+    align-content:start !important;
+    padding-right:4px !important;
+    min-height:0 !important;
+    flex:1 1 auto !important;
+  }
+  body.dash-active #market .fig-canvas{height:92px !important;}
+  body.dash-active #market .fig-info{padding:8px !important;}
+  body.dash-active #market .fig-weight{font-size:13px !important;}
+  body.dash-active #market .fig-price{font-size:14px !important;}
+
+  /* Squad and leaderboard feel like side control panels */
+  body.dash-active #squad{padding:15px !important;}
+  body.dash-active #squad .col-grid{
+    grid-template-columns:repeat(3,minmax(0,1fr)) !important;
+    gap:9px !important;
+    overflow:auto !important;
+    align-content:start !important;
+    min-height:0 !important;
+  }
+  body.dash-active #squad .fig-canvas{height:86px !important;}
+  body.dash-active #leaderboard .lb-podium{
+    grid-template-columns:repeat(3,minmax(0,1fr)) !important;
+    gap:9px !important;
+  }
+  body.dash-active #leaderboard .lb-podium-card{min-height:158px !important;}
+  body.dash-active #leaderboard .lb-podium-card .fig-canvas{height:86px !important;}
+  body.dash-active #leaderboard .lb-rest-list{max-height:150px !important;}
+
+  /* Country panel becomes compact bottom-left intel */
+  body.dash-active #countryLb{padding:15px !important;}
+  body.dash-active #countryLbGrid{max-height:190px !important;overflow:auto !important;}
+  body.dash-active .country-dash-summary{grid-template-columns:1fr 1fr !important;gap:8px !important;}
+}
+/* DESKTOP TOP STRIP FIX - brand / quests / figure */
+@media (min-width:1200px) and (min-height:720px){
+  body.dash-active #mint{
+    position:relative !important;
+    display:block !important;
+    padding:14px 20px !important;
+    min-height:218px !important;
+  }
+  body.dash-active #mint .hero-left{
+    display:block !important;
+    width:300px !important;
+    padding:0 !important;
+  }
+  body.dash-active #mint .badge{margin:0 0 10px !important;}
+  body.dash-active #mint .hero-title-desktop{
+    font-size:34px !important;
+    line-height:.9 !important;
+    margin:0 0 10px !important;
+  }
+  body.dash-active #mint .stats-row{
+    display:grid !important;
+    grid-template-columns:repeat(4,1fr) !important;
+    gap:7px !important;
+    width:295px !important;
+    margin:0 !important;
+  }
+  body.dash-active #mint .quest-launcher{
+    position:absolute !important;
+    left:365px !important;
+    top:42px !important;
+    right:270px !important;
+    display:grid !important;
+    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+    gap:12px !important;
+    margin:0 !important;
+  }
+  body.dash-active #mint .quest-link{
+    min-height:118px !important;
+    grid-template-columns:64px minmax(0,1fr) !important;
+    padding:14px 16px !important;
+  }
+  body.dash-active #mint .quest-icon-cell{width:64px !important;min-width:64px !important;height:72px !important;}
+  body.dash-active #mint .quest-icon{font-size:42px !important;}
+  body.dash-active #mint .quest-flag-us{width:48px !important;height:34px !important;}
+  body.dash-active #mint .quest-title{font-size:14px !important;}
+  body.dash-active #mint .quest-amount{font-size:24px !important;}
+  body.dash-active #mint .quest-amount span{font-size:10px !important;}
+  body.dash-active #mint .quest-label{font-size:11px !important;}
+  body.dash-active #mint .hero-right{
+    position:absolute !important;
+    right:42px !important;
+    top:13px !important;
+    width:190px !important;
+    height:190px !important;
+    display:flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+    padding:0 !important;
+    opacity:1 !important;
+  }
+  body.dash-active #mint .hero-figure-stage,
+  body.dash-active #mint #heroCanvas{
+    width:190px !important;
+    height:190px !important;
+    min-height:0 !important;
+    position:static !important;
+  }
+}
+/* DESKTOP TOP QUEST CARDS FINAL OVERRIDE */
+@media (min-width:1200px) and (min-height:720px){
+  body.dash-active .desktop-dashboard{
+    grid-template-rows:250px minmax(360px,1fr) 310px !important;
+  }
+  body.dash-active #mint .quest-launcher{
+    left:390px !important;
+    top:55px !important;
+    right:300px !important;
+    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+    gap:14px !important;
+  }
+  body.dash-active #mint .quest-link{
+    display:grid !important;
+    grid-template-columns:66px minmax(0,1fr) !important;
+    align-items:center !important;
+    min-height:112px !important;
+    max-height:112px !important;
+    padding:14px 16px !important;
+    gap:12px !important;
+    overflow:hidden !important;
+  }
+  body.dash-active #mint .quest-icon-cell{
+    position:relative !important;
+    left:auto !important;
+    top:auto !important;
+    width:66px !important;
+    min-width:66px !important;
+    height:76px !important;
+    padding:0 !important;
+  }
+  body.dash-active #mint .quest-icon{font-size:42px !important;}
+  body.dash-active #mint .quest-flag-us{width:50px !important;height:35px !important;}
+  body.dash-active #mint .quest-link > div{
+    min-width:0 !important;
+    overflow:hidden !important;
+  }
+  body.dash-active #mint .quest-title{
+    padding-left:0 !important;
+    font-size:14px !important;
+    line-height:1 !important;
+    white-space:nowrap !important;
+    text-align:center !important;
+  }
+  body.dash-active #mint .quest-prize{
+    margin-top:9px !important;
+    text-align:center !important;
+  }
+  body.dash-active #mint .quest-amount{
+    font-size:25px !important;
+    line-height:.95 !important;
+    flex-wrap:wrap !important;
+  }
+  body.dash-active #mint .quest-amount span{
+    display:block !important;
+    width:100% !important;
+    font-size:10px !important;
+    margin-top:2px !important;
+  }
+  body.dash-active #mint .quest-label{
+    font-size:10px !important;
+    margin-top:4px !important;
+  }
+  body.dash-active #mint .hero-right{top:26px !important;}
+}
+/* DESKTOP TOP STRIP POSITIONING FIX */
+@media (min-width:1200px) and (min-height:720px){
+  body.dash-active #mint .hero-left{position:static !important;}
+  body.dash-active #mint .quest-launcher{
+    left:398px !important;
+    right:300px !important;
+    width:auto !important;
+    max-width:none !important;
+  }
+}
 </style>
 </head>
 <body>
