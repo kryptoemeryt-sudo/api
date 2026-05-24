@@ -1768,17 +1768,35 @@ body.dash-active .quest-label{font-size:8px !important;margin-top:3px !important
     margin:0 !important;
     padding:14px 16px !important;
     justify-content:center !important;
+    cursor:pointer !important;
   }
   body.dash-active #mint .flow-earn-title{
-    font-size:13px !important;
+    font-family:'Black Ops One',sans-serif !important;
+    font-size:18px !important;
     margin-bottom:8px !important;
   }
   body.dash-active #mint .flow-earn-text{
-    font-size:14px !important;
+    font-size:15px !important;
     line-height:1.34 !important;
   }
   body.dash-active #mint .flow-earn-text strong{
     font-size:13px !important;
+  }
+  body.dash-active #mint .price-roadmap-card,
+  body.dash-active #mint .price-roadmap-card *{
+    font-family:'Black Ops One',sans-serif !important;
+    letter-spacing:.8px !important;
+  }
+  body.dash-active #mint .price-roadmap-card div[style*="justify-content:space-between"]{
+    font-size:11px !important;
+  }
+  body.dash-active #mint .price-roadmap-card div[style*="justify-content:space-between"] span:last-child{
+    color:var(--gold) !important;
+    text-align:right !important;
+  }
+  .how-cta-card:hover{
+    border-color:rgba(0,255,135,.55) !important;
+    box-shadow:0 0 34px rgba(0,255,135,.14), inset 0 0 24px rgba(0,255,135,.045) !important;
   }
 }
 /* TEMP QUEST VISIBILITY CLEANUP */
@@ -2066,9 +2084,9 @@ document.addEventListener('DOMContentLoaded', setupDesktopDashboardLayout);
           </div>
         </div>
       </div>
-      <div class="flow-earn-card" style="margin-top:14px;margin-bottom:0;">
-        <div class="flow-earn-title">FLOW TO EARN: SCORE THEN SELL</div>
-        <div class="flow-earn-text"><strong>No need to HODL.</strong> Mint or buy a card, score it when it enters your wallet, then sell it and move to the next hunt. A new fantasy flow: score first, trade next.</div>
+      <div class="flow-earn-card how-cta-card" style="margin-top:14px;margin-bottom:0;" onclick="openQuickHowModal()">
+        <div class="flow-earn-title">HOW IT WORKS</div>
+        <div class="flow-earn-text"><strong>Score then sell.</strong> Open the quick rules: rewards, 65/25/10 split and why you do not need to HODL every card.</div>
       </div>
     </div>
   </div>
@@ -2195,6 +2213,46 @@ document.addEventListener('DOMContentLoaded', setupDesktopDashboardLayout);
     <div id="mintPopupExtras" style="display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-bottom:16px;"></div>
     <button onclick="shareMintOnX()" style="width:100%;background:#000;border:1px solid #333;color:#fff;padding:10px;border-radius:8px;font-family:'Black Ops One',sans-serif;font-size:12px;letter-spacing:1px;cursor:pointer;margin-bottom:8px;">X SHARE ON X</button>
     <button onclick="closeMintSuccess()" style="width:100%;background:none;border:1px solid var(--border);color:var(--text3);padding:8px;border-radius:8px;font-family:'Black Ops One',sans-serif;font-size:11px;letter-spacing:1px;cursor:pointer;">CLOSE</button>
+  </div>
+</div>
+
+<div class="list-modal" id="quickHowModal" onclick="if(event.target===this)closeQuickHowModal()">
+  <div class="list-box" style="max-width:560px;">
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px;">
+      <div class="list-title" style="margin:0;color:var(--green);">HOW IT WORKS</div>
+      <button onclick="closeQuickHowModal()" style="background:none;border:none;color:var(--text3);font-size:22px;cursor:pointer;line-height:1;padding:0 4px;">&times;</button>
+    </div>
+    <div style="background:rgba(0,255,135,.07);border:1px solid rgba(0,255,135,.24);border-radius:10px;padding:12px 14px;margin-bottom:12px;">
+      <div style="font-family:'Black Ops One',sans-serif;color:var(--green);font-size:14px;letter-spacing:1px;margin-bottom:5px;">FLOW TO EARN: SCORE THEN SELL</div>
+      <div style="font-size:14px;color:var(--text2);line-height:1.45;"><strong style="color:var(--gold);">No need to HODL every card.</strong> When a card enters your wallet, it scores for quests. After that you can sell it, trade up, or hold/block it if it is rare.</div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-bottom:12px;">
+      <div style="background:rgba(255,255,255,.025);border:1px solid rgba(0,255,135,.2);border-radius:9px;padding:12px;">
+        <div style="font-family:'Black Ops One',sans-serif;color:var(--green);font-size:24px;">65%</div>
+        <div style="font-family:'Black Ops One',sans-serif;font-size:11px;letter-spacing:1px;margin:4px 0;">GLOBAL TOP</div>
+        <div style="font-size:12px;color:var(--text2);line-height:1.35;">Shared by top 10%. Final score = figure weight x tournament multiplier.</div>
+      </div>
+      <div style="background:rgba(255,255,255,.025);border:1px solid rgba(255,201,64,.25);border-radius:9px;padding:12px;">
+        <div style="font-family:'Black Ops One',sans-serif;color:var(--gold);font-size:24px;">25%</div>
+        <div style="font-family:'Black Ops One',sans-serif;font-size:11px;letter-spacing:1px;margin:4px 0;">COUNTRY BEST</div>
+        <div style="font-size:12px;color:var(--text2);line-height:1.35;">Best card in each country race earns the country reward.</div>
+      </div>
+      <div style="background:rgba(255,255,255,.025);border:1px solid rgba(168,85,247,.28);border-radius:9px;padding:12px;">
+        <div style="font-family:'Black Ops One',sans-serif;color:#a855f7;font-size:24px;">10%</div>
+        <div style="font-family:'Black Ops One',sans-serif;font-size:11px;letter-spacing:1px;margin:4px 0;">LEGENDARY</div>
+        <div style="font-size:12px;color:var(--text2);line-height:1.35;">Legendary cards share the legendary reward lane.</div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+      <div style="border:1px solid var(--border);border-radius:9px;padding:11px 12px;background:rgba(255,255,255,.02);">
+        <div style="font-family:'Black Ops One',sans-serif;color:var(--text);font-size:12px;margin-bottom:5px;">STRATEGY</div>
+        <div style="font-size:12px;color:var(--text2);line-height:1.4;">Flip common cards fast, hunt upgrades, or hold rare low-supply cards to control a position.</div>
+      </div>
+      <div style="border:1px solid var(--border);border-radius:9px;padding:11px 12px;background:rgba(255,255,255,.02);">
+        <div style="font-family:'Black Ops One',sans-serif;color:var(--text);font-size:12px;margin-bottom:5px;">HOLD OR SELL?</div>
+        <div style="font-size:12px;color:var(--text2);line-height:1.4;">Global score can be stamped. Country-best rewards should be held at the final snapshot.</div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -2793,6 +2851,15 @@ function switchHowTab(tab, btn){
 function closeNqWelcome(dontShow){
   document.getElementById('nqWelcomeModal').classList.remove('show');
   if(dontShow) localStorage.setItem('nqWelcomeSeen','1');
+}
+
+function openQuickHowModal(){
+  const modal = document.getElementById('quickHowModal');
+  if(modal) modal.classList.add('show');
+}
+function closeQuickHowModal(){
+  const modal = document.getElementById('quickHowModal');
+  if(modal) modal.classList.remove('show');
 }
 
 function showNqWelcome(){
