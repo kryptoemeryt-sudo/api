@@ -33,7 +33,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:12px 2
 .nav-right{display:flex;align-items:center;gap:12px;}
 .wallet-addr{font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--text2);}
 .wallet-bal{font-family:'Black Ops One',sans-serif;font-size:13px;color:var(--gold);}
-.btn-updates,.wallet-bal{display:none!important;}
+.btn-updates{display:none!important;}
 .btn-connect{background:var(--green-dim);border:1px solid rgba(0,255,135,0.3);color:var(--green);padding:8px 18px;border-radius:6px;font-family:'Black Ops One',sans-serif;font-size:11px;letter-spacing:1px;cursor:pointer;transition:all 0.2s;}
 .btn-connect:hover{background:rgba(0,255,135,0.2);}
 .wallet-choice-modal{position:fixed;inset:0;background:rgba(0,0,0,0.76);backdrop-filter:blur(8px);z-index:5000;display:none;align-items:center;justify-content:center;padding:18px;}
@@ -344,7 +344,7 @@ h1 .accent{color:var(--green);text-shadow:0 0 30px var(--green-glow);}
   #betaBanner{display:none!important;}
   #statsTicker{display:none!important;}
   .wallet-addr{display:none!important;}
-  .wallet-bal{display:none!important;}
+  .wallet-bal{font-size:10px;}
   .btn-connect{font-size:10px;padding:6px 10px;}
   #hamburgerBtn{display:flex!important;}
 
@@ -1491,7 +1491,7 @@ body.dash-active .quest-label{font-size:8px !important;margin-top:3px !important
 /* DESKTOP BOTTOM PANELS LIFT + COUNTRY LEAD SCROLL */
 @media (min-width:1200px) and (min-height:720px){
   body.dash-active .desktop-dashboard{
-    grid-template-rows:250px 540px minmax(0,1fr) !important;
+    grid-template-rows:330px 460px minmax(0,1fr) !important;
   }
   body.dash-active #market,
   body.dash-active #countryLb,
@@ -1540,6 +1540,122 @@ body.dash-active .quest-label{font-size:8px !important;margin-top:3px !important
     overflow-y:auto !important;
     padding-right:4px !important;
     padding-bottom:14px !important;
+  }
+}
+/* DESKTOP HERO CTA - mint + referral + flow under quest cards */
+@media (min-width:1200px) and (min-height:720px){
+  body.dash-active #mint{
+    min-height:330px !important;
+  }
+  body.dash-active #mint .hero-center{
+    display:block !important;
+    position:absolute !important;
+    left:398px !important;
+    right:300px !important;
+    top:184px !important;
+    width:auto !important;
+    max-width:none !important;
+    padding:0 !important;
+    z-index:3 !important;
+  }
+  body.dash-active #mint .mint-box{
+    max-width:none !important;
+    width:100% !important;
+    display:grid !important;
+    grid-template-columns:170px 190px minmax(210px,1fr) !important;
+    grid-template-areas:
+      "price action flow"
+      "road road flow" !important;
+    gap:8px 10px !important;
+    padding:10px !important;
+    border-radius:10px !important;
+    background:linear-gradient(135deg,rgba(0,255,135,.075),rgba(15,19,24,.96)) !important;
+    border-color:rgba(0,255,135,.28) !important;
+  }
+  body.dash-active #mint .price-row{
+    grid-area:price !important;
+    display:block !important;
+    margin:0 !important;
+  }
+  body.dash-active #mint .price-label{
+    font-size:10px !important;
+    letter-spacing:1.4px !important;
+  }
+  body.dash-active #mint .price-val{
+    font-size:25px !important;
+    line-height:1 !important;
+    margin-top:4px !important;
+  }
+  body.dash-active #mint .split-row{
+    display:none !important;
+  }
+  body.dash-active #mint #heroConnBtn,
+  body.dash-active #mint #mintBtn{
+    grid-area:action !important;
+    align-self:start !important;
+    min-height:42px !important;
+    padding:10px 12px !important;
+    font-size:13px !important;
+    margin:0 !important;
+  }
+  body.dash-active #mint #refLinkWrap{
+    grid-area:action !important;
+    align-self:end !important;
+    margin:50px 0 0 !important;
+  }
+  body.dash-active #mint #refLinkWrap button{
+    min-height:34px !important;
+    padding:7px 9px !important;
+    font-size:9px !important;
+    line-height:1.05 !important;
+  }
+  body.dash-active #mint #refLinkWrap span{
+    display:none !important;
+  }
+  body.dash-active #mint .price-roadmap-card{
+    grid-area:road !important;
+    margin:0 !important;
+    padding:7px 9px !important;
+    border-radius:8px !important;
+  }
+  body.dash-active #mint .price-roadmap-card > div:first-child{
+    font-size:9px !important;
+    margin-bottom:4px !important;
+  }
+  body.dash-active #mint .price-roadmap-card div[style*="flex-direction:column"]{
+    display:grid !important;
+    grid-template-columns:repeat(3,minmax(0,1fr)) !important;
+    gap:6px !important;
+  }
+  body.dash-active #mint .price-roadmap-card div[style*="justify-content:space-between"]{
+    display:block !important;
+    font-size:10px !important;
+    white-space:nowrap !important;
+  }
+  body.dash-active #mint .price-roadmap-card span{
+    display:block !important;
+    overflow:hidden !important;
+    text-overflow:ellipsis !important;
+  }
+  body.dash-active #mint .flow-earn-card{
+    grid-area:flow !important;
+    margin:0 !important;
+    padding:9px 11px !important;
+    min-height:100% !important;
+    display:flex !important;
+    flex-direction:column !important;
+    justify-content:center !important;
+  }
+  body.dash-active #mint .flow-earn-title{
+    font-size:11px !important;
+    margin-bottom:5px !important;
+  }
+  body.dash-active #mint .flow-earn-text{
+    font-size:12px !important;
+    line-height:1.25 !important;
+  }
+  body.dash-active #mint .flow-earn-text strong{
+    font-size:11px !important;
   }
 }
 /* TEMP QUEST VISIBILITY CLEANUP */
@@ -1808,7 +1924,7 @@ document.addEventListener('DOMContentLoaded', setupDesktopDashboardLayout);
         </button>
       </div>
       <!-- Price roadmap -->
-      <div style="margin-top:14px;background:rgba(255,201,64,0.06);border:1px solid rgba(255,201,64,0.2);border-radius:8px;padding:12px 14px;">
+      <div class="price-roadmap-card" style="margin-top:14px;background:rgba(255,201,64,0.06);border:1px solid rgba(255,201,64,0.2);border-radius:8px;padding:12px 14px;">
         <div style="font-size:11px;color:var(--gold);letter-spacing:2px;font-family:'Black Ops One',sans-serif;margin-bottom:8px;">&#128293; PRICE INCREASES SOON</div>
         <div style="display:flex;flex-direction:column;gap:4px;">
           <div style="display:flex;justify-content:space-between;font-size:13px;">
@@ -2844,6 +2960,8 @@ async function connectWalletSilent(){
     _readProvider = null;
     document.getElementById('navAddr').textContent = address.slice(0,6)+'...'+address.slice(-4);
     document.getElementById('navAddr').style.display = 'inline';
+    const silentBal = await provider.getBalance(address).catch(() => 0n);
+    document.getElementById('navBal').textContent = Number(ethers.formatEther(silentBal)).toFixed(1)+' CHZ';
     document.getElementById('navBal').style.display = 'inline';
     document.getElementById('navBtn').textContent = 'CONNECTED';
     document.getElementById('navBtn').classList.add('connected');
@@ -2982,6 +3100,8 @@ async function connectInjectedWallet(){
 
     document.getElementById('navAddr').textContent=address.slice(0,6)+'...'+address.slice(-4);
     document.getElementById('navAddr').style.display='inline';
+    const injectedBal = await provider.getBalance(address).catch(() => 0n);
+    document.getElementById('navBal').textContent=Number(ethers.formatEther(injectedBal)).toFixed(1)+' CHZ';
     document.getElementById('navBal').style.display='inline';
     document.getElementById('navBtn').textContent='CONNECTED';
     document.getElementById('navBtn').classList.add('connected');
