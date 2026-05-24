@@ -669,7 +669,10 @@ async function cancelListing(listingId) {
 
 async function fetchEvents() {
   try {
-    const res = await fetch("/api/events", {cache:"no-store"});
+    const res = await fetch(`/api/events?t=${Date.now()}`, {
+      cache:"no-store",
+      headers:{"Cache-Control":"no-store"}
+    });
     if (res.ok) {
       const data = await res.json();
       if (Array.isArray(data.mints)) {
@@ -935,7 +938,15 @@ function openSellCards(position) {
 }
 
 async function manualRefresh() {
-  await loadQuest(false, false);
+  const remaining = refreshRemainingMs();
+  if (remaining > 0) {
+    updateRefreshButton();
+    const sec = Math.ceil(remaining / 1000);
+    const status = document.getElementById("updatedAt");
+    if (status) status.textContent = `Refresh in ${sec}s`;
+    return;
+  }
+  await loadQuest(false, true);
 }
 
 async function loadQuest(silent = false, force = false) {
