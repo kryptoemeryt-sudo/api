@@ -10,10 +10,10 @@
 <link rel="icon" href='data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"%3E%3Crect width="64" height="64" rx="12" fill="%2306080a"/%3E%3Ctext x="32" y="43" text-anchor="middle" font-size="38"%3E%E2%9A%BD%3C/text%3E%3C/svg%3E'>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-html,body{width:100%;min-height:100%;background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif}
-body{overflow-x:hidden}
+html,body{width:100%;max-width:100%;min-height:100%;background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;overflow-x:hidden}
+body{position:relative}
 a{text-decoration:none;color:inherit}
-.page{min-height:100dvh;display:grid;grid-template-rows:auto auto auto minmax(0,1fr);gap:10px;padding:10px;background:radial-gradient(circle at 15% 0%,rgba(0,255,135,.11),transparent 31%),radial-gradient(circle at 90% 10%,rgba(255,201,64,.09),transparent 32%),#06080a}
+.page{width:100%;max-width:100%;min-height:100dvh;display:grid;grid-template-rows:auto auto auto minmax(0,1fr);gap:10px;padding:10px;overflow-x:hidden;background:radial-gradient(circle at 15% 0%,rgba(0,255,135,.11),transparent 31%),radial-gradient(circle at 90% 10%,rgba(255,201,64,.09),transparent 32%),#06080a}
 .topnav{height:52px;border-bottom:1px solid #1c2028;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0 10px;background:rgba(6,8,10,.72);backdrop-filter:blur(6px)}
 .top-left{display:flex;align-items:center;gap:8px;min-width:0;overflow:hidden}
 .brand{display:flex;align-items:center;gap:9px;font-family:'Black Ops One',sans-serif;letter-spacing:1.5px;font-size:15px}
@@ -58,7 +58,7 @@ a{text-decoration:none;color:inherit}
 .section-title{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px;font-family:'Black Ops One',sans-serif;color:#7a8899;font-size:13px;letter-spacing:2px;text-transform:uppercase}
 .section-title .live{font-family:'Share Tech Mono',monospace;color:#00ff87;font-size:12px;letter-spacing:1px}
 .squad{display:grid;grid-template-columns:repeat(11,minmax(0,1fr));gap:6px}
-.slot{position:relative;min-height:104px;border-radius:8px;border:1px solid rgba(90,106,122,.26);background:linear-gradient(180deg,rgba(15,19,24,.96),rgba(8,11,16,.94));display:flex;flex-direction:column;justify-content:space-between;align-items:center;padding:9px 4px;text-align:center;overflow:hidden}
+.slot{position:relative;min-width:0;min-height:104px;border-radius:8px;border:1px solid rgba(90,106,122,.26);background:linear-gradient(180deg,rgba(15,19,24,.96),rgba(8,11,16,.94));display:flex;flex-direction:column;justify-content:space-between;align-items:center;padding:9px 4px;text-align:center;overflow:hidden}
 .slot.done{border-color:rgba(0,255,135,.64);background:linear-gradient(180deg,rgba(0,255,135,.18),rgba(15,19,24,.95));box-shadow:0 0 18px rgba(0,255,135,.14),inset 0 0 18px rgba(0,255,135,.10)}
 .slot.rarity-1{border-color:rgba(59,130,246,.62);background:linear-gradient(180deg,rgba(59,130,246,.24),rgba(15,19,24,.95));box-shadow:0 0 18px rgba(59,130,246,.14),inset 0 0 18px rgba(59,130,246,.10)}
 .slot.rarity-2{border-color:rgba(192,132,252,.68);background:linear-gradient(180deg,rgba(192,132,252,.25),rgba(15,19,24,.95));box-shadow:0 0 18px rgba(192,132,252,.16),inset 0 0 18px rgba(192,132,252,.11)}
@@ -120,7 +120,10 @@ a{text-decoration:none;color:inherit}
 .network-ball{font-size:0;animation:spin 1.1s linear infinite;margin-bottom:10px}.network-ball::before{content:"\26bd";font-size:34px}.slot-ball span{font-size:0}.slot-ball span::before{content:"\26bd";font-size:17px}.network-title{font-family:'Black Ops One',sans-serif;color:#00ff87;font-size:16px;letter-spacing:1px;margin-bottom:8px}.network-text{font-family:'Share Tech Mono',monospace;color:#8fa4bb;font-size:12px;line-height:1.35}
 @media(max-width:1100px){.main-grid{grid-template-columns:1fr}.squad{grid-template-columns:repeat(11,minmax(0,1fr))}}
 @media(max-width:900px){
-  .page{padding:6px;gap:7px}.topnav{height:auto;min-height:44px;padding:6px}.top-left{gap:4px}.brand{font-size:11px}.brand-ball{font-size:17px}.nav-actions{gap:5px}.pill{display:none}.wallet-info{font-size:7px;padding:3px 4px;max-width:76px;overflow:hidden;text-overflow:ellipsis}.btn{font-size:8px;padding:7px 8px}
+  html,body{width:100%;max-width:100%;overflow-x:hidden;touch-action:pan-y}
+  .page,.topnav,.hero,.stats,.main-grid,.panel,.market-section,.info-grid,.squad,.market-grid,.feed{width:100%;max-width:100%;min-width:0;overflow-x:hidden}
+  .page{padding:6px;gap:7px}.topnav{height:auto;min-height:44px;padding:6px}.top-left{gap:4px}.brand{font-size:11px}.brand-ball{font-size:17px}.nav-actions{gap:5px}.pill{display:none}.wallet-info{font-size:7px;padding:3px 4px;max-width:76px;overflow:hidden;text-overflow:ellipsis}.btn{font-size:8px;padding:7px 6px}
+  .topnav{display:grid;grid-template-columns:minmax(0,1fr);align-items:center}.top-left,.nav-actions{min-width:0;max-width:100%;overflow:hidden}.brand{min-width:0;max-width:100%;overflow:hidden}.brand span:last-child{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.nav-actions{width:100%;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));justify-content:stretch}.nav-actions .btn{width:100%;min-width:0;max-width:100%;overflow:hidden;text-overflow:ellipsis}.wallet-info{min-width:0}
   .hero{grid-template-columns:1fr}.hero-title{font-size:39px}.hero-copy{font-size:16px}.panel{padding:8px;border-radius:8px}.reward{font-size:40px}
   .stats{grid-template-columns:repeat(4,minmax(0,1fr));gap:5px}.stat{min-height:58px;padding:7px 3px}.stat-value{font-size:17px}.stat-label{font-size:7px;letter-spacing:.2px}
   .squad{gap:3px}.slot{min-height:64px;padding:5px 2px;border-radius:6px}.slot.has-actions{cursor:pointer}.slot-pos{font-size:7px}.slot-ball{font-size:11px}.slot-count{font-size:10px}.slot-status{font-size:5px}.slot-actions{display:none}.slot-action{font-size:6px;padding:3px 4px}.section-title{font-size:8px;letter-spacing:.6px}.section-title .live{font-size:7px}.callout p{font-size:13px}.feed{max-height:150px}.feed-row{grid-template-columns:34px 1fr auto;padding:6px}.feed-pos{font-size:9px}.feed-addr,.feed-token{font-size:8px}.market-section{grid-column:auto}.market-grid{max-height:180px;grid-template-columns:1fr}.market-card{grid-template-columns:36px 1fr 78px}.market-card .slot-action{width:70px}
