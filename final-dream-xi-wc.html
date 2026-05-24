@@ -663,6 +663,11 @@ body.game-mode .country-card{height:100%;min-height:0;min-width:0;overflow:hidde
 body.game-mode .country-card,
 body.game-mode .country-card:hover,
 body.game-mode .country-card.selected{transform:none!important;}
+body.game-mode .country-card.album-empty{opacity:.72;border-color:rgba(90,106,122,.28);background:linear-gradient(180deg,rgba(15,19,24,.96),rgba(8,11,16,.94));}
+body.game-mode .country-card.album-low{border-color:rgba(59,130,246,.46);background:linear-gradient(180deg,rgba(59,130,246,.16),rgba(15,19,24,.95));box-shadow:0 0 12px rgba(59,130,246,.08),inset 0 0 14px rgba(59,130,246,.07);}
+body.game-mode .country-card.album-mid{border-color:rgba(0,255,135,.46);background:linear-gradient(180deg,rgba(0,255,135,.13),rgba(15,19,24,.95));box-shadow:0 0 14px rgba(0,255,135,.10),inset 0 0 16px rgba(0,255,135,.08);}
+body.game-mode .country-card.album-hot{border-color:rgba(255,201,64,.58);background:linear-gradient(180deg,rgba(255,201,64,.18),rgba(22,18,9,.95));box-shadow:0 0 16px rgba(255,201,64,.14),inset 0 0 18px rgba(255,201,64,.09);}
+body.game-mode .country-card.album-complete{border-color:rgba(192,132,252,.72);background:linear-gradient(180deg,rgba(192,132,252,.20),rgba(0,255,135,.08),rgba(15,19,24,.95));box-shadow:0 0 18px rgba(192,132,252,.16),inset 0 0 18px rgba(0,255,135,.10);}
 body.game-mode .country-card > div{width:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;}
 body.game-mode .country-card-flag{font-size:18px;margin:0;min-height:0;width:100%;display:flex;justify-content:center;overflow:hidden;line-height:1;}
 body.game-mode .country-card .flag-container{max-width:100%;height:auto;overflow:hidden;}
@@ -671,7 +676,7 @@ body.game-mode .country-card-name{font-size:clamp(8px,1.02vw,12px);line-height:1
 body.game-mode .country-card-fed{display:none;}
 body.game-mode .country-card-score{font-size:clamp(9px,1.15vw,13px);line-height:1;margin-top:2px;}
 body.game-mode .country-card-completion{font-size:clamp(6px,.82vw,9px);line-height:1;font-family:'Black Ops One',sans-serif;letter-spacing:.3px;}
-body.game-mode .country-card.selected{border-color:#00ff87;box-shadow:inset 0 0 18px rgba(0,255,135,.12);}
+body.game-mode .country-card.selected{border-color:#00ff87;box-shadow:0 0 14px rgba(0,255,135,.18),inset 0 0 18px rgba(0,255,135,.12);}
 body.game-mode .country-card:has(.country-card-crown){border-color:rgba(255,201,64,.42);box-shadow:inset 0 0 18px rgba(255,201,64,.08);}
 body.game-mode .pitch-container{display:flex;flex-direction:column;order:1;width:100%;grid-column:1 / -1;grid-row:1 / 2;}
 body.game-mode .pitch-title-row{margin-bottom:7px;flex-shrink:0;}
@@ -2157,14 +2162,20 @@ function renderCountryHub() {
     const leader = getCountryLeader(team.id);
     const isMeLeader = leader.wallet && leader.wallet.toLowerCase() === myAddr;
     
-    const card = document.createElement('div');
-    card.className = `country-card ${selectedTeamId === team.id ? 'selected' : ''}`;
-    card.onclick = () => selectCountry(team.id);
-    
     let scoreDisplay = userStats.score > 0 ? `${userStats.score} pts` : '0 pts';
     let compDisplay = `${userStats.completed}/11`;
     const compRatio = userStats.completed / 11;
     const compColor = compRatio >= 1 ? '#00ff87' : compRatio >= .55 ? '#ffc940' : compRatio > 0 ? '#f97316' : '#ef4444';
+    const progressClass = userStats.completed >= 11 ? 'album-complete'
+      : userStats.completed >= 8 ? 'album-hot'
+      : userStats.completed >= 5 ? 'album-mid'
+      : userStats.completed > 0 ? 'album-low'
+      : 'album-empty';
+    
+    const card = document.createElement('div');
+    card.className = `country-card ${progressClass} ${selectedTeamId === team.id ? 'selected' : ''}`;
+    card.onclick = () => selectCountry(team.id);
+    
     let crownDisplay = '';
 
     card.innerHTML = `
