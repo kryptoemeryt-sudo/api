@@ -658,7 +658,7 @@ body.game-mode .lb-section{background:#0a0e14;border:1px solid #1c2028;border-ra
 body.game-mode .country-section{display:flex;flex-direction:column;order:2;width:100%;grid-column:1 / -1;grid-row:2 / 3;}
 body.game-mode .filter-tabs{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px;margin-bottom:8px;flex-shrink:0;}
 body.game-mode .tab-btn{font-size:8px;padding:6px 4px;letter-spacing:.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-body.game-mode .country-grid{flex:1;min-height:0;max-height:none;overflow:hidden;grid-template-columns:repeat(8,minmax(0,1fr));grid-template-rows:repeat(6,minmax(0,1fr));gap:6px;padding-right:0;align-items:stretch;}
+body.game-mode .country-grid{flex:1;min-height:0;max-height:none;overflow:auto;grid-template-columns:repeat(6,minmax(0,1fr));grid-auto-rows:minmax(74px,1fr);gap:6px;padding-right:3px;align-items:stretch;}
 body.game-mode .country-card{height:100%;min-height:0;min-width:0;overflow:hidden;padding:5px 3px;border-radius:7px;align-items:center;text-align:center;justify-content:center;gap:2px;background:radial-gradient(circle at 50% 0%,rgba(116,172,223,.08),transparent 60%),#0f1318;}
 body.game-mode .country-card,
 body.game-mode .country-card:hover,
@@ -765,7 +765,7 @@ body.game-mode .lb-score{font-size:12px;text-align:right;white-space:nowrap;}
   body.game-mode .lb-section{padding:6px;border-radius:8px;}
   body.game-mode .filter-tabs{grid-template-columns:repeat(7,minmax(0,1fr));gap:3px;margin-bottom:4px;}
   body.game-mode .tab-btn{font-size:5px;padding:4px 1px;}
-  body.game-mode .country-grid{grid-template-columns:repeat(8,minmax(0,1fr));grid-template-rows:repeat(6,minmax(0,1fr));gap:3px;overflow:hidden;padding-right:0;}
+  body.game-mode .country-grid{grid-template-columns:repeat(6,minmax(0,1fr));grid-template-rows:none;grid-auto-rows:minmax(58px,1fr);gap:3px;overflow:auto;padding-right:2px;}
   body.game-mode .country-card{min-height:0;padding:3px 1px;justify-content:center;gap:1px;}
   body.game-mode .country-card.album-empty{opacity:.72;border-color:rgba(90,106,122,.24);background:linear-gradient(180deg,rgba(15,19,24,.96),rgba(8,11,16,.94));}
   body.game-mode .country-card.album-low{border-color:rgba(59,130,246,.46);background:linear-gradient(180deg,rgba(59,130,246,.16),rgba(15,19,24,.95));box-shadow:0 0 8px rgba(59,130,246,.10),inset 0 0 10px rgba(59,130,246,.08);}
@@ -844,7 +844,7 @@ body.game-mode .lb-score{font-size:12px;text-align:right;white-space:nowrap;}
   body.game-mode .lb-section{padding:5px;border-radius:7px;}
   body.game-mode .filter-tabs{grid-template-columns:repeat(7,minmax(0,1fr));gap:3px;margin-bottom:5px;}
   body.game-mode .tab-btn{font-size:5px;padding:3px 2px;}
-  body.game-mode .country-grid{grid-template-columns:repeat(8,minmax(0,1fr));grid-template-rows:repeat(6,minmax(0,1fr));gap:3px;overflow:hidden;padding-right:0;}
+  body.game-mode .country-grid{grid-template-columns:repeat(6,minmax(0,1fr));grid-template-rows:none;grid-auto-rows:minmax(52px,1fr);gap:3px;overflow:auto;padding-right:2px;}
   body.game-mode .country-card{min-height:0;padding:2px 1px;gap:1px;}
   body.game-mode .country-card.album-low{box-shadow:0 0 7px rgba(59,130,246,.10),inset 0 0 9px rgba(59,130,246,.08);}
   body.game-mode .country-card.album-mid{box-shadow:0 0 8px rgba(0,255,135,.12),inset 0 0 9px rgba(0,255,135,.09);}
@@ -954,11 +954,12 @@ body.game-mode .lb-score{font-size:12px;text-align:right;white-space:nowrap;}
     padding:clamp(3px,.55dvh,5px) 1px;
   }
   body.game-mode .country-grid{
-    grid-template-columns:repeat(8,minmax(0,1fr));
-    grid-template-rows:repeat(6,minmax(0,1fr));
+    grid-template-columns:repeat(6,minmax(0,1fr));
+    grid-template-rows:none;
+    grid-auto-rows:minmax(clamp(46px,7.2dvh,64px),1fr);
     gap:clamp(2px,.75vw,4px);
-    overflow:hidden;
-    padding-right:0;
+    overflow:auto;
+    padding-right:2px;
   }
   body.game-mode .country-card{
     min-height:0;
