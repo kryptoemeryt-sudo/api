@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
 <title>BLOCK KICKERS 2026</title>
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 64 64%27%3E%3Crect width=%2764%27 height=%2764%27 rx=%2714%27 fill=%27%2300ff87%27/%3E%3Cpath fill=%27%2306080a%27 d=%27M12 14h20c7 0 11 3 11 9 0 4-2 7-6 8 5 1 8 4 8 9 0 7-5 10-13 10H12V14zm12 9v6h6c3 0 5-1 5-3s-2-3-5-3h-6zm0 15v6h8c3 0 5-1 5-3s-2-3-5-3h-8z%27/%3E%3Cpath fill=%27%2306080a%27 d=%27M45 14h7v14l8-14h7L56 31l12 19h-8l-8-14v14h-7V14z%27 transform=%27translate(-8 0)%27/%3E%3C/svg%3E">
-<link rel="shortcut icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 64 64%27%3E%3Crect width=%2764%27 height=%2764%27 rx=%2714%27 fill=%27%2300ff87%27/%3E%3Cpath fill=%27%2306080a%27 d=%27M12 14h20c7 0 11 3 11 9 0 4-2 7-6 8 5 1 8 4 8 9 0 7-5 10-13 10H12V14zm12 9v6h6c3 0 5-1 5-3s-2-3-5-3h-6zm0 15v6h8c3 0 5-1 5-3s-2-3-5-3h-8z%27/%3E%3Cpath fill=%27%2306080a%27 d=%27M45 14h7v14l8-14h7L56 31l12 19h-8l-8-14v14h-7V14z%27 transform=%27translate(-8 0)%27/%3E%3C/svg%3E">
-<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 64 64%27%3E%3Crect width=%2764%27 height=%2764%27 rx=%2714%27 fill=%27%2300ff87%27/%3E%3Cpath fill=%27%2306080a%27 d=%27M12 14h20c7 0 11 3 11 9 0 4-2 7-6 8 5 1 8 4 8 9 0 7-5 10-13 10H12V14zm12 9v6h6c3 0 5-1 5-3s-2-3-5-3h-6zm0 15v6h8c3 0 5-1 5-3s-2-3-5-3h-8z%27/%3E%3Cpath fill=%27%2306080a%27 d=%27M45 14h7v14l8-14h7L56 31l12 19h-8l-8-14v14h-7V14z%27 transform=%27translate(-8 0)%27/%3E%3C/svg%3E">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2306080a'/%3E%3Ctext x='32' y='47' text-anchor='middle' font-size='43'%3E%E2%9A%BD%3C/text%3E%3C/svg%3E">
+<link rel="shortcut icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2306080a'/%3E%3Ctext x='32' y='47' text-anchor='middle' font-size='43'%3E%E2%9A%BD%3C/text%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2306080a'/%3E%3Ctext x='32' y='47' text-anchor='middle' font-size='43'%3E%E2%9A%BD%3C/text%3E%3C/svg%3E">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.7.0/ethers.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <style>
@@ -36,6 +36,19 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:12px 2
 .btn-updates,.wallet-bal{display:none!important;}
 .btn-connect{background:var(--green-dim);border:1px solid rgba(0,255,135,0.3);color:var(--green);padding:8px 18px;border-radius:6px;font-family:'Black Ops One',sans-serif;font-size:11px;letter-spacing:1px;cursor:pointer;transition:all 0.2s;}
 .btn-connect:hover{background:rgba(0,255,135,0.2);}
+.wallet-choice-modal{position:fixed;inset:0;background:rgba(0,0,0,0.76);backdrop-filter:blur(8px);z-index:5000;display:none;align-items:center;justify-content:center;padding:18px;}
+.wallet-choice-modal.show{display:flex;}
+.wallet-choice-panel{width:min(440px,100%);background:linear-gradient(180deg,#111820,#090d12);border:1px solid rgba(0,255,135,0.28);border-radius:12px;box-shadow:0 24px 80px rgba(0,0,0,0.55),0 0 32px rgba(0,255,135,0.08);padding:16px;}
+.wallet-choice-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px;}
+.wallet-choice-title{font-family:'Black Ops One',sans-serif;color:var(--text);font-size:17px;letter-spacing:1px;}
+.wallet-choice-close{width:32px;height:32px;border-radius:8px;border:1px solid rgba(255,255,255,0.12);background:rgba(255,255,255,0.04);color:var(--text);cursor:pointer;font-size:18px;line-height:1;}
+.wallet-choice-option{width:100%;display:grid;grid-template-columns:42px 1fr auto;align-items:center;gap:12px;text-align:left;border:1px solid rgba(255,255,255,0.09);background:rgba(255,255,255,0.035);border-radius:10px;padding:12px;margin-top:10px;cursor:pointer;color:var(--text);}
+.wallet-choice-option:hover{border-color:rgba(0,255,135,0.35);background:rgba(0,255,135,0.055);}
+.wallet-choice-icon{font-size:23px;width:42px;height:42px;display:grid;place-items:center;border-radius:9px;background:rgba(0,255,135,0.08);}
+.wallet-choice-name{font-family:'Black Ops One',sans-serif;font-size:13px;letter-spacing:1px;color:#fff;}
+.wallet-choice-desc{font-size:11px;color:#8da0b7;margin-top:4px;line-height:1.25;}
+.wallet-choice-tag{font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--green);border:1px solid rgba(0,255,135,0.24);border-radius:999px;padding:3px 7px;white-space:nowrap;}
+.wallet-choice-note{font-size:11px;color:#6f7f92;line-height:1.35;margin-top:12px;}
 .filter-strip{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px;}
 @media(max-width:768px){.filter-strip{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;padding-bottom:4px;}}
 .album-grid-row{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;}
@@ -95,28 +108,36 @@ h1 .accent{color:var(--green);text-shadow:0 0 30px var(--green-glow);}
 .sec-sub{font-size:13px;color:var(--text2);letter-spacing:1px;}
 
 /* COLLECTION GRID */
-.col-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;}
+.col-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:7px;}
 .empty{text-align:center;padding:60px;color:var(--text3);font-size:14px;letter-spacing:2px;grid-column:1/-1;}
 
 /* FIGURE CARD */
-.fig-card{background:var(--card);border:1px solid var(--border);border-radius:10px;overflow:hidden;cursor:pointer;transition:all 0.25s;}
-.fig-card:hover{transform:translateY(-6px);box-shadow:0 16px 48px rgba(0,0,0,0.5);}
-.fig-card.r3{border-color:rgba(255,201,64,0.45);box-shadow:0 0 16px rgba(255,201,64,0.1);}
-.fig-card.r2{border-color:rgba(168,85,247,0.4);}
-.fig-card.r1{border-color:rgba(59,130,246,0.3);}
-.fig-canvas{height:90px;background:linear-gradient(145deg,#0c0e14,#090b10);position:relative;}
+.fig-card{position:relative;background:linear-gradient(180deg,rgba(15,19,24,.98),rgba(8,11,15,.96));border:1px solid var(--border);border-radius:8px;overflow:hidden;cursor:pointer;transition:all 0.2s;box-shadow:inset 0 0 24px rgba(0,0,0,.18);}
+.fig-card:hover{transform:translateY(-3px);box-shadow:0 12px 32px rgba(0,0,0,0.45),0 0 18px rgba(0,255,135,.08);}
+.fig-card.r3{background:linear-gradient(160deg,rgba(255,201,64,.24),rgba(15,19,24,.97) 54%,rgba(255,201,64,.08));border-color:rgba(255,201,64,0.72);box-shadow:inset 0 0 28px rgba(255,201,64,.12),0 0 16px rgba(255,201,64,0.13);}
+.fig-card.r2{background:linear-gradient(160deg,rgba(168,85,247,.22),rgba(15,19,24,.97) 56%,rgba(168,85,247,.07));border-color:rgba(168,85,247,0.55);}
+.fig-card.r1{background:linear-gradient(160deg,rgba(59,130,246,.2),rgba(15,19,24,.97) 56%,rgba(59,130,246,.06));border-color:rgba(59,130,246,0.45);}
+.fig-canvas{height:82px;background:radial-gradient(circle at 50% 85%,rgba(0,255,135,.12),transparent 42%);position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;}
 .fig-canvas canvas{width:100%!important;height:100%!important;}
-.rarity-badge{display:inline-block;padding:2px 7px;border-radius:3px;font-size:9px;font-weight:700;letter-spacing:2px;}
+.fig-flag{position:absolute;top:5px;left:6px;width:24px;height:16px;object-fit:cover;border-radius:2px;box-shadow:0 0 0 1px rgba(255,255,255,.18),0 2px 8px rgba(0,0,0,.35);z-index:2;background:#111;}
+.fig-svg-wrap{width:100%;height:100%;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+.fig-svg-wrap svg > rect[x="2"][y="2"]{display:none!important;}
+.rarity-badge{display:inline-block;padding:2px 5px;border-radius:4px;font-size:8px;font-weight:700;letter-spacing:.8px;white-space:nowrap;}
 .rb0{background:rgba(107,114,128,0.25);color:#9ca3af;border:1px solid rgba(107,114,128,0.35);}
 .rb1{background:rgba(59,130,246,0.2);color:#60a5fa;border:1px solid rgba(59,130,246,0.4);}
 .rb2{background:rgba(168,85,247,0.2);color:#c084fc;border:1px solid rgba(168,85,247,0.4);}
 .rb3{background:rgba(255,201,64,0.2);color:#fbbf24;border:1px solid rgba(255,201,64,0.5);box-shadow:0 0 8px rgba(255,201,64,0.2);}
-.fig-info{padding:12px;}
-.fig-name{font-family:'Black Ops One',sans-serif;font-size:18px;margin-bottom:3px;}
-.fig-id{font-family:'Share Tech Mono',monospace;font-size:13px;color:var(--text3);margin-bottom:8px;}
+.fig-info{padding:6px 7px 7px;border-top:1px solid rgba(255,255,255,.035);}
+.fig-name{font-family:'Black Ops One',sans-serif;font-size:13px;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.fig-id{font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--text3);margin-bottom:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .fig-chips{display:flex;gap:4px;flex-wrap:wrap;}
 .chip{background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:3px;padding:2px 7px;font-size:9px;color:var(--text2);letter-spacing:1px;}
-.fig-weight{font-family:'Black Ops One',sans-serif;font-size:15px;color:var(--green);margin-top:8px;}
+.fig-weight{font-family:'Black Ops One',sans-serif;font-size:13px;color:var(--green);margin-top:0;white-space:nowrap;}
+.fig-row{display:flex;align-items:center;justify-content:space-between;gap:4px;margin-top:0;min-width:0;}
+.fig-price{font-family:'Black Ops One',sans-serif;font-size:13px;color:var(--gold);white-space:nowrap;}
+.fig-market-action{margin-top:5px;display:grid;grid-template-columns:1fr;gap:4px;}
+.fig-market-action .btn-buy,.fig-market-action .btn-cancel{width:100%;padding:5px 6px!important;font-size:9px!important;border-radius:5px;}
+.fig-owner{font-size:9px;color:var(--text3);margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 
 /* MODAL */
 .overlay{position:fixed;inset:0;background:rgba(0,0,0,0.88);display:none;align-items:center;justify-content:center;z-index:200;backdrop-filter:blur(6px);}
@@ -141,64 +162,7 @@ h1 .accent{color:var(--green);text-shadow:0 0 30px var(--green-glow);}
 .toast.err{border-color:rgba(239,68,68,0.4);color:var(--red);}
 .spin{display:inline-block;width:14px;height:14px;border:2px solid rgba(0,255,135,0.2);border-top-color:var(--green);border-radius:50%;animation:rot 0.8s linear infinite;margin-right:6px;vertical-align:middle;}
 @keyframes rot{to{transform:rotate(360deg)}}
-#networkOverlay{position:fixed;inset:0;z-index:6000;display:none;align-items:center;justify-content:center;background:rgba(2,6,8,.78);backdrop-filter:blur(7px);padding:16px;}
-#networkOverlay.show{display:flex;}
-.network-wait-card{width:min(320px,92vw);border:1px solid rgba(0,255,135,.32);border-radius:12px;background:linear-gradient(145deg,rgba(15,19,24,.96),rgba(6,8,10,.96));box-shadow:0 0 38px rgba(0,255,135,.16);padding:22px;text-align:center;}
-.network-ball{width:54px;height:54px;margin:0 auto 14px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(0,255,135,.1);border:1px solid rgba(0,255,135,.35);font-size:28px;animation:networkBallSpin .82s linear infinite;}
-.network-wait-title{font-family:'Black Ops One',sans-serif;font-size:14px;color:var(--green);letter-spacing:1px;margin-bottom:6px;}
-.network-wait-text{font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--text2);line-height:1.5;}
-body.network-busy{cursor:progress;}
-@keyframes networkBallSpin{to{transform:rotate(360deg)}}
 
-/* Stable home cards */
-.quest-launcher{grid-template-columns:repeat(2,minmax(0,1fr));align-items:stretch;}
-.quest-link{height:100%;min-width:0;grid-template-columns:42px minmax(0,1fr);align-items:center;}
-.quest-link > span:last-child,.quest-title,.quest-sub,.quest-prize,.quest-amount,.quest-label{min-width:0;max-width:100%;}
-.quest-prize{display:grid;grid-template-columns:minmax(0,1fr);gap:2px;}
-.quest-amount{display:flex;align-items:baseline;flex-wrap:wrap;line-height:1.05;}
-.quest-label{line-height:1;}
-.reward-lanes{grid-template-columns:repeat(3,minmax(0,1fr));align-items:stretch;}
-.reward-lane{display:grid;grid-template-rows:auto auto 1fr auto;min-height:96px;overflow:hidden;}
-.reward-pct,.reward-title,.reward-copy,.reward-value{min-width:0;}
-.reward-title{white-space:normal;line-height:1.05;}
-.reward-value{white-space:normal;line-height:1.05;overflow-wrap:anywhere;}
-@media(max-width:768px){
-  .quest-launcher{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;}
-  .quest-link{min-height:92px!important;padding:10px!important;grid-template-columns:30px minmax(0,1fr)!important;gap:8px!important;}
-  .quest-icon-cell{width:30px!important;min-width:30px!important;}
-  .quest-icon{font-size:21px!important;}
-  .quest-flag-us{width:24px!important;height:17px!important;}
-  .quest-title{font-size:9px!important;line-height:1.05!important;}
-  .quest-sub{font-size:8px!important;line-height:1.05!important;margin-top:2px!important;}
-  .quest-prize{margin-top:6px!important;}
-  .quest-amount{font-size:12px!important;gap:3px!important;}
-  .quest-amount span{font-size:8px!important;}
-  .quest-label{font-size:9px!important;margin-top:2px!important;}
-  .reward-lanes{grid-template-columns:repeat(3,minmax(0,1fr));gap:5px;}
-  .reward-lane{padding:7px 5px;min-height:84px;}
-  .reward-pct{font-size:16px;}
-  .reward-title{font-size:7px;letter-spacing:.4px;}
-  .reward-copy{font-size:8px;line-height:1.1;}
-  .reward-value{font-size:9px;margin-top:3px;}
-}
-
-
-/* Mobile overflow guard */
-.hero-left,.hero-center,.hero-right,.mint-box,.flow-earn-card,.quest-launcher,.reward-lanes{min-width:0;max-width:100%;}
-.flow-earn-text,.hero-desc{overflow-wrap:anywhere;}
-@media(max-width:768px){
-  nav{gap:8px;overflow:hidden;}
-  .logo{font-size:14px;letter-spacing:1px;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-  .nav-right{gap:6px;min-width:0;flex-shrink:0;}
-  .btn-connect{font-size:9px;padding:6px 8px;max-width:118px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-  .hero-left,.hero-center,.hero-right{max-width:100vw;overflow:hidden;}
-  .hero-desc{max-width:100%;}
-  .mint-box{width:100%;}
-  .price-row{gap:8px;}
-  .price-val{font-size:26px;white-space:nowrap;}
-  .flow-earn-title{font-size:12px;line-height:1.1;}
-  .flow-earn-text{font-size:13px;line-height:1.28;}
-}
 /* HOW IT WORKS */
 .how-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;}
 .how-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:20px;}
@@ -230,6 +194,28 @@ body.network-busy{cursor:progress;}
 .lb-empty{text-align:center;padding:48px;color:var(--text3);font-size:13px;letter-spacing:2px;}
 .lb-loading{text-align:center;padding:32px;color:var(--text2);font-size:12px;letter-spacing:2px;}
 .top10-badge{display:inline-block;background:rgba(0,255,135,0.12);border:1px solid rgba(0,255,135,0.3);color:var(--green);font-size:9px;padding:2px 6px;border-radius:3px;letter-spacing:1px;margin-left:6px;}
+.lb-podium{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:12px;}
+.lb-podium-card{min-height:184px;cursor:pointer;}
+.lb-podium-card.rank-1{border-color:rgba(255,201,64,.82);box-shadow:inset 0 0 28px rgba(255,201,64,.14),0 0 20px rgba(255,201,64,.16);}
+.lb-podium-card.rank-2{border-color:rgba(148,163,184,.58);box-shadow:inset 0 0 24px rgba(148,163,184,.08),0 0 16px rgba(148,163,184,.1);}
+.lb-podium-card.rank-3{border-color:rgba(205,127,50,.66);box-shadow:inset 0 0 24px rgba(205,127,50,.1),0 0 16px rgba(205,127,50,.12);}
+.lb-podium-rank{position:absolute;right:7px;top:6px;z-index:4;font-family:'Black Ops One',sans-serif;font-size:18px;color:var(--gold);text-shadow:0 0 10px rgba(255,201,64,.28);}
+.lb-podium-card.rank-2 .lb-podium-rank{color:#cbd5e1;}
+.lb-podium-card.rank-3 .lb-podium-rank{color:#cd7f32;}
+.lb-podium-owner{font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--text3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:5px;}
+.lb-podium-team{font-family:'Black Ops One',sans-serif;font-size:11px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.lb-rest{border:1px solid var(--border);border-radius:9px;background:rgba(255,255,255,.02);overflow:hidden;}
+.lb-rest summary{list-style:none;cursor:pointer;padding:12px 14px;font-family:'Black Ops One',sans-serif;font-size:12px;letter-spacing:1px;color:var(--green);display:flex;align-items:center;justify-content:space-between;gap:10px;}
+.lb-rest summary::-webkit-details-marker{display:none;}
+.lb-rest summary::after{content:'+';font-size:16px;color:var(--gold);}
+.lb-rest[open] summary::after{content:'-';}
+.lb-rest-list{display:flex;flex-direction:column;border-top:1px solid var(--border);max-height:360px;overflow:auto;}
+.lb-rest-row{display:grid;grid-template-columns:44px 1fr auto auto;gap:10px;align-items:center;padding:9px 12px;border-bottom:1px solid rgba(255,255,255,.04);cursor:pointer;}
+.lb-rest-row:hover{background:rgba(0,255,135,.045);}
+.lb-rest-rank{font-family:'Black Ops One',sans-serif;color:var(--text3);font-size:13px;}
+.lb-rest-name{font-family:'Black Ops One',sans-serif;color:var(--text);font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.lb-rest-sub{font-family:'Share Tech Mono',monospace;color:var(--text3);font-size:9px;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.lb-rest-weight{font-family:'Black Ops One',sans-serif;color:var(--green);font-size:13px;white-space:nowrap;}
 
 
 
@@ -239,7 +225,7 @@ body.network-busy{cursor:progress;}
 .market-tabs{display:flex;gap:8px;margin-bottom:16px;}
 .mtab{background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:6px;padding:8px 20px;font-family:'Black Ops One',sans-serif;font-size:12px;letter-spacing:1px;color:var(--text2);cursor:pointer;transition:all 0.2s;}
 .mtab.active{background:var(--green-dim);border-color:rgba(0,255,135,0.3);color:var(--green);}
-.market-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;}
+.market-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:7px;}
 .market-item{display:flex;align-items:center;gap:12px;padding:12px 14px;background:var(--card);border:1px solid var(--border);border-radius:10px;transition:border-color 0.2s;height:100%;}
 .market-item:hover{border-color:rgba(0,255,135,0.2);}
 .market-mini{width:70px;height:70px;border-radius:8px;flex-shrink:0;background:#0c0e14;position:relative;}
@@ -394,8 +380,8 @@ body.network-busy{cursor:progress;}
   /* GRIDS */
   .how-grid{grid-template-columns:1fr!important;}
   .rar-grid{grid-template-columns:1fr 1fr;}
-  .col-grid{grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px;}
-  .market-list{grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px;}
+  .col-grid{grid-template-columns:repeat(auto-fill,minmax(92px,1fr));gap:7px;}
+  .market-list{grid-template-columns:repeat(auto-fill,minmax(92px,1fr));gap:7px;}
 
   /* GROUPS */
   #groups > div[style*="grid-template-columns"]{grid-template-columns:1fr 1fr!important;gap:8px!important;}
@@ -558,32 +544,28 @@ body.network-busy{cursor:progress;}
   body.dash-active #marketFilters,
   body.dash-active #squadFilters{flex-shrink:0;max-height:31px;overflow-x:auto;overflow-y:hidden;flex-wrap:nowrap;}
   body.dash-active #marketList{
-    grid-template-columns:repeat(auto-fill,minmax(132px,1fr));
+    grid-template-columns:repeat(auto-fill,minmax(96px,1fr));
     gap:8px;
     overflow-y:auto;
     padding-right:4px;
     min-height:0;
     align-content:start;
   }
-  body.dash-active #market .fig-canvas{height:82px!important;}
-  body.dash-active #market .fig-info{padding:9px;}
-  body.dash-active #market .fig-name{font-size:12px!important;}
-  body.dash-active #market .fig-id{font-size:9px!important;}
+  body.dash-active #market .fig-canvas{height:72px!important;}
+  body.dash-active #market .fig-info{padding:6px 7px 7px;}
   body.dash-active #market .btn-buy,
   body.dash-active #market .btn-cancel{padding:5px 8px!important;font-size:9px!important;}
 
   body.dash-active #squad .col-grid{
-    grid-template-columns:repeat(auto-fill,minmax(92px,1fr));
+    grid-template-columns:repeat(auto-fill,minmax(96px,1fr));
     gap:7px;
     overflow-y:auto;
     padding-right:4px;
     min-height:0;
     align-content:start;
   }
-  body.dash-active #squad .fig-canvas{height:62px;}
-  body.dash-active #squad .fig-info{padding:7px;}
-  body.dash-active #squad .fig-name{font-size:11px!important;}
-  body.dash-active #squad .fig-id{font-size:8px!important;}
+  body.dash-active #squad .fig-canvas{height:72px;}
+  body.dash-active #squad .fig-info{padding:6px 7px 7px;}
   body.dash-active #squad .rarity-badge{font-size:7px;padding:2px 4px;letter-spacing:1px;}
   body.dash-active #squad .fig-weight{font-size:10px!important;}
 
@@ -606,6 +588,10 @@ body.network-busy{cursor:progress;}
   body.dash-active #leaderboard .lb-name{font-size:12px;}
   body.dash-active #leaderboard .lb-sub{font-size:9px;}
   body.dash-active #leaderboard .lb-weight{font-size:13px;padding:6px 4px;}
+  body.dash-active #leaderboard .lb-podium{gap:6px;margin-bottom:8px;}
+  body.dash-active #leaderboard .lb-podium-card{min-height:142px;}
+  body.dash-active #leaderboard .lb-podium-rank{font-size:14px;}
+  body.dash-active #leaderboard .lb-rest-list{max-height:210px;}
 
   body.dash-active .country-dash-summary{
     display:grid;
@@ -635,144 +621,551 @@ body.network-busy{cursor:progress;}
 #ptfTeams::-webkit-scrollbar-thumb:hover { background: var(--text3); }
 
 
-/* QUEST CARD FIT FIX - keeps CHZ values inside narrow home cards */
+/* QUEST CARD BALANCE - trophy/flag higher, reward stronger and centered */
 .quest-link{
-  gap:12px !important;
+  align-items:start !important;
+  grid-template-columns:54px minmax(0,1fr) !important;
+  gap:8px !important;
   min-height:112px !important;
-  padding:15px 18px !important;
+  padding:15px 14px 14px !important;
+}
+.quest-icon-cell{
+  align-self:start !important;
+  justify-content:center !important;
+  width:54px !important;
+  min-width:54px !important;
+  padding-top:22px !important;
+}
+.quest-icon{
+  font-size:34px !important;
+}
+.quest-flag-us{
+  width:38px !important;
+  height:27px !important;
+}
+.quest-title,
+.quest-sub,
+.quest-prize{
+  text-align:center !important;
 }
 .quest-prize{
   max-width:100%;
+  margin-top:14px !important;
 }
 .quest-amount{
-  display:inline-flex !important;
+  display:flex !important;
+  justify-content:center !important;
   align-items:baseline;
-  gap:5px;
+  gap:4px;
+  width:100%;
   max-width:100%;
-  white-space:normal !important;
+  font-size:21px !important;
+  line-height:.95;
+  white-space:nowrap !important;
   overflow-wrap:normal;
 }
 .quest-amount span{
-  font-size:12px !important;
-  letter-spacing:.8px;
+  font-size:10px !important;
+  letter-spacing:.4px;
   opacity:.92;
 }
 .quest-label{
-  font-size:12px !important;
-  margin-top:6px !important;
+  display:block;
+  text-align:center !important;
+  font-size:13px !important;
+  margin-top:7px !important;
 }
 @media (max-width: 768px){
   .quest-link{
+    grid-template-columns:42px minmax(0,1fr) !important;
     min-height:98px !important;
-    padding:12px 14px !important;
-    gap:10px !important;
+    padding:11px 10px 12px !important;
+    gap:6px !important;
   }
-  .quest-amount{
-    font-size:14px !important;
-    gap:4px;
+  .quest-icon-cell{
+    width:42px !important;
+    min-width:42px !important;
+    padding-top:19px !important;
   }
-  .quest-amount span{
-    font-size:10px !important;
-  }
+  .quest-icon{font-size:28px !important;}
+  .quest-flag-us{width:31px !important;height:22px !important;}
+  .quest-prize{margin-top:10px !important;}
+  .quest-amount{font-size:16px !important;gap:3px;}
+  .quest-amount span{font-size:8px !important;}
+  .quest-label{font-size:10px !important;margin-top:5px !important;}
 }
 @media (min-width: 1200px) and (min-height: 720px){
   body.dash-active .quest-link{
+    grid-template-columns:36px minmax(0,1fr) !important;
     min-height:80px !important;
-    padding:9px 10px !important;
+    padding:8px 8px 9px !important;
+    gap:5px !important;
+  }
+  body.dash-active .quest-icon-cell{
+    width:36px !important;
+    min-width:36px !important;
+    padding-top:16px !important;
+  }
+  body.dash-active .quest-icon{font-size:24px !important;}
+  body.dash-active .quest-flag-us{width:28px !important;height:20px !important;}
+  body.dash-active .quest-prize{margin-top:6px !important;}
+  body.dash-active .quest-amount{font-size:14px !important;gap:2px;}
+  body.dash-active .quest-amount span{font-size:7px !important;}
+  body.dash-active .quest-label{font-size:9px !important;margin-top:4px !important;}
+}
+
+/* QUEST CARD FINAL LAYOUT - full-width reward, raised badge */
+.quest-link{
+  display:block !important;
+  grid-template-columns:none !important;
+  align-items:initial !important;
+  min-height:112px !important;
+  padding:15px 12px 13px !important;
+}
+.quest-icon-cell{
+  position:absolute !important;
+  left:17px !important;
+  top:39px !important;
+  width:42px !important;
+  min-width:42px !important;
+  padding-top:0 !important;
+}
+.quest-icon{font-size:34px !important;}
+.quest-flag-us{width:37px !important;height:26px !important;}
+.quest-link > div{
+  position:relative;
+  z-index:1;
+}
+.quest-title,
+.quest-sub,
+.quest-prize{
+  text-align:center !important;
+}
+.quest-title,
+.quest-sub{
+  padding-left:42px;
+}
+.quest-prize{
+  margin-top:14px !important;
+  width:100% !important;
+}
+.quest-amount{
+  display:flex !important;
+  justify-content:center !important;
+  align-items:baseline !important;
+  gap:4px !important;
+  width:100% !important;
+  max-width:100% !important;
+  font-size:22px !important;
+  line-height:1 !important;
+  white-space:normal !important;
+}
+.quest-amount span{
+  font-size:11px !important;
+  letter-spacing:.5px !important;
+}
+.quest-label{
+  text-align:center !important;
+  font-size:13px !important;
+  margin-top:6px !important;
+}
+@media (max-width: 768px){
+  .quest-link{min-height:98px !important;padding:11px 8px 12px !important;}
+  .quest-icon-cell{left:12px !important;top:37px !important;width:34px !important;min-width:34px !important;}
+  .quest-icon{font-size:27px !important;}
+  .quest-flag-us{width:30px !important;height:21px !important;}
+  .quest-title,.quest-sub{padding-left:32px;}
+  .quest-prize{margin-top:9px !important;}
+  .quest-amount{font-size:16px !important;gap:3px !important;}
+  .quest-amount span{font-size:8px !important;}
+  .quest-label{font-size:10px !important;margin-top:4px !important;}
+}
+@media (min-width: 1200px) and (min-height: 720px){
+  body.dash-active .quest-link{display:block !important;min-height:80px !important;padding:8px 7px 9px !important;}
+  body.dash-active .quest-icon-cell{left:9px !important;top:31px !important;width:28px !important;min-width:28px !important;}
+  body.dash-active .quest-icon{font-size:22px !important;}
+  body.dash-active .quest-flag-us{width:26px !important;height:18px !important;}
+  body.dash-active .quest-title,
+  body.dash-active .quest-sub{padding-left:28px;}
+  body.dash-active .quest-prize{margin-top:5px !important;}
+  body.dash-active .quest-amount{font-size:14px !important;gap:2px !important;}
+  body.dash-active .quest-amount span{font-size:7px !important;}
+  body.dash-active .quest-label{font-size:9px !important;margin-top:3px !important;}
+}
+/* QUEST CARD FINAL LAYOUT - full-width reward, raised badge */
+.quest-link{
+  display:block !important;
+  grid-template-columns:none !important;
+  align-items:initial !important;
+  min-height:112px !important;
+  padding:15px 12px 13px !important;
+}
+.quest-icon-cell{
+  position:absolute !important;
+  left:17px !important;
+  top:39px !important;
+  width:42px !important;
+  min-width:42px !important;
+  padding-top:0 !important;
+}
+.quest-icon{font-size:34px !important;}
+.quest-flag-us{width:37px !important;height:26px !important;}
+.quest-link > div{
+  position:relative;
+  z-index:1;
+}
+.quest-title,
+.quest-sub,
+.quest-prize{
+  text-align:center !important;
+}
+.quest-title,
+.quest-sub{
+  padding-left:42px;
+}
+.quest-prize{
+  margin-top:14px !important;
+  width:100% !important;
+}
+.quest-amount{
+  display:flex !important;
+  justify-content:center !important;
+  align-items:baseline !important;
+  gap:4px !important;
+  width:100% !important;
+  max-width:100% !important;
+  font-size:22px !important;
+  line-height:1 !important;
+  white-space:normal !important;
+}
+.quest-amount span{
+  font-size:11px !important;
+  letter-spacing:.5px !important;
+}
+.quest-label{
+  text-align:center !important;
+  font-size:13px !important;
+  margin-top:6px !important;
+}
+@media (max-width: 768px){
+  .quest-link{min-height:98px !important;padding:11px 8px 12px !important;}
+  .quest-icon-cell{left:12px !important;top:37px !important;width:34px !important;min-width:34px !important;}
+  .quest-icon{font-size:27px !important;}
+  .quest-flag-us{width:30px !important;height:21px !important;}
+  .quest-title,.quest-sub{padding-left:32px;}
+  .quest-prize{margin-top:9px !important;}
+  .quest-amount{font-size:16px !important;gap:3px !important;}
+  .quest-amount span{font-size:8px !important;}
+  .quest-label{font-size:10px !important;margin-top:4px !important;}
+}
+@media (min-width: 1200px) and (min-height: 720px){
+  body.dash-active .quest-link{display:block !important;min-height:80px !important;padding:8px 7px 9px !important;}
+  body.dash-active .quest-icon-cell{left:9px !important;top:31px !important;width:28px !important;min-width:28px !important;}
+  body.dash-active .quest-icon{font-size:22px !important;}
+  body.dash-active .quest-flag-us{width:26px !important;height:18px !important;}
+  body.dash-active .quest-title,
+  body.dash-active .quest-sub{padding-left:28px;}
+  body.dash-active .quest-prize{margin-top:5px !important;}
+  body.dash-active .quest-amount{font-size:14px !important;gap:2px !important;}
+  body.dash-active .quest-amount span{font-size:7px !important;}
+  body.dash-active .quest-label{font-size:9px !important;margin-top:3px !important;}
+}
+/* QUEST REWARD WRAP - no clipped CHZ on narrow quest cards */
+.quest-amount{
+  flex-wrap:wrap !important;
+}
+.quest-amount span{
+  display:block !important;
+  width:100% !important;
+  text-align:center !important;
+  margin-top:2px !important;
+}
+/* LEADERBOARD PODIUM MOBILE FIT */
+@media (max-width: 768px){
+  .lb-podium{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;}
+  .lb-podium-card{min-height:138px;}
+  .lb-podium-card .fig-canvas{height:72px;}
+  .lb-podium-card .fig-info{padding:6px;}
+  .lb-podium-rank{font-size:13px;right:5px;top:5px;}
+  .lb-podium-team{font-size:9px;}
+  .lb-podium-owner{display:none;}
+  .lb-rest-row{grid-template-columns:34px 1fr auto;gap:7px;padding:8px 9px;}
+  .lb-rest-row .rarity-badge{display:none;}
+  .lb-rest-weight{font-size:12px;}
+}
+/* QUEST TILE CLEANUP - main home prize cards */
+.quest-launcher{
+  gap:10px !important;
+}
+.quest-link{
+  display:grid !important;
+  grid-template-columns:52px minmax(0,1fr) !important;
+  align-items:center !important;
+  min-height:96px !important;
+  padding:14px 14px !important;
+  gap:10px !important;
+  border-radius:9px !important;
+  background:linear-gradient(145deg,rgba(15,19,24,.96),rgba(255,255,255,.025)) !important;
+}
+.quest-link::before{
+  opacity:.62 !important;
+}
+.quest-icon-cell{
+  position:relative !important;
+  left:auto !important;
+  top:auto !important;
+  width:52px !important;
+  min-width:52px !important;
+  height:62px !important;
+  padding:0 !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+}
+.quest-icon{
+  font-size:34px !important;
+  filter:drop-shadow(0 0 12px rgba(255,201,64,.38)) drop-shadow(0 8px 10px rgba(0,0,0,.45)) !important;
+}
+.quest-flag-us{
+  width:42px !important;
+  height:30px !important;
+  border-radius:3px !important;
+  box-shadow:0 0 0 1px rgba(255,255,255,.18),0 0 15px rgba(255,255,255,.12),0 8px 18px rgba(0,0,0,.35) !important;
+}
+.quest-link > div{
+  min-width:0 !important;
+  position:relative !important;
+  z-index:1 !important;
+}
+.quest-title{
+  display:block !important;
+  padding-left:0 !important;
+  text-align:center !important;
+  font-size:13px !important;
+  line-height:1 !important;
+  color:#fff !important;
+  letter-spacing:.6px !important;
+  text-shadow:0 0 12px rgba(255,255,255,.12) !important;
+}
+.quest-sub{
+  display:none !important;
+}
+.quest-prize{
+  margin-top:12px !important;
+  width:100% !important;
+  text-align:center !important;
+}
+.quest-amount{
+  display:flex !important;
+  justify-content:center !important;
+  align-items:baseline !important;
+  flex-wrap:wrap !important;
+  gap:3px !important;
+  width:100% !important;
+  font-size:21px !important;
+  line-height:.95 !important;
+  white-space:normal !important;
+}
+.quest-amount span{
+  display:block !important;
+  width:100% !important;
+  margin-top:2px !important;
+  text-align:center !important;
+  font-size:10px !important;
+  letter-spacing:1px !important;
+}
+.quest-label{
+  display:block !important;
+  margin-top:5px !important;
+  text-align:center !important;
+  font-size:12px !important;
+  letter-spacing:1.3px !important;
+}
+.quest-dream .quest-amount,
+.quest-dream .quest-label{
+  color:#58d2ff !important;
+  text-shadow:0 0 14px rgba(88,210,255,.38) !important;
+}
+.quest-nation .quest-amount,
+.quest-nation .quest-label{
+  color:var(--gold) !important;
+  text-shadow:0 0 14px rgba(255,201,64,.42) !important;
+}
+body.dash-active .quest-link{
+  min-height:76px !important;
+  grid-template-columns:34px minmax(0,1fr) !important;
+  padding:8px 7px !important;
+  gap:5px !important;
+}
+body.dash-active .quest-icon-cell{
+  width:34px !important;
+  min-width:34px !important;
+  height:48px !important;
+}
+body.dash-active .quest-icon{font-size:24px !important;}
+body.dash-active .quest-flag-us{width:27px !important;height:19px !important;}
+body.dash-active .quest-title{font-size:9px !important;letter-spacing:.3px !important;}
+body.dash-active .quest-prize{margin-top:7px !important;}
+body.dash-active .quest-amount{font-size:15px !important;}
+body.dash-active .quest-amount span{font-size:7px !important;margin-top:1px !important;}
+body.dash-active .quest-label{font-size:8px !important;margin-top:3px !important;}
+@media (max-width:768px){
+  .quest-link{
+    min-height:88px !important;
+    grid-template-columns:40px minmax(0,1fr) !important;
+    padding:10px 9px !important;
     gap:7px !important;
   }
-  body.dash-active .quest-amount{
-    font-size:12px !important;
-    gap:3px;
-  }
-  body.dash-active .quest-amount span{
-    font-size:8px !important;
-  }
+  .quest-icon-cell{width:40px !important;min-width:40px !important;height:56px !important;}
+  .quest-icon{font-size:29px !important;}
+  .quest-flag-us{width:32px !important;height:23px !important;}
+  .quest-title{font-size:10px !important;letter-spacing:.3px !important;}
+  .quest-prize{margin-top:8px !important;}
+  .quest-amount{font-size:17px !important;}
+  .quest-amount span{font-size:8px !important;}
+  .quest-label{font-size:9px !important;margin-top:4px !important;}
 }
-
-
-/* Final home layout guard */
-.hero-left,.hero-center,.hero-right,.mint-box,.flow-earn-card,.quest-launcher,.reward-lanes{min-width:0!important;max-width:100%!important;}
-.quest-launcher{width:100%!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;align-items:stretch!important;}
-.quest-link{height:100%!important;min-width:0!important;grid-template-columns:42px minmax(0,1fr)!important;align-items:center!important;}
-.quest-link > span:last-child,.quest-title,.quest-sub,.quest-prize,.quest-amount,.quest-label{min-width:0!important;max-width:100%!important;}
-.quest-prize{display:grid!important;grid-template-columns:minmax(0,1fr)!important;gap:2px!important;}
-.quest-amount{display:flex!important;align-items:baseline!important;flex-wrap:wrap!important;line-height:1.05!important;}
-.quest-label{line-height:1!important;}
-.reward-lanes{grid-template-columns:repeat(3,minmax(0,1fr))!important;align-items:stretch!important;}
-.reward-lane{display:grid!important;grid-template-rows:auto auto 1fr auto!important;min-height:96px!important;overflow:hidden!important;}
-.reward-title{white-space:normal!important;line-height:1.05!important;}
-.reward-value{white-space:normal!important;line-height:1.05!important;overflow-wrap:anywhere!important;}
-.flow-earn-text,.hero-desc{overflow-wrap:anywhere!important;}
-@media(max-width:768px){
-  nav{gap:8px!important;overflow:hidden!important;}
-  .logo{font-size:14px!important;letter-spacing:1px!important;min-width:0!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;}
-  .nav-right{gap:6px!important;min-width:0!important;flex-shrink:0!important;}
-  .btn-connect{font-size:9px!important;padding:6px 8px!important;max-width:118px!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;}
-  .hero-left,.hero-center,.hero-right{max-width:100vw!important;overflow:hidden!important;}
-  .hero-desc{max-width:100%!important;}
-  .quest-launcher{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:6px!important;}
-  .quest-link{min-height:92px!important;padding:10px!important;grid-template-columns:30px minmax(0,1fr)!important;gap:8px!important;}
-  .quest-icon-cell{width:30px!important;min-width:30px!important;}
-  .quest-icon{font-size:21px!important;}
-  .quest-flag-us{width:24px!important;height:17px!important;}
-  .quest-title{font-size:9px!important;line-height:1.05!important;}
-  .quest-sub{font-size:8px!important;line-height:1.05!important;margin-top:2px!important;}
-  .quest-prize{margin-top:6px!important;}
-  .quest-amount{font-size:12px!important;gap:3px!important;}
-  .quest-amount span{font-size:8px!important;}
-  .quest-label{font-size:9px!important;margin-top:2px!important;}
-  .mint-box{width:100%!important;}
-  .price-row{gap:8px!important;}
-  .price-val{font-size:26px!important;white-space:nowrap!important;}
-  .flow-earn-title{font-size:12px!important;line-height:1.1!important;}
-  .flow-earn-text{font-size:13px!important;line-height:1.28!important;}
-  .reward-lanes{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:5px!important;}
-  .reward-lane{padding:7px 5px!important;min-height:84px!important;}
-  .reward-pct{font-size:16px!important;}
-  .reward-title{font-size:7px!important;letter-spacing:.4px!important;}
-  .reward-copy{font-size:8px!important;line-height:1.1!important;}
-  .reward-value{font-size:9px!important;margin-top:3px!important;}
+/* QUEST TILE MOBILE WIDTH GUARD */
+.quest-launcher{
+  width:100% !important;
+  max-width:100% !important;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr) !important;
 }
-
-/* Hard mobile viewport clamp */
-@media(max-width:768px){
-  html,body{width:100vw!important;max-width:100vw!important;overflow-x:hidden!important;}
-  nav,.hero,.hero-left,.hero-center,.hero-right{width:100vw!important;max-width:100vw!important;}
-  .hero-left,.hero-center,.hero-right{padding-left:12px!important;padding-right:12px!important;}
-  .stats-row,.quest-launcher,.mint-box,.flow-earn-card,.reward-lanes{width:calc(100vw - 24px)!important;max-width:calc(100vw - 24px)!important;}
-  .stats-row{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:6px!important;}
-  .stat-n{font-size:18px!important;}
-  .stat-l{font-size:9px!important;letter-spacing:1px!important;}
-  .btn-connect{max-width:92px!important;}
+.quest-link,
+.quest-link > div{
+  min-width:0 !important;
+  max-width:100% !important;
+  overflow:hidden !important;
 }
-
-/* Flow card mobile fix */
-@media(max-width:768px){
-  .mint-box .flow-earn-card{
-    width:100%!important;
-    max-width:100%!important;
-    margin-left:0!important;
-    margin-right:0!important;
-    padding:10px 12px!important;
-    box-sizing:border-box!important;
-    overflow:hidden!important;
+@media (max-width:768px){
+  .quest-launcher{gap:8px !important;}
+  .quest-link{
+    grid-template-columns:34px minmax(0,1fr) !important;
+    min-height:82px !important;
+    padding:9px 7px !important;
+    gap:5px !important;
   }
-  .mint-box .flow-earn-title{
-    font-size:11px!important;
-    line-height:1.12!important;
-    letter-spacing:.6px!important;
-    white-space:normal!important;
+  .quest-icon-cell{width:34px !important;min-width:34px !important;height:50px !important;}
+  .quest-icon{font-size:26px !important;}
+  .quest-flag-us{width:28px !important;height:20px !important;}
+  .quest-title{font-size:9px !important;white-space:normal !important;line-height:1.05 !important;}
+  .quest-amount{font-size:15px !important;}
+  .quest-amount span{font-size:7px !important;letter-spacing:.8px !important;}
+  .quest-label{font-size:8px !important;letter-spacing:1px !important;}
+}
+/* QUEST TILE MOBILE STACK */
+@media (max-width:768px){
+  .quest-launcher{
+    grid-template-columns:1fr !important;
+    gap:8px !important;
   }
-  .mint-box .flow-earn-text,
-  .mint-box .flow-earn-text strong{
-    max-width:100%!important;
-    white-space:normal!important;
-    overflow-wrap:anywhere!important;
-    word-break:normal!important;
+  .quest-link{
+    grid-template-columns:44px minmax(0,1fr) !important;
+    min-height:74px !important;
+    padding:10px 12px !important;
   }
-  .mint-box .flow-earn-text{font-size:12px!important;line-height:1.24!important;}
-  .mint-box .flow-earn-text strong{font-size:11px!important;letter-spacing:.3px!important;}
+  .quest-icon-cell{width:44px !important;min-width:44px !important;height:48px !important;}
+  .quest-icon{font-size:29px !important;}
+  .quest-flag-us{width:34px !important;height:24px !important;}
+  .quest-title{font-size:11px !important;white-space:nowrap !important;}
+  .quest-prize{margin-top:6px !important;}
+  .quest-amount{font-size:18px !important;}
+  .quest-amount span{font-size:8px !important;}
+  .quest-label{font-size:9px !important;}
+}
+/* DESKTOP DASHBOARD PROFESSIONAL POLISH */
+@media (min-width:1200px) and (min-height:720px){
+  body.dash-active .desktop-dashboard{
+    grid-template-columns:330px minmax(620px,1fr) 390px !important;
+    gap:12px !important;
+    padding:12px !important;
+    height:calc(100vh - 49px) !important;
+  }
+  body.dash-active .dash-column{gap:12px !important;}
+  body.dash-active .dash-left{grid-template-rows:360px minmax(0,1fr) !important;}
+  body.dash-active .dash-center{grid-template-rows:minmax(0,1fr) !important;}
+  body.dash-active .dash-right{grid-template-rows:500px minmax(0,1fr) !important;}
+  body.dash-active .section,
+  body.dash-active .hero{
+    padding:14px !important;
+    border-radius:11px !important;
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,.012),0 16px 40px rgba(0,0,0,.18);
+  }
+  body.dash-active .sec-header{margin-bottom:10px !important;padding-bottom:9px !important;}
+  body.dash-active .sec-title{font-size:24px !important;line-height:.95 !important;}
+  body.dash-active #market .market-tabs{margin-bottom:9px !important;}
+  body.dash-active #marketList{
+    grid-template-columns:repeat(auto-fill,minmax(112px,1fr)) !important;
+    gap:10px !important;
+    align-content:start !important;
+    overflow-y:auto !important;
+  }
+  body.dash-active #market .fig-canvas{height:86px !important;}
+  body.dash-active #market .fig-info{padding:7px 8px 8px !important;}
+  body.dash-active #market .fig-weight{font-size:12px !important;}
+  body.dash-active #market .fig-price{font-size:13px !important;}
+  body.dash-active #squad .col-grid{
+    grid-template-columns:repeat(auto-fill,minmax(106px,1fr)) !important;
+    gap:9px !important;
+    align-content:start !important;
+  }
+  body.dash-active #squad .fig-canvas{height:82px !important;}
+  body.dash-active #squad .fig-weight{font-size:12px !important;}
+  body.dash-active #leaderboard .lb-podium{gap:8px !important;}
+  body.dash-active #leaderboard .lb-podium-card{min-height:154px !important;}
+  body.dash-active #leaderboard .lb-podium-card .fig-canvas{height:82px !important;}
+  body.dash-active #leaderboard .lb-podium-team{font-size:10px !important;}
+  body.dash-active #leaderboard .lb-rest-list{max-height:260px !important;}
+  body.dash-active .hero{justify-content:start !important;}
+  body.dash-active .hero-title-desktop{font-size:30px !important;margin-right:112px !important;}
+  body.dash-active .stats-row{gap:6px !important;margin-bottom:9px !important;}
+  body.dash-active .stat{padding:7px 4px !important;}
+  body.dash-active .stat-n{font-size:20px !important;}
+  body.dash-active .quest-launcher{gap:8px !important;margin-bottom:0 !important;}
+  body.dash-active .quest-link{min-height:88px !important;padding:10px 8px !important;}
+  body.dash-active .quest-icon-cell{height:58px !important;}
+  body.dash-active .quest-amount{font-size:16px !important;}
+  body.dash-active #countryLb .sec-header{margin-bottom:8px !important;}
+  body.dash-active .country-dash-summary{gap:7px !important;margin-bottom:7px !important;}
+  body.dash-active .country-dash-card{padding:9px !important;}
+}
+/* DESKTOP DASHBOARD CONTENT BALANCE */
+@media (min-width:1200px) and (min-height:720px){
+  body.dash-active .dash-left{grid-template-rows:500px minmax(0,1fr) !important;}
+  body.dash-active .dash-center{grid-template-rows:auto !important;align-content:start !important;}
+  body.dash-active #market{
+    min-height:420px !important;
+    max-height:620px !important;
+  }
+  body.dash-active #marketList{
+    max-height:438px !important;
+    flex:0 1 auto !important;
+  }
+  body.dash-active .quest-launcher{
+    grid-template-columns:1fr !important;
+    gap:8px !important;
+  }
+  body.dash-active .quest-link{
+    grid-template-columns:48px minmax(0,1fr) !important;
+    min-height:74px !important;
+    padding:9px 12px !important;
+  }
+  body.dash-active .quest-icon-cell{
+    width:48px !important;
+    min-width:48px !important;
+    height:54px !important;
+  }
+  body.dash-active .quest-icon{font-size:30px !important;}
+  body.dash-active .quest-flag-us{width:36px !important;height:25px !important;}
+  body.dash-active .quest-title{font-size:11px !important;white-space:nowrap !important;}
+  body.dash-active .quest-prize{margin-top:5px !important;}
+  body.dash-active .quest-amount{font-size:18px !important;}
+  body.dash-active .quest-amount span{font-size:8px !important;}
+  body.dash-active .quest-label{font-size:9px !important;margin-top:3px !important;}
+  body.dash-active .hero-title-desktop{font-size:30px !important;margin-bottom:7px !important;}
+  body.dash-active .hero-right{top:42px !important;right:7px !important;width:108px !important;height:132px !important;}
+  body.dash-active .hero-figure-stage,
+  body.dash-active .hero-right #heroCanvas{width:108px !important;height:132px !important;}
 }
 </style>
 </head>
@@ -784,7 +1177,7 @@ body.network-busy{cursor:progress;}
     <button class="btn-updates" onclick="openChangelog()" style="background:none;border:1px solid rgba(255,255,255,0.1);color:var(--text3);padding:5px 10px;border-radius:6px;font-family:'Black Ops One',sans-serif;font-size:10px;letter-spacing:1px;cursor:pointer;transition:all 0.2s;white-space:nowrap;" onmouseover="this.style.borderColor='rgba(0,255,135,0.4)';this.style.color='var(--green)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.1)';this.style.color='var(--text3)'">UPDATES</button>
     <span class="wallet-addr" id="navAddr" style="display:none"></span>
     <span class="wallet-bal" id="navBal" style="display:none"></span>
-    <button class="btn-connect" id="navBtn" onclick="connectWallet()">CONNECT</button>
+    <button class="btn-connect" id="navBtn" onclick="openWalletChoice()">CONNECT</button>
     <button id="hamburgerBtn" onclick="toggleDrawer()" style="display:none;background:none;border:none;color:var(--green);cursor:pointer;padding:4px;margin-left:8px;">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
         <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
@@ -848,7 +1241,7 @@ function updateNavHeight(){
   if(!nav) return;
   const navH = nav.offsetHeight;
   document.documentElement.style.setProperty('--nav-h', navH + 'px');
-  // PrzesuÄąâ€ž navMenu dokÄąâ€šadnie pod nav
+  // PrzesuĹ„ navMenu dokĹ‚adnie pod nav
   if(menu) menu.style.top = navH + 'px';
   // Ustaw padding-top body = nav + navMenu
   const menuH = menu ? menu.offsetHeight : 42;
@@ -910,7 +1303,7 @@ document.addEventListener('DOMContentLoaded', setupDesktopDashboardLayout);
   const meta = document.querySelector('meta[name="viewport"]');
   if(meta) meta.content = 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no';
   
-  // SprawdÄąĹź czy ekran jest zbyt wĂ„â€¦ski i wymuÄąâ€ş szerokoÄąâ€şĂ„â€ˇ
+  // SprawdĹş czy ekran jest zbyt wÄ…ski i wymuĹ› szerokoĹ›Ä‡
   document.addEventListener('DOMContentLoaded', function(){
     const fixWidth = function(){
       const vw = Math.min(window.innerWidth, document.documentElement.clientWidth);
@@ -959,12 +1352,12 @@ document.addEventListener('DOMContentLoaded', setupDesktopDashboardLayout);
 <div class="hero" id="mint">
   <div class="hero-left">
     <div class="badge"><span class="badge-dot"></span>WORLD CUP 2026 &middot; CHILIZ CHAIN</div>
-    <!-- Mobile: tytuÄąâ€š + figurka obok siebie -->
+    <!-- Mobile: tytuĹ‚ + figurka obok siebie -->
     <div class="hero-top-mobile">
       <h1>BLOCK<br><span class="accent">KICKERS</span><br>2026</h1>
       <div class="hero-canvas-mobile"><canvas id="heroCanvasMobile"></canvas></div>
     </div>
-    <!-- Desktop: tylko tytuÄąâ€š (figurka po prawej) -->
+    <!-- Desktop: tylko tytuĹ‚ (figurka po prawej) -->
     <h1 class="hero-title-desktop">BLOCK<br><span class="accent">KICKERS</span><br>2026</h1>
     <p class="hero-desc">Two quests are live. Mint a card, score it in your squad, then sell it on the market. The score stays stamped while the card keeps flowing.</p>
     <div class="stats-row">
@@ -978,7 +1371,6 @@ document.addEventListener('DOMContentLoaded', setupDesktopDashboardLayout);
         <span class="quest-icon-cell"><span class="quest-icon">&#127942;</span></span>
         <span style="min-width:0;">
           <span class="quest-title">DREAM XI</span>
-          <span class="quest-sub">score then sell cards</span>
           <span class="quest-prize" id="questDreamPrize"><span class="quest-amount">10,000+ <span>CHZ</span></span><span class="quest-label">POOL</span></span>
         </span>
       </a>
@@ -992,8 +1384,7 @@ document.addEventListener('DOMContentLoaded', setupDesktopDashboardLayout);
         </span>
         <span style="min-width:0;">
           <span class="quest-title">NATION QUEST</span>
-          <span class="quest-sub">USA 1,000 CHZ race</span>
-          <span class="quest-prize" id="questNationPrize"><span class="quest-amount">1,000 <span>CHZ</span></span><span class="quest-label">PRIZE</span></span>
+          <span class="quest-prize" id="questNationPrize"><span class="quest-amount">1,500 <span>CHZ</span></span><span class="quest-label">PRIZE</span></span>
         </span>
       </a>
     </div>
@@ -1122,12 +1513,12 @@ document.addEventListener('DOMContentLoaded', setupDesktopDashboardLayout);
       <svg width="56" height="40" viewBox="0 0 56 40" style="border-radius:4px;margin-bottom:12px;"><rect width="56" height="40" fill="#B22234"/><rect y="3.08" width="56" height="3.08" fill="#fff"/><rect y="9.23" width="56" height="3.08" fill="#fff"/><rect y="15.38" width="56" height="3.08" fill="#fff"/><rect y="21.54" width="56" height="3.08" fill="#fff"/><rect y="27.69" width="56" height="3.08" fill="#fff"/><rect y="33.85" width="56" height="3.08" fill="#fff"/><rect width="24" height="21.54" fill="#3C3B6E"/></svg>
       <div style="font-family:'Black Ops One',sans-serif;font-size:11px;letter-spacing:3px;color:#ffc940;margin-bottom:8px;">&#127942; ACTIVE QUEST</div>
       <div style="font-family:'Black Ops One',sans-serif;font-size:22px;color:#dde4f0;margin-bottom:6px;">USA NATION QUEST</div>
-      <div style="font-family:'Black Ops One',sans-serif;font-size:32px;color:#ffc940;">1,000 CHZ</div>
+      <div style="font-family:'Black Ops One',sans-serif;font-size:32px;color:#ffc940;">1,500 CHZ</div>
       <div style="font-size:12px;letter-spacing:2px;color:#5a6a7a;margin-top:4px;">PRIZE FOR FIRST TO COMPLETE</div>
     </div>
     <div style="background:#0a0d10;border:1px solid #1c2028;border-radius:8px;padding:14px;margin-bottom:16px;font-size:14px;color:#7a8899;line-height:1.7;">
       Collect all <span style="color:#dde4f0;font-weight:700;">11 United States positions</span> in your wallet.<br>
-      First wallet to complete wins <span style="color:#ffc940;font-weight:700;">1,000 CHZ</span>.<br><br>
+      First wallet to complete wins <span style="color:#ffc940;font-weight:700;">1,500 CHZ</span>.<br><br>
       <span style="color:#00ff87;">&rarr;</span> Mint for 10 CHZ &mdash; land a USA card<br>
       <span style="color:#00ff87;">&rarr;</span> Buy missing positions on the market<br>
       <span style="color:#00ff87;">&rarr;</span> Track progress in the <span style="color:#dde4f0;">Album</span> section
@@ -1229,13 +1620,39 @@ document.addEventListener('DOMContentLoaded', setupDesktopDashboardLayout);
   </div>
 </div>
 
+<!-- WALLET CHOICE MODAL -->
+<div class="wallet-choice-modal" id="walletChoiceModal" onclick="if(event.target===this)closeWalletChoice()">
+  <div class="wallet-choice-panel">
+    <div class="wallet-choice-head">
+      <div class="wallet-choice-title">CONNECT WALLET</div>
+      <button class="wallet-choice-close" type="button" onclick="closeWalletChoice()">&times;</button>
+    </div>
+    <button class="wallet-choice-option" type="button" onclick="connectInjectedWallet()">
+      <span class="wallet-choice-icon">&#128188;</span>
+      <span><span class="wallet-choice-name">MetaMask / Trust Browser</span><span class="wallet-choice-desc">Use the wallet already injected into this browser.</span></span>
+      <span class="wallet-choice-tag">APP</span>
+    </button>
+    <button class="wallet-choice-option" type="button" onclick="connectWalletConnect()">
+      <span class="wallet-choice-icon">&#128279;</span>
+      <span><span class="wallet-choice-name">WalletConnect</span><span class="wallet-choice-desc">Use Trust Wallet or MetaMask Mobile. Avoid Socios if it reverts transactions.</span></span>
+      <span class="wallet-choice-tag">QR</span>
+    </button>
+    <button class="wallet-choice-option" type="button" onclick="connectPrivyWallet()">
+      <span class="wallet-choice-icon">&#9993;</span>
+      <span><span class="wallet-choice-name">Privy Email Wallet</span><span class="wallet-choice-desc">Create or restore an embedded wallet by email code.</span></span>
+      <span class="wallet-choice-tag">NEW</span>
+    </button>
+    <div class="wallet-choice-note">Recommended on mobile: Privy, Trust Wallet, or MetaMask Mobile.</div>
+  </div>
+</div>
+
 
 <!-- LEADERBOARD -->
 <div class="section" id="leaderboard">
   <div class="sec-header">
     <div>
       <div class="sec-title">LEADER<span class="acc">BOARD</span></div>
-      <div class="sec-sub">All figures ranked by weight &middot; Top 10% win prize pool after WC final</div>
+      <div class="sec-sub">Top 3 podium cards &middot; rest hidden in expandable list</div>
     </div>
     <button onclick="loadLeaderboard()" style="background:var(--green-dim);border:1px solid rgba(0,255,135,0.3);color:var(--green);padding:8px 18px;border-radius:6px;font-family:'Black Ops One',sans-serif;font-size:11px;letter-spacing:1px;cursor:pointer;">REFRESH</button>
   </div>
@@ -1267,7 +1684,6 @@ document.addEventListener('DOMContentLoaded', setupDesktopDashboardLayout);
 </div>
 
 <div class="toast" id="toast"></div>
-<div id="networkOverlay" aria-live="polite" aria-busy="true"><div class="network-wait-card"><div class="network-ball">&#9917;</div><div class="network-wait-title">Loading chain data</div><div class="network-wait-text" id="networkOverlayText">Please wait for Chiliz Chain.</div></div></div>
 
 <script>
 // ============================================================
@@ -1276,6 +1692,9 @@ document.addEventListener('DOMContentLoaded', setupDesktopDashboardLayout);
 const CONTRACT_ADDRESS = "0xAAdc8D56e25a223B6cf4b88ba0889975560f21aB";
 const CHAIN_ID = 88888;
 const DEPLOY_BLOCK = 34086621; // v5 deploy block
+const WALLETCONNECT_PROJECT_ID = "15671485110825e18107d31b379d9df6";
+const PRIVY_APP_ID = "cmpil29vr000r0cl27mvi078e";
+const PRIVY_CLIENT_ID = "client-WY6ZYpnr2u5M5Jusp4enZTZBmqhrikkMGUCjvgwWymidE";
 
 const ABI = [
   "function mint(address referrer) external payable","function referralCount(address) external view returns (uint256)","function referralEarned(address) external view returns (uint256)","function referredBy(address) external view returns (address)",
@@ -1359,12 +1778,18 @@ const TEAM_COLORS = [
 ];
 
 const RARITY_NAMES = ['COMMON','RARE','EPIC','LEGENDARY'];
+const RARITY_SHORT = ['COM','RAR','EPI','LEG'];
+const TEAM_FLAG_CODES = ['au','ir','iq','jp','jo','qa','sa','kr','uz','dz','cv','cd','eg','gh','ci','ma','sn','za','tn','ca','cw','ht','mx','pa','us','ar','br','co','ec','py','uy','nz','at','be','ba','hr','cz','gb-eng','fr','de','nl','no','pt','gb-sct','es','se','ch','tr'];
 const HAIR_NAMES   = ['Buzz Cut','Curly','Spiky','Mohawk','Afro','Dreads','Bald','Wavy'];
 const SKIN_NAMES   = ['Fair','Light','Medium','Tan','Brown','Dark'];
 const POSITION_NAMES = {
   1:'Goalkeeper',2:'Right Back',3:'Left Back',4:'Centre Back',5:'Centre Back',
   6:'Def. Mid',7:'Right Wing',8:'Mid',9:'Striker',10:'Playmaker',11:'Left Wing'
 };
+function teamFlagImg(teamId, teamName){
+  const code = TEAM_FLAG_CODES[Number(teamId) % TEAM_FLAG_CODES.length] || 'un';
+  return `<img class="fig-flag" src="https://flagcdn.com/w40/${code}.png" srcset="https://flagcdn.com/w80/${code}.png 2x" alt="${teamName || 'team'} flag" loading="lazy">`;
+}
 
 // ============================================================
 //  THREE.JS FIGURE RENDERER
@@ -1412,7 +1837,7 @@ class Figure3D {
     this.cam = new THREE.PerspectiveCamera(42, w/h, 0.1, 100);
     this.cam.position.set(0, 1.2, 7.0);
     this.cam.lookAt(0, 1, 0);
-    // SprawdÄąĹź czy WebGL dostĂ„â„˘pny
+    // SprawdĹş czy WebGL dostÄ™pny
     try{
       const testCtx = this.canvas.getContext('webgl2') || this.canvas.getContext('webgl');
       if(!testCtx){ this.canvas.style.background='#111'; return; }
@@ -1708,32 +2133,12 @@ class Figure3D {
 //  STATE
 // ============================================================
 let provider,signer,address,contract;
-let networkOverlayDepth = 0;
-function showNetworkOverlay(message='Please wait for Chiliz Chain.'){
-  networkOverlayDepth++;
-  const overlay=document.getElementById('networkOverlay');
-  const text=document.getElementById('networkOverlayText');
-  if(text) text.textContent=message;
-  if(overlay) overlay.classList.add('show');
-  document.body.classList.add('network-busy');
-}
-function updateNetworkOverlay(message){
-  const text=document.getElementById('networkOverlayText');
-  if(text && message) text.textContent=message;
-}
-function hideNetworkOverlay(){
-  networkOverlayDepth=Math.max(0,networkOverlayDepth-1);
-  if(networkOverlayDepth>0) return;
-  const overlay=document.getElementById('networkOverlay');
-  if(overlay) overlay.classList.remove('show');
-  document.body.classList.remove('network-busy');
-}
-async function withNetworkOverlay(message, fn){
-  const wasVisible=networkOverlayDepth>0;
-  if(wasVisible) updateNetworkOverlay(message); else showNetworkOverlay(message);
-  try{return await fn();}
-  finally{if(!wasVisible) hideNetworkOverlay();}
-}
+let walletConnectProvider = null;
+let activeWalletProvider = null;
+let activeWalletType = '';
+let privySdk = null;
+let privyClient = null;
+let privyIframe = null;
 
 function switchHowTab(tab, btn){
   ['mechanics','rarity','example'].forEach(t => {
@@ -1752,7 +2157,7 @@ function closeNqWelcome(dontShow){
 function showNqWelcome(){
   if(localStorage.getItem('nqWelcomeSeen')) return;
   setTimeout(async () => {
-    // Pobierz aktualnĂ„â€¦ liczbĂ„â„˘ wymintowanych pozycji USA
+    // Pobierz aktualnÄ… liczbÄ™ wymintowanych pozycji USA
     try{
       const res = await fetch('/api/events');
       if(res.ok){
@@ -1820,7 +2225,7 @@ function openChangelog(){
       <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:6px;">
         ${entry.items.map(item =>
           `<li style="display:flex;gap:8px;font-size:13px;color:var(--text2);line-height:1.4;">
-            <span style="color:var(--green);flex-shrink:0;margin-top:1px;">Ă˘â‚¬Ĺź</span>
+            <span style="color:var(--green);flex-shrink:0;margin-top:1px;">â€ş</span>
             <span>${item}</span>
           </li>`
         ).join('')}
@@ -1835,12 +2240,12 @@ function closeChangelog(){
 }
 // ============================================================
 const dnaCache = {};           // tokenId -> dna
-let   eventsCache = null;      // cache wszystkich FigureMinted eventÄ‚Ĺ‚w
-let   eventsCacheBlock = 0;    // blok przy ktÄ‚Ĺ‚rym cache byÄąâ€š zbudowany
-let   salesCache = null;       // cache Sold eventÄ‚Ĺ‚w
-const CACHE_BLOCKS = 50;       // odÄąâ€şwieÄąÄ˝aj cache co 50 blokÄ‚Ĺ‚w (~2.5 min)
+let   eventsCache = null;      // cache wszystkich FigureMinted eventĂłw
+let   eventsCacheBlock = 0;    // blok przy ktĂłrym cache byĹ‚ zbudowany
+let   salesCache = null;       // cache Sold eventĂłw
+const CACHE_BLOCKS = 50;       // odĹ›wieĹĽaj cache co 50 blokĂłw (~2.5 min)
 
-// Publiczne RPC - uÄąÄ˝ywane do queryFilter (omija limit MetaMask 50k blokÄ‚Ĺ‚w)
+// Publiczne RPC - uĹĽywane do queryFilter (omija limit MetaMask 50k blokĂłw)
 const PUBLIC_RPCS = [
   'https://chiliz-rpc.publicnode.com',
   'https://rpc.chiliz.com',
@@ -1848,7 +2253,7 @@ const PUBLIC_RPCS = [
 ];
 let _readProvider = null;
 
-// ZwrÄ‚Ĺ‚Ă„â€ˇ dziaÄąâ€šajĂ„â€¦cy read-only provider (JsonRpcProvider, nie MetaMask)
+// ZwrĂłÄ‡ dziaĹ‚ajÄ…cy read-only provider (JsonRpcProvider, nie MetaMask)
 async function getReadProvider(){
   if(_readProvider){
     try{ await _readProvider.getBlockNumber(); return _readProvider; }
@@ -1877,7 +2282,7 @@ async function rpcWithRetry(fn, retries=3, delay=500){
   }
 }
 
-// Cache z Vercel API - jeden fetch dla wszystkich userÄ‚Ĺ‚w
+// Cache z Vercel API - jeden fetch dla wszystkich userĂłw
 let _apiCache = null;
 let _apiCacheTime = 0;
 const API_CACHE_MS = 60 * 1000; // 60 sekund - sync z Vercel cache
@@ -1920,14 +2325,14 @@ async function getAllMintEvents(c, p){
   };
 
   try{
-    // PrÄ‚Ĺ‚buj API najpierw (Vercel cache - 1 request dla wszystkich userÄ‚Ĺ‚w)
+    // PrĂłbuj API najpierw (Vercel cache - 1 request dla wszystkich userĂłw)
     const api = await fetchFromAPI();
     if(api && api.mints && api.mints.length > 0){
       let events = api.mints.map(m => ({
         args: { tokenId: BigInt(m.tokenId), owner: m.owner, dna: BigInt(m.dna) },
         blockNumber: api.currentBlock,
       }));
-      // Dobierz Äąâ€şwieÄąÄ˝e eventy od snapshotu API do teraz
+      // Dobierz Ĺ›wieĹĽe eventy od snapshotu API do teraz
       if(api.currentBlock < current){
         try{
           const rc = new ethers.Contract(CONTRACT_ADDRESS, ABI, rp);
@@ -1942,7 +2347,7 @@ async function getAllMintEvents(c, p){
       return release(eventsCache);
     }
 
-    // Fallback - bezpoÄąâ€şrednie RPC chunkami
+    // Fallback - bezpoĹ›rednie RPC chunkami
     const rc = new ethers.Contract(CONTRACT_ADDRESS, ABI, rp);
     const CHUNK = 20000;
     let events = [];
@@ -1979,10 +2384,10 @@ async function getAllMintEvents(c, p){
 async function getSoldEvents(mk, p){
   if(salesCache) return salesCache;
 
-  // PrÄ‚Ĺ‚buj API
+  // PrĂłbuj API
   const api = await fetchFromAPI();
   if(api && api.sales){
-    // Konwertuj do formatu kompatybilnego z resztĂ„â€¦ kodu
+    // Konwertuj do formatu kompatybilnego z resztÄ… kodu
     salesCache = api.sales.map(s => ({
       args: { tokenId: s.tokenId, buyer: s.buyer, listingId: s.listingId }
     }));
@@ -2024,13 +2429,15 @@ async function connectWalletSilent(){
     const accounts = await window.ethereum.request({method:'eth_accounts'});
     if(accounts.length === 0) return;
     const cid = await window.ethereum.request({method:'eth_chainId'});
-    if(parseInt(cid,16) !== CHAIN_ID) return; // nie prÄ‚Ĺ‚buj zmieniaĂ„â€ˇ sieci przy silent
+    if(parseInt(cid,16) !== CHAIN_ID) return; // nie prĂłbuj zmieniaÄ‡ sieci przy silent
     provider = new ethers.BrowserProvider(window.ethereum);
     signer   = await provider.getSigner();
     address  = await signer.getAddress();
+    activeWalletProvider = window.ethereum;
+    activeWalletType = 'Injected';
     contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
 
-    // WyczyÄąâ€şĂ„â€ˇ cache - stare dane mogĂ„â€¦ mieĂ„â€ˇ bÄąâ€šĂ„â„˘dnych wÄąâ€šaÄąâ€şcicieli
+    // WyczyĹ›Ä‡ cache - stare dane mogÄ… mieÄ‡ bĹ‚Ä™dnych wĹ‚aĹ›cicieli
     eventsCache = null;
     _apiCache = null;
     salesCache = null;
@@ -2045,7 +2452,7 @@ async function connectWalletSilent(){
     document.getElementById('refLinkWrap').style.display = 'block';
     await updateStats();
     initMarket();
-    // ÄąÂaduj wszystko rÄ‚Ĺ‚wnolegle - nie czekaj sekwencyjnie
+    // Ĺaduj wszystko rĂłwnolegle - nie czekaj sekwencyjnie
     loadCollection();
     loadTicker();
     loadMarket();
@@ -2057,8 +2464,91 @@ async function connectWalletSilent(){
   }catch(e){ console.warn('Silent connect failed:', e); }
 }
 
-async function connectWallet(){
+function openWalletChoice(){
+  const modal = document.getElementById('walletChoiceModal');
+  if(modal) modal.classList.add('show');
+}
+function closeWalletChoice(){
+  const modal = document.getElementById('walletChoiceModal');
+  if(modal) modal.classList.remove('show');
+}
+function connectWallet(){
+  openWalletChoice();
+}
+function readableWalletError(error){
+  return (error?.shortMessage || error?.reason || error?.message || String(error || 'Unknown error')).replace(/\s+/g,' ').trim();
+}
+function isMissingPrivySession(error){
+  const text = readableWalletError(error).toLowerCase();
+  return text.includes('missing_or_invalid_token') || text.includes('no tokens found') || text.includes('invalid token');
+}
+async function ensureChilizChain(walletProvider){
+  const chainHex = '0x'+CHAIN_ID.toString(16);
+  const current = await walletProvider.request({method:'eth_chainId'}).catch(() => null);
+  if(String(current).toLowerCase() === chainHex.toLowerCase()) return true;
+  const chilizChain = [{
+    chainId: chainHex,
+    chainName: 'Chiliz Chain',
+    nativeCurrency: {name:'CHZ',symbol:'CHZ',decimals:18},
+    rpcUrls: PUBLIC_RPCS,
+    blockExplorerUrls: ['https://scan.chiliz.com']
+  }];
+  try{
+    await walletProvider.request({method:'wallet_switchEthereumChain',params:[{chainId:chainHex}]});
+  }catch(e){
+    await walletProvider.request({method:'wallet_addEthereumChain',params:chilizChain});
+  }
+  return true;
+}
+async function finishWalletConnection(walletProvider, label){
+  activeWalletProvider = walletProvider;
+  activeWalletType = label;
+  await ensureChilizChain(walletProvider);
+  provider = new ethers.BrowserProvider(walletProvider);
+  signer = await provider.getSigner();
+  address = await signer.getAddress();
+  contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
+  if(typeof MARKET_ADDRESS !== 'undefined' && MARKET_ADDRESS) {
+    marketContract = new ethers.Contract(MARKET_ADDRESS, MARKET_ABI, signer);
+  }
+
+  eventsCache = null;
+  _apiCache = null;
+  salesCache = null;
+  _readProvider = null;
+
+  const navAddr = document.getElementById('navAddr');
+  const navBal = document.getElementById('navBal');
+  const navBtn = document.getElementById('navBtn');
+  if(navAddr){ navAddr.textContent = address.slice(0,6)+'...'+address.slice(-4); navAddr.style.display = 'inline'; }
+  if(navBal){
+    const bal = await provider.getBalance(address).catch(() => 0n);
+    navBal.textContent = Number(ethers.formatEther(bal)).toFixed(1)+' CHZ';
+    navBal.style.display = 'inline';
+  }
+  if(navBtn){ navBtn.textContent = label.toUpperCase(); navBtn.classList.add('connected'); }
+  const heroBtn = document.getElementById('heroConnBtn');
+  if(heroBtn) heroBtn.style.display = 'none';
+  const mintBtn = document.getElementById('mintBtn');
+  if(mintBtn) mintBtn.style.display = 'block';
+  const refWrap = document.getElementById('refLinkWrap');
+  if(refWrap) refWrap.style.display = 'block';
+
+  await updateStats();
+  initMarket();
+  loadCollection();
+  loadTicker();
+  loadActivityFeed();
+  loadMarket();
+  loadCountryLb();
+  loadAlbum();
+  loadLeaderboard();
+  loadClaimSection();
+}
+
+async function connectInjectedWallet(){
   if(!window.ethereum){showToast('Install MetaMask - metamask.io','err');return;}
+  closeWalletChoice();
   try{
     await window.ethereum.request({method:'eth_requestAccounts'});
     const cid=await window.ethereum.request({method:'eth_chainId'});
@@ -2080,9 +2570,11 @@ async function connectWallet(){
     provider=new ethers.BrowserProvider(window.ethereum);
     signer=await provider.getSigner();
     address=await signer.getAddress();
+    activeWalletProvider = window.ethereum;
+    activeWalletType = 'Injected';
     contract=new ethers.Contract(CONTRACT_ADDRESS,ABI,signer);
 
-    // WyczyÄąâ€şĂ„â€ˇ cache - stare dane mogĂ„â€¦ mieĂ„â€ˇ bÄąâ€šĂ„â„˘dnych wÄąâ€šaÄąâ€şcicieli
+    // WyczyĹ›Ä‡ cache - stare dane mogÄ… mieÄ‡ bĹ‚Ä™dnych wĹ‚aĹ›cicieli
     eventsCache = null;
     _apiCache = null;
     salesCache = null;
@@ -2118,7 +2610,7 @@ async function connectWallet(){
     // Handle wallet events
     window.ethereum.on('accountsChanged', (accounts) => {
       if(accounts.length === 0){ location.reload(); }
-      else { connectWallet(); }
+      else { connectInjectedWallet(); }
     });
     window.ethereum.on('chainChanged', () => { location.reload(); });
     window.ethereum.on('disconnect', () => { 
@@ -2129,8 +2621,127 @@ async function connectWallet(){
   }catch(err){showToast('Error: '+(err.message||err),'err');}
 }
 
+function getChilizPrivyChain(){
+  const rpc = PUBLIC_RPCS[0] || 'https://chiliz-rpc.publicnode.com';
+  return {
+    id: CHAIN_ID,
+    name: 'Chiliz Chain',
+    network: 'chiliz',
+    nativeCurrency: {name:'CHZ',symbol:'CHZ',decimals:18},
+    rpcUrls: {default:{http:[rpc]}, public:{http:[rpc]}},
+    blockExplorers: {default:{name:'ChilizScan', url:'https://scan.chiliz.com'}}
+  };
+}
+
+async function getPrivyClient(){
+  if(privyClient) return privyClient;
+  if(location.protocol === 'file:') throw new Error('Privy requires a hosted HTTPS origin. Upload to Vercel and add this domain in Privy Allowed origins.');
+  const sdk = await import('https://esm.sh/@privy-io/js-sdk-core@latest');
+  privySdk = sdk;
+  const Privy = sdk.default;
+  const storage = sdk.LocalStorage ? new sdk.LocalStorage() : {
+    get:key => Promise.resolve(localStorage.getItem(key)),
+    put:(key,value) => Promise.resolve(localStorage.setItem(key,value)),
+    del:key => Promise.resolve(localStorage.removeItem(key)),
+    getKeys:() => Promise.resolve(Object.keys(localStorage))
+  };
+  const chilizChain = getChilizPrivyChain();
+  privyClient = new Privy({
+    appId: PRIVY_APP_ID,
+    clientId: PRIVY_CLIENT_ID,
+    defaultChain: chilizChain,
+    supportedChains: [chilizChain],
+    storage
+  });
+  await privyClient.initialize();
+  if(privyClient.embeddedWallet && !privyIframe){
+    privyIframe = document.createElement('iframe');
+    privyIframe.src = privyClient.embeddedWallet.getURL();
+    privyIframe.style.display = 'none';
+    privyIframe.setAttribute('aria-hidden','true');
+    document.body.appendChild(privyIframe);
+    privyClient.setMessagePoster(privyIframe.contentWindow);
+    window.addEventListener('message', event => {
+      if(event.source !== privyIframe.contentWindow) return;
+      const data = typeof event.data === 'string' ? JSON.parse(event.data) : event.data;
+      privyClient.embeddedWallet.onMessage(data);
+    });
+  }
+  return privyClient;
+}
+
+async function connectPrivyWallet(){
+  closeWalletChoice();
+  showToast('Opening Privy wallet...', 'ok');
+  try{
+    const client = await getPrivyClient();
+    let user = null;
+    try{
+      const current = await client.user.get();
+      user = current?.user || null;
+    }catch(sessionError){
+      if(!isMissingPrivySession(sessionError)) throw sessionError;
+    }
+    if(!user){
+      const email = window.prompt('Enter email for Privy wallet login:');
+      if(!email) return;
+      showToast('Sending Privy login code...', 'ok');
+      await client.auth.email.sendCode(email.trim());
+      const code = window.prompt('Enter the Privy code from your email:');
+      if(!code) return;
+      showToast('Confirming Privy login...', 'ok');
+      const session = await client.auth.email.loginWithCode(email.trim(), code.trim());
+      user = session.user;
+    }
+    let wallet = privySdk.getUserEmbeddedEthereumWallet(user);
+    if(!wallet){
+      showToast('Creating Privy wallet...', 'ok');
+      const created = await client.embeddedWallet.create({});
+      user = created.user;
+      wallet = privySdk.getUserEmbeddedEthereumWallet(user);
+    }
+    const entropy = privySdk.getEntropyDetailsFromUser(user);
+    const walletProvider = await client.embeddedWallet.getEthereumProvider({
+      wallet,
+      entropyId: entropy.entropyId,
+      entropyIdVerifier: entropy.entropyIdVerifier
+    });
+    await finishWalletConnection(walletProvider, 'Privy');
+    showToast('Privy wallet connected', 'ok');
+  }catch(e){
+    console.error('Privy connect failed:', e);
+    showToast('Privy failed: '+readableWalletError(e).slice(0, 170), 'err');
+  }
+}
+
+async function connectWalletConnect(){
+  closeWalletChoice();
+  showToast('Opening WalletConnect...', 'ok');
+  try{
+    const mod = await import('https://esm.sh/@walletconnect/ethereum-provider@2');
+    const EthereumProvider = mod.default || mod.EthereumProvider;
+    walletConnectProvider = await EthereumProvider.init({
+      projectId: WALLETCONNECT_PROJECT_ID,
+      chains: [CHAIN_ID],
+      optionalChains: [CHAIN_ID],
+      chainId: CHAIN_ID,
+      rpcMap: {[CHAIN_ID]: PUBLIC_RPCS[0] || 'https://chiliz-rpc.publicnode.com'},
+      showQrModal: true,
+      methods: ['eth_sendTransaction','personal_sign','wallet_switchEthereumChain','wallet_addEthereumChain'],
+      events: ['chainChanged','accountsChanged','disconnect'],
+      metadata: {name:'Block Kickers',description:'Block Kickers on Chiliz Chain',url:location.origin,icons:[location.origin + '/favicon.ico']}
+    });
+    await walletConnectProvider.connect({chains:[CHAIN_ID]});
+    await finishWalletConnection(walletConnectProvider, 'WC');
+    showToast('WalletConnect wallet connected', 'ok');
+  }catch(e){
+    console.error('WalletConnect failed:', e);
+    showToast('WalletConnect failed: '+readableWalletError(e).slice(0, 140), 'err');
+  }
+}
+
 function openMetaMaskMobile(){
-  closeWalletModal();
+  closeWalletChoice();
   const url = 'https://metamask.app.link/dapp/block-kickers.vercel.app';
   window.open(url, '_blank');
   showToast('Opening in MetaMask browser...', 'ok');
@@ -2193,7 +2804,6 @@ function makeFigureSVG(dna, size){
   p.push('<rect x="'+(cx-s*0.07)+'" y="'+(headY+headH*0.72)+'" width="'+(s*0.14)+'" height="'+(s*0.03)+'" rx="2" fill="#8b1a00" opacity="0.8"/>');
   if(t.hasBand){p.push('<rect x="'+(cx-headW/2-2)+'" y="'+(headY+headH*0.18)+'" width="'+(headW+4)+'" height="'+(s*0.06)+'" rx="3" fill="white" opacity="0.85"/>');}
   if(t.hasTattoo){p.push('<line x1="'+(cx-bodyW/2-armW/2)+'" y1="'+(armY+armH*0.3)+'" x2="'+(cx-bodyW/2-armW/2+s*0.04)+'" y2="'+(armY+armH*0.5)+'" stroke="#000" stroke-width="1.5" opacity="0.5"/>');p.push('<line x1="'+(cx-bodyW/2-armW/2+s*0.04)+'" y1="'+(armY+armH*0.3)+'" x2="'+(cx-bodyW/2-armW/2)+'" y2="'+(armY+armH*0.5)+'" stroke="#000" stroke-width="1.5" opacity="0.5"/>');}
-  if(t.rarity>=2){p.push('<rect x="2" y="2" width="'+(s-4)+'" height="'+(s-4)+'" rx="8" fill="none" stroke="'+rar+'" stroke-width="1.5" opacity="0.5"/>');}
   return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 '+s+' '+s+'" width="'+s+'" height="'+s+'">'+p.join('')+'</svg>';
 }
 
@@ -2244,21 +2854,18 @@ function updateRewardPreview(vaultWeiOrChz, legendaryCount = null){
     : formatGameChz(legendaryPool, { compact: true });
 }
 
-async function loadTicker(options = {}){
-  if(options && options.silent) return loadTickerCore();
-  return withNetworkOverlay('Refreshing live game stats...', loadTickerCore);
-}
-
-async function loadTickerCore(){
+async function loadTicker(){
   try{
-    // UÄąÄ˝yj istniejĂ„â€¦cego contract lub stwÄ‚Ĺ‚rz read-only
+    // UĹĽyj istniejÄ…cego contract lub stwĂłrz read-only
     let c = contract;
     let p = provider;
     if(!c){
-      p = await getReadProvider();
-      c = new ethers.Contract(CONTRACT_ADDRESS, ABI, p);
+      try{
+        p = new ethers.BrowserProvider(window.ethereum || {request:()=>{}});
+        c = new ethers.Contract(CONTRACT_ADDRESS, ABI, p);
+      }catch(e){ return; }
     }
-    if(!c || !p) return;
+    if(!c) return;
 
     const current = await p.getBlockNumber();
     const events = await getAllMintEvents(c, p);
@@ -2300,7 +2907,7 @@ async function loadTickerCore(){
       topHolder[0].slice(0,6)+'...'+topHolder[0].slice(-4)+' ('+topHolder[1]+' figs)';
     if(topCard) document.getElementById('tickerTopFigure').textContent =
       topCard.team+' '+topCard.rarity+' W:'+topCard.weight;
-    document.getElementById('tickerHolders').textContent = formatGameNumber(holders)+' players';
+    document.getElementById('tickerHolders').textContent = formatGameNumber(holders)+' wallets';
     document.getElementById('tickerVault').textContent = vaultChz;
     const sHolders = document.getElementById('sHolders');
     if(sHolders) sHolders.textContent = formatGameNumber(holders);
@@ -2357,14 +2964,36 @@ function copyRefLink() {
 
 async function doMint(){
   if(!signer||!contract){showToast('Connect wallet first','err');return;}
-  showNetworkOverlay('Waiting for mint transaction...');
   const btn=document.getElementById('mintBtn');
   btn.disabled=true;
   btn.innerHTML='<span class="spin"></span>MINTING...';
   try{
     const price=await contract.mintPrice();
     const referrer=getReferrerFromURL();
-    const tx=await contract.mint(referrer,{value:price,gasLimit:400000});
+    let tx;
+    if(activeWalletType === 'Privy' && activeWalletProvider){
+      const iface = new ethers.Interface(ABI);
+      const feeData = await provider.getFeeData().catch(() => null);
+      const gasPrice = feeData?.gasPrice || 2500000000000n;
+      const gasHex = ethers.toQuantity(650000n);
+      const txHash = await activeWalletProvider.request({
+        method:'eth_sendTransaction',
+        params:[{
+          from:address,
+          to:CONTRACT_ADDRESS,
+          data:iface.encodeFunctionData('mint',[referrer]),
+          value:ethers.toQuantity(price),
+          gas:gasHex,
+          gasLimit:gasHex,
+          gasPrice:ethers.toQuantity(gasPrice),
+          chainId:'0x'+CHAIN_ID.toString(16),
+          type:'0x0'
+        }]
+      });
+      tx = {hash:txHash, wait:() => provider.waitForTransaction(txHash)};
+    }else{
+      tx=await contract.mint(referrer,{value:price,gasLimit:400000});
+    }
     showToast('Transaction sent...','ok');
     const receipt=await tx.wait();
     const iface=new ethers.Interface(ABI);
@@ -2374,8 +3003,8 @@ async function doMint(){
         if(p&&p.name==='FigureMinted'){
           const tid=Number(p.args.tokenId);
           const dna=p.args.dna;
-          showToast(`Figure #${tid} minted!`,'ok');
-          eventsCache = null; // odÄąâ€şwieÄąÄ˝ eventy przy nastĂ„â„˘pnym loadCollection
+          showToast(`Figure #${tid} minted! đźŽ‰`,'ok');
+          eventsCache = null; // odĹ›wieĹĽ eventy przy nastÄ™pnym loadCollection
           _apiCache = null;
           addToCollection(tid,dna);
           openMintSuccess(tid, dna);
@@ -2387,7 +3016,6 @@ async function doMint(){
   }catch(err){showToast('Error: '+(err.reason||err.message||'Failed'),'err');}
   btn.disabled=false;
   btn.innerHTML='MINT FIGURE';
-  hideNetworkOverlay();
 }
 
 // ============================================================
@@ -2397,10 +3025,10 @@ async function loadCollection(){
   if(!contract||!address)return;
   document.getElementById('colCount').textContent='LOADING...';
   try{
-    // SprawdÄąĹź ile tokenÄ‚Ĺ‚w powinno byĂ„â€ˇ
+    // SprawdĹş ile tokenĂłw powinno byÄ‡
     const totalMinted = Number(await contract.totalMinted());
 
-    // Pobierz eventy - z retry jeÄąâ€şli liczba siĂ„â„˘ nie zgadza
+    // Pobierz eventy - z retry jeĹ›li liczba siÄ™ nie zgadza
     let events = await getAllMintEvents(contract, provider);
     if(events.length < totalMinted){
       console.warn(`loadCollection: got ${events.length} events but totalMinted=${totalMinted}, retrying...`);
@@ -2410,7 +3038,7 @@ async function loadCollection(){
       events = await getAllMintEvents(contract, provider);
     }
 
-    // ÄąĹˇledÄąĹź wÄąâ€šaÄąâ€şciciela przez Sold eventy
+    // ĹšledĹş wĹ‚aĹ›ciciela przez Sold eventy
     const ownerMap = {}; // tokenId -> owner
     events.forEach(ev => {
       ownerMap[Number(ev.args.tokenId)] = {
@@ -2489,12 +3117,14 @@ function renderCollection(){
   const filtered = _squadTeamFilter
     ? myFigures.filter(f=>{ try{ return TEAMS[parseDNA(f.dna).teamId%TEAMS.length]===_squadTeamFilter; }catch(e){ return true; } })
     : myFigures;
-  const squadStart=squadPage*SQUAD_PER_PAGE;
-  const squadEnd=squadStart+SQUAD_PER_PAGE;
-  const squadTotal=Math.ceil(filtered.length/SQUAD_PER_PAGE);
+  const squadPageSize = twoRowGridLimit(grid, SQUAD_PER_PAGE);
+  const squadStart=squadPage*squadPageSize;
+  const squadEnd=squadStart+squadPageSize;
+  const squadTotal=Math.ceil(filtered.length/squadPageSize);
   filtered.slice(squadStart,squadEnd).forEach(({tid,dna})=>{
     const t=parseDNA(dna);
     const rn=RARITY_NAMES[t.rarity];
+    const rs=RARITY_SHORT[t.rarity] || rn;
     const team=TEAMS[t.teamId%TEAMS.length];
     const pos=POSITION_NAMES[t.position]||'#'+t.position;
     const card=document.createElement('div');
@@ -2513,23 +3143,21 @@ function renderCollection(){
       t.hasBand?'<span class="chip">HEADBAND</span>':'',
       t.hasGloves&&t.position===1?'<span class="chip">GLOVES</span>':''
     ].filter(Boolean).join('');
-    card.innerHTML=`<div class="fig-canvas"><div id="${cid}" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;overflow:hidden;"></div></div>
+    card.innerHTML=`<div class="fig-canvas">${teamFlagImg(t.teamId, team)}<div id="${cid}" class="fig-svg-wrap"></div></div>
     <div class="fig-info">
-      <div class="fig-name" style="font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${team}</div>
-      <div class="fig-id" style="font-size:10px;">#${String(tid).padStart(4,'0')} &middot; ${pos}</div>
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-top:4px;">
-        <div class="fig-weight" style="font-size:12px;margin-top:0;white-space:nowrap;">&#9889; ${t.weight}<span style="font-size:10px;color:var(--text3);">/100</span></div>
-        <span class="rarity-badge rb${t.rarity}">${rn}</span>
+      <div class="fig-row">
+        <div class="fig-weight">&#9889; ${t.weight}<span style="font-size:10px;color:var(--text3);">/100</span></div>
+        <span class="rarity-badge rb${t.rarity}" title="${rn}">${rs}</span>
       </div>
     </div>`;
     grid.appendChild(card);
     const svgTarget=document.getElementById(cid);
-    if(svgTarget) svgTarget.innerHTML=makeFigureSVG(dna,80);
+    if(svgTarget) svgTarget.innerHTML=makeFigureSVG(dna,68);
   });
-  if(filtered.length > SQUAD_PER_PAGE){
+  if(filtered.length > squadPageSize){
     const pag=document.createElement('div');
     pag.style.cssText='grid-column:1/-1;display:flex;align-items:center;justify-content:center;gap:12px;padding:16px 0;';
-    const squadTotal2=Math.ceil(filtered.length/SQUAD_PER_PAGE);
+    const squadTotal2=Math.ceil(filtered.length/squadPageSize);
     pag.innerHTML='<button onclick="squadPageChange(-1)" style="padding:6px 16px;background:var(--card);border:1px solid var(--border);color:var(--text2);border-radius:6px;cursor:pointer;font-family:Black Ops One,sans-serif;font-size:12px;" '+(squadPage===0?'disabled':'')+'><- PREV</button><span style="font-size:12px;color:var(--text3);font-family:Share Tech Mono,monospace;">PAGE '+(squadPage+1)+' / '+squadTotal2+'</span><button onclick="squadPageChange(1)" style="padding:6px 16px;background:var(--card);border:1px solid var(--border);color:var(--text2);border-radius:6px;cursor:pointer;font-family:Black Ops One,sans-serif;font-size:12px;" '+(squadPage>=squadTotal2-1?'disabled':'')+'>NEXT -></button>';
     grid.appendChild(pag);
   }
@@ -2609,7 +3237,7 @@ function initHero(){
   // Desktop canvas
   const cv=document.getElementById('heroCanvas');
   if(cv && cv.clientWidth > 0) heroRen=new Figure3D(cv,randDna,true);
-  // Mobile canvas - ustaw jawny rozmiar przed inicjalizacjĂ„â€¦
+  // Mobile canvas - ustaw jawny rozmiar przed inicjalizacjÄ…
   const cvm=document.getElementById('heroCanvasMobile');
   if(cvm){
     cvm.width=110; cvm.height=140;
@@ -2667,7 +3295,7 @@ const POSITION_LABELS = {1:'GK',2:'RB',3:'LB',4:'CB',5:'CB',6:'CDM',7:'RW',8:'MI
 async function loadActivityFeed(){
   const feed = document.getElementById('activityFeed');
   if(!feed) return;
-  // UÄąÄ˝yj contract jeÄąâ€şli poÄąâ€šĂ„â€¦czony, lub RPC bez portfela
+  // UĹĽyj contract jeĹ›li poĹ‚Ä…czony, lub RPC bez portfela
   let feedContract = contract;
   let feedProvider = provider;
   if(!feedContract){
@@ -2704,7 +3332,7 @@ async function loadActivityFeed(){
     const joined = items.join('   &middot;   ');
     // Duplikuj dla infinite scroll
     feed.innerHTML = '<span>' + joined + '   &middot;   </span><span aria-hidden=true>' + joined + '   &middot;   </span>';
-    // Ustaw animacjĂ„â„˘ na podstawie dÄąâ€šugoÄąâ€şci
+    // Ustaw animacjÄ™ na podstawie dĹ‚ugoĹ›ci
     const len = items.length;
     const duration = Math.max(20, len * 4);
     feed.style.animationDuration = duration + 's';
@@ -2743,7 +3371,7 @@ function simInitResults(keepChampion){
   const champ = keepChampion ? simChampion : -1;
   simChampion = champ;
 
-  // Losuj resztĂ„â„˘
+  // Losuj resztÄ™
   const sh=[...Array.from({length:48},(_,i)=>i)]
     .filter(i=>i!==champ)
     .sort(()=>Math.random()-0.5);
@@ -2807,7 +3435,7 @@ function simParseDNA(n){
   return{teamId,pos,rarity,weight:w};
 }
 
-// parseDNABig - alias dla parseDNA (BigInt input), uÄąÄ˝ywany w simulatorze
+// parseDNABig - alias dla parseDNA (BigInt input), uĹĽywany w simulatorze
 function parseDNABig(dna){
   const t = parseDNA(dna);
   return { teamId: t.teamId, rarity: t.rarity, weight: t.weight, pos: t.position };
@@ -2815,7 +3443,7 @@ function parseDNABig(dna){
 
 
 // ============================================================
-//  LIVE SIMULATOR - uÄąÄ˝ywa rzeczywistych figurek z blockchaina
+//  LIVE SIMULATOR - uĹĽywa rzeczywistych figurek z blockchaina
 // ============================================================
 // ============================================================
 //  LIVE SIMULATOR
@@ -2824,7 +3452,7 @@ async function runLiveSim(){
   const btn = document.getElementById('liveSimBtn');
   const info = document.getElementById('liveSimInfo');
   if(!contract){ showToast('Connect wallet first','err'); return; }
-  btn.textContent = 'Ă˘ĹąĹ‚ LOADING...'; btn.disabled = true;
+  btn.textContent = 'âŹł LOADING...'; btn.disabled = true;
   if(info) info.style.display = 'block';
   try{
     const p = provider;
@@ -2983,12 +3611,27 @@ let allMarketListings = [];
 let mkPage = 0;
 const MK_PER_PAGE = 12;
 let squadPage = 0;
-const SQUAD_PER_PAGE = 18;
+const SQUAD_PER_PAGE = 12;
 let currentMarketTab = 'all';
 let selectedListToken = null;
 let marketRens = {};
 // Set of tokenIds that are listed by current user (refreshed from chain)
 const localListedFigures = new Set();
+
+function twoRowGridLimit(gridEl, fallback) {
+  if (!gridEl) return fallback;
+  const styles = getComputedStyle(gridEl);
+  const gap = parseFloat(styles.columnGap) || 8;
+  const minCard = gridEl.id === 'marketList' ? 112 : 104;
+  const width = gridEl.clientWidth || gridEl.getBoundingClientRect().width || 0;
+  const measuredCols = width > 0 ? Math.floor((width + gap) / (minCard + gap)) : 0;
+  const cssCols = styles.gridTemplateColumns
+    .split(' ')
+    .filter(Boolean)
+    .length;
+  const cols = Math.max(1, measuredCols || cssCols || Math.ceil(fallback / 2));
+  return Math.max(2, cols * 2);
+}
 
 function initMarket() {
   if (!MARKET_ADDRESS || !signer) return;
@@ -3071,15 +3714,10 @@ function setMarketFilter(team,btn){
   loadMarket();
 }
 
-async function loadMarket(options = {}){
-  if(options && options.silent) return loadMarketCore();
-  return withNetworkOverlay('Refreshing market...', loadMarketCore);
-}
-
-async function loadMarketCore() {
+async function loadMarket() {
   const list = document.getElementById('marketList');
   if (!MARKET_ADDRESS) { list.innerHTML = '<div class="market-empty">MARKET COMING SOON</div>'; return; }
-  // SprawdÄąĹź czy turniej zakoÄąâ€žczony
+  // SprawdĹş czy turniej zakoĹ„czony
   try{
     if(contract){
       const ended = await contract.tournamentEnded();
@@ -3099,7 +3737,7 @@ async function loadMarketCore() {
     buildMarketFilters(listings);
     await syncListedFigures(listings);
 
-    // Sortuj po wadze malejĂ„â€¦co
+    // Sortuj po wadze malejÄ…co
     listings.sort((a,b)=>{
       const wa=parseDNA(a.dna||0n)?.weight||0;
       const wb=parseDNA(b.dna||0n)?.weight||0;
@@ -3120,9 +3758,10 @@ async function loadMarketCore() {
     marketRens = {};
     list.innerHTML = '';
 
-    const mkStart = mkPage * MK_PER_PAGE;
-    const mkEnd = mkStart + MK_PER_PAGE;
-    const mkTotal = Math.ceil(filtered.length / MK_PER_PAGE);
+    const marketPageSize = twoRowGridLimit(list, MK_PER_PAGE);
+    const mkStart = mkPage * marketPageSize;
+    const mkEnd = mkStart + marketPageSize;
+    const mkTotal = Math.ceil(filtered.length / marketPageSize);
     const paginated = filtered.slice(mkStart, mkEnd);
 
     for (const l of paginated) {
@@ -3132,6 +3771,7 @@ async function loadMarketCore() {
       const team = TEAMS[t.teamId % TEAMS.length];
       const pos  = POSITION_NAMES[t.position] || '#' + t.position;
       const rn   = RARITY_NAMES[t.rarity];
+      const rs   = RARITY_SHORT[t.rarity] || rn;
       const priceChz = parseFloat(ethers.formatEther(l.price));
       const priceStr = priceChz >= 1000 ? (priceChz/1000).toFixed(1).replace(/\.0$/,'')+'K' : priceChz.toFixed(priceChz < 10 ? 2 : 0);
       const isOwn = l.seller.toLowerCase() === myAddr;
@@ -3141,28 +3781,26 @@ async function loadMarketCore() {
       item.className = `fig-card r${t.rarity}`;
       item.style.cursor = 'default';
       item.innerHTML = `
-        <div class="fig-canvas" style="height:90px;">
-          <div id="${cid}" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;overflow:hidden;"></div>
+        <div class="fig-canvas">
+          ${teamFlagImg(t.teamId, team)}
+          <div id="${cid}" class="fig-svg-wrap"></div>
         </div>
         <div class="fig-info">
-          <div class="fig-name" style="font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${team}</div>
-          <div class="fig-id" style="font-size:10px;">#${String(l.tokenId).padStart(4,'0')} &middot; ${pos}</div>
-          <div style="display:flex;align-items:center;justify-content:space-between;margin-top:4px;">
-            <div style="font-family:'Black Ops One',sans-serif;font-size:12px;color:var(--green);white-space:nowrap;">&#9889; ${t.weight}<span style="font-size:10px;color:var(--text3);">/100</span></div>
-            <span class="rarity-badge rb${t.rarity}">${rn}</span>
+          <div class="fig-row">
+            <div class="fig-weight">&#9889; ${t.weight}<span style="font-size:10px;color:var(--text3);">/100</span></div>
+            <span class="rarity-badge rb${t.rarity}" title="${rn}">${rs}</span>
           </div>
-          <div style="margin-top:6px;display:flex;align-items:center;justify-content:space-between;gap:4px;">
-            <div style="font-family:'Black Ops One',sans-serif;font-size:16px;color:var(--gold);white-space:nowrap;">${priceStr} <span style="font-size:10px;color:var(--text3);">CHZ</span></div>
+          <div class="fig-market-action">
+            <div class="fig-price">${priceStr} <span style="font-size:10px;color:var(--text3);">CHZ</span></div>
             ${isOwn
               ? `<button class="btn-cancel" style="padding:5px 10px;font-size:10px;" onclick="doCancelListing(${l.id},${l.tokenId})">CANCEL</button>`
               : `<button class="btn-buy" style="padding:5px 10px;font-size:10px;" onclick="doBuyFigure(${l.id},'${ethers.formatEther(l.price)}')">BUY</button>`
             }
           </div>
-          <div style="font-size:10px;color:var(--text3);margin-top:3px;">${isOwn ? 'YOUR LISTING' : l.seller.slice(0,6)+'...'+l.seller.slice(-4)}</div>
         </div>`;
       list.appendChild(item);
       const mkDiv = document.getElementById(cid);
-      if(mkDiv) mkDiv.innerHTML = makeFigureSVG(dna, 80);
+      if(mkDiv) mkDiv.innerHTML = makeFigureSVG(dna, 68);
     }
 
     // Paginacja
@@ -3211,7 +3849,6 @@ async function confirmList() {
   if (!priceStr || parseFloat(priceStr) <= 0) { showToast('Enter a valid price', 'err'); return; }
   const btn = document.querySelector('#listModal .btn-list-confirm');
   if (btn) { btn.disabled = true; btn.textContent = '...'; }
-  showNetworkOverlay('Waiting for marketplace transaction...');
   try {
     const approved = await contract.isApprovedForAll(address, MARKET_ADDRESS);
     if (!approved) {
@@ -3230,18 +3867,16 @@ async function confirmList() {
     showToast('Error: ' + (err.reason || err.message || 'Failed'), 'err');
   }
   if (btn) { btn.disabled = false; btn.textContent = 'LIST FOR SALE'; }
-  hideNetworkOverlay();
 }
 
 async function doBuyFigure(listingId, priceEth) {
   if (!marketContract) return;
-  showNetworkOverlay('Waiting for buy transaction...');
   try {
     const tx = await marketContract.buyFigure(listingId, {value: ethers.parseEther(priceEth), gasLimit: 250000});
     showToast('Buying...', 'ok');
     await tx.wait();
-    showToast('Figure purchased!', 'ok');
-    // WyczyÄąâ€şĂ„â€ˇ wszystkie cache - nowa sprzedaÄąÄ˝ musi byĂ„â€ˇ pobrana od nowa
+    showToast('Figure purchased! đźŽ‰', 'ok');
+    // WyczyĹ›Ä‡ wszystkie cache - nowa sprzedaĹĽ musi byÄ‡ pobrana od nowa
     salesCache = null;
     eventsCache = null;
     _apiCache = null;
@@ -3250,12 +3885,11 @@ async function doBuyFigure(listingId, priceEth) {
     await loadCollection();
   } catch(err) {
     showToast('Error: ' + (err.reason || err.message || 'Failed'), 'err');
-  } finally { hideNetworkOverlay(); }
+  }
 }
 
 async function doCancelListing(listingId, tokenId) {
   if (!marketContract) return;
-  showNetworkOverlay('Waiting for cancel transaction...');
   try {
     const tx = await marketContract.cancelListing(listingId, {gasLimit: 150000});
     showToast('Cancelling...', 'ok');
@@ -3265,13 +3899,13 @@ async function doCancelListing(listingId, tokenId) {
     showToast('Listing cancelled!', 'ok');
     await loadMarket();
     renderCollection();
-    // OdÄąâ€şwieÄąÄ˝ modal jeÄąâ€şli otwarty
+    // OdĹ›wieĹĽ modal jeĹ›li otwarty
     if(currentModalToken && Number(currentModalToken.tid) === Number(tokenId)){
       openModal(Number(tokenId), currentModalToken.dna);
     }
   } catch(err) {
     showToast('Error: ' + (err.reason || err.message || 'Failed'), 'err');
-  } finally { hideNetworkOverlay(); }
+  }
 }
 
 // ============================================================
@@ -3316,11 +3950,11 @@ async function loadClaimSection(){
         if(refunded){
           document.getElementById('claimBox').innerHTML = `
             <div class="claim-ended">REFUND CLAIMED</div>
-            <div class="claim-already">Ă˘Ĺ›â€¦ YOU HAVE BEEN REFUNDED</div>`;
+            <div class="claim-already">âś… YOU HAVE BEEN REFUNDED</div>`;
         } else if(Number(deposit) > 0){
           const depositEth = parseFloat(ethers.formatEther(deposit)).toFixed(4);
           document.getElementById('claimBox').innerHTML = `
-            <div class="claim-ended" style="color:var(--red)">Ă˘ĹˇÂ ÄŹÂ¸Ĺą TOURNAMENT NOT FINALIZED</div>
+            <div class="claim-ended" style="color:var(--red)">âš ď¸Ź TOURNAMENT NOT FINALIZED</div>
             <div class="claim-amount">${depositEth}</div>
             <div class="claim-sub">CHZ &middot; REFUND AVAILABLE</div>
             <button class="btn-claim" style="background:linear-gradient(135deg,var(--red),#cc0000)" onclick="doRefund()">CLAIM REFUND</button>`;
@@ -3360,7 +3994,7 @@ async function loadClaimSection(){
     if(claimed){
       document.getElementById('claimBox').innerHTML = `
         <div class="claim-ended">TOURNAMENT ENDED</div>
-        <div class="claim-already">Ă˘Ĺ›â€¦ REWARD CLAIMED<br><span style="font-size:14px;color:var(--gold)">${amountEth} CHZ</span></div>`;
+        <div class="claim-already">âś… REWARD CLAIMED<br><span style="font-size:14px;color:var(--gold)">${amountEth} CHZ</span></div>`;
       return;
     }
 
@@ -3380,7 +4014,7 @@ async function doRefund(){
     const tx = await contract.claimRefund({gasLimit:200000});
     showToast('Refund transaction sent...','ok');
     await tx.wait();
-    showToast('Refund claimed! Ă˘Ĺ›â€¦','ok');
+    showToast('Refund claimed! âś…','ok');
     await loadClaimSection();
     const bal = await provider.getBalance(address);
     document.getElementById('navBal').textContent = parseFloat(ethers.formatEther(bal)).toFixed(3)+' CHZ';
@@ -3407,7 +4041,7 @@ async function doClaim(){
     );
     showToast('Transaction sent...','ok');
     await tx.wait();
-    showToast('Reward claimed! Ä‘ĹşĹ˝â€°','ok');
+    showToast('Reward claimed! đźŽ‰','ok');
     await loadClaimSection();
     // Update balance
     const bal = await provider.getBalance(address);
@@ -3475,71 +4109,79 @@ function renderLeaderboard(){
   window._lbFigures = allFigures;
   const top10pct = Math.ceil(allFigures.length * 0.1);
 
-  let html=`<table class="lb-table">
-    <thead><tr>
-      <th>#</th><th>FIGURE</th><th style="width:140px">INFO</th>
-      <th>RARITY</th><th>MINTER</th><th style="text-align:right">WEIGHT</th><th style="text-align:right">SCORE*</th>
-    </tr></thead><tbody>`;
+  const podium = allFigures.slice(0, 3);
+  const rest = allFigures.slice(3);
+  let html = '<div class="lb-podium">';
 
-  const lbStart = lbPage * LB_PER_PAGE;
-  const lbEnd = lbStart + LB_PER_PAGE;
-  const pageTotal = Math.ceil(allFigures.length / LB_PER_PAGE);
-
-  allFigures.slice(lbStart, lbEnd).forEach(({tid,dna,owner},i)=>{
-    const globalI = lbStart + i;
-    i = globalI;
+  podium.forEach(({tid,dna,owner},i)=>{
     const t=parseDNA(dna);
     const team=TEAMS[t.teamId%TEAMS.length];
     const pos=POSITION_NAMES[t.position]||'#'+t.position;
     const rn=RARITY_NAMES[t.rarity];
-    const rankCls=i===0?'top1':i===1?'top2':i===2?'top3':'';  // i = globalI
     const wCls=t.rarity===3?'w-legendary':t.rarity===2?'w-epic':t.rarity===1?'w-rare':'';
     const isTop=i<top10pct;
     const isMe=address&&owner.toLowerCase()===address.toLowerCase();
-    const rowStyle=isMe?'background:rgba(0,255,135,0.04);':'';
-    const canvasId=`lb-${tid}`;
-
-    html+=`<tr class="lb-row" onclick="openModal(${tid},${dna}n)" style="${rowStyle}">
-      <td class="lb-rank ${rankCls}">${i+1}</td>
-      <td class="lb-mini"><div id="${canvasId}" style="width:60px;height:60px;display:flex;align-items:center;justify-content:center;"></div></td>
-      <td class="lb-info">
-        <div class="lb-name">${team} ${isMe?'<span style="color:var(--green);font-size:10px;">YOU</span>':''}</div>
-        <div class="lb-sub">${pos} &middot; #${String(tid).padStart(4,'0')}${isTop?'<span class="top10-badge">TOP 10%</span>':''}</div>
-      </td>
-      <td class="lb-rarity"><span style="display:inline-block;padding:3px 8px;border-radius:4px;font-size:10px;font-weight:700;letter-spacing:1px;background:${['rgba(107,114,128,0.25)','rgba(59,130,246,0.2)','rgba(168,85,247,0.2)','rgba(255,201,64,0.2)'][t.rarity]};color:${['#9ca3af','#60a5fa','#c084fc','#fbbf24'][t.rarity]};border:1px solid ${['rgba(107,114,128,0.35)','rgba(59,130,246,0.4)','rgba(168,85,247,0.4)','rgba(255,201,64,0.5)'][t.rarity]};">${rn}</span></td>
-      <td class="lb-owner">${owner.slice(0,6)}...${owner.slice(-4)}</td>
-      <td class="lb-weight ${wCls}">${t.weight}<span style="font-size:11px;color:var(--text3)">/100</span></td>
-      <td style="text-align:right;padding:12px 8px;font-size:12px;color:var(--text3);font-family:'Share Tech Mono',monospace;">${t.weight} x ?</td>
-    </tr>`;
+    const rs=RARITY_SHORT[t.rarity] || rn;
+    const canvasId=`lb-podium-${tid}`;
+    html+=`<div class="fig-card lb-podium-card rank-${i+1} r${t.rarity}" onclick="openModal(${tid},${dna}n)">
+      <div class="lb-podium-rank">#${i+1}</div>
+      <div class="fig-canvas">
+        ${teamFlagImg(t.teamId, team)}
+        <div id="${canvasId}" class="fig-svg-wrap"></div>
+      </div>
+      <div class="fig-info">
+        <div class="lb-podium-team">${team} ${isMe?'<span style="color:var(--green);font-size:9px;">YOU</span>':''}</div>
+        <div class="fig-row" style="margin-top:5px;">
+          <div class="fig-weight ${wCls}">&#9889; ${t.weight}<span style="font-size:10px;color:var(--text3);">/100</span></div>
+          <span class="rarity-badge rb${t.rarity}" title="${rn}">${rs}</span>
+        </div>
+        <div class="lb-podium-owner">${owner.slice(0,6)}...${owner.slice(-4)}${isTop?'<span class="top10-badge">TOP</span>':''}</div>
+      </div>
+    </div>`;
   });
 
-  html+='</tbody></table>';
+  html+='</div>';
+
+  if(rest.length){
+    html+=`<details class="lb-rest">
+      <summary><span>SHOW REST OF LEADERBOARD</span><span>${rest.length} FIGURES</span></summary>
+      <div class="lb-rest-list">`;
+    rest.forEach(({tid,dna,owner},idx)=>{
+      const rank = idx + 4;
+      const t=parseDNA(dna);
+      const team=TEAMS[t.teamId%TEAMS.length];
+      const pos=POSITION_NAMES[t.position]||'#'+t.position;
+      const rn=RARITY_NAMES[t.rarity];
+      const rs=RARITY_SHORT[t.rarity] || rn;
+      const isTop=rank-1<top10pct;
+      const isMe=address&&owner.toLowerCase()===address.toLowerCase();
+      html+=`<div class="lb-rest-row" onclick="openModal(${tid},${dna}n)" style="${isMe?'background:rgba(0,255,135,.045);':''}">
+        <div class="lb-rest-rank">#${rank}</div>
+        <div>
+          <div class="lb-rest-name">${team} ${isMe?'<span style="color:var(--green);font-size:9px;">YOU</span>':''}</div>
+          <div class="lb-rest-sub">${pos} &middot; ${owner.slice(0,6)}...${owner.slice(-4)}${isTop?' &middot; TOP 10%':''}</div>
+        </div>
+        <span class="rarity-badge rb${t.rarity}" title="${rn}">${rs}</span>
+        <div class="lb-rest-weight">&#9889; ${t.weight}</div>
+      </div>`;
+    });
+    html+='</div></details>';
+  }
+
   wrap.innerHTML=html;
 
-  // Paginacja
   // Footnote
   const fn = document.createElement('div');
-  fn.style.cssText='padding:4px 0 12px;';
+  fn.style.cssText='padding:9px 0 0;';
   fn.className='sec-sub';
   fn.textContent='* Score = Weight x WC Multiplier (calculated after tournament)';
   wrap.appendChild(fn);
 
-  if(allFigures.length > LB_PER_PAGE){
-    const pagDiv = document.createElement('div');
-    pagDiv.style.cssText='display:flex;align-items:center;justify-content:center;gap:12px;padding:16px;';
-    pagDiv.innerHTML=`
-      <button onclick="lbPageChange(-1)" style="padding:6px 16px;background:var(--card);border:1px solid var(--border);color:var(--text2);border-radius:6px;cursor:pointer;font-family:'Black Ops One',sans-serif;font-size:12px;" ${lbPage===0?'disabled':''}><- PREV</button>
-      <span style="font-size:12px;color:var(--text3);font-family:'Share Tech Mono',monospace;">PAGE ${lbPage+1} / ${pageTotal}</span>
-      <button onclick="lbPageChange(1)" style="padding:6px 16px;background:var(--card);border:1px solid var(--border);color:var(--text2);border-radius:6px;cursor:pointer;font-family:'Black Ops One',sans-serif;font-size:12px;" ${lbPage>=pageTotal-1?'disabled':''}>NEXT -></button>
-    `;
-    wrap.appendChild(pagDiv);
-  }
-
-  // Render SVG dla aktualnej strony
-  allFigures.slice(lbStart, lbEnd).forEach(({tid,dna})=>{
+  // Render SVG for podium cards only. The rest stays compact inside the hidden list.
+  podium.forEach(({tid,dna})=>{
     requestAnimationFrame(()=>{
-      const cv=document.getElementById(`lb-${tid}`);
-      if(cv){ cv.style.cssText='display:flex;align-items:center;justify-content:center;'; cv.innerHTML=makeFigureSVG(dna,80); }
+      const cv=document.getElementById(`lb-podium-${tid}`);
+      if(cv){ cv.innerHTML=makeFigureSVG(dna,80); }
     });
   });
 }
@@ -3622,16 +4264,11 @@ const WC_GROUPS = [
 
 const NATION_QUEST = {
   teamId: 24, // United States
-  prize: '1000 CHZ',
+  prize: '1500 CHZ',
   active: true,
 };
 
-async function loadAlbum(options = {}){
-  if(options && options.silent) return loadAlbumCore();
-  return withNetworkOverlay('Refreshing album...', loadAlbumCore);
-}
-
-async function loadAlbumCore(){
+async function loadAlbum(){
   const grid = document.getElementById('albumGrid');
   if(!grid) return;
   if(!contract){ grid.innerHTML='<div style="text-align:center;color:var(--text3);padding:32px;font-size:12px;letter-spacing:2px;">CONNECT WALLET TO SEE ALBUM</div>'; return; }
@@ -3662,7 +4299,7 @@ async function loadAlbumCore(){
       wallets[owner][teamId].add(pos);
     });
 
-    // Upewnij siĂ„â„˘ ÄąÄ˝e mamy listings z marketu (mogÄąâ€šy jeszcze nie byĂ„â€ˇ zaÄąâ€šadowane)
+    // Upewnij siÄ™ ĹĽe mamy listings z marketu (mogĹ‚y jeszcze nie byÄ‡ zaĹ‚adowane)
     if(allMarketListings.length === 0 && marketContract){
       try{
         allMarketListings = await fetchListings();
@@ -3679,7 +4316,7 @@ async function loadAlbumCore(){
         // Unia pozycji
         if(!teamAllPos[tid]) teamAllPos[tid] = new Set();
         positions.forEach(p => teamAllPos[tid].add(p));
-        // Top holder (najwiĂ„â„˘cej unikalnych pozycji)
+        // Top holder (najwiÄ™cej unikalnych pozycji)
         if(!teamEntries[tid] || positions.size > teamEntries[tid].count){
           const missing = [];
           for(let p=1; p<=11; p++) if(!teamAllPos[tid]?.has(p)) missing.push(p);
@@ -3688,7 +4325,7 @@ async function loadAlbumCore(){
       });
     });
 
-    // Przelicz missing na podstawie peÄąâ€šnej unii
+    // Przelicz missing na podstawie peĹ‚nej unii
     Object.keys(teamEntries).forEach(tid => {
       const allPos = teamAllPos[Number(tid)] || new Set();
       teamEntries[tid].missing = [];
@@ -3721,9 +4358,9 @@ async function loadAlbumCore(){
             '<rect width="12" height="10.77" fill="#3C3B6E"/>' +
           '</svg>' +
           '<div style="font-family:\'Black Ops One\',sans-serif;font-size:16px;flex:1;">NATION QUEST &mdash; <span style="color:#ffc940;">UNITED STATES</span></div>' +
-          '<div style="font-family:\'Black Ops One\',sans-serif;font-size:18px;color:#ffc940;">1000 CHZ</div>' +
+          '<div style="font-family:\'Black Ops One\',sans-serif;font-size:18px;color:#ffc940;">1500 CHZ</div>' +
         '</div>' +
-        '<div style="font-size:13px;color:var(--text2);margin-bottom:10px;line-height:1.5;">First wallet to collect all <strong style="color:#dde4f0;">11 USA positions</strong> wins 1000 CHZ. Mint for 10 CHZ &mdash; if you land a rare position, list it for 500 CHZ. The collector racing to win will buy it.</div>' +
+        '<div style="font-size:13px;color:var(--text2);margin-bottom:10px;line-height:1.5;">First wallet to collect all <strong style="color:#dde4f0;">11 USA positions</strong> wins 1500 CHZ. Mint for 10 CHZ &mdash; if you land a rare position, list it for 500 CHZ. The collector racing to win will buy it.</div>' +
         '<div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">' +
           '<div style="font-size:12px;color:var(--text3);">&#127942; Leader: <span style="color:var(--text2);">' + nqLeader + '</span></div>' +
           (nqMyCount > 0 ? '<div style="font-size:12px;color:var(--green);">You: ' + nqMyCount + '/11</div>' : '') +
@@ -3770,7 +4407,7 @@ async function loadAlbumCore(){
           const pct = Math.round(leaderCount/11*100);
           const color = leaderCount>=11?'var(--gold)':leaderCount>=9?'#c084fc':leaderCount>=6?'var(--blue)':'var(--green)';
 
-          // NajtaÄąâ€žszy listing per pozycja (buy)
+          // NajtaĹ„szy listing per pozycja (buy)
           const marketByPos = {};
           if(allMarketListings && allMarketListings.length > 0){
             allMarketListings.forEach(l => {
@@ -3785,7 +4422,7 @@ async function loadAlbumCore(){
             });
           }
 
-          // Moje figurki tej druÄąÄ˝yny per pozycja (sell)
+          // Moje figurki tej druĹĽyny per pozycja (sell)
           const myByPos = {};
           if(myAddr){
             myFigures.forEach(f => {
@@ -3865,7 +4502,7 @@ async function loadAlbumCore(){
     '<span><span style="color:var(--gold);font-weight:700;">&#9632;</span> 11/11 complete</span>' +
     '</div>';
   grid.appendChild(legend);
-  // Powiadom ÄąÄ˝e album siĂ„â„˘ zaÄąâ€šadowaÄąâ€š
+  // Powiadom ĹĽe album siÄ™ zaĹ‚adowaĹ‚
   document.dispatchEvent(new CustomEvent('albumLoaded'));
 }
 
@@ -3953,11 +4590,11 @@ function openMintSuccess(tid, dna){
   ).join('');
 
   const extras = [];
-  if(t.hasGoldenBoots) extras.push('<span style="background:rgba(255,201,64,0.15);border:1px solid rgba(255,201,64,0.4);color:var(--gold);padding:3px 8px;border-radius:4px;font-size:11px;">Ä‘Ĺşâ€Ĺş Golden Boots +8</span>');
-  if(t.hasTattoo) extras.push('<span style="background:rgba(255,255,255,0.05);border:1px solid var(--border);color:var(--text2);padding:3px 8px;border-radius:4px;font-size:11px;">Ä‘ĹşĹ˝Â¨ Tattoo +5</span>');
-  if(t.hasEarring) extras.push('<span style="background:rgba(255,255,255,0.05);border:1px solid var(--border);color:var(--text2);padding:3px 8px;border-radius:4px;font-size:11px;">Ä‘Ĺşâ€â€š Earring +3</span>');
-  if(t.hasBand) extras.push('<span style="background:rgba(255,255,255,0.05);border:1px solid var(--border);color:var(--text2);padding:3px 8px;border-radius:4px;font-size:11px;">Ä‘ĹşĹ˝â‚¬ Headband +2</span>');
-  if(t.hasGloves) extras.push('<span style="background:rgba(255,255,255,0.05);border:1px solid var(--border);color:var(--text2);padding:3px 8px;border-radius:4px;font-size:11px;">Ä‘ĹşÂ§Â¤ Gloves +2</span>');
+  if(t.hasGoldenBoots) extras.push('<span style="background:rgba(255,201,64,0.15);border:1px solid rgba(255,201,64,0.4);color:var(--gold);padding:3px 8px;border-radius:4px;font-size:11px;">đź‘ź Golden Boots +8</span>');
+  if(t.hasTattoo) extras.push('<span style="background:rgba(255,255,255,0.05);border:1px solid var(--border);color:var(--text2);padding:3px 8px;border-radius:4px;font-size:11px;">đźŽ¨ Tattoo +5</span>');
+  if(t.hasEarring) extras.push('<span style="background:rgba(255,255,255,0.05);border:1px solid var(--border);color:var(--text2);padding:3px 8px;border-radius:4px;font-size:11px;">đź‘‚ Earring +3</span>');
+  if(t.hasBand) extras.push('<span style="background:rgba(255,255,255,0.05);border:1px solid var(--border);color:var(--text2);padding:3px 8px;border-radius:4px;font-size:11px;">đźŽ€ Headband +2</span>');
+  if(t.hasGloves) extras.push('<span style="background:rgba(255,255,255,0.05);border:1px solid var(--border);color:var(--text2);padding:3px 8px;border-radius:4px;font-size:11px;">đź§¤ Gloves +2</span>');
   document.getElementById('mintPopupExtras').innerHTML = extras.join('') || '<span style="font-size:12px;color:var(--text3);">No accessories</span>';
 
   document.getElementById('mintSuccessModal').classList.add('show');
@@ -3980,7 +4617,7 @@ function shareMintOnX(){
 async function albumBuy(listingId, priceEth){
   if(!marketContract){ showToast('Connect wallet first','err'); return; }
 
-  // PokaÄąÄ˝ popup w stanie Äąâ€šadowania
+  // PokaĹĽ popup w stanie Ĺ‚adowania
   document.getElementById('buyFigureName').textContent = 'LOADING...';
   document.getElementById('buyFigureSvg').innerHTML = '';
   document.getElementById('buyPrice').textContent = '...';
@@ -3990,7 +4627,7 @@ async function albumBuy(listingId, priceEth){
   _albumBuyListing = null;
 
   try{
-    // Pobierz listing LIVE z kontraktu - ÄąÄ˝adnych cache
+    // Pobierz listing LIVE z kontraktu - ĹĽadnych cache
     const l = await marketContract.getListing(listingId);
     const seller = String(l[0]);
     const tokenId = Number(l[1]);
@@ -4012,13 +4649,13 @@ async function albumBuy(listingId, priceEth){
     const priceChz = parseFloat(ethers.formatEther(price));
     const priceStr = priceChz >= 1000 ? (priceChz/1000).toFixed(1).replace(/\.0$/,'')+'K' : priceChz.toFixed(priceChz < 10 ? 2 : 0);
 
-    // WypeÄąâ€šnij popup zweryfikowanymi danymi
+    // WypeĹ‚nij popup zweryfikowanymi danymi
     document.getElementById('buyFigureName').textContent = `${team} - ${pos} - ${RARITY_NAMES[t.rarity]} - W:${t.weight}`;
     document.getElementById('buyFigureSvg').innerHTML = makeFigureSVG(dna, 80);
     document.getElementById('buyPrice').textContent = priceStr;
     document.getElementById('buyPriceUsd').textContent = `Token #${String(tokenId).padStart(4,'0')} - Seller: ${seller.slice(0,6)}...${seller.slice(-4)}`;
 
-    // Zapisz zweryfikowane dane - uÄąÄ˝ywamy price z kontraktu, nie z cache
+    // Zapisz zweryfikowane dane - uĹĽywamy price z kontraktu, nie z cache
     _albumBuyListing = { listingId, priceEth: ethers.formatEther(price) };
     document.getElementById('buyConfirmBtn').disabled = false;
     document.getElementById('buyConfirmBtn').textContent = 'BUY NOW';
@@ -4055,7 +4692,7 @@ window.addEventListener('load', async () => {
   initHero();
   fetchInitialPrice();
   loadActivityFeed();
-  loadTicker({silent:true});
+  loadTicker();
   showNqWelcome();
   // Auto-connect dla MetaMask
   if(window.ethereum){
@@ -4067,14 +4704,14 @@ window.addEventListener('load', async () => {
       }
     }catch(e){}
   }
-  // ObsÄąâ€šuga #hash w URL - scrolluj po zaÄąâ€šadowaniu danych
+  // ObsĹ‚uga #hash w URL - scrolluj po zaĹ‚adowaniu danych
   if(location.hash){
     const targetId = location.hash.slice(1);
     if(targetId === 'album'){
       document.addEventListener('albumLoaded', () => {
         setTimeout(() => {
           scrollToSection('album');
-          history.replaceState(null, '', ' '); // wyczyÄąâ€şĂ„â€ˇ hash z URL
+          history.replaceState(null, '', ' '); // wyczyĹ›Ä‡ hash z URL
         }, 100);
       }, { once: true });
       setTimeout(() => {
@@ -4112,7 +4749,7 @@ window.addEventListener('load', async () => {
       <div class="how-card"><div class="how-num">03</div><div class="how-title">WATCH THE WORLD CUP</div><div class="how-desc">
 Every match matters. Your score = figure weight x country multiplier:<br><br>
 <span style="color:var(--gold);font-weight:700">&#127942; Champion &times; 5.0</span><br>
-<span style="color:var(--gold)">Ä‘ĹşÄ„Â Finalist x 3.0</span><br>
+<span style="color:var(--gold)">đźĄ Finalist x 3.0</span><br>
 <span style="color:var(--cyan)">Semi-final x 2.0</span><br>
 <span style="color:var(--cyan)">Quarter-final x 1.5</span><br>
 <span style="color:var(--text2)">Round of 16 x 1.2</span><br>
@@ -4156,18 +4793,18 @@ Knowledge beats luck - pick the right nation!
     <div style="margin-top:20px;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:20px;">
       <div style="font-size:13px;color:var(--text2);margin-bottom:12px;letter-spacing:1px;">ACCESSORIES ADD WEIGHT</div>
       <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;">
-        <span style="background:rgba(255,201,64,0.15);border:1px solid rgba(255,201,64,0.4);color:var(--gold);padding:4px 10px;border-radius:4px;font-size:12px;">Ä‘Ĺşâ€Ĺş Golden Boots +8</span>
-        <span style="background:rgba(255,255,255,0.05);border:1px solid var(--border);color:var(--text2);padding:4px 10px;border-radius:4px;font-size:12px;">Ä‘ĹşĹ˝Â¨ Tattoo +5</span>
-        <span style="background:rgba(255,255,255,0.05);border:1px solid var(--border);color:var(--text2);padding:4px 10px;border-radius:4px;font-size:12px;">Ä‘Ĺşâ€â€š Earring +3</span>
-        <span style="background:rgba(255,255,255,0.05);border:1px solid var(--border);color:var(--text2);padding:4px 10px;border-radius:4px;font-size:12px;">Ä‘ĹşĹ˝â‚¬ Headband +2</span>
-        <span style="background:rgba(255,255,255,0.05);border:1px solid var(--border);color:var(--text);padding:4px 10px;border-radius:4px;font-size:12px;">Ä‘ĹşÂ§Â¤ Gloves +2 <span style="color:var(--text3);font-size:10px;">(#1 only)</span></span>
+        <span style="background:rgba(255,201,64,0.15);border:1px solid rgba(255,201,64,0.4);color:var(--gold);padding:4px 10px;border-radius:4px;font-size:12px;">đź‘ź Golden Boots +8</span>
+        <span style="background:rgba(255,255,255,0.05);border:1px solid var(--border);color:var(--text2);padding:4px 10px;border-radius:4px;font-size:12px;">đźŽ¨ Tattoo +5</span>
+        <span style="background:rgba(255,255,255,0.05);border:1px solid var(--border);color:var(--text2);padding:4px 10px;border-radius:4px;font-size:12px;">đź‘‚ Earring +3</span>
+        <span style="background:rgba(255,255,255,0.05);border:1px solid var(--border);color:var(--text2);padding:4px 10px;border-radius:4px;font-size:12px;">đźŽ€ Headband +2</span>
+        <span style="background:rgba(255,255,255,0.05);border:1px solid var(--border);color:var(--text);padding:4px 10px;border-radius:4px;font-size:12px;">đź§¤ Gloves +2 <span style="color:var(--text3);font-size:10px;">(#1 only)</span></span>
       </div>
       <div style="font-size:13px;color:var(--text3);line-height:1.8;">
         <span style="color:var(--gold)">Example:</span> Legendary #10 + Golden Boots + Tattoo + Earring + Headband = <span style="color:var(--green);font-weight:700;">100 pts</span><br>
         <span style="color:var(--text3)">Score = Weight x WC Multiplier - Top 10% split the prize pool</span>
       </div>
       <div style="margin-top:12px;background:rgba(0,255,135,0.06);border:1px solid rgba(0,255,135,0.2);border-radius:8px;padding:12px 14px;font-size:14px;line-height:1.7;">
-        Ä‘Ĺşâ€™Ë‡ <span style="color:var(--green);font-weight:700;">Even a COMMON figure can win the prize pool.</span><br>
+        đź’ˇ <span style="color:var(--green);font-weight:700;">Even a COMMON figure can win the prize pool.</span><br>
         <span style="color:var(--text2)">A Common figure (10 pts) from the Champion nation scores <strong style="color:var(--green)">10 x 5.0 = 50 pts</strong>.<br>
         A Legendary figure (82 pts) from a team eliminated in the group stage scores <strong style="color:var(--red)">82 x 0 = 0 pts</strong>.<br>
         Picking the right country matters more than rarity.</span>
@@ -4190,7 +4827,7 @@ Knowledge beats luck - pick the right nation!
         <div style="background:rgba(0,255,135,0.05);padding:24px 28px;display:flex;align-items:center;justify-content:center;min-width:80px;"><span style="font-family:'Black Ops One',sans-serif;font-size:28px;color:var(--green);">2</span></div>
         <div style="padding:20px 24px;">
           <div style="font-family:'Black Ops One',sans-serif;font-size:16px;margin-bottom:6px;">WORLD CUP BEGINS</div>
-          <div style="font-size:15px;color:var(--text2);line-height:1.7;">Price rises from 10 to 100 CHZ. Prize vault reaches <span style="color:var(--gold);font-weight:700;">200,000 CHZ</span><br>Split: <span style="color:var(--green);">130,000 CHZ</span> TOP 10% - <span style="color:var(--gold);">50,000 CHZ</span> Country Champions - <span style="color:#c084fc;">20,000 CHZ</span> Legendary Jackpot<br>France advances -> your figure score grows with every win Ä‘Ĺşâ€â‚¬</div>
+          <div style="font-size:15px;color:var(--text2);line-height:1.7;">Price rises from 10 to 100 CHZ. Prize vault reaches <span style="color:var(--gold);font-weight:700;">200,000 CHZ</span><br>Split: <span style="color:var(--green);">130,000 CHZ</span> TOP 10% - <span style="color:var(--gold);">50,000 CHZ</span> Country Champions - <span style="color:#c084fc;">20,000 CHZ</span> Legendary Jackpot<br>France advances -> your figure score grows with every win đź‘€</div>
         </div>
       </div>
       <div style="display:grid;grid-template-columns:auto 1fr;gap:0;border-bottom:1px solid var(--border);">
@@ -4234,7 +4871,7 @@ Knowledge beats luck - pick the right nation!
   <div class="sim-grid" style="grid-template-columns:repeat(auto-fit,minmax(130px,1fr));">
     <div class="sim-stat"><div class="sim-stat-label">Vault (CHZ)</div><div class="sim-stat-val" id="simVault">-</div></div>
     <div class="sim-stat"><div class="sim-stat-label">Top Score</div><div class="sim-stat-val" id="simTopScore">-</div></div>
-    <div class="sim-stat"><div class="sim-stat-label">Ä‘ĹşÄ„â€ˇ Prize #1<br><span style="font-size:9px;color:var(--text3);">TOP 10% (65%)</span></div><div class="sim-stat-val" id="simPrize1">-</div></div>
+    <div class="sim-stat"><div class="sim-stat-label">đźĄ‡ Prize #1<br><span style="font-size:9px;color:var(--text3);">TOP 10% (65%)</span></div><div class="sim-stat-val" id="simPrize1">-</div></div>
     <div class="sim-stat"><div class="sim-stat-label">&#127941; Country<br><span style="font-size:9px;color:var(--text3);">per champion (25%)</span></div><div class="sim-stat-val" style="color:#ffc940;" id="simCountry">&mdash;</div></div>
     <div class="sim-stat"><div class="sim-stat-label">&#9889; Legendary<br><span style="font-size:9px;color:var(--text3);">per figure (10%)</span></div><div class="sim-stat-val" style="color:#c084fc;" id="simLeg">&mdash;</div></div>
     <div class="sim-stat"><div class="sim-stat-label">Winners</div><div class="sim-stat-val" id="simWinners">-</div></div>
@@ -4564,22 +5201,16 @@ function updateCountryDashboardSummary(countryBest, perCountry){
     </div>`;
 }
 
-async function loadCountryLb(options = {}){
-  if(options && options.silent) return loadCountryLbCore();
-  return withNetworkOverlay('Refreshing country champions...', loadCountryLbCore);
-}
-
-async function loadCountryLbCore(){
+async function loadCountryLb(){
   const grid = document.getElementById('countryLbGrid');
   if(!grid) return;
-  const readProvider = (contract && provider) ? provider : await getReadProvider();
-  const readContract = contract || new ethers.Contract(CONTRACT_ADDRESS, ABI, readProvider);
+  if(!contract){ grid.innerHTML='<div style="grid-column:1/-1;text-align:center;color:var(--text3);padding:32px;letter-spacing:2px;font-size:12px;">CONNECT WALLET TO SEE COUNTRY CHAMPIONS</div>'; return; }
 
   grid.innerHTML='<div style="grid-column:1/-1;text-align:center;color:var(--text3);padding:32px;font-size:12px;"><span class=\'spin\'></span> LOADING...</div>';
 
   try{
-    const current = await readProvider.getBlockNumber();
-    const events = await getAllMintEvents(readContract, readProvider);
+    const current = await provider.getBlockNumber();
+    const events = await getAllMintEvents(contract, provider);
 
     // Najlepsza figurka per kraj
     const countryBest = {};
@@ -4600,7 +5231,7 @@ async function loadCountryLbCore(){
 
     // Szacowana nagroda country champion
     let vaultChz = 0;
-    try{ vaultChz = parseFloat(ethers.formatEther(await readContract.vaultBalance())); }catch(e){}
+    try{ vaultChz = parseFloat(ethers.formatEther(await contract.vaultBalance())); }catch(e){}
     const perCountry = vaultChz * 0.25 / 48;
     updateCountryDashboardSummary(countryBest, perCountry);
 
