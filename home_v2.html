@@ -2042,6 +2042,18 @@ body.dash-active .quest-label{font-size:8px !important;margin-top:3px !important
   .price-roadmap-card div[style*="justify-content:space-between"] span:last-child{
     color:var(--gold) !important;
   }
+  .nav-countdown{
+    display:none !important;
+  }
+  .mobile-price-countdown-row{
+    display:block !important;
+    font-family:'Black Ops One',sans-serif !important;
+  }
+  .mobile-price-countdown-row strong{
+    font-size:16px !important;
+    color:var(--gold) !important;
+    letter-spacing:2px !important;
+  }
   .stat-l{
     font-family:'Black Ops One',sans-serif !important;
     color:var(--text) !important;
@@ -2314,6 +2326,10 @@ document.addEventListener('DOMContentLoaded', setupDesktopDashboardLayout);
           <div style="display:flex;justify-content:space-between;font-size:13px;">
             <span style="color:var(--text2);">Jun 11 (WC Start)</span>
             <span style="color:var(--text2);">100 CHZ</span>
+          </div>
+          <div class="mobile-price-countdown-row" style="display:none;text-align:center;font-size:13px;color:var(--gold);padding-top:6px;border-top:1px solid rgba(255,201,64,0.16);">
+            <span style="display:block;color:var(--text2);font-size:10px;margin-bottom:2px;">50 CHZ IN</span>
+            <strong id="mobilePriceCountdown">--:--:--:--</strong>
           </div>
         </div>
       </div>
@@ -4241,11 +4257,12 @@ setInterval(updateDrawerCountdown, 60000);
 function updateNavPriceCountdown(){
   // 2026-06-01 00:00 Berlin/Warsaw time = 2026-05-31 22:00 UTC.
   const el = document.getElementById('navPriceCountdown');
-  if(!el) return;
+  const mobileEl = document.getElementById('mobilePriceCountdown');
   const target = Date.UTC(2026, 4, 31, 22, 0, 0);
   const diff = target - Date.now();
   if(diff <= 0){
-    el.innerHTML = '<span>PRICE</span>50 CHZ LIVE';
+    if(el) el.innerHTML = '<span>PRICE</span>50 CHZ LIVE';
+    if(mobileEl) mobileEl.textContent = '50 CHZ LIVE';
     return;
   }
   const d = Math.floor(diff / 86400000);
@@ -4253,7 +4270,9 @@ function updateNavPriceCountdown(){
   const m = Math.floor((diff % 3600000) / 60000);
   const s = Math.floor((diff % 60000) / 1000);
   const pad = n => String(n).padStart(2,'0');
-  el.innerHTML = `<span>50 CHZ IN</span>${pad(d)}:${pad(h)}:${pad(m)}:${pad(s)}`;
+  const value = `${pad(d)}:${pad(h)}:${pad(m)}:${pad(s)}`;
+  if(el) el.innerHTML = `<span>50 CHZ IN</span>${value}`;
+  if(mobileEl) mobileEl.textContent = value;
 }
 updateNavPriceCountdown();
 setInterval(updateNavPriceCountdown, 1000);
