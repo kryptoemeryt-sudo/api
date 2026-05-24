@@ -3839,10 +3839,10 @@ async function loadTicker(){
   try{
     // UĹĽyj istniejÄ…cego contract lub stwĂłrz read-only
     let c = contract;
-    let p = provider;
+    let p = await getReadProvider();
     if(!c){
       try{
-        p = new ethers.BrowserProvider(window.ethereum || {request:()=>{}});
+        p = await getReadProvider();
         c = new ethers.Contract(CONTRACT_ADDRESS, ABI, p);
       }catch(e){ return; }
     }
