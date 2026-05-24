@@ -172,7 +172,7 @@ a{text-decoration:none;color:inherit}
 
   <section class="stats">
     <div class="stat"><div class="stat-value" id="statCompleted">- / 11</div><div class="stat-label">USA Positions</div></div>
-    <div class="stat"><div class="stat-value gold" id="statMissing">-</div><div class="stat-label">Global Cards Left</div></div>
+    <div class="stat"><div class="stat-value gold" id="statLeader">- / 11</div><div class="stat-label" id="statLeaderLabel">Quest Leader</div></div>
     <div class="stat"><div class="stat-value blue" id="myCompleted">- / 11</div><div class="stat-label">My USA Squad</div></div>
     <div class="stat"><div class="stat-value gold" id="statUsaCards">-</div><div class="stat-label">USA Cards Minted</div></div>
   </section>
@@ -772,6 +772,10 @@ async function buildState() {
     set.add(e.position);
     if (set.size === 11 && !squadWinner) squadWinner = e;
   });
+  let leader = {wallet:null, count:0};
+  walletPositions.forEach((set, wallet) => {
+    if (set.size > leader.count) leader = {wallet, count:set.size};
+  });
   const mySet = address ? (walletPositions.get(address) || new Set()) : new Set();
   const myOwnedSet = new Set();
   if (address) usaCards.forEach(card => {
@@ -780,7 +784,7 @@ async function buildState() {
   const missing = POSITIONS.filter(p => !globalPositions.has(p.id));
   const listings = await fetchActiveListings(tokenInfo);
   await Promise.all([cardWinner, squadWinner].filter(Boolean).map(async item => { item.time = await getBlockTime(item.block); }));
-  return {usaCards, usaEvents:events, globalPositions, walletPositions, mySet, myOwnedSet, missing, cardWinner, squadWinner, listings, ownerByToken, tokenInfo};
+  return {usaCards, usaEvents:events, globalPositions, walletPositions, leader, mySet, myOwnedSet, missing, cardWinner, squadWinner, listings, ownerByToken, tokenInfo};
 }
 
 function renderSlots(targetId, filledSet, byPosition, winnerPos = null, mode = "global") {
@@ -831,7 +835,8 @@ function renderQuest(state) {
     byPosition.get(card.position).push(card);
   });
   document.getElementById("statCompleted").textContent = `${state.globalPositions.size} / 11`;
-  document.getElementById("statMissing").textContent = String(state.missing.length);
+  document.getElementById("statLeader").textContent = state.leader?.wallet ? `${state.leader.count} / 11` : "- / 11";
+  document.getElementById("statLeaderLabel").textContent = state.leader?.wallet ? `Leader ${shortAddr(state.leader.wallet)}` : "Quest Leader";
   document.getElementById("statUsaCards").textContent = String(state.usaCards.length);
   document.getElementById("myCompleted").textContent = address ? `${state.myOwnedSet.size} / 11` : "- / 11";
   document.getElementById("myStatus").textContent = address ? shortAddr(address) : "Connect wallet";
