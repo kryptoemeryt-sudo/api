@@ -225,6 +225,11 @@ h1 .accent{color:var(--green);text-shadow:0 0 30px var(--green-glow);}
 .market-tabs{display:flex;gap:8px;margin-bottom:16px;}
 .mtab{background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:6px;padding:8px 20px;font-family:'Black Ops One',sans-serif;font-size:12px;letter-spacing:1px;color:var(--text2);cursor:pointer;transition:all 0.2s;}
 .mtab.active{background:var(--green-dim);border-color:rgba(0,255,135,0.3);color:var(--green);}
+.market-sort-btn{width:34px;min-width:34px;height:34px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.045);border:1px solid rgba(255,255,255,.1);border-radius:6px;color:var(--text2);cursor:pointer;transition:all .18s;}
+.market-sort-btn:hover,.market-sort-btn.active{background:var(--green-dim);border-color:rgba(0,255,135,.4);color:var(--green);box-shadow:0 0 16px rgba(0,255,135,.12);}
+.market-sort-tri{width:0;height:0;border-left:7px solid transparent;border-right:7px solid transparent;display:block;}
+.market-sort-tri.up{border-bottom:12px solid currentColor;}
+.market-sort-tri.down{border-top:12px solid currentColor;}
 .market-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:7px;}
 .market-item{display:flex;align-items:center;gap:12px;padding:12px 14px;background:var(--card);border:1px solid var(--border);border-radius:10px;transition:border-color 0.2s;height:100%;}
 .market-item:hover{border-color:rgba(0,255,135,0.2);}
@@ -236,6 +241,8 @@ h1 .accent{color:var(--green);text-shadow:0 0 30px var(--green-glow);}
 .market-price{font-family:'Black Ops One',sans-serif;font-size:22px;color:var(--gold);text-shadow:0 0 10px var(--gold-glow);}
 .btn-buy{background:linear-gradient(135deg,var(--green),#00c96a);color:#000;border:none;padding:8px 20px;border-radius:6px;font-family:'Black Ops One',sans-serif;font-size:12px;letter-spacing:1px;cursor:pointer;}
 .btn-cancel{background:none;border:1px solid rgba(239,68,68,0.4);color:var(--red);padding:8px 20px;border-radius:6px;font-family:'Black Ops One',sans-serif;font-size:12px;cursor:pointer;}
+.btn-buy:hover{filter:brightness(1.12);transform:translateY(-1px);box-shadow:0 0 18px rgba(0,255,135,.24);}
+.btn-cancel:hover{background:rgba(239,68,68,.14);border-color:rgba(239,68,68,.72);color:#ff7b7b;transform:translateY(-1px);box-shadow:0 0 16px rgba(239,68,68,.18);}
 .market-empty{text-align:center;padding:48px;color:var(--text3);font-size:14px;letter-spacing:2px;}
 .list-modal{position:fixed;inset:0;background:rgba(0,0,0,0.85);display:none;align-items:center;justify-content:center;z-index:300;backdrop-filter:blur(4px);}
 .list-modal.show{display:flex;}
@@ -2334,6 +2341,8 @@ document.addEventListener('DOMContentLoaded', setupDesktopDashboardLayout);
   <div class="market-tabs">
     <button class="mtab active" onclick="switchMarketTab('all',this)">ALL LISTINGS</button>
     <button class="mtab" onclick="switchMarketTab('mine',this)">MY LISTINGS</button>
+    <button class="market-sort-btn" id="sortHighBtn" onclick="setMarketSort('high')" title="Highest price first"><span class="market-sort-tri up"></span></button>
+    <button class="market-sort-btn" id="sortLowBtn" onclick="setMarketSort('low')" title="Lowest price first"><span class="market-sort-tri down"></span></button>
   </div>
   <div id="marketFilters" class="filter-strip"></div>
   <div class="market-list" id="marketList"><div class="market-empty">CONNECT WALLET TO SEE LISTINGS</div></div>
@@ -2594,6 +2603,18 @@ const TEAMS = [
   'Austria','Belgium','Bosnia','Croatia','Czech Republic','England','France','Germany',
   'Netherlands','Norway','Portugal','Scotland','Spain','Sweden','Switzerland','Turkey'
 ];
+
+const TEAM_CODES = {
+  'Australia':'AUS','Iran':'IRN','Iraq':'IRQ','Japan':'JPN','Jordan':'JOR','Qatar':'QAT','Saudi Arabia':'KSA','South Korea':'KOR','Uzbekistan':'UZB',
+  'Algeria':'ALG','Cape Verde':'CPV','DR Congo':'COD','Egypt':'EGY','Ghana':'GHA','Ivory Coast':'CIV','Morocco':'MAR','Senegal':'SEN','South Africa':'RSA','Tunisia':'TUN',
+  'Canada':'CAN','Curacao':'CUW','Haiti':'HAI','Mexico':'MEX','Panama':'PAN','United States':'USA',
+  'Argentina':'ARG','Brazil':'BRA','Colombia':'COL','Ecuador':'ECU','Paraguay':'PAR','Uruguay':'URU',
+  'New Zealand':'NZL','Austria':'AUT','Belgium':'BEL','Bosnia':'BIH','Czech Republic':'CZE','Czech Rep.':'CZE','England':'ENG','France':'FRA','Germany':'GER',
+  'Netherlands':'NED','Norway':'NOR','Portugal':'POR','Scotland':'SCO','Spain':'ESP','Sweden':'SWE','Switzerland':'SUI','Turkey':'TUR'
+};
+function teamCode(team){
+  return TEAM_CODES[team] || String(team || '').replace(/[^A-Za-z]/g,'').slice(0,3).toUpperCase();
+}
 
 const TEAM_COLORS = [
   // AFC (0-8)
@@ -4476,7 +4497,8 @@ function buildSquadFilters(){
   teams.forEach(team=>{
     const b=document.createElement('button');
     b.style.cssText=s1;
-    b.textContent=team;
+    b.textContent=teamCode(team);
+    b.title=team;
     b.onclick=()=>setSquadFilter(team,b);
     div.appendChild(b);
   });
@@ -4502,6 +4524,7 @@ const MK_PER_PAGE = 12;
 let squadPage = 0;
 const SQUAD_PER_PAGE = 12;
 let currentMarketTab = 'all';
+let marketSortMode = 'weight';
 let selectedListToken = null;
 let marketRens = {};
 // Set of tokenIds that are listed by current user (refreshed from chain)
@@ -4532,6 +4555,14 @@ function switchMarketTab(tab, btn) {
   currentMarketTab = tab;
   document.querySelectorAll('.mtab').forEach(t => t.classList.remove('active'));
   btn.classList.add('active');
+  loadMarket();
+}
+
+function setMarketSort(mode){
+  marketSortMode = marketSortMode === mode ? 'weight' : mode;
+  mkPage = 0;
+  document.getElementById('sortHighBtn')?.classList.toggle('active', marketSortMode === 'high');
+  document.getElementById('sortLowBtn')?.classList.toggle('active', marketSortMode === 'low');
   loadMarket();
 }
 
@@ -4588,7 +4619,8 @@ function buildMarketFilters(listings){
   teams.forEach(team=>{
     const b=document.createElement('button');
     b.style.cssText=s1;
-    b.textContent=team;
+    b.textContent=teamCode(team);
+    b.title=team;
     b.onclick=()=>setMarketFilter(team,b);
     div.appendChild(b);
   });
@@ -4627,8 +4659,9 @@ async function loadMarket() {
     buildMarketFilters(listings);
     await syncListedFigures(listings);
 
-    // Sortuj po wadze malejÄ…co
     listings.sort((a,b)=>{
+      if(marketSortMode === 'high') return b.price > a.price ? 1 : (b.price < a.price ? -1 : 0);
+      if(marketSortMode === 'low') return a.price > b.price ? 1 : (a.price < b.price ? -1 : 0);
       const wa=parseDNA(a.dna||0n)?.weight||0;
       const wb=parseDNA(b.dna||0n)?.weight||0;
       return wb-wa;
