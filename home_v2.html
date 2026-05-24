@@ -1964,6 +1964,26 @@ body.dash-active .quest-label{font-size:8px !important;margin-top:3px !important
     margin-top:2px !important;
   }
 }
+/* DESKTOP MICRO ALIGN - figure axis + bottom row closer to market */
+@media (min-width:1200px) and (min-height:720px){
+  body.dash-active .desktop-dashboard{
+    grid-template-rows:300px 525px minmax(0,1fr) !important;
+  }
+  body.dash-active #mint .hero-right{
+    right:34px !important;
+    top:56px !important;
+    width:285px !important;
+    height:228px !important;
+    display:flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+  }
+  body.dash-active #mint .hero-figure-stage,
+  body.dash-active #mint #heroCanvas{
+    width:285px !important;
+    height:228px !important;
+  }
+}
 /* TEMP QUEST VISIBILITY CLEANUP */
 #album,
 #countryLbGrid,
