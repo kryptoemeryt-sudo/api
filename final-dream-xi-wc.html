@@ -1673,6 +1673,18 @@ function toggleMintSuccessModal(show) {
 }
 
 function renderCardResult(title, card, statusHtml) {
+  if (!card) {
+    const titleEl = document.getElementById('cardResultTitle');
+    if (titleEl) titleEl.textContent = title;
+    document.getElementById('mintedCardVisual').innerHTML = `
+      <div style="font-size:38px; margin-bottom:8px;">&#9917;</div>
+      <div style="font-family:'Black Ops One',sans-serif; font-size:20px; color:#dde4f0; margin-bottom:6px;">CARD CONFIRMED</div>
+      <div style="font-family:'Share Tech Mono',monospace; font-size:14px; color:#7a8899;">Waiting for marketplace index</div>
+    `;
+    document.getElementById('mintedCardStatus').innerHTML = statusHtml;
+    toggleMintSuccessModal(true);
+    return;
+  }
   const teamInfo = TEAMS.find(t => t.id === card.teamId) || {name: 'Unknown', code: 'us'};
   const posName = POSITION_SHORT[card.position] || card.position;
   const rarityName = ['Common','Rare','Epic','Legendary'][card.rarity] || 'Common';
@@ -1707,6 +1719,34 @@ function applyScoredCardLocally(wallet, card) {
   }
   if (ownerMap[card.tokenId]) ownerMap[card.tokenId].owner = w;
   return { oldCard: cur, isUpgrade, diff: cur ? card.weight - cur.weight : card.weight };
+}
+
+async function getListingCardSnapshot(listingId) {
+  const id = Number(listingId);
+  if (activeListingsById[id]) return activeListingsById[id];
+  try {
+    const reader = marketContract || new ethers.Contract(MARKET_ADDRESS, MARKET_ABI, await getReadProvider());
+    const l = await reader.getListing(id);
+    const tokenId = Number(l[1]);
+    const priceWei = l[2];
+    const fig = ownerMap[tokenId];
+    if (!fig) return null;
+    return {
+      listingId: id,
+      tokenId,
+      seller: String(l[0]).toLowerCase(),
+      price: parseFloat(ethers.formatEther(priceWei)),
+      priceWei,
+      teamId: fig.teamId,
+      position: fig.position,
+      weight: fig.weight,
+      rarity: fig.rarity,
+      dna: fig.dna
+    };
+  } catch(e) {
+    console.warn('Could not snapshot listing before buy:', e);
+    return null;
+  }
 }
 
 function refreshAfterChainUpdate(localCard = null) {
@@ -2655,7 +2695,7 @@ async function buyFromMarket(listingId, priceChz){
     return;
   }
   try {
-    const purchasedCard = activeListingsById[Number(listingId)] || null;
+    const purchasedCard = await getListingCardSnapshot(listingId);
     showToast(`Initializing marketplace buy: Listing #${listingId} for ${priceChz} CHZ...`);
     // Optimizing Buy speed - converting passed CHZ string back to Wei without extra slow contract lookup calls
     const priceWei = ethers.parseEther(String(priceChz));
@@ -2678,6 +2718,8 @@ async function buyFromMarket(listingId, priceChz){
       renderCountryHub();
       renderPitch();
       renderLeaderboard();
+    } else {
+      renderCardResult('CARD PURCHASED!', null, `<span class="card-result-badge">PURCHASE CONFIRMED</span><p>Your transaction is confirmed. The card is being indexed from Chiliz Chain and should appear in your squad shortly.</p>`);
     }
     await loadData();
     if (purchasedCard && address) {
