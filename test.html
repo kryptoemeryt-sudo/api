@@ -797,13 +797,21 @@ body.game-mode .squad-score{color:#00ff87;}
   body.game-mode .completion-label,
   body.game-mode .squad-score,
   body.game-mode .lb-toggle-btn{
-    font-size:12px !important;
+    font-size:13px !important;
     letter-spacing:1.5px;
+  }
+  body.game-mode .pitch-title,
+  body.game-mode .dash-prize-title,
+  body.game-mode .stat-lbl,
+  body.game-mode .countdown-sub,
+  body.game-mode .lb-info{
+    color:#dde4f0 !important;
   }
   body.game-mode .tab-btn{
     font-size:12px;
     padding:6px 4px;
     letter-spacing:.7px;
+    color:#dde4f0;
   }
   body.game-mode .country-grid{
     overflow:hidden;
@@ -846,21 +854,48 @@ body.game-mode .squad-score{color:#00ff87;}
     justify-content:flex-start;
   }
   body.game-mode .country-card .flag-img{
-    width:24px;
-    height:16px;
+    width:32px;
+    height:22px;
   }
   body.game-mode .country-card-name{
     width:auto;
     margin-top:0!important;
     text-align:left;
-    font-size:10px;
+    font-family:'Black Ops One',sans-serif;
+    font-size:13px;
+    letter-spacing:.4px;
+    color:#dde4f0;
   }
   body.game-mode .country-card-score{
-    font-size:10px;
+    font-size:13px;
     margin-top:0;
+    color:#dde4f0;
   }
   body.game-mode .country-card-completion{
-    font-size:8px;
+    font-size:11px;
+    font-family:'Black Ops One',sans-serif;
+  }
+  body.game-mode .pos-name{
+    font-family:'Black Ops One',sans-serif;
+    font-size:11px;
+    color:#dde4f0;
+  }
+  body.game-mode .pitch-title #selectedCountryTitle{
+    color:#dde4f0;
+    font-size:13px;
+  }
+  body.game-mode .squad-score{font-size:13px!important;}
+  body.game-mode .figure-mini{
+    width:34px;
+    height:34px;
+    margin:0 auto;
+    display:grid;
+    place-items:center;
+  }
+  body.game-mode .figure-mini svg{
+    width:100%;
+    height:100%;
+    display:block;
   }
 }
 .pos-card.rarity-1 .pos-name,.pos-card.rarity-1 .pos-ball{color:#93c5fd;}
@@ -2009,6 +2044,77 @@ function getFlagHtml(team, isLarge = false) {
   `;
 }
 
+function makeFigureSVG(dna, size = 80) {
+  const t = parseDNA(dna);
+  const team = TEAMS[t.teamId % TEAMS.length] || {};
+  const SHIRT = {
+    'Australia':'#FFD700','Iran':'#239F40','Iraq':'#CC0001','Japan':'#BC002D','Jordan':'#007A3D','Qatar':'#8D153A',
+    'Saudi Arabia':'#006C35','South Korea':'#CD2E3A','Uzbekistan':'#1EB53A','Algeria':'#006233','Cape Verde':'#003893',
+    'DR Congo':'#007FFF','Egypt':'#CE1126','Ghana':'#006B3F','Ivory Coast':'#F77F00','Morocco':'#C1272D','Senegal':'#00853F',
+    'South Africa':'#007749','Tunisia':'#E70013','Canada':'#FF0000','Curacao':'#002B7F','Haiti':'#00209F','Mexico':'#006847',
+    'Panama':'#DA121A','USA':'#002868','Argentina':'#74ACDF','Brazil':'#009C3B','Colombia':'#FCD116','Ecuador':'#FFD100',
+    'Paraguay':'#D52B1E','Uruguay':'#5EB6E4','New Zealand':'#00247D','Austria':'#ED2939','Belgium':'#111111','Bosnia':'#002395',
+    'Croatia':'#FF0000','Czech Rep.':'#D7141A','England':'#EEEEEE','France':'#002395','Germany':'#111111','Netherlands':'#FF6600',
+    'Norway':'#EF2B2D','Portugal':'#006600','Scotland':'#003087','Spain':'#AA151B','Sweden':'#006AA7','Switzerland':'#FF0000','Turkey':'#E30A17'
+  };
+  const SKIN = ['#FDBCB4','#F1C27D','#E0AC69','#C68642','#8D5524','#4A2912'];
+  const RARC = ['#6b7280','#3b82f6','#a855f7','#f59e0b'];
+  const shirt = SHIRT[team.name] || '#0066cc';
+  const skin = SKIN[Number((BigInt(String(dna)) >> 18n) % 6n)];
+  const rar = RARC[t.rarity] || '#6b7280';
+  const isLight = ['#FFD700','#FCD116','#FFD100','#EEEEEE'].includes(shirt);
+  const numC = isLight ? '#000' : '#fff';
+  const bootC = t.hasGoldenBoots ? '#FFD700' : '#111';
+  const s = size, cx = s / 2;
+  const headY = s * 0.12, headW = s * 0.30, headH = s * 0.28;
+  const bodyY = headY + headH * 0.85, bodyW = s * 0.40, bodyH = s * 0.28;
+  const legW = s * 0.10, legH = s * 0.22, legGap = s * 0.04;
+  const legY = bodyY + bodyH * 0.85;
+  const armW = s * 0.09, armH = s * 0.20, armY = bodyY + s * 0.02;
+  const bootH = s * 0.09, handR = s * 0.06;
+  const p = [];
+  p.push(`<ellipse cx="${cx}" cy="${legY+legH+bootH+s*0.03}" rx="${bodyW*0.55}" ry="${s*0.04}" fill="${rar}" opacity="0.24"/>`);
+  p.push(`<rect x="${cx-legW-legGap}" y="${legY}" width="${legW}" height="${legH}" rx="3" fill="${shirt}"/>`);
+  p.push(`<rect x="${cx+legGap}" y="${legY}" width="${legW}" height="${legH}" rx="3" fill="${shirt}"/>`);
+  const sockY = legY + legH * 0.65;
+  p.push(`<rect x="${cx-legW-legGap}" y="${sockY}" width="${legW}" height="${legH*0.38}" rx="2" fill="white"/>`);
+  p.push(`<rect x="${cx+legGap}" y="${sockY}" width="${legW}" height="${legH*0.38}" rx="2" fill="white"/>`);
+  const bootY = legY + legH;
+  p.push(`<rect x="${cx-legW-legGap-2}" y="${bootY}" width="${legW+4}" height="${bootH}" rx="3" fill="${bootC}"/>`);
+  p.push(`<rect x="${cx+legGap-2}" y="${bootY}" width="${legW+4}" height="${bootH}" rx="3" fill="${bootC}"/>`);
+  p.push(`<rect x="${cx-bodyW/2}" y="${bodyY+bodyH*0.78}" width="${bodyW}" height="${s*0.09}" rx="3" fill="${shirt}cc"/>`);
+  p.push(`<rect x="${cx-bodyW/2}" y="${bodyY}" width="${bodyW}" height="${bodyH*0.85}" rx="5" fill="${shirt}"/>`);
+  p.push(`<text x="${cx}" y="${bodyY+bodyH*0.55}" text-anchor="middle" font-family="Arial Black" font-size="${s*0.13}" font-weight="900" fill="${numC}" opacity="0.9">${t.position}</text>`);
+  p.push(`<rect x="${cx-bodyW/2-armW+2}" y="${armY}" width="${armW}" height="${armH}" rx="3" fill="${shirt}" transform="rotate(7,${cx-bodyW/2},${armY})"/>`);
+  p.push(`<rect x="${cx+bodyW/2-2}" y="${armY}" width="${armW}" height="${armH}" rx="3" fill="${shirt}" transform="rotate(-7,${cx+bodyW/2},${armY})"/>`);
+  p.push(`<circle cx="${cx-bodyW/2-s*0.04}" cy="${armY+armH}" r="${handR}" fill="${skin}"/>`);
+  p.push(`<circle cx="${cx+bodyW/2+s*0.04}" cy="${armY+armH}" r="${handR}" fill="${skin}"/>`);
+  if (t.hasGloves) {
+    p.push(`<circle cx="${cx-bodyW/2-s*0.04}" cy="${armY+armH}" r="${handR+2}" fill="none" stroke="#FFD700" stroke-width="2"/>`);
+    p.push(`<circle cx="${cx+bodyW/2+s*0.04}" cy="${armY+armH}" r="${handR+2}" fill="none" stroke="#FFD700" stroke-width="2"/>`);
+  }
+  p.push(`<rect x="${cx-s*0.04}" y="${bodyY-s*0.05}" width="${s*0.08}" height="${s*0.07}" rx="2" fill="${skin}"/>`);
+  p.push(`<rect x="${cx-headW/2}" y="${headY}" width="${headW}" height="${headH}" rx="6" fill="${skin}"/>`);
+  p.push(`<rect x="${cx-headW/2-s*0.03}" y="${headY+headH*0.25}" width="${s*0.04}" height="${s*0.08}" rx="2" fill="${skin}"/>`);
+  p.push(`<rect x="${cx+headW/2-s*0.01}" y="${headY+headH*0.25}" width="${s*0.04}" height="${s*0.08}" rx="2" fill="${skin}"/>`);
+  if (t.hasEarring) p.push(`<circle cx="${cx-headW/2-1}" cy="${headY+headH*0.38}" r="${s*0.025}" fill="#FFD700"/>`);
+  const eyeY = headY + headH * 0.32, eyeW = s * 0.07, eyeH = s * 0.05;
+  p.push(`<rect x="${cx-headW*0.36}" y="${eyeY}" width="${eyeW}" height="${eyeH}" rx="2" fill="white"/>`);
+  p.push(`<rect x="${cx+headW*0.08}" y="${eyeY}" width="${eyeW}" height="${eyeH}" rx="2" fill="white"/>`);
+  p.push(`<rect x="${cx-headW*0.33}" y="${eyeY+1}" width="${eyeW*0.6}" height="${eyeH*0.7}" rx="1" fill="#0a0a14"/>`);
+  p.push(`<rect x="${cx+headW*0.11}" y="${eyeY+1}" width="${eyeW*0.6}" height="${eyeH*0.7}" rx="1" fill="#0a0a14"/>`);
+  p.push(`<rect x="${cx-headW*0.38}" y="${eyeY-s*0.04}" width="${eyeW+2}" height="${s*0.025}" rx="1" fill="#1a0800" opacity="0.8"/>`);
+  p.push(`<rect x="${cx+headW*0.06}" y="${eyeY-s*0.04}" width="${eyeW+2}" height="${s*0.025}" rx="1" fill="#1a0800" opacity="0.8"/>`);
+  p.push(`<rect x="${cx-s*0.02}" y="${eyeY+eyeH+s*0.02}" width="${s*0.04}" height="${s*0.05}" rx="2" fill="${skin}" opacity="0.7"/>`);
+  p.push(`<rect x="${cx-s*0.07}" y="${headY+headH*0.72}" width="${s*0.14}" height="${s*0.03}" rx="2" fill="#8b1a00" opacity="0.8"/>`);
+  if (t.hasBand) p.push(`<rect x="${cx-headW/2-2}" y="${headY+headH*0.18}" width="${headW+4}" height="${s*0.06}" rx="3" fill="white" opacity="0.85"/>`);
+  if (t.hasTattoo) {
+    p.push(`<line x1="${cx-bodyW/2-armW/2}" y1="${armY+armH*0.3}" x2="${cx-bodyW/2-armW/2+s*0.04}" y2="${armY+armH*0.5}" stroke="#000" stroke-width="1.5" opacity="0.5"/>`);
+    p.push(`<line x1="${cx-bodyW/2-armW/2+s*0.04}" y1="${armY+armH*0.3}" x2="${cx-bodyW/2-armW/2}" y2="${armY+armH*0.5}" stroke="#000" stroke-width="1.5" opacity="0.5"/>`);
+  }
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${s} ${s}" width="${s}" height="${s}" aria-hidden="true">${p.join('')}</svg>`;
+}
+
 // Sponsored Prize Pool split layout for Top 10
 function getPrizeForRank(rank) {
   if (rank === 1) return 10000;
@@ -2391,9 +2497,17 @@ async function loadData(options = {}){
     const rmk = new ethers.Contract(MARKET_ADDRESS, MARKET_ABI, rp);
     const nextId = Number(await rmk.nextListingId());
     const from = Math.max(0, nextId - 150);
-    for(let i = from; i < nextId; i++){
+    const ids = Array.from({length: nextId - from}, (_, idx) => from + idx);
+    const listingResults = [];
+    for(let start = 0; start < ids.length; start += 25){
+      const batch = ids.slice(start, start + 25);
+      const settled = await Promise.allSettled(batch.map(i => rmk.getListing(i).then(l => ({i, l}))));
+      settled.forEach(result => {
+        if(result.status === 'fulfilled') listingResults.push(result.value);
+      });
+    }
+    for(const {i, l} of listingResults){
       try{
-        const l = await rmk.getListing(i);
         if(!Boolean(l[3])) continue; 
         const seller = String(l[0]).toLowerCase();
         const tokenId = Number(l[1]);
@@ -2657,7 +2771,7 @@ function renderPitch() {
         card.innerHTML = `
           <div>
             <div class="pos-name">${POSITION_SHORT[pos]}</div>
-            <span class="pos-ball">&#9917;</span>
+            <span class="figure-mini">${makeFigureSVG(scored.dna, 80)}</span>
           </div>
           <div>
             <div class="pos-weight ${scored.rarity === 3 ? 'gold' : ''}">${scored.weight}</div>
