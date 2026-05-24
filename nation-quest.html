@@ -66,6 +66,25 @@ a{text-decoration:none;color:inherit}
 .slot.open .slot-status{color:#ffc940;font-family:'Black Ops One',sans-serif}
 .slot-count{font-family:'Black Ops One',sans-serif;font-size:15px;color:#818cf8}
 .slot.open .slot-count{color:#ffc940}
+.slot-actions{position:absolute;inset:auto 4px 4px;display:flex;gap:4px;justify-content:center;opacity:0;transform:translateY(6px);transition:.18s}
+.slot:hover .slot-actions{opacity:1;transform:translateY(0)}
+.slot-action{border:1px solid rgba(0,255,135,.35);background:rgba(0,255,135,.12);color:#00ff87;border-radius:5px;padding:4px 5px;font-family:'Black Ops One',sans-serif;font-size:7px;cursor:pointer}
+.slot-action.sell{border-color:rgba(239,68,68,.42);background:rgba(239,68,68,.14);color:#ef4444}
+.slot-action.buy{border-color:rgba(255,201,64,.42);background:rgba(255,201,64,.13);color:#ffc940}
+.slot-action:hover{filter:brightness(1.12)}
+.market-section{grid-column:1 / 3}
+.market-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:8px;max-height:230px;overflow:auto;padding-right:4px}
+.market-grid::-webkit-scrollbar{width:5px}.market-grid::-webkit-scrollbar-track{background:rgba(6,8,10,.65);border-radius:5px}.market-grid::-webkit-scrollbar-thumb{background:rgba(0,255,135,.34);border-radius:5px}
+.market-card{border:1px solid #1c2028;background:#0f1318;border-radius:8px;padding:9px;display:grid;grid-template-columns:auto 1fr auto;gap:8px;align-items:center}
+.market-pos{width:42px;height:38px;border:1px solid rgba(129,140,248,.34);border-radius:7px;display:grid;place-items:center;font-family:'Black Ops One',sans-serif;color:#dde4f0;font-size:11px}
+.market-meta{min-width:0}.market-name{font-family:'Black Ops One',sans-serif;color:#dde4f0;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.market-sub{font-family:'Share Tech Mono',monospace;color:#7a8899;font-size:10px;margin-top:3px}
+.market-price{font-family:'Black Ops One',sans-serif;color:#ffc940;font-size:13px;text-align:right}
+.modal{position:fixed;inset:0;z-index:6100;display:none;align-items:center;justify-content:center;background:rgba(2,6,8,.78);backdrop-filter:blur(7px);padding:16px}
+.modal.show{display:flex}
+.modal-panel{width:min(92vw,520px);background:linear-gradient(180deg,rgba(15,19,24,.98),rgba(6,8,10,.96));border:1px solid rgba(0,255,135,.35);border-radius:12px;padding:16px;box-shadow:0 24px 80px rgba(0,0,0,.68),0 0 28px rgba(0,255,135,.08)}
+.modal-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px}.modal-title{font-family:'Black Ops One',sans-serif;color:#00ff87;font-size:16px;letter-spacing:1px}.modal-close{border:1px solid #1c2028;background:#0f1318;color:#dde4f0;border-radius:7px;width:32px;height:32px;cursor:pointer;font-size:20px}
+.sell-list{display:grid;gap:8px;max-height:330px;overflow:auto}.sell-row{display:grid;grid-template-columns:52px 1fr 80px;gap:8px;align-items:center;border:1px solid #1c2028;background:#0f1318;border-radius:8px;padding:8px}.sell-input{width:100%;background:#06080a;border:1px solid #1c2028;border-radius:7px;color:#dde4f0;font-family:'Black Ops One',sans-serif;padding:8px;text-align:center}
+.wallet-options{display:grid;gap:8px}.wallet-option{border:1px solid #1c2028;background:#0f1318;color:#dde4f0;border-radius:9px;padding:12px;text-align:left;cursor:pointer}.wallet-option b{display:block;font-family:'Black Ops One',sans-serif;color:#00ff87;font-weight:400}.wallet-option span{font-family:'Share Tech Mono',monospace;color:#7a8899;font-size:11px}
 .info-grid{display:grid;grid-template-columns:1fr;gap:10px}
 .callout{border:1px solid rgba(0,255,135,.24);background:rgba(0,255,135,.06);border-radius:9px;padding:13px}
 .callout.gold{border-color:rgba(255,201,64,.28);background:rgba(255,201,64,.06)}
@@ -90,17 +109,17 @@ a{text-decoration:none;color:inherit}
   .page{padding:6px;gap:7px}.topnav{height:auto;min-height:44px;padding:6px}.brand{font-size:11px}.brand-ball{width:20px;height:20px;font-size:12px}.nav-actions{gap:5px}.pill{display:none}.btn{font-size:8px;padding:7px 8px}
   .hero{grid-template-columns:1fr}.hero-title{font-size:39px}.hero-copy{font-size:16px}.panel{padding:8px;border-radius:8px}.reward{font-size:40px}
   .stats{grid-template-columns:repeat(4,minmax(0,1fr));gap:5px}.stat{min-height:58px;padding:7px 3px}.stat-value{font-size:17px}.stat-label{font-size:7px;letter-spacing:.2px}
-  .squad{gap:3px}.slot{min-height:64px;padding:5px 2px;border-radius:6px}.slot-pos{font-size:7px}.slot-ball{font-size:11px}.slot-count{font-size:10px}.slot-status{font-size:5px}.section-title{font-size:8px;letter-spacing:.6px}.section-title .live{font-size:7px}.callout p{font-size:13px}.feed{max-height:150px}.feed-row{grid-template-columns:34px 1fr auto;padding:6px}.feed-pos{font-size:9px}.feed-addr,.feed-token{font-size:8px}
+  .squad{gap:3px}.slot{min-height:64px;padding:5px 2px;border-radius:6px}.slot-pos{font-size:7px}.slot-ball{font-size:11px}.slot-count{font-size:10px}.slot-status{font-size:5px}.slot-actions{opacity:1;position:static;transform:none;margin-top:2px}.slot-action{font-size:5px;padding:2px 3px}.section-title{font-size:8px;letter-spacing:.6px}.section-title .live{font-size:7px}.callout p{font-size:13px}.feed{max-height:150px}.feed-row{grid-template-columns:34px 1fr auto;padding:6px}.feed-pos{font-size:9px}.feed-addr,.feed-token{font-size:8px}.market-section{grid-column:auto}.market-grid{max-height:180px;grid-template-columns:1fr}
 }
 </style>
 </head>
 <body>
 <div class="page">
   <header class="topnav">
-    <a class="brand" href="/"><span class="brand-ball">BK</span><span>BLOCK <b>KICKERS</b></span></a>
+    <a class="brand" href="/"><span class="brand-ball">&#9917;</span><span>BLOCK <b>KICKERS</b></span></a>
     <div class="nav-actions">
       <span class="pill" id="walletPill">NO WALLET</span>
-      <button class="btn secondary" type="button" onclick="connectWallet()">CONNECT</button>
+      <button class="btn secondary" type="button" onclick="openWalletModal()">CONNECT</button>
       <button class="btn" id="mintBtn" type="button" onclick="directMint()">MINT 10 CHZ</button>
     </div>
   </header>
@@ -147,6 +166,11 @@ a{text-decoration:none;color:inherit}
       <div class="squad" id="mySlots"><div class="loading" style="grid-column:1/-1">Connect wallet to track your 1000 CHZ squad race.</div></div>
     </section>
 
+    <section class="panel market-section">
+      <div class="section-title"><span>USA Market</span><span class="live" id="marketCount">Loading...</span></div>
+      <div class="market-grid" id="marketGrid"><div class="loading" style="grid-column:1/-1"><span class="spin"></span>Loading USA listings...</div></div>
+    </section>
+
     <aside class="info-grid">
       <div class="callout gold">
         <h3>500 CHZ Card Hunt</h3>
@@ -164,9 +188,26 @@ a{text-decoration:none;color:inherit}
   </main>
 </div>
 
+<div class="modal" id="walletModal">
+  <div class="modal-panel">
+    <div class="modal-head"><div class="modal-title">CONNECT WALLET</div><button class="modal-close" onclick="closeWalletModal()">&times;</button></div>
+    <div class="wallet-options">
+      <button class="wallet-option" onclick="connectInjected()"><b>Browser Wallet</b><span>MetaMask, Trust Wallet browser, Rabby or another EIP-1193 wallet.</span></button>
+      <button class="wallet-option" onclick="connectWalletConnect()"><b>WalletConnect</b><span>Use mobile wallets through WalletConnect. Avoid Socios if it reverts transactions.</span></button>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="sellModal">
+  <div class="modal-panel">
+    <div class="modal-head"><div class="modal-title" id="sellTitle">SELL USA CARD</div><button class="modal-close" onclick="closeSellModal()">&times;</button></div>
+    <div class="sell-list" id="sellList"></div>
+  </div>
+</div>
+
 <div id="networkOverlay" aria-live="polite" aria-busy="true">
   <div class="network-card">
-    <div class="network-ball">BK</div>
+    <div class="network-ball">&#9917;</div>
     <div class="network-title">Waiting for network</div>
     <div class="network-text" id="networkText">Please confirm in your wallet and wait for Chiliz Chain.</div>
   </div>
@@ -183,11 +224,18 @@ const ZERO_REF = "0x0000000000000000000000000000000000000000";
 const ABI = [
   "event FigureMinted(address indexed owner,uint256 indexed tokenId,uint256 dna,uint256 teamId,uint256 position,uint8 rarity,uint256 weight)",
   "function mintPrice() external view returns (uint256)",
-  "function mint(address referrer) external payable"
+  "function mint(address referrer) external payable",
+  "function isApprovedForAll(address account,address operator) external view returns (bool)",
+  "function setApprovalForAll(address operator,bool approved) external"
 ];
 const MARKET_ABI = [
   "event Sold(uint256 indexed listingId,address indexed buyer,uint256 price)",
-  "event Listed(uint256 indexed listingId,address indexed seller,uint256 tokenId,uint256 price)"
+  "event Listed(uint256 indexed listingId,address indexed seller,uint256 tokenId,uint256 price)",
+  "function nextListingId() external view returns (uint256)",
+  "function getListing(uint256) external view returns (address,uint256,uint256,bool)",
+  "function buyFigure(uint256 listingId) external payable",
+  "function listFigure(uint256 tokenId,uint256 price) external",
+  "function cancelListing(uint256 listingId) external"
 ];
 const POSITIONS = [
   {id:1,label:"GK"},{id:2,label:"RB"},{id:3,label:"LB"},{id:4,label:"CB A"},{id:5,label:"CB B"},{id:6,label:"DM"},{id:7,label:"RW"},{id:8,label:"MID"},{id:9,label:"ST"},{id:10,label:"#10"},{id:11,label:"LW"}
@@ -196,9 +244,11 @@ let provider = new ethers.JsonRpcProvider(PUBLIC_RPC);
 let browserProvider = null;
 let signer = null;
 let contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, provider);
+let marketContract = new ethers.Contract(MARKET_ADDRESS, MARKET_ABI, provider);
 let address = null;
 let currentMintPrice = ethers.parseEther("10");
-let latestState = {usaCards:[], usaEvents:[], cardWinner:null, squadWinner:null, missing:POSITIONS};
+let walletConnectProvider = null;
+let latestState = {usaCards:[], usaEvents:[], cardWinner:null, squadWinner:null, missing:POSITIONS, listings:[], ownerByToken:new Map()};
 
 function parseDNA(dna) {
   const n = typeof dna === "bigint" ? dna : BigInt(String(dna));
@@ -212,6 +262,7 @@ function parseDNA(dna) {
 function shortAddr(addr){return addr ? `${addr.slice(0,6)}...${addr.slice(-4)}` : "0x...";}
 function rarityName(r){return ["Common","Rare","Epic","Legendary"][r] || "Common";}
 function posLabel(id){return POSITIONS.find(p => p.id === Number(id))?.label || String(id);}
+function ballIcon(){return '<span style="font-family:Arial, sans-serif;font-weight:900;">&#9917;</span>';}
 function showOverlay(msg){document.getElementById("networkText").textContent = msg;document.getElementById("networkOverlay").classList.add("show");}
 function updateOverlay(msg){document.getElementById("networkText").textContent = msg;}
 function hideOverlay(){document.getElementById("networkOverlay").classList.remove("show");}
@@ -241,22 +292,62 @@ async function ensureChilizChain(walletProvider) {
   }
 }
 
-async function connectWallet() {
+function openWalletModal(){document.getElementById("walletModal").classList.add("show");}
+function closeWalletModal(){document.getElementById("walletModal").classList.remove("show");}
+function closeSellModal(){document.getElementById("sellModal").classList.remove("show");}
+
+async function finalizeWalletConnection(walletProvider, label) {
+  await ensureChilizChain(walletProvider);
+  browserProvider = new ethers.BrowserProvider(walletProvider);
+  signer = await browserProvider.getSigner();
+  address = (await signer.getAddress()).toLowerCase();
+  provider = browserProvider;
+  contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
+  marketContract = new ethers.Contract(MARKET_ADDRESS, MARKET_ABI, signer);
+  document.getElementById("walletPill").textContent = `${label} ${shortAddr(address)}`;
+  document.getElementById("mintNote").textContent = `Connected: ${shortAddr(address)}`;
+  await loadQuest(true);
+}
+
+async function connectInjected() {
   if (!window.ethereum) {
     alert("Open this page in MetaMask, Trust Wallet, or another Web3 wallet browser.");
     return;
   }
+  closeWalletModal();
   showOverlay("Connecting wallet...");
   try {
-    await ensureChilizChain(window.ethereum);
-    browserProvider = new ethers.BrowserProvider(window.ethereum);
-    await browserProvider.send("eth_requestAccounts", []);
-    signer = await browserProvider.getSigner();
-    address = (await signer.getAddress()).toLowerCase();
-    contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
-    document.getElementById("walletPill").textContent = shortAddr(address);
-    document.getElementById("mintNote").textContent = `Connected: ${shortAddr(address)}`;
-    await loadQuest(true);
+    await window.ethereum.request({method:"eth_requestAccounts"});
+    await finalizeWalletConnection(window.ethereum, "WEB3");
+  } finally {
+    hideOverlay();
+  }
+}
+
+async function connectWallet(){ return connectInjected(); }
+
+async function connectWalletConnect() {
+  closeWalletModal();
+  showOverlay("Opening WalletConnect...");
+  try {
+    const mod = await import("https://esm.sh/@walletconnect/ethereum-provider@2");
+    const EthereumProvider = mod.default || mod.EthereumProvider;
+    walletConnectProvider = await EthereumProvider.init({
+      projectId:"15671485110825e18107d31b379d9df6",
+      chains:[CHAIN_ID],
+      optionalChains:[CHAIN_ID],
+      chainId:CHAIN_ID,
+      rpcMap:{[CHAIN_ID]:PUBLIC_RPC},
+      showQrModal:true,
+      methods:["eth_sendTransaction","personal_sign","wallet_switchEthereumChain","wallet_addEthereumChain"],
+      events:["chainChanged","accountsChanged","disconnect"],
+      metadata:{name:"Block Kickers Nation Quest",description:"USA Nation Quest on Chiliz Chain",url:location.origin,icons:[location.origin + "/favicon.ico"]}
+    });
+    await walletConnectProvider.connect({chains:[CHAIN_ID]});
+    await finalizeWalletConnection(walletConnectProvider, "WC");
+  } catch(e) {
+    console.error(e);
+    alert("WalletConnect failed. Try a Web3 browser wallet.");
   } finally {
     hideOverlay();
   }
@@ -279,6 +370,79 @@ async function directMint() {
   } catch(e) {
     console.error(e);
     alert("Mint failed. Check CHZ balance, network, and wallet confirmation.");
+  } finally {
+    hideOverlay();
+  }
+}
+
+async function requireSigner() {
+  if (!signer) await openWalletModal();
+  return Boolean(signer);
+}
+
+async function buyListing(listingId, priceChz) {
+  if (!signer) { openWalletModal(); return; }
+  showOverlay(`Buying USA card for ${priceChz} CHZ...`);
+  try {
+    const listing = await marketContract.getListing(Number(listingId));
+    if (!Boolean(listing[3])) throw new Error("Listing is no longer active.");
+    const priceWei = listing[2];
+    updateOverlay("Waiting for wallet confirmation...");
+    const tx = await marketContract.buyFigure(Number(listingId), {value: priceWei});
+    updateOverlay("Buy sent. Waiting for block confirmation...");
+    const receipt = await tx.wait();
+    if (receipt && Number(receipt.status) === 0) throw new Error("Buy reverted on-chain.");
+    updateOverlay("Updating squad and market...");
+    await loadQuest(true);
+  } catch(e) {
+    console.error(e);
+    alert("Buy failed. Check balance, listing status and wallet confirmation.");
+  } finally {
+    hideOverlay();
+  }
+}
+
+async function listCard(tokenId) {
+  if (!signer) { openWalletModal(); return; }
+  const input = document.getElementById(`sellPrice_${tokenId}`);
+  const price = String(input?.value || "").trim();
+  if (!price || Number(price) <= 0) { alert("Enter a valid CHZ price."); return; }
+  showOverlay("Preparing marketplace listing...");
+  try {
+    const approved = await contract.isApprovedForAll(address, MARKET_ADDRESS);
+    if (!approved) {
+      updateOverlay("Approving marketplace access...");
+      const txApprove = await contract.setApprovalForAll(MARKET_ADDRESS, true);
+      await txApprove.wait();
+    }
+    updateOverlay(`Listing card for ${price} CHZ...`);
+    const tx = await marketContract.listFigure(Number(tokenId), ethers.parseEther(price));
+    updateOverlay("Listing sent. Waiting for block confirmation...");
+    const receipt = await tx.wait();
+    if (receipt && Number(receipt.status) === 0) throw new Error("Listing reverted on-chain.");
+    closeSellModal();
+    await loadQuest(true);
+  } catch(e) {
+    console.error(e);
+    alert("Listing failed. The card may already be listed or unavailable.");
+  } finally {
+    hideOverlay();
+  }
+}
+
+async function cancelListing(listingId) {
+  if (!signer) { openWalletModal(); return; }
+  showOverlay("Cancelling listing...");
+  try {
+    updateOverlay("Waiting for wallet confirmation...");
+    const tx = await marketContract.cancelListing(Number(listingId));
+    updateOverlay("Cancel sent. Waiting for block confirmation...");
+    const receipt = await tx.wait();
+    if (receipt && Number(receipt.status) === 0) throw new Error("Cancel reverted on-chain.");
+    await loadQuest(true);
+  } catch(e) {
+    console.error(e);
+    alert("Cancel failed. Make sure this is your listing.");
   } finally {
     hideOverlay();
   }
@@ -317,10 +481,43 @@ async function fetchEvents() {
   return {mints, sales};
 }
 
+async function fetchActiveListings(tokenInfo) {
+  const readMarket = marketContract || new ethers.Contract(MARKET_ADDRESS, MARKET_ABI, provider);
+  const listings = [];
+  try {
+    const nextId = Number(await readMarket.nextListingId());
+    const from = Math.max(0, nextId - 400);
+    for (let i = from; i < nextId; i++) {
+      try {
+        const l = await readMarket.getListing(i);
+        if (!Boolean(l[3])) continue;
+        const tokenId = Number(l[1]);
+        const card = tokenInfo.get(tokenId);
+        if (!card || card.teamId !== USA_TEAM_ID) continue;
+        const priceWei = l[2];
+        listings.push({
+          ...card,
+          listingId:i,
+          seller:String(l[0]).toLowerCase(),
+          tokenId,
+          priceWei,
+          price:Number(ethers.formatEther(priceWei))
+        });
+      } catch(e) {}
+    }
+  } catch(e) {
+    console.warn("Market listings unavailable", e);
+  }
+  return listings.sort((a,b) => a.price - b.price || b.weight - a.weight);
+}
+
 async function buildState() {
   const {mints, sales} = await fetchEvents();
   const tokenInfo = new Map();
   mints.forEach(m => tokenInfo.set(m.tokenId, {...m, ...parseDNA(m.dna)}));
+  const ownerByToken = new Map();
+  mints.forEach(m => ownerByToken.set(m.tokenId, String(m.owner || "").toLowerCase()));
+  sales.forEach(s => { if (tokenInfo.has(s.tokenId)) ownerByToken.set(s.tokenId, String(s.buyer || "").toLowerCase()); });
   const usaCards = [...tokenInfo.values()].filter(c => c.teamId === USA_TEAM_ID);
   const events = [];
   mints.forEach(m => {
@@ -352,24 +549,33 @@ async function buildState() {
   });
   const mySet = address ? (walletPositions.get(address) || new Set()) : new Set();
   const missing = POSITIONS.filter(p => !globalPositions.has(p.id));
+  const listings = await fetchActiveListings(tokenInfo);
   await Promise.all([cardWinner, squadWinner].filter(Boolean).map(async item => { item.time = await getBlockTime(item.block); }));
-  return {usaCards, usaEvents:events, globalPositions, walletPositions, mySet, missing, cardWinner, squadWinner};
+  return {usaCards, usaEvents:events, globalPositions, walletPositions, mySet, missing, cardWinner, squadWinner, listings, ownerByToken, tokenInfo};
 }
 
-function renderSlots(targetId, filledSet, byPosition, winnerPos = null) {
+function renderSlots(targetId, filledSet, byPosition, winnerPos = null, mode = "global") {
   const target = document.getElementById(targetId);
   target.innerHTML = "";
   POSITIONS.forEach(pos => {
     const cards = byPosition?.get(pos.id) || [];
     const done = filledSet.has(pos.id);
     const best = cards.slice().sort((a,b) => b.weight - a.weight)[0];
+    const floor = (latestState.listings || []).filter(l => l.position === pos.id && (!address || l.seller !== address)).sort((a,b) => a.price - b.price)[0];
+    const sellable = mode === "mine" && cards.length;
     const el = document.createElement("div");
     el.className = `slot ${done ? "done" : "open"} ${winnerPos === pos.id ? "win" : ""}`;
+    const openCount = mode === "global" ? "500" : (floor ? `${floor.price}` : "-");
+    const openStatus = mode === "global" ? "OPEN CHZ" : (floor ? "BUY CHZ" : "MISSING");
     el.innerHTML = `
       <div class="slot-pos">${pos.label}</div>
-      <div class="slot-ball">BK</div>
-      <div class="slot-count">${done ? (cards.length ? cards.length + "x" : "OK") : "500"}</div>
-      <div class="slot-status">${done ? (best ? `${best.weight} PTS ${rarityName(best.rarity)}` : "SCORED") : "OPEN CHZ"}</div>
+      <div class="slot-ball">${ballIcon()}</div>
+      <div class="slot-count">${done ? (cards.length ? cards.length + "x" : "OK") : openCount}</div>
+      <div class="slot-status">${done ? (best ? `${best.weight} PTS ${rarityName(best.rarity)}` : "SCORED") : openStatus}</div>
+      ${mode === "mine" ? `<div class="slot-actions">
+        ${floor ? `<button class="slot-action buy" onclick="buyListing(${floor.listingId}, '${floor.price}')">BUY</button>` : ""}
+        ${sellable ? `<button class="slot-action sell" onclick="openSellCards(${pos.id})">SELL</button>` : ""}
+      </div>` : ""}
     `;
     target.appendChild(el);
   });
@@ -407,13 +613,14 @@ function renderQuest(state) {
     questStatus.textContent = `${state.missing.length} CARDS LEFT: ${state.missing.map(p => p.label).join(", ")}`;
   }
 
-  renderSlots("globalSlots", state.globalPositions, byPosition, state.cardWinner?.position);
+  renderSlots("globalSlots", state.globalPositions, byPosition, state.cardWinner?.position, "global");
   const myByPosition = new Map();
   if (address) state.usaEvents.filter(e => e.wallet === address).forEach(card => {
     if (!myByPosition.has(card.position)) myByPosition.set(card.position, []);
     myByPosition.get(card.position).push(card);
   });
-  renderSlots("mySlots", state.mySet, myByPosition, state.squadWinner?.wallet === address ? state.squadWinner.position : null);
+  renderSlots("mySlots", state.mySet, myByPosition, state.squadWinner?.wallet === address ? state.squadWinner.position : null, "mine");
+  renderMarket(state);
 
   document.getElementById("cardWinnerBox").innerHTML = state.cardWinner
     ? `<b>500 CHZ winner</b><br>${shortAddr(state.cardWinner.wallet)} minted ${posLabel(state.cardWinner.position)}<br>Block ${state.cardWinner.block || "pending"} - ${formatTime(state.cardWinner.time)}`
@@ -431,6 +638,58 @@ function renderQuest(state) {
       <div class="feed-token">#${e.tokenId}</div>
     </div>
   `).join("") : '<div class="loading">No USA events yet.</div>';
+}
+
+function renderMarket(state) {
+  const grid = document.getElementById("marketGrid");
+  const listings = state.listings || [];
+  document.getElementById("marketCount").textContent = `${listings.length} LISTINGS`;
+  if (!listings.length) {
+    grid.innerHTML = '<div class="loading" style="grid-column:1/-1">No USA cards listed right now.</div>';
+    return;
+  }
+  grid.innerHTML = listings.slice(0, 40).map(l => {
+    const mine = address && l.seller === address;
+    return `
+      <div class="market-card">
+        <div class="market-pos">${posLabel(l.position)}</div>
+        <div class="market-meta">
+          <div class="market-name">${l.weight} PTS ${rarityName(l.rarity)}</div>
+          <div class="market-sub">#${l.tokenId} - ${mine ? "your listing" : shortAddr(l.seller)}</div>
+        </div>
+        <div>
+          <div class="market-price">${l.price} CHZ</div>
+          <button class="slot-action ${mine ? "sell" : "buy"}" onclick="${mine ? `cancelListing(${l.listingId})` : `buyListing(${l.listingId}, '${l.price}')`}">${mine ? "CANCEL" : "BUY"}</button>
+        </div>
+      </div>
+    `;
+  }).join("");
+}
+
+function openSellCards(position) {
+  if (!address) { openWalletModal(); return; }
+  const cards = (latestState.usaCards || []).filter(card => latestState.ownerByToken?.get(Number(card.tokenId)) === address && card.position === Number(position));
+  const activeListed = new Set((latestState.listings || []).filter(l => l.seller === address).map(l => Number(l.tokenId)));
+  document.getElementById("sellTitle").textContent = `SELL ${posLabel(position)} CARD`;
+  const box = document.getElementById("sellList");
+  if (!cards.length) {
+    box.innerHTML = '<div class="loading">No cards for this position.</div>';
+  } else {
+    box.innerHTML = cards.sort((a,b) => b.weight - a.weight).map(card => {
+      const listed = activeListed.has(Number(card.tokenId));
+      return `
+        <div class="sell-row">
+          <div class="market-pos">#${card.tokenId}</div>
+          <div>
+            <div class="market-name">${card.weight} PTS ${rarityName(card.rarity)}</div>
+            <div class="market-sub">${posLabel(card.position)} ${listed ? "- already listed" : ""}</div>
+          </div>
+          ${listed ? `<button class="slot-action sell" disabled>LISTED</button>` : `<div><input class="sell-input" id="sellPrice_${card.tokenId}" value="50" type="number" min="1" step="1"><button class="slot-action sell" style="margin-top:5px;width:100%" onclick="listCard(${card.tokenId})">SELL</button></div>`}
+        </div>
+      `;
+    }).join("");
+  }
+  document.getElementById("sellModal").classList.add("show");
 }
 
 async function loadQuest(silent = false) {
