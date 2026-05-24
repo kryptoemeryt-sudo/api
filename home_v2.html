@@ -116,6 +116,8 @@ h1 .accent{color:var(--green);text-shadow:0 0 30px var(--green-glow);}
 /* FIGURE CARD */
 .fig-card{position:relative;background:linear-gradient(180deg,rgba(15,19,24,.98),rgba(8,11,15,.96));border:1px solid var(--border);border-radius:8px;overflow:hidden;cursor:pointer;transition:all 0.2s;box-shadow:inset 0 0 24px rgba(0,0,0,.18);}
 .fig-card:hover{transform:translateY(-3px);box-shadow:0 12px 32px rgba(0,0,0,0.45),0 0 18px rgba(0,255,135,.08);}
+.flag-filter{cursor:pointer;transition:transform .16s, box-shadow .16s, border-color .16s;}
+.flag-filter:hover{transform:scale(1.08);box-shadow:0 0 14px rgba(0,255,135,.2);border-color:rgba(0,255,135,.55);}
 .fig-card.r3{background:linear-gradient(160deg,rgba(255,201,64,.24),rgba(15,19,24,.97) 54%,rgba(255,201,64,.08));border-color:rgba(255,201,64,0.72);box-shadow:inset 0 0 28px rgba(255,201,64,.12),0 0 16px rgba(255,201,64,0.13);}
 .fig-card.r2{background:linear-gradient(160deg,rgba(168,85,247,.22),rgba(15,19,24,.97) 56%,rgba(168,85,247,.07));border-color:rgba(168,85,247,0.55);}
 .fig-card.r1{background:linear-gradient(160deg,rgba(59,130,246,.2),rgba(15,19,24,.97) 56%,rgba(59,130,246,.06));border-color:rgba(59,130,246,0.45);}
@@ -1998,6 +2000,11 @@ body.dash-active .quest-label{font-size:8px !important;margin-top:3px !important
     color:var(--text) !important;
     opacity:.92 !important;
   }
+  body.dash-active #market .fig-weight,
+  body.dash-active #squad .fig-weight{
+    font-size:12px !important;
+    line-height:1 !important;
+  }
 }
 /* TEMP QUEST VISIBILITY CLEANUP */
 #album,
@@ -2034,6 +2041,12 @@ body.dash-active .quest-label{font-size:8px !important;margin-top:3px !important
   }
   .price-roadmap-card div[style*="justify-content:space-between"] span:last-child{
     color:var(--gold) !important;
+  }
+  .stat-l{
+    font-family:'Black Ops One',sans-serif !important;
+    color:var(--text) !important;
+    opacity:.94 !important;
+    letter-spacing:1px !important;
   }
 }
 @media (min-width:769px){
@@ -2721,6 +2734,12 @@ const POSITION_NAMES = {
 function teamFlagImg(teamId, teamName){
   const code = TEAM_FLAG_CODES[Number(teamId) % TEAM_FLAG_CODES.length] || 'un';
   return `<img class="fig-flag" src="https://flagcdn.com/w40/${code}.png" srcset="https://flagcdn.com/w80/${code}.png 2x" alt="${teamName || 'team'} flag" loading="lazy">`;
+}
+function cardFlagFilter(teamId, teamName, scope){
+  const code = TEAM_FLAG_CODES[Number(teamId) % TEAM_FLAG_CODES.length] || 'un';
+  const team = String(teamName || '');
+  const fn = scope === 'squad' ? 'setSquadFilterByTeam' : 'setMarketFilterByTeam';
+  return `<img class="fig-flag flag-filter" src="https://flagcdn.com/w40/${code}.png" srcset="https://flagcdn.com/w80/${code}.png 2x" alt="${team} flag" title="Filter ${teamCode(team)}" loading="lazy" onclick="event.stopPropagation();${fn}(${Number(teamId)})">`;
 }
 
 // ============================================================
@@ -4089,7 +4108,7 @@ function renderCollection(){
       t.hasBand?'<span class="chip">HEADBAND</span>':'',
       t.hasGloves&&t.position===1?'<span class="chip">GLOVES</span>':''
     ].filter(Boolean).join('');
-    card.innerHTML=`<div class="fig-canvas">${teamFlagImg(t.teamId, team)}<div id="${cid}" class="fig-svg-wrap"></div></div>
+    card.innerHTML=`<div class="fig-canvas">${cardFlagFilter(t.teamId, team, 'squad')}<div id="${cid}" class="fig-svg-wrap"></div></div>
     <div class="fig-info">
       <div class="fig-row">
         <div class="fig-weight">&#9889; ${t.weight}<span style="font-size:10px;color:var(--text3);">/100</span></div>
@@ -4549,10 +4568,10 @@ function buildSquadFilters(){
   if(teams.length <= 1){ div.innerHTML=''; return; }
   const s1='padding:3px 8px;border-radius:12px;border:1px solid var(--border);background:rgba(255,255,255,0.03);color:var(--text3);font-size:10px;cursor:pointer;white-space:nowrap;flex-shrink:0;';
   const s2='padding:3px 8px;border-radius:12px;border:1px solid rgba(0,255,135,0.3);background:var(--green-dim);color:var(--green);font-size:10px;cursor:pointer;white-space:nowrap;flex-shrink:0;';
-  div.innerHTML='<button onclick="setSquadFilter(null,this)" style="'+s2+'">ALL</button>';
+  div.innerHTML='<button onclick="setSquadFilter(null,this)" style="'+(!_squadTeamFilter?s2:s1)+'">ALL</button>';
   teams.forEach(team=>{
     const b=document.createElement('button');
-    b.style.cssText=s1;
+    b.style.cssText=_squadTeamFilter===team?s2:s1;
     b.textContent=teamCode(team);
     b.title=team;
     b.onclick=()=>setSquadFilter(team,b);
@@ -4566,8 +4585,14 @@ function setSquadFilter(team,btn){
   const s1='padding:3px 8px;border-radius:12px;border:1px solid var(--border);background:rgba(255,255,255,0.03);color:var(--text3);font-size:9px;cursor:pointer;white-space:nowrap;flex-shrink:0;';
   const s2='padding:3px 8px;border-radius:12px;border:1px solid rgba(0,255,135,0.3);background:var(--green-dim);color:var(--green);font-size:9px;cursor:pointer;white-space:nowrap;flex-shrink:0;';
   document.querySelectorAll('#squadFilters button').forEach(b=>b.style.cssText=s1);
+  if(!btn && team) btn=[...document.querySelectorAll('#squadFilters button')].find(b=>b.title===team);
   if(btn) btn.style.cssText=s2;
   renderCollection();
+}
+
+function setSquadFilterByTeam(teamId){
+  const team = TEAMS[Number(teamId) % TEAMS.length];
+  setSquadFilter(team, null);
 }
 
 // ============================================================
@@ -4671,10 +4696,10 @@ function buildMarketFilters(listings){
   }).filter(Boolean))].sort();
   const s1='padding:3px 8px;border-radius:12px;border:1px solid var(--border);background:rgba(255,255,255,0.03);color:var(--text3);font-size:10px;cursor:pointer;white-space:nowrap;flex-shrink:0;';
   const s2='padding:3px 8px;border-radius:12px;border:1px solid rgba(0,255,135,0.3);background:var(--green-dim);color:var(--green);font-size:10px;cursor:pointer;white-space:nowrap;flex-shrink:0;';
-  div.innerHTML='<button id="mfAll" onclick="setMarketFilter(null,this)" style="'+s2+'">ALL</button>';
+  div.innerHTML='<button id="mfAll" onclick="setMarketFilter(null,this)" style="'+(!_marketTeamFilter?s2:s1)+'">ALL</button>';
   teams.forEach(team=>{
     const b=document.createElement('button');
-    b.style.cssText=s1;
+    b.style.cssText=_marketTeamFilter===team?s2:s1;
     b.textContent=teamCode(team);
     b.title=team;
     b.onclick=()=>setMarketFilter(team,b);
@@ -4688,8 +4713,14 @@ function setMarketFilter(team,btn){
   const s1='padding:3px 8px;border-radius:12px;border:1px solid var(--border);background:rgba(255,255,255,0.03);color:var(--text3);font-size:10px;cursor:pointer;white-space:nowrap;flex-shrink:0;';
   const s2='padding:3px 8px;border-radius:12px;border:1px solid rgba(0,255,135,0.3);background:var(--green-dim);color:var(--green);font-size:10px;cursor:pointer;white-space:nowrap;flex-shrink:0;';
   document.querySelectorAll('#marketFilters button').forEach(b=>b.style.cssText=s1);
+  if(!btn && team) btn=[...document.querySelectorAll('#marketFilters button')].find(b=>b.title===team);
   if(btn) btn.style.cssText=s2;
   loadMarket();
+}
+
+function setMarketFilterByTeam(teamId){
+  const team = TEAMS[Number(teamId) % TEAMS.length];
+  setMarketFilter(team, null);
 }
 
 async function loadMarket() {
@@ -4761,7 +4792,7 @@ async function loadMarket() {
       item.onclick = () => openModal(Number(l.tokenId), dna);
       item.innerHTML = `
         <div class="fig-canvas">
-          ${teamFlagImg(t.teamId, team)}
+          ${cardFlagFilter(t.teamId, team, 'market')}
           <div id="${cid}" class="fig-svg-wrap"></div>
         </div>
         <div class="fig-info">
