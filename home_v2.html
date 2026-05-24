@@ -1888,6 +1888,75 @@ body.dash-active .quest-label{font-size:8px !important;margin-top:3px !important
     height:190px !important;
   }
 }
+/* DESKTOP FINAL ALIGNMENT PASS */
+@media (min-width:1200px) and (min-height:720px){
+  body.dash-active .desktop-dashboard{
+    grid-template-rows:300px 570px minmax(0,1fr) !important;
+  }
+  body.dash-active #mint .hero-left{
+    width:390px !important;
+    padding-top:0 !important;
+  }
+  body.dash-active #mint .badge{
+    margin-bottom:10px !important;
+  }
+  body.dash-active #mint .hero-title-desktop{
+    font-size:56px !important;
+    line-height:.82 !important;
+    margin:0 0 15px !important;
+    letter-spacing:0 !important;
+  }
+  body.dash-active #mint .stats-row{
+    width:360px !important;
+    gap:9px !important;
+  }
+  body.dash-active #mint .stat{
+    min-height:64px !important;
+    padding:10px 7px !important;
+  }
+  body.dash-active #mint .stat-n{
+    font-size:27px !important;
+    line-height:1 !important;
+  }
+  body.dash-active #mint .stat-l{
+    font-size:9px !important;
+    margin-top:6px !important;
+  }
+  body.dash-active #mint .hero-right{
+    right:35px !important;
+    top:36px !important;
+    width:285px !important;
+    height:238px !important;
+  }
+  body.dash-active #mint .hero-figure-stage,
+  body.dash-active #mint #heroCanvas{
+    width:285px !important;
+    height:238px !important;
+  }
+  body.dash-active #market{
+    min-height:0 !important;
+  }
+  body.dash-active #marketList{
+    overflow:visible !important;
+    max-height:none !important;
+  }
+  body.dash-active #countryLb,
+  body.dash-active #leaderboard{
+    min-height:0 !important;
+  }
+  body.dash-active #squadFilters{
+    max-height:72px !important;
+    min-height:58px !important;
+    overflow:hidden !important;
+    flex-wrap:wrap !important;
+    align-content:flex-start !important;
+    gap:6px !important;
+    padding-bottom:2px !important;
+  }
+  body.dash-active #squad .col-grid{
+    margin-top:2px !important;
+  }
+}
 /* TEMP QUEST VISIBILITY CLEANUP */
 #album,
 #countryLbGrid,
