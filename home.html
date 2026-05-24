@@ -108,7 +108,7 @@ h1 .accent{color:var(--green);text-shadow:0 0 30px var(--green-glow);}
 .sec-sub{font-size:13px;color:var(--text2);letter-spacing:1px;}
 
 /* COLLECTION GRID */
-.col-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(118px,1fr));gap:8px;}
+.col-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:7px;}
 .empty{text-align:center;padding:60px;color:var(--text3);font-size:14px;letter-spacing:2px;grid-column:1/-1;}
 
 /* FIGURE CARD */
@@ -117,23 +117,25 @@ h1 .accent{color:var(--green);text-shadow:0 0 30px var(--green-glow);}
 .fig-card.r3{background:linear-gradient(160deg,rgba(255,201,64,.24),rgba(15,19,24,.97) 54%,rgba(255,201,64,.08));border-color:rgba(255,201,64,0.72);box-shadow:inset 0 0 28px rgba(255,201,64,.12),0 0 16px rgba(255,201,64,0.13);}
 .fig-card.r2{background:linear-gradient(160deg,rgba(168,85,247,.22),rgba(15,19,24,.97) 56%,rgba(168,85,247,.07));border-color:rgba(168,85,247,0.55);}
 .fig-card.r1{background:linear-gradient(160deg,rgba(59,130,246,.2),rgba(15,19,24,.97) 56%,rgba(59,130,246,.06));border-color:rgba(59,130,246,0.45);}
-.fig-canvas{height:78px;background:radial-gradient(circle at 50% 85%,rgba(0,255,135,.12),transparent 42%);position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+.fig-canvas{height:82px;background:radial-gradient(circle at 50% 85%,rgba(0,255,135,.12),transparent 42%);position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;}
 .fig-canvas canvas{width:100%!important;height:100%!important;}
 .fig-flag{position:absolute;top:5px;left:6px;width:24px;height:16px;object-fit:cover;border-radius:2px;box-shadow:0 0 0 1px rgba(255,255,255,.18),0 2px 8px rgba(0,0,0,.35);z-index:2;background:#111;}
 .fig-svg-wrap{width:100%;height:100%;display:flex;align-items:center;justify-content:center;overflow:hidden;}
-.rarity-badge{display:inline-block;padding:2px 6px;border-radius:4px;font-size:8px;font-weight:700;letter-spacing:1.4px;white-space:nowrap;}
+.rarity-badge{display:inline-block;padding:2px 5px;border-radius:4px;font-size:8px;font-weight:700;letter-spacing:.8px;white-space:nowrap;}
 .rb0{background:rgba(107,114,128,0.25);color:#9ca3af;border:1px solid rgba(107,114,128,0.35);}
 .rb1{background:rgba(59,130,246,0.2);color:#60a5fa;border:1px solid rgba(59,130,246,0.4);}
 .rb2{background:rgba(168,85,247,0.2);color:#c084fc;border:1px solid rgba(168,85,247,0.4);}
 .rb3{background:rgba(255,201,64,0.2);color:#fbbf24;border:1px solid rgba(255,201,64,0.5);box-shadow:0 0 8px rgba(255,201,64,0.2);}
-.fig-info{padding:8px 9px 9px;border-top:1px solid rgba(255,255,255,.035);}
+.fig-info{padding:6px 7px 7px;border-top:1px solid rgba(255,255,255,.035);}
 .fig-name{font-family:'Black Ops One',sans-serif;font-size:13px;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .fig-id{font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--text3);margin-bottom:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .fig-chips{display:flex;gap:4px;flex-wrap:wrap;}
 .chip{background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:3px;padding:2px 7px;font-size:9px;color:var(--text2);letter-spacing:1px;}
-.fig-weight{font-family:'Black Ops One',sans-serif;font-size:12px;color:var(--green);margin-top:0;white-space:nowrap;}
-.fig-row{display:flex;align-items:center;justify-content:space-between;gap:6px;margin-top:4px;min-width:0;}
-.fig-price{font-family:'Black Ops One',sans-serif;font-size:15px;color:var(--gold);white-space:nowrap;}
+.fig-weight{font-family:'Black Ops One',sans-serif;font-size:13px;color:var(--green);margin-top:0;white-space:nowrap;}
+.fig-row{display:flex;align-items:center;justify-content:space-between;gap:4px;margin-top:0;min-width:0;}
+.fig-price{font-family:'Black Ops One',sans-serif;font-size:13px;color:var(--gold);white-space:nowrap;}
+.fig-market-action{margin-top:5px;display:grid;grid-template-columns:1fr;gap:4px;}
+.fig-market-action .btn-buy,.fig-market-action .btn-cancel{width:100%;padding:5px 6px!important;font-size:9px!important;border-radius:5px;}
 .fig-owner{font-size:9px;color:var(--text3);margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 
 /* MODAL */
@@ -200,7 +202,7 @@ h1 .accent{color:var(--green);text-shadow:0 0 30px var(--green-glow);}
 .market-tabs{display:flex;gap:8px;margin-bottom:16px;}
 .mtab{background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:6px;padding:8px 20px;font-family:'Black Ops One',sans-serif;font-size:12px;letter-spacing:1px;color:var(--text2);cursor:pointer;transition:all 0.2s;}
 .mtab.active{background:var(--green-dim);border-color:rgba(0,255,135,0.3);color:var(--green);}
-.market-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;}
+.market-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:7px;}
 .market-item{display:flex;align-items:center;gap:12px;padding:12px 14px;background:var(--card);border:1px solid var(--border);border-radius:10px;transition:border-color 0.2s;height:100%;}
 .market-item:hover{border-color:rgba(0,255,135,0.2);}
 .market-mini{width:70px;height:70px;border-radius:8px;flex-shrink:0;background:#0c0e14;position:relative;}
@@ -355,8 +357,8 @@ h1 .accent{color:var(--green);text-shadow:0 0 30px var(--green-glow);}
   /* GRIDS */
   .how-grid{grid-template-columns:1fr!important;}
   .rar-grid{grid-template-columns:1fr 1fr;}
-  .col-grid{grid-template-columns:repeat(auto-fill,minmax(104px,1fr));gap:7px;}
-  .market-list{grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px;}
+  .col-grid{grid-template-columns:repeat(auto-fill,minmax(92px,1fr));gap:7px;}
+  .market-list{grid-template-columns:repeat(auto-fill,minmax(92px,1fr));gap:7px;}
 
   /* GROUPS */
   #groups > div[style*="grid-template-columns"]{grid-template-columns:1fr 1fr!important;gap:8px!important;}
@@ -519,7 +521,7 @@ h1 .accent{color:var(--green);text-shadow:0 0 30px var(--green-glow);}
   body.dash-active #marketFilters,
   body.dash-active #squadFilters{flex-shrink:0;max-height:31px;overflow-x:auto;overflow-y:hidden;flex-wrap:nowrap;}
   body.dash-active #marketList{
-    grid-template-columns:repeat(auto-fill,minmax(118px,1fr));
+    grid-template-columns:repeat(auto-fill,minmax(96px,1fr));
     gap:8px;
     overflow-y:auto;
     padding-right:4px;
@@ -527,24 +529,20 @@ h1 .accent{color:var(--green);text-shadow:0 0 30px var(--green-glow);}
     align-content:start;
   }
   body.dash-active #market .fig-canvas{height:72px!important;}
-  body.dash-active #market .fig-info{padding:7px 8px 8px;}
-  body.dash-active #market .fig-name{font-size:12px!important;}
-  body.dash-active #market .fig-id{font-size:9px!important;}
+  body.dash-active #market .fig-info{padding:6px 7px 7px;}
   body.dash-active #market .btn-buy,
   body.dash-active #market .btn-cancel{padding:5px 8px!important;font-size:9px!important;}
 
   body.dash-active #squad .col-grid{
-    grid-template-columns:repeat(auto-fill,minmax(104px,1fr));
+    grid-template-columns:repeat(auto-fill,minmax(96px,1fr));
     gap:7px;
     overflow-y:auto;
     padding-right:4px;
     min-height:0;
     align-content:start;
   }
-  body.dash-active #squad .fig-canvas{height:70px;}
-  body.dash-active #squad .fig-info{padding:7px 8px 8px;}
-  body.dash-active #squad .fig-name{font-size:12px!important;}
-  body.dash-active #squad .fig-id{font-size:8px!important;}
+  body.dash-active #squad .fig-canvas{height:72px;}
+  body.dash-active #squad .fig-info{padding:6px 7px 7px;}
   body.dash-active #squad .rarity-badge{font-size:7px;padding:2px 4px;letter-spacing:1px;}
   body.dash-active #squad .fig-weight{font-size:10px!important;}
 
@@ -1264,6 +1262,7 @@ const TEAM_COLORS = [
 ];
 
 const RARITY_NAMES = ['COMMON','RARE','EPIC','LEGENDARY'];
+const RARITY_SHORT = ['COM','RAR','EPI','LEG'];
 const TEAM_FLAG_CODES = ['au','ir','iq','jp','jo','qa','sa','kr','uz','dz','cv','cd','eg','gh','ci','ma','sn','za','tn','ca','cw','ht','mx','pa','us','ar','br','co','ec','py','uy','nz','at','be','ba','hr','cz','gb-eng','fr','de','nl','no','pt','gb-sct','es','se','ch','tr'];
 const HAIR_NAMES   = ['Buzz Cut','Curly','Spiky','Mohawk','Afro','Dreads','Bald','Wavy'];
 const SKIN_NAMES   = ['Fair','Light','Medium','Tan','Brown','Dark'];
@@ -2609,6 +2608,7 @@ function renderCollection(){
   filtered.slice(squadStart,squadEnd).forEach(({tid,dna})=>{
     const t=parseDNA(dna);
     const rn=RARITY_NAMES[t.rarity];
+    const rs=RARITY_SHORT[t.rarity] || rn;
     const team=TEAMS[t.teamId%TEAMS.length];
     const pos=POSITION_NAMES[t.position]||'#'+t.position;
     const card=document.createElement('div');
@@ -2629,11 +2629,9 @@ function renderCollection(){
     ].filter(Boolean).join('');
     card.innerHTML=`<div class="fig-canvas">${teamFlagImg(t.teamId, team)}<div id="${cid}" class="fig-svg-wrap"></div></div>
     <div class="fig-info">
-      <div class="fig-name">${team}</div>
-      <div class="fig-id">#${String(tid).padStart(4,'0')} &middot; ${pos}</div>
       <div class="fig-row">
         <div class="fig-weight">&#9889; ${t.weight}<span style="font-size:10px;color:var(--text3);">/100</span></div>
-        <span class="rarity-badge rb${t.rarity}">${rn}</span>
+        <span class="rarity-badge rb${t.rarity}" title="${rn}">${rs}</span>
       </div>
     </div>`;
     grid.appendChild(card);
@@ -3097,7 +3095,7 @@ let allMarketListings = [];
 let mkPage = 0;
 const MK_PER_PAGE = 12;
 let squadPage = 0;
-const SQUAD_PER_PAGE = 18;
+const SQUAD_PER_PAGE = 12;
 let currentMarketTab = 'all';
 let selectedListToken = null;
 let marketRens = {};
@@ -3241,6 +3239,7 @@ async function loadMarket() {
       const team = TEAMS[t.teamId % TEAMS.length];
       const pos  = POSITION_NAMES[t.position] || '#' + t.position;
       const rn   = RARITY_NAMES[t.rarity];
+      const rs   = RARITY_SHORT[t.rarity] || rn;
       const priceChz = parseFloat(ethers.formatEther(l.price));
       const priceStr = priceChz >= 1000 ? (priceChz/1000).toFixed(1).replace(/\.0$/,'')+'K' : priceChz.toFixed(priceChz < 10 ? 2 : 0);
       const isOwn = l.seller.toLowerCase() === myAddr;
@@ -3255,20 +3254,17 @@ async function loadMarket() {
           <div id="${cid}" class="fig-svg-wrap"></div>
         </div>
         <div class="fig-info">
-          <div class="fig-name">${team}</div>
-          <div class="fig-id">#${String(l.tokenId).padStart(4,'0')} &middot; ${pos}</div>
           <div class="fig-row">
             <div class="fig-weight">&#9889; ${t.weight}<span style="font-size:10px;color:var(--text3);">/100</span></div>
-            <span class="rarity-badge rb${t.rarity}">${rn}</span>
+            <span class="rarity-badge rb${t.rarity}" title="${rn}">${rs}</span>
           </div>
-          <div class="fig-row">
+          <div class="fig-market-action">
             <div class="fig-price">${priceStr} <span style="font-size:10px;color:var(--text3);">CHZ</span></div>
             ${isOwn
               ? `<button class="btn-cancel" style="padding:5px 10px;font-size:10px;" onclick="doCancelListing(${l.id},${l.tokenId})">CANCEL</button>`
               : `<button class="btn-buy" style="padding:5px 10px;font-size:10px;" onclick="doBuyFigure(${l.id},'${ethers.formatEther(l.price)}')">BUY</button>`
             }
           </div>
-          <div class="fig-owner">${isOwn ? 'YOUR LISTING' : l.seller.slice(0,6)+'...'+l.seller.slice(-4)}</div>
         </div>`;
       list.appendChild(item);
       const mkDiv = document.getElementById(cid);
