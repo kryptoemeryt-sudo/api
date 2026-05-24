@@ -595,61 +595,265 @@ h1 .accent{color:var(--green);text-shadow:0 0 30px var(--green-glow);}
 #ptfTeams::-webkit-scrollbar-thumb:hover { background: var(--text3); }
 
 
-/* QUEST CARD FIT FIX - keeps CHZ values inside narrow home cards */
+/* QUEST CARD BALANCE - trophy/flag higher, reward stronger and centered */
 .quest-link{
-  gap:12px !important;
+  align-items:start !important;
+  grid-template-columns:54px minmax(0,1fr) !important;
+  gap:8px !important;
   min-height:112px !important;
-  padding:15px 18px !important;
+  padding:15px 14px 14px !important;
+}
+.quest-icon-cell{
+  align-self:start !important;
+  justify-content:center !important;
+  width:54px !important;
+  min-width:54px !important;
+  padding-top:22px !important;
+}
+.quest-icon{
+  font-size:34px !important;
+}
+.quest-flag-us{
+  width:38px !important;
+  height:27px !important;
+}
+.quest-title,
+.quest-sub,
+.quest-prize{
+  text-align:center !important;
 }
 .quest-prize{
   max-width:100%;
+  margin-top:14px !important;
 }
 .quest-amount{
-  display:inline-flex !important;
+  display:flex !important;
+  justify-content:center !important;
   align-items:baseline;
-  gap:5px;
+  gap:4px;
+  width:100%;
   max-width:100%;
-  white-space:normal !important;
+  font-size:21px !important;
+  line-height:.95;
+  white-space:nowrap !important;
   overflow-wrap:normal;
 }
 .quest-amount span{
-  font-size:12px !important;
-  letter-spacing:.8px;
+  font-size:10px !important;
+  letter-spacing:.4px;
   opacity:.92;
 }
 .quest-label{
-  font-size:12px !important;
-  margin-top:6px !important;
+  display:block;
+  text-align:center !important;
+  font-size:13px !important;
+  margin-top:7px !important;
 }
 @media (max-width: 768px){
   .quest-link{
+    grid-template-columns:42px minmax(0,1fr) !important;
     min-height:98px !important;
-    padding:12px 14px !important;
-    gap:10px !important;
+    padding:11px 10px 12px !important;
+    gap:6px !important;
   }
-  .quest-amount{
-    font-size:14px !important;
-    gap:4px;
+  .quest-icon-cell{
+    width:42px !important;
+    min-width:42px !important;
+    padding-top:19px !important;
   }
-  .quest-amount span{
-    font-size:10px !important;
-  }
+  .quest-icon{font-size:28px !important;}
+  .quest-flag-us{width:31px !important;height:22px !important;}
+  .quest-prize{margin-top:10px !important;}
+  .quest-amount{font-size:16px !important;gap:3px;}
+  .quest-amount span{font-size:8px !important;}
+  .quest-label{font-size:10px !important;margin-top:5px !important;}
 }
 @media (min-width: 1200px) and (min-height: 720px){
   body.dash-active .quest-link{
+    grid-template-columns:36px minmax(0,1fr) !important;
     min-height:80px !important;
-    padding:9px 10px !important;
-    gap:7px !important;
+    padding:8px 8px 9px !important;
+    gap:5px !important;
   }
-  body.dash-active .quest-amount{
-    font-size:12px !important;
-    gap:3px;
+  body.dash-active .quest-icon-cell{
+    width:36px !important;
+    min-width:36px !important;
+    padding-top:16px !important;
   }
-  body.dash-active .quest-amount span{
-    font-size:8px !important;
-  }
+  body.dash-active .quest-icon{font-size:24px !important;}
+  body.dash-active .quest-flag-us{width:28px !important;height:20px !important;}
+  body.dash-active .quest-prize{margin-top:6px !important;}
+  body.dash-active .quest-amount{font-size:14px !important;gap:2px;}
+  body.dash-active .quest-amount span{font-size:7px !important;}
+  body.dash-active .quest-label{font-size:9px !important;margin-top:4px !important;}
 }
 
+/* QUEST CARD FINAL LAYOUT - full-width reward, raised badge */
+.quest-link{
+  display:block !important;
+  grid-template-columns:none !important;
+  align-items:initial !important;
+  min-height:112px !important;
+  padding:15px 12px 13px !important;
+}
+.quest-icon-cell{
+  position:absolute !important;
+  left:17px !important;
+  top:39px !important;
+  width:42px !important;
+  min-width:42px !important;
+  padding-top:0 !important;
+}
+.quest-icon{font-size:34px !important;}
+.quest-flag-us{width:37px !important;height:26px !important;}
+.quest-link > div{
+  position:relative;
+  z-index:1;
+}
+.quest-title,
+.quest-sub,
+.quest-prize{
+  text-align:center !important;
+}
+.quest-title,
+.quest-sub{
+  padding-left:42px;
+}
+.quest-prize{
+  margin-top:14px !important;
+  width:100% !important;
+}
+.quest-amount{
+  display:flex !important;
+  justify-content:center !important;
+  align-items:baseline !important;
+  gap:4px !important;
+  width:100% !important;
+  max-width:100% !important;
+  font-size:22px !important;
+  line-height:1 !important;
+  white-space:normal !important;
+}
+.quest-amount span{
+  font-size:11px !important;
+  letter-spacing:.5px !important;
+}
+.quest-label{
+  text-align:center !important;
+  font-size:13px !important;
+  margin-top:6px !important;
+}
+@media (max-width: 768px){
+  .quest-link{min-height:98px !important;padding:11px 8px 12px !important;}
+  .quest-icon-cell{left:12px !important;top:37px !important;width:34px !important;min-width:34px !important;}
+  .quest-icon{font-size:27px !important;}
+  .quest-flag-us{width:30px !important;height:21px !important;}
+  .quest-title,.quest-sub{padding-left:32px;}
+  .quest-prize{margin-top:9px !important;}
+  .quest-amount{font-size:16px !important;gap:3px !important;}
+  .quest-amount span{font-size:8px !important;}
+  .quest-label{font-size:10px !important;margin-top:4px !important;}
+}
+@media (min-width: 1200px) and (min-height: 720px){
+  body.dash-active .quest-link{display:block !important;min-height:80px !important;padding:8px 7px 9px !important;}
+  body.dash-active .quest-icon-cell{left:9px !important;top:31px !important;width:28px !important;min-width:28px !important;}
+  body.dash-active .quest-icon{font-size:22px !important;}
+  body.dash-active .quest-flag-us{width:26px !important;height:18px !important;}
+  body.dash-active .quest-title,
+  body.dash-active .quest-sub{padding-left:28px;}
+  body.dash-active .quest-prize{margin-top:5px !important;}
+  body.dash-active .quest-amount{font-size:14px !important;gap:2px !important;}
+  body.dash-active .quest-amount span{font-size:7px !important;}
+  body.dash-active .quest-label{font-size:9px !important;margin-top:3px !important;}
+}
+/* QUEST CARD FINAL LAYOUT - full-width reward, raised badge */
+.quest-link{
+  display:block !important;
+  grid-template-columns:none !important;
+  align-items:initial !important;
+  min-height:112px !important;
+  padding:15px 12px 13px !important;
+}
+.quest-icon-cell{
+  position:absolute !important;
+  left:17px !important;
+  top:39px !important;
+  width:42px !important;
+  min-width:42px !important;
+  padding-top:0 !important;
+}
+.quest-icon{font-size:34px !important;}
+.quest-flag-us{width:37px !important;height:26px !important;}
+.quest-link > div{
+  position:relative;
+  z-index:1;
+}
+.quest-title,
+.quest-sub,
+.quest-prize{
+  text-align:center !important;
+}
+.quest-title,
+.quest-sub{
+  padding-left:42px;
+}
+.quest-prize{
+  margin-top:14px !important;
+  width:100% !important;
+}
+.quest-amount{
+  display:flex !important;
+  justify-content:center !important;
+  align-items:baseline !important;
+  gap:4px !important;
+  width:100% !important;
+  max-width:100% !important;
+  font-size:22px !important;
+  line-height:1 !important;
+  white-space:normal !important;
+}
+.quest-amount span{
+  font-size:11px !important;
+  letter-spacing:.5px !important;
+}
+.quest-label{
+  text-align:center !important;
+  font-size:13px !important;
+  margin-top:6px !important;
+}
+@media (max-width: 768px){
+  .quest-link{min-height:98px !important;padding:11px 8px 12px !important;}
+  .quest-icon-cell{left:12px !important;top:37px !important;width:34px !important;min-width:34px !important;}
+  .quest-icon{font-size:27px !important;}
+  .quest-flag-us{width:30px !important;height:21px !important;}
+  .quest-title,.quest-sub{padding-left:32px;}
+  .quest-prize{margin-top:9px !important;}
+  .quest-amount{font-size:16px !important;gap:3px !important;}
+  .quest-amount span{font-size:8px !important;}
+  .quest-label{font-size:10px !important;margin-top:4px !important;}
+}
+@media (min-width: 1200px) and (min-height: 720px){
+  body.dash-active .quest-link{display:block !important;min-height:80px !important;padding:8px 7px 9px !important;}
+  body.dash-active .quest-icon-cell{left:9px !important;top:31px !important;width:28px !important;min-width:28px !important;}
+  body.dash-active .quest-icon{font-size:22px !important;}
+  body.dash-active .quest-flag-us{width:26px !important;height:18px !important;}
+  body.dash-active .quest-title,
+  body.dash-active .quest-sub{padding-left:28px;}
+  body.dash-active .quest-prize{margin-top:5px !important;}
+  body.dash-active .quest-amount{font-size:14px !important;gap:2px !important;}
+  body.dash-active .quest-amount span{font-size:7px !important;}
+  body.dash-active .quest-label{font-size:9px !important;margin-top:3px !important;}
+}
+/* QUEST REWARD WRAP - no clipped CHZ on narrow quest cards */
+.quest-amount{
+  flex-wrap:wrap !important;
+}
+.quest-amount span{
+  display:block !important;
+  width:100% !important;
+  text-align:center !important;
+  margin-top:2px !important;
+}
 </style>
 </head>
 <body>
