@@ -1459,6 +1459,22 @@ body.dash-active .quest-label{font-size:8px !important;margin-top:3px !important
     max-width:none !important;
   }
 }
+/* DESKTOP MARKET 2x9 LOCK */
+@media (min-width:1200px) and (min-height:720px){
+  body.dash-active #marketList{
+    grid-template-columns:repeat(9,minmax(0,1fr)) !important;
+    grid-auto-rows:max-content !important;
+    gap:9px !important;
+  }
+  body.dash-active #market .fig-card{min-width:0 !important;}
+  body.dash-active #market .fig-canvas{height:78px !important;}
+  body.dash-active #market .fig-info{padding:7px !important;}
+  body.dash-active #market .fig-weight{font-size:11px !important;}
+  body.dash-active #market .fig-price{font-size:12px !important;}
+  body.dash-active #market .rarity-badge{font-size:7px !important;padding:2px 4px !important;}
+  body.dash-active #market .fig-market-action .btn-buy,
+  body.dash-active #market .fig-market-action .btn-cancel{padding:5px 6px !important;font-size:8px !important;}
+}
 </style>
 </head>
 <body>
@@ -3912,6 +3928,7 @@ const localListedFigures = new Set();
 
 function twoRowGridLimit(gridEl, fallback) {
   if (!gridEl) return fallback;
+  if (document.body.classList.contains('dash-active') && gridEl.id === 'marketList') return 18;
   const styles = getComputedStyle(gridEl);
   const gap = parseFloat(styles.columnGap) || 8;
   const minCard = gridEl.id === 'marketList' ? 112 : 104;
@@ -5474,6 +5491,26 @@ function updateCountryDashboardSummary(countryBest, perCountry){
   const leadNote = leaders.length
     ? leaders.slice(0, 3).map(c => `${TEAMS[c.teamId % TEAMS.length]} W:${c.weight}`).join(' &middot; ')
     : 'Own the highest-weight card in any country to lead its reward race.';
+  const leadList = leaders.map(c => {
+    const team = TEAMS[c.teamId % TEAMS.length];
+    const owner = c.owner ? `${c.owner.slice(0,6)}...${c.owner.slice(-4)}` : '-';
+    return `<div style="display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px solid rgba(255,255,255,.04);">
+      <span style="color:var(--text);">${team}</span>
+      <span style="color:var(--green);font-family:'Black Ops One',sans-serif;">W:${c.weight}</span>
+      <span style="color:var(--text3);font-family:'Share Tech Mono',monospace;">${owner}</span>
+    </div>`;
+  }).join('');
+  const leadDetails = leaders.length > 1
+    ? `<details style="margin-top:8px;">
+        <summary style="cursor:pointer;color:var(--green);font-family:'Black Ops One',sans-serif;font-size:10px;letter-spacing:1px;">SHOW ${leaders.length} LEADING COUNTRIES</summary>
+        <div style="margin-top:6px;font-size:10px;line-height:1.25;">${leadList}</div>
+      </details>`
+    : '';
+  const leadCardTitle = leaders.length ? 'Countries You Lead' : 'Countries You Lead';
+  const leadCardValue = leaders.length ? leadValue : '0 COUNTRIES';
+  const leadCardNote = leaders.length
+    ? `${leaders[0] ? `${TEAMS[leaders[0].teamId % TEAMS.length]} W:${leaders[0].weight}` : ''}${leaders.length > 1 ? ' - open list below.' : ' - your current country lead.'}`
+    : 'Take the highest-weight card in a country to appear here.';
 
   box.innerHTML = `
     <div class="country-dash-card">
@@ -5487,9 +5524,10 @@ function updateCountryDashboardSummary(countryBest, perCountry){
       <div class="country-dash-note">${leadNote}</div>
     </div>
     <div class="country-dash-card" style="grid-column:1/-1;">
-      <div class="country-dash-label">Highest Country Card</div>
-      <div class="country-dash-value" style="font-size:15px;color:var(--text);">${topTeam}${top ? ` &middot; W:${top.weight}` : ''}</div>
-      <div class="country-dash-note">${top ? `${top.owner.slice(0,6)}...${top.owner.slice(-4)} is leading that country.` : 'Mint or buy a strong country card to start the race.'}</div>
+      <div class="country-dash-label">${leadCardTitle}</div>
+      <div class="country-dash-value" style="font-size:17px;color:${leaders.length ? 'var(--green)' : 'var(--text2)'};">${leadCardValue}</div>
+      <div class="country-dash-note">${leadCardNote}</div>
+      ${leadDetails}
     </div>`;
 }
 
