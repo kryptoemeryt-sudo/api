@@ -1475,6 +1475,19 @@ body.dash-active .quest-label{font-size:8px !important;margin-top:3px !important
   body.dash-active #market .fig-market-action .btn-buy,
   body.dash-active #market .fig-market-action .btn-cancel{padding:5px 6px !important;font-size:8px !important;}
 }
+/* COUNTRY LEAD DETAILS SCROLL FIX */
+.country-lead-details{margin-top:8px;padding-bottom:4px;}
+.country-lead-details summary{cursor:pointer;color:var(--green);font-family:'Black Ops One',sans-serif;font-size:10px;letter-spacing:1px;list-style:none;}
+.country-lead-details summary::-webkit-details-marker{display:none;}
+.country-lead-details summary::after{content:' +';color:var(--gold);float:right;}
+.country-lead-details[open] summary::after{content:' -';}
+.country-lead-list{margin-top:7px;font-size:10px;line-height:1.25;max-height:112px;overflow:auto;padding-right:5px;padding-bottom:8px;}
+@media (min-width:1200px) and (min-height:720px){
+  body.dash-active #countryLb{padding-bottom:20px !important;}
+  body.dash-active .country-dash-summary{padding-bottom:10px !important;}
+  body.dash-active .country-dash-card{overflow:hidden !important;}
+  body.dash-active .country-lead-list{max-height:96px !important;}
+}
 </style>
 </head>
 <body>
@@ -5487,9 +5500,9 @@ function updateCountryDashboardSummary(countryBest, perCountry){
     : [];
   const top = best.slice().sort((a,b) => b.weight - a.weight)[0];
   const topTeam = top ? TEAMS[top.teamId % TEAMS.length] : 'No leader yet';
-  const leadValue = leaders.length ? `${leaders.length} COUNTRY${leaders.length === 1 ? '' : 'IES'}` : 'NO LEAD';
+  const leadValue = leaders.length ? `${leaders.length} ${leaders.length === 1 ? 'COUNTRY' : 'COUNTRIES'}` : 'NO LEAD';
   const leadNote = leaders.length
-    ? leaders.slice(0, 3).map(c => `${TEAMS[c.teamId % TEAMS.length]} W:${c.weight}`).join(' &middot; ')
+    ? 'You currently own the best card in these country races.'
     : 'Own the highest-weight card in any country to lead its reward race.';
   const leadList = leaders.map(c => {
     const team = TEAMS[c.teamId % TEAMS.length];
@@ -5501,9 +5514,9 @@ function updateCountryDashboardSummary(countryBest, perCountry){
     </div>`;
   }).join('');
   const leadDetails = leaders.length > 1
-    ? `<details style="margin-top:8px;">
-        <summary style="cursor:pointer;color:var(--green);font-family:'Black Ops One',sans-serif;font-size:10px;letter-spacing:1px;">SHOW ${leaders.length} LEADING COUNTRIES</summary>
-        <div style="margin-top:6px;font-size:10px;line-height:1.25;">${leadList}</div>
+    ? `<details class="country-lead-details">
+        <summary>SHOW ${leaders.length} LEADING COUNTRIES</summary>
+        <div class="country-lead-list">${leadList}</div>
       </details>`
     : '';
   const leadCardTitle = leaders.length ? 'Countries You Lead' : 'Countries You Lead';
