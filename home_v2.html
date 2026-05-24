@@ -1488,6 +1488,60 @@ body.dash-active .quest-label{font-size:8px !important;margin-top:3px !important
   body.dash-active .country-dash-card{overflow:hidden !important;}
   body.dash-active .country-lead-list{max-height:96px !important;}
 }
+/* DESKTOP BOTTOM PANELS LIFT + COUNTRY LEAD SCROLL */
+@media (min-width:1200px) and (min-height:720px){
+  body.dash-active .desktop-dashboard{
+    grid-template-rows:250px 540px minmax(0,1fr) !important;
+  }
+  body.dash-active #market,
+  body.dash-active #countryLb,
+  body.dash-active #leaderboard{
+    min-height:0 !important;
+  }
+  body.dash-active #countryLb{
+    display:flex !important;
+    flex-direction:column !important;
+    padding-bottom:18px !important;
+  }
+  body.dash-active #countryDashSummary{
+    flex:1 1 auto !important;
+    min-height:0 !important;
+    max-height:none !important;
+    overflow-y:auto !important;
+    overflow-x:hidden !important;
+    padding-right:4px !important;
+    padding-bottom:18px !important;
+    scrollbar-gutter:stable;
+  }
+  body.dash-active .country-dash-card{
+    overflow:visible !important;
+  }
+  body.dash-active .country-dash-card:last-child{
+    padding-bottom:14px !important;
+  }
+  body.dash-active .country-lead-details[open]{
+    display:block !important;
+    padding-bottom:10px !important;
+  }
+  body.dash-active .country-lead-list{
+    max-height:132px !important;
+    overflow-y:auto !important;
+    overflow-x:hidden !important;
+    padding-bottom:12px !important;
+  }
+  body.dash-active #leaderboard{
+    display:flex !important;
+    flex-direction:column !important;
+    padding-bottom:18px !important;
+  }
+  body.dash-active #leaderboard #lbWrap{
+    flex:1 1 auto !important;
+    min-height:0 !important;
+    overflow-y:auto !important;
+    padding-right:4px !important;
+    padding-bottom:14px !important;
+  }
+}
 </style>
 </head>
 <body>
