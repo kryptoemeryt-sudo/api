@@ -1658,6 +1658,129 @@ body.dash-active .quest-label{font-size:8px !important;margin-top:3px !important
     font-size:11px !important;
   }
 }
+/* DESKTOP HERO CTA FINAL - four clear cards, no clipping */
+@media (min-width:1200px) and (min-height:720px){
+  body.dash-active .desktop-dashboard{
+    grid-template-rows:300px 490px minmax(0,1fr) !important;
+  }
+  body.dash-active #mint{
+    min-height:300px !important;
+  }
+  body.dash-active #mint .quest-launcher{
+    top:36px !important;
+  }
+  body.dash-active #mint .quest-link{
+    min-height:104px !important;
+    max-height:104px !important;
+  }
+  body.dash-active #mint .hero-right{
+    top:18px !important;
+  }
+  body.dash-active #mint .hero-center{
+    left:398px !important;
+    right:300px !important;
+    top:154px !important;
+    width:auto !important;
+    padding:0 !important;
+  }
+  body.dash-active #mint .mint-box{
+    display:grid !important;
+    grid-template-columns:160px 190px 260px minmax(260px,1fr) !important;
+    grid-template-areas:"price action road flow" !important;
+    gap:10px !important;
+    padding:0 !important;
+    border:0 !important;
+    background:transparent !important;
+    box-shadow:none !important;
+  }
+  body.dash-active #mint .price-row,
+  body.dash-active #mint .hero-action-card,
+  body.dash-active #mint .price-roadmap-card,
+  body.dash-active #mint .flow-earn-card{
+    min-height:118px !important;
+    border-radius:10px !important;
+    background:linear-gradient(145deg,rgba(15,19,24,.97),rgba(0,255,135,.055)) !important;
+    border:1px solid rgba(0,255,135,.28) !important;
+    box-shadow:0 0 24px rgba(0,255,135,.07), inset 0 0 18px rgba(0,255,135,.025) !important;
+  }
+  body.dash-active #mint .price-row{
+    grid-area:price !important;
+    display:flex !important;
+    flex-direction:column !important;
+    justify-content:center !important;
+    padding:14px !important;
+  }
+  body.dash-active #mint .price-label{
+    font-size:10px !important;
+  }
+  body.dash-active #mint .price-val{
+    font-size:35px !important;
+    line-height:.95 !important;
+    margin-top:6px !important;
+  }
+  body.dash-active #mint .hero-action-card{
+    grid-area:action !important;
+    display:flex !important;
+    flex-direction:column !important;
+    justify-content:center !important;
+    gap:9px !important;
+    padding:12px !important;
+  }
+  body.dash-active #mint #heroConnBtn,
+  body.dash-active #mint #mintBtn{
+    grid-area:auto !important;
+    min-height:46px !important;
+    padding:11px 12px !important;
+    font-size:15px !important;
+    margin:0 !important;
+  }
+  body.dash-active #mint #refLinkWrap{
+    grid-area:auto !important;
+    align-self:auto !important;
+    margin:0 !important;
+  }
+  body.dash-active #mint #refLinkWrap button{
+    min-height:40px !important;
+    padding:8px 9px !important;
+    font-size:10px !important;
+  }
+  body.dash-active #mint .price-roadmap-card{
+    grid-area:road !important;
+    margin:0 !important;
+    padding:12px !important;
+  }
+  body.dash-active #mint .price-roadmap-card > div:first-child{
+    font-size:10px !important;
+    margin-bottom:8px !important;
+  }
+  body.dash-active #mint .price-roadmap-card div[style*="flex-direction:column"]{
+    display:flex !important;
+    flex-direction:column !important;
+    gap:5px !important;
+  }
+  body.dash-active #mint .price-roadmap-card div[style*="justify-content:space-between"]{
+    display:flex !important;
+    justify-content:space-between !important;
+    font-size:12px !important;
+  }
+  body.dash-active #mint .flow-earn-card{
+    grid-area:flow !important;
+    margin:0 !important;
+    padding:14px 16px !important;
+    justify-content:center !important;
+  }
+  body.dash-active #mint .flow-earn-title{
+    font-size:13px !important;
+    margin-bottom:8px !important;
+  }
+  body.dash-active #mint .flow-earn-text{
+    font-size:14px !important;
+    line-height:1.34 !important;
+  }
+  body.dash-active #mint .flow-earn-text strong{
+    font-size:13px !important;
+  }
+}
 /* TEMP QUEST VISIBILITY CLEANUP */
 #album,
 #countryLbGrid,
@@ -1915,13 +2038,15 @@ document.addEventListener('DOMContentLoaded', setupDesktopDashboardLayout);
         <div class="split"><div class="split-pct g">95%</div><div class="split-lbl">PRIZE VAULT</div></div>
         <div class="split"><div class="split-pct d">5%</div><div class="split-lbl">CREATOR</div></div>
       </div>
-      <button class="btn-connect-hero" id="heroConnBtn" onclick="connectWallet()">CONNECT WALLET TO MINT</button>
-      
-      <button class="btn-mint" id="mintBtn" onclick="doMint()" style="display:none">MINT FIGURE</button>
-      <div id="refLinkWrap" style="display:none;margin-top:10px;">
-        <button onclick="copyRefLink()" style="width:100%;padding:10px;background:transparent;border:1px solid rgba(0,255,135,0.2);color:var(--green);border-radius:8px;font-family:'Black Ops One',sans-serif;font-size:11px;letter-spacing:1px;cursor:pointer;">
-          &#128203; COPY MY REFERRAL LINK<br><span style="font-size:10px;opacity:0.7;font-family:Barlow Condensed,sans-serif;">+2.5% CHZ per invite</span>
-        </button>
+      <div class="hero-action-card">
+        <button class="btn-connect-hero" id="heroConnBtn" onclick="connectWallet()">CONNECT WALLET TO MINT</button>
+        
+        <button class="btn-mint" id="mintBtn" onclick="doMint()" style="display:none">MINT FIGURE</button>
+        <div id="refLinkWrap" style="display:none;margin-top:10px;">
+          <button onclick="copyRefLink()" style="width:100%;padding:10px;background:transparent;border:1px solid rgba(0,255,135,0.2);color:var(--green);border-radius:8px;font-family:'Black Ops One',sans-serif;font-size:11px;letter-spacing:1px;cursor:pointer;">
+            &#128203; COPY MY REFERRAL LINK<br><span style="font-size:10px;opacity:0.7;font-family:Barlow Condensed,sans-serif;">+2.5% CHZ per invite</span>
+          </button>
+        </div>
       </div>
       <!-- Price roadmap -->
       <div class="price-roadmap-card" style="margin-top:14px;background:rgba(255,201,64,0.06);border:1px solid rgba(255,201,64,0.2);border-radius:8px;padding:12px 14px;">
