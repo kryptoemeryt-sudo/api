@@ -436,6 +436,15 @@ body.game-mode .wallet-actions #connectBtn.connected{display:none;}
   text-transform:uppercase;
 }
 .card-hover-actions .btn-card-action{margin-top:0;}
+.slot-action-modal{position:fixed;inset:0;z-index:5200;display:none;align-items:flex-end;justify-content:center;background:rgba(0,0,0,.68);backdrop-filter:blur(6px);padding:12px;}
+.slot-action-modal.active{display:flex;}
+.slot-action-panel{width:min(420px,100%);background:linear-gradient(180deg,#111820,#070b10);border:1px solid rgba(0,255,135,.32);border-radius:12px;padding:14px;box-shadow:0 -18px 60px rgba(0,0,0,.55),0 0 24px rgba(0,255,135,.08);}
+.slot-action-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px;}
+.slot-action-title{font-family:'Black Ops One',sans-serif;font-size:13px;color:#dde4f0;letter-spacing:1px;}
+.slot-action-close{width:30px;height:30px;border-radius:7px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.04);color:#dde4f0;cursor:pointer;font-size:18px;line-height:1;}
+.slot-action-body{display:grid;gap:8px;}
+.slot-action-body .btn-card-action{font-size:10px;padding:10px 8px;border-radius:7px;margin:0;}
+.slot-action-body .card-hover-note{font-size:9px;text-align:center;}
 
 /* LEADERBOARD STANDINGS */
 .lb-section{padding: 0 24px 24px;}
@@ -775,7 +784,7 @@ body.game-mode .lb-score{font-size:12px;text-align:right;white-space:nowrap;}
   body.game-mode .country-card.album-mid{border-color:rgba(249,115,22,.52);background:linear-gradient(180deg,rgba(249,115,22,.16),rgba(15,19,24,.95));box-shadow:0 0 9px rgba(249,115,22,.11),inset 0 0 10px rgba(249,115,22,.08);}
   body.game-mode .country-card.album-hot{border-color:rgba(255,201,64,.58);background:linear-gradient(180deg,rgba(255,201,64,.18),rgba(22,18,9,.95));box-shadow:0 0 10px rgba(255,201,64,.14),inset 0 0 11px rgba(255,201,64,.10);}
   body.game-mode .country-card.album-complete{border-color:rgba(0,255,135,.72);background:linear-gradient(180deg,rgba(0,255,135,.22),rgba(15,19,24,.95));box-shadow:0 0 11px rgba(0,255,135,.18),inset 0 0 11px rgba(0,255,135,.12);}
-  body.game-mode .country-card.selected{box-shadow:0 0 9px rgba(0,255,135,.18),inset 0 0 11px rgba(0,255,135,.13);}
+  body.game-mode .country-card.selected{border-color:#00ff87;outline:2px solid rgba(0,255,135,.88);outline-offset:-2px;box-shadow:0 0 14px rgba(0,255,135,.32),inset 0 0 14px rgba(0,255,135,.18);}
   body.game-mode .country-card-flag{font-size:12px;min-height:13px;}
   body.game-mode .country-card .flag-img{width:22px;height:15px;}
   body.game-mode .country-card-name{font-size:7px;line-height:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;}
@@ -811,7 +820,8 @@ body.game-mode .lb-score{font-size:12px;text-align:right;white-space:nowrap;}
   body.game-mode .pos-weight{font-size:11px;}
   body.game-mode .pos-rarity{font-size:5px;}
   body.game-mode .btn-card-action{font-size:5px;padding:2px 1px;margin-top:2px;}
-  body.game-mode .card-hover-actions{inset:2px;padding:2px;gap:2px;}
+  body.game-mode .pos-card.has-actions{cursor:pointer;}
+  body.game-mode .card-hover-actions{display:none;}
   body.game-mode .card-hover-note{font-size:5px;}
   body.game-mode .pitch-center-circle,
   body.game-mode .pitch-penalty-area-top,
@@ -854,7 +864,7 @@ body.game-mode .lb-score{font-size:12px;text-align:right;white-space:nowrap;}
   body.game-mode .country-card.album-mid{box-shadow:0 0 8px rgba(249,115,22,.11),inset 0 0 9px rgba(249,115,22,.08);}
   body.game-mode .country-card.album-hot{box-shadow:0 0 9px rgba(255,201,64,.14),inset 0 0 10px rgba(255,201,64,.10);}
   body.game-mode .country-card.album-complete{box-shadow:0 0 10px rgba(0,255,135,.18),inset 0 0 10px rgba(0,255,135,.12);}
-  body.game-mode .country-card.selected{box-shadow:0 0 8px rgba(0,255,135,.18),inset 0 0 10px rgba(0,255,135,.13);}
+  body.game-mode .country-card.selected{border-color:#00ff87;outline:2px solid rgba(0,255,135,.88);outline-offset:-2px;box-shadow:0 0 12px rgba(0,255,135,.30),inset 0 0 12px rgba(0,255,135,.18);}
   body.game-mode .country-card-flag{font-size:11px;min-height:12px;}
   body.game-mode .country-card .flag-img{width:21px;height:14px;}
   body.game-mode .country-card-name{font-size:6.4px;line-height:1;margin-top:1px!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;}
@@ -976,7 +986,7 @@ body.game-mode .lb-score{font-size:12px;text-align:right;white-space:nowrap;}
   body.game-mode .country-card.album-mid{box-shadow:0 0 clamp(7px,2vw,10px) rgba(249,115,22,.11),inset 0 0 clamp(8px,2.4vw,11px) rgba(249,115,22,.08);}
   body.game-mode .country-card.album-hot{box-shadow:0 0 clamp(8px,2.2vw,11px) rgba(255,201,64,.14),inset 0 0 clamp(9px,2.5vw,12px) rgba(255,201,64,.10);}
   body.game-mode .country-card.album-complete{box-shadow:0 0 clamp(9px,2.4vw,12px) rgba(0,255,135,.18),inset 0 0 clamp(9px,2.5vw,12px) rgba(0,255,135,.12);}
-  body.game-mode .country-card.selected{box-shadow:0 0 clamp(8px,2.2vw,11px) rgba(0,255,135,.18),inset 0 0 clamp(9px,2.5vw,12px) rgba(0,255,135,.13);}
+  body.game-mode .country-card.selected{border-color:#00ff87;outline:2px solid rgba(0,255,135,.88);outline-offset:-2px;box-shadow:0 0 clamp(11px,3vw,15px) rgba(0,255,135,.30),inset 0 0 clamp(10px,2.8vw,14px) rgba(0,255,135,.18);}
   body.game-mode .country-card .flag-img{width:clamp(18px,6vw,26px);height:clamp(12px,4vw,18px);}
   body.game-mode .country-card-name{font-size:clamp(5.5px,1.86vw,7.4px);}
   body.game-mode .country-card-score{font-size:clamp(6px,2.04vw,8.4px);}
@@ -1624,6 +1634,7 @@ function toggleMintSuccessModal(show) {
 
 // Open Sell Modal with selected card data and fully rendering vectors
 function openSellModal(tokenId, pos, weight, rarity) {
+  closeSlotActionSheet();
   activeSellTokenId = tokenId;
   const posName = POSITION_SHORT[pos] || pos;
   const rarityName = ['Common','Rare','Epic','Legendary'][rarity];
@@ -1638,6 +1649,45 @@ function openSellModal(tokenId, pos, weight, rarity) {
   `;
   document.getElementById('sellPriceInput').value = "10";
   toggleSellModal(true);
+}
+
+function isMobileActionSheetMode() {
+  return window.matchMedia && window.matchMedia('(max-width: 700px)').matches;
+}
+
+function ensureSlotActionSheet() {
+  let modal = document.getElementById('slotActionSheet');
+  if (modal) return modal;
+  modal = document.createElement('div');
+  modal.id = 'slotActionSheet';
+  modal.className = 'slot-action-modal';
+  modal.onclick = (event) => {
+    if (event.target === modal) closeSlotActionSheet();
+  };
+  modal.innerHTML = `
+    <div class="slot-action-panel">
+      <div class="slot-action-head">
+        <div class="slot-action-title" id="slotActionTitle">CARD ACTIONS</div>
+        <button type="button" class="slot-action-close" onclick="closeSlotActionSheet()">&times;</button>
+      </div>
+      <div class="slot-action-body" id="slotActionBody"></div>
+    </div>
+  `;
+  document.body.appendChild(modal);
+  return modal;
+}
+
+function openSlotActionSheet(title, actionHtml) {
+  if (!actionHtml) return;
+  const modal = ensureSlotActionSheet();
+  document.getElementById('slotActionTitle').textContent = title;
+  document.getElementById('slotActionBody').innerHTML = actionHtml;
+  modal.classList.add('active');
+}
+
+function closeSlotActionSheet() {
+  const modal = document.getElementById('slotActionSheet');
+  if (modal) modal.classList.remove('active');
 }
 
 // Handle Submit Card Listing
@@ -2250,6 +2300,8 @@ function renderPitch() {
       
       const floorTeam = marketFloorByTeamPosition[selectedTeamId] || {};
       const floor = floorTeam[pos];
+      let sheetTitle = `${selectedTeam.name} ${POSITION_SHORT[pos]}`;
+      let sheetActionsHtml = '';
 
       if (scored) {
         const rarColor = ['#7a8899','#3b82f6','#c084fc','#ffc940'][scored.rarity];
@@ -2272,7 +2324,8 @@ function renderPitch() {
             : `<button onclick="openSellModal(${scored.tid}, ${pos}, ${scored.weight}, ${scored.rarity})" class="btn-card-action" style="background:rgba(239,68,68,0.1); border-color:rgba(239,68,68,0.3); color:#ef4444;">SELL CARD</button>`;
         }
         const floorNote = floor ? `<div class="card-hover-note">Floor ${floor.price} CHZ</div>` : '';
-        const hoverHtml = (floorNote || actionHtml || sellBtnHtml) ? `<div class="card-hover-actions">${floorNote}${actionHtml}${sellBtnHtml}</div>` : '';
+        sheetActionsHtml = `${floorNote}${actionHtml}${sellBtnHtml}`;
+        const hoverHtml = sheetActionsHtml ? `<div class="card-hover-actions">${sheetActionsHtml}</div>` : '';
 
         card.innerHTML = `
           <div>
@@ -2294,6 +2347,7 @@ function renderPitch() {
         } else {
           actionHtml = `<div class="card-hover-note" style="color:#5a6a7a;">NO LISTINGS</div>`;
         }
+        sheetActionsHtml = actionHtml;
 
         card.innerHTML = `
           <div>
@@ -2306,6 +2360,15 @@ function renderPitch() {
           </div>
           <div class="card-hover-actions">${actionHtml}</div>
         `;
+      }
+      if (sheetActionsHtml) {
+        card.classList.add('has-actions');
+        card.addEventListener('click', (event) => {
+          if (!isMobileActionSheetMode()) return;
+          event.preventDefault();
+          event.stopPropagation();
+          openSlotActionSheet(sheetTitle, sheetActionsHtml);
+        });
       }
       rowEl.appendChild(card);
     });
@@ -2438,6 +2501,7 @@ function renderLeaderboard(){
 }
 
 async function buyFromMarket(listingId, priceChz){
+  closeSlotActionSheet();
   if (!signer || !marketContract) {
     showToast('Connect your wallet to purchase on the marketplace.', true);
     return;
@@ -2462,6 +2526,7 @@ async function buyFromMarket(listingId, priceChz){
 }
 
 async function sellFigure(tokenId, priceChz) {
+  closeSlotActionSheet();
   if (!signer || !marketContract || !address) {
     showToast('Please connect your wallet first.', true);
     return;
@@ -2498,6 +2563,7 @@ async function sellFigure(tokenId, priceChz) {
 }
 
 async function cancelMarketListing(listingId) {
+  closeSlotActionSheet();
   if (!signer || !marketContract) {
     showToast('Connect your wallet to cancel listing.', true);
     return;
