@@ -893,6 +893,186 @@ h1 .accent{color:var(--green);text-shadow:0 0 30px var(--green-glow);}
   .lb-rest-row .rarity-badge{display:none;}
   .lb-rest-weight{font-size:12px;}
 }
+/* QUEST TILE CLEANUP - main home prize cards */
+.quest-launcher{
+  gap:10px !important;
+}
+.quest-link{
+  display:grid !important;
+  grid-template-columns:52px minmax(0,1fr) !important;
+  align-items:center !important;
+  min-height:96px !important;
+  padding:14px 14px !important;
+  gap:10px !important;
+  border-radius:9px !important;
+  background:linear-gradient(145deg,rgba(15,19,24,.96),rgba(255,255,255,.025)) !important;
+}
+.quest-link::before{
+  opacity:.62 !important;
+}
+.quest-icon-cell{
+  position:relative !important;
+  left:auto !important;
+  top:auto !important;
+  width:52px !important;
+  min-width:52px !important;
+  height:62px !important;
+  padding:0 !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+}
+.quest-icon{
+  font-size:34px !important;
+  filter:drop-shadow(0 0 12px rgba(255,201,64,.38)) drop-shadow(0 8px 10px rgba(0,0,0,.45)) !important;
+}
+.quest-flag-us{
+  width:42px !important;
+  height:30px !important;
+  border-radius:3px !important;
+  box-shadow:0 0 0 1px rgba(255,255,255,.18),0 0 15px rgba(255,255,255,.12),0 8px 18px rgba(0,0,0,.35) !important;
+}
+.quest-link > div{
+  min-width:0 !important;
+  position:relative !important;
+  z-index:1 !important;
+}
+.quest-title{
+  display:block !important;
+  padding-left:0 !important;
+  text-align:center !important;
+  font-size:13px !important;
+  line-height:1 !important;
+  color:#fff !important;
+  letter-spacing:.6px !important;
+  text-shadow:0 0 12px rgba(255,255,255,.12) !important;
+}
+.quest-sub{
+  display:none !important;
+}
+.quest-prize{
+  margin-top:12px !important;
+  width:100% !important;
+  text-align:center !important;
+}
+.quest-amount{
+  display:flex !important;
+  justify-content:center !important;
+  align-items:baseline !important;
+  flex-wrap:wrap !important;
+  gap:3px !important;
+  width:100% !important;
+  font-size:21px !important;
+  line-height:.95 !important;
+  white-space:normal !important;
+}
+.quest-amount span{
+  display:block !important;
+  width:100% !important;
+  margin-top:2px !important;
+  text-align:center !important;
+  font-size:10px !important;
+  letter-spacing:1px !important;
+}
+.quest-label{
+  display:block !important;
+  margin-top:5px !important;
+  text-align:center !important;
+  font-size:12px !important;
+  letter-spacing:1.3px !important;
+}
+.quest-dream .quest-amount,
+.quest-dream .quest-label{
+  color:#58d2ff !important;
+  text-shadow:0 0 14px rgba(88,210,255,.38) !important;
+}
+.quest-nation .quest-amount,
+.quest-nation .quest-label{
+  color:var(--gold) !important;
+  text-shadow:0 0 14px rgba(255,201,64,.42) !important;
+}
+body.dash-active .quest-link{
+  min-height:76px !important;
+  grid-template-columns:34px minmax(0,1fr) !important;
+  padding:8px 7px !important;
+  gap:5px !important;
+}
+body.dash-active .quest-icon-cell{
+  width:34px !important;
+  min-width:34px !important;
+  height:48px !important;
+}
+body.dash-active .quest-icon{font-size:24px !important;}
+body.dash-active .quest-flag-us{width:27px !important;height:19px !important;}
+body.dash-active .quest-title{font-size:9px !important;letter-spacing:.3px !important;}
+body.dash-active .quest-prize{margin-top:7px !important;}
+body.dash-active .quest-amount{font-size:15px !important;}
+body.dash-active .quest-amount span{font-size:7px !important;margin-top:1px !important;}
+body.dash-active .quest-label{font-size:8px !important;margin-top:3px !important;}
+@media (max-width:768px){
+  .quest-link{
+    min-height:88px !important;
+    grid-template-columns:40px minmax(0,1fr) !important;
+    padding:10px 9px !important;
+    gap:7px !important;
+  }
+  .quest-icon-cell{width:40px !important;min-width:40px !important;height:56px !important;}
+  .quest-icon{font-size:29px !important;}
+  .quest-flag-us{width:32px !important;height:23px !important;}
+  .quest-title{font-size:10px !important;letter-spacing:.3px !important;}
+  .quest-prize{margin-top:8px !important;}
+  .quest-amount{font-size:17px !important;}
+  .quest-amount span{font-size:8px !important;}
+  .quest-label{font-size:9px !important;margin-top:4px !important;}
+}
+/* QUEST TILE MOBILE WIDTH GUARD */
+.quest-launcher{
+  width:100% !important;
+  max-width:100% !important;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr) !important;
+}
+.quest-link,
+.quest-link > div{
+  min-width:0 !important;
+  max-width:100% !important;
+  overflow:hidden !important;
+}
+@media (max-width:768px){
+  .quest-launcher{gap:8px !important;}
+  .quest-link{
+    grid-template-columns:34px minmax(0,1fr) !important;
+    min-height:82px !important;
+    padding:9px 7px !important;
+    gap:5px !important;
+  }
+  .quest-icon-cell{width:34px !important;min-width:34px !important;height:50px !important;}
+  .quest-icon{font-size:26px !important;}
+  .quest-flag-us{width:28px !important;height:20px !important;}
+  .quest-title{font-size:9px !important;white-space:normal !important;line-height:1.05 !important;}
+  .quest-amount{font-size:15px !important;}
+  .quest-amount span{font-size:7px !important;letter-spacing:.8px !important;}
+  .quest-label{font-size:8px !important;letter-spacing:1px !important;}
+}
+/* QUEST TILE MOBILE STACK */
+@media (max-width:768px){
+  .quest-launcher{
+    grid-template-columns:1fr !important;
+    gap:8px !important;
+  }
+  .quest-link{
+    grid-template-columns:44px minmax(0,1fr) !important;
+    min-height:74px !important;
+    padding:10px 12px !important;
+  }
+  .quest-icon-cell{width:44px !important;min-width:44px !important;height:48px !important;}
+  .quest-icon{font-size:29px !important;}
+  .quest-flag-us{width:34px !important;height:24px !important;}
+  .quest-title{font-size:11px !important;white-space:nowrap !important;}
+  .quest-prize{margin-top:6px !important;}
+  .quest-amount{font-size:18px !important;}
+  .quest-amount span{font-size:8px !important;}
+  .quest-label{font-size:9px !important;}
+}
 </style>
 </head>
 <body>
@@ -1097,7 +1277,6 @@ document.addEventListener('DOMContentLoaded', setupDesktopDashboardLayout);
         <span class="quest-icon-cell"><span class="quest-icon">&#127942;</span></span>
         <span style="min-width:0;">
           <span class="quest-title">DREAM XI</span>
-          <span class="quest-sub">score then sell cards</span>
           <span class="quest-prize" id="questDreamPrize"><span class="quest-amount">10,000+ <span>CHZ</span></span><span class="quest-label">POOL</span></span>
         </span>
       </a>
@@ -1111,7 +1290,6 @@ document.addEventListener('DOMContentLoaded', setupDesktopDashboardLayout);
         </span>
         <span style="min-width:0;">
           <span class="quest-title">NATION QUEST</span>
-          <span class="quest-sub">USA 1,500 CHZ race</span>
           <span class="quest-prize" id="questNationPrize"><span class="quest-amount">1,500 <span>CHZ</span></span><span class="quest-label">PRIZE</span></span>
         </span>
       </a>
