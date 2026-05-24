@@ -30,6 +30,8 @@ body{font-family:'Barlow Condensed',sans-serif;background:var(--black);color:var
 nav{display:flex;align-items:center;justify-content:space-between;padding:12px 28px;border-bottom:1px solid rgba(0,255,135,0.14);background:rgba(5,7,10,0.96);backdrop-filter:blur(14px);position:fixed;top:0;left:0;right:0;z-index:100;}
 .logo{font-family:'Black Ops One',sans-serif;font-size:18px;letter-spacing:2px;color:var(--text);text-shadow:0 0 18px rgba(0,255,135,0.16);}
 .logo span{color:var(--green);}
+.nav-countdown{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-family:'Black Ops One',sans-serif;font-size:13px;letter-spacing:2px;color:var(--gold);padding:6px 12px;border:1px solid rgba(255,201,64,.24);border-radius:7px;background:rgba(255,201,64,.045);white-space:nowrap;}
+.nav-countdown span{color:var(--text);font-size:10px;margin-right:8px;letter-spacing:1px;}
 .nav-right{display:flex;align-items:center;gap:12px;}
 .wallet-addr{font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--text2);}
 .wallet-bal{font-family:'Black Ops One',sans-serif;font-size:13px;color:var(--gold);}
@@ -347,6 +349,8 @@ h1 .accent{color:var(--green);text-shadow:0 0 30px var(--green-glow);}
 
   /* NAV */
   nav{padding:0 12px;position:fixed;top:0;left:0;right:0;z-index:100;height:48px;display:flex;align-items:center;}
+  .nav-countdown{top:48px;left:50%;transform:translateX(-50%);font-size:9px;letter-spacing:1px;padding:4px 7px;z-index:101;background:rgba(5,7,10,.96);}
+  .nav-countdown span{display:none;}
   #navMenu{display:none!important;}
   #betaBanner{display:none!important;}
   #statsTicker{display:none!important;}
@@ -1970,7 +1974,7 @@ body.dash-active .quest-label{font-size:8px !important;margin-top:3px !important
     grid-template-rows:300px 525px minmax(0,1fr) !important;
   }
   body.dash-active #mint .hero-right{
-    right:34px !important;
+    right:0 !important;
     top:32px !important;
     width:305px !important;
     height:252px !important;
@@ -2045,6 +2049,7 @@ body.dash-active .quest-label{font-size:8px !important;margin-top:3px !important
 
 <nav>
   <div class="logo">&#9917; BLOCK <span>KICKERS</span></div>
+  <div class="nav-countdown" id="navPriceCountdown"><span>50 CHZ IN</span>--:--:--:--</div>
   <div class="nav-right">
     <button class="btn-updates" onclick="openChangelog()" style="background:none;border:1px solid rgba(255,255,255,0.1);color:var(--text3);padding:5px 10px;border-radius:6px;font-family:'Black Ops One',sans-serif;font-size:10px;letter-spacing:1px;cursor:pointer;transition:all 0.2s;white-space:nowrap;" onmouseover="this.style.borderColor='rgba(0,255,135,0.4)';this.style.color='var(--green)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.1)';this.style.color='var(--text3)'">UPDATES</button>
     <span class="wallet-addr" id="navAddr" style="display:none"></span>
@@ -2372,8 +2377,8 @@ document.addEventListener('DOMContentLoaded', setupDesktopDashboardLayout);
   <div class="market-tabs">
     <button class="mtab active" onclick="switchMarketTab('all',this)">ALL LISTINGS</button>
     <button class="mtab" onclick="switchMarketTab('mine',this)">MY LISTINGS</button>
-    <button class="market-sort-btn" id="sortLowBtn" onclick="setMarketSort('low')" title="Lowest price first"><span class="market-sort-tri up"></span></button>
     <button class="market-sort-btn" id="sortHighBtn" onclick="setMarketSort('high')" title="Highest price first"><span class="market-sort-tri down"></span></button>
+    <button class="market-sort-btn" id="sortLowBtn" onclick="setMarketSort('low')" title="Lowest price first"><span class="market-sort-tri up"></span></button>
   </div>
   <div id="marketFilters" class="filter-strip"></div>
   <div class="market-list" id="marketList"><div class="market-empty">CONNECT WALLET TO SEE LISTINGS</div></div>
@@ -4213,6 +4218,26 @@ function updateDrawerCountdown(){
 }
 updateDrawerCountdown();
 setInterval(updateDrawerCountdown, 60000);
+
+function updateNavPriceCountdown(){
+  // 2026-06-01 00:00 Berlin/Warsaw time = 2026-05-31 22:00 UTC.
+  const el = document.getElementById('navPriceCountdown');
+  if(!el) return;
+  const target = Date.UTC(2026, 4, 31, 22, 0, 0);
+  const diff = target - Date.now();
+  if(diff <= 0){
+    el.innerHTML = '<span>PRICE</span>50 CHZ LIVE';
+    return;
+  }
+  const d = Math.floor(diff / 86400000);
+  const h = Math.floor((diff % 86400000) / 3600000);
+  const m = Math.floor((diff % 3600000) / 60000);
+  const s = Math.floor((diff % 60000) / 1000);
+  const pad = n => String(n).padStart(2,'0');
+  el.innerHTML = `<span>50 CHZ IN</span>${pad(d)}:${pad(h)}:${pad(m)}:${pad(s)}`;
+}
+updateNavPriceCountdown();
+setInterval(updateNavPriceCountdown, 1000);
 
 function updateCountdown(){
   const target = new Date('2026-06-01T00:00:00Z').getTime();
