@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
 <title>BLOCK KICKERS 2026</title>
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%2306080a'/%3E%3Ccircle cx='32' cy='32' r='21' fill='%23dde4f0'/%3E%3Cpath d='M32 12l8 8-3 10H27l-3-10 8-8zM16 29l9 1 4 9-7 7-9-4 3-13zM48 29l3 13-9 4-7-7 4-9 9-1zM25 49l7-6 7 6-2 8H27l-2-8z' fill='%2306080a'/%3E%3Cpath d='M9 9h46v12H9z' fill='%2300ff87' opacity='.18'/%3E%3C/svg%3E">
-<link rel="shortcut icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%2306080a'/%3E%3Ccircle cx='32' cy='32' r='21' fill='%23dde4f0'/%3E%3Cpath d='M32 12l8 8-3 10H27l-3-10 8-8zM16 29l9 1 4 9-7 7-9-4 3-13zM48 29l3 13-9 4-7-7 4-9 9-1zM25 49l7-6 7 6-2 8H27l-2-8z' fill='%2306080a'/%3E%3Cpath d='M9 9h46v12H9z' fill='%2300ff87' opacity='.18'/%3E%3C/svg%3E">
-<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%2306080a'/%3E%3Ccircle cx='32' cy='32' r='21' fill='%23dde4f0'/%3E%3Cpath d='M32 12l8 8-3 10H27l-3-10 8-8zM16 29l9 1 4 9-7 7-9-4 3-13zM48 29l3 13-9 4-7-7 4-9 9-1zM25 49l7-6 7 6-2 8H27l-2-8z' fill='%2306080a'/%3E%3Cpath d='M9 9h46v12H9z' fill='%2300ff87' opacity='.18'/%3E%3C/svg%3E">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2306080a'/%3E%3Ctext x='32' y='47' text-anchor='middle' font-size='43'%3E%E2%9A%BD%3C/text%3E%3C/svg%3E">
+<link rel="shortcut icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2306080a'/%3E%3Ctext x='32' y='47' text-anchor='middle' font-size='43'%3E%E2%9A%BD%3C/text%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2306080a'/%3E%3Ctext x='32' y='47' text-anchor='middle' font-size='43'%3E%E2%9A%BD%3C/text%3E%3C/svg%3E">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.7.0/ethers.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <style>
@@ -36,6 +36,19 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:12px 2
 .btn-updates,.wallet-bal{display:none!important;}
 .btn-connect{background:var(--green-dim);border:1px solid rgba(0,255,135,0.3);color:var(--green);padding:8px 18px;border-radius:6px;font-family:'Black Ops One',sans-serif;font-size:11px;letter-spacing:1px;cursor:pointer;transition:all 0.2s;}
 .btn-connect:hover{background:rgba(0,255,135,0.2);}
+.wallet-choice-modal{position:fixed;inset:0;background:rgba(0,0,0,0.76);backdrop-filter:blur(8px);z-index:5000;display:none;align-items:center;justify-content:center;padding:18px;}
+.wallet-choice-modal.show{display:flex;}
+.wallet-choice-panel{width:min(440px,100%);background:linear-gradient(180deg,#111820,#090d12);border:1px solid rgba(0,255,135,0.28);border-radius:12px;box-shadow:0 24px 80px rgba(0,0,0,0.55),0 0 32px rgba(0,255,135,0.08);padding:16px;}
+.wallet-choice-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px;}
+.wallet-choice-title{font-family:'Black Ops One',sans-serif;color:var(--text);font-size:17px;letter-spacing:1px;}
+.wallet-choice-close{width:32px;height:32px;border-radius:8px;border:1px solid rgba(255,255,255,0.12);background:rgba(255,255,255,0.04);color:var(--text);cursor:pointer;font-size:18px;line-height:1;}
+.wallet-choice-option{width:100%;display:grid;grid-template-columns:42px 1fr auto;align-items:center;gap:12px;text-align:left;border:1px solid rgba(255,255,255,0.09);background:rgba(255,255,255,0.035);border-radius:10px;padding:12px;margin-top:10px;cursor:pointer;color:var(--text);}
+.wallet-choice-option:hover{border-color:rgba(0,255,135,0.35);background:rgba(0,255,135,0.055);}
+.wallet-choice-icon{font-size:23px;width:42px;height:42px;display:grid;place-items:center;border-radius:9px;background:rgba(0,255,135,0.08);}
+.wallet-choice-name{font-family:'Black Ops One',sans-serif;font-size:13px;letter-spacing:1px;color:#fff;}
+.wallet-choice-desc{font-size:11px;color:#8da0b7;margin-top:4px;line-height:1.25;}
+.wallet-choice-tag{font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--green);border:1px solid rgba(0,255,135,0.24);border-radius:999px;padding:3px 7px;white-space:nowrap;}
+.wallet-choice-note{font-size:11px;color:#6f7f92;line-height:1.35;margin-top:12px;}
 .filter-strip{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px;}
 @media(max-width:768px){.filter-strip{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;padding-bottom:4px;}}
 .album-grid-row{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;}
@@ -643,7 +656,7 @@ h1 .accent{color:var(--green);text-shadow:0 0 30px var(--green-glow);}
     <button class="btn-updates" onclick="openChangelog()" style="background:none;border:1px solid rgba(255,255,255,0.1);color:var(--text3);padding:5px 10px;border-radius:6px;font-family:'Black Ops One',sans-serif;font-size:10px;letter-spacing:1px;cursor:pointer;transition:all 0.2s;white-space:nowrap;" onmouseover="this.style.borderColor='rgba(0,255,135,0.4)';this.style.color='var(--green)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.1)';this.style.color='var(--text3)'">UPDATES</button>
     <span class="wallet-addr" id="navAddr" style="display:none"></span>
     <span class="wallet-bal" id="navBal" style="display:none"></span>
-    <button class="btn-connect" id="navBtn" onclick="connectWallet()">CONNECT</button>
+    <button class="btn-connect" id="navBtn" onclick="openWalletChoice()">CONNECT</button>
     <button id="hamburgerBtn" onclick="toggleDrawer()" style="display:none;background:none;border:none;color:var(--green);cursor:pointer;padding:4px;margin-left:8px;">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
         <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
@@ -1088,6 +1101,32 @@ document.addEventListener('DOMContentLoaded', setupDesktopDashboardLayout);
   </div>
 </div>
 
+<!-- WALLET CHOICE MODAL -->
+<div class="wallet-choice-modal" id="walletChoiceModal" onclick="if(event.target===this)closeWalletChoice()">
+  <div class="wallet-choice-panel">
+    <div class="wallet-choice-head">
+      <div class="wallet-choice-title">CONNECT WALLET</div>
+      <button class="wallet-choice-close" type="button" onclick="closeWalletChoice()">&times;</button>
+    </div>
+    <button class="wallet-choice-option" type="button" onclick="connectInjectedWallet()">
+      <span class="wallet-choice-icon">&#128188;</span>
+      <span><span class="wallet-choice-name">MetaMask / Trust Browser</span><span class="wallet-choice-desc">Use the wallet already injected into this browser.</span></span>
+      <span class="wallet-choice-tag">APP</span>
+    </button>
+    <button class="wallet-choice-option" type="button" onclick="connectWalletConnect()">
+      <span class="wallet-choice-icon">&#128279;</span>
+      <span><span class="wallet-choice-name">WalletConnect</span><span class="wallet-choice-desc">Use Trust Wallet or MetaMask Mobile. Avoid Socios if it reverts transactions.</span></span>
+      <span class="wallet-choice-tag">QR</span>
+    </button>
+    <button class="wallet-choice-option" type="button" onclick="connectPrivyWallet()">
+      <span class="wallet-choice-icon">&#9993;</span>
+      <span><span class="wallet-choice-name">Privy Email Wallet</span><span class="wallet-choice-desc">Create or restore an embedded wallet by email code.</span></span>
+      <span class="wallet-choice-tag">NEW</span>
+    </button>
+    <div class="wallet-choice-note">Recommended on mobile: Privy, Trust Wallet, or MetaMask Mobile.</div>
+  </div>
+</div>
+
 
 <!-- LEADERBOARD -->
 <div class="section" id="leaderboard">
@@ -1134,6 +1173,9 @@ document.addEventListener('DOMContentLoaded', setupDesktopDashboardLayout);
 const CONTRACT_ADDRESS = "0xAAdc8D56e25a223B6cf4b88ba0889975560f21aB";
 const CHAIN_ID = 88888;
 const DEPLOY_BLOCK = 34086621; // v5 deploy block
+const WALLETCONNECT_PROJECT_ID = "15671485110825e18107d31b379d9df6";
+const PRIVY_APP_ID = "cmpil29vr000r0cl27mvi078e";
+const PRIVY_CLIENT_ID = "client-WY6ZYpnr2u5M5Jusp4enZTZBmqhrikkMGUCjvgwWymidE";
 
 const ABI = [
   "function mint(address referrer) external payable","function referralCount(address) external view returns (uint256)","function referralEarned(address) external view returns (uint256)","function referredBy(address) external view returns (address)",
@@ -1566,6 +1608,12 @@ class Figure3D {
 //  STATE
 // ============================================================
 let provider,signer,address,contract;
+let walletConnectProvider = null;
+let activeWalletProvider = null;
+let activeWalletType = '';
+let privySdk = null;
+let privyClient = null;
+let privyIframe = null;
 
 function switchHowTab(tab, btn){
   ['mechanics','rarity','example'].forEach(t => {
@@ -1860,6 +1908,8 @@ async function connectWalletSilent(){
     provider = new ethers.BrowserProvider(window.ethereum);
     signer   = await provider.getSigner();
     address  = await signer.getAddress();
+    activeWalletProvider = window.ethereum;
+    activeWalletType = 'Injected';
     contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
 
     // WyczyĹ›Ä‡ cache - stare dane mogÄ… mieÄ‡ bĹ‚Ä™dnych wĹ‚aĹ›cicieli
@@ -1889,8 +1939,91 @@ async function connectWalletSilent(){
   }catch(e){ console.warn('Silent connect failed:', e); }
 }
 
-async function connectWallet(){
+function openWalletChoice(){
+  const modal = document.getElementById('walletChoiceModal');
+  if(modal) modal.classList.add('show');
+}
+function closeWalletChoice(){
+  const modal = document.getElementById('walletChoiceModal');
+  if(modal) modal.classList.remove('show');
+}
+function connectWallet(){
+  openWalletChoice();
+}
+function readableWalletError(error){
+  return (error?.shortMessage || error?.reason || error?.message || String(error || 'Unknown error')).replace(/\s+/g,' ').trim();
+}
+function isMissingPrivySession(error){
+  const text = readableWalletError(error).toLowerCase();
+  return text.includes('missing_or_invalid_token') || text.includes('no tokens found') || text.includes('invalid token');
+}
+async function ensureChilizChain(walletProvider){
+  const chainHex = '0x'+CHAIN_ID.toString(16);
+  const current = await walletProvider.request({method:'eth_chainId'}).catch(() => null);
+  if(String(current).toLowerCase() === chainHex.toLowerCase()) return true;
+  const chilizChain = [{
+    chainId: chainHex,
+    chainName: 'Chiliz Chain',
+    nativeCurrency: {name:'CHZ',symbol:'CHZ',decimals:18},
+    rpcUrls: PUBLIC_RPCS,
+    blockExplorerUrls: ['https://scan.chiliz.com']
+  }];
+  try{
+    await walletProvider.request({method:'wallet_switchEthereumChain',params:[{chainId:chainHex}]});
+  }catch(e){
+    await walletProvider.request({method:'wallet_addEthereumChain',params:chilizChain});
+  }
+  return true;
+}
+async function finishWalletConnection(walletProvider, label){
+  activeWalletProvider = walletProvider;
+  activeWalletType = label;
+  await ensureChilizChain(walletProvider);
+  provider = new ethers.BrowserProvider(walletProvider);
+  signer = await provider.getSigner();
+  address = await signer.getAddress();
+  contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
+  if(typeof MARKET_ADDRESS !== 'undefined' && MARKET_ADDRESS) {
+    marketContract = new ethers.Contract(MARKET_ADDRESS, MARKET_ABI, signer);
+  }
+
+  eventsCache = null;
+  _apiCache = null;
+  salesCache = null;
+  _readProvider = null;
+
+  const navAddr = document.getElementById('navAddr');
+  const navBal = document.getElementById('navBal');
+  const navBtn = document.getElementById('navBtn');
+  if(navAddr){ navAddr.textContent = address.slice(0,6)+'...'+address.slice(-4); navAddr.style.display = 'inline'; }
+  if(navBal){
+    const bal = await provider.getBalance(address).catch(() => 0n);
+    navBal.textContent = Number(ethers.formatEther(bal)).toFixed(1)+' CHZ';
+    navBal.style.display = 'inline';
+  }
+  if(navBtn){ navBtn.textContent = label.toUpperCase(); navBtn.classList.add('connected'); }
+  const heroBtn = document.getElementById('heroConnBtn');
+  if(heroBtn) heroBtn.style.display = 'none';
+  const mintBtn = document.getElementById('mintBtn');
+  if(mintBtn) mintBtn.style.display = 'block';
+  const refWrap = document.getElementById('refLinkWrap');
+  if(refWrap) refWrap.style.display = 'block';
+
+  await updateStats();
+  initMarket();
+  loadCollection();
+  loadTicker();
+  loadActivityFeed();
+  loadMarket();
+  loadCountryLb();
+  loadAlbum();
+  loadLeaderboard();
+  loadClaimSection();
+}
+
+async function connectInjectedWallet(){
   if(!window.ethereum){showToast('Install MetaMask - metamask.io','err');return;}
+  closeWalletChoice();
   try{
     await window.ethereum.request({method:'eth_requestAccounts'});
     const cid=await window.ethereum.request({method:'eth_chainId'});
@@ -1912,6 +2045,8 @@ async function connectWallet(){
     provider=new ethers.BrowserProvider(window.ethereum);
     signer=await provider.getSigner();
     address=await signer.getAddress();
+    activeWalletProvider = window.ethereum;
+    activeWalletType = 'Injected';
     contract=new ethers.Contract(CONTRACT_ADDRESS,ABI,signer);
 
     // WyczyĹ›Ä‡ cache - stare dane mogÄ… mieÄ‡ bĹ‚Ä™dnych wĹ‚aĹ›cicieli
@@ -1950,7 +2085,7 @@ async function connectWallet(){
     // Handle wallet events
     window.ethereum.on('accountsChanged', (accounts) => {
       if(accounts.length === 0){ location.reload(); }
-      else { connectWallet(); }
+      else { connectInjectedWallet(); }
     });
     window.ethereum.on('chainChanged', () => { location.reload(); });
     window.ethereum.on('disconnect', () => { 
@@ -1961,8 +2096,127 @@ async function connectWallet(){
   }catch(err){showToast('Error: '+(err.message||err),'err');}
 }
 
+function getChilizPrivyChain(){
+  const rpc = PUBLIC_RPCS[0] || 'https://chiliz-rpc.publicnode.com';
+  return {
+    id: CHAIN_ID,
+    name: 'Chiliz Chain',
+    network: 'chiliz',
+    nativeCurrency: {name:'CHZ',symbol:'CHZ',decimals:18},
+    rpcUrls: {default:{http:[rpc]}, public:{http:[rpc]}},
+    blockExplorers: {default:{name:'ChilizScan', url:'https://scan.chiliz.com'}}
+  };
+}
+
+async function getPrivyClient(){
+  if(privyClient) return privyClient;
+  if(location.protocol === 'file:') throw new Error('Privy requires a hosted HTTPS origin. Upload to Vercel and add this domain in Privy Allowed origins.');
+  const sdk = await import('https://esm.sh/@privy-io/js-sdk-core@latest');
+  privySdk = sdk;
+  const Privy = sdk.default;
+  const storage = sdk.LocalStorage ? new sdk.LocalStorage() : {
+    get:key => Promise.resolve(localStorage.getItem(key)),
+    put:(key,value) => Promise.resolve(localStorage.setItem(key,value)),
+    del:key => Promise.resolve(localStorage.removeItem(key)),
+    getKeys:() => Promise.resolve(Object.keys(localStorage))
+  };
+  const chilizChain = getChilizPrivyChain();
+  privyClient = new Privy({
+    appId: PRIVY_APP_ID,
+    clientId: PRIVY_CLIENT_ID,
+    defaultChain: chilizChain,
+    supportedChains: [chilizChain],
+    storage
+  });
+  await privyClient.initialize();
+  if(privyClient.embeddedWallet && !privyIframe){
+    privyIframe = document.createElement('iframe');
+    privyIframe.src = privyClient.embeddedWallet.getURL();
+    privyIframe.style.display = 'none';
+    privyIframe.setAttribute('aria-hidden','true');
+    document.body.appendChild(privyIframe);
+    privyClient.setMessagePoster(privyIframe.contentWindow);
+    window.addEventListener('message', event => {
+      if(event.source !== privyIframe.contentWindow) return;
+      const data = typeof event.data === 'string' ? JSON.parse(event.data) : event.data;
+      privyClient.embeddedWallet.onMessage(data);
+    });
+  }
+  return privyClient;
+}
+
+async function connectPrivyWallet(){
+  closeWalletChoice();
+  showToast('Opening Privy wallet...', 'ok');
+  try{
+    const client = await getPrivyClient();
+    let user = null;
+    try{
+      const current = await client.user.get();
+      user = current?.user || null;
+    }catch(sessionError){
+      if(!isMissingPrivySession(sessionError)) throw sessionError;
+    }
+    if(!user){
+      const email = window.prompt('Enter email for Privy wallet login:');
+      if(!email) return;
+      showToast('Sending Privy login code...', 'ok');
+      await client.auth.email.sendCode(email.trim());
+      const code = window.prompt('Enter the Privy code from your email:');
+      if(!code) return;
+      showToast('Confirming Privy login...', 'ok');
+      const session = await client.auth.email.loginWithCode(email.trim(), code.trim());
+      user = session.user;
+    }
+    let wallet = privySdk.getUserEmbeddedEthereumWallet(user);
+    if(!wallet){
+      showToast('Creating Privy wallet...', 'ok');
+      const created = await client.embeddedWallet.create({});
+      user = created.user;
+      wallet = privySdk.getUserEmbeddedEthereumWallet(user);
+    }
+    const entropy = privySdk.getEntropyDetailsFromUser(user);
+    const walletProvider = await client.embeddedWallet.getEthereumProvider({
+      wallet,
+      entropyId: entropy.entropyId,
+      entropyIdVerifier: entropy.entropyIdVerifier
+    });
+    await finishWalletConnection(walletProvider, 'Privy');
+    showToast('Privy wallet connected', 'ok');
+  }catch(e){
+    console.error('Privy connect failed:', e);
+    showToast('Privy failed: '+readableWalletError(e).slice(0, 170), 'err');
+  }
+}
+
+async function connectWalletConnect(){
+  closeWalletChoice();
+  showToast('Opening WalletConnect...', 'ok');
+  try{
+    const mod = await import('https://esm.sh/@walletconnect/ethereum-provider@2');
+    const EthereumProvider = mod.default || mod.EthereumProvider;
+    walletConnectProvider = await EthereumProvider.init({
+      projectId: WALLETCONNECT_PROJECT_ID,
+      chains: [CHAIN_ID],
+      optionalChains: [CHAIN_ID],
+      chainId: CHAIN_ID,
+      rpcMap: {[CHAIN_ID]: PUBLIC_RPCS[0] || 'https://chiliz-rpc.publicnode.com'},
+      showQrModal: true,
+      methods: ['eth_sendTransaction','personal_sign','wallet_switchEthereumChain','wallet_addEthereumChain'],
+      events: ['chainChanged','accountsChanged','disconnect'],
+      metadata: {name:'Block Kickers',description:'Block Kickers on Chiliz Chain',url:location.origin,icons:[location.origin + '/favicon.ico']}
+    });
+    await walletConnectProvider.connect({chains:[CHAIN_ID]});
+    await finishWalletConnection(walletConnectProvider, 'WC');
+    showToast('WalletConnect wallet connected', 'ok');
+  }catch(e){
+    console.error('WalletConnect failed:', e);
+    showToast('WalletConnect failed: '+readableWalletError(e).slice(0, 140), 'err');
+  }
+}
+
 function openMetaMaskMobile(){
-  closeWalletModal();
+  closeWalletChoice();
   const url = 'https://metamask.app.link/dapp/block-kickers.vercel.app';
   window.open(url, '_blank');
   showToast('Opening in MetaMask browser...', 'ok');
@@ -2192,7 +2446,30 @@ async function doMint(){
   try{
     const price=await contract.mintPrice();
     const referrer=getReferrerFromURL();
-    const tx=await contract.mint(referrer,{value:price,gasLimit:400000});
+    let tx;
+    if(activeWalletType === 'Privy' && activeWalletProvider){
+      const iface = new ethers.Interface(ABI);
+      const feeData = await provider.getFeeData().catch(() => null);
+      const gasPrice = feeData?.gasPrice || 2500000000000n;
+      const gasHex = ethers.toQuantity(650000n);
+      const txHash = await activeWalletProvider.request({
+        method:'eth_sendTransaction',
+        params:[{
+          from:address,
+          to:CONTRACT_ADDRESS,
+          data:iface.encodeFunctionData('mint',[referrer]),
+          value:ethers.toQuantity(price),
+          gas:gasHex,
+          gasLimit:gasHex,
+          gasPrice:ethers.toQuantity(gasPrice),
+          chainId:'0x'+CHAIN_ID.toString(16),
+          type:'0x0'
+        }]
+      });
+      tx = {hash:txHash, wait:() => provider.waitForTransaction(txHash)};
+    }else{
+      tx=await contract.mint(referrer,{value:price,gasLimit:400000});
+    }
     showToast('Transaction sent...','ok');
     const receipt=await tx.wait();
     const iface=new ethers.Interface(ABI);
