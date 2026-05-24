@@ -1848,6 +1848,46 @@ body.dash-active .quest-label{font-size:8px !important;margin-top:3px !important
     font-size:14px !important;
   }
 }
+/* DESKTOP HERO SIDE BALANCE */
+@media (min-width:1200px) and (min-height:720px){
+  body.dash-active #mint .hero-left{
+    width:365px !important;
+  }
+  body.dash-active #mint .badge{
+    margin-bottom:10px !important;
+  }
+  body.dash-active #mint .hero-title-desktop{
+    font-size:45px !important;
+    line-height:.86 !important;
+    margin:0 0 12px !important;
+    text-shadow:0 0 22px rgba(0,255,135,.22) !important;
+  }
+  body.dash-active #mint .stats-row{
+    width:330px !important;
+    gap:8px !important;
+  }
+  body.dash-active #mint .stat{
+    min-height:52px !important;
+    padding:8px 6px !important;
+  }
+  body.dash-active #mint .stat-n{
+    font-size:22px !important;
+  }
+  body.dash-active #mint .stat-l{
+    font-size:8px !important;
+  }
+  body.dash-active #mint .hero-right{
+    right:42px !important;
+    top:50px !important;
+    width:235px !important;
+    height:190px !important;
+  }
+  body.dash-active #mint .hero-figure-stage,
+  body.dash-active #mint #heroCanvas{
+    width:235px !important;
+    height:190px !important;
+  }
+}
 /* TEMP QUEST VISIBILITY CLEANUP */
 #album,
 #countryLbGrid,
@@ -1862,8 +1902,27 @@ body.dash-active .quest-label{font-size:8px !important;margin-top:3px !important
   #countryLb{
     display:none !important;
   }
+  #howto{
+    display:none !important;
+  }
   #mobileDrawer button[onclick*="countryLb"]{
     display:none !important;
+  }
+  .price-roadmap-card,
+  .price-roadmap-card *{
+    font-family:'Black Ops One',sans-serif !important;
+    letter-spacing:.7px !important;
+  }
+  .price-roadmap-card > div:first-child{
+    font-size:12px !important;
+    color:var(--gold) !important;
+  }
+  .price-roadmap-card div[style*="justify-content:space-between"]{
+    font-size:12px !important;
+    line-height:1.25 !important;
+  }
+  .price-roadmap-card div[style*="justify-content:space-between"] span:last-child{
+    color:var(--gold) !important;
   }
 }
 @media (min-width:769px){
