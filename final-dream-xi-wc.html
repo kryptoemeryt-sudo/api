@@ -436,15 +436,29 @@ body.game-mode .wallet-actions #connectBtn.connected{display:none;}
   text-transform:uppercase;
 }
 .card-hover-actions .btn-card-action{margin-top:0;}
-.slot-action-modal{position:fixed;inset:0;z-index:5200;display:none;align-items:flex-end;justify-content:center;background:rgba(0,0,0,.68);backdrop-filter:blur(6px);padding:12px;}
+.slot-action-modal{position:fixed;inset:0;z-index:5200;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.68);backdrop-filter:blur(6px);padding:12px 14px 22vh;}
 .slot-action-modal.active{display:flex;}
-.slot-action-panel{width:min(420px,100%);background:linear-gradient(180deg,#111820,#070b10);border:1px solid rgba(0,255,135,.32);border-radius:12px;padding:14px;box-shadow:0 -18px 60px rgba(0,0,0,.55),0 0 24px rgba(0,255,135,.08);}
+.slot-action-panel{width:min(430px,100%);background:linear-gradient(180deg,#111820,#070b10);border:1px solid rgba(0,255,135,.36);border-radius:12px;padding:16px;box-shadow:0 18px 70px rgba(0,0,0,.58),0 0 28px rgba(0,255,135,.10);}
 .slot-action-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px;}
-.slot-action-title{font-family:'Black Ops One',sans-serif;font-size:13px;color:#dde4f0;letter-spacing:1px;}
-.slot-action-close{width:30px;height:30px;border-radius:7px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.04);color:#dde4f0;cursor:pointer;font-size:18px;line-height:1;}
-.slot-action-body{display:grid;gap:8px;}
-.slot-action-body .btn-card-action{font-size:10px;padding:10px 8px;border-radius:7px;margin:0;}
-.slot-action-body .card-hover-note{font-size:9px;text-align:center;}
+.slot-action-title{font-family:'Black Ops One',sans-serif;font-size:15px;color:#dde4f0;letter-spacing:1px;}
+.slot-action-close{width:34px;height:34px;border-radius:8px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.05);color:#dde4f0;cursor:pointer;font-size:20px;line-height:1;}
+.slot-action-body{display:grid;gap:10px;}
+.slot-action-body .btn-card-action{font-size:12px;padding:13px 10px;border-radius:8px;margin:0;}
+.slot-action-body .card-hover-note{font-size:11px;text-align:center;}
+
+.sell-modal-shell{display:none;position:fixed;inset:0;background:rgba(6,8,10,0.86);backdrop-filter:blur(8px);z-index:5300;align-items:center;justify-content:center;padding:16px;}
+.sell-panel{background:linear-gradient(180deg,#111820,#070b10);border:1px solid rgba(0,255,135,.32);border-radius:14px;max-width:430px;width:100%;padding:18px;position:relative;box-shadow:0 22px 80px rgba(0,0,0,.62),0 0 28px rgba(0,255,135,.10);}
+.sell-close{position:absolute;top:12px;right:12px;width:34px;height:34px;border-radius:8px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.05);color:#dde4f0;font-size:20px;cursor:pointer;line-height:1;}
+.sell-title{font-family:'Black Ops One',sans-serif;font-size:19px;color:#00ff87;letter-spacing:1px;margin-bottom:12px;}
+.sell-card-preview{background:linear-gradient(180deg,rgba(0,255,135,.10),rgba(15,19,24,.96));border:1px solid rgba(0,255,135,.30);border-radius:10px;padding:12px;margin-bottom:14px;box-shadow:inset 0 0 18px rgba(0,255,135,.08);}
+.sell-card-info{font-family:'Share Tech Mono',monospace;font-size:12px;color:#c9d7e8;line-height:1.55;display:grid;gap:3px;}
+.sell-price-box{background:rgba(6,8,10,.78);border:1px solid rgba(255,201,64,.30);border-radius:10px;padding:12px;margin-bottom:14px;}
+.sell-price-label{font-family:'Black Ops One',sans-serif;font-size:11px;letter-spacing:1px;color:#ffc940;margin-bottom:8px;text-transform:uppercase;}
+.sell-stepper{display:grid;grid-template-columns:46px 1fr 46px;gap:8px;align-items:center;}
+.sell-step-btn{height:44px;border-radius:8px;border:1px solid rgba(0,255,135,.35);background:rgba(0,255,135,.10);color:#00ff87;font-family:'Black Ops One',sans-serif;font-size:20px;cursor:pointer;touch-action:none;}
+.sell-step-btn:active{background:#00ff87;color:#000;}
+.sell-price-input{width:100%;height:44px;background:#06080a;border:1px solid #1c2028;border-radius:8px;color:#dde4f0;font-family:'Black Ops One',sans-serif;font-size:18px;text-align:center;}
+.sell-submit{padding:12px!important;font-size:12px!important;border-radius:8px!important;}
 
 /* LEADERBOARD STANDINGS */
 .lb-section{padding: 0 24px 24px;}
@@ -1286,18 +1300,24 @@ body.game-mode .lb-score{font-size:12px;text-align:right;white-space:nowrap;}
 </div>
 
 <!-- SELL MODAL -->
-<div id="sellModal" style="display:none; position:fixed; inset:0; background:rgba(6,8,10,0.85); backdrop-filter:blur(8px); z-index:1000; align-items:center; justify-content:center; padding:16px;">
-  <div style="background:#0f1318; border:1px solid #1c2028; border-radius:12px; max-width:400px; width:100%; padding:24px; position:relative; box-shadow:0 10px 40px rgba(0,0,0,0.6);">
-    <button onclick="toggleSellModal(false)" style="position:absolute; top:16px; right:16px; background:none; border:none; color:#7a8899; font-size:24px; cursor:pointer;">&times;</button>
-    <h2 style="font-family:'Black Ops One',sans-serif; font-size:20px; color:#ef4444; margin-bottom:12px;">Sell Player Card</h2>
-    <div id="sellCardInfo" style="margin-bottom:16px; font-size:14px; color:#dde4f0; line-height:1.5; display: flex; flex-direction: column; align-items: flex-start; gap: 4px;">
+<div id="sellModal" class="sell-modal-shell">
+  <div class="sell-panel">
+    <button class="sell-close" onclick="toggleSellModal(false)">&times;</button>
+    <h2 class="sell-title">LIST CARD</h2>
+    <div class="sell-card-preview">
+      <div id="sellCardInfo" class="sell-card-info">
       <!-- Dynamic card info -->
+      </div>
     </div>
-    <div style="margin-bottom:20px;">
-      <label style="display:block; font-size:11px; letter-spacing:1px; color:#5a6a7a; margin-bottom:6px; text-transform:uppercase;">Set Listing Price (CHZ)</label>
-      <input type="number" id="sellPriceInput" step="0.1" min="0.1" placeholder="10.0" style="width:100%; background:#06080a; border:1px solid #1c2028; padding:10px; border-radius:6px; color:#dde4f0; font-family:'Share Tech Mono',monospace; font-size:16px;">
+    <div class="sell-price-box">
+      <label class="sell-price-label">Set Listing Price (CHZ)</label>
+      <div class="sell-stepper">
+        <button type="button" class="sell-step-btn" data-step="-1">-</button>
+        <input type="number" id="sellPriceInput" class="sell-price-input" step="1" min="1" placeholder="10">
+        <button type="button" class="sell-step-btn" data-step="1">+</button>
+      </div>
     </div>
-    <button class="btn-card-action upgrade" id="btnSubmitSell" onclick="submitSellCard()" style="padding:10px; font-size:11px; text-transform:uppercase;">List Card For Sale</button>
+    <button class="btn-card-action upgrade sell-submit" id="btnSubmitSell" onclick="submitSellCard()">LIST CARD FOR SALE</button>
   </div>
 </div>
 
@@ -1624,6 +1644,7 @@ function setRulesLanguage(lang) {
 function toggleSellModal(show) {
   const modal = document.getElementById('sellModal');
   modal.style.display = show ? 'flex' : 'none';
+  if (show) initSellStepper();
 }
 
 // Mint Success Modal visibility control
@@ -1641,11 +1662,11 @@ function openSellModal(tokenId, pos, weight, rarity) {
   const selectedTeam = TEAMS.find(t => t.id === selectedTeamId);
   
   document.getElementById('sellCardInfo').innerHTML = `
-    <strong>Country:</strong> ${getFlagHtml(selectedTeam)} ${selectedTeam.name}<br>
-    <strong>Position:</strong> ${posName}<br>
-    <strong>Rarity:</strong> ${rarityName}<br>
-    <strong>Weight:</strong> ${weight} pts<br>
-    <strong>Token ID:</strong> #${tokenId}
+    <span><strong>Country:</strong> ${getFlagHtml(selectedTeam)} ${selectedTeam.name}</span>
+    <span><strong>Position:</strong> ${posName}</span>
+    <span><strong>Rarity:</strong> ${rarityName}</span>
+    <span><strong>Weight:</strong> ${weight} pts</span>
+    <span><strong>Token ID:</strong> #${tokenId}</span>
   `;
   document.getElementById('sellPriceInput').value = "10";
   toggleSellModal(true);
@@ -1688,6 +1709,44 @@ function openSlotActionSheet(title, actionHtml) {
 function closeSlotActionSheet() {
   const modal = document.getElementById('slotActionSheet');
   if (modal) modal.classList.remove('active');
+}
+
+let sellStepperReady = false;
+let sellStepTimer = null;
+let sellStepDelayTimer = null;
+
+function changeSellPrice(delta) {
+  const input = document.getElementById('sellPriceInput');
+  if (!input) return;
+  const current = Math.max(1, Math.round(parseFloat(input.value || '1') || 1));
+  input.value = Math.max(1, current + delta);
+}
+
+function stopSellStepHold() {
+  clearTimeout(sellStepDelayTimer);
+  clearInterval(sellStepTimer);
+  sellStepDelayTimer = null;
+  sellStepTimer = null;
+}
+
+function initSellStepper() {
+  if (sellStepperReady) return;
+  sellStepperReady = true;
+  document.querySelectorAll('.sell-step-btn').forEach(btn => {
+    const delta = Number(btn.dataset.step || 0);
+    const start = (event) => {
+      event.preventDefault();
+      changeSellPrice(delta);
+      stopSellStepHold();
+      sellStepDelayTimer = setTimeout(() => {
+        sellStepTimer = setInterval(() => changeSellPrice(delta), 85);
+      }, 380);
+    };
+    btn.addEventListener('pointerdown', start);
+    btn.addEventListener('pointerup', stopSellStepHold);
+    btn.addEventListener('pointerleave', stopSellStepHold);
+    btn.addEventListener('pointercancel', stopSellStepHold);
+  });
 }
 
 // Handle Submit Card Listing
