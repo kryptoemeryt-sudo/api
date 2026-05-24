@@ -462,6 +462,17 @@ body.game-mode .wallet-actions #connectBtn.connected{display:none;}
 .sell-step-btn:active{background:#00ff87;color:#000;}
 .sell-price-input{width:100%;height:44px;background:#06080a;border:1px solid #1c2028;border-radius:8px;color:#dde4f0;font-family:'Black Ops One',sans-serif;font-size:18px;text-align:center;}
 .sell-submit{padding:12px!important;font-size:12px!important;border-radius:8px!important;}
+.card-result-modal{display:none;position:fixed;inset:0;background:rgba(6,8,10,0.86);backdrop-filter:blur(8px);z-index:5350;align-items:center;justify-content:center;padding:16px;}
+.card-result-panel{background:linear-gradient(180deg,#111820,#070b10);border:1px solid rgba(0,255,135,.36);border-radius:14px;max-width:450px;width:100%;padding:22px;position:relative;box-shadow:0 22px 80px rgba(0,0,0,.62),0 0 30px rgba(0,255,135,.12);text-align:center;}
+.card-result-close{position:absolute;top:12px;right:12px;width:34px;height:34px;border-radius:8px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.05);color:#dde4f0;font-size:20px;cursor:pointer;line-height:1;}
+.card-result-icon{font-size:46px;margin-bottom:10px;animation:pulse 2s infinite;}
+.card-result-panel > div[style*="font-size: 50px"]{font-size:0!important;margin-bottom:10px!important;}
+.card-result-panel > div[style*="font-size: 50px"]::before{content:"\26BD";font-size:46px;animation:pulse 2s infinite;display:inline-block;}
+.card-result-title{font-family:'Black Ops One',sans-serif;font-size:24px;color:#00ff87;margin-bottom:14px;letter-spacing:1px;text-transform:uppercase;}
+.card-result-visual{background:linear-gradient(180deg,rgba(0,255,135,.08),rgba(6,8,10,.94));border:1px solid rgba(0,255,135,.26);border-radius:10px;padding:18px;margin-bottom:16px;display:inline-block;width:100%;box-shadow:inset 0 0 22px rgba(0,255,135,.08);}
+.card-result-status{font-family:'Barlow Condensed',sans-serif;font-size:17px;line-height:1.35;margin-bottom:18px;color:#9fb1c7;}
+.card-result-badge{display:inline-block;background:rgba(0,255,135,0.15);color:#00ff87;border:1px solid #00ff87;padding:7px 13px;border-radius:6px;font-weight:700;margin-bottom:12px;font-size:14px;text-transform:uppercase;letter-spacing:1px;animation:pulse 1.5s infinite;}
+.card-result-badge.reserve{background:rgba(122,136,153,0.15);color:#7a8899;border-color:#1c2028;animation:none;}
 
 /* LEADERBOARD STANDINGS */
 .lb-section{padding: 0 24px 24px;}
@@ -1329,21 +1340,21 @@ body.game-mode .lb-score{font-size:12px;text-align:right;white-space:nowrap;}
 </div>
 
 <!-- MINT SUCCESS MODAL -->
-<div id="mintSuccessModal" style="display:none; position:fixed; inset:0; background:rgba(6,8,10,0.85); backdrop-filter:blur(8px); z-index:1001; align-items:center; justify-content:center; padding:16px;">
-  <div style="background:#0f1318; border:1px solid #1c2028; border-radius:12px; max-width:450px; width:100%; padding:24px; position:relative; box-shadow:0 10px 40px rgba(0,0,0,0.6); text-align:center;">
-    <button onclick="toggleMintSuccessModal(false)" style="position:absolute; top:16px; right:16px; background:none; border:none; color:#7a8899; font-size:24px; cursor:pointer;">&times;</button>
+<div id="mintSuccessModal" class="card-result-modal">
+  <div class="card-result-panel">
+    <button class="card-result-close" onclick="toggleMintSuccessModal(false)">&times;</button>
     <div style="font-size: 50px; margin-bottom: 12px; animation: pulse 2s infinite;">🎉</div>
-    <h2 style="font-family:'Black Ops One',sans-serif; font-size:24px; color:#00ff87; margin-bottom:16px; letter-spacing:1px;">PLAYER MINTED!</h2>
+    <h2 id="cardResultTitle" class="card-result-title">CARD MINTED!</h2>
     
-    <div id="mintedCardVisual" style="background:#06080a; border:1px solid #1c2028; border-radius:8px; padding:20px; margin-bottom:20px; display:inline-block; width:100%;">
+    <div id="mintedCardVisual" class="card-result-visual">
       <!-- Dynamically populated card view -->
     </div>
 
-    <div id="mintedCardStatus" style="font-family:'Barlow Condensed',sans-serif; font-size:16px; line-height:1.4; margin-bottom:20px;">
+    <div id="mintedCardStatus" class="card-result-status">
       <!-- Dynamically populated status message -->
     </div>
 
-    <button class="btn-card-action upgrade" onclick="toggleMintSuccessModal(false)" style="padding:10px; font-size:11px; text-transform:uppercase; font-family:'Black Ops One', sans-serif;">CONTINUE TO PITCH</button>
+    <button class="btn-card-action upgrade" onclick="toggleMintSuccessModal(false)" style="padding:13px; font-size:13px; text-transform:uppercase; font-family:'Black Ops One', sans-serif;">CONTINUE TO SQUAD</button>
   </div>
 </div>
 
@@ -1566,6 +1577,7 @@ window.dreamScores = {}; // wallet -> { teamId -> { position -> {weight, tid, ra
 let marketByTeamPosition = {}; // teamId -> { position -> {listingId, price, weight, rarity} }
 let marketFloorByTeamPosition = {}; // teamId -> { position -> {listingId, price} }
 let activeListingsByToken = {}; // tokenId -> { listingId, seller, price, priceWei }
+let activeListingsById = {}; // listingId -> { tokenId, seller, price, priceWei, teamId, position, weight, rarity, dna }
 let currentMintPrice = ethers.parseEther("10"); 
 let dynamicVaultBalance = 0;
 
@@ -1660,6 +1672,63 @@ function toggleMintSuccessModal(show) {
   modal.style.display = show ? 'flex' : 'none';
 }
 
+function renderCardResult(title, card, statusHtml) {
+  const teamInfo = TEAMS.find(t => t.id === card.teamId) || {name: 'Unknown', code: 'us'};
+  const posName = POSITION_SHORT[card.position] || card.position;
+  const rarityName = ['Common','Rare','Epic','Legendary'][card.rarity] || 'Common';
+  const rarColor = ['#7a8899','#3b82f6','#c084fc','#ffc940'][card.rarity] || '#7a8899';
+  const titleEl = document.getElementById('cardResultTitle');
+  if (titleEl) titleEl.textContent = title;
+  document.getElementById('mintedCardVisual').innerHTML = `
+    <div style="font-size:32px; margin-bottom:8px;">${getFlagHtml(teamInfo, true)}</div>
+    <div style="font-family:'Black Ops One',sans-serif; font-size:18px; color:#dde4f0; margin-bottom:4px;">${teamInfo.name.toUpperCase()}</div>
+    <div style="font-family:'Share Tech Mono',monospace; font-size:14px; color:#5a6a7a; margin-bottom:8px;">Position: ${posName}</div>
+    <div style="font-family:'Black Ops One',sans-serif; font-size:36px; color:${rarColor}; line-height:1;">${card.weight} <span style="font-size:16px;">PTS</span></div>
+    <div style="font-size:11px; font-family:'Share Tech Mono',monospace; color:${rarColor}; margin-top:4px; text-transform:uppercase;">${rarityName}</div>
+  `;
+  document.getElementById('mintedCardStatus').innerHTML = statusHtml;
+  toggleMintSuccessModal(true);
+}
+
+function applyScoredCardLocally(wallet, card) {
+  if (!wallet || !card) return null;
+  const w = wallet.toLowerCase();
+  if (!window.dreamScores[w]) window.dreamScores[w] = {};
+  if (!window.dreamScores[w][card.teamId]) window.dreamScores[w][card.teamId] = {};
+  const cur = window.dreamScores[w][card.teamId][card.position];
+  const isUpgrade = !cur || card.weight > cur.weight;
+  if (isUpgrade) {
+    window.dreamScores[w][card.teamId][card.position] = {
+      weight: card.weight,
+      tid: card.tokenId,
+      rarity: card.rarity,
+      dna: card.dna
+    };
+  }
+  if (ownerMap[card.tokenId]) ownerMap[card.tokenId].owner = w;
+  return { oldCard: cur, isUpgrade, diff: cur ? card.weight - cur.weight : card.weight };
+}
+
+function refreshAfterChainUpdate(localCard = null) {
+  const delays = [2500, 9000, 25000, 65000];
+  delays.forEach(delay => {
+    setTimeout(async () => {
+      try {
+        await loadData();
+        if (localCard && address) {
+          applyScoredCardLocally(address, localCard);
+          renderStats();
+          renderCountryHub();
+          renderPitch();
+          renderLeaderboard();
+        }
+      } catch(e) {
+        console.warn('Delayed sync failed:', e);
+      }
+    }, delay);
+  });
+}
+
 // Open Sell Modal with selected card data and fully rendering vectors
 function openSellModal(tokenId, pos, weight, rarity) {
   closeSlotActionSheet();
@@ -1672,7 +1741,7 @@ function openSellModal(tokenId, pos, weight, rarity) {
     <span><strong>Country:</strong> ${getFlagHtml(selectedTeam)} ${selectedTeam.name}</span>
     <span><strong>Position:</strong> ${posName}</span>
     <span><strong>Rarity:</strong> ${rarityName}</span>
-    <span><strong>Weight:</strong> ${weight} pts</span>
+    <span><strong>Weight:</strong> ${weight} PTS</span>
     <span><strong>Token ID:</strong> #${tokenId}</span>
   `;
   document.getElementById('sellPriceInput').value = "10";
@@ -2145,6 +2214,7 @@ async function loadData(){
   marketByTeamPosition = {};
   marketFloorByTeamPosition = {};
   activeListingsByToken = {};
+  activeListingsById = {};
   try{
     const rp = await getReadProvider();
     const rmk = new ethers.Contract(MARKET_ADDRESS, MARKET_ABI, rp);
@@ -2163,6 +2233,18 @@ async function loadData(){
         activeListingsByToken[tokenId] = {listingId: i, seller, price, priceWei};
         const tid = fig.teamId;
         const pos = fig.position;
+        activeListingsById[i] = {
+          listingId: i,
+          tokenId,
+          seller,
+          price,
+          priceWei,
+          teamId: fig.teamId,
+          position: fig.position,
+          weight: fig.weight,
+          rarity: fig.rarity,
+          dna: fig.dna
+        };
         
         // Find best upgrade card
         if(!marketByTeamPosition[tid]) marketByTeamPosition[tid] = {};
@@ -2305,7 +2387,7 @@ function renderCountryHub() {
     const leader = getCountryLeader(team.id);
     const isMeLeader = leader.wallet && leader.wallet.toLowerCase() === myAddr;
     
-    let scoreDisplay = userStats.score > 0 ? `${userStats.score} pts` : '0 pts';
+    let scoreDisplay = userStats.score > 0 ? `${userStats.score} PTS` : '0 PTS';
     let compDisplay = `${userStats.completed}/11`;
     const compRatio = userStats.completed / 11;
     const compColor = compRatio >= 1 ? '#00ff87' : compRatio >= .55 ? '#ffc940' : compRatio > 0 ? '#f97316' : '#ef4444';
@@ -2482,7 +2564,7 @@ function renderLeaderboard(){
           <div class="lb-addr">${player.wallet.slice(0,6)}…${player.wallet.slice(-4)} ${isMe ? '<span class="lb-you">YOU</span>' : ''}</div>
           <div class="lb-completion">Active Albums: ${player.filled}/48</div>
           <div class="lb-completion prize-cell">${prizeDisplay}</div>
-          <div class="lb-score">${player.score} pts</div>
+          <div class="lb-score">${player.score} PTS</div>
         </div>
       `;
     };
@@ -2544,7 +2626,7 @@ function renderLeaderboard(){
           <div class="lb-pos ${posClass}">${medal || '#' + rank}</div>
           <div class="lb-addr">${player.wallet.slice(0,6)}…${player.wallet.slice(-4)} ${isMe ? '<span class="lb-you">YOU</span>' : ''}</div>
           <div class="lb-completion">Completed: ${player.completed}/11</div>
-          <div class="lb-score" style="${isWinner ? 'color: #00ff87;' : ''}">${player.score} pts</div>
+          <div class="lb-score" style="${isWinner ? 'color: #00ff87;' : ''}">${player.score} PTS</div>
         </div>
       `;
     };
@@ -2573,6 +2655,7 @@ async function buyFromMarket(listingId, priceChz){
     return;
   }
   try {
+    const purchasedCard = activeListingsById[Number(listingId)] || null;
     showToast(`Initializing marketplace buy: Listing #${listingId} for ${priceChz} CHZ...`);
     // Optimizing Buy speed - converting passed CHZ string back to Wei without extra slow contract lookup calls
     const priceWei = ethers.parseEther(String(priceChz));
@@ -2583,8 +2666,28 @@ async function buyFromMarket(listingId, priceChz){
     
     const receipt = await tx.wait();
     if (receipt && Number(receipt.status) === 0) throw new Error('Buy reverted on-chain.');
-    showToast('Success! Card purchased. Lineup updated!');
+    showToast('Success! Card purchased. Syncing squad...');
+    let localResult = null;
+    if (purchasedCard && address) {
+      localResult = applyScoredCardLocally(address, purchasedCard);
+      const upgradeText = localResult?.isUpgrade
+        ? `<span class="card-result-badge">SQUAD UPGRADED +${localResult.diff} PTS</span><p>Your album score was updated instantly. Blockchain events can still take a short moment to appear in every panel.</p>`
+        : `<span class="card-result-badge reserve">CARD SCORED BEFORE</span><p>This card entered your wallet, but your squad already had an equal or stronger card in that position.</p>`;
+      renderCardResult('CARD PURCHASED!', purchasedCard, upgradeText);
+      renderStats();
+      renderCountryHub();
+      renderPitch();
+      renderLeaderboard();
+    }
     await loadData();
+    if (purchasedCard && address) {
+      applyScoredCardLocally(address, purchasedCard);
+      renderStats();
+      renderCountryHub();
+      renderPitch();
+      renderLeaderboard();
+    }
+    refreshAfterChainUpdate(purchasedCard);
   } catch (error) {
     console.error(error);
     showToast('Transaction failed. Make sure you have enough CHZ.', true);
@@ -2650,12 +2753,12 @@ async function cancelMarketListing(listingId) {
 
 async function directMint() {
   if (!signer || !contract) {
-    showToast('Connect your wallet to mint players.', true);
+    showToast('Connect your wallet to mint cards.', true);
     return;
   }
   try {
     const referrer = getReferrer();
-    showToast(`Initializing player mint for ${ethers.formatEther(currentMintPrice)} CHZ...`);
+    showToast(`Initializing card mint for ${ethers.formatEther(currentMintPrice)} CHZ...`);
     
     let tx;
     if (activeWalletType === 'Privy') {
@@ -2732,6 +2835,8 @@ async function directMint() {
       const posName = POSITION_SHORT[mintedCard.position] || mintedCard.position;
       const rarityName = ['Common','Rare','Epic','Legendary'][mintedCard.rarity];
       const rarColor = ['#7a8899','#3b82f6','#c084fc','#ffc940'][mintedCard.rarity];
+      const resultTitle = document.getElementById('cardResultTitle');
+      if (resultTitle) resultTitle.textContent = 'CARD MINTED!';
 
       document.getElementById('mintedCardVisual').innerHTML = `
         <div style="font-size:32px; margin-bottom:8px;">${getFlagHtml(teamInfo, true)}</div>
@@ -2748,16 +2853,19 @@ async function directMint() {
           <span style="display:inline-block; background:rgba(0,255,135,0.15); color:#00ff87; border:1px solid #00ff87; padding:6px 12px; border-radius:4px; font-weight:700; margin-bottom:12px; font-size:13px; text-transform:uppercase; letter-spacing:1px; animation: pulse 1.5s infinite;">
             🔥 SQUAD UPGRADED! (+${upgradeDiff} PTS)
           </span>
-          <p style="color:#7a8899;">Great pull! This player is heavier than your previous one! Your active National Squad weight and leaderboard score have increased.</p>
+          <p style="color:#7a8899;">Great pull! This card is heavier than your previous one. Your active National Squad weight and leaderboard score have increased.</p>
         `;
       } else {
         statusText = `
           <span style="display:inline-block; background:rgba(122,136,153,0.15); color:#7a8899; border:1px solid #1c2028; padding:6px 12px; border-radius:4px; font-weight:700; margin-bottom:12px; font-size:13px; text-transform:uppercase; letter-spacing:1px;">
-            RESERVE PLAYER ACQUIRED
+            RESERVE CARD ACQUIRED
           </span>
-          <p style="color:#7a8899;">You already have a heavier card in this slot (owned: ${oldCard.weight} pts). This card is sent to your reserves. You can list & sell it on the marketplace!</p>
+          <p style="color:#7a8899;">You already have a heavier card in this slot (owned: ${oldCard.weight} PTS). This card is sent to your reserves. You can list & sell it on the marketplace!</p>
         `;
       }
+      statusText = statusText
+        .replace(/<span[\s\S]*?SQUAD UPGRADED![\s\S]*?<\/span>/, `<span class="card-result-badge">SQUAD UPGRADED! +${isUpgrade ? (oldCard ? mintedCard.weight - oldCard.weight : mintedCard.weight) : 0} PTS</span>`)
+        .replace(/<span[\s\S]*?RESERVE CARD ACQUIRED[\s\S]*?<\/span>/, '<span class="card-result-badge reserve">RESERVE CARD ACQUIRED</span>');
       document.getElementById('mintedCardStatus').innerHTML = statusText;
       toggleMintSuccessModal(true);
     }
@@ -2773,7 +2881,7 @@ function shareOnX(){
   const selectedTeam = TEAMS.find(t => t.id === selectedTeamId);
   const myAddr = address?.toLowerCase();
   const stats = getTeamDetails(myAddr, selectedTeamId);
-  const text = `🏆 Competing for the sponsored 25,000 CHZ prize pool in WORLD CUP DREAM XI on @fan_tokens Block Kickers!\n\nMy ${selectedTeam.flag} ${selectedTeam.name} lineup has scored ${stats.score} pts (${stats.completed}/11 positions finalized).\n\nBuild your squad and challenge me! ⚽🔥\n\nblock-kickers.vercel.app/dream-xi`;
+  const text = `🏆 Competing for the sponsored 25,000 CHZ prize pool in WORLD CUP DREAM XI on @fan_tokens Block Kickers!\n\nMy ${selectedTeam.flag} ${selectedTeam.name} lineup has scored ${stats.score} PTS (${stats.completed}/11 positions finalized).\n\nBuild your squad and challenge me! ⚽🔥\n\nblock-kickers.vercel.app/dream-xi`;
   window.open('https://twitter.com/intent/tweet?text='+encodeURIComponent(text),'_blank');
 }
 
