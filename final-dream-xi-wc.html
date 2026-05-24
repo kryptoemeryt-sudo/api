@@ -767,6 +767,12 @@ body.game-mode .lb-score{font-size:12px;text-align:right;white-space:nowrap;}
   body.game-mode .tab-btn{font-size:5px;padding:4px 1px;}
   body.game-mode .country-grid{grid-template-columns:repeat(8,minmax(0,1fr));grid-template-rows:repeat(6,minmax(0,1fr));gap:3px;overflow:hidden;padding-right:0;}
   body.game-mode .country-card{min-height:0;padding:3px 1px;justify-content:center;gap:1px;}
+  body.game-mode .country-card.album-empty{opacity:.72;border-color:rgba(90,106,122,.24);background:linear-gradient(180deg,rgba(15,19,24,.96),rgba(8,11,16,.94));}
+  body.game-mode .country-card.album-low{border-color:rgba(59,130,246,.46);background:linear-gradient(180deg,rgba(59,130,246,.16),rgba(15,19,24,.95));box-shadow:0 0 8px rgba(59,130,246,.10),inset 0 0 10px rgba(59,130,246,.08);}
+  body.game-mode .country-card.album-mid{border-color:rgba(0,255,135,.46);background:linear-gradient(180deg,rgba(0,255,135,.13),rgba(15,19,24,.95));box-shadow:0 0 9px rgba(0,255,135,.12),inset 0 0 10px rgba(0,255,135,.09);}
+  body.game-mode .country-card.album-hot{border-color:rgba(255,201,64,.58);background:linear-gradient(180deg,rgba(255,201,64,.18),rgba(22,18,9,.95));box-shadow:0 0 10px rgba(255,201,64,.14),inset 0 0 11px rgba(255,201,64,.10);}
+  body.game-mode .country-card.album-complete{border-color:rgba(192,132,252,.72);background:linear-gradient(180deg,rgba(192,132,252,.20),rgba(0,255,135,.08),rgba(15,19,24,.95));box-shadow:0 0 11px rgba(192,132,252,.16),inset 0 0 11px rgba(0,255,135,.10);}
+  body.game-mode .country-card.selected{box-shadow:0 0 9px rgba(0,255,135,.18),inset 0 0 11px rgba(0,255,135,.13);}
   body.game-mode .country-card-flag{font-size:12px;min-height:13px;}
   body.game-mode .country-card .flag-img{width:22px;height:15px;}
   body.game-mode .country-card-name{font-size:7px;line-height:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;}
@@ -840,6 +846,11 @@ body.game-mode .lb-score{font-size:12px;text-align:right;white-space:nowrap;}
   body.game-mode .tab-btn{font-size:5px;padding:3px 2px;}
   body.game-mode .country-grid{grid-template-columns:repeat(8,minmax(0,1fr));grid-template-rows:repeat(6,minmax(0,1fr));gap:3px;overflow:hidden;padding-right:0;}
   body.game-mode .country-card{min-height:0;padding:2px 1px;gap:1px;}
+  body.game-mode .country-card.album-low{box-shadow:0 0 7px rgba(59,130,246,.10),inset 0 0 9px rgba(59,130,246,.08);}
+  body.game-mode .country-card.album-mid{box-shadow:0 0 8px rgba(0,255,135,.12),inset 0 0 9px rgba(0,255,135,.09);}
+  body.game-mode .country-card.album-hot{box-shadow:0 0 9px rgba(255,201,64,.14),inset 0 0 10px rgba(255,201,64,.10);}
+  body.game-mode .country-card.album-complete{box-shadow:0 0 10px rgba(192,132,252,.16),inset 0 0 10px rgba(0,255,135,.10);}
+  body.game-mode .country-card.selected{box-shadow:0 0 8px rgba(0,255,135,.18),inset 0 0 10px rgba(0,255,135,.13);}
   body.game-mode .country-card-flag{font-size:11px;min-height:12px;}
   body.game-mode .country-card .flag-img{width:21px;height:14px;}
   body.game-mode .country-card-name{font-size:6.4px;line-height:1;margin-top:1px!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;}
@@ -954,6 +965,11 @@ body.game-mode .lb-score{font-size:12px;text-align:right;white-space:nowrap;}
     padding:clamp(1px,.35dvh,3px) 1px;
     border-radius:clamp(5px,1.5vw,8px);
   }
+  body.game-mode .country-card.album-low{box-shadow:0 0 clamp(6px,1.9vw,9px) rgba(59,130,246,.10),inset 0 0 clamp(8px,2.4vw,11px) rgba(59,130,246,.08);}
+  body.game-mode .country-card.album-mid{box-shadow:0 0 clamp(7px,2vw,10px) rgba(0,255,135,.12),inset 0 0 clamp(8px,2.4vw,11px) rgba(0,255,135,.09);}
+  body.game-mode .country-card.album-hot{box-shadow:0 0 clamp(8px,2.2vw,11px) rgba(255,201,64,.14),inset 0 0 clamp(9px,2.5vw,12px) rgba(255,201,64,.10);}
+  body.game-mode .country-card.album-complete{box-shadow:0 0 clamp(9px,2.4vw,12px) rgba(192,132,252,.16),inset 0 0 clamp(9px,2.5vw,12px) rgba(0,255,135,.10);}
+  body.game-mode .country-card.selected{box-shadow:0 0 clamp(8px,2.2vw,11px) rgba(0,255,135,.18),inset 0 0 clamp(9px,2.5vw,12px) rgba(0,255,135,.13);}
   body.game-mode .country-card .flag-img{width:clamp(18px,6vw,26px);height:clamp(12px,4vw,18px);}
   body.game-mode .country-card-name{font-size:clamp(5.5px,1.86vw,7.4px);}
   body.game-mode .country-card-score{font-size:clamp(6px,2.04vw,8.4px);}
