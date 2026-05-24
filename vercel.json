@@ -1,6 +1,7 @@
 {
   "rewrites": [
     { "source": "/nation-quest", "destination": "/nation-quest.html" },
+    { "source": "/nqb", "destination": "/nation-quest-badges.html" },
     { "source": "/bkhome2", "destination": "/BlockKickers.html" },
     { "source": "/promo-stats", "destination": "/promo-stats.html" },
     { "source": "/dream-xi", "destination": "/test.html" },
