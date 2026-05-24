@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Barlow+Condensed:wght@400;600;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.7.0/ethers.umd.min.js"></script>
-<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="12" fill="%2306080a"/><text x="32" y="43" text-anchor="middle" font-size="38">⚽</text></svg>'>
+<link rel="icon" href='data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"%3E%3Crect width="64" height="64" rx="12" fill="%2306080a"/%3E%3Ctext x="32" y="43" text-anchor="middle" font-size="38"%3E%E2%9A%BD%3C/text%3E%3C/svg%3E'>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{width:100%;min-height:100%;background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif}
@@ -17,7 +17,7 @@ a{text-decoration:none;color:inherit}
 .topnav{height:52px;border-bottom:1px solid #1c2028;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0 10px;background:rgba(6,8,10,.72);backdrop-filter:blur(6px)}
 .top-left{display:flex;align-items:center;gap:8px;min-width:0;overflow:hidden}
 .brand{display:flex;align-items:center;gap:9px;font-family:'Black Ops One',sans-serif;letter-spacing:1.5px;font-size:15px}
-.brand-ball{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:#dde4f0;color:#06080a;font-family:Arial;font-size:15px}
+.brand-ball{display:inline-flex;align-items:center;justify-content:center;background:transparent;color:#dde4f0;font-family:Arial,sans-serif;font-size:22px;line-height:1;text-shadow:none;filter:none}
 .brand b{color:#00ff87;font-weight:400}
 .nav-actions{display:flex;align-items:center;gap:8px;min-width:0}
 .pill{border:1px solid rgba(0,255,135,.28);background:rgba(0,255,135,.07);color:#00ff87;border-radius:7px;padding:7px 10px;font-family:'Share Tech Mono',monospace;font-size:12px;white-space:nowrap}
@@ -97,7 +97,7 @@ a{text-decoration:none;color:inherit}
 .modal-panel{width:min(92vw,520px);background:linear-gradient(180deg,rgba(15,19,24,.98),rgba(6,8,10,.96));border:1px solid rgba(0,255,135,.35);border-radius:12px;padding:16px;box-shadow:0 24px 80px rgba(0,0,0,.68),0 0 28px rgba(0,255,135,.08)}
 .modal-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px}.modal-title{font-family:'Black Ops One',sans-serif;color:#00ff87;font-size:16px;letter-spacing:1px}.modal-close{border:1px solid #1c2028;background:#0f1318;color:#dde4f0;border-radius:7px;width:32px;height:32px;cursor:pointer;font-size:20px}
 .sell-list{display:grid;gap:8px;max-height:330px;overflow:auto}.sell-row{display:grid;grid-template-columns:52px 1fr 80px;gap:8px;align-items:center;border:1px solid #1c2028;background:#0f1318;border-radius:8px;padding:8px}.sell-input{width:100%;background:#06080a;border:1px solid #1c2028;border-radius:7px;color:#dde4f0;font-family:'Black Ops One',sans-serif;padding:8px;text-align:center}
-.wallet-options{display:grid;gap:8px}.wallet-option{border:1px solid #1c2028;background:#0f1318;color:#dde4f0;border-radius:9px;padding:12px;text-align:left;cursor:pointer}.wallet-option b{display:block;font-family:'Black Ops One',sans-serif;color:#00ff87;font-weight:400}.wallet-option span{font-family:'Share Tech Mono',monospace;color:#7a8899;font-size:11px}
+.wallet-options{display:grid;gap:8px}.wallet-option{width:100%;display:grid;grid-template-columns:42px 1fr auto;align-items:center;gap:12px;border:1px solid #1c2028;background:#0f1318;color:#dde4f0;border-radius:9px;padding:12px;text-align:left;cursor:pointer}.wallet-option:hover{border-color:rgba(0,255,135,.35);background:rgba(0,255,135,.055)}.wallet-option-icon{font-size:23px;width:42px;height:42px;display:grid;place-items:center;border-radius:9px;background:rgba(0,255,135,.08)}.wallet-option-name{display:block;font-family:'Black Ops One',sans-serif;color:#fff;font-size:13px;letter-spacing:1px}.wallet-option-desc{display:block;font-family:'Share Tech Mono',monospace;color:#7a8899;font-size:11px;margin-top:4px;line-height:1.25}.wallet-option-tag{font-family:'Share Tech Mono',monospace;font-size:10px;color:#00ff87;border:1px solid rgba(0,255,135,.24);border-radius:999px;padding:3px 7px;white-space:nowrap}.wallet-modal-note{font-family:'Share Tech Mono',monospace;color:#7a8899;font-size:11px;margin-top:10px;line-height:1.35}
 .action-sheet-body{display:grid;gap:9px}.action-sheet-body .slot-action{width:100%;min-height:42px;font-size:12px}
 .info-grid{display:grid;grid-template-columns:1fr;gap:10px}
 .callout{border:1px solid rgba(0,255,135,.24);background:rgba(0,255,135,.06);border-radius:9px;padding:13px}
@@ -117,10 +117,10 @@ a{text-decoration:none;color:inherit}
 #networkOverlay{position:fixed;inset:0;z-index:6000;display:none;align-items:center;justify-content:center;background:rgba(2,6,8,.78);backdrop-filter:blur(7px);padding:16px}
 #networkOverlay.show{display:flex}
 .network-card{width:min(88vw,340px);background:linear-gradient(180deg,rgba(15,19,24,.98),rgba(6,8,10,.96));border:1px solid rgba(0,255,135,.35);border-radius:12px;padding:24px 18px;text-align:center;box-shadow:0 24px 80px rgba(0,0,0,.68),0 0 28px rgba(0,255,135,.08)}
-.network-ball{font-size:34px;animation:spin 1.1s linear infinite;margin-bottom:10px}.network-title{font-family:'Black Ops One',sans-serif;color:#00ff87;font-size:16px;letter-spacing:1px;margin-bottom:8px}.network-text{font-family:'Share Tech Mono',monospace;color:#8fa4bb;font-size:12px;line-height:1.35}
+.network-ball{font-size:0;animation:spin 1.1s linear infinite;margin-bottom:10px}.network-ball::before{content:"\26bd";font-size:34px}.slot-ball span{font-size:0}.slot-ball span::before{content:"\26bd";font-size:17px}.network-title{font-family:'Black Ops One',sans-serif;color:#00ff87;font-size:16px;letter-spacing:1px;margin-bottom:8px}.network-text{font-family:'Share Tech Mono',monospace;color:#8fa4bb;font-size:12px;line-height:1.35}
 @media(max-width:1100px){.main-grid{grid-template-columns:1fr}.squad{grid-template-columns:repeat(11,minmax(0,1fr))}}
 @media(max-width:900px){
-  .page{padding:6px;gap:7px}.topnav{height:auto;min-height:44px;padding:6px}.top-left{gap:4px}.brand{font-size:11px}.brand-ball{width:20px;height:20px;font-size:12px}.nav-actions{gap:5px}.pill{display:none}.wallet-info{font-size:7px;padding:3px 4px;max-width:76px;overflow:hidden;text-overflow:ellipsis}.btn{font-size:8px;padding:7px 8px}
+  .page{padding:6px;gap:7px}.topnav{height:auto;min-height:44px;padding:6px}.top-left{gap:4px}.brand{font-size:11px}.brand-ball{font-size:17px}.nav-actions{gap:5px}.pill{display:none}.wallet-info{font-size:7px;padding:3px 4px;max-width:76px;overflow:hidden;text-overflow:ellipsis}.btn{font-size:8px;padding:7px 8px}
   .hero{grid-template-columns:1fr}.hero-title{font-size:39px}.hero-copy{font-size:16px}.panel{padding:8px;border-radius:8px}.reward{font-size:40px}
   .stats{grid-template-columns:repeat(4,minmax(0,1fr));gap:5px}.stat{min-height:58px;padding:7px 3px}.stat-value{font-size:17px}.stat-label{font-size:7px;letter-spacing:.2px}
   .squad{gap:3px}.slot{min-height:64px;padding:5px 2px;border-radius:6px}.slot.has-actions{cursor:pointer}.slot-pos{font-size:7px}.slot-ball{font-size:11px}.slot-count{font-size:10px}.slot-status{font-size:5px}.slot-actions{display:none}.slot-action{font-size:6px;padding:3px 4px}.section-title{font-size:8px;letter-spacing:.6px}.section-title .live{font-size:7px}.callout p{font-size:13px}.feed{max-height:150px}.feed-row{grid-template-columns:34px 1fr auto;padding:6px}.feed-pos{font-size:9px}.feed-addr,.feed-token{font-size:8px}.market-section{grid-column:auto}.market-grid{max-height:180px;grid-template-columns:1fr}.market-card{grid-template-columns:36px 1fr 78px}.market-card .slot-action{width:70px}
@@ -211,8 +211,22 @@ a{text-decoration:none;color:inherit}
   <div class="modal-panel">
     <div class="modal-head"><div class="modal-title">CONNECT WALLET</div><button class="modal-close" onclick="closeWalletModal()">&times;</button></div>
     <div class="wallet-options">
-      <button class="wallet-option" onclick="connectInjected()"><b>Browser Wallet</b><span>MetaMask, Trust Wallet browser, Rabby or another EIP-1193 wallet.</span></button>
-      <button class="wallet-option" onclick="connectWalletConnect()"><b>WalletConnect</b><span>Use mobile wallets through WalletConnect. Avoid Socios if it reverts transactions.</span></button>
+      <button class="wallet-option" type="button" onclick="connectInjected()">
+        <span class="wallet-option-icon">&#128188;</span>
+        <span><span class="wallet-option-name">MetaMask / Trust Browser</span><span class="wallet-option-desc">Use the wallet already injected into this browser.</span></span>
+        <span class="wallet-option-tag">APP</span>
+      </button>
+      <button class="wallet-option" type="button" onclick="connectWalletConnect()">
+        <span class="wallet-option-icon">&#128279;</span>
+        <span><span class="wallet-option-name">WalletConnect</span><span class="wallet-option-desc">Use Trust Wallet or MetaMask Mobile. Avoid Socios if it reverts transactions.</span></span>
+        <span class="wallet-option-tag">QR</span>
+      </button>
+      <button class="wallet-option" type="button" onclick="connectPrivyWallet()">
+        <span class="wallet-option-icon">&#9993;</span>
+        <span><span class="wallet-option-name">Privy Email Wallet</span><span class="wallet-option-desc">Create or restore an embedded wallet by email code.</span></span>
+        <span class="wallet-option-tag">NEW</span>
+      </button>
+      <div class="wallet-modal-note">Recommended on mobile: Privy, Trust Wallet, or MetaMask Mobile.</div>
     </div>
   </div>
 </div>
@@ -247,6 +261,9 @@ const USA_TEAM_ID = 24;
 const DEPLOY_BLOCK = 34086621;
 const PUBLIC_RPC = "https://chiliz-rpc.publicnode.com";
 const ZERO_REF = "0x0000000000000000000000000000000000000000";
+const PRIVY_APP_ID = "cmpil29vr000r0cl27mvi078e";
+const PRIVY_CLIENT_ID = "client-WY6ZYpnr2u5M5Jusp4enZTZBmqhrikkMGUCjvgwWymidE";
+const WALLETCONNECT_PROJECT_ID = "15671485110825e18107d31b379d9df6";
 const ABI = [
   "event FigureMinted(address indexed owner,uint256 indexed tokenId,uint256 dna,uint256 teamId,uint256 position,uint8 rarity,uint256 weight)",
   "function mintPrice() external view returns (uint256)",
@@ -274,6 +291,11 @@ let marketContract = new ethers.Contract(MARKET_ADDRESS, MARKET_ABI, provider);
 let address = null;
 let currentMintPrice = ethers.parseEther("10");
 let walletConnectProvider = null;
+let activeWalletProvider = null;
+let activeWalletType = "";
+let privySdk = null;
+let privyClient = null;
+let privyIframe = null;
 let latestState = {usaCards:[], usaEvents:[], cardWinner:null, squadWinner:null, missing:POSITIONS, listings:[], ownerByToken:new Map(), myOwnedSet:new Set()};
 let localListings = [];
 const REFRESH_COOLDOWN_MS = 15000;
@@ -291,6 +313,14 @@ function parseDNA(dna) {
 function shortAddr(addr){return addr ? `${addr.slice(0,6)}...${addr.slice(-4)}` : "0x...";}
 function rarityName(r){return ["Common","Rare","Epic","Legendary"][r] || "Common";}
 function posLabel(id){return POSITIONS.find(p => p.id === Number(id))?.label || String(id);}
+function readableError(error) {
+  const msg = error?.shortMessage || error?.reason || error?.message || String(error || "Unknown error");
+  return msg.replace(/\s+/g, " ").trim();
+}
+function isMissingPrivySession(error) {
+  const text = readableError(error).toLowerCase();
+  return text.includes("missing_or_invalid_token") || text.includes("no tokens found") || text.includes("invalid token");
+}
 function ballIcon(){return '<span style="font-family:Arial, sans-serif;font-weight:900;">⚽</span>';}
 function showOverlay(msg){document.getElementById("networkText").textContent = msg;document.getElementById("networkOverlay").classList.add("show");}
 function updateOverlay(msg){document.getElementById("networkText").textContent = msg;}
@@ -344,6 +374,8 @@ function openActionModal(title, html) {
 }
 
 async function finalizeWalletConnection(walletProvider, label) {
+  activeWalletProvider = walletProvider;
+  activeWalletType = label;
   await ensureChilizChain(walletProvider);
   browserProvider = new ethers.BrowserProvider(walletProvider);
   signer = await browserProvider.getSigner();
@@ -383,6 +415,101 @@ async function connectInjected() {
 
 async function connectWallet(){ return connectInjected(); }
 
+function getChilizPrivyChain() {
+  return {
+    id: CHAIN_ID,
+    name: "Chiliz Chain",
+    network: "chiliz",
+    nativeCurrency: {name:"CHZ", symbol:"CHZ", decimals:18},
+    rpcUrls: {default:{http:[PUBLIC_RPC]}, public:{http:[PUBLIC_RPC]}},
+    blockExplorers: {default:{name:"ChilizScan", url:"https://scan.chiliz.com"}}
+  };
+}
+
+async function getPrivyClient() {
+  if (privyClient) return privyClient;
+  if (location.protocol === "file:") throw new Error("Privy requires a hosted HTTPS origin.");
+  const sdk = await import("https://esm.sh/@privy-io/js-sdk-core@latest");
+  privySdk = sdk;
+  const Privy = sdk.default;
+  const storage = sdk.LocalStorage ? new sdk.LocalStorage() : {
+    get:key => Promise.resolve(localStorage.getItem(key)),
+    put:(key,value) => Promise.resolve(localStorage.setItem(key,value)),
+    del:key => Promise.resolve(localStorage.removeItem(key)),
+    getKeys:() => Promise.resolve(Object.keys(localStorage))
+  };
+  const chilizChain = getChilizPrivyChain();
+  privyClient = new Privy({
+    appId: PRIVY_APP_ID,
+    clientId: PRIVY_CLIENT_ID,
+    defaultChain: chilizChain,
+    supportedChains: [chilizChain],
+    storage
+  });
+  await privyClient.initialize();
+  if (privyClient.embeddedWallet && !privyIframe) {
+    privyIframe = document.createElement("iframe");
+    privyIframe.src = privyClient.embeddedWallet.getURL();
+    privyIframe.style.display = "none";
+    privyIframe.setAttribute("aria-hidden", "true");
+    document.body.appendChild(privyIframe);
+    privyClient.setMessagePoster(privyIframe.contentWindow);
+    window.addEventListener("message", event => {
+      if (event.source !== privyIframe.contentWindow) return;
+      const data = typeof event.data === "string" ? JSON.parse(event.data) : event.data;
+      privyClient.embeddedWallet.onMessage(data);
+    });
+  }
+  return privyClient;
+}
+
+async function connectPrivyWallet() {
+  closeWalletModal();
+  showOverlay("Opening Privy wallet...");
+  try {
+    const client = await getPrivyClient();
+    let user = null;
+    try {
+      const current = await client.user.get();
+      user = current?.user || null;
+    } catch(sessionError) {
+      if (!isMissingPrivySession(sessionError)) throw sessionError;
+    }
+    if (!user) {
+      hideOverlay();
+      const email = window.prompt("Enter email for Privy wallet login:");
+      if (!email) return;
+      showOverlay("Sending Privy login code...");
+      await client.auth.email.sendCode(email.trim());
+      hideOverlay();
+      const code = window.prompt("Enter the Privy code from your email:");
+      if (!code) return;
+      showOverlay("Confirming Privy login...");
+      const session = await client.auth.email.loginWithCode(email.trim(), code.trim());
+      user = session.user;
+    }
+    let wallet = privySdk.getUserEmbeddedEthereumWallet(user);
+    if (!wallet) {
+      updateOverlay("Creating Privy embedded wallet...");
+      const created = await client.embeddedWallet.create({});
+      user = created.user;
+      wallet = privySdk.getUserEmbeddedEthereumWallet(user);
+    }
+    const entropy = privySdk.getEntropyDetailsFromUser(user);
+    const walletProvider = await client.embeddedWallet.getEthereumProvider({
+      wallet,
+      entropyId: entropy.entropyId,
+      entropyIdVerifier: entropy.entropyIdVerifier
+    });
+    await finalizeWalletConnection(walletProvider, "Privy");
+  } catch(e) {
+    console.error("Privy connect failed:", e);
+    alert("Privy failed: " + readableError(e).slice(0, 180));
+  } finally {
+    hideOverlay();
+  }
+}
+
 async function connectWalletConnect() {
   closeWalletModal();
   showOverlay("Opening WalletConnect...");
@@ -390,7 +517,7 @@ async function connectWalletConnect() {
     const mod = await import("https://esm.sh/@walletconnect/ethereum-provider@2");
     const EthereumProvider = mod.default || mod.EthereumProvider;
     walletConnectProvider = await EthereumProvider.init({
-      projectId:"15671485110825e18107d31b379d9df6",
+      projectId:WALLETCONNECT_PROJECT_ID,
       chains:[CHAIN_ID],
       optionalChains:[CHAIN_ID],
       chainId:CHAIN_ID,
@@ -418,7 +545,30 @@ async function directMint() {
   try {
     currentMintPrice = await contract.mintPrice().catch(() => currentMintPrice);
     updateOverlay(`Minting random WC card for ${ethers.formatEther(currentMintPrice)} CHZ...`);
-    const tx = await contract.mint(ZERO_REF, {value: currentMintPrice});
+    let tx;
+    if (activeWalletType === "Privy" && activeWalletProvider) {
+      const iface = new ethers.Interface(ABI);
+      const feeData = await browserProvider.getFeeData().catch(() => null);
+      const gasPrice = feeData?.gasPrice || 2500000000000n;
+      const gasHex = ethers.toQuantity(650000n);
+      const txHash = await activeWalletProvider.request({
+        method: "eth_sendTransaction",
+        params: [{
+          from: address,
+          to: CONTRACT_ADDRESS,
+          data: iface.encodeFunctionData("mint", [ZERO_REF]),
+          value: ethers.toQuantity(currentMintPrice),
+          gas: gasHex,
+          gasLimit: gasHex,
+          gasPrice: ethers.toQuantity(gasPrice),
+          chainId: "0x" + CHAIN_ID.toString(16),
+          type: "0x0"
+        }]
+      });
+      tx = {hash: txHash, wait: () => browserProvider.waitForTransaction(txHash)};
+    } else {
+      tx = await contract.mint(ZERO_REF, {value: currentMintPrice});
+    }
     updateOverlay("Mint sent. Waiting for block confirmation...");
     const receipt = await tx.wait();
     if (receipt && Number(receipt.status) === 0) throw new Error("Mint reverted on-chain.");
@@ -653,7 +803,7 @@ function renderSlots(targetId, filledSet, byPosition, winnerPos = null, mode = "
       <div class="slot-pos">${pos.label}</div>
       <div class="slot-ball">${ballIcon()}</div>
       <div class="slot-count">${done ? (cards.length ? cards.length + "x" : "OK") : openCount}</div>
-      <div class="slot-status">${mode === "global" ? (done ? "✓" : openStatus) : (done ? (best ? `${best.weight} PTS ${rarityName(best.rarity)}` : "SCORED") : openStatus)}</div>
+      <div class="slot-status">${done ? "✓" : openStatus}</div>
       ${mode === "mine" && actionHtml.trim() ? `<div class="slot-actions">${actionHtml}</div>` : ""}
     `;
     if (mode === "mine" && actionHtml.trim()) {
