@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Block Kickers - Nation Quest USA</title>
+<title>Block Kickers - USA Nation Quest</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Barlow+Condensed:wght@400;600;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.7.0/ethers.umd.min.js"></script>
@@ -13,88 +13,84 @@
 html,body{width:100%;min-height:100%;background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif}
 body{overflow-x:hidden}
 a{text-decoration:none;color:inherit}
-.page{min-height:100dvh;display:grid;grid-template-rows:auto auto minmax(0,1fr);gap:10px;padding:10px;background:radial-gradient(circle at 15% 0%,rgba(0,255,135,.10),transparent 30%),radial-gradient(circle at 90% 15%,rgba(255,201,64,.08),transparent 32%),#06080a}
+.page{min-height:100dvh;display:grid;grid-template-rows:auto auto auto minmax(0,1fr);gap:10px;padding:10px;background:radial-gradient(circle at 15% 0%,rgba(0,255,135,.11),transparent 31%),radial-gradient(circle at 90% 10%,rgba(255,201,64,.09),transparent 32%),#06080a}
 .topnav{height:52px;border-bottom:1px solid #1c2028;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0 10px;background:rgba(6,8,10,.72);backdrop-filter:blur(6px)}
 .brand{display:flex;align-items:center;gap:9px;font-family:'Black Ops One',sans-serif;letter-spacing:1.5px;font-size:15px}
 .brand-ball{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:#dde4f0;color:#06080a;font-family:Arial;font-size:15px}
 .brand b{color:#00ff87;font-weight:400}
-.nav-actions{display:flex;align-items:center;gap:8px}
+.nav-actions{display:flex;align-items:center;gap:8px;min-width:0}
 .pill{border:1px solid rgba(0,255,135,.28);background:rgba(0,255,135,.07);color:#00ff87;border-radius:7px;padding:7px 10px;font-family:'Share Tech Mono',monospace;font-size:12px;white-space:nowrap}
 .btn{border:1px solid rgba(0,255,135,.46);background:linear-gradient(135deg,#00ff87,#00c96a);color:#000;border-radius:8px;padding:10px 14px;font-family:'Black Ops One',sans-serif;font-size:12px;letter-spacing:1px;cursor:pointer;box-shadow:0 0 18px rgba(0,255,135,.12);white-space:nowrap}
 .btn.secondary{background:rgba(255,255,255,.04);color:#dde4f0;border-color:#1c2028;box-shadow:none}
-.btn:hover{filter:brightness(1.08)}
-.hero{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(300px,.9fr);gap:10px;min-height:0}
+.btn.closed,.btn:disabled{background:rgba(239,68,68,.15);border-color:rgba(239,68,68,.42);color:#ef4444;box-shadow:none;cursor:not-allowed}
+.btn:hover:not(:disabled){filter:brightness(1.08)}
+.hero{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(300px,.95fr);gap:10px;min-height:0}
 .panel{background:#0a0e14;border:1px solid #1c2028;border-radius:10px;padding:14px;min-width:0;overflow:hidden}
 .panel.gold{border-color:rgba(255,201,64,.42);background:linear-gradient(135deg,rgba(255,201,64,.13),rgba(15,19,24,.96) 50%,rgba(0,255,135,.06));box-shadow:0 0 24px rgba(255,201,64,.08)}
 .quest-kicker{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(0,255,135,.34);background:rgba(0,255,135,.08);border-radius:5px;color:#00ff87;padding:6px 12px;margin-bottom:12px;font-family:'Share Tech Mono',monospace;font-size:12px;letter-spacing:3px;text-transform:uppercase}
 .dot{width:7px;height:7px;border-radius:50%;background:#00ff87;box-shadow:0 0 12px rgba(0,255,135,.7);animation:pulse 1.8s infinite}
 @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.45;transform:scale(.82)}}
-.hero-title{font-family:'Black Ops One',sans-serif;font-size:clamp(40px,7vw,88px);line-height:.9;letter-spacing:0;color:#dde4f0}
+.hero-title{font-family:'Black Ops One',sans-serif;font-size:clamp(38px,6.5vw,82px);line-height:.9;color:#dde4f0}
 .hero-title span{display:block;color:#00ff87;text-shadow:0 0 24px rgba(0,255,135,.18)}
-.hero-copy{max-width:780px;color:#9fb1c7;font-size:clamp(18px,2.2vw,26px);line-height:1.35;margin:16px 0 0}
+.hero-copy{max-width:780px;color:#9fb1c7;font-size:clamp(18px,2.1vw,25px);line-height:1.35;margin:14px 0 0}
 .hero-copy strong{color:#ffc940}
+.mint-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;align-items:center}
+.wallet-note{font-family:'Share Tech Mono',monospace;color:#7a8899;font-size:12px}
 .usa-card{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:center}
 .flag{width:82px;height:56px;border-radius:6px;object-fit:cover;box-shadow:0 6px 18px rgba(0,0,0,.42);background:#0f1318}
 .usa-title{font-family:'Black Ops One',sans-serif;font-size:22px;letter-spacing:1.5px}
 .usa-sub{font-family:'Share Tech Mono',monospace;color:#7a8899;font-size:13px;margin-top:3px}
-.reward{font-family:'Black Ops One',sans-serif;color:#ffc940;font-size:clamp(44px,6vw,74px);line-height:.92;margin-top:16px;text-shadow:0 0 24px rgba(255,201,64,.18)}
+.reward{font-family:'Black Ops One',sans-serif;color:#ffc940;font-size:clamp(40px,5.8vw,70px);line-height:.92;margin-top:14px;text-shadow:0 0 24px rgba(255,201,64,.18)}
 .reward small{font-size:.36em}
 .reward-label{font-family:'Share Tech Mono',monospace;color:#7a8899;font-size:13px;letter-spacing:1.5px;margin-top:8px;text-transform:uppercase}
-.status-line{margin-top:14px;border:1px solid rgba(255,201,64,.26);background:rgba(255,201,64,.07);border-radius:8px;padding:10px 12px;font-family:'Black Ops One',sans-serif;color:#ffc940;font-size:13px;letter-spacing:1px;text-transform:uppercase}
+.status-line{margin-top:12px;border:1px solid rgba(255,201,64,.26);background:rgba(255,201,64,.07);border-radius:8px;padding:10px 12px;font-family:'Black Ops One',sans-serif;color:#ffc940;font-size:13px;letter-spacing:1px;text-transform:uppercase}
+.status-line.win{border-color:rgba(0,255,135,.34);background:rgba(0,255,135,.07);color:#00ff87}
 .stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
 .stat{background:#0f1318;border:1px solid #1c2028;border-radius:9px;padding:12px;text-align:center;min-height:72px;display:flex;flex-direction:column;align-items:center;justify-content:center}
 .stat-value{font-family:'Black Ops One',sans-serif;font-size:clamp(22px,3vw,36px);line-height:1;color:#00ff87}
-.stat-value.gold{color:#ffc940}
-.stat-value.blue{color:#818cf8}
+.stat-value.gold{color:#ffc940}.stat-value.blue{color:#818cf8}.stat-value.red{color:#ef4444}
 .stat-label{font-family:'Share Tech Mono',monospace;font-size:11px;color:#5a6a7a;letter-spacing:1px;text-transform:uppercase;margin-top:6px}
-.main-grid{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(300px,.75fr);gap:10px;min-height:0}
+.main-grid{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1.2fr) minmax(300px,.8fr);gap:10px;min-height:0}
 .section-title{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px;font-family:'Black Ops One',sans-serif;color:#7a8899;font-size:13px;letter-spacing:2px;text-transform:uppercase}
 .section-title .live{font-family:'Share Tech Mono',monospace;color:#00ff87;font-size:12px;letter-spacing:1px}
-.squad{display:grid;grid-template-columns:repeat(11,minmax(0,1fr));gap:7px}
-.slot{position:relative;min-height:108px;border-radius:8px;border:1px solid rgba(90,106,122,.26);background:linear-gradient(180deg,rgba(15,19,24,.96),rgba(8,11,16,.94));display:flex;flex-direction:column;justify-content:space-between;align-items:center;padding:9px 5px;text-align:center;overflow:hidden}
+.squad{display:grid;grid-template-columns:repeat(11,minmax(0,1fr));gap:6px}
+.slot{position:relative;min-height:104px;border-radius:8px;border:1px solid rgba(90,106,122,.26);background:linear-gradient(180deg,rgba(15,19,24,.96),rgba(8,11,16,.94));display:flex;flex-direction:column;justify-content:space-between;align-items:center;padding:9px 4px;text-align:center;overflow:hidden}
 .slot.done{border-color:rgba(0,255,135,.64);background:linear-gradient(180deg,rgba(0,255,135,.18),rgba(15,19,24,.95));box-shadow:0 0 18px rgba(0,255,135,.14),inset 0 0 18px rgba(0,255,135,.10)}
 .slot.open{border-color:rgba(255,201,64,.86);background:linear-gradient(180deg,rgba(255,201,64,.24),rgba(22,18,9,.96));box-shadow:0 0 30px rgba(255,201,64,.22),inset 0 0 18px rgba(255,201,64,.10);animation:hotSlot 1.45s ease-in-out infinite}
-@keyframes hotSlot{0%,100%{transform:translateY(0);box-shadow:0 0 18px rgba(255,201,64,.16),inset 0 0 16px rgba(255,201,64,.09)}50%{transform:translateY(-2px);box-shadow:0 0 36px rgba(255,201,64,.34),inset 0 0 24px rgba(255,201,64,.14)}}
-.slot-pos{font-family:'Black Ops One',sans-serif;font-size:14px;color:#dde4f0}
-.slot-ball{font-size:20px;color:#dde4f0}
-.slot-status{font-family:'Share Tech Mono',monospace;font-size:10px;color:#7a8899;text-transform:uppercase}
-.slot.done .slot-status{color:#00ff87}
-.slot.open .slot-status{color:#ffc940;font-family:'Black Ops One',sans-serif;font-size:11px}
-.slot-count{font-family:'Black Ops One',sans-serif;font-size:17px;color:#818cf8}
+.slot.win{border-color:rgba(0,255,135,.86);box-shadow:0 0 32px rgba(0,255,135,.25),inset 0 0 18px rgba(0,255,135,.14)}
+@keyframes hotSlot{0%,100%{transform:translateY(0)}50%{transform:translateY(-2px)}}
+.slot-pos{font-family:'Black Ops One',sans-serif;font-size:12px;color:#dde4f0}
+.slot-ball{font-size:17px;color:#dde4f0}
+.slot-status{font-family:'Share Tech Mono',monospace;font-size:9px;color:#7a8899;text-transform:uppercase}
+.slot.done .slot-status,.slot.win .slot-status{color:#00ff87}
+.slot.open .slot-status{color:#ffc940;font-family:'Black Ops One',sans-serif}
+.slot-count{font-family:'Black Ops One',sans-serif;font-size:15px;color:#818cf8}
 .slot.open .slot-count{color:#ffc940}
 .info-grid{display:grid;grid-template-columns:1fr;gap:10px}
 .callout{border:1px solid rgba(0,255,135,.24);background:rgba(0,255,135,.06);border-radius:9px;padding:13px}
+.callout.gold{border-color:rgba(255,201,64,.28);background:rgba(255,201,64,.06)}
 .callout h3{font-family:'Black Ops One',sans-serif;color:#00ff87;font-size:14px;letter-spacing:1px;margin-bottom:7px}
-.callout p{font-size:16px;color:#9fb1c7;line-height:1.35}
-.callout p strong{color:#ffc940}
-.feed{display:grid;gap:7px;max-height:250px;overflow:auto;padding-right:4px}
+.callout.gold h3{color:#ffc940}
+.callout p{font-size:16px;color:#9fb1c7;line-height:1.35}.callout p strong{color:#ffc940}
+.winner-box{font-family:'Share Tech Mono',monospace;color:#9fb1c7;font-size:12px;line-height:1.45}
+.winner-box b{font-family:'Black Ops One',sans-serif;color:#00ff87;font-weight:400}
+.feed{display:grid;gap:7px;max-height:230px;overflow:auto;padding-right:4px}
 .feed::-webkit-scrollbar{width:5px}.feed::-webkit-scrollbar-track{background:rgba(6,8,10,.65);border-radius:5px}.feed::-webkit-scrollbar-thumb{background:rgba(0,255,135,.34);border-radius:5px}
-.feed-row{display:grid;grid-template-columns:50px 1fr auto;gap:8px;align-items:center;border:1px solid #1c2028;background:#0f1318;border-radius:7px;padding:8px}
-.feed-pos{font-family:'Black Ops One',sans-serif;color:#dde4f0;font-size:13px}
-.feed-addr{font-family:'Share Tech Mono',monospace;color:#7a8899;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.feed-token{font-family:'Share Tech Mono',monospace;color:#818cf8;font-size:11px}
+.feed-row{display:grid;grid-template-columns:46px 1fr auto;gap:8px;align-items:center;border:1px solid #1c2028;background:#0f1318;border-radius:7px;padding:8px}
+.feed-pos{font-family:'Black Ops One',sans-serif;color:#dde4f0;font-size:12px}.feed-addr{font-family:'Share Tech Mono',monospace;color:#7a8899;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.feed-token{font-family:'Share Tech Mono',monospace;color:#818cf8;font-size:11px}
 .loading{font-family:'Share Tech Mono',monospace;color:#7a8899;text-align:center;padding:18px}
 .spin{display:inline-block;width:16px;height:16px;border:2px solid rgba(0,255,135,.3);border-top-color:#00ff87;border-radius:50%;animation:spin .8s linear infinite;vertical-align:middle;margin-right:8px}
 @keyframes spin{to{transform:rotate(360deg)}}
+#networkOverlay{position:fixed;inset:0;z-index:6000;display:none;align-items:center;justify-content:center;background:rgba(2,6,8,.78);backdrop-filter:blur(7px);padding:16px}
+#networkOverlay.show{display:flex}
+.network-card{width:min(88vw,340px);background:linear-gradient(180deg,rgba(15,19,24,.98),rgba(6,8,10,.96));border:1px solid rgba(0,255,135,.35);border-radius:12px;padding:24px 18px;text-align:center;box-shadow:0 24px 80px rgba(0,0,0,.68),0 0 28px rgba(0,255,135,.08)}
+.network-ball{font-size:34px;animation:spin 1.1s linear infinite;margin-bottom:10px}.network-title{font-family:'Black Ops One',sans-serif;color:#00ff87;font-size:16px;letter-spacing:1px;margin-bottom:8px}.network-text{font-family:'Share Tech Mono',monospace;color:#8fa4bb;font-size:12px;line-height:1.35}
+@media(max-width:1100px){.main-grid{grid-template-columns:1fr}.squad{grid-template-columns:repeat(11,minmax(0,1fr))}}
 @media(max-width:900px){
-  .page{padding:6px;gap:7px}
-  .topnav{height:auto;min-height:44px;padding:6px}
-  .brand{font-size:11px}.brand-ball{width:20px;height:20px;font-size:12px}
-  .nav-actions{gap:5px}.pill{font-size:8px;padding:5px 6px}.btn{font-size:8px;padding:7px 8px}
-  .hero,.main-grid{grid-template-columns:1fr}
-  .hero-title{font-size:42px}
-  .hero-copy{font-size:17px}
-  .stats{grid-template-columns:repeat(4,minmax(0,1fr));gap:5px}
-  .stat{min-height:58px;padding:7px 3px}.stat-value{font-size:18px}.stat-label{font-size:7px;letter-spacing:.3px}
-  .panel{padding:8px;border-radius:8px}
-  .reward{font-size:42px}
-  .squad{gap:3px}
-  .slot{min-height:68px;padding:5px 2px;border-radius:6px}
-  .slot-pos{font-size:8px}.slot-ball{font-size:13px}.slot-count{font-size:11px}.slot-status{font-size:6px}.slot.open .slot-status{font-size:7px}
-  .section-title{font-size:9px;letter-spacing:.8px;margin-bottom:7px}.section-title .live{font-size:8px}
-  .callout p{font-size:14px}
-  .feed{max-height:168px}
-  .feed-row{grid-template-columns:38px 1fr auto;padding:6px}.feed-pos{font-size:10px}.feed-addr,.feed-token{font-size:8px}
+  .page{padding:6px;gap:7px}.topnav{height:auto;min-height:44px;padding:6px}.brand{font-size:11px}.brand-ball{width:20px;height:20px;font-size:12px}.nav-actions{gap:5px}.pill{display:none}.btn{font-size:8px;padding:7px 8px}
+  .hero{grid-template-columns:1fr}.hero-title{font-size:39px}.hero-copy{font-size:16px}.panel{padding:8px;border-radius:8px}.reward{font-size:40px}
+  .stats{grid-template-columns:repeat(4,minmax(0,1fr));gap:5px}.stat{min-height:58px;padding:7px 3px}.stat-value{font-size:17px}.stat-label{font-size:7px;letter-spacing:.2px}
+  .squad{gap:3px}.slot{min-height:64px;padding:5px 2px;border-radius:6px}.slot-pos{font-size:7px}.slot-ball{font-size:11px}.slot-count{font-size:10px}.slot-status{font-size:5px}.section-title{font-size:8px;letter-spacing:.6px}.section-title .live{font-size:7px}.callout p{font-size:13px}.feed{max-height:150px}.feed-row{grid-template-columns:34px 1fr auto;padding:6px}.feed-pos{font-size:9px}.feed-addr,.feed-token{font-size:8px}
 }
 </style>
 </head>
@@ -103,87 +99,106 @@ a{text-decoration:none;color:inherit}
   <header class="topnav">
     <a class="brand" href="/"><span class="brand-ball">BK</span><span>BLOCK <b>KICKERS</b></span></a>
     <div class="nav-actions">
-      <span class="pill">USA QUEST LIVE</span>
-      <a class="btn secondary" href="/">HOME</a>
-      <a class="btn" href="/dream-xi-wc">MINT</a>
+      <span class="pill" id="walletPill">NO WALLET</span>
+      <button class="btn secondary" type="button" onclick="connectWallet()">CONNECT</button>
+      <button class="btn" id="mintBtn" type="button" onclick="directMint()">MINT 10 CHZ</button>
     </div>
   </header>
 
   <section class="hero">
     <div class="panel">
       <div class="quest-kicker"><span class="dot"></span> Open Nation Quest</div>
-      <h1 class="hero-title">USA CARD HUNT <span>500 CHZ</span></h1>
-      <p class="hero-copy">One USA position is still open. Mint the missing USA card and claim the <strong>500 CHZ instant quest reward</strong>.</p>
+      <h1 class="hero-title">CARD HUNT <span>500 CHZ</span></h1>
+      <p class="hero-copy">Mint the missing USA position first and claim the <strong>500 CHZ card hunt reward</strong>. When the missing card appears, the quest locks automatically.</p>
+      <div class="mint-row">
+        <button class="btn" id="heroMintBtn" type="button" onclick="directMint()">MINT RANDOM WC CARD</button>
+        <span class="wallet-note" id="mintNote">Connect wallet or mint directly in a Web3 browser.</span>
+      </div>
     </div>
     <div class="panel gold">
       <div class="usa-card">
         <img class="flag" src="https://flagcdn.com/w160/us.png" alt="USA flag">
         <div>
-          <div class="usa-title">UNITED STATES</div>
-          <div class="usa-sub">World Cup Album - live minted positions</div>
+          <div class="usa-title">USA SQUAD RACE</div>
+          <div class="usa-sub">First complete wallet wins the squad prize</div>
         </div>
       </div>
-      <div class="reward">500 <small>CHZ</small></div>
-      <div class="reward-label">Paid to the wallet that mints the missing USA position</div>
+      <div class="reward">1000 <small>CHZ</small></div>
+      <div class="reward-label">First wallet with all 11 USA positions wins</div>
       <div class="status-line" id="questStatus">Loading live quest status...</div>
     </div>
   </section>
 
   <section class="stats">
-    <div class="stat"><div class="stat-value" id="statCompleted">- / 11</div><div class="stat-label">Positions Minted</div></div>
-    <div class="stat"><div class="stat-value gold" id="statMissing">-</div><div class="stat-label">Cards Left</div></div>
-    <div class="stat"><div class="stat-value blue" id="statUsaCards">-</div><div class="stat-label">USA Cards Minted</div></div>
-    <div class="stat"><div class="stat-value gold">10</div><div class="stat-label">CHZ Mint Price</div></div>
+    <div class="stat"><div class="stat-value" id="statCompleted">- / 11</div><div class="stat-label">USA Positions</div></div>
+    <div class="stat"><div class="stat-value gold" id="statMissing">-</div><div class="stat-label">Global Cards Left</div></div>
+    <div class="stat"><div class="stat-value blue" id="myCompleted">- / 11</div><div class="stat-label">My USA Squad</div></div>
+    <div class="stat"><div class="stat-value gold" id="statUsaCards">-</div><div class="stat-label">USA Cards Minted</div></div>
   </section>
 
   <main class="main-grid">
     <section class="panel">
-      <div class="section-title">
-        <span>USA Squad Slots</span>
-        <span class="live" id="updatedAt">Reading Chiliz Chain...</span>
-      </div>
-      <div class="squad" id="squadSlots">
-        <div class="loading" style="grid-column:1/-1"><span class="spin"></span>Loading minted USA positions...</div>
-      </div>
+      <div class="section-title"><span>Global USA Slots</span><span class="live" id="updatedAt">Reading chain...</span></div>
+      <div class="squad" id="globalSlots"><div class="loading" style="grid-column:1/-1"><span class="spin"></span>Loading USA positions...</div></div>
+    </section>
+
+    <section class="panel">
+      <div class="section-title"><span>My USA Squad</span><span class="live" id="myStatus">Connect wallet</span></div>
+      <div class="squad" id="mySlots"><div class="loading" style="grid-column:1/-1">Connect wallet to track your 1000 CHZ squad race.</div></div>
     </section>
 
     <aside class="info-grid">
-      <div class="callout">
-        <h3>How To Win</h3>
-        <p>Open the World Cup album and mint random WC cards. If your mint lands on the missing USA position, you can claim <strong>500 CHZ</strong>.</p>
+      <div class="callout gold">
+        <h3>500 CHZ Card Hunt</h3>
+        <div class="winner-box" id="cardWinnerBox">Waiting for the missing USA card...</div>
       </div>
       <div class="callout">
-        <h3>Why It Matters</h3>
-        <p>The page reads all minted cards from the chain. Duplicates do not close new slots. Only the missing position completes this quest.</p>
+        <h3>1000 CHZ Squad Prize</h3>
+        <div class="winner-box" id="squadWinnerBox">First wallet to complete all 11 USA positions wins.</div>
       </div>
       <div class="panel" style="padding:10px">
-        <div class="section-title"><span>Latest USA Mints</span><span class="live" id="feedCount">LIVE</span></div>
-        <div class="feed" id="mintFeed">
-          <div class="loading"><span class="spin"></span>Loading feed...</div>
-        </div>
+        <div class="section-title"><span>Latest USA Events</span><span class="live" id="feedCount">LIVE</span></div>
+        <div class="feed" id="mintFeed"><div class="loading"><span class="spin"></span>Loading feed...</div></div>
       </div>
     </aside>
   </main>
 </div>
 
+<div id="networkOverlay" aria-live="polite" aria-busy="true">
+  <div class="network-card">
+    <div class="network-ball">BK</div>
+    <div class="network-title">Waiting for network</div>
+    <div class="network-text" id="networkText">Please confirm in your wallet and wait for Chiliz Chain.</div>
+  </div>
+</div>
+
 <script>
 const CONTRACT_ADDRESS = "0xAAdc8D56e25a223B6cf4b88ba0889975560f21aB";
+const MARKET_ADDRESS = "0xA18f7Bade67Eda41FD7D2B3A204d39b543977DaE";
+const CHAIN_ID = 88888;
 const USA_TEAM_ID = 24;
 const DEPLOY_BLOCK = 34086621;
 const PUBLIC_RPC = "https://chiliz-rpc.publicnode.com";
-const POSITIONS = [
-  {id:1,label:"GK"},
-  {id:2,label:"RB"},
-  {id:3,label:"LB"},
-  {id:4,label:"CB A"},
-  {id:5,label:"CB B"},
-  {id:6,label:"DM"},
-  {id:7,label:"RW"},
-  {id:8,label:"MID"},
-  {id:9,label:"ST"},
-  {id:10,label:"#10"},
-  {id:11,label:"LW"}
+const ZERO_REF = "0x0000000000000000000000000000000000000000";
+const ABI = [
+  "event FigureMinted(address indexed owner,uint256 indexed tokenId,uint256 dna,uint256 teamId,uint256 position,uint8 rarity,uint256 weight)",
+  "function mintPrice() external view returns (uint256)",
+  "function mint(address referrer) external payable"
 ];
+const MARKET_ABI = [
+  "event Sold(uint256 indexed listingId,address indexed buyer,uint256 price)",
+  "event Listed(uint256 indexed listingId,address indexed seller,uint256 tokenId,uint256 price)"
+];
+const POSITIONS = [
+  {id:1,label:"GK"},{id:2,label:"RB"},{id:3,label:"LB"},{id:4,label:"CB A"},{id:5,label:"CB B"},{id:6,label:"DM"},{id:7,label:"RW"},{id:8,label:"MID"},{id:9,label:"ST"},{id:10,label:"#10"},{id:11,label:"LW"}
+];
+let provider = new ethers.JsonRpcProvider(PUBLIC_RPC);
+let browserProvider = null;
+let signer = null;
+let contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, provider);
+let address = null;
+let currentMintPrice = ethers.parseEther("10");
+let latestState = {usaCards:[], usaEvents:[], cardWinner:null, squadWinner:null, missing:POSITIONS};
 
 function parseDNA(dna) {
   const n = typeof dna === "bigint" ? dna : BigInt(String(dna));
@@ -194,130 +209,252 @@ function parseDNA(dna) {
   const weight = base + Number((n >> 16n) % 8n);
   return {teamId, position, rarity, weight};
 }
+function shortAddr(addr){return addr ? `${addr.slice(0,6)}...${addr.slice(-4)}` : "0x...";}
+function rarityName(r){return ["Common","Rare","Epic","Legendary"][r] || "Common";}
+function posLabel(id){return POSITIONS.find(p => p.id === Number(id))?.label || String(id);}
+function showOverlay(msg){document.getElementById("networkText").textContent = msg;document.getElementById("networkOverlay").classList.add("show");}
+function updateOverlay(msg){document.getElementById("networkText").textContent = msg;}
+function hideOverlay(){document.getElementById("networkOverlay").classList.remove("show");}
+function formatTime(ts){return ts ? new Date(ts * 1000).toLocaleString([], {month:"short", day:"2-digit", hour:"2-digit", minute:"2-digit"}) : "time pending";}
 
-function shortAddr(addr) {
-  if (!addr) return "0x...";
-  return `${addr.slice(0,6)}...${addr.slice(-4)}`;
+async function getBlockTime(block) {
+  if (!block) return 0;
+  try {
+    const b = await provider.getBlock(Number(block));
+    return Number(b?.timestamp || 0);
+  } catch(e) {
+    return 0;
+  }
 }
 
-function rarityName(rarity) {
-  return ["Common","Rare","Epic","Legendary"][rarity] || "Common";
+async function ensureChilizChain(walletProvider) {
+  const chainHex = "0x" + CHAIN_ID.toString(16);
+  const current = await walletProvider.request({method:"eth_chainId"}).catch(() => null);
+  if (String(current).toLowerCase() === chainHex.toLowerCase()) return;
+  try {
+    await walletProvider.request({method:"wallet_switchEthereumChain", params:[{chainId: chainHex}]});
+  } catch(e) {
+    await walletProvider.request({
+      method:"wallet_addEthereumChain",
+      params:[{chainId:chainHex,chainName:"Chiliz Chain",nativeCurrency:{name:"CHZ",symbol:"CHZ",decimals:18},rpcUrls:[PUBLIC_RPC],blockExplorerUrls:["https://chiliscan.com"]}]
+    });
+  }
 }
 
-async function fetchQuestMints() {
+async function connectWallet() {
+  if (!window.ethereum) {
+    alert("Open this page in MetaMask, Trust Wallet, or another Web3 wallet browser.");
+    return;
+  }
+  showOverlay("Connecting wallet...");
+  try {
+    await ensureChilizChain(window.ethereum);
+    browserProvider = new ethers.BrowserProvider(window.ethereum);
+    await browserProvider.send("eth_requestAccounts", []);
+    signer = await browserProvider.getSigner();
+    address = (await signer.getAddress()).toLowerCase();
+    contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
+    document.getElementById("walletPill").textContent = shortAddr(address);
+    document.getElementById("mintNote").textContent = `Connected: ${shortAddr(address)}`;
+    await loadQuest(true);
+  } finally {
+    hideOverlay();
+  }
+}
+
+async function directMint() {
+  if (latestState.squadWinner) return;
+  if (!signer) await connectWallet();
+  if (!signer) return;
+  showOverlay("Preparing card mint...");
+  try {
+    currentMintPrice = await contract.mintPrice().catch(() => currentMintPrice);
+    updateOverlay(`Minting random WC card for ${ethers.formatEther(currentMintPrice)} CHZ...`);
+    const tx = await contract.mint(ZERO_REF, {value: currentMintPrice});
+    updateOverlay("Mint sent. Waiting for block confirmation...");
+    const receipt = await tx.wait();
+    if (receipt && Number(receipt.status) === 0) throw new Error("Mint reverted on-chain.");
+    updateOverlay("Mint confirmed. Updating quest state...");
+    await loadQuest(true);
+  } catch(e) {
+    console.error(e);
+    alert("Mint failed. Check CHZ balance, network, and wallet confirmation.");
+  } finally {
+    hideOverlay();
+  }
+}
+
+async function fetchEvents() {
   try {
     const res = await fetch("/api/events", {cache:"no-store"});
     if (res.ok) {
       const data = await res.json();
       if (Array.isArray(data.mints)) {
-        return data.mints.map(m => ({
-          owner: String(m.owner || "").toLowerCase(),
-          tokenId: Number(m.tokenId),
-          dna: BigInt(String(m.dna)),
-          block: Number(m.block || 0)
-        }));
+        const mints = data.mints.map(m => ({type:"mint", owner:String(m.owner||"").toLowerCase(), tokenId:Number(m.tokenId), dna:BigInt(String(m.dna)), block:Number(m.block||0)}));
+        const sales = Array.isArray(data.sales) ? data.sales.map(s => ({type:"sale", buyer:String(s.buyer||"").toLowerCase(), tokenId:Number(s.tokenId), block:Number(s.block||0)})).filter(s => s.tokenId) : [];
+        return {mints, sales};
       }
     }
   } catch(e) {
     console.warn("API unavailable, using RPC fallback.", e);
   }
-
-  const provider = new ethers.JsonRpcProvider(PUBLIC_RPC);
-  const abi = ["event FigureMinted(address indexed owner,uint256 indexed tokenId,uint256 dna,uint256 teamId,uint256 position,uint8 rarity,uint256 weight)"];
-  const contract = new ethers.Contract(CONTRACT_ADDRESS, abi, provider);
-  const current = await provider.getBlockNumber();
+  const readProvider = provider || new ethers.JsonRpcProvider(PUBLIC_RPC);
+  const rc = new ethers.Contract(CONTRACT_ADDRESS, ABI, readProvider);
+  const rmk = new ethers.Contract(MARKET_ADDRESS, MARKET_ABI, readProvider);
+  const current = await readProvider.getBlockNumber();
   const chunk = 25000;
-  const rows = [];
+  const mints = [];
+  const listed = [];
+  const sold = [];
   for (let from = DEPLOY_BLOCK; from <= current; from += chunk) {
     const to = Math.min(from + chunk - 1, current);
-    try {
-      const events = await contract.queryFilter(contract.filters.FigureMinted(), from, to);
-      events.forEach(ev => rows.push({
-        owner: String(ev.args.owner || "").toLowerCase(),
-        tokenId: Number(ev.args.tokenId),
-        dna: ev.args.dna,
-        block: Number(ev.blockNumber || 0)
-      }));
-    } catch(e) {
-      console.warn("RPC chunk failed", from, to, e);
-    }
+    try {(await rc.queryFilter(rc.filters.FigureMinted(), from, to)).forEach(ev => mints.push({type:"mint", owner:String(ev.args.owner||"").toLowerCase(), tokenId:Number(ev.args.tokenId), dna:ev.args.dna, block:Number(ev.blockNumber||0)}));} catch(e) {}
+    try {(await rmk.queryFilter(rmk.filters.Listed(), from, to)).forEach(ev => listed.push({listingId:Number(ev.args.listingId), tokenId:Number(ev.args.tokenId)}));} catch(e) {}
+    try {(await rmk.queryFilter(rmk.filters.Sold(), from, to)).forEach(ev => sold.push({listingId:Number(ev.args.listingId), buyer:String(ev.args.buyer||"").toLowerCase(), block:Number(ev.blockNumber||0)}));} catch(e) {}
   }
-  return rows;
+  const listingToToken = new Map(listed.map(l => [l.listingId, l.tokenId]));
+  const sales = sold.map(s => ({type:"sale", buyer:s.buyer, tokenId:listingToToken.get(s.listingId), block:s.block})).filter(s => s.tokenId);
+  return {mints, sales};
 }
 
-function renderQuest(usaMints) {
-  const byPosition = new Map();
-  usaMints.forEach(card => {
-    if (!byPosition.has(card.position)) byPosition.set(card.position, []);
-    byPosition.get(card.position).push(card);
+async function buildState() {
+  const {mints, sales} = await fetchEvents();
+  const tokenInfo = new Map();
+  mints.forEach(m => tokenInfo.set(m.tokenId, {...m, ...parseDNA(m.dna)}));
+  const usaCards = [...tokenInfo.values()].filter(c => c.teamId === USA_TEAM_ID);
+  const events = [];
+  mints.forEach(m => {
+    const card = tokenInfo.get(m.tokenId);
+    if (card && card.teamId === USA_TEAM_ID) events.push({...card, wallet:m.owner, eventType:"mint", block:m.block});
+  });
+  sales.forEach(s => {
+    const card = tokenInfo.get(s.tokenId);
+    if (card && card.teamId === USA_TEAM_ID) events.push({...card, wallet:s.buyer, eventType:"buy", block:s.block});
+  });
+  events.sort((a,b) => (a.block || 0) - (b.block || 0) || a.tokenId - b.tokenId);
+
+  const globalPositions = new Set();
+  let cardWinner = null;
+  events.filter(e => e.eventType === "mint").forEach(e => {
+    if (!globalPositions.has(e.position)) {
+      globalPositions.add(e.position);
+      if (globalPositions.size === 11 && !cardWinner) cardWinner = e;
+    }
   });
 
-  const completed = byPosition.size;
-  const missing = POSITIONS.filter(p => !byPosition.has(p.id));
-  document.getElementById("statCompleted").textContent = `${completed} / 11`;
-  document.getElementById("statMissing").textContent = String(missing.length);
-  document.getElementById("statUsaCards").textContent = String(usaMints.length);
-  document.getElementById("updatedAt").textContent = new Date().toLocaleTimeString([], {hour:"2-digit", minute:"2-digit"});
+  const walletPositions = new Map();
+  let squadWinner = null;
+  events.forEach(e => {
+    if (!walletPositions.has(e.wallet)) walletPositions.set(e.wallet, new Set());
+    const set = walletPositions.get(e.wallet);
+    set.add(e.position);
+    if (set.size === 11 && !squadWinner) squadWinner = e;
+  });
+  const mySet = address ? (walletPositions.get(address) || new Set()) : new Set();
+  const missing = POSITIONS.filter(p => !globalPositions.has(p.id));
+  await Promise.all([cardWinner, squadWinner].filter(Boolean).map(async item => { item.time = await getBlockTime(item.block); }));
+  return {usaCards, usaEvents:events, globalPositions, walletPositions, mySet, missing, cardWinner, squadWinner};
+}
 
-  const status = document.getElementById("questStatus");
-  if (missing.length === 0) {
-    status.textContent = "USA quest complete - all 11 positions are minted.";
-    status.style.color = "#00ff87";
-  } else if (missing.length === 1) {
-    status.textContent = `1 CARD LEFT: ${missing[0].label} - mint it to claim 500 CHZ`;
-    status.style.color = "#ffc940";
-  } else {
-    status.textContent = `${missing.length} CARDS LEFT: ${missing.map(p => p.label).join(", ")}`;
-    status.style.color = "#ffc940";
-  }
-
-  const slots = document.getElementById("squadSlots");
-  slots.innerHTML = "";
+function renderSlots(targetId, filledSet, byPosition, winnerPos = null) {
+  const target = document.getElementById(targetId);
+  target.innerHTML = "";
   POSITIONS.forEach(pos => {
-    const cards = byPosition.get(pos.id) || [];
-    const minted = cards.length > 0;
-    const best = minted ? cards.slice().sort((a,b) => b.weight - a.weight)[0] : null;
+    const cards = byPosition?.get(pos.id) || [];
+    const done = filledSet.has(pos.id);
+    const best = cards.slice().sort((a,b) => b.weight - a.weight)[0];
     const el = document.createElement("div");
-    el.className = `slot ${minted ? "done" : "open"}`;
+    el.className = `slot ${done ? "done" : "open"} ${winnerPos === pos.id ? "win" : ""}`;
     el.innerHTML = `
       <div class="slot-pos">${pos.label}</div>
       <div class="slot-ball">BK</div>
-      <div class="slot-count">${minted ? cards.length + "x" : "500"}</div>
-      <div class="slot-status">${minted ? `${best.weight} PTS ${rarityName(best.rarity)}` : "OPEN CHZ"}</div>
+      <div class="slot-count">${done ? (cards.length ? cards.length + "x" : "OK") : "500"}</div>
+      <div class="slot-status">${done ? (best ? `${best.weight} PTS ${rarityName(best.rarity)}` : "SCORED") : "OPEN CHZ"}</div>
     `;
-    slots.appendChild(el);
+    target.appendChild(el);
   });
-
-  const feed = document.getElementById("mintFeed");
-  const latest = usaMints.slice().sort((a,b) => (b.block || 0) - (a.block || 0) || b.tokenId - a.tokenId).slice(0, 12);
-  document.getElementById("feedCount").textContent = `${usaMints.length} USA`;
-  if (!latest.length) {
-    feed.innerHTML = '<div class="loading">No USA cards minted yet.</div>';
-    return;
-  }
-  feed.innerHTML = latest.map(card => `
-    <div class="feed-row">
-      <div class="feed-pos">${POSITIONS.find(p => p.id === card.position)?.label || card.position}</div>
-      <div class="feed-addr">${shortAddr(card.owner)}</div>
-      <div class="feed-token">#${card.tokenId}</div>
-    </div>
-  `).join("");
 }
 
-async function loadQuest() {
+function renderQuest(state) {
+  latestState = state;
+  const byPosition = new Map();
+  state.usaCards.forEach(card => {
+    if (!byPosition.has(card.position)) byPosition.set(card.position, []);
+    byPosition.get(card.position).push(card);
+  });
+  document.getElementById("statCompleted").textContent = `${state.globalPositions.size} / 11`;
+  document.getElementById("statMissing").textContent = String(state.missing.length);
+  document.getElementById("statUsaCards").textContent = String(state.usaCards.length);
+  document.getElementById("myCompleted").textContent = address ? `${state.mySet.size} / 11` : "- / 11";
+  document.getElementById("myStatus").textContent = address ? shortAddr(address) : "Connect wallet";
+  document.getElementById("updatedAt").textContent = new Date().toLocaleTimeString([], {hour:"2-digit", minute:"2-digit"});
+
+  const closed = Boolean(state.squadWinner);
+  ["mintBtn","heroMintBtn"].forEach(id => {
+    const btn = document.getElementById(id);
+    btn.disabled = closed;
+    btn.classList.toggle("closed", closed);
+    btn.textContent = closed ? "NO REWARDS" : state.cardWinner ? "MINT FOR SQUAD" : (id === "mintBtn" ? "MINT 10 CHZ" : "MINT RANDOM WC CARD");
+  });
+
+  const questStatus = document.getElementById("questStatus");
+  questStatus.classList.toggle("win", closed);
+  if (state.cardWinner) {
+    questStatus.textContent = `500 CHZ CARD FOUND: ${posLabel(state.cardWinner.position)} by ${shortAddr(state.cardWinner.wallet)}`;
+  } else if (state.missing.length === 1) {
+    questStatus.textContent = `1 CARD LEFT: ${state.missing[0].label} - first mint wins 500 CHZ`;
+  } else {
+    questStatus.textContent = `${state.missing.length} CARDS LEFT: ${state.missing.map(p => p.label).join(", ")}`;
+  }
+
+  renderSlots("globalSlots", state.globalPositions, byPosition, state.cardWinner?.position);
+  const myByPosition = new Map();
+  if (address) state.usaEvents.filter(e => e.wallet === address).forEach(card => {
+    if (!myByPosition.has(card.position)) myByPosition.set(card.position, []);
+    myByPosition.get(card.position).push(card);
+  });
+  renderSlots("mySlots", state.mySet, myByPosition, state.squadWinner?.wallet === address ? state.squadWinner.position : null);
+
+  document.getElementById("cardWinnerBox").innerHTML = state.cardWinner
+    ? `<b>500 CHZ winner</b><br>${shortAddr(state.cardWinner.wallet)} minted ${posLabel(state.cardWinner.position)}<br>Block ${state.cardWinner.block || "pending"} - ${formatTime(state.cardWinner.time)}`
+    : `No winner yet.<br>Missing: <b>${state.missing.map(p => p.label).join(", ") || "none"}</b>`;
+  document.getElementById("squadWinnerBox").innerHTML = state.squadWinner
+    ? `<b>1000 CHZ winner</b><br>${shortAddr(state.squadWinner.wallet)} completed USA squad<br>Block ${state.squadWinner.block || "pending"} - ${formatTime(state.squadWinner.time)}`
+    : `No completed USA squad yet.<br>First wallet with all 11 positions wins <b>1000 CHZ</b>.`;
+
+  const latest = state.usaEvents.slice().sort((a,b) => (b.block || 0) - (a.block || 0) || b.tokenId - a.tokenId).slice(0, 12);
+  document.getElementById("feedCount").textContent = `${state.usaEvents.length} EVENTS`;
+  document.getElementById("mintFeed").innerHTML = latest.length ? latest.map(e => `
+    <div class="feed-row">
+      <div class="feed-pos">${posLabel(e.position)}</div>
+      <div class="feed-addr">${e.eventType.toUpperCase()} ${shortAddr(e.wallet)}</div>
+      <div class="feed-token">#${e.tokenId}</div>
+    </div>
+  `).join("") : '<div class="loading">No USA events yet.</div>';
+}
+
+async function loadQuest(silent = false) {
+  if (!silent) showOverlay("Reading Nation Quest data...");
   try {
-    const allMints = await fetchQuestMints();
-    const usaMints = allMints.map(m => ({...m, ...parseDNA(m.dna)})).filter(m => m.teamId === USA_TEAM_ID);
-    renderQuest(usaMints);
+    const state = await buildState();
+    renderQuest(state);
   } catch(error) {
     console.error(error);
     document.getElementById("questStatus").textContent = "Error loading live quest data. Refresh the page.";
-    document.getElementById("squadSlots").innerHTML = '<div class="loading" style="grid-column:1/-1">Could not read Chiliz Chain data.</div>';
+  } finally {
+    if (!silent) hideOverlay();
   }
 }
 
-window.addEventListener("load", loadQuest);
-setInterval(loadQuest, 90000);
+window.addEventListener("load", async () => {
+  await loadQuest(true);
+  if (window.ethereum) {
+    window.ethereum.request({method:"eth_accounts"}).then(accounts => {
+      if (accounts && accounts[0]) connectWallet().catch(console.warn);
+    }).catch(()=>{});
+  }
+});
+setInterval(() => loadQuest(true), 90000);
 </script>
 </body>
 </html>
