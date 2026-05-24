@@ -15,11 +15,15 @@ body{overflow-x:hidden}
 a{text-decoration:none;color:inherit}
 .page{min-height:100dvh;display:grid;grid-template-rows:auto auto auto minmax(0,1fr);gap:10px;padding:10px;background:radial-gradient(circle at 15% 0%,rgba(0,255,135,.11),transparent 31%),radial-gradient(circle at 90% 10%,rgba(255,201,64,.09),transparent 32%),#06080a}
 .topnav{height:52px;border-bottom:1px solid #1c2028;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0 10px;background:rgba(6,8,10,.72);backdrop-filter:blur(6px)}
+.top-left{display:flex;align-items:center;gap:8px;min-width:0;overflow:hidden}
 .brand{display:flex;align-items:center;gap:9px;font-family:'Black Ops One',sans-serif;letter-spacing:1.5px;font-size:15px}
 .brand-ball{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:#dde4f0;color:#06080a;font-family:Arial;font-size:15px}
 .brand b{color:#00ff87;font-weight:400}
 .nav-actions{display:flex;align-items:center;gap:8px;min-width:0}
 .pill{border:1px solid rgba(0,255,135,.28);background:rgba(0,255,135,.07);color:#00ff87;border-radius:7px;padding:7px 10px;font-family:'Share Tech Mono',monospace;font-size:12px;white-space:nowrap}
+.wallet-info{display:none;border:1px solid rgba(0,255,135,.24);background:rgba(0,255,135,.06);border-radius:7px;padding:5px 8px;font-family:'Share Tech Mono',monospace;font-size:11px;white-space:nowrap}
+.wallet-info.addr{color:#dde4f0}.wallet-info.balance{color:#00ff87}
+.btn.connected{display:none}
 .btn{border:1px solid rgba(0,255,135,.46);background:linear-gradient(135deg,#00ff87,#00c96a);color:#000;border-radius:8px;padding:10px 14px;font-family:'Black Ops One',sans-serif;font-size:12px;letter-spacing:1px;cursor:pointer;box-shadow:0 0 18px rgba(0,255,135,.12);white-space:nowrap}
 .btn.secondary{background:rgba(255,255,255,.04);color:#dde4f0;border-color:#1c2028;box-shadow:none}
 .btn.closed,.btn:disabled{background:rgba(239,68,68,.15);border-color:rgba(239,68,68,.42);color:#ef4444;box-shadow:none;cursor:not-allowed}
@@ -78,7 +82,7 @@ a{text-decoration:none;color:inherit}
 .market-section{grid-column:1 / 3}
 .market-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:8px;max-height:230px;overflow:auto;padding-right:4px}
 .market-grid::-webkit-scrollbar{width:5px}.market-grid::-webkit-scrollbar-track{background:rgba(6,8,10,.65);border-radius:5px}.market-grid::-webkit-scrollbar-thumb{background:rgba(0,255,135,.34);border-radius:5px}
-.market-card{border:1px solid #1c2028;background:#0f1318;border-radius:8px;padding:9px;display:grid;grid-template-columns:auto 1fr auto;gap:8px;align-items:center}
+.market-card{border:1px solid #1c2028;background:#0f1318;border-radius:8px;padding:9px;display:grid;grid-template-columns:auto 1fr 86px;gap:8px;align-items:center}
 .market-card.rarity-1{border-color:rgba(59,130,246,.48);background:linear-gradient(180deg,rgba(59,130,246,.14),#0f1318)}
 .market-card.rarity-2{border-color:rgba(192,132,252,.52);background:linear-gradient(180deg,rgba(192,132,252,.15),#0f1318)}
 .market-card.rarity-3{border-color:rgba(255,201,64,.58);background:linear-gradient(180deg,rgba(255,201,64,.18),#0f1318)}
@@ -87,12 +91,14 @@ a{text-decoration:none;color:inherit}
 .market-meta{min-width:0}.market-name{font-family:'Black Ops One',sans-serif;color:#dde4f0;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.market-sub{font-family:'Share Tech Mono',monospace;color:#7a8899;font-size:10px;margin-top:3px}
 .market-sub.you{color:#00ff87;font-weight:700}
 .market-price{font-family:'Black Ops One',sans-serif;color:#ffc940;font-size:13px;text-align:right}
+.market-card .slot-action{width:78px;min-height:28px}
 .modal{position:fixed;inset:0;z-index:6100;display:none;align-items:center;justify-content:center;background:rgba(2,6,8,.78);backdrop-filter:blur(7px);padding:16px}
 .modal.show{display:flex}
 .modal-panel{width:min(92vw,520px);background:linear-gradient(180deg,rgba(15,19,24,.98),rgba(6,8,10,.96));border:1px solid rgba(0,255,135,.35);border-radius:12px;padding:16px;box-shadow:0 24px 80px rgba(0,0,0,.68),0 0 28px rgba(0,255,135,.08)}
 .modal-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px}.modal-title{font-family:'Black Ops One',sans-serif;color:#00ff87;font-size:16px;letter-spacing:1px}.modal-close{border:1px solid #1c2028;background:#0f1318;color:#dde4f0;border-radius:7px;width:32px;height:32px;cursor:pointer;font-size:20px}
 .sell-list{display:grid;gap:8px;max-height:330px;overflow:auto}.sell-row{display:grid;grid-template-columns:52px 1fr 80px;gap:8px;align-items:center;border:1px solid #1c2028;background:#0f1318;border-radius:8px;padding:8px}.sell-input{width:100%;background:#06080a;border:1px solid #1c2028;border-radius:7px;color:#dde4f0;font-family:'Black Ops One',sans-serif;padding:8px;text-align:center}
 .wallet-options{display:grid;gap:8px}.wallet-option{border:1px solid #1c2028;background:#0f1318;color:#dde4f0;border-radius:9px;padding:12px;text-align:left;cursor:pointer}.wallet-option b{display:block;font-family:'Black Ops One',sans-serif;color:#00ff87;font-weight:400}.wallet-option span{font-family:'Share Tech Mono',monospace;color:#7a8899;font-size:11px}
+.action-sheet-body{display:grid;gap:9px}.action-sheet-body .slot-action{width:100%;min-height:42px;font-size:12px}
 .info-grid{display:grid;grid-template-columns:1fr;gap:10px}
 .callout{border:1px solid rgba(0,255,135,.24);background:rgba(0,255,135,.06);border-radius:9px;padding:13px}
 .callout.gold{border-color:rgba(255,201,64,.28);background:rgba(255,201,64,.06)}
@@ -114,20 +120,24 @@ a{text-decoration:none;color:inherit}
 .network-ball{font-size:34px;animation:spin 1.1s linear infinite;margin-bottom:10px}.network-title{font-family:'Black Ops One',sans-serif;color:#00ff87;font-size:16px;letter-spacing:1px;margin-bottom:8px}.network-text{font-family:'Share Tech Mono',monospace;color:#8fa4bb;font-size:12px;line-height:1.35}
 @media(max-width:1100px){.main-grid{grid-template-columns:1fr}.squad{grid-template-columns:repeat(11,minmax(0,1fr))}}
 @media(max-width:900px){
-  .page{padding:6px;gap:7px}.topnav{height:auto;min-height:44px;padding:6px}.brand{font-size:11px}.brand-ball{width:20px;height:20px;font-size:12px}.nav-actions{gap:5px}.pill{display:none}.btn{font-size:8px;padding:7px 8px}
+  .page{padding:6px;gap:7px}.topnav{height:auto;min-height:44px;padding:6px}.top-left{gap:4px}.brand{font-size:11px}.brand-ball{width:20px;height:20px;font-size:12px}.nav-actions{gap:5px}.pill{display:none}.wallet-info{font-size:7px;padding:3px 4px;max-width:76px;overflow:hidden;text-overflow:ellipsis}.btn{font-size:8px;padding:7px 8px}
   .hero{grid-template-columns:1fr}.hero-title{font-size:39px}.hero-copy{font-size:16px}.panel{padding:8px;border-radius:8px}.reward{font-size:40px}
   .stats{grid-template-columns:repeat(4,minmax(0,1fr));gap:5px}.stat{min-height:58px;padding:7px 3px}.stat-value{font-size:17px}.stat-label{font-size:7px;letter-spacing:.2px}
-  .squad{gap:3px}.slot{min-height:64px;padding:5px 2px;border-radius:6px}.slot-pos{font-size:7px}.slot-ball{font-size:11px}.slot-count{font-size:10px}.slot-status{font-size:5px}.slot-actions{opacity:1;position:static;transform:none;margin-top:2px}.slot-action{font-size:5px;padding:2px 3px}.section-title{font-size:8px;letter-spacing:.6px}.section-title .live{font-size:7px}.callout p{font-size:13px}.feed{max-height:150px}.feed-row{grid-template-columns:34px 1fr auto;padding:6px}.feed-pos{font-size:9px}.feed-addr,.feed-token{font-size:8px}.market-section{grid-column:auto}.market-grid{max-height:180px;grid-template-columns:1fr}
+  .squad{gap:3px}.slot{min-height:64px;padding:5px 2px;border-radius:6px}.slot.has-actions{cursor:pointer}.slot-pos{font-size:7px}.slot-ball{font-size:11px}.slot-count{font-size:10px}.slot-status{font-size:5px}.slot-actions{display:none}.slot-action{font-size:6px;padding:3px 4px}.section-title{font-size:8px;letter-spacing:.6px}.section-title .live{font-size:7px}.callout p{font-size:13px}.feed{max-height:150px}.feed-row{grid-template-columns:34px 1fr auto;padding:6px}.feed-pos{font-size:9px}.feed-addr,.feed-token{font-size:8px}.market-section{grid-column:auto}.market-grid{max-height:180px;grid-template-columns:1fr}.market-card{grid-template-columns:36px 1fr 78px}.market-card .slot-action{width:70px}
 }
 </style>
 </head>
 <body>
 <div class="page">
   <header class="topnav">
-    <a class="brand" href="/"><span class="brand-ball">&#9917;</span><span>BLOCK <b>KICKERS</b></span></a>
+    <div class="top-left">
+      <a class="brand" href="/"><span class="brand-ball">⚽</span><span>BLOCK <b>KICKERS</b></span></a>
+      <span id="walletAddress" class="wallet-info addr">0x0000...0000</span>
+      <span id="walletBalance" class="wallet-info balance">0.0 CHZ</span>
+    </div>
     <div class="nav-actions">
       <span class="pill" id="walletPill">NO WALLET</span>
-      <button class="btn secondary" type="button" onclick="openWalletModal()">CONNECT</button>
+      <button class="btn secondary" id="connectBtn" type="button" onclick="openWalletModal()">CONNECT</button>
       <button class="btn secondary" id="refreshBtn" type="button" onclick="manualRefresh()">REFRESH</button>
       <button class="btn" id="mintBtn" type="button" onclick="directMint()">MINT 10 CHZ</button>
     </div>
@@ -214,9 +224,16 @@ a{text-decoration:none;color:inherit}
   </div>
 </div>
 
+<div class="modal" id="actionModal">
+  <div class="modal-panel">
+    <div class="modal-head"><div class="modal-title" id="actionTitle">CARD ACTIONS</div><button class="modal-close" onclick="closeActionModal()">&times;</button></div>
+    <div class="action-sheet-body" id="actionBody"></div>
+  </div>
+</div>
+
 <div id="networkOverlay" aria-live="polite" aria-busy="true">
   <div class="network-card">
-    <div class="network-ball">&#9917;</div>
+    <div class="network-ball">⚽</div>
     <div class="network-title">Waiting for network</div>
     <div class="network-text" id="networkText">Please confirm in your wallet and wait for Chiliz Chain.</div>
   </div>
@@ -258,6 +275,7 @@ let address = null;
 let currentMintPrice = ethers.parseEther("10");
 let walletConnectProvider = null;
 let latestState = {usaCards:[], usaEvents:[], cardWinner:null, squadWinner:null, missing:POSITIONS, listings:[], ownerByToken:new Map(), myOwnedSet:new Set()};
+let localListings = [];
 const REFRESH_COOLDOWN_MS = 15000;
 const REFRESH_KEY = "bkNationQuestLastRefresh";
 
@@ -273,7 +291,7 @@ function parseDNA(dna) {
 function shortAddr(addr){return addr ? `${addr.slice(0,6)}...${addr.slice(-4)}` : "0x...";}
 function rarityName(r){return ["Common","Rare","Epic","Legendary"][r] || "Common";}
 function posLabel(id){return POSITIONS.find(p => p.id === Number(id))?.label || String(id);}
-function ballIcon(){return '<span style="font-family:Arial, sans-serif;font-weight:900;">&#9917;</span>';}
+function ballIcon(){return '<span style="font-family:Arial, sans-serif;font-weight:900;">⚽</span>';}
 function showOverlay(msg){document.getElementById("networkText").textContent = msg;document.getElementById("networkOverlay").classList.add("show");}
 function updateOverlay(msg){document.getElementById("networkText").textContent = msg;}
 function hideOverlay(){document.getElementById("networkOverlay").classList.remove("show");}
@@ -317,6 +335,13 @@ async function ensureChilizChain(walletProvider) {
 function openWalletModal(){document.getElementById("walletModal").classList.add("show");}
 function closeWalletModal(){document.getElementById("walletModal").classList.remove("show");}
 function closeSellModal(){document.getElementById("sellModal").classList.remove("show");}
+function closeActionModal(){document.getElementById("actionModal").classList.remove("show");}
+function isMobileActions(){return window.matchMedia && window.matchMedia("(max-width: 900px)").matches;}
+function openActionModal(title, html) {
+  document.getElementById("actionTitle").textContent = title;
+  document.getElementById("actionBody").innerHTML = html || '<div class="loading">No actions available.</div>';
+  document.getElementById("actionModal").classList.add("show");
+}
 
 async function finalizeWalletConnection(walletProvider, label) {
   await ensureChilizChain(walletProvider);
@@ -327,6 +352,16 @@ async function finalizeWalletConnection(walletProvider, label) {
   contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
   marketContract = new ethers.Contract(MARKET_ADDRESS, MARKET_ABI, signer);
   document.getElementById("walletPill").textContent = `${label} ${shortAddr(address)}`;
+  const addrEl = document.getElementById("walletAddress");
+  const balEl = document.getElementById("walletBalance");
+  const connectBtn = document.getElementById("connectBtn");
+  if (addrEl) { addrEl.textContent = shortAddr(address); addrEl.style.display = "inline-flex"; }
+  if (balEl) {
+    const bal = await browserProvider.getBalance(address).catch(() => 0n);
+    balEl.textContent = `${Number(ethers.formatEther(bal)).toFixed(1)} CHZ`;
+    balEl.style.display = "inline-flex";
+  }
+  if (connectBtn) connectBtn.classList.add("connected");
   document.getElementById("mintNote").textContent = `Connected: ${shortAddr(address)}`;
   await loadQuest(true, true);
 }
@@ -403,6 +438,7 @@ async function requireSigner() {
 }
 
 async function buyListing(listingId, priceChz) {
+  closeActionModal();
   if (!signer) { openWalletModal(); return; }
   showOverlay(`Buying USA card for ${priceChz} CHZ...`);
   try {
@@ -438,10 +474,16 @@ async function listCard(tokenId) {
       await txApprove.wait();
     }
     updateOverlay(`Listing card for ${price} CHZ...`);
+    const nextListingId = Number(await marketContract.nextListingId().catch(() => -1));
     const tx = await marketContract.listFigure(Number(tokenId), ethers.parseEther(price));
     updateOverlay("Listing sent. Waiting for block confirmation...");
     const receipt = await tx.wait();
     if (receipt && Number(receipt.status) === 0) throw new Error("Listing reverted on-chain.");
+    const card = latestState.usaCards.find(c => Number(c.tokenId) === Number(tokenId));
+    if (card && nextListingId >= 0) {
+      localListings = localListings.filter(l => Number(l.tokenId) !== Number(tokenId));
+      localListings.push({...card, listingId:nextListingId, seller:address, price:Number(price), priceWei:ethers.parseEther(price)});
+    }
     closeSellModal();
     await loadQuest(true, true);
   } catch(e) {
@@ -453,6 +495,7 @@ async function listCard(tokenId) {
 }
 
 async function cancelListing(listingId) {
+  closeActionModal();
   if (!signer) { openWalletModal(); return; }
   showOverlay("Cancelling listing...");
   try {
@@ -461,6 +504,7 @@ async function cancelListing(listingId) {
     updateOverlay("Cancel sent. Waiting for block confirmation...");
     const receipt = await tx.wait();
     if (receipt && Number(receipt.status) === 0) throw new Error("Cancel reverted on-chain.");
+    localListings = localListings.filter(l => Number(l.listingId) !== Number(listingId));
     await loadQuest(true, true);
   } catch(e) {
     console.error(e);
@@ -530,6 +574,9 @@ async function fetchActiveListings(tokenInfo) {
   } catch(e) {
     console.warn("Market listings unavailable", e);
   }
+  localListings.forEach(local => {
+    if (!listings.some(l => Number(l.tokenId) === Number(local.tokenId))) listings.push(local);
+  });
   return listings.sort((a,b) => a.price - b.price || b.weight - a.weight);
 }
 
@@ -597,17 +644,25 @@ function renderSlots(targetId, filledSet, byPosition, winnerPos = null, mode = "
     el.className = `slot ${done ? "done" : "open"} ${mode === "mine" && best ? `rarity-${best.rarity}` : ""} ${winnerPos === pos.id ? "win" : ""}`;
     const openCount = mode === "global" ? "500" : (floor ? `${floor.price}` : "-");
     const openStatus = mode === "global" ? "OPEN CHZ" : (floor ? "BUY CHZ" : "MISSING");
+    const actionHtml = mode === "mine" ? `
+        ${floor ? `<button class="slot-action buy" onclick="buyListing(${floor.listingId}, '${floor.price}')">BUY</button>` : ""}
+        ${ownListing && !sellable ? `<button class="slot-action sell" onclick="cancelListing(${ownListing.listingId})">CANCEL</button>` : ""}
+        ${sellable ? `<button class="slot-action sell" onclick="openSellCards(${pos.id})">SELL</button>` : ""}
+      ` : "";
     el.innerHTML = `
       <div class="slot-pos">${pos.label}</div>
       <div class="slot-ball">${ballIcon()}</div>
       <div class="slot-count">${done ? (cards.length ? cards.length + "x" : "OK") : openCount}</div>
-      <div class="slot-status">${mode === "global" ? (done ? "MINTED" : openStatus) : (done ? (best ? `${best.weight} PTS ${rarityName(best.rarity)}` : "SCORED") : openStatus)}</div>
-      ${mode === "mine" ? `<div class="slot-actions">
-        ${floor ? `<button class="slot-action buy" onclick="buyListing(${floor.listingId}, '${floor.price}')">BUY</button>` : ""}
-        ${ownListing && !sellable ? `<button class="slot-action sell" onclick="cancelListing(${ownListing.listingId})">CANCEL</button>` : ""}
-        ${sellable ? `<button class="slot-action sell" onclick="openSellCards(${pos.id})">SELL</button>` : ""}
-      </div>` : ""}
+      <div class="slot-status">${mode === "global" ? (done ? "✓" : openStatus) : (done ? (best ? `${best.weight} PTS ${rarityName(best.rarity)}` : "SCORED") : openStatus)}</div>
+      ${mode === "mine" && actionHtml.trim() ? `<div class="slot-actions">${actionHtml}</div>` : ""}
     `;
+    if (mode === "mine" && actionHtml.trim()) {
+      el.classList.add("has-actions");
+      el.addEventListener("click", event => {
+        if (!isMobileActions() || event.target.closest("button")) return;
+        openActionModal(`${pos.label} ACTIONS`, actionHtml);
+      });
+    }
     target.appendChild(el);
   });
 }
@@ -698,6 +753,7 @@ function renderMarket(state) {
 }
 
 function openSellCards(position) {
+  closeActionModal();
   if (!address) { openWalletModal(); return; }
   const cards = (latestState.usaCards || []).filter(card => latestState.ownerByToken?.get(Number(card.tokenId)) === address && card.position === Number(position));
   const activeListed = new Set((latestState.listings || []).filter(l => l.seller === address).map(l => Number(l.tokenId)));
@@ -740,7 +796,7 @@ async function loadQuest(silent = false, force = false) {
   try {
     const state = await buildState();
     renderQuest(state);
-    if (!force) markRefresh();
+    if (!force || !silent) markRefresh();
     updateRefreshButton();
   } catch(error) {
     console.error(error);
@@ -752,7 +808,7 @@ async function loadQuest(silent = false, force = false) {
 
 window.addEventListener("load", async () => {
   updateRefreshButton();
-  await loadQuest(true, false);
+  await loadQuest(false, true);
   if (window.ethereum) {
     window.ethereum.request({method:"eth_accounts"}).then(accounts => {
       if (accounts && accounts[0]) connectWallet().catch(console.warn);
