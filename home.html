@@ -194,6 +194,28 @@ h1 .accent{color:var(--green);text-shadow:0 0 30px var(--green-glow);}
 .lb-empty{text-align:center;padding:48px;color:var(--text3);font-size:13px;letter-spacing:2px;}
 .lb-loading{text-align:center;padding:32px;color:var(--text2);font-size:12px;letter-spacing:2px;}
 .top10-badge{display:inline-block;background:rgba(0,255,135,0.12);border:1px solid rgba(0,255,135,0.3);color:var(--green);font-size:9px;padding:2px 6px;border-radius:3px;letter-spacing:1px;margin-left:6px;}
+.lb-podium{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:12px;}
+.lb-podium-card{min-height:184px;cursor:pointer;}
+.lb-podium-card.rank-1{border-color:rgba(255,201,64,.82);box-shadow:inset 0 0 28px rgba(255,201,64,.14),0 0 20px rgba(255,201,64,.16);}
+.lb-podium-card.rank-2{border-color:rgba(148,163,184,.58);box-shadow:inset 0 0 24px rgba(148,163,184,.08),0 0 16px rgba(148,163,184,.1);}
+.lb-podium-card.rank-3{border-color:rgba(205,127,50,.66);box-shadow:inset 0 0 24px rgba(205,127,50,.1),0 0 16px rgba(205,127,50,.12);}
+.lb-podium-rank{position:absolute;right:7px;top:6px;z-index:4;font-family:'Black Ops One',sans-serif;font-size:18px;color:var(--gold);text-shadow:0 0 10px rgba(255,201,64,.28);}
+.lb-podium-card.rank-2 .lb-podium-rank{color:#cbd5e1;}
+.lb-podium-card.rank-3 .lb-podium-rank{color:#cd7f32;}
+.lb-podium-owner{font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--text3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:5px;}
+.lb-podium-team{font-family:'Black Ops One',sans-serif;font-size:11px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.lb-rest{border:1px solid var(--border);border-radius:9px;background:rgba(255,255,255,.02);overflow:hidden;}
+.lb-rest summary{list-style:none;cursor:pointer;padding:12px 14px;font-family:'Black Ops One',sans-serif;font-size:12px;letter-spacing:1px;color:var(--green);display:flex;align-items:center;justify-content:space-between;gap:10px;}
+.lb-rest summary::-webkit-details-marker{display:none;}
+.lb-rest summary::after{content:'+';font-size:16px;color:var(--gold);}
+.lb-rest[open] summary::after{content:'-';}
+.lb-rest-list{display:flex;flex-direction:column;border-top:1px solid var(--border);max-height:360px;overflow:auto;}
+.lb-rest-row{display:grid;grid-template-columns:44px 1fr auto auto;gap:10px;align-items:center;padding:9px 12px;border-bottom:1px solid rgba(255,255,255,.04);cursor:pointer;}
+.lb-rest-row:hover{background:rgba(0,255,135,.045);}
+.lb-rest-rank{font-family:'Black Ops One',sans-serif;color:var(--text3);font-size:13px;}
+.lb-rest-name{font-family:'Black Ops One',sans-serif;color:var(--text);font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.lb-rest-sub{font-family:'Share Tech Mono',monospace;color:var(--text3);font-size:9px;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.lb-rest-weight{font-family:'Black Ops One',sans-serif;color:var(--green);font-size:13px;white-space:nowrap;}
 
 
 
@@ -566,6 +588,10 @@ h1 .accent{color:var(--green);text-shadow:0 0 30px var(--green-glow);}
   body.dash-active #leaderboard .lb-name{font-size:12px;}
   body.dash-active #leaderboard .lb-sub{font-size:9px;}
   body.dash-active #leaderboard .lb-weight{font-size:13px;padding:6px 4px;}
+  body.dash-active #leaderboard .lb-podium{gap:6px;margin-bottom:8px;}
+  body.dash-active #leaderboard .lb-podium-card{min-height:142px;}
+  body.dash-active #leaderboard .lb-podium-rank{font-size:14px;}
+  body.dash-active #leaderboard .lb-rest-list{max-height:210px;}
 
   body.dash-active .country-dash-summary{
     display:grid;
@@ -854,6 +880,19 @@ h1 .accent{color:var(--green);text-shadow:0 0 30px var(--green-glow);}
   text-align:center !important;
   margin-top:2px !important;
 }
+/* LEADERBOARD PODIUM MOBILE FIT */
+@media (max-width: 768px){
+  .lb-podium{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;}
+  .lb-podium-card{min-height:138px;}
+  .lb-podium-card .fig-canvas{height:72px;}
+  .lb-podium-card .fig-info{padding:6px;}
+  .lb-podium-rank{font-size:13px;right:5px;top:5px;}
+  .lb-podium-team{font-size:9px;}
+  .lb-podium-owner{display:none;}
+  .lb-rest-row{grid-template-columns:34px 1fr auto;gap:7px;padding:8px 9px;}
+  .lb-rest-row .rarity-badge{display:none;}
+  .lb-rest-weight{font-size:12px;}
+}
 </style>
 </head>
 <body>
@@ -1072,8 +1111,8 @@ document.addEventListener('DOMContentLoaded', setupDesktopDashboardLayout);
         </span>
         <span style="min-width:0;">
           <span class="quest-title">NATION QUEST</span>
-          <span class="quest-sub">USA 1,000 CHZ race</span>
-          <span class="quest-prize" id="questNationPrize"><span class="quest-amount">1,000 <span>CHZ</span></span><span class="quest-label">PRIZE</span></span>
+          <span class="quest-sub">USA 1,500 CHZ race</span>
+          <span class="quest-prize" id="questNationPrize"><span class="quest-amount">1,500 <span>CHZ</span></span><span class="quest-label">PRIZE</span></span>
         </span>
       </a>
     </div>
@@ -1202,12 +1241,12 @@ document.addEventListener('DOMContentLoaded', setupDesktopDashboardLayout);
       <svg width="56" height="40" viewBox="0 0 56 40" style="border-radius:4px;margin-bottom:12px;"><rect width="56" height="40" fill="#B22234"/><rect y="3.08" width="56" height="3.08" fill="#fff"/><rect y="9.23" width="56" height="3.08" fill="#fff"/><rect y="15.38" width="56" height="3.08" fill="#fff"/><rect y="21.54" width="56" height="3.08" fill="#fff"/><rect y="27.69" width="56" height="3.08" fill="#fff"/><rect y="33.85" width="56" height="3.08" fill="#fff"/><rect width="24" height="21.54" fill="#3C3B6E"/></svg>
       <div style="font-family:'Black Ops One',sans-serif;font-size:11px;letter-spacing:3px;color:#ffc940;margin-bottom:8px;">&#127942; ACTIVE QUEST</div>
       <div style="font-family:'Black Ops One',sans-serif;font-size:22px;color:#dde4f0;margin-bottom:6px;">USA NATION QUEST</div>
-      <div style="font-family:'Black Ops One',sans-serif;font-size:32px;color:#ffc940;">1,000 CHZ</div>
+      <div style="font-family:'Black Ops One',sans-serif;font-size:32px;color:#ffc940;">1,500 CHZ</div>
       <div style="font-size:12px;letter-spacing:2px;color:#5a6a7a;margin-top:4px;">PRIZE FOR FIRST TO COMPLETE</div>
     </div>
     <div style="background:#0a0d10;border:1px solid #1c2028;border-radius:8px;padding:14px;margin-bottom:16px;font-size:14px;color:#7a8899;line-height:1.7;">
       Collect all <span style="color:#dde4f0;font-weight:700;">11 United States positions</span> in your wallet.<br>
-      First wallet to complete wins <span style="color:#ffc940;font-weight:700;">1,000 CHZ</span>.<br><br>
+      First wallet to complete wins <span style="color:#ffc940;font-weight:700;">1,500 CHZ</span>.<br><br>
       <span style="color:#00ff87;">&rarr;</span> Mint for 10 CHZ &mdash; land a USA card<br>
       <span style="color:#00ff87;">&rarr;</span> Buy missing positions on the market<br>
       <span style="color:#00ff87;">&rarr;</span> Track progress in the <span style="color:#dde4f0;">Album</span> section
@@ -1341,7 +1380,7 @@ document.addEventListener('DOMContentLoaded', setupDesktopDashboardLayout);
   <div class="sec-header">
     <div>
       <div class="sec-title">LEADER<span class="acc">BOARD</span></div>
-      <div class="sec-sub">All figures ranked by weight &middot; Top 10% win prize pool after WC final</div>
+      <div class="sec-sub">Top 3 podium cards &middot; rest hidden in expandable list</div>
     </div>
     <button onclick="loadLeaderboard()" style="background:var(--green-dim);border:1px solid rgba(0,255,135,0.3);color:var(--green);padding:8px 18px;border-radius:6px;font-family:'Black Ops One',sans-serif;font-size:11px;letter-spacing:1px;cursor:pointer;">REFRESH</button>
   </div>
@@ -3792,71 +3831,79 @@ function renderLeaderboard(){
   window._lbFigures = allFigures;
   const top10pct = Math.ceil(allFigures.length * 0.1);
 
-  let html=`<table class="lb-table">
-    <thead><tr>
-      <th>#</th><th>FIGURE</th><th style="width:140px">INFO</th>
-      <th>RARITY</th><th>MINTER</th><th style="text-align:right">WEIGHT</th><th style="text-align:right">SCORE*</th>
-    </tr></thead><tbody>`;
+  const podium = allFigures.slice(0, 3);
+  const rest = allFigures.slice(3);
+  let html = '<div class="lb-podium">';
 
-  const lbStart = lbPage * LB_PER_PAGE;
-  const lbEnd = lbStart + LB_PER_PAGE;
-  const pageTotal = Math.ceil(allFigures.length / LB_PER_PAGE);
-
-  allFigures.slice(lbStart, lbEnd).forEach(({tid,dna,owner},i)=>{
-    const globalI = lbStart + i;
-    i = globalI;
+  podium.forEach(({tid,dna,owner},i)=>{
     const t=parseDNA(dna);
     const team=TEAMS[t.teamId%TEAMS.length];
     const pos=POSITION_NAMES[t.position]||'#'+t.position;
     const rn=RARITY_NAMES[t.rarity];
-    const rankCls=i===0?'top1':i===1?'top2':i===2?'top3':'';  // i = globalI
     const wCls=t.rarity===3?'w-legendary':t.rarity===2?'w-epic':t.rarity===1?'w-rare':'';
     const isTop=i<top10pct;
     const isMe=address&&owner.toLowerCase()===address.toLowerCase();
-    const rowStyle=isMe?'background:rgba(0,255,135,0.04);':'';
-    const canvasId=`lb-${tid}`;
-
-    html+=`<tr class="lb-row" onclick="openModal(${tid},${dna}n)" style="${rowStyle}">
-      <td class="lb-rank ${rankCls}">${i+1}</td>
-      <td class="lb-mini"><div id="${canvasId}" style="width:60px;height:60px;display:flex;align-items:center;justify-content:center;"></div></td>
-      <td class="lb-info">
-        <div class="lb-name">${team} ${isMe?'<span style="color:var(--green);font-size:10px;">YOU</span>':''}</div>
-        <div class="lb-sub">${pos} &middot; #${String(tid).padStart(4,'0')}${isTop?'<span class="top10-badge">TOP 10%</span>':''}</div>
-      </td>
-      <td class="lb-rarity"><span style="display:inline-block;padding:3px 8px;border-radius:4px;font-size:10px;font-weight:700;letter-spacing:1px;background:${['rgba(107,114,128,0.25)','rgba(59,130,246,0.2)','rgba(168,85,247,0.2)','rgba(255,201,64,0.2)'][t.rarity]};color:${['#9ca3af','#60a5fa','#c084fc','#fbbf24'][t.rarity]};border:1px solid ${['rgba(107,114,128,0.35)','rgba(59,130,246,0.4)','rgba(168,85,247,0.4)','rgba(255,201,64,0.5)'][t.rarity]};">${rn}</span></td>
-      <td class="lb-owner">${owner.slice(0,6)}...${owner.slice(-4)}</td>
-      <td class="lb-weight ${wCls}">${t.weight}<span style="font-size:11px;color:var(--text3)">/100</span></td>
-      <td style="text-align:right;padding:12px 8px;font-size:12px;color:var(--text3);font-family:'Share Tech Mono',monospace;">${t.weight} x ?</td>
-    </tr>`;
+    const rs=RARITY_SHORT[t.rarity] || rn;
+    const canvasId=`lb-podium-${tid}`;
+    html+=`<div class="fig-card lb-podium-card rank-${i+1} r${t.rarity}" onclick="openModal(${tid},${dna}n)">
+      <div class="lb-podium-rank">#${i+1}</div>
+      <div class="fig-canvas">
+        ${teamFlagImg(t.teamId, team)}
+        <div id="${canvasId}" class="fig-svg-wrap"></div>
+      </div>
+      <div class="fig-info">
+        <div class="lb-podium-team">${team} ${isMe?'<span style="color:var(--green);font-size:9px;">YOU</span>':''}</div>
+        <div class="fig-row" style="margin-top:5px;">
+          <div class="fig-weight ${wCls}">&#9889; ${t.weight}<span style="font-size:10px;color:var(--text3);">/100</span></div>
+          <span class="rarity-badge rb${t.rarity}" title="${rn}">${rs}</span>
+        </div>
+        <div class="lb-podium-owner">${owner.slice(0,6)}...${owner.slice(-4)}${isTop?'<span class="top10-badge">TOP</span>':''}</div>
+      </div>
+    </div>`;
   });
 
-  html+='</tbody></table>';
+  html+='</div>';
+
+  if(rest.length){
+    html+=`<details class="lb-rest">
+      <summary><span>SHOW REST OF LEADERBOARD</span><span>${rest.length} FIGURES</span></summary>
+      <div class="lb-rest-list">`;
+    rest.forEach(({tid,dna,owner},idx)=>{
+      const rank = idx + 4;
+      const t=parseDNA(dna);
+      const team=TEAMS[t.teamId%TEAMS.length];
+      const pos=POSITION_NAMES[t.position]||'#'+t.position;
+      const rn=RARITY_NAMES[t.rarity];
+      const rs=RARITY_SHORT[t.rarity] || rn;
+      const isTop=rank-1<top10pct;
+      const isMe=address&&owner.toLowerCase()===address.toLowerCase();
+      html+=`<div class="lb-rest-row" onclick="openModal(${tid},${dna}n)" style="${isMe?'background:rgba(0,255,135,.045);':''}">
+        <div class="lb-rest-rank">#${rank}</div>
+        <div>
+          <div class="lb-rest-name">${team} ${isMe?'<span style="color:var(--green);font-size:9px;">YOU</span>':''}</div>
+          <div class="lb-rest-sub">${pos} &middot; ${owner.slice(0,6)}...${owner.slice(-4)}${isTop?' &middot; TOP 10%':''}</div>
+        </div>
+        <span class="rarity-badge rb${t.rarity}" title="${rn}">${rs}</span>
+        <div class="lb-rest-weight">&#9889; ${t.weight}</div>
+      </div>`;
+    });
+    html+='</div></details>';
+  }
+
   wrap.innerHTML=html;
 
-  // Paginacja
   // Footnote
   const fn = document.createElement('div');
-  fn.style.cssText='padding:4px 0 12px;';
+  fn.style.cssText='padding:9px 0 0;';
   fn.className='sec-sub';
   fn.textContent='* Score = Weight x WC Multiplier (calculated after tournament)';
   wrap.appendChild(fn);
 
-  if(allFigures.length > LB_PER_PAGE){
-    const pagDiv = document.createElement('div');
-    pagDiv.style.cssText='display:flex;align-items:center;justify-content:center;gap:12px;padding:16px;';
-    pagDiv.innerHTML=`
-      <button onclick="lbPageChange(-1)" style="padding:6px 16px;background:var(--card);border:1px solid var(--border);color:var(--text2);border-radius:6px;cursor:pointer;font-family:'Black Ops One',sans-serif;font-size:12px;" ${lbPage===0?'disabled':''}><- PREV</button>
-      <span style="font-size:12px;color:var(--text3);font-family:'Share Tech Mono',monospace;">PAGE ${lbPage+1} / ${pageTotal}</span>
-      <button onclick="lbPageChange(1)" style="padding:6px 16px;background:var(--card);border:1px solid var(--border);color:var(--text2);border-radius:6px;cursor:pointer;font-family:'Black Ops One',sans-serif;font-size:12px;" ${lbPage>=pageTotal-1?'disabled':''}>NEXT -></button>
-    `;
-    wrap.appendChild(pagDiv);
-  }
-
-  // Render SVG dla aktualnej strony
-  allFigures.slice(lbStart, lbEnd).forEach(({tid,dna})=>{
+  // Render SVG for podium cards only. The rest stays compact inside the hidden list.
+  podium.forEach(({tid,dna})=>{
     requestAnimationFrame(()=>{
-      const cv=document.getElementById(`lb-${tid}`);
-      if(cv){ cv.style.cssText='display:flex;align-items:center;justify-content:center;'; cv.innerHTML=makeFigureSVG(dna,80); }
+      const cv=document.getElementById(`lb-podium-${tid}`);
+      if(cv){ cv.innerHTML=makeFigureSVG(dna,80); }
     });
   });
 }
@@ -3939,7 +3986,7 @@ const WC_GROUPS = [
 
 const NATION_QUEST = {
   teamId: 24, // United States
-  prize: '1000 CHZ',
+  prize: '1500 CHZ',
   active: true,
 };
 
@@ -4033,9 +4080,9 @@ async function loadAlbum(){
             '<rect width="12" height="10.77" fill="#3C3B6E"/>' +
           '</svg>' +
           '<div style="font-family:\'Black Ops One\',sans-serif;font-size:16px;flex:1;">NATION QUEST &mdash; <span style="color:#ffc940;">UNITED STATES</span></div>' +
-          '<div style="font-family:\'Black Ops One\',sans-serif;font-size:18px;color:#ffc940;">1000 CHZ</div>' +
+          '<div style="font-family:\'Black Ops One\',sans-serif;font-size:18px;color:#ffc940;">1500 CHZ</div>' +
         '</div>' +
-        '<div style="font-size:13px;color:var(--text2);margin-bottom:10px;line-height:1.5;">First wallet to collect all <strong style="color:#dde4f0;">11 USA positions</strong> wins 1000 CHZ. Mint for 10 CHZ &mdash; if you land a rare position, list it for 500 CHZ. The collector racing to win will buy it.</div>' +
+        '<div style="font-size:13px;color:var(--text2);margin-bottom:10px;line-height:1.5;">First wallet to collect all <strong style="color:#dde4f0;">11 USA positions</strong> wins 1500 CHZ. Mint for 10 CHZ &mdash; if you land a rare position, list it for 500 CHZ. The collector racing to win will buy it.</div>' +
         '<div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">' +
           '<div style="font-size:12px;color:var(--text3);">&#127942; Leader: <span style="color:var(--text2);">' + nqLeader + '</span></div>' +
           (nqMyCount > 0 ? '<div style="font-size:12px;color:var(--green);">You: ' + nqMyCount + '/11</div>' : '') +
