@@ -26,6 +26,7 @@ a{text-decoration:none;color:inherit}
 .btn.connected{display:none}
 .btn{border:1px solid rgba(0,255,135,.46);background:linear-gradient(135deg,#00ff87,#00c96a);color:#000;border-radius:8px;padding:10px 14px;font-family:'Black Ops One',sans-serif;font-size:12px;letter-spacing:1px;cursor:pointer;box-shadow:0 0 18px rgba(0,255,135,.12);white-space:nowrap}
 .btn.secondary{background:rgba(255,255,255,.04);color:#dde4f0;border-color:#1c2028;box-shadow:none}
+.btn.x-link{display:inline-flex;align-items:center;justify-content:center;min-width:38px;background:rgba(255,255,255,.04);color:#dde4f0;border-color:rgba(129,140,248,.34);box-shadow:none}
 .btn.closed,.btn:disabled{background:rgba(239,68,68,.15);border-color:rgba(239,68,68,.42);color:#ef4444;box-shadow:none;cursor:not-allowed}
 .btn:hover:not(:disabled){filter:brightness(1.08)}
 .hero{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(300px,.95fr);gap:10px;min-height:0}
@@ -49,6 +50,10 @@ a{text-decoration:none;color:inherit}
 .reward-label{font-family:'Share Tech Mono',monospace;color:#7a8899;font-size:13px;letter-spacing:1.5px;margin-top:8px;text-transform:uppercase}
 .status-line{margin-top:12px;border:1px solid rgba(255,201,64,.26);background:rgba(255,201,64,.07);border-radius:8px;padding:10px 12px;font-family:'Black Ops One',sans-serif;color:#ffc940;font-size:13px;letter-spacing:1px;text-transform:uppercase}
 .status-line.win{border-color:rgba(0,255,135,.34);background:rgba(0,255,135,.07);color:#00ff87}
+.cross-quest{display:grid;grid-template-columns:1fr auto;align-items:center;gap:8px;margin-top:10px;border:1px solid rgba(129,140,248,.32);background:linear-gradient(135deg,rgba(129,140,248,.12),rgba(0,255,135,.05));border-radius:8px;padding:9px 10px}
+.cross-kicker{font-family:'Share Tech Mono',monospace;color:#818cf8;font-size:10px;text-transform:uppercase;letter-spacing:1px}
+.cross-title{font-family:'Black Ops One',sans-serif;color:#dde4f0;font-size:13px;letter-spacing:.8px;margin-top:2px}
+.cross-prize{font-family:'Black Ops One',sans-serif;color:#ffc940;font-size:18px;white-space:nowrap}
 .stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
 .stat{background:#0f1318;border:1px solid #1c2028;border-radius:9px;padding:12px;text-align:center;min-height:72px;display:flex;flex-direction:column;align-items:center;justify-content:center}
 .stat-value{font-family:'Black Ops One',sans-serif;font-size:clamp(22px,3vw,36px);line-height:1;color:#00ff87}
@@ -123,8 +128,8 @@ a{text-decoration:none;color:inherit}
   html,body{width:100%;max-width:100%;overflow-x:hidden;touch-action:pan-y}
   .page,.topnav,.hero,.stats,.main-grid,.panel,.market-section,.info-grid,.squad,.market-grid,.feed{width:100%;max-width:100%;min-width:0;overflow-x:hidden}
   .page{padding:6px;gap:7px}.topnav{height:auto;min-height:44px;padding:6px}.top-left{gap:4px}.brand{font-size:11px}.brand-ball{font-size:17px}.nav-actions{gap:5px}.pill{display:none}.wallet-info{font-size:7px;padding:3px 4px;max-width:76px;overflow:hidden;text-overflow:ellipsis}.btn{font-size:8px;padding:7px 6px}
-  .topnav{display:grid;grid-template-columns:minmax(0,1fr);align-items:center}.top-left,.nav-actions{min-width:0;max-width:100%;overflow:hidden}.brand{min-width:0;max-width:100%;overflow:hidden}.brand span:last-child{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.nav-actions{width:100%;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));justify-content:stretch}.nav-actions .btn{width:100%;min-width:0;max-width:100%;overflow:hidden;text-overflow:ellipsis}.wallet-info{min-width:0}
-  .hero{grid-template-columns:1fr}.hero-title{font-size:39px}.hero-copy{font-size:16px}.panel{padding:8px;border-radius:8px}.reward{font-size:40px}
+  .topnav{display:grid;grid-template-columns:minmax(0,1fr);align-items:center}.top-left,.nav-actions{min-width:0;max-width:100%;overflow:hidden}.brand{min-width:0;max-width:100%;overflow:hidden}.brand span:last-child{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.nav-actions{width:100%;display:grid;grid-template-columns:32px repeat(3,minmax(0,1fr));justify-content:stretch}.nav-actions .btn{width:100%;min-width:0;max-width:100%;overflow:hidden;text-overflow:ellipsis}.wallet-info{min-width:0}
+  .hero{grid-template-columns:1fr}.hero-title{font-size:39px}.hero-copy{font-size:16px}.panel{padding:8px;border-radius:8px}.reward{font-size:40px}.cross-quest{padding:8px}.cross-title{font-size:11px}.cross-prize{font-size:15px}
   .stats{grid-template-columns:repeat(4,minmax(0,1fr));gap:5px}.stat{min-height:58px;padding:7px 3px}.stat-value{font-size:17px}.stat-label{font-size:7px;letter-spacing:.2px}
   .squad{gap:3px}.slot{min-height:64px;padding:5px 2px;border-radius:6px}.slot.has-actions{cursor:pointer}.slot-pos{font-size:7px}.slot-ball{font-size:11px}.slot-count{font-size:10px}.slot-status{font-size:5px}.slot-actions{display:none}.slot-action{font-size:6px;padding:3px 4px}.section-title{font-size:8px;letter-spacing:.6px}.section-title .live{font-size:7px}.callout p{font-size:13px}.feed{max-height:150px}.feed-row{grid-template-columns:34px 1fr auto;padding:6px}.feed-pos{font-size:9px}.feed-addr,.feed-token{font-size:8px}.market-section{grid-column:auto}.market-grid{max-height:180px;grid-template-columns:1fr}.market-card{grid-template-columns:36px 1fr 78px}.market-card .slot-action{width:70px}
 }
@@ -140,6 +145,7 @@ a{text-decoration:none;color:inherit}
     </div>
     <div class="nav-actions">
       <span class="pill" id="walletPill">NO WALLET</span>
+      <a class="btn x-link" href="https://x.com/fan_tokens" target="_blank" rel="noopener noreferrer" aria-label="Open fan_tokens on X">X</a>
       <button class="btn secondary" id="connectBtn" type="button" onclick="openWalletModal()">CONNECT</button>
       <button class="btn secondary" id="refreshBtn" type="button" onclick="manualRefresh()">REFRESH</button>
       <button class="btn" id="mintBtn" type="button" onclick="directMint()">MINT 10 CHZ</button>
@@ -166,6 +172,13 @@ a{text-decoration:none;color:inherit}
       </div>
       <div class="reward">1500 <small>CHZ</small></div>
       <div class="reward-label">Rolled-up prize for the first complete USA squad</div>
+      <a class="cross-quest" href="https://block-kickers.vercel.app/dream-xi" target="_blank" rel="noopener noreferrer">
+        <span>
+          <span class="cross-kicker">More Live Rewards</span>
+          <span class="cross-title">Dream XI Argentina</span>
+        </span>
+        <span class="cross-prize">10k CHZ</span>
+      </a>
       <div class="status-line" id="questStatus">Loading live quest status...</div>
     </div>
   </section>
