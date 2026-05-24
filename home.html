@@ -108,28 +108,33 @@ h1 .accent{color:var(--green);text-shadow:0 0 30px var(--green-glow);}
 .sec-sub{font-size:13px;color:var(--text2);letter-spacing:1px;}
 
 /* COLLECTION GRID */
-.col-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;}
+.col-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(118px,1fr));gap:8px;}
 .empty{text-align:center;padding:60px;color:var(--text3);font-size:14px;letter-spacing:2px;grid-column:1/-1;}
 
 /* FIGURE CARD */
-.fig-card{background:var(--card);border:1px solid var(--border);border-radius:10px;overflow:hidden;cursor:pointer;transition:all 0.25s;}
-.fig-card:hover{transform:translateY(-6px);box-shadow:0 16px 48px rgba(0,0,0,0.5);}
-.fig-card.r3{border-color:rgba(255,201,64,0.45);box-shadow:0 0 16px rgba(255,201,64,0.1);}
-.fig-card.r2{border-color:rgba(168,85,247,0.4);}
-.fig-card.r1{border-color:rgba(59,130,246,0.3);}
-.fig-canvas{height:90px;background:linear-gradient(145deg,#0c0e14,#090b10);position:relative;}
+.fig-card{position:relative;background:linear-gradient(180deg,rgba(15,19,24,.98),rgba(8,11,15,.96));border:1px solid var(--border);border-radius:8px;overflow:hidden;cursor:pointer;transition:all 0.2s;box-shadow:inset 0 0 24px rgba(0,0,0,.18);}
+.fig-card:hover{transform:translateY(-3px);box-shadow:0 12px 32px rgba(0,0,0,0.45),0 0 18px rgba(0,255,135,.08);}
+.fig-card.r3{background:linear-gradient(160deg,rgba(255,201,64,.24),rgba(15,19,24,.97) 54%,rgba(255,201,64,.08));border-color:rgba(255,201,64,0.72);box-shadow:inset 0 0 28px rgba(255,201,64,.12),0 0 16px rgba(255,201,64,0.13);}
+.fig-card.r2{background:linear-gradient(160deg,rgba(168,85,247,.22),rgba(15,19,24,.97) 56%,rgba(168,85,247,.07));border-color:rgba(168,85,247,0.55);}
+.fig-card.r1{background:linear-gradient(160deg,rgba(59,130,246,.2),rgba(15,19,24,.97) 56%,rgba(59,130,246,.06));border-color:rgba(59,130,246,0.45);}
+.fig-canvas{height:78px;background:radial-gradient(circle at 50% 85%,rgba(0,255,135,.12),transparent 42%);position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;}
 .fig-canvas canvas{width:100%!important;height:100%!important;}
-.rarity-badge{display:inline-block;padding:2px 7px;border-radius:3px;font-size:9px;font-weight:700;letter-spacing:2px;}
+.fig-flag{position:absolute;top:5px;left:6px;width:24px;height:16px;object-fit:cover;border-radius:2px;box-shadow:0 0 0 1px rgba(255,255,255,.18),0 2px 8px rgba(0,0,0,.35);z-index:2;background:#111;}
+.fig-svg-wrap{width:100%;height:100%;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+.rarity-badge{display:inline-block;padding:2px 6px;border-radius:4px;font-size:8px;font-weight:700;letter-spacing:1.4px;white-space:nowrap;}
 .rb0{background:rgba(107,114,128,0.25);color:#9ca3af;border:1px solid rgba(107,114,128,0.35);}
 .rb1{background:rgba(59,130,246,0.2);color:#60a5fa;border:1px solid rgba(59,130,246,0.4);}
 .rb2{background:rgba(168,85,247,0.2);color:#c084fc;border:1px solid rgba(168,85,247,0.4);}
 .rb3{background:rgba(255,201,64,0.2);color:#fbbf24;border:1px solid rgba(255,201,64,0.5);box-shadow:0 0 8px rgba(255,201,64,0.2);}
-.fig-info{padding:12px;}
-.fig-name{font-family:'Black Ops One',sans-serif;font-size:18px;margin-bottom:3px;}
-.fig-id{font-family:'Share Tech Mono',monospace;font-size:13px;color:var(--text3);margin-bottom:8px;}
+.fig-info{padding:8px 9px 9px;border-top:1px solid rgba(255,255,255,.035);}
+.fig-name{font-family:'Black Ops One',sans-serif;font-size:13px;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.fig-id{font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--text3);margin-bottom:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .fig-chips{display:flex;gap:4px;flex-wrap:wrap;}
 .chip{background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:3px;padding:2px 7px;font-size:9px;color:var(--text2);letter-spacing:1px;}
-.fig-weight{font-family:'Black Ops One',sans-serif;font-size:15px;color:var(--green);margin-top:8px;}
+.fig-weight{font-family:'Black Ops One',sans-serif;font-size:12px;color:var(--green);margin-top:0;white-space:nowrap;}
+.fig-row{display:flex;align-items:center;justify-content:space-between;gap:6px;margin-top:4px;min-width:0;}
+.fig-price{font-family:'Black Ops One',sans-serif;font-size:15px;color:var(--gold);white-space:nowrap;}
+.fig-owner{font-size:9px;color:var(--text3);margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 
 /* MODAL */
 .overlay{position:fixed;inset:0;background:rgba(0,0,0,0.88);display:none;align-items:center;justify-content:center;z-index:200;backdrop-filter:blur(6px);}
@@ -350,7 +355,7 @@ h1 .accent{color:var(--green);text-shadow:0 0 30px var(--green-glow);}
   /* GRIDS */
   .how-grid{grid-template-columns:1fr!important;}
   .rar-grid{grid-template-columns:1fr 1fr;}
-  .col-grid{grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px;}
+  .col-grid{grid-template-columns:repeat(auto-fill,minmax(104px,1fr));gap:7px;}
   .market-list{grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px;}
 
   /* GROUPS */
@@ -514,31 +519,31 @@ h1 .accent{color:var(--green);text-shadow:0 0 30px var(--green-glow);}
   body.dash-active #marketFilters,
   body.dash-active #squadFilters{flex-shrink:0;max-height:31px;overflow-x:auto;overflow-y:hidden;flex-wrap:nowrap;}
   body.dash-active #marketList{
-    grid-template-columns:repeat(auto-fill,minmax(132px,1fr));
+    grid-template-columns:repeat(auto-fill,minmax(118px,1fr));
     gap:8px;
     overflow-y:auto;
     padding-right:4px;
     min-height:0;
     align-content:start;
   }
-  body.dash-active #market .fig-canvas{height:82px!important;}
-  body.dash-active #market .fig-info{padding:9px;}
+  body.dash-active #market .fig-canvas{height:72px!important;}
+  body.dash-active #market .fig-info{padding:7px 8px 8px;}
   body.dash-active #market .fig-name{font-size:12px!important;}
   body.dash-active #market .fig-id{font-size:9px!important;}
   body.dash-active #market .btn-buy,
   body.dash-active #market .btn-cancel{padding:5px 8px!important;font-size:9px!important;}
 
   body.dash-active #squad .col-grid{
-    grid-template-columns:repeat(auto-fill,minmax(92px,1fr));
+    grid-template-columns:repeat(auto-fill,minmax(104px,1fr));
     gap:7px;
     overflow-y:auto;
     padding-right:4px;
     min-height:0;
     align-content:start;
   }
-  body.dash-active #squad .fig-canvas{height:62px;}
-  body.dash-active #squad .fig-info{padding:7px;}
-  body.dash-active #squad .fig-name{font-size:11px!important;}
+  body.dash-active #squad .fig-canvas{height:70px;}
+  body.dash-active #squad .fig-info{padding:7px 8px 8px;}
+  body.dash-active #squad .fig-name{font-size:12px!important;}
   body.dash-active #squad .fig-id{font-size:8px!important;}
   body.dash-active #squad .rarity-badge{font-size:7px;padding:2px 4px;letter-spacing:1px;}
   body.dash-active #squad .fig-weight{font-size:10px!important;}
@@ -1259,12 +1264,17 @@ const TEAM_COLORS = [
 ];
 
 const RARITY_NAMES = ['COMMON','RARE','EPIC','LEGENDARY'];
+const TEAM_FLAG_CODES = ['au','ir','iq','jp','jo','qa','sa','kr','uz','dz','cv','cd','eg','gh','ci','ma','sn','za','tn','ca','cw','ht','mx','pa','us','ar','br','co','ec','py','uy','nz','at','be','ba','hr','cz','gb-eng','fr','de','nl','no','pt','gb-sct','es','se','ch','tr'];
 const HAIR_NAMES   = ['Buzz Cut','Curly','Spiky','Mohawk','Afro','Dreads','Bald','Wavy'];
 const SKIN_NAMES   = ['Fair','Light','Medium','Tan','Brown','Dark'];
 const POSITION_NAMES = {
   1:'Goalkeeper',2:'Right Back',3:'Left Back',4:'Centre Back',5:'Centre Back',
   6:'Def. Mid',7:'Right Wing',8:'Mid',9:'Striker',10:'Playmaker',11:'Left Wing'
 };
+function teamFlagImg(teamId, teamName){
+  const code = TEAM_FLAG_CODES[Number(teamId) % TEAM_FLAG_CODES.length] || 'un';
+  return `<img class="fig-flag" src="https://flagcdn.com/w40/${code}.png" srcset="https://flagcdn.com/w80/${code}.png 2x" alt="${teamName || 'team'} flag" loading="lazy">`;
+}
 
 // ============================================================
 //  THREE.JS FIGURE RENDERER
@@ -2617,18 +2627,18 @@ function renderCollection(){
       t.hasBand?'<span class="chip">HEADBAND</span>':'',
       t.hasGloves&&t.position===1?'<span class="chip">GLOVES</span>':''
     ].filter(Boolean).join('');
-    card.innerHTML=`<div class="fig-canvas"><div id="${cid}" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;overflow:hidden;"></div></div>
+    card.innerHTML=`<div class="fig-canvas">${teamFlagImg(t.teamId, team)}<div id="${cid}" class="fig-svg-wrap"></div></div>
     <div class="fig-info">
-      <div class="fig-name" style="font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${team}</div>
-      <div class="fig-id" style="font-size:10px;">#${String(tid).padStart(4,'0')} &middot; ${pos}</div>
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-top:4px;">
-        <div class="fig-weight" style="font-size:12px;margin-top:0;white-space:nowrap;">&#9889; ${t.weight}<span style="font-size:10px;color:var(--text3);">/100</span></div>
+      <div class="fig-name">${team}</div>
+      <div class="fig-id">#${String(tid).padStart(4,'0')} &middot; ${pos}</div>
+      <div class="fig-row">
+        <div class="fig-weight">&#9889; ${t.weight}<span style="font-size:10px;color:var(--text3);">/100</span></div>
         <span class="rarity-badge rb${t.rarity}">${rn}</span>
       </div>
     </div>`;
     grid.appendChild(card);
     const svgTarget=document.getElementById(cid);
-    if(svgTarget) svgTarget.innerHTML=makeFigureSVG(dna,80);
+    if(svgTarget) svgTarget.innerHTML=makeFigureSVG(dna,68);
   });
   if(filtered.length > SQUAD_PER_PAGE){
     const pag=document.createElement('div');
@@ -3240,28 +3250,29 @@ async function loadMarket() {
       item.className = `fig-card r${t.rarity}`;
       item.style.cursor = 'default';
       item.innerHTML = `
-        <div class="fig-canvas" style="height:90px;">
-          <div id="${cid}" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;overflow:hidden;"></div>
+        <div class="fig-canvas">
+          ${teamFlagImg(t.teamId, team)}
+          <div id="${cid}" class="fig-svg-wrap"></div>
         </div>
         <div class="fig-info">
-          <div class="fig-name" style="font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${team}</div>
-          <div class="fig-id" style="font-size:10px;">#${String(l.tokenId).padStart(4,'0')} &middot; ${pos}</div>
-          <div style="display:flex;align-items:center;justify-content:space-between;margin-top:4px;">
-            <div style="font-family:'Black Ops One',sans-serif;font-size:12px;color:var(--green);white-space:nowrap;">&#9889; ${t.weight}<span style="font-size:10px;color:var(--text3);">/100</span></div>
+          <div class="fig-name">${team}</div>
+          <div class="fig-id">#${String(l.tokenId).padStart(4,'0')} &middot; ${pos}</div>
+          <div class="fig-row">
+            <div class="fig-weight">&#9889; ${t.weight}<span style="font-size:10px;color:var(--text3);">/100</span></div>
             <span class="rarity-badge rb${t.rarity}">${rn}</span>
           </div>
-          <div style="margin-top:6px;display:flex;align-items:center;justify-content:space-between;gap:4px;">
-            <div style="font-family:'Black Ops One',sans-serif;font-size:16px;color:var(--gold);white-space:nowrap;">${priceStr} <span style="font-size:10px;color:var(--text3);">CHZ</span></div>
+          <div class="fig-row">
+            <div class="fig-price">${priceStr} <span style="font-size:10px;color:var(--text3);">CHZ</span></div>
             ${isOwn
               ? `<button class="btn-cancel" style="padding:5px 10px;font-size:10px;" onclick="doCancelListing(${l.id},${l.tokenId})">CANCEL</button>`
               : `<button class="btn-buy" style="padding:5px 10px;font-size:10px;" onclick="doBuyFigure(${l.id},'${ethers.formatEther(l.price)}')">BUY</button>`
             }
           </div>
-          <div style="font-size:10px;color:var(--text3);margin-top:3px;">${isOwn ? 'YOUR LISTING' : l.seller.slice(0,6)+'...'+l.seller.slice(-4)}</div>
+          <div class="fig-owner">${isOwn ? 'YOUR LISTING' : l.seller.slice(0,6)+'...'+l.seller.slice(-4)}</div>
         </div>`;
       list.appendChild(item);
       const mkDiv = document.getElementById(cid);
-      if(mkDiv) mkDiv.innerHTML = makeFigureSVG(dna, 80);
+      if(mkDiv) mkDiv.innerHTML = makeFigureSVG(dna, 68);
     }
 
     // Paginacja
