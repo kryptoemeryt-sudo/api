@@ -1768,12 +1768,14 @@ body.dash-active .quest-label{font-size:8px !important;margin-top:3px !important
     margin:0 !important;
     padding:14px 16px !important;
     justify-content:center !important;
+    align-items:center !important;
     cursor:pointer !important;
   }
   body.dash-active #mint .flow-earn-title{
     font-family:'Black Ops One',sans-serif !important;
-    font-size:18px !important;
-    margin-bottom:8px !important;
+    font-size:26px !important;
+    margin-bottom:0 !important;
+    text-align:center !important;
   }
   body.dash-active #mint .flow-earn-text{
     font-size:15px !important;
@@ -2086,7 +2088,6 @@ document.addEventListener('DOMContentLoaded', setupDesktopDashboardLayout);
       </div>
       <div class="flow-earn-card how-cta-card" style="margin-top:14px;margin-bottom:0;" onclick="openQuickHowModal()">
         <div class="flow-earn-title">HOW IT WORKS</div>
-        <div class="flow-earn-text"><strong>Score then sell.</strong> Open the quick rules: rewards, 65/25/10 split and why you do not need to HODL every card.</div>
       </div>
     </div>
   </div>
@@ -2224,23 +2225,23 @@ document.addEventListener('DOMContentLoaded', setupDesktopDashboardLayout);
     </div>
     <div style="background:rgba(0,255,135,.07);border:1px solid rgba(0,255,135,.24);border-radius:10px;padding:12px 14px;margin-bottom:12px;">
       <div style="font-family:'Black Ops One',sans-serif;color:var(--green);font-size:14px;letter-spacing:1px;margin-bottom:5px;">FLOW TO EARN: SCORE THEN SELL</div>
-      <div style="font-size:14px;color:var(--text2);line-height:1.45;"><strong style="color:var(--gold);">No need to HODL every card.</strong> When a card enters your wallet, it scores for quests. After that you can sell it, trade up, or hold/block it if it is rare.</div>
+      <div style="font-size:14px;color:var(--text2);line-height:1.45;"><strong style="color:var(--gold);">No need to HODL every card during the hunt.</strong> When a card enters your wallet, it scores for quests. Then you can sell it, trade up, or hold/block it if it is rare.</div>
     </div>
     <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-bottom:12px;">
       <div style="background:rgba(255,255,255,.025);border:1px solid rgba(0,255,135,.2);border-radius:9px;padding:12px;">
         <div style="font-family:'Black Ops One',sans-serif;color:var(--green);font-size:24px;">65%</div>
         <div style="font-family:'Black Ops One',sans-serif;font-size:11px;letter-spacing:1px;margin:4px 0;">GLOBAL TOP</div>
-        <div style="font-size:12px;color:var(--text2);line-height:1.35;">Shared by top 10%. Final score = figure weight x tournament multiplier.</div>
+        <div style="font-size:12px;color:var(--text2);line-height:1.35;">Shared by top 10%. Final score = figure weight x tournament multiplier. Hold scoring cards for final rewards.</div>
       </div>
       <div style="background:rgba(255,255,255,.025);border:1px solid rgba(255,201,64,.25);border-radius:9px;padding:12px;">
         <div style="font-family:'Black Ops One',sans-serif;color:var(--gold);font-size:24px;">25%</div>
         <div style="font-family:'Black Ops One',sans-serif;font-size:11px;letter-spacing:1px;margin:4px 0;">COUNTRY BEST</div>
-        <div style="font-size:12px;color:var(--text2);line-height:1.35;">Best card in each country race earns the country reward.</div>
+        <div style="font-size:12px;color:var(--text2);line-height:1.35;">Best held card in each country race earns the country reward at snapshot.</div>
       </div>
       <div style="background:rgba(255,255,255,.025);border:1px solid rgba(168,85,247,.28);border-radius:9px;padding:12px;">
         <div style="font-family:'Black Ops One',sans-serif;color:#a855f7;font-size:24px;">10%</div>
         <div style="font-family:'Black Ops One',sans-serif;font-size:11px;letter-spacing:1px;margin:4px 0;">LEGENDARY</div>
-        <div style="font-size:12px;color:var(--text2);line-height:1.35;">Legendary cards share the legendary reward lane.</div>
+        <div style="font-size:12px;color:var(--text2);line-height:1.35;">Held Legendary cards share the legendary reward lane at snapshot.</div>
       </div>
     </div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
@@ -2250,7 +2251,7 @@ document.addEventListener('DOMContentLoaded', setupDesktopDashboardLayout);
       </div>
       <div style="border:1px solid var(--border);border-radius:9px;padding:11px 12px;background:rgba(255,255,255,.02);">
         <div style="font-family:'Black Ops One',sans-serif;color:var(--text);font-size:12px;margin-bottom:5px;">HOLD OR SELL?</div>
-        <div style="font-size:12px;color:var(--text2);line-height:1.4;">Global score can be stamped. Country-best rewards should be held at the final snapshot.</div>
+        <div style="font-size:12px;color:var(--text2);line-height:1.4;">For final rewards: hold Global contenders, Country leaders and Legendaries. Sell extras or weaker cards.</div>
       </div>
     </div>
   </div>
@@ -2863,6 +2864,7 @@ function closeQuickHowModal(){
 }
 
 function showNqWelcome(){
+  if(!address) return;
   if(localStorage.getItem('nqWelcomeSeen')) return;
   setTimeout(async () => {
     // Pobierz aktualnÄ… liczbÄ™ wymintowanych pozycji USA
