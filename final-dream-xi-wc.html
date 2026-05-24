@@ -9,17 +9,18 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.7.0/ethers.umd.min.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
-body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;font-size:16px;min-height:100vh;}
-.page{max-width:1440px;margin:0 auto;padding:0 0 60px;}
+html{width:100%;max-width:100%;overflow-x:hidden;}
+body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;font-size:16px;min-height:100vh;width:100%;max-width:100%;overflow-x:hidden;}
+.page{width:100%;max-width:1440px;margin:0 auto;padding:0 0 60px;overflow-x:hidden;}
 
 /* NAVIGATION */
-.topnav{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;border-bottom:1px solid #1c2028;background:rgba(6,8,10,0.97);position:sticky;top:0;z-index:100;backdrop-filter:blur(10px);}
+.topnav{display:flex;align-items:center;justify-content:space-between;width:100%;max-width:100%;min-width:0;padding:14px 24px;border-bottom:1px solid #1c2028;background:rgba(6,8,10,0.97);position:sticky;top:0;z-index:100;backdrop-filter:blur(10px);overflow:hidden;}
 .topnav-logo{font-family:'Black Ops One',sans-serif;font-size:13px;letter-spacing:2px;color:#dde4f0;}
 .topnav-logo span{color:#00ff87;}
 .btn-connect{background:rgba(0,255,135,0.1);border:1px solid rgba(0,255,135,0.3);color:#00ff87;padding:8px 16px;border-radius:6px;font-family:'Black Ops One',sans-serif;font-size:11px;letter-spacing:1px;cursor:pointer;}
 .btn-connect.connected{background:rgba(0,255,135,0.15);border-color:#00ff87;}
-.topnav-left{display:flex;align-items:center;gap:8px;min-width:0;}
-.wallet-actions{display:flex;align-items:center;gap:8px;flex-shrink:0;}
+.topnav-left{display:flex;align-items:center;gap:8px;min-width:0;max-width:100%;overflow:hidden;}
+.wallet-actions{display:flex;align-items:center;gap:8px;min-width:0;flex-shrink:0;}
 .wallet-pill{font-family:'Share Tech Mono',monospace;font-size:11px;display:none;background:rgba(0,255,135,0.06);border:1px solid rgba(0,255,135,0.2);padding:4px 7px;border-radius:5px;letter-spacing:0;white-space:nowrap;line-height:1;}
 .wallet-modal{position:fixed;inset:0;background:rgba(0,0,0,0.72);backdrop-filter:blur(8px);z-index:5000;display:none;align-items:center;justify-content:center;padding:18px;}
 .wallet-modal.active{display:flex;}
@@ -632,12 +633,12 @@ body.game-mode .wallet-actions #connectBtn.connected{display:none;}
 }
 
 /* Dream XI style compact dashboard */
-body.game-mode{overflow:hidden;height:100vh;display:flex;flex-direction:column;}
-body.game-mode .topnav{position:relative;flex:0 0 auto;}
+body.game-mode{overflow:hidden;height:100vh;width:100%;max-width:100%;display:flex;flex-direction:column;}
+body.game-mode .topnav{position:relative;flex:0 0 auto;width:100%;max-width:100%;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;}
 body.game-mode .hero,
 body.game-mode #connectSection,
 body.game-mode #gameSection > div:first-child{display:none !important;}
-body.game-mode .page{max-width:none;height:auto;flex:1 1 auto;min-height:0;padding:8px;display:grid;grid-template-rows:auto auto auto minmax(0,1fr) minmax(120px,18vh);gap:7px;overflow:hidden;}
+body.game-mode .page{width:100%;max-width:none;height:auto;flex:1 1 auto;min-height:0;padding:8px;display:grid;grid-template-rows:auto auto auto minmax(0,1fr) minmax(120px,18vh);gap:7px;overflow:hidden;}
 .dashboard-prize-strip{display:none;}
 body.game-mode .dashboard-prize-strip{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:12px;border:1px solid rgba(255,201,64,.42);background:linear-gradient(90deg,rgba(255,201,64,.16),rgba(0,255,135,.065),rgba(116,172,223,.08));border-radius:10px;padding:7px 12px;box-shadow:0 0 22px rgba(255,201,64,.08);}
 .dash-prize-title{font-family:'Black Ops One',sans-serif;color:#ffc940;font-size:12px;letter-spacing:1.5px;white-space:nowrap;}
@@ -743,7 +744,9 @@ body.game-mode .lb-score{font-size:12px;text-align:right;white-space:nowrap;}
 @media(max-width:700px){
   body.game-mode .topnav{height:auto;min-height:44px;padding:7px 9px;}
   body.game-mode .topnav-logo{font-size:10px;letter-spacing:1px;}
-  body.game-mode .wallet-pill{font-size:7px;padding:3px 4px;max-width:86px;overflow:hidden;text-overflow:ellipsis;}
+  body.game-mode .topnav-left{gap:5px;min-width:0;overflow:hidden;}
+  body.game-mode .wallet-actions{gap:5px;min-width:0;}
+  body.game-mode .wallet-pill{font-size:7px;padding:3px 4px;max-width:clamp(54px,22vw,86px);overflow:hidden;text-overflow:ellipsis;}
   body.game-mode .btn-connect{font-size:8px;padding:6px 7px;letter-spacing:.5px;}
   body.game-mode .page{height:auto;padding:6px;grid-template-rows:auto auto auto minmax(0,1fr) minmax(132px,20vh);gap:5px;}
   body.game-mode .dashboard-prize-strip{grid-template-columns:1fr auto;padding:6px 8px;border-radius:8px;gap:6px;}
@@ -827,6 +830,7 @@ body.game-mode .lb-score{font-size:12px;text-align:right;white-space:nowrap;}
 
 @media(max-width:700px) and (pointer:fine){
   body.game-mode .topnav{height:auto;min-height:36px;padding:5px 8px;}
+  body.game-mode .topnav-left{gap:4px;}
   body.game-mode .page{height:auto;padding:4px;grid-template-rows:auto auto auto minmax(0,1fr) minmax(96px,17vh);gap:4px;}
   body.game-mode #statsRow{grid-template-columns:.75fr .65fr .62fr .9fr;gap:4px;}
   body.game-mode #statsRow .stat-card{min-height:44px;padding:4px 5px;}
@@ -884,8 +888,10 @@ body.game-mode .lb-score{font-size:12px;text-align:right;white-space:nowrap;}
     min-height:clamp(34px,5.4dvh,48px);
     padding:clamp(4px,.8dvh,8px) clamp(6px,1.7vw,10px);
   }
+  body.game-mode .topnav-left{gap:clamp(3px,1vw,6px);}
+  body.game-mode .wallet-actions{gap:clamp(3px,1vw,6px);}
   body.game-mode .topnav-logo{font-size:clamp(9px,2.6vw,12px);}
-  body.game-mode .wallet-pill{font-size:clamp(6px,1.85vw,8px);padding:clamp(2px,.45dvh,4px) clamp(3px,1vw,5px);}
+  body.game-mode .wallet-pill{font-size:clamp(6px,1.85vw,8px);padding:clamp(2px,.45dvh,4px) clamp(3px,1vw,5px);max-width:clamp(48px,22vw,88px);}
 
   body.game-mode .page{
     padding:clamp(3px,1vw,6px);
