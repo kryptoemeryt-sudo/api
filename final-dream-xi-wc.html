@@ -2845,9 +2845,9 @@ async function directMint() {
 
     // Parsing FigureMinted event directly from the receipt log
     let mintedCard = null;
-    try {
-      const iface = new ethers.Interface(ABI);
-      for (const log of receipt.logs) {
+    const iface = new ethers.Interface(ABI);
+    for (const log of receipt.logs || []) {
+      try {
         const parsed = iface.parseLog(log);
         if (parsed && parsed.name === 'FigureMinted') {
           mintedCard = {
@@ -2861,9 +2861,7 @@ async function directMint() {
           };
           break;
         }
-      }
-    } catch(err) {
-      console.warn("Error parsing receipt logs:", err);
+      } catch(err) {}
     }
 
     if (mintedCard) {
@@ -2871,6 +2869,11 @@ async function directMint() {
       const myAddr = address.toLowerCase();
       const oldCard = window.dreamScores[myAddr]?.[mintedCard.teamId]?.[mintedCard.position];
       const isUpgrade = !oldCard || mintedCard.weight > oldCard.weight;
+      applyScoredCardLocally(address, mintedCard);
+      renderStats();
+      renderCountryHub();
+      renderPitch();
+      renderLeaderboard();
 
       // Populating the successful mint popup content
       const teamInfo = TEAMS.find(t => t.id === mintedCard.teamId) || {flag: "🏳️", name: "Unknown", code: "us"};
@@ -2913,6 +2916,14 @@ async function directMint() {
     }
     
     await loadData();
+    if (mintedCard) {
+      applyScoredCardLocally(address, mintedCard);
+      renderStats();
+      renderCountryHub();
+      renderPitch();
+      renderLeaderboard();
+      refreshAfterChainUpdate(mintedCard);
+    }
   } catch (error) {
     console.error(error);
     showToast('Mint failed. Check your CHZ balance and connection.', true);
