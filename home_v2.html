@@ -1542,6 +1542,31 @@ body.dash-active .quest-label{font-size:8px !important;margin-top:3px !important
     padding-bottom:14px !important;
   }
 }
+/* TEMP QUEST VISIBILITY CLEANUP */
+#album,
+#countryLbGrid,
+#nqWelcomeModal{
+  display:none !important;
+}
+#navMenu a[onclick*="album"],
+#mobileDrawer button[onclick*="album"]{
+  display:none !important;
+}
+@media (max-width:768px){
+  #countryLb{
+    display:none !important;
+  }
+  #mobileDrawer button[onclick*="countryLb"]{
+    display:none !important;
+  }
+}
+@media (min-width:769px){
+  #claimSection,
+  #navMenu a[onclick*="claimSection"],
+  #mobileDrawer button[onclick*="claimSection"]{
+    display:none !important;
+  }
+}
 </style>
 </head>
 <body>
