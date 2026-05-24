@@ -1801,6 +1801,53 @@ body.dash-active .quest-label{font-size:8px !important;margin-top:3px !important
     box-shadow:0 0 34px rgba(0,255,135,.14), inset 0 0 24px rgba(0,255,135,.045) !important;
   }
 }
+/* DESKTOP MARKET + PRICE ROADMAP FINAL POLISH */
+@media (min-width:1200px) and (min-height:720px){
+  body.dash-active .desktop-dashboard{
+    grid-template-rows:300px 500px minmax(0,1fr) !important;
+  }
+  body.dash-active #market{
+    overflow:hidden !important;
+  }
+  body.dash-active #marketList{
+    overflow:visible !important;
+    max-height:none !important;
+    flex:0 0 auto !important;
+    padding-right:0 !important;
+  }
+  body.dash-active #marketList .fig-card{
+    cursor:pointer !important;
+  }
+  body.dash-active #marketList .fig-card:hover{
+    transform:translateY(-2px) !important;
+  }
+  body.dash-active #marketList > div[style*="grid-column"]{
+    padding:14px 0 0 !important;
+  }
+  body.dash-active #mint .price-roadmap-card{
+    background:rgba(10,13,16,.96) !important;
+    border:1px solid rgba(255,201,64,.55) !important;
+    box-shadow:none !important;
+    padding:13px 14px !important;
+  }
+  body.dash-active #mint .price-roadmap-card > div:first-child{
+    font-size:12px !important;
+    color:var(--gold) !important;
+    margin-bottom:9px !important;
+    text-shadow:none !important;
+  }
+  body.dash-active #mint .price-roadmap-card div[style*="justify-content:space-between"]{
+    font-size:13px !important;
+    line-height:1.22 !important;
+  }
+  body.dash-active #mint .price-roadmap-card div[style*="justify-content:space-between"] span:first-child{
+    color:var(--text) !important;
+  }
+  body.dash-active #mint .price-roadmap-card div[style*="justify-content:space-between"] span:last-child{
+    color:var(--gold) !important;
+    font-size:14px !important;
+  }
+}
 /* TEMP QUEST VISIBILITY CLEANUP */
 #album,
 #countryLbGrid,
@@ -4494,7 +4541,7 @@ async function loadMarket() {
 
       const item = document.createElement('div');
       item.className = `fig-card r${t.rarity}`;
-      item.style.cursor = 'default';
+      item.onclick = () => openModal(Number(l.tokenId), dna);
       item.innerHTML = `
         <div class="fig-canvas">
           ${teamFlagImg(t.teamId, team)}
@@ -4508,8 +4555,8 @@ async function loadMarket() {
           <div class="fig-market-action">
             <div class="fig-price">${priceStr} <span style="font-size:10px;color:var(--text3);">CHZ</span></div>
             ${isOwn
-              ? `<button class="btn-cancel" style="padding:5px 10px;font-size:10px;" onclick="doCancelListing(${l.id},${l.tokenId})">CANCEL</button>`
-              : `<button class="btn-buy" style="padding:5px 10px;font-size:10px;" onclick="doBuyFigure(${l.id},'${ethers.formatEther(l.price)}')">BUY</button>`
+              ? `<button class="btn-cancel" style="padding:5px 10px;font-size:10px;" onclick="event.stopPropagation();doCancelListing(${l.id},${l.tokenId})">CANCEL</button>`
+              : `<button class="btn-buy" style="padding:5px 10px;font-size:10px;" onclick="event.stopPropagation();doBuyFigure(${l.id},'${ethers.formatEther(l.price)}')">BUY</button>`
             }
           </div>
         </div>`;
