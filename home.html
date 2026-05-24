@@ -121,6 +121,7 @@ h1 .accent{color:var(--green);text-shadow:0 0 30px var(--green-glow);}
 .fig-canvas canvas{width:100%!important;height:100%!important;}
 .fig-flag{position:absolute;top:5px;left:6px;width:24px;height:16px;object-fit:cover;border-radius:2px;box-shadow:0 0 0 1px rgba(255,255,255,.18),0 2px 8px rgba(0,0,0,.35);z-index:2;background:#111;}
 .fig-svg-wrap{width:100%;height:100%;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+.fig-svg-wrap svg > rect[x="2"][y="2"]{display:none!important;}
 .rarity-badge{display:inline-block;padding:2px 5px;border-radius:4px;font-size:8px;font-weight:700;letter-spacing:.8px;white-space:nowrap;}
 .rb0{background:rgba(107,114,128,0.25);color:#9ca3af;border:1px solid rgba(107,114,128,0.35);}
 .rb1{background:rgba(59,130,246,0.2);color:#60a5fa;border:1px solid rgba(59,130,246,0.4);}
@@ -2288,7 +2289,6 @@ function makeFigureSVG(dna, size){
   p.push('<rect x="'+(cx-s*0.07)+'" y="'+(headY+headH*0.72)+'" width="'+(s*0.14)+'" height="'+(s*0.03)+'" rx="2" fill="#8b1a00" opacity="0.8"/>');
   if(t.hasBand){p.push('<rect x="'+(cx-headW/2-2)+'" y="'+(headY+headH*0.18)+'" width="'+(headW+4)+'" height="'+(s*0.06)+'" rx="3" fill="white" opacity="0.85"/>');}
   if(t.hasTattoo){p.push('<line x1="'+(cx-bodyW/2-armW/2)+'" y1="'+(armY+armH*0.3)+'" x2="'+(cx-bodyW/2-armW/2+s*0.04)+'" y2="'+(armY+armH*0.5)+'" stroke="#000" stroke-width="1.5" opacity="0.5"/>');p.push('<line x1="'+(cx-bodyW/2-armW/2+s*0.04)+'" y1="'+(armY+armH*0.3)+'" x2="'+(cx-bodyW/2-armW/2)+'" y2="'+(armY+armH*0.5)+'" stroke="#000" stroke-width="1.5" opacity="0.5"/>');}
-  if(t.rarity>=2){p.push('<rect x="2" y="2" width="'+(s-4)+'" height="'+(s-4)+'" rx="8" fill="none" stroke="'+rar+'" stroke-width="1.5" opacity="0.5"/>');}
   return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 '+s+' '+s+'" width="'+s+'" height="'+s+'">'+p.join('')+'</svg>';
 }
 
@@ -2602,9 +2602,10 @@ function renderCollection(){
   const filtered = _squadTeamFilter
     ? myFigures.filter(f=>{ try{ return TEAMS[parseDNA(f.dna).teamId%TEAMS.length]===_squadTeamFilter; }catch(e){ return true; } })
     : myFigures;
-  const squadStart=squadPage*SQUAD_PER_PAGE;
-  const squadEnd=squadStart+SQUAD_PER_PAGE;
-  const squadTotal=Math.ceil(filtered.length/SQUAD_PER_PAGE);
+  const squadPageSize = twoRowGridLimit(grid, SQUAD_PER_PAGE);
+  const squadStart=squadPage*squadPageSize;
+  const squadEnd=squadStart+squadPageSize;
+  const squadTotal=Math.ceil(filtered.length/squadPageSize);
   filtered.slice(squadStart,squadEnd).forEach(({tid,dna})=>{
     const t=parseDNA(dna);
     const rn=RARITY_NAMES[t.rarity];
@@ -2638,10 +2639,10 @@ function renderCollection(){
     const svgTarget=document.getElementById(cid);
     if(svgTarget) svgTarget.innerHTML=makeFigureSVG(dna,68);
   });
-  if(filtered.length > SQUAD_PER_PAGE){
+  if(filtered.length > squadPageSize){
     const pag=document.createElement('div');
     pag.style.cssText='grid-column:1/-1;display:flex;align-items:center;justify-content:center;gap:12px;padding:16px 0;';
-    const squadTotal2=Math.ceil(filtered.length/SQUAD_PER_PAGE);
+    const squadTotal2=Math.ceil(filtered.length/squadPageSize);
     pag.innerHTML='<button onclick="squadPageChange(-1)" style="padding:6px 16px;background:var(--card);border:1px solid var(--border);color:var(--text2);border-radius:6px;cursor:pointer;font-family:Black Ops One,sans-serif;font-size:12px;" '+(squadPage===0?'disabled':'')+'><- PREV</button><span style="font-size:12px;color:var(--text3);font-family:Share Tech Mono,monospace;">PAGE '+(squadPage+1)+' / '+squadTotal2+'</span><button onclick="squadPageChange(1)" style="padding:6px 16px;background:var(--card);border:1px solid var(--border);color:var(--text2);border-radius:6px;cursor:pointer;font-family:Black Ops One,sans-serif;font-size:12px;" '+(squadPage>=squadTotal2-1?'disabled':'')+'>NEXT -></button>';
     grid.appendChild(pag);
   }
@@ -3102,6 +3103,15 @@ let marketRens = {};
 // Set of tokenIds that are listed by current user (refreshed from chain)
 const localListedFigures = new Set();
 
+function twoRowGridLimit(gridEl, fallback) {
+  if (!gridEl) return fallback;
+  const cols = getComputedStyle(gridEl).gridTemplateColumns
+    .split(' ')
+    .filter(Boolean)
+    .length;
+  return Math.max(2, (cols || Math.ceil(fallback / 2)) * 2);
+}
+
 function initMarket() {
   if (!MARKET_ADDRESS || !signer) return;
   marketContract = new ethers.Contract(MARKET_ADDRESS, MARKET_ABI, signer);
@@ -3227,9 +3237,10 @@ async function loadMarket() {
     marketRens = {};
     list.innerHTML = '';
 
-    const mkStart = mkPage * MK_PER_PAGE;
-    const mkEnd = mkStart + MK_PER_PAGE;
-    const mkTotal = Math.ceil(filtered.length / MK_PER_PAGE);
+    const marketPageSize = twoRowGridLimit(list, MK_PER_PAGE);
+    const mkStart = mkPage * marketPageSize;
+    const mkEnd = mkStart + marketPageSize;
+    const mkTotal = Math.ceil(filtered.length / marketPageSize);
     const paginated = filtered.slice(mkStart, mkEnd);
 
     for (const l of paginated) {
