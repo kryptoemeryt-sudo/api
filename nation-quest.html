@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Barlow+Condensed:wght@400;600;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.7.0/ethers.umd.min.js"></script>
-<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="12" fill="%2306080a"/><circle cx="32" cy="32" r="23" fill="%2300ff87"/><text x="32" y="42" text-anchor="middle" font-size="23" font-family="Arial" font-weight="900" fill="%2306080a">BK</text></svg>'>
+<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="12" fill="%2306080a"/><text x="32" y="43" text-anchor="middle" font-size="38">⚽</text></svg>'>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{width:100%;min-height:100%;background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif}
@@ -56,6 +56,9 @@ a{text-decoration:none;color:inherit}
 .squad{display:grid;grid-template-columns:repeat(11,minmax(0,1fr));gap:6px}
 .slot{position:relative;min-height:104px;border-radius:8px;border:1px solid rgba(90,106,122,.26);background:linear-gradient(180deg,rgba(15,19,24,.96),rgba(8,11,16,.94));display:flex;flex-direction:column;justify-content:space-between;align-items:center;padding:9px 4px;text-align:center;overflow:hidden}
 .slot.done{border-color:rgba(0,255,135,.64);background:linear-gradient(180deg,rgba(0,255,135,.18),rgba(15,19,24,.95));box-shadow:0 0 18px rgba(0,255,135,.14),inset 0 0 18px rgba(0,255,135,.10)}
+.slot.rarity-1{border-color:rgba(59,130,246,.62);background:linear-gradient(180deg,rgba(59,130,246,.24),rgba(15,19,24,.95));box-shadow:0 0 18px rgba(59,130,246,.14),inset 0 0 18px rgba(59,130,246,.10)}
+.slot.rarity-2{border-color:rgba(192,132,252,.68);background:linear-gradient(180deg,rgba(192,132,252,.25),rgba(15,19,24,.95));box-shadow:0 0 18px rgba(192,132,252,.16),inset 0 0 18px rgba(192,132,252,.11)}
+.slot.rarity-3{border-color:rgba(255,201,64,.78);background:linear-gradient(180deg,rgba(255,201,64,.28),rgba(22,18,9,.96));box-shadow:0 0 22px rgba(255,201,64,.18),inset 0 0 18px rgba(255,201,64,.12)}
 .slot.open{border-color:rgba(255,201,64,.86);background:linear-gradient(180deg,rgba(255,201,64,.24),rgba(22,18,9,.96));box-shadow:0 0 30px rgba(255,201,64,.22),inset 0 0 18px rgba(255,201,64,.10);animation:hotSlot 1.45s ease-in-out infinite}
 .slot.win{border-color:rgba(0,255,135,.86);box-shadow:0 0 32px rgba(0,255,135,.25),inset 0 0 18px rgba(0,255,135,.14)}
 @keyframes hotSlot{0%,100%{transform:translateY(0)}50%{transform:translateY(-2px)}}
@@ -76,8 +79,13 @@ a{text-decoration:none;color:inherit}
 .market-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:8px;max-height:230px;overflow:auto;padding-right:4px}
 .market-grid::-webkit-scrollbar{width:5px}.market-grid::-webkit-scrollbar-track{background:rgba(6,8,10,.65);border-radius:5px}.market-grid::-webkit-scrollbar-thumb{background:rgba(0,255,135,.34);border-radius:5px}
 .market-card{border:1px solid #1c2028;background:#0f1318;border-radius:8px;padding:9px;display:grid;grid-template-columns:auto 1fr auto;gap:8px;align-items:center}
+.market-card.rarity-1{border-color:rgba(59,130,246,.48);background:linear-gradient(180deg,rgba(59,130,246,.14),#0f1318)}
+.market-card.rarity-2{border-color:rgba(192,132,252,.52);background:linear-gradient(180deg,rgba(192,132,252,.15),#0f1318)}
+.market-card.rarity-3{border-color:rgba(255,201,64,.58);background:linear-gradient(180deg,rgba(255,201,64,.18),#0f1318)}
+.market-card.mine{border-color:rgba(0,255,135,.58);box-shadow:0 0 14px rgba(0,255,135,.12)}
 .market-pos{width:42px;height:38px;border:1px solid rgba(129,140,248,.34);border-radius:7px;display:grid;place-items:center;font-family:'Black Ops One',sans-serif;color:#dde4f0;font-size:11px}
 .market-meta{min-width:0}.market-name{font-family:'Black Ops One',sans-serif;color:#dde4f0;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.market-sub{font-family:'Share Tech Mono',monospace;color:#7a8899;font-size:10px;margin-top:3px}
+.market-sub.you{color:#00ff87;font-weight:700}
 .market-price{font-family:'Black Ops One',sans-serif;color:#ffc940;font-size:13px;text-align:right}
 .modal{position:fixed;inset:0;z-index:6100;display:none;align-items:center;justify-content:center;background:rgba(2,6,8,.78);backdrop-filter:blur(7px);padding:16px}
 .modal.show{display:flex}
@@ -120,6 +128,7 @@ a{text-decoration:none;color:inherit}
     <div class="nav-actions">
       <span class="pill" id="walletPill">NO WALLET</span>
       <button class="btn secondary" type="button" onclick="openWalletModal()">CONNECT</button>
+      <button class="btn secondary" id="refreshBtn" type="button" onclick="manualRefresh()">REFRESH</button>
       <button class="btn" id="mintBtn" type="button" onclick="directMint()">MINT 10 CHZ</button>
     </div>
   </header>
@@ -248,7 +257,9 @@ let marketContract = new ethers.Contract(MARKET_ADDRESS, MARKET_ABI, provider);
 let address = null;
 let currentMintPrice = ethers.parseEther("10");
 let walletConnectProvider = null;
-let latestState = {usaCards:[], usaEvents:[], cardWinner:null, squadWinner:null, missing:POSITIONS, listings:[], ownerByToken:new Map()};
+let latestState = {usaCards:[], usaEvents:[], cardWinner:null, squadWinner:null, missing:POSITIONS, listings:[], ownerByToken:new Map(), myOwnedSet:new Set()};
+const REFRESH_COOLDOWN_MS = 15000;
+const REFRESH_KEY = "bkNationQuestLastRefresh";
 
 function parseDNA(dna) {
   const n = typeof dna === "bigint" ? dna : BigInt(String(dna));
@@ -267,6 +278,17 @@ function showOverlay(msg){document.getElementById("networkText").textContent = m
 function updateOverlay(msg){document.getElementById("networkText").textContent = msg;}
 function hideOverlay(){document.getElementById("networkOverlay").classList.remove("show");}
 function formatTime(ts){return ts ? new Date(ts * 1000).toLocaleString([], {month:"short", day:"2-digit", hour:"2-digit", minute:"2-digit"}) : "time pending";}
+function refreshRemainingMs(){return Math.max(0, REFRESH_COOLDOWN_MS - (Date.now() - Number(localStorage.getItem(REFRESH_KEY) || 0)));}
+function markRefresh(){localStorage.setItem(REFRESH_KEY, String(Date.now()));}
+function updateRefreshButton() {
+  const btn = document.getElementById("refreshBtn");
+  if (!btn) return;
+  const remaining = Math.ceil(refreshRemainingMs() / 1000);
+  btn.disabled = remaining > 0;
+  btn.textContent = remaining > 0 ? `REFRESH ${remaining}s` : "REFRESH";
+  btn.classList.toggle("closed", remaining > 0);
+}
+setInterval(updateRefreshButton, 500);
 
 async function getBlockTime(block) {
   if (!block) return 0;
@@ -306,7 +328,7 @@ async function finalizeWalletConnection(walletProvider, label) {
   marketContract = new ethers.Contract(MARKET_ADDRESS, MARKET_ABI, signer);
   document.getElementById("walletPill").textContent = `${label} ${shortAddr(address)}`;
   document.getElementById("mintNote").textContent = `Connected: ${shortAddr(address)}`;
-  await loadQuest(true);
+  await loadQuest(true, true);
 }
 
 async function connectInjected() {
@@ -366,7 +388,7 @@ async function directMint() {
     const receipt = await tx.wait();
     if (receipt && Number(receipt.status) === 0) throw new Error("Mint reverted on-chain.");
     updateOverlay("Mint confirmed. Updating quest state...");
-    await loadQuest(true);
+    await loadQuest(true, true);
   } catch(e) {
     console.error(e);
     alert("Mint failed. Check CHZ balance, network, and wallet confirmation.");
@@ -393,7 +415,7 @@ async function buyListing(listingId, priceChz) {
     const receipt = await tx.wait();
     if (receipt && Number(receipt.status) === 0) throw new Error("Buy reverted on-chain.");
     updateOverlay("Updating squad and market...");
-    await loadQuest(true);
+    await loadQuest(true, true);
   } catch(e) {
     console.error(e);
     alert("Buy failed. Check balance, listing status and wallet confirmation.");
@@ -421,7 +443,7 @@ async function listCard(tokenId) {
     const receipt = await tx.wait();
     if (receipt && Number(receipt.status) === 0) throw new Error("Listing reverted on-chain.");
     closeSellModal();
-    await loadQuest(true);
+    await loadQuest(true, true);
   } catch(e) {
     console.error(e);
     alert("Listing failed. The card may already be listed or unavailable.");
@@ -439,7 +461,7 @@ async function cancelListing(listingId) {
     updateOverlay("Cancel sent. Waiting for block confirmation...");
     const receipt = await tx.wait();
     if (receipt && Number(receipt.status) === 0) throw new Error("Cancel reverted on-chain.");
-    await loadQuest(true);
+    await loadQuest(true, true);
   } catch(e) {
     console.error(e);
     alert("Cancel failed. Make sure this is your listing.");
@@ -548,10 +570,14 @@ async function buildState() {
     if (set.size === 11 && !squadWinner) squadWinner = e;
   });
   const mySet = address ? (walletPositions.get(address) || new Set()) : new Set();
+  const myOwnedSet = new Set();
+  if (address) usaCards.forEach(card => {
+    if (ownerByToken.get(Number(card.tokenId)) === address) myOwnedSet.add(card.position);
+  });
   const missing = POSITIONS.filter(p => !globalPositions.has(p.id));
   const listings = await fetchActiveListings(tokenInfo);
   await Promise.all([cardWinner, squadWinner].filter(Boolean).map(async item => { item.time = await getBlockTime(item.block); }));
-  return {usaCards, usaEvents:events, globalPositions, walletPositions, mySet, missing, cardWinner, squadWinner, listings, ownerByToken, tokenInfo};
+  return {usaCards, usaEvents:events, globalPositions, walletPositions, mySet, myOwnedSet, missing, cardWinner, squadWinner, listings, ownerByToken, tokenInfo};
 }
 
 function renderSlots(targetId, filledSet, byPosition, winnerPos = null, mode = "global") {
@@ -562,18 +588,23 @@ function renderSlots(targetId, filledSet, byPosition, winnerPos = null, mode = "
     const done = filledSet.has(pos.id);
     const best = cards.slice().sort((a,b) => b.weight - a.weight)[0];
     const floor = (latestState.listings || []).filter(l => l.position === pos.id && (!address || l.seller !== address)).sort((a,b) => a.price - b.price)[0];
-    const sellable = mode === "mine" && cards.length;
+    const myListed = (latestState.listings || []).filter(l => address && l.seller === address && l.position === pos.id);
+    const listedTokens = new Set(myListed.map(l => Number(l.tokenId)));
+    const unlistedCards = cards.filter(card => !listedTokens.has(Number(card.tokenId)));
+    const sellable = mode === "mine" && unlistedCards.length;
+    const ownListing = myListed[0];
     const el = document.createElement("div");
-    el.className = `slot ${done ? "done" : "open"} ${winnerPos === pos.id ? "win" : ""}`;
+    el.className = `slot ${done ? "done" : "open"} ${mode === "mine" && best ? `rarity-${best.rarity}` : ""} ${winnerPos === pos.id ? "win" : ""}`;
     const openCount = mode === "global" ? "500" : (floor ? `${floor.price}` : "-");
     const openStatus = mode === "global" ? "OPEN CHZ" : (floor ? "BUY CHZ" : "MISSING");
     el.innerHTML = `
       <div class="slot-pos">${pos.label}</div>
       <div class="slot-ball">${ballIcon()}</div>
       <div class="slot-count">${done ? (cards.length ? cards.length + "x" : "OK") : openCount}</div>
-      <div class="slot-status">${done ? (best ? `${best.weight} PTS ${rarityName(best.rarity)}` : "SCORED") : openStatus}</div>
+      <div class="slot-status">${mode === "global" ? (done ? "MINTED" : openStatus) : (done ? (best ? `${best.weight} PTS ${rarityName(best.rarity)}` : "SCORED") : openStatus)}</div>
       ${mode === "mine" ? `<div class="slot-actions">
         ${floor ? `<button class="slot-action buy" onclick="buyListing(${floor.listingId}, '${floor.price}')">BUY</button>` : ""}
+        ${ownListing && !sellable ? `<button class="slot-action sell" onclick="cancelListing(${ownListing.listingId})">CANCEL</button>` : ""}
         ${sellable ? `<button class="slot-action sell" onclick="openSellCards(${pos.id})">SELL</button>` : ""}
       </div>` : ""}
     `;
@@ -591,7 +622,7 @@ function renderQuest(state) {
   document.getElementById("statCompleted").textContent = `${state.globalPositions.size} / 11`;
   document.getElementById("statMissing").textContent = String(state.missing.length);
   document.getElementById("statUsaCards").textContent = String(state.usaCards.length);
-  document.getElementById("myCompleted").textContent = address ? `${state.mySet.size} / 11` : "- / 11";
+  document.getElementById("myCompleted").textContent = address ? `${state.myOwnedSet.size} / 11` : "- / 11";
   document.getElementById("myStatus").textContent = address ? shortAddr(address) : "Connect wallet";
   document.getElementById("updatedAt").textContent = new Date().toLocaleTimeString([], {hour:"2-digit", minute:"2-digit"});
 
@@ -615,11 +646,11 @@ function renderQuest(state) {
 
   renderSlots("globalSlots", state.globalPositions, byPosition, state.cardWinner?.position, "global");
   const myByPosition = new Map();
-  if (address) state.usaEvents.filter(e => e.wallet === address).forEach(card => {
+  if (address) state.usaCards.filter(card => state.ownerByToken?.get(Number(card.tokenId)) === address).forEach(card => {
     if (!myByPosition.has(card.position)) myByPosition.set(card.position, []);
     myByPosition.get(card.position).push(card);
   });
-  renderSlots("mySlots", state.mySet, myByPosition, state.squadWinner?.wallet === address ? state.squadWinner.position : null, "mine");
+  renderSlots("mySlots", state.myOwnedSet, myByPosition, state.squadWinner?.wallet === address ? state.squadWinner.position : null, "mine");
   renderMarket(state);
 
   document.getElementById("cardWinnerBox").innerHTML = state.cardWinner
@@ -651,11 +682,11 @@ function renderMarket(state) {
   grid.innerHTML = listings.slice(0, 40).map(l => {
     const mine = address && l.seller === address;
     return `
-      <div class="market-card">
+      <div class="market-card rarity-${l.rarity} ${mine ? "mine" : ""}">
         <div class="market-pos">${posLabel(l.position)}</div>
         <div class="market-meta">
           <div class="market-name">${l.weight} PTS ${rarityName(l.rarity)}</div>
-          <div class="market-sub">#${l.tokenId} - ${mine ? "your listing" : shortAddr(l.seller)}</div>
+          <div class="market-sub ${mine ? "you" : ""}">#${l.tokenId} - ${mine ? "YOU" : shortAddr(l.seller)}</div>
         </div>
         <div>
           <div class="market-price">${l.price} CHZ</div>
@@ -692,11 +723,25 @@ function openSellCards(position) {
   document.getElementById("sellModal").classList.add("show");
 }
 
-async function loadQuest(silent = false) {
+async function manualRefresh() {
+  await loadQuest(false, false);
+}
+
+async function loadQuest(silent = false, force = false) {
+  const remaining = refreshRemainingMs();
+  if (!force && remaining > 0) {
+    updateRefreshButton();
+    const sec = Math.ceil(remaining / 1000);
+    const status = document.getElementById("updatedAt");
+    if (status) status.textContent = `Refresh in ${sec}s`;
+    return;
+  }
   if (!silent) showOverlay("Reading Nation Quest data...");
   try {
     const state = await buildState();
     renderQuest(state);
+    if (!force) markRefresh();
+    updateRefreshButton();
   } catch(error) {
     console.error(error);
     document.getElementById("questStatus").textContent = "Error loading live quest data. Refresh the page.";
@@ -706,14 +751,15 @@ async function loadQuest(silent = false) {
 }
 
 window.addEventListener("load", async () => {
-  await loadQuest(true);
+  updateRefreshButton();
+  await loadQuest(true, false);
   if (window.ethereum) {
     window.ethereum.request({method:"eth_accounts"}).then(accounts => {
       if (accounts && accounts[0]) connectWallet().catch(console.warn);
     }).catch(()=>{});
   }
 });
-setInterval(() => loadQuest(true), 90000);
+setInterval(() => loadQuest(true, true), 45000);
 </script>
 </body>
 </html>
