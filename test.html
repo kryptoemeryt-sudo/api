@@ -1925,6 +1925,110 @@ body.network-busy{cursor:progress;}
   .network-wait-title{font-size:13px;}
   .network-wait-text{font-size:11px;}
 }
+
+/* Home-matched nav + stable pre-login landing */
+body{padding-top:54px!important;}
+.topnav{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  gap:12px!important;
+  padding:12px 28px!important;
+  border-bottom:1px solid rgba(0,255,135,0.14)!important;
+  background:rgba(5,7,10,0.96)!important;
+  backdrop-filter:blur(14px)!important;
+  position:fixed!important;
+  top:0!important;
+  left:0!important;
+  right:0!important;
+  z-index:100!important;
+  overflow:visible!important;
+}
+.topnav-logo{font-size:18px!important;letter-spacing:2px!important;text-shadow:0 0 18px rgba(0,255,135,0.16)!important;white-space:nowrap;}
+.topnav-left{display:flex!important;align-items:center!important;gap:12px!important;min-width:0!important;overflow:hidden!important;}
+.wallet-actions{display:flex!important;align-items:center!important;gap:12px!important;justify-self:auto!important;flex-shrink:0!important;}
+.wallet-pill{font-family:'Share Tech Mono',monospace!important;font-size:11px!important;line-height:1!important;}
+.nav-countdown,.nav-price-countdown{
+  position:absolute!important;
+  left:50%!important;
+  top:50%!important;
+  transform:translate(-50%,-50%)!important;
+  font-family:'Black Ops One',sans-serif!important;
+  font-size:13px!important;
+  letter-spacing:2px!important;
+  color:#ffc940!important;
+  padding:6px 12px!important;
+  border:1px solid rgba(255,201,64,.24)!important;
+  border-radius:7px!important;
+  background:rgba(255,201,64,.045)!important;
+  white-space:nowrap!important;
+  display:block!important;
+  justify-self:auto!important;
+}
+.nav-countdown span,.nav-price-countdown span{color:#dde4f0!important;font-size:10px!important;margin-right:8px!important;letter-spacing:1px!important;}
+.nav-countdown b,.nav-price-countdown b{font-size:13px!important;color:#ffc940!important;font-weight:400!important;}
+body:not(.game-mode) #gameSection,
+body:not(.game-mode) #statsRow,
+body:not(.game-mode) .dashboard-prize-strip{display:none!important;}
+body:not(.game-mode) .page{max-width:none!important;width:100%!important;margin:0!important;padding:8px 8px 40px!important;display:block!important;min-height:calc(100vh - 54px)!important;}
+body:not(.game-mode) .hero{
+  width:min(1480px,100%)!important;
+  margin:0 auto!important;
+  min-height:0!important;
+  display:grid!important;
+  grid-template-columns:minmax(165px,.65fr) minmax(185px,.72fr) minmax(430px,1.45fr) minmax(245px,.95fr)!important;
+  align-items:stretch!important;
+  gap:10px!important;
+  padding:10px!important;
+  border:1px solid #1c2028!important;
+  border-radius:10px!important;
+  background:linear-gradient(90deg,rgba(0,255,135,.035),rgba(15,19,24,.45),rgba(116,172,223,.025))!important;
+  overflow:hidden!important;
+}
+body:not(.game-mode) .hero::before{opacity:.45!important;}
+body:not(.game-mode) .badge,
+body:not(.game-mode) .trophy,
+body:not(.game-mode) .arg-flag,
+body:not(.game-mode) .hero-sub,
+body:not(.game-mode) .countdown-wrap{display:none!important;}
+body:not(.game-mode) .hero-title{grid-column:1!important;align-self:center!important;font-size:clamp(24px,2.3vw,38px)!important;line-height:.93!important;margin:0!important;text-align:left!important;padding:10px 4px!important;}
+body:not(.game-mode) .prize-row{grid-column:2!important;margin:0!important;display:grid!important;grid-template-columns:1fr!important;gap:6px!important;min-width:0!important;}
+body:not(.game-mode) .prize-box.main{min-height:86px!important;padding:12px 10px!important;border-radius:8px!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;}
+body:not(.game-mode) .prize-num{font-size:28px!important;line-height:1!important;}
+body:not(.game-mode) .prize-chz{font-size:12px!important;}
+body:not(.game-mode) .prize-side-notes{display:grid!important;grid-template-columns:1fr!important;gap:5px!important;}
+body:not(.game-mode) .prize-note{min-height:36px!important;padding:7px 8px!important;font-size:9px!important;line-height:1.12!important;border-radius:6px!important;}
+body:not(.game-mode) .prize-note strong{font-size:10px!important;margin-bottom:2px!important;}
+body:not(.game-mode) .quest-flow{grid-column:3!important;margin:0!important;display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:8px!important;align-self:center!important;}
+body:not(.game-mode) .flow-card{min-height:86px!important;padding:10px!important;border-radius:8px!important;}
+body:not(.game-mode) .flow-title{font-size:12px!important;margin-bottom:5px!important;}
+body:not(.game-mode) .flow-text{font-size:10px!important;line-height:1.25!important;}
+body:not(.game-mode) .hero-actions{grid-column:4!important;margin:0!important;display:grid!important;grid-template-columns:1fr!important;gap:8px!important;align-self:center!important;}
+body:not(.game-mode) .hero-actions .btn-mint-hero{width:100%!important;min-height:42px!important;padding:10px 12px!important;font-size:11px!important;letter-spacing:1px!important;border-radius:8px!important;white-space:nowrap!important;}
+body:not(.game-mode) .hero-actions .btn-mint-hero + .btn-mint-hero{display:none!important;}
+body:not(.game-mode) #connectSection{max-width:520px!important;margin:22px auto 0!important;padding:22px!important;border:1px solid rgba(0,255,135,.18)!important;border-radius:10px!important;background:rgba(15,19,24,.72)!important;}
+@media(max-width:900px){
+  body{padding-top:72px!important;}
+  .topnav{padding:10px 12px!important;min-height:48px!important;}
+  .topnav-logo{font-size:13px!important;}
+  .wallet-pill{font-size:8px!important;padding:4px 5px!important;max-width:88px!important;overflow:hidden!important;text-overflow:ellipsis!important;}
+  .btn-connect{font-size:9px!important;padding:7px 9px!important;}
+  .nav-countdown,.nav-price-countdown{top:48px!important;left:50%!important;transform:translateX(-50%)!important;font-size:9px!important;letter-spacing:1px!important;padding:4px 7px!important;z-index:101!important;background:rgba(5,7,10,.96)!important;}
+  .nav-countdown span,.nav-price-countdown span{display:none!important;}
+  body:not(.game-mode) .hero{grid-template-columns:1fr!important;padding:10px!important;gap:8px!important;}
+  body:not(.game-mode) .hero-title,
+  body:not(.game-mode) .prize-row,
+  body:not(.game-mode) .quest-flow,
+  body:not(.game-mode) .hero-actions{grid-column:1!important;}
+  body:not(.game-mode) .hero-title{text-align:center!important;font-size:30px!important;}
+  body:not(.game-mode) .prize-row{grid-template-columns:1fr!important;}
+  body:not(.game-mode) .prize-side-notes{grid-template-columns:1fr 1fr!important;}
+  body:not(.game-mode) .quest-flow{grid-template-columns:1fr 1fr 1fr!important;gap:5px!important;}
+  body:not(.game-mode) .flow-card{min-height:64px!important;padding:7px 5px!important;}
+  body:not(.game-mode) .flow-text{display:none!important;}
+  body:not(.game-mode) .flow-title{font-size:9px!important;margin:0!important;}
+  body:not(.game-mode) .flow-kicker{font-size:7px!important;margin-bottom:3px!important;}
+}
 </style>
 </head>
 <body>
@@ -1935,7 +2039,7 @@ body.network-busy{cursor:progress;}
     <span id="walletAddress" class="wallet-pill" style="color:#dde4f0;">0x0000...0000</span>
     <span id="walletBalance" class="wallet-pill" style="color:#00ff87;">0.0 CHZ</span>
   </div>
-  <div class="nav-price-countdown" id="navPriceCountdown"><span>50 CHZ IN</span><b>--</b></div>
+  <div class="nav-countdown" id="navPriceCountdown"><span>50 CHZ IN</span><b>--</b></div>
   <div class="wallet-actions">
     <button class="btn-connect" id="connectBtn" onclick="openWalletChoice()">CONNECT</button>
   </div>
@@ -2084,6 +2188,7 @@ body.network-busy{cursor:progress;}
     </div>
 
     <!-- ASYMETRYCZNY UKĹAD ROZGRYWKI -->
+      <div id="gameSection" style="display:none;">
     <div class="game-grid">
       
       <!-- LEWA KOLUMNA: HOW IT WORKS, SNIPE MARKET, LIVE FEED -->
@@ -3399,7 +3504,7 @@ async function connectWallet(){
     await finalizeWalletConnection(walletProvider, 'Injected');
   }catch(e){
     console.error(e);
-    showHeaderToast('Error connecting wallet.', true);
+    showHeaderToast('Wallet connection failed: ' + readableError(e).slice(0, 120), true);
   }
 }
 
