@@ -37,33 +37,6 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
 .wallet-note{font-size:11px;color:#6f7f92;line-height:1.35;margin-top:12px;}
 body.game-mode .wallet-actions #connectBtn.connected{display:none;}
 
-
-/* Home-style WC topbar + WC Album guide */
-.topnav{height:52px!important;padding:8px 18px!important;display:grid!important;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr)!important;align-items:center!important;background:rgba(6,8,10,.98)!important;border-bottom:1px solid rgba(0,255,135,.16)!important;position:sticky!important;top:0!important;}
-.topnav-left{justify-self:start!important;display:flex!important;align-items:center!important;gap:10px!important;min-width:0!important;}
-.topnav-logo{font-size:13px!important;letter-spacing:2px!important;white-space:nowrap!important;}
-.wc-nav-countdown{justify-self:center!important;border:1px solid rgba(255,201,64,.38)!important;background:rgba(255,201,64,.055)!important;border-radius:7px!important;padding:7px 18px!important;font-family:'Black Ops One',sans-serif!important;font-size:12px!important;letter-spacing:1px!important;color:#ffc940!important;white-space:nowrap!important;line-height:1!important;}
-.wc-nav-countdown span{color:#dde4f0!important;margin-right:8px!important;}
-.wallet-actions{justify-self:end!important;display:flex!important;align-items:center!important;gap:10px!important;min-width:0!important;}
-.wallet-pill{border:0!important;background:transparent!important;padding:0!important;border-radius:0!important;line-height:1!important;}
-#walletAddress{font-family:'Share Tech Mono',monospace!important;color:#7a8899!important;font-size:11px!important;}
-#walletBalance{font-family:'Black Ops One',sans-serif!important;color:#ffc940!important;font-size:13px!important;}
-.btn-connect{background:rgba(0,255,135,.10)!important;border:1px solid rgba(0,255,135,.30)!important;color:#00ff87!important;padding:8px 18px!important;border-radius:6px!important;font-size:11px!important;box-shadow:none!important;}
-.btn-connect.connected{background:rgba(0,255,135,.14)!important;border-color:rgba(0,255,135,.55)!important;}
-body.game-mode .topnav{grid-template-columns:minmax(0,1fr) auto minmax(0,1fr)!important;}
-body.game-mode .wallet-actions #connectBtn.connected{display:inline-flex!important;}
-.wc-guide-modal{position:fixed;inset:0;background:rgba(0,0,0,.72);backdrop-filter:blur(8px);z-index:5600;display:none;align-items:center;justify-content:center;padding:18px;}
-.wc-guide-modal.active{display:flex;}
-.wc-guide-panel{width:min(700px,100%);max-height:calc(100dvh - 36px);overflow:auto;background:linear-gradient(180deg,#111820,#070b10);border:1px solid rgba(0,255,135,.34);border-radius:13px;box-shadow:0 24px 80px rgba(0,0,0,.65),0 0 34px rgba(0,255,135,.10);padding:18px;}
-.wc-guide-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:10px;}.wc-guide-close{width:34px;height:34px;border-radius:8px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.04);color:#dde4f0;font-size:20px;cursor:pointer;line-height:1;flex:0 0 auto;}
-.wc-guide-kicker{font-family:'Share Tech Mono',monospace;color:#ffc940;font-size:11px;letter-spacing:3px;margin-bottom:6px;text-transform:uppercase;}.wc-guide-title{font-family:'Black Ops One',sans-serif;font-size:28px;line-height:.95;color:#00ff87;letter-spacing:1px;}.wc-guide-copy{color:#dde4f0;font-size:16px;line-height:1.35;margin:10px 0 12px;}
-.wc-guide-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}.wc-guide-step{display:grid;grid-template-columns:34px 1fr;gap:9px;align-items:start;background:linear-gradient(145deg,rgba(15,19,24,.98),rgba(0,255,135,.045));border:1px solid rgba(0,255,135,.18);border-radius:9px;padding:10px;}.wc-guide-num{height:28px;border-radius:7px;display:grid;place-items:center;background:rgba(0,255,135,.12);border:1px solid rgba(0,255,135,.26);font-family:'Black Ops One',sans-serif;color:#00ff87;font-size:11px;}.wc-guide-step-title{font-family:'Black Ops One',sans-serif;color:#fff;font-size:12px;letter-spacing:.8px;margin-bottom:4px;}.wc-guide-step-text{color:#dde4f0;font-size:14px;line-height:1.28;}
-.wc-guide-examples{margin-top:12px;border:1px solid rgba(129,140,248,.30);border-radius:9px;background:rgba(129,140,248,.055);overflow:hidden;}.wc-guide-examples summary{list-style:none;cursor:pointer;padding:11px 12px;font-family:'Black Ops One',sans-serif;color:#818cf8;font-size:12px;letter-spacing:1px;display:flex;align-items:center;justify-content:space-between;gap:10px;}.wc-guide-examples summary::-webkit-details-marker{display:none}.wc-guide-examples summary::after{content:'+';color:#ffc940;font-size:16px;line-height:1}.wc-guide-examples[open] summary::after{content:'-'}
-.wc-example-list{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:0 10px 10px;}.wc-example{border:1px solid rgba(255,255,255,.08);border-radius:8px;background:rgba(6,8,10,.54);padding:9px;}.wc-example b{display:block;font-family:'Black Ops One',sans-serif;color:#ffc940;font-size:10px;letter-spacing:.8px;margin-bottom:5px;}.wc-example span{display:block;color:#dde4f0;font-size:13px;line-height:1.25;}
-.wc-guide-note{margin-top:12px;border:1px solid rgba(255,201,64,.28);background:rgba(255,201,64,.075);border-radius:8px;padding:10px;color:#dde4f0;font-size:14px;line-height:1.3;}.wc-guide-note strong{font-family:'Black Ops One',sans-serif;color:#ffc940;font-size:11px;letter-spacing:.8px;}
-.wc-guide-dont-show{display:flex;align-items:center;gap:8px;margin-top:12px;color:#dde4f0;font-family:'Share Tech Mono',monospace;font-size:12px;cursor:pointer;}.wc-guide-dont-show input{accent-color:#00ff87;width:16px;height:16px;}.wc-guide-start{width:100%;margin-top:14px;padding:12px!important;font-size:12px!important;border-radius:8px!important;font-family:'Black Ops One',sans-serif!important;}
-@media(max-width:700px){.topnav{height:42px!important;min-height:42px!important;padding:6px 8px!important;grid-template-columns:auto minmax(80px,1fr) auto!important;gap:6px!important}.topnav-logo{font-size:9px!important;letter-spacing:.7px!important}.wc-nav-countdown{padding:4px 6px!important;font-size:6.5px!important;letter-spacing:0!important;max-width:118px!important;overflow:hidden!important;text-overflow:ellipsis!important}.wc-nav-countdown span{margin-right:2px!important}.wallet-actions{gap:5px!important}.wallet-actions #walletAddress{display:none!important}.wallet-actions #walletBalance{display:inline-flex!important;font-size:7px!important;max-width:58px!important;overflow:hidden!important;text-overflow:ellipsis!important}.btn-connect{font-size:7px!important;padding:6px 6px!important;max-width:74px!important;overflow:hidden!important;text-overflow:ellipsis!important}.wc-guide-panel{padding:14px!important}.wc-guide-title{font-size:22px}.wc-guide-copy{font-size:13px}.wc-guide-grid,.wc-example-list{grid-template-columns:1fr;gap:7px}.wc-guide-step-text,.wc-example span,.wc-guide-note{font-size:12px}.wc-guide-examples summary{font-size:10px;padding:9px 10px}.wc-guide-dont-show{font-size:11px}}
-
 /* HERO & HEADER */
 .hero{padding:22px 24px 20px;text-align:left;border-bottom:1px solid #1c2028;position:relative;overflow:hidden;display:grid;grid-template-columns:minmax(280px,0.95fr) minmax(300px,1.2fr) minmax(280px,0.85fr);gap:16px;align-items:stretch;}
 .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 55% at 20% 0%,rgba(0,255,135,0.12),transparent 65%),radial-gradient(ellipse 50% 45% at 85% 10%,rgba(129,140,248,0.12),transparent 70%);pointer-events:none;}
@@ -375,7 +348,7 @@ body.game-mode .wallet-actions #connectBtn.connected{display:inline-flex!importa
   background: rgba(0,255,135,0.06);
 }
 .pos-card.owned::after{
-  content: '';
+  content: '✓';
   position: absolute;
   top: 2px;
   right: 4px;
@@ -800,6 +773,158 @@ body.game-mode .lb-row{display:grid;grid-template-columns:34px minmax(0,1fr) 92p
 body.game-mode .lb-addr{font-size:10px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 body.game-mode .lb-completion{font-size:9px;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 body.game-mode .lb-score{font-size:12px;text-align:right;white-space:nowrap;}
+body.game-mode .stat-lbl,
+body.game-mode .pitch-title,
+body.game-mode .countdown-sub,
+body.game-mode .lb-completion,
+body.game-mode .wallet-note,
+body.game-mode .flow-kicker,
+body.game-mode .schedule-date,
+body.game-mode .pos-rarity,
+body.game-mode .card-hover-note{color:#dde4f0 !important;}
+.album-count-label{font-family:'Share Tech Mono',monospace;color:#818cf8;}
+.completion-label{font-family:'Share Tech Mono',monospace;color:#818cf8;font-size:12px;}
+body.game-mode .squad-score{display:inline-block;margin-left:8px;color:#00ff87;font-family:'Black Ops One',sans-serif;font-size:11px;letter-spacing:1px;}
+.pos-card-top{display:grid;grid-template-rows:auto 1fr;align-items:center;justify-items:center;min-height:0;width:100%;}
+.figure-mini{width:34px;height:34px;margin:0 auto;display:grid;place-items:center;line-height:0;}
+.figure-mini svg{width:100%;height:100%;display:block;}
+.pos-card.owned::after{top:-5px;right:-3px;background:#0a0e14;border:1px solid rgba(0,255,135,.45);border-radius:50%;width:14px;height:14px;display:grid;place-items:center;font-size:9px;line-height:1;z-index:8;}
+@media(min-width:701px){
+  body.game-mode .nation-selector-title{
+    display:grid;
+    grid-template-columns:max-content minmax(0,1fr) max-content;
+    align-items:center;
+    gap:8px;
+    margin-bottom:7px;
+  }
+  body.game-mode .nation-selector-title .filter-tabs{
+    display:grid;
+    grid-template-columns:repeat(7,minmax(0,1fr));
+    gap:5px;
+    margin:0;
+    min-width:0;
+  }
+  body.game-mode .album-title-tools{justify-content:flex-end;min-width:0;}
+  body.game-mode .album-count-label,
+  body.game-mode .completion-label,
+  body.game-mode .squad-score,
+  body.game-mode .lb-toggle-btn{
+    font-family:'Black Ops One',sans-serif;
+    font-size:13px !important;
+    letter-spacing:1.5px;
+  }
+  body.game-mode .album-count-label,
+  body.game-mode .completion-label{color:#818cf8;}
+  body.game-mode .pitch-title,
+  body.game-mode .dash-prize-title,
+  body.game-mode .stat-lbl,
+  body.game-mode .countdown-sub,
+  body.game-mode .lb-info{
+    color:#dde4f0 !important;
+  }
+  body.game-mode .tab-btn{
+    font-size:12px;
+    padding:6px 4px;
+    letter-spacing:.7px;
+    color:#dde4f0;
+  }
+  body.game-mode .country-grid{
+    overflow:hidden;
+    grid-template-columns:repeat(6,minmax(0,1fr));
+    grid-auto-rows:minmax(30px,1fr);
+    gap:5px;
+    padding-right:0;
+  }
+  body.game-mode .country-card{
+    min-height:30px;
+    padding:5px 7px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    align-items:center;
+    justify-items:center;
+    text-align:center;
+    gap:4px 8px;
+  }
+  body.game-mode .country-card-main{
+    min-width:0;
+    width:100%;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:2px;
+  }
+  body.game-mode .country-card-stats{
+    width:100%;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    line-height:1.05;
+    white-space:nowrap;
+  }
+  body.game-mode .country-card-flag{
+    width:auto;
+    flex-shrink:0;
+    justify-content:center;
+    align-self:center;
+  }
+  body.game-mode .country-card .flag-img{
+    width:38px;
+    height:25px;
+  }
+  body.game-mode .country-card-name{
+    width:auto;
+    margin-top:0!important;
+    text-align:center;
+    font-family:'Black Ops One',sans-serif;
+    font-size:16px;
+    letter-spacing:.6px;
+    color:#dde4f0;
+  }
+  body.game-mode .country-card-score{
+    font-family:'Black Ops One',sans-serif;
+    font-size:16px;
+    margin-top:0;
+    color:#dde4f0;
+  }
+  body.game-mode .country-card-completion{
+    font-size:13px;
+    font-family:'Black Ops One',sans-serif;
+  }
+  body.game-mode .pos-name{
+    font-family:'Black Ops One',sans-serif;
+    font-size:11px;
+    color:#dde4f0;
+  }
+  body.game-mode .pitch-title #selectedCountryTitle{
+    color:#dde4f0;
+    font-size:13px;
+  }
+  body.game-mode .squad-score{font-size:13px!important;}
+  body.game-mode .pos-card-top{
+    min-height:45px;
+    width:100%;
+    align-items:center;
+    justify-items:center;
+  }
+  body.game-mode .figure-mini{
+    width:38px;
+    height:38px;
+  }
+  body.game-mode .lb-row{
+    grid-template-columns:40px minmax(0,1fr) 110px 122px 82px;
+  }
+  body.game-mode .lb-addr,
+  body.game-mode .lb-completion,
+  body.game-mode .lb-score,
+  body.game-mode .lb-prize{
+    font-family:'Black Ops One',sans-serif;
+    font-size:13px;
+    letter-spacing:.5px;
+    color:#dde4f0;
+  }
+}
 .pos-card.rarity-1 .pos-name,.pos-card.rarity-1 .pos-ball{color:#93c5fd;}
 .pos-card.rarity-2 .pos-name,.pos-card.rarity-2 .pos-ball{color:#d8b4fe;}
 .pos-card.rarity-3 .pos-name,.pos-card.rarity-3 .pos-ball{color:#ffe08a;}
@@ -809,15 +934,6 @@ body.game-mode .lb-score{font-size:12px;text-align:right;white-space:nowrap;}
 .network-ball{font-size:34px;animation:spin 1.1s linear infinite;margin-bottom:10px;text-shadow:0 0 18px rgba(0,255,135,.25);}
 .network-wait-title{font-family:'Black Ops One',sans-serif;color:#00ff87;font-size:16px;letter-spacing:1px;margin-bottom:8px;}
 .network-wait-text{font-family:'Share Tech Mono',monospace;color:#8fa4bb;font-size:12px;line-height:1.35;}
-.network-steps{display:none;margin-top:14px;text-align:left;border-top:1px solid rgba(255,255,255,.10);padding-top:12px;gap:7px;}
-.network-steps.active{display:grid;}
-.network-step{display:grid;grid-template-columns:18px 1fr;align-items:center;gap:8px;font-family:'Black Ops One',sans-serif;font-size:10px;letter-spacing:.7px;color:#8fa4bb;text-transform:uppercase;line-height:1.15;}
-.network-step::before{content:'';width:13px;height:13px;border-radius:50%;border:1px solid rgba(143,164,187,.45);background:rgba(255,255,255,.03);box-shadow:inset 0 0 8px rgba(0,0,0,.35);}
-.network-step.active{color:#fff;}
-.network-step.active::before{border-color:#ffc940;background:radial-gradient(circle,#ffc940 0 35%,rgba(255,201,64,.14) 38% 100%);box-shadow:0 0 12px rgba(255,201,64,.24);}
-.network-step.done{color:#00ff87;}
-.network-step.done::before{content:'';display:grid;place-items:center;background:#00ff87;border-color:#00ff87;box-shadow:0 0 12px rgba(0,255,135,.28);position:relative;}
-.network-step.done::after{content:'';grid-column:1;grid-row:1;width:7px;height:4px;border-left:2px solid #06080a;border-bottom:2px solid #06080a;transform:rotate(-45deg);justify-self:center;align-self:center;margin-top:-1px;}
 #toast{display:none!important;}
 
 @media(max-width:700px){
@@ -839,6 +955,13 @@ body.game-mode .lb-score{font-size:12px;text-align:right;white-space:nowrap;}
   body.game-mode #statsRow .stat-val{font-size:15px;}
   body.game-mode #statsRow #myEstPayout{font-size:15px!important;}
   body.game-mode #statsRow .stat-lbl{font-size:6px;letter-spacing:.2px;line-height:1.05;color:#9fb0c4;font-weight:700;}
+  body.game-mode #statsRow .stat-lbl,
+  body.game-mode .pitch-title,
+  body.game-mode .lb-completion,
+  body.game-mode .countdown-sub,
+  body.game-mode .pos-rarity,
+  body.game-mode .dash-prize-title,
+  body.game-mode .card-hover-note{color:#dde4f0!important;}
   body.game-mode .game-grid{grid-template-columns:1fr;grid-template-rows:auto minmax(0,1fr);gap:6px;}
   body.game-mode .country-section{grid-column:1 / -1;grid-row:2 / 3;}
   body.game-mode .pitch-container{grid-column:1 / -1;grid-row:1 / 2;}
@@ -890,6 +1013,8 @@ body.game-mode .lb-score{font-size:12px;text-align:right;white-space:nowrap;}
   body.game-mode .pos-ball{font-size:12px;}
   body.game-mode .pos-weight{font-size:11px;}
   body.game-mode .pos-rarity{font-size:5px;}
+  body.game-mode .pos-card-top{min-height:32px;align-items:center;justify-items:center;}
+  body.game-mode .figure-mini{width:24px;height:24px;margin:auto;}
   body.game-mode .btn-card-action{font-size:5px;padding:2px 1px;margin-top:2px;}
   body.game-mode .pos-card.has-actions{cursor:pointer;}
   body.game-mode .card-hover-actions{display:none;}
@@ -900,12 +1025,12 @@ body.game-mode .lb-score{font-size:12px;text-align:right;white-space:nowrap;}
   body.game-mode .lb-toggle-container{margin-bottom:5px;}
   body.game-mode .lb-toggle-btn{font-size:6px;padding:5px 2px;}
   body.game-mode .leaderboard-list{padding:5px;}
-  body.game-mode .lb-row{grid-template-columns:22px minmax(0,1fr) 44px 58px 42px;gap:4px;padding:5px;}
-  body.game-mode .lb-pos{font-size:9px;width:auto;}
-  body.game-mode .lb-addr{font-size:8px;}
-  body.game-mode .lb-completion{font-size:7px;}
-  body.game-mode .lb-score{font-size:8px;}
-  body.game-mode .lb-prize{font-size:8px;}
+  body.game-mode .lb-row{grid-template-columns:22px minmax(0,1fr) 52px 64px 44px;gap:4px;padding:5px;}
+  body.game-mode .lb-pos{font-size:10px;width:auto;}
+  body.game-mode .lb-addr{font-size:9px;}
+  body.game-mode .lb-completion{font-size:8px;}
+  body.game-mode .lb-score{font-size:9px;}
+  body.game-mode .lb-prize{font-size:9px;}
   body.game-mode .lb-prize.none{font-size:7px;}
 }
 
@@ -1075,262 +1200,54 @@ body.game-mode .lb-score{font-size:12px;text-align:right;white-space:nowrap;}
   }
 }
 
-
-/* Stable loading dots: no glyph checkmarks */
-.network-steps{
-  width:100%!important;
-  display:none!important;
-  grid-template-columns:1fr!important;
-  gap:8px!important;
-}
-.network-steps.active{display:grid!important;}
-.network-step{
-  display:grid!important;
-  grid-template-columns:18px minmax(0,1fr)!important;
-  align-items:center!important;
-  column-gap:9px!important;
-  width:100%!important;
-  min-width:0!important;
-  text-align:left!important;
-  white-space:nowrap!important;
-  overflow:hidden!important;
-  text-overflow:ellipsis!important;
-  line-height:1.15!important;
-}
-.network-step::before{
-  content:''!important;
-  grid-column:1!important;
-  grid-row:1!important;
-  width:13px!important;
-  height:13px!important;
-  border-radius:50%!important;
-  border:1px solid rgba(143,164,187,.45)!important;
-  background:rgba(255,255,255,.03)!important;
-  box-shadow:inset 0 0 8px rgba(0,0,0,.35)!important;
-  justify-self:center!important;
-  align-self:center!important;
-}
-.network-step::after{content:none!important;display:none!important;}
-.network-step.active::before{border-color:#ffc940!important;background:#ffc940!important;box-shadow:0 0 12px rgba(255,201,64,.25)!important;}
-.network-step.done::before{border-color:#00ff87!important;background:#00ff87!important;box-shadow:0 0 12px rgba(0,255,135,.32)!important;}
-.network-step.done{color:#00ff87!important;}
-.pos-card.owned::after{content:none!important;display:none!important;}
-
-/* Keep loading checklist readable inside the modal */
-.network-wait-card{width:min(92vw,420px)!important;}
-.network-step{font-size:clamp(10px,2.5vw,12px)!important;letter-spacing:.8px!important;}
-@media(max-width:700px){.network-wait-card{width:min(92vw,360px)!important;}.network-step{font-size:10px!important;}}
-
-/* Final WC topbar: match dream-xi */
-body{padding-top:55px!important;}
-.topnav{
-  display:flex!important;
-  align-items:center!important;
-  justify-content:space-between!important;
-  height:55px!important;
-  min-height:55px!important;
-  padding:0 28px!important;
-  position:fixed!important;
-  top:0!important;
-  left:0!important;
-  right:0!important;
-  z-index:5000!important;
-  background:rgba(6,8,10,.98)!important;
-  border-bottom:1px solid rgba(0,255,135,.16)!important;
-  backdrop-filter:blur(10px)!important;
-  overflow:visible!important;
-}
-.topnav-logo.logo,.logo{
-  font-family:'Black Ops One',sans-serif!important;
-  font-size:18px!important;
-  letter-spacing:2px!important;
-  color:#dde4f0!important;
-  text-shadow:0 0 18px rgba(0,255,135,.16)!important;
-  white-space:nowrap!important;
-  flex:0 0 auto!important;
-}
-.topnav-logo.logo span,.logo span{color:#00ff87!important;}
-.nav-right,.wallet-actions{display:flex!important;align-items:center!important;gap:12px!important;margin-left:auto!important;flex-shrink:0!important;justify-self:auto!important;}
-.wallet-addr{font-family:'Share Tech Mono',monospace!important;font-size:11px!important;color:#7a8899!important;line-height:1!important;white-space:nowrap!important;}
-.wallet-bal{font-family:'Black Ops One',sans-serif!important;font-size:13px!important;color:#ffc940!important;line-height:1!important;white-space:nowrap!important;}
-.nav-countdown,.nav-price-countdown{
-  position:absolute!important;
-  left:50%!important;
-  top:50%!important;
-  transform:translate(-50%,-50%)!important;
-  display:inline-flex!important;
-  align-items:center!important;
-  justify-content:center!important;
-  gap:8px!important;
-  border:1px solid rgba(255,201,64,.34)!important;
-  background:rgba(255,201,64,.08)!important;
-  border-radius:8px!important;
-  padding:6px 12px!important;
-  font-family:'Black Ops One',sans-serif!important;
-  color:#ffc940!important;
-  letter-spacing:1px!important;
-  white-space:nowrap!important;
-  z-index:1!important;
-  line-height:1!important;
-}
-.nav-countdown span,.nav-price-countdown span{color:#dde4f0!important;font-size:10px!important;margin-right:8px!important;letter-spacing:1px!important;}
-.nav-countdown b,.nav-price-countdown b{font-size:13px!important;color:#ffc940!important;font-weight:400!important;}
-.btn-connect.connected{background:rgba(0,255,135,0.15)!important;border-color:#00ff87!important;color:#00ff87!important;}
-body.game-mode .topnav{position:fixed!important;display:flex!important;grid-template-columns:none!important;}
-body.game-mode .wallet-actions #connectBtn.connected{display:inline-flex!important;}
-@media(max-width:700px){
-  body{padding-top:70px!important;}
-  .topnav{height:70px!important;min-height:70px!important;padding:8px 10px!important;display:grid!important;grid-template-columns:minmax(0,1fr) auto!important;grid-template-rows:auto auto!important;align-content:center!important;gap:4px 6px!important;}
-  .topnav-logo.logo,.topnav .logo{grid-column:1!important;grid-row:1!important;font-size:13px!important;letter-spacing:1.4px!important;align-self:center!important;overflow:hidden!important;text-overflow:ellipsis!important;}
-  .topnav .wallet-actions,.topnav .nav-right{grid-column:2!important;grid-row:1!important;justify-self:end!important;gap:6px!important;}
-  .wallet-addr{display:none!important;}
-  .wallet-bal{font-size:9px!important;max-width:62px!important;overflow:hidden!important;text-overflow:ellipsis!important;}
-  .btn-connect{font-size:9px!important;padding:7px 9px!important;max-width:76px!important;overflow:hidden!important;text-overflow:ellipsis!important;}
-  .nav-countdown,.nav-price-countdown{grid-column:1 / -1!important;grid-row:2!important;position:static!important;transform:none!important;justify-self:center!important;top:auto!important;left:auto!important;font-size:9px!important;letter-spacing:1px!important;padding:4px 7px!important;background:rgba(5,7,10,.96)!important;}
-  .nav-countdown span,.nav-price-countdown span,.nav-countdown b,.nav-price-countdown b{display:inline!important;font-size:9px!important;}
-  .nav-countdown span,.nav-price-countdown span{color:#fff!important;margin-right:5px!important;}
-  .nav-countdown b,.nav-price-countdown b{color:#ffc940!important;}
-}
-
-
-/* PC polish: WC album selector, tabs and leaderboard readability */
+/* Final WC Album readability pass */
+body.game-mode .stat-lbl,
+body.game-mode .pitch-title,
+body.game-mode .lb-completion,
+body.game-mode .countdown-sub,
+body.game-mode .pos-rarity,
+body.game-mode .dash-prize-title,
+body.game-mode .card-hover-note,
+body.game-mode .wallet-note{color:#dde4f0!important;}
+body.game-mode .pos-card-top{display:grid!important;grid-template-rows:auto minmax(0,1fr);align-items:center!important;justify-items:center!important;width:100%;}
+body.game-mode .figure-mini{display:grid!important;place-items:center!important;margin:auto!important;line-height:0!important;}
+body.game-mode .figure-mini svg{display:block!important;width:100%!important;height:100%!important;}
+body.game-mode .pos-card.owned::after{top:-5px!important;right:-3px!important;z-index:8!important;}
 @media(min-width:701px){
-  body.game-mode .country-section,
-  body.game-mode .pitch-container,
-  body.game-mode .lb-section,
-  body.game-mode .leaderboard-list,
-  body.game-mode .lb-row,
-  body.game-mode .country-card,
-  body.game-mode .pos-card{color:#fff!important;}
-  body.game-mode .stat-lbl,
-  body.game-mode .pitch-title,
-  body.game-mode .country-card-name,
-  body.game-mode .country-card-fed,
-  body.game-mode .country-card-completion,
+  body.game-mode .country-card{grid-template-columns:1fr 1fr!important;text-align:center!important;justify-items:center!important;}
+  body.game-mode .country-card-main,
+  body.game-mode .country-card-stats{align-items:center!important;justify-content:center!important;text-align:center!important;}
+  body.game-mode .country-card-main{flex-direction:column!important;}
+  body.game-mode .country-card .flag-img{width:40px!important;height:27px!important;}
+  body.game-mode .country-card-name{font-size:17px!important;text-align:center!important;}
+  body.game-mode .country-card-score{font-size:17px!important;text-align:center!important;}
+  body.game-mode .country-card-completion{font-size:14px!important;text-align:center!important;}
   body.game-mode .lb-addr,
   body.game-mode .lb-completion,
-  body.game-mode .lb-prize.none,
-  body.game-mode .pos-name,
-  body.game-mode .pos-rarity,
-  body.game-mode #selectedCountryCompletion,
-  body.game-mode .album-title-tools span,
-  body.game-mode .card-hover-note,
-  body.game-mode .stat-card,
-  body.game-mode .stat-lbl{color:#fff!important;}
-  body.game-mode .nation-selector-head{
-    display:grid!important;
-    grid-template-columns:auto minmax(0,1fr) auto!important;
-    align-items:center!important;
-    gap:10px!important;
-    margin-bottom:8px!important;
-    font-family:'Black Ops One',sans-serif!important;
-    color:#fff!important;
-    letter-spacing:1.4px!important;
-  }
-  body.game-mode .nation-selector-label,
-  body.game-mode .pitch-title,
-  body.game-mode .album-title-tools span,
-  body.game-mode .lb-toggle-btn,
-  body.game-mode .tab-btn{
-    font-family:'Black Ops One',sans-serif!important;
-    font-size:12px!important;
-    letter-spacing:1px!important;
-    color:#fff!important;
-    line-height:1!important;
-  }
-  body.game-mode .nation-filter-inline{
-    display:grid!important;
-    grid-template-columns:repeat(7,minmax(0,1fr))!important;
-    gap:5px!important;
-    margin:0!important;
-    min-width:0!important;
-    width:100%!important;
-    align-items:center!important;
-    overflow:visible!important;
-  }
-  body.game-mode .tab-btn{
-    padding:7px 5px!important;
-    min-height:28px!important;
-    border-radius:6px!important;
-    text-align:center!important;
-    white-space:nowrap!important;
-    overflow:hidden!important;
-    text-overflow:ellipsis!important;
-    background:#0f1318!important;
-    border-color:#1c2028!important;
-  }
-  body.game-mode .tab-btn.active{background:#818cf8!important;color:#000!important;border-color:#818cf8!important;}
-  body.game-mode .lb-toggle-btn{min-height:34px!important;padding:9px 10px!important;text-transform:uppercase!important;}
-  body.game-mode .lb-toggle-btn.active{color:#000!important;}
-  body.game-mode .country-grid{padding-top:0!important;}
-  body.game-mode .leaderboard-list{color:#fff!important;}
-  body.game-mode .lb-pos{display:flex!important;align-items:center!important;justify-content:center!important;color:#fff!important;}
-  .rank-medal{width:26px;height:26px;border-radius:999px;display:inline-grid;place-items:center;font-family:'Black Ops One',sans-serif;font-size:13px;line-height:1;color:#05070a;border:1px solid rgba(255,255,255,.18);box-shadow:0 0 14px rgba(0,0,0,.35);}
-  .rank-medal.rank-1{background:linear-gradient(135deg,#ffe68a,#ffc940 55%,#b77905);box-shadow:0 0 16px rgba(255,201,64,.32);}
-  .rank-medal.rank-2{background:linear-gradient(135deg,#f5f7fb,#a8b3c7 55%,#677184);box-shadow:0 0 14px rgba(200,220,255,.22);}
-  .rank-medal.rank-3{background:linear-gradient(135deg,#ffbf7a,#c46a24 55%,#7a3511);box-shadow:0 0 14px rgba(255,128,32,.22);}
+  body.game-mode .lb-score,
+  body.game-mode .lb-prize{font-family:'Black Ops One',sans-serif!important;font-size:13px!important;color:#dde4f0!important;}
 }
-
-
-/* PC polish: simple rank labels and 8x6 nation grid */
-@media(min-width:701px){
-  body.game-mode .page{
-    grid-template-rows:auto auto auto minmax(0,1fr) minmax(86px,12vh)!important;
-  }
-  body.game-mode .game-grid{
-    gap:7px!important;
-  }
-  body.game-mode .country-grid{
-    grid-template-columns:repeat(8,minmax(0,1fr))!important;
-    grid-auto-rows:minmax(62px,1fr)!important;
-    gap:5px!important;
-    overflow:hidden!important;
-    padding-right:0!important;
-  }
-  body.game-mode .country-card{
-    min-height:0!important;
-    padding:4px 3px!important;
-  }
-  body.game-mode .country-card .flag-img{
-    width:clamp(22px,2.7vw,32px)!important;
-    height:clamp(15px,1.8vw,21px)!important;
-  }
-  body.game-mode .country-card-name{
-    font-size:clamp(8px,.88vw,11px)!important;
-  }
-  body.game-mode .country-card-score{
-    font-size:clamp(8px,.95vw,12px)!important;
-  }
-  body.game-mode .country-card-completion{
-    font-size:clamp(6px,.72vw,8px)!important;
-  }
-  .rank-medal{
-    width:auto!important;
-    height:auto!important;
-    min-width:0!important;
-    border-radius:0!important;
-    background:none!important;
-    border:0!important;
-    box-shadow:none!important;
-    color:#ffc940!important;
-    font-family:'Black Ops One',sans-serif!important;
-    font-size:16px!important;
-    line-height:1!important;
-  }
-  .rank-medal.rank-2{color:#dde4f0!important;}
-  .rank-medal.rank-3{color:#f97316!important;}
+@media(max-width:700px){
+  body.game-mode .figure-mini{width:24px!important;height:24px!important;}
+  body.game-mode .pos-card-top{min-height:32px!important;}
+  body.game-mode .lb-row{grid-template-columns:22px minmax(0,1fr) 52px 64px 44px!important;}
+  body.game-mode .lb-addr{font-size:9px!important;color:#dde4f0!important;}
+  body.game-mode .lb-completion{font-size:8px!important;color:#dde4f0!important;}
+  body.game-mode .lb-score,
+  body.game-mode .lb-prize{font-size:9px!important;color:#dde4f0!important;}
 }
 </style>
 </head>
 <body>
 
 <nav class="topnav">
-  <a href="https://block-kickers.vercel.app" class="topnav-logo logo" style="text-decoration:none;">&#9917; BLOCK <span>KICKERS</span></a>
-  <div class="nav-countdown" id="wcNavCountdown"><span>WC END IN</span><b>--:--:--:--</b></div>
-  <div class="nav-right wallet-actions">
-    <span id="walletAddress" class="wallet-addr" style="display:none;"></span>
-    <span id="walletBalance" class="wallet-bal" style="display:none;"></span>
-    <button class="btn-connect" id="connectBtn" onclick="openWalletChoice()">CONNECT</button>
+  <div class="topnav-left">
+    <a href="https://block-kickers.vercel.app" class="topnav-logo" style="text-decoration:none;">&#9917; BLOCK <span>KICKERS</span></a>
+    <span id="walletAddress" class="wallet-pill" style="color:#dde4f0;">0x0000...0000</span>
+    <span id="walletBalance" class="wallet-pill" style="color:#00ff87;">0.0 CHZ</span>
+  </div>
+  <div class="wallet-actions">
+    <button class="btn-connect" id="connectBtn" onclick="openWalletChoice()">CONNECT WALLET</button>
   </div>
 </nav>
 
@@ -1466,11 +1383,11 @@ body.game-mode .wallet-actions #connectBtn.connected{display:inline-flex!importa
       <div class="stat-lbl">Cards Owned</div>
     </div>
     <div class="stat-card">
-      <div class="stat-val text-primary" id="myGlobalRank" style="color:#818cf8;">â€”</div>
+      <div class="stat-val text-primary" id="myGlobalRank" style="color:#818cf8;">—</div>
       <div class="stat-lbl">Global Position</div>
     </div>
     <div class="stat-card" style="background:rgba(0,255,135,0.03); border-color:rgba(0,255,135,0.2);">
-      <div class="stat-val" id="myEstPayout" style="color:#00ff87; font-size:24px; padding-top:6px;">0.00 CHZ</div>
+      <div class="stat-val" id="myEstPayout" style="color:#00ff87; font-size:24px; padding-top:6px;">???,??? CHZ</div>
       <div class="stat-lbl">Est. Quest Reward (TOP 10)</div>
     </div>
   </div>
@@ -1501,10 +1418,10 @@ body.game-mode .wallet-actions #connectBtn.connected{display:inline-flex!importa
       </button>
       <div style="display:flex; gap:8px;">
         <button class="btn-share" onclick="toggleRulesModal(true)" style="border-color:#ffc940; color:#ffc940;">
-          đź“– RULES & INFO
+          📖 RULES & INFO
         </button>
         <button class="btn-share" onclick="loadData()" style="border-color:rgba(99,102,241,0.3); color:#818cf8;">
-          â†» REFRESH DATA
+          ↻ REFRESH DATA
         </button>
       </div>
     </div>
@@ -1514,9 +1431,9 @@ body.game-mode .wallet-actions #connectBtn.connected{display:inline-flex!importa
       
       <!-- LEFT COLUMN: NATION SELECTOR -->
       <div class="left-col country-section">
-        <div class="pitch-title nation-selector-head">
-          <span class="nation-selector-label">NATION SELECTOR</span>
-          <div class="filter-tabs nation-filter-inline">
+        <div class="pitch-title nation-selector-title">
+          <span>NATION SELECTOR</span>
+          <div class="filter-tabs">
             <button class="tab-btn active" onclick="filterFederation('ALL', this)">ALL (48)</button>
             <button class="tab-btn" onclick="filterFederation('UEFA', this)">UEFA</button>
             <button class="tab-btn" onclick="filterFederation('CONMEBOL', this)">CONMEBOL</button>
@@ -1526,7 +1443,7 @@ body.game-mode .wallet-actions #connectBtn.connected{display:inline-flex!importa
             <button class="tab-btn" onclick="filterFederation('OFC', this)">OFC</button>
           </div>
           <span class="album-title-tools">
-            <span style="font-family:'Share Tech Mono',monospace; color:#818cf8;">48 ALBUMS</span>
+            <span class="album-count-label">48 ALBUMS</span>
             <button class="dash-icon-btn" type="button" title="Refresh albums" onclick="loadData()">&#8635;</button>
           </span>
         </div>
@@ -1543,7 +1460,7 @@ body.game-mode .wallet-actions #connectBtn.connected{display:inline-flex!importa
             <span id="selectedCountryTitle">TACTICAL PITCH</span>
           </div>
           <button class="dash-mint-btn" onclick="directMint()">MINT</button>
-          <span style="font-family:'Share Tech Mono',monospace; color:#818cf8; font-size:12px;" id="selectedCountryCompletion">0/11 COMPLETED</span>
+          <span class="completion-label" id="selectedCountryCompletion">0/11 COMPLETED</span>
         </div>
 
         <div class="pitch-wrap">
@@ -1580,37 +1497,6 @@ body.game-mode .wallet-actions #connectBtn.connected{display:inline-flex!importa
   </div>
 </div>
 
-<div class="wc-guide-modal" id="wcGuideModal" onclick="closeWcGuideFromBackdrop(event)">
-  <div class="wc-guide-panel" onclick="event.stopPropagation()">
-    <div class="wc-guide-head">
-      <div>
-        <div class="wc-guide-kicker">WORLD CUP ALBUM</div>
-        <div class="wc-guide-title">QUICK GUIDE</div>
-      </div>
-      <button class="wc-guide-close" type="button" onclick="toggleWcGuide(false, false)">&times;</button>
-    </div>
-    <p class="wc-guide-copy">This is the 48 nation album race. Every card can matter: score positions, complete squads, trade missing cards and climb global standings.</p>
-    <div class="wc-guide-grid">
-      <div class="wc-guide-step"><div class="wc-guide-num">01</div><div><div class="wc-guide-step-title">SCORE ALBUMS</div><div class="wc-guide-step-text">Mint or buy a WC card. When it enters your wallet, it scores for that nation and position.</div></div></div>
-      <div class="wc-guide-step"><div class="wc-guide-num">02</div><div><div class="wc-guide-step-title">48 NATIONS</div><div class="wc-guide-step-text">You do not need every country at once. Each active national album adds to your global progress.</div></div></div>
-      <div class="wc-guide-step"><div class="wc-guide-num">03</div><div><div class="wc-guide-step-title">UPGRADE POSITIONS</div><div class="wc-guide-step-text">Only your best scored card per position counts inside each country squad.</div></div></div>
-      <div class="wc-guide-step"><div class="wc-guide-num">04</div><div><div class="wc-guide-step-title">SELL OR HOLD</div><div class="wc-guide-step-text">After scoring, sell for CHZ or hold scarce cards to block other players from completing albums.</div></div></div>
-    </div>
-    <details class="wc-guide-examples">
-      <summary>SHOW REAL EXAMPLES</summary>
-      <div class="wc-example-list">
-        <div class="wc-example"><b>EXAMPLE 1: PARTIAL ALBUM</b><span>You have Brazil 5/11. Those positions already add points. Full 11/11 is stronger, but partial albums still matter.</span></div>
-        <div class="wc-example"><b>EXAMPLE 2: UPGRADE</b><span>You scored France RB 10 PTS. Later you buy France RB 36 PTS. The stronger RB replaces it in the squad score.</span></div>
-        <div class="wc-example"><b>EXAMPLE 3: MARKET DEMAND</b><span>If another player needs your last missing CB or LW, it can be worth more than a normal floor listing.</span></div>
-        <div class="wc-example"><b>EXAMPLE 4: GLOBAL RANK</b><span>More active countries plus stronger positions increase your global leaderboard potential.</span></div>
-      </div>
-    </details>
-    <div class="wc-guide-note"><strong>KEY STRATEGY</strong><br>Score first, then decide: sell to recycle CHZ, or hold rare/missing cards if they protect your rank or create market pressure.</div>
-    <label class="wc-guide-dont-show"><input id="dontShowWcGuide" type="checkbox"> Don&apos;t show again</label>
-    <button class="btn-card-action upgrade wc-guide-start" onclick="toggleWcGuide(false, document.getElementById('dontShowWcGuide')?.checked)">START ALBUM</button>
-  </div>
-</div>
-
 <!-- MULTI-LANGUAGE RULES MODAL -->
 <div id="rulesModal" style="display:none; position:fixed; inset:0; background:rgba(6,8,10,0.85); backdrop-filter:blur(8px); z-index:1000; align-items:center; justify-content:center; padding:16px;">
   <div style="background:#0f1318; border:1px solid #1c2028; border-radius:12px; max-width:550px; width:100%; padding:24px; position:relative; box-shadow:0 10px 40px rgba(0,0,0,0.6);">
@@ -1619,13 +1505,13 @@ body.game-mode .wallet-actions #connectBtn.connected{display:inline-flex!importa
     
     <!-- Flag Multi-Language Selector Tabs -->
     <div style="display:flex; gap:8px; margin-bottom:20px; flex-wrap:wrap; border-bottom:1px solid #1c2028; padding-bottom:12px;">
-      <button class="tab-btn active" id="lang-en" onclick="setRulesLanguage('en')">đź‡¬đź‡§ EN</button>
-      <button class="tab-btn" id="lang-pl" onclick="setRulesLanguage('pl')">đź‡µđź‡± PL</button>
-      <button class="tab-btn" id="lang-de" onclick="setRulesLanguage('de')">đź‡©đź‡Ş DE</button>
-      <button class="tab-btn" id="lang-fr" onclick="setRulesLanguage('fr')">đź‡«đź‡· FR</button>
-      <button class="tab-btn" id="lang-es" onclick="setRulesLanguage('es')">đź‡Şđź‡¸ ES</button>
-      <button class="tab-btn" id="lang-pt" onclick="setRulesLanguage('pt')">đź‡µđź‡ą PT</button>
-      <button class="tab-btn" id="lang-it" onclick="setRulesLanguage('it')">đź‡®đź‡ą IT</button>
+      <button class="tab-btn active" id="lang-en" onclick="setRulesLanguage('en')">🇬🇧 EN</button>
+      <button class="tab-btn" id="lang-pl" onclick="setRulesLanguage('pl')">🇵🇱 PL</button>
+      <button class="tab-btn" id="lang-de" onclick="setRulesLanguage('de')">🇩🇪 DE</button>
+      <button class="tab-btn" id="lang-fr" onclick="setRulesLanguage('fr')">🇫🇷 FR</button>
+      <button class="tab-btn" id="lang-es" onclick="setRulesLanguage('es')">🇪🇸 ES</button>
+      <button class="tab-btn" id="lang-pt" onclick="setRulesLanguage('pt')">🇵🇹 PT</button>
+      <button class="tab-btn" id="lang-it" onclick="setRulesLanguage('it')">🇮🇹 IT</button>
     </div>
     
     <ul id="rulesContent" style="list-style:none; display:flex; flex-direction:column; gap:12px; font-family:'Barlow Condensed',sans-serif; font-size:16px; color:#dde4f0; line-height:1.4;">
@@ -1662,7 +1548,7 @@ body.game-mode .wallet-actions #connectBtn.connected{display:inline-flex!importa
 <div id="mintSuccessModal" class="card-result-modal">
   <div class="card-result-panel">
     <button class="card-result-close" onclick="toggleMintSuccessModal(false)">&times;</button>
-    <div style="font-size: 50px; margin-bottom: 12px; animation: pulse 2s infinite;">đźŽ‰</div>
+    <div style="font-size: 50px; margin-bottom: 12px; animation: pulse 2s infinite;">🎉</div>
     <h2 id="cardResultTitle" class="card-result-title">CARD MINTED!</h2>
     
     <div id="mintedCardVisual" class="card-result-visual">
@@ -1683,7 +1569,6 @@ body.game-mode .wallet-actions #connectBtn.connected{display:inline-flex!importa
     <div class="network-ball">&#9917;</div>
     <div class="network-wait-title">Waiting for network</div>
     <div class="network-wait-text" id="networkOverlayText">Please confirm in your wallet and wait for Chiliz Chain.</div>
-    <div class="network-steps" id="networkOverlaySteps" aria-live="polite"></div>
     <button id="walletOpenBtn" type="button" onclick="openWalletConnectApp()" style="display:none;margin-top:12px;border:1px solid rgba(0,255,135,.42);background:rgba(0,255,135,.10);color:#00ff87;border-radius:7px;padding:9px 12px;font-family:'Black Ops One',sans-serif;font-size:10px;letter-spacing:1px;">OPEN WALLET APP</button>
   </div>
 </div>
@@ -1738,142 +1623,154 @@ const FORMATION = [
   [1]          // GK
 ];
 
-// Spis krajĂłw z odpowiednimi kodami ISO-2 dla flagcdn.com
+// Spis krajów z odpowiednimi kodami ISO-2 dla flagcdn.com
 const TEAMS = [
-  {id:0,  name:"Australia",     flag:"đź‡¦đź‡ş", code:"au", fed:"AFC"},
-  {id:1,  name:"Iran",          flag:"đź‡®đź‡·", code:"ir", fed:"AFC"},
-  {id:2,  name:"Iraq",          flag:"đź‡®đź‡¶", code:"iq", fed:"AFC"},
-  {id:3,  name:"Japan",         flag:"đź‡Żđź‡µ", code:"jp", fed:"AFC"},
-  {id:4,  name:"Jordan",        flag:"đź‡Żđź‡´", code:"jo", fed:"AFC"},
-  {id:5,  name:"Qatar",         flag:"đź‡¶đź‡¦", code:"qa", fed:"AFC"},
-  {id:6,  name:"Saudi Arabia",  flag:"đź‡¸đź‡¦", code:"sa", fed:"AFC"},
-  {id:7,  name:"South Korea",   flag:"đź‡°đź‡·", code:"kr", fed:"AFC"},
-  {id:8,  name:"Uzbekistan",    flag:"đź‡şđź‡ż", code:"uz", fed:"AFC"},
-  {id:9,  name:"Algeria",      flag:"đź‡©đź‡ż", code:"dz", fed:"CAF"},
-  {id:10, name:"Cape Verde",    flag:"đź‡¨đź‡»", code:"cv", fed:"CAF"},
-  {id:11, name:"DR Congo",      flag:"đź‡¨đź‡©", code:"cd", fed:"CAF"},
-  {id:12, name:"Egypt",         flag:"đź‡Şđź‡¬", code:"eg", fed:"CAF"},
-  {id:13, name:"Ghana",         flag:"đź‡¬đź‡­", code:"gh", fed:"CAF"},
-  {id:14, name:"Ivory Coast",   flag:"đź‡¨đź‡®", code:"ci", fed:"CAF"},
-  {id:15, name:"Morocco",        flag:"đź‡˛đź‡¦", code:"ma", fed:"CAF"},
-  {id:16, name:"Senegal",       flag:"đź‡¸đź‡ł", code:"sn", fed:"CAF"},
-  {id:17, name:"South Africa",  flag:"đź‡żđź‡¦", code:"za", fed:"CAF"},
-  {id:18, name:"Tunisia",       flag:"đź‡ąđź‡ł", code:"tn", fed:"CAF"},
-  {id:19, name:"Canada",        flag:"đź‡¨đź‡¦", code:"ca", fed:"CONCACAF"},
-  {id:20, name:"Curacao",       flag:"đź‡¨đź‡Ľ", code:"cw", fed:"CONCACAF"},
-  {id:21, name:"Haiti",         flag:"đź‡­đź‡ą", code:"ht", fed:"CONCACAF"},
-  {id:22, name:"Mexico",        flag:"đź‡˛đź‡˝", code:"mx", fed:"CONCACAF"},
-  {id:23, name:"Panama",        flag:"đź‡µđź‡¦", code:"pa", fed:"CONCACAF"},
-  {id:24, name:"USA",           flag:"đź‡şđź‡¸", code:"us", fed:"CONCACAF"},
-  {id:25, name:"Argentina",     flag:"đź‡¦đź‡·", code:"ar", fed:"CONMEBOL"},
-  {id:26, name:"Brazil",        flag:"đź‡§đź‡·", code:"br", fed:"CONMEBOL"},
-  {id:27, name:"Colombia",      flag:"đź‡¨đź‡´", code:"co", fed:"CONMEBOL"},
-  {id:28, name:"Ecuador",       flag:"đź‡Şđź‡¨", code:"ec", fed:"CONMEBOL"},
-  {id:29, name:"Paraguay",      flag:"đź‡µđź‡ľ", code:"py", fed:"CONMEBOL"},
-  {id:30, name:"Uruguay",       flag:"đź‡şđź‡ľ", code:"uy", fed:"CONMEBOL"},
-  {id:31, name:"New Zealand",   flag:"đź‡łđź‡ż", code:"nz", fed:"OFC"},
-  {id:32, name:"Austria",       flag:"đź‡¦đź‡ą", code:"at", fed:"UEFA"},
-  {id:33, name:"Belgium",        flag:"đź‡§đź‡Ş", code:"be", fed:"UEFA"},
-  {id:34, name:"Bosnia",        flag:"đź‡§đź‡¦", code:"ba", fed:"UEFA"},
-  {id:35, name:"Croatia",       flag:"đź‡­đź‡·", code:"hr", fed:"UEFA"},
-  {id:36, name:"Czech Rep.",    flag:"đź‡¨đź‡ż", code:"cz", fed:"UEFA"},
-  {id:37, name:"England",        flag:"đźŹ´\u200dó ˘ó Ąó ®ó §ó ż", code:"gb-eng", fed:"UEFA"},
-  {id:38, name:"France",       flag:"đź‡«đź‡·", code:"fr", fed:"UEFA"},
-  {id:39, name:"Germany",        flag:"đź‡©đź‡Ş", code:"de", fed:"UEFA"},
-  {id:40, name:"Netherlands",    flag:"đź‡łđź‡±", code:"nl", fed:"UEFA"},
-  {id:41, name:"Norway",        flag:"đź‡łđź‡´", code:"no", fed:"UEFA"},
-  {id:42, name:"Portugal",      flag:"đź‡µđź‡ą", code:"pt", fed:"UEFA"},
-  {id:43, name:"Scotland",      flag:"đźŹ´\u200dó łó Łó ´ó ż", code:"gb-sct", fed:"UEFA"},
-  {id:44, name:"Spain",         flag:"đź‡Şđź‡¸", code:"es", fed:"UEFA"},
-  {id:45, name:"Sweden",        flag:"đź‡¸đź‡Ş", code:"se", fed:"UEFA"},
-  {id:46, name:"Switzerland",    flag:"đź‡¨đź‡­", code:"ch", fed:"UEFA"},
-  {id:47, name:"Turkey",        flag:"đź‡ąđź‡·", code:"tr", fed:"UEFA"}
+  {id:0,  name:"Australia",     flag:"🇦🇺", code:"au", fed:"AFC"},
+  {id:1,  name:"Iran",          flag:"🇮🇷", code:"ir", fed:"AFC"},
+  {id:2,  name:"Iraq",          flag:"🇮🇶", code:"iq", fed:"AFC"},
+  {id:3,  name:"Japan",         flag:"🇯🇵", code:"jp", fed:"AFC"},
+  {id:4,  name:"Jordan",        flag:"🇯🇴", code:"jo", fed:"AFC"},
+  {id:5,  name:"Qatar",         flag:"🇶🇦", code:"qa", fed:"AFC"},
+  {id:6,  name:"Saudi Arabia",  flag:"🇸🇦", code:"sa", fed:"AFC"},
+  {id:7,  name:"South Korea",   flag:"🇰🇷", code:"kr", fed:"AFC"},
+  {id:8,  name:"Uzbekistan",    flag:"🇺🇿", code:"uz", fed:"AFC"},
+  {id:9,  name:"Algeria",      flag:"🇩🇿", code:"dz", fed:"CAF"},
+  {id:10, name:"Cape Verde",    flag:"🇨🇻", code:"cv", fed:"CAF"},
+  {id:11, name:"DR Congo",      flag:"🇨🇩", code:"cd", fed:"CAF"},
+  {id:12, name:"Egypt",         flag:"🇪🇬", code:"eg", fed:"CAF"},
+  {id:13, name:"Ghana",         flag:"🇬🇭", code:"gh", fed:"CAF"},
+  {id:14, name:"Ivory Coast",   flag:"🇨🇮", code:"ci", fed:"CAF"},
+  {id:15, name:"Morocco",        flag:"🇲🇦", code:"ma", fed:"CAF"},
+  {id:16, name:"Senegal",       flag:"🇸🇳", code:"sn", fed:"CAF"},
+  {id:17, name:"South Africa",  flag:"🇿🇦", code:"za", fed:"CAF"},
+  {id:18, name:"Tunisia",       flag:"🇹🇳", code:"tn", fed:"CAF"},
+  {id:19, name:"Canada",        flag:"🇨🇦", code:"ca", fed:"CONCACAF"},
+  {id:20, name:"Curacao",       flag:"🇨🇼", code:"cw", fed:"CONCACAF"},
+  {id:21, name:"Haiti",         flag:"🇭🇹", code:"ht", fed:"CONCACAF"},
+  {id:22, name:"Mexico",        flag:"🇲🇽", code:"mx", fed:"CONCACAF"},
+  {id:23, name:"Panama",        flag:"🇵🇦", code:"pa", fed:"CONCACAF"},
+  {id:24, name:"USA",           flag:"🇺🇸", code:"us", fed:"CONCACAF"},
+  {id:25, name:"Argentina",     flag:"🇦🇷", code:"ar", fed:"CONMEBOL"},
+  {id:26, name:"Brazil",        flag:"🇧🇷", code:"br", fed:"CONMEBOL"},
+  {id:27, name:"Colombia",      flag:"🇨🇴", code:"co", fed:"CONMEBOL"},
+  {id:28, name:"Ecuador",       flag:"🇪🇨", code:"ec", fed:"CONMEBOL"},
+  {id:29, name:"Paraguay",      flag:"🇵🇾", code:"py", fed:"CONMEBOL"},
+  {id:30, name:"Uruguay",       flag:"🇺🇾", code:"uy", fed:"CONMEBOL"},
+  {id:31, name:"New Zealand",   flag:"🇳🇿", code:"nz", fed:"OFC"},
+  {id:32, name:"Austria",       flag:"🇦🇹", code:"at", fed:"UEFA"},
+  {id:33, name:"Belgium",        flag:"🇧🇪", code:"be", fed:"UEFA"},
+  {id:34, name:"Bosnia",        flag:"🇧🇦", code:"ba", fed:"UEFA"},
+  {id:35, name:"Croatia",       flag:"🇭🇷", code:"hr", fed:"UEFA"},
+  {id:36, name:"Czech Rep.",    flag:"🇨🇿", code:"cz", fed:"UEFA"},
+  {id:37, name:"England",        flag:"🏴\u200d󠁢󠁥󠁮󠁧󠁿", code:"gb-eng", fed:"UEFA"},
+  {id:38, name:"France",       flag:"🇫🇷", code:"fr", fed:"UEFA"},
+  {id:39, name:"Germany",        flag:"🇩🇪", code:"de", fed:"UEFA"},
+  {id:40, name:"Netherlands",    flag:"🇳🇱", code:"nl", fed:"UEFA"},
+  {id:41, name:"Norway",        flag:"🇳🇴", code:"no", fed:"UEFA"},
+  {id:42, name:"Portugal",      flag:"🇵🇹", code:"pt", fed:"UEFA"},
+  {id:43, name:"Scotland",      flag:"🏴\u200d󠁳󠁣󠁴󠁿", code:"gb-sct", fed:"UEFA"},
+  {id:44, name:"Spain",         flag:"🇪🇸", code:"es", fed:"UEFA"},
+  {id:45, name:"Sweden",        flag:"🇸🇪", code:"se", fed:"UEFA"},
+  {id:46, name:"Switzerland",    flag:"🇨🇭", code:"ch", fed:"UEFA"},
+  {id:47, name:"Turkey",        flag:"🇹🇷", code:"tr", fed:"UEFA"}
 ];
 
-// Multilanguage Rules Data (Polski oraz kluczowa reguĹ‚a transferowa zaimplementowane)
+const TEAM_ABBR = {
+  'Australia':'AUS','Iran':'IRN','Iraq':'IRQ','Japan':'JPN','Jordan':'JOR','Qatar':'QAT','Saudi Arabia':'KSA','South Korea':'KOR','Uzbekistan':'UZB',
+  'Algeria':'ALG','Cape Verde':'CPV','DR Congo':'DRC','Egypt':'EGY','Ghana':'GHA','Ivory Coast':'CIV','Morocco':'MAR','Senegal':'SEN','South Africa':'RSA','Tunisia':'TUN',
+  'Canada':'CAN','Curacao':'CUR','Haiti':'HAI','Mexico':'MEX','Panama':'PAN','USA':'USA',
+  'Argentina':'ARG','Brazil':'BRA','Colombia':'COL','Ecuador':'ECU','Paraguay':'PAR','Uruguay':'URU',
+  'New Zealand':'NZL','Austria':'AUT','Belgium':'BEL','Bosnia':'BIH','Croatia':'CRO','Czech Rep.':'CZE','England':'ENG','France':'FRA','Germany':'GER','Netherlands':'NED','Norway':'NOR','Portugal':'POR','Scotland':'SCO','Spain':'ESP','Sweden':'SWE','Switzerland':'SUI','Turkey':'TUR'
+};
+
+function teamAbbr(team) {
+  return TEAM_ABBR[team?.name] || String(team?.name || '').slice(0, 3).toUpperCase();
+}
+
+// Multilanguage Rules Data (Polski oraz kluczowa reguła transferowa zaimplementowane)
 const RULES_TRANSLATIONS = {
   en: {
     title: "How to Play & Rules",
     items: [
-      "đź”— Connect your Chiliz Wallet to activate your personal team hubs.",
-      "âš˝ Mint player cards or purchase on the marketplace for any of the 48 participating nations.",
-      "âš ď¸Ź Player cards count ONLY when minted or bought via the marketplace. You can list and sell them, but direct transfers/gifts DO NOT COUNT (no score assigned).",
-      "đź“ť Complete the 11-player lineup (tactical positions) for each nation to maximize that nation's total weight.",
-      "âšˇ Your Global Score is the sum of tactical weights achieved across all of your 48 national albums.",
-      "đźŹ† The Sponsored Prize Pool of 25,000 CHZ is shared strictly among the Global TOP 10 players.",
-      "đź“ Est. Payout card live-updates to display your currently projected prize based on your rank!"
+      "🔗 Connect your Chiliz Wallet to activate your personal team hubs.",
+      "⚽ Mint player cards or purchase on the marketplace for any of the 48 participating nations.",
+      "⚠️ Player cards count ONLY when minted or bought via the marketplace. You can list and sell them, but direct transfers/gifts DO NOT COUNT (no score assigned).",
+      "📝 Complete the 11-player lineup (tactical positions) for each nation to maximize that nation's total weight.",
+      "⚡ Your Global Score is the sum of tactical weights achieved across all of your 48 national albums.",
+      "🏆 The Sponsored Prize Pool of 25,000 CHZ is shared strictly among the Global TOP 10 players.",
+      "📈 Est. Payout card live-updates to display your currently projected prize based on your rank!"
     ]
   },
   pl: {
-    title: "Zasady gry i wskazĂłwki",
+    title: "Zasady gry i wskazówki",
     items: [
-      "đź”— PoĹ‚Ä…cz swĂłj portfel Chiliz, aby aktywowaÄ‡ swĂłj osobisty panel druĹĽyn.",
-      "âš˝ Mintuj karty graczy lub kupuj je na rynku dla kaĹĽdego z 48 uczestniczÄ…cych krajĂłw.",
-      "âš ď¸Ź Karty sÄ… zaliczane do Twojego albumu i wyniku WYĹÄ„CZNIE, gdy zostanÄ… wymintowane lub zakupione na rynku wtĂłrnym. MoĹĽesz je wystawiÄ‡ i sprzedaÄ‡, lecz bezpoĹ›rednie transfery/podarunki pomiÄ™dzy portfelami NIE NALICZAJÄ„ PUNKTĂ“W (brak punktĂłw taktycznych).",
-      "đź“ť UkoĹ„cz 11-osobowy skĹ‚ad (pozycje taktyczne) dla kaĹĽdego kraju, aby zmaksymalizowaÄ‡ jego Ĺ‚Ä…cznÄ… wagÄ™.",
-      "âšˇ TwĂłj wynik globalny to suma wag taktycznych zdobytych we wszystkich Twoich 48 albumach narodowych.",
-      "đźŹ† Sponsorowana pula nagrĂłd 25 000 CHZ jest dzielona wyĹ‚Ä…cznie miÄ™dzy TOP 10 graczy o najwyĹĽszym wyniku.",
-      "đź“ Karta szacowanej wygranej aktualizuje siÄ™ na ĹĽywo, pokazujÄ…c TwojÄ… przewidywanÄ… nagrodÄ™ na podstawie Twojego miejsca!"
+      "🔗 Połącz swój portfel Chiliz, aby aktywować swój osobisty panel drużyn.",
+      "⚽ Mintuj karty graczy lub kupuj je na rynku dla każdego z 48 uczestniczących krajów.",
+      "⚠️ Karty są zaliczane do Twojego albumu i wyniku WYŁĄCZNIE, gdy zostaną wymintowane lub zakupione na rynku wtórnym. Możesz je wystawić i sprzedać, lecz bezpośrednie transfery/podarunki pomiędzy portfelami NIE NALICZAJĄ PUNKTÓW (brak punktów taktycznych).",
+      "📝 Ukończ 11-osobowy skład (pozycje taktyczne) dla każdego kraju, aby zmaksymalizować jego łączną wagę.",
+      "⚡ Twój wynik globalny to suma wag taktycznych zdobytych we wszystkich Twoich 48 albumach narodowych.",
+      "🏆 Sponsorowana pula nagród 25 000 CHZ jest dzielona wyłącznie między TOP 10 graczy o najwyższym wyniku.",
+      "📈 Karta szacowanej wygranej aktualizuje się na żywo, pokazując Twoją przewidywaną nagrodę na podstawie Twojego miejsca!"
     ]
   },
   de: {
     title: "Spielregeln & Anleitung",
     items: [
-      "đź”— Verbinden Sie Ihre Chiliz Wallet, um Ihre persĂ¶nlichen Team-Hubs zu aktivieren.",
-      "âš˝ PrĂ¤gen Sie eine Spielerkarte oder kaufen Sie eine auf dem Marktplatz fĂĽr eines der 48 teilnehmenden LĂ¤nder.",
-      "âš ď¸Ź Spielerkarten zĂ¤hlen NUR, wenn sie geprĂ¤gt (mint) oder auf dem Marktplatz gekauft wurden. Sie kĂ¶nnen sie anbieten und verkaufen, aber direkte Transfers/Schenkungen ZĂ„HLEN NICHT (keine Punktevergabe).",
-      "đź“ť VervollstĂ¤ndigen Sie die 11-Spieler-Aufstellung fĂĽr jedes Land, um das Gesamtgewicht dieses Landes zu maximieren.",
-      "âšˇ Ihre globale Punktzahl ist die Summe der taktischen Gewichte, die in allen 48 Nationalalben erzielt wurden.",
-      "đźŹ† Der gesponserte Preispool von 25.000 CHZ wird streng unter den globalen TOP 10 Spielern aufgeteilt.",
-      "đź“ Die geschĂ¤tzte Auszahlung wird live aktualisiert, um Ihren derzeit prognostizierten Preis basierend auf Ihrem Rang anzuzeigen!"
+      "🔗 Verbinden Sie Ihre Chiliz Wallet, um Ihre persönlichen Team-Hubs zu aktivieren.",
+      "⚽ Prägen Sie eine Spielerkarte oder kaufen Sie eine auf dem Marktplatz für eines der 48 teilnehmenden Länder.",
+      "⚠️ Spielerkarten zählen NUR, wenn sie geprägt (mint) oder auf dem Marktplatz gekauft wurden. Sie können sie anbieten und verkaufen, aber direkte Transfers/Schenkungen ZÄHLEN NICHT (keine Punktevergabe).",
+      "📝 Vervollständigen Sie die 11-Spieler-Aufstellung für jedes Land, um das Gesamtgewicht dieses Landes zu maximieren.",
+      "⚡ Ihre globale Punktzahl ist die Summe der taktischen Gewichte, die in allen 48 Nationalalben erzielt wurden.",
+      "🏆 Der gesponserte Preispool von 25.000 CHZ wird streng unter den globalen TOP 10 Spielern aufgeteilt.",
+      "📈 Die geschätzte Auszahlung wird live aktualisiert, um Ihren derzeit prognostizierten Preis basierend auf Ihrem Rang anzuzeigen!"
     ]
   },
   fr: {
-    title: "RĂ¨gles et Comment Jouer",
+    title: "Règles et Comment Jouer",
     items: [
-      "đź”— Connectez votre portefeuille Chiliz pour activer vos hubs d'Ă©quipe personnels.",
-      "âš˝ Mintez une carte de joueur ou achetez-la sur le marchĂ© pour l'un des 48 pays participants.",
-      "âš ď¸Ź Les cartes de joueur comptent UNIQUEMENT si elles sont mintĂ©es ou achetĂ©es sur le marchĂ©. Vous pouvez les mettre en vente et les vendre, mais les transferts directs/cadeaux NE COMPTENT PAS (aucun point attribuĂ©).",
-      "đź“ť ComplĂ©tez l'alignement de 11 joueurs pour chaque nation afin de maximiser le poids total de cette nation.",
-      "âšˇ Votre score global est la somme des poids tactiques obtenus dans l'ensemble de vos 48 albums nationaux.",
-      "đźŹ† La cagnotte sponsorisĂ©e de 25 000 CHZ est strictement partagĂ©e entre les 10 meilleurs joueurs mondiaux.",
-      "đź“ Le paiement estimĂ© est mis Ă  jour en direct pour afficher votre prix actuellement projetĂ© en fonction de votre rang !"
+      "🔗 Connectez votre portefeuille Chiliz pour activer vos hubs d'équipe personnels.",
+      "⚽ Mintez une carte de joueur ou achetez-la sur le marché pour l'un des 48 pays participants.",
+      "⚠️ Les cartes de joueur comptent UNIQUEMENT si elles sont mintées ou achetées sur le marché. Vous pouvez les mettre en vente et les vendre, mais les transferts directs/cadeaux NE COMPTENT PAS (aucun point attribué).",
+      "📝 Complétez l'alignement de 11 joueurs pour chaque nation afin de maximiser le poids total de cette nation.",
+      "⚡ Votre score global est la somme des poids tactiques obtenus dans l'ensemble de vos 48 albums nationaux.",
+      "🏆 La cagnotte sponsorisée de 25 000 CHZ est strictement partagée entre les 10 meilleurs joueurs mondiaux.",
+      "📈 Le paiement estimé est mis à jour en direct pour afficher votre prix actuellement projeté en fonction de votre rang !"
     ]
   },
   es: {
-    title: "Reglas y CĂłmo Jugar",
+    title: "Reglas y Cómo Jugar",
     items: [
-      "đź”— Conecta tu billetera Chiliz para activar tus centros de equipo personales.",
-      "âš˝ Mintea tarjetas de jugador o cĂłmpralas en el mercado para cualquiera de los 48 paĂ­ses participantes.",
-      "âš ď¸Ź Las cartas de jugador cuentan SOLO cuando se acuĂ±an (mint) o se compran en el mercado. Puedes listarlas y venderlas, pero las transferencias directas/regalos NO CUENTAN (no se asignan puntos).",
-      "đź“ť Completa la alineaciĂłn de 11 jugadores para cada naciĂłn para maximizar el peso total de esa naciĂłn.",
-      "âšˇ Tu puntuaciĂłn global es la suma de los pesos tĂˇcticos logrados en tus 48 Ăˇlbumes nacionales.",
-      "đźŹ† El fondo de premios patrocinado de 25,000 CHZ se comparte estrictamente entre los 10 mejores jugadores mundiales.",
-      "đź“ El pago estimado se updatea en vivo para mostrar el premio proyectado segĂşn tu clasificaciĂłn."
+      "🔗 Conecta tu billetera Chiliz para activar tus centros de equipo personales.",
+      "⚽ Mintea tarjetas de jugador o cómpralas en el mercado para cualquiera de los 48 países participantes.",
+      "⚠️ Las cartas de jugador cuentan SOLO cuando se acuñan (mint) o se compran en el mercado. Puedes listarlas y venderlas, pero las transferencias directas/regalos NO CUENTAN (no se asignan puntos).",
+      "📝 Completa la alineación de 11 jugadores para cada nación para maximizar el peso total de esa nación.",
+      "⚡ Tu puntuación global es la suma de los pesos tácticos logrados en tus 48 álbumes nacionales.",
+      "🏆 El fondo de premios patrocinado de 25,000 CHZ se comparte estrictamente entre los 10 mejores jugadores mundiales.",
+      "📈 El pago estimado se updatea en vivo para mostrar el premio proyectado según tu clasificación."
     ]
   },
   pt: {
     title: "Regras e Como Jogar",
     items: [
-      "đź”— Conecte sua carteira Chiliz para ativar os seus centros de equipa pessoais.",
-      "âš˝ Minte cartas de jogador ou compre-as no mercado para qualquer um dos 48 paĂ­ses participantes.",
-      "âš ď¸Ź As cartas de jogador contam APENAS quando sĂŁo mintadas ou compradas no mercado. Pode listĂˇ-las e vendĂŞ-las, mas transferĂŞncias diretas/ofertas NĂO CONTAM (nenhuma pontuaĂ§ĂŁo Ă© atribuĂ­da).",
-      "đź“ť Complete a escalaĂ§ĂŁo de 11 jogadores para cada naĂ§ĂŁo para maximizar o peso total dessa naĂ§ĂŁo.",
-      "âšˇ Sua pontuaĂ§ĂŁo global Ă© a soma dos pesos tĂˇticos obtidos em cada um dos seus 48 Ăˇlbuns nacionais.",
-      "đźŹ† O prĂŞmio patrocinado de 25.000 CHZ Ă© compartilhado estritamente entre os 10 melhores jogadores globais.",
-      "đź“ O pagamento estimado Ă© atualizado ao vivo para exibir o seu prĂŞmio projetado com base na sua classificaĂ§ĂŁo!"
+      "🔗 Conecte sua carteira Chiliz para ativar os seus centros de equipa pessoais.",
+      "⚽ Minte cartas de jogador ou compre-as no mercado para qualquer um dos 48 países participantes.",
+      "⚠️ As cartas de jogador contam APENAS quando são mintadas ou compradas no mercado. Pode listá-las e vendê-las, mas transferências diretas/ofertas NÃO CONTAM (nenhuma pontuação é atribuída).",
+      "📝 Complete a escalação de 11 jogadores para cada nação para maximizar o peso total dessa nação.",
+      "⚡ Sua pontuação global é a soma dos pesos táticos obtidos em cada um dos seus 48 álbuns nacionais.",
+      "🏆 O prêmio patrocinado de 25.000 CHZ é compartilhado estritamente entre os 10 melhores jogadores globais.",
+      "📈 O pagamento estimado é atualizado ao vivo para exibir o seu prêmio projetado com base na sua classificação!"
     ]
   },
   it: {
     title: "Regole e Come Giocare",
     items: [
-      "đź”— Collega il tuo wallet Chiliz per attivare i tuoi hub di squadra personali.",
-      "âš˝ Minta una carta giocatore o acquistala sul mercato per uno dei 48 partecipanti partecipanti.",
-      "âš ď¸Ź Le carte giocatore contano SOLO se mintate o acquistate sul mercato. Puoi metterle in vendita e venderle, ma i trasferimenti diretti/regali NON CONTANO (nessun punteggio assegnato).",
-      "đź“ť Completa la formazione di 11 giocatori per ogni nazione per massimizzare il peso totale di quella nazione.",
-      "âšˇ Il tuo punteggio globale Ă¨ la somma dei pesi tattici ottenuti in tutti e 48 i tuoi album nazionali.",
-      "đźŹ† Il montepremi sponsorizzato di 25.000 CHZ Ă¨ interamente diviso tra i TOP 10 giocatori globali.",
-      "đź“ Il pagamento stimato si aggiorna in tempo reale per mostrare il premio attualmente previsto in base al tuo posizionamento!"
+      "🔗 Collega il tuo wallet Chiliz per attivare i tuoi hub di squadra personali.",
+      "⚽ Minta una carta giocatore o acquistala sul mercato per uno dei 48 partecipanti partecipanti.",
+      "⚠️ Le carte giocatore contano SOLO se mintate o acquistate sul mercato. Puoi metterle in vendita e venderle, ma i trasferimenti diretti/regali NON CONTANO (nessun punteggio assegnato).",
+      "📝 Completa la formazione di 11 giocatori per ogni nazione per massimizzare il peso totale di quella nazione.",
+      "⚡ Il tuo punteggio globale è la somma dei pesi tattici ottenuti in tutti e 48 i tuoi album nazionali.",
+      "🏆 Il montepremi sponsorizzato di 25.000 CHZ è interamente diviso tra i TOP 10 giocatori globali.",
+      "📈 Il pagamento stimato si aggiorna in tempo reale per mostrare il premio attualmente previsto in base al tuo posizionamento!"
     ]
   }
 };
@@ -1947,71 +1844,9 @@ function hideNetworkOverlay() {
   const overlay = document.getElementById('networkOverlay');
   if (overlay) overlay.classList.remove('show');
   setWalletOpenButton(false);
-  resetNetworkOverlayContent();
 }
 function isNetworkOverlayVisible() {
   return networkOverlayDepth > 0;
-}
-
-const DATA_LOAD_STEPS = [
-  'Events / API',
-  'Mint price + supply',
-  'Squad scores',
-  'Marketplace listings',
-  'Render dashboard'
-];
-
-function setNetworkTitle(text) {
-  const title = document.querySelector('#networkOverlay .network-wait-title');
-  if (title && text) title.textContent = text;
-}
-
-function renderDataLoadSteps(activeIndex = 0) {
-  const steps = document.getElementById('networkOverlaySteps');
-  if (!steps) return;
-  steps.classList.add('active');
-  steps.innerHTML = DATA_LOAD_STEPS.map((label, index) => {
-    const cls = index < activeIndex ? 'done' : index === activeIndex ? 'active' : '';
-    return `<div class="network-step ${cls}">${label}</div>`;
-  }).join('');
-}
-
-function showDataLoadingOverlay(message = 'Loading blockchain data...') {
-  showNetworkOverlay(message);
-  setNetworkTitle('Loading WC album data');
-  renderDataLoadSteps(0);
-}
-
-function updateDataLoadingStep(index, message) {
-  updateNetworkOverlay(message || DATA_LOAD_STEPS[index] || 'Loading data...');
-  renderDataLoadSteps(index);
-}
-
-function finishDataLoadingSteps() { renderDataLoadSteps(DATA_LOAD_STEPS.length); }
-
-function resetNetworkOverlayContent() {
-  setNetworkTitle('Waiting for network');
-  const steps = document.getElementById('networkOverlaySteps');
-  if (steps) { steps.classList.remove('active'); steps.innerHTML = ''; }
-}
-
-function toggleWcGuide(show, remember = false) {
-  const modal = document.getElementById('wcGuideModal');
-  if (!modal) return;
-  modal.classList.toggle('active', Boolean(show));
-  if (!show && remember) {
-    try { localStorage.setItem('wcAlbumGuideSeen', '1'); } catch(e) {}
-  }
-}
-function closeWcGuideFromBackdrop(event) {
-  if (event && event.target !== event.currentTarget) return;
-  toggleWcGuide(false, false);
-}
-function maybeShowWcGuide() {
-  try {
-    if (localStorage.getItem('wcAlbumGuideSeen') === '1') return;
-  } catch(e) {}
-  setTimeout(() => toggleWcGuide(true), 450);
 }
 
 // Rules Modal visibility control
@@ -2294,6 +2129,77 @@ function getFlagHtml(team, isLarge = false) {
   `;
 }
 
+function makeFigureSVG(dna, size = 80) {
+  const t = parseDNA(dna);
+  const team = TEAMS[t.teamId % TEAMS.length] || {};
+  const SHIRT = {
+    'Australia':'#FFD700','Iran':'#239F40','Iraq':'#CC0001','Japan':'#BC002D','Jordan':'#007A3D','Qatar':'#8D153A',
+    'Saudi Arabia':'#006C35','South Korea':'#CD2E3A','Uzbekistan':'#1EB53A','Algeria':'#006233','Cape Verde':'#003893',
+    'DR Congo':'#007FFF','Egypt':'#CE1126','Ghana':'#006B3F','Ivory Coast':'#F77F00','Morocco':'#C1272D','Senegal':'#00853F',
+    'South Africa':'#007749','Tunisia':'#E70013','Canada':'#FF0000','Curacao':'#002B7F','Haiti':'#00209F','Mexico':'#006847',
+    'Panama':'#DA121A','USA':'#002868','Argentina':'#74ACDF','Brazil':'#009C3B','Colombia':'#FCD116','Ecuador':'#FFD100',
+    'Paraguay':'#D52B1E','Uruguay':'#5EB6E4','New Zealand':'#00247D','Austria':'#ED2939','Belgium':'#111111','Bosnia':'#002395',
+    'Croatia':'#FF0000','Czech Rep.':'#D7141A','England':'#EEEEEE','France':'#002395','Germany':'#111111','Netherlands':'#FF6600',
+    'Norway':'#EF2B2D','Portugal':'#006600','Scotland':'#003087','Spain':'#AA151B','Sweden':'#006AA7','Switzerland':'#FF0000','Turkey':'#E30A17'
+  };
+  const SKIN = ['#FDBCB4','#F1C27D','#E0AC69','#C68642','#8D5524','#4A2912'];
+  const RARC = ['#6b7280','#3b82f6','#a855f7','#f59e0b'];
+  const shirt = SHIRT[team.name] || '#0066cc';
+  const skin = SKIN[Number((BigInt(String(dna)) >> 18n) % 6n)];
+  const rar = RARC[t.rarity] || '#6b7280';
+  const isLight = ['#FFD700','#FCD116','#FFD100','#EEEEEE'].includes(shirt);
+  const numC = isLight ? '#000' : '#fff';
+  const bootC = t.hasGoldenBoots ? '#FFD700' : '#111';
+  const s = size, cx = s / 2;
+  const headY = s * 0.12, headW = s * 0.30, headH = s * 0.28;
+  const bodyY = headY + headH * 0.85, bodyW = s * 0.40, bodyH = s * 0.28;
+  const legW = s * 0.10, legH = s * 0.22, legGap = s * 0.04;
+  const legY = bodyY + bodyH * 0.85;
+  const armW = s * 0.09, armH = s * 0.20, armY = bodyY + s * 0.02;
+  const bootH = s * 0.09, handR = s * 0.06;
+  const p = [];
+  p.push(`<ellipse cx="${cx}" cy="${legY+legH+bootH+s*0.03}" rx="${bodyW*0.55}" ry="${s*0.04}" fill="${rar}" opacity="0.24"/>`);
+  p.push(`<rect x="${cx-legW-legGap}" y="${legY}" width="${legW}" height="${legH}" rx="3" fill="${shirt}"/>`);
+  p.push(`<rect x="${cx+legGap}" y="${legY}" width="${legW}" height="${legH}" rx="3" fill="${shirt}"/>`);
+  const sockY = legY + legH * 0.65;
+  p.push(`<rect x="${cx-legW-legGap}" y="${sockY}" width="${legW}" height="${legH*0.38}" rx="2" fill="white"/>`);
+  p.push(`<rect x="${cx+legGap}" y="${sockY}" width="${legW}" height="${legH*0.38}" rx="2" fill="white"/>`);
+  const bootY = legY + legH;
+  p.push(`<rect x="${cx-legW-legGap-2}" y="${bootY}" width="${legW+4}" height="${bootH}" rx="3" fill="${bootC}"/>`);
+  p.push(`<rect x="${cx+legGap-2}" y="${bootY}" width="${legW+4}" height="${bootH}" rx="3" fill="${bootC}"/>`);
+  p.push(`<rect x="${cx-bodyW/2}" y="${bodyY+bodyH*0.78}" width="${bodyW}" height="${s*0.09}" rx="3" fill="${shirt}cc"/>`);
+  p.push(`<rect x="${cx-bodyW/2}" y="${bodyY}" width="${bodyW}" height="${bodyH*0.85}" rx="5" fill="${shirt}"/>`);
+  p.push(`<text x="${cx}" y="${bodyY+bodyH*0.55}" text-anchor="middle" font-family="Arial Black" font-size="${s*0.13}" font-weight="900" fill="${numC}" opacity="0.9">${t.position}</text>`);
+  p.push(`<rect x="${cx-bodyW/2-armW+2}" y="${armY}" width="${armW}" height="${armH}" rx="3" fill="${shirt}" transform="rotate(7,${cx-bodyW/2},${armY})"/>`);
+  p.push(`<rect x="${cx+bodyW/2-2}" y="${armY}" width="${armW}" height="${armH}" rx="3" fill="${shirt}" transform="rotate(-7,${cx+bodyW/2},${armY})"/>`);
+  p.push(`<circle cx="${cx-bodyW/2-s*0.04}" cy="${armY+armH}" r="${handR}" fill="${skin}"/>`);
+  p.push(`<circle cx="${cx+bodyW/2+s*0.04}" cy="${armY+armH}" r="${handR}" fill="${skin}"/>`);
+  if (t.hasGloves) {
+    p.push(`<circle cx="${cx-bodyW/2-s*0.04}" cy="${armY+armH}" r="${handR+2}" fill="none" stroke="#FFD700" stroke-width="2"/>`);
+    p.push(`<circle cx="${cx+bodyW/2+s*0.04}" cy="${armY+armH}" r="${handR+2}" fill="none" stroke="#FFD700" stroke-width="2"/>`);
+  }
+  p.push(`<rect x="${cx-s*0.04}" y="${bodyY-s*0.05}" width="${s*0.08}" height="${s*0.07}" rx="2" fill="${skin}"/>`);
+  p.push(`<rect x="${cx-headW/2}" y="${headY}" width="${headW}" height="${headH}" rx="6" fill="${skin}"/>`);
+  p.push(`<rect x="${cx-headW/2-s*0.03}" y="${headY+headH*0.25}" width="${s*0.04}" height="${s*0.08}" rx="2" fill="${skin}"/>`);
+  p.push(`<rect x="${cx+headW/2-s*0.01}" y="${headY+headH*0.25}" width="${s*0.04}" height="${s*0.08}" rx="2" fill="${skin}"/>`);
+  if (t.hasEarring) p.push(`<circle cx="${cx-headW/2-1}" cy="${headY+headH*0.38}" r="${s*0.025}" fill="#FFD700"/>`);
+  const eyeY = headY + headH * 0.32, eyeW = s * 0.07, eyeH = s * 0.05;
+  p.push(`<rect x="${cx-headW*0.36}" y="${eyeY}" width="${eyeW}" height="${eyeH}" rx="2" fill="white"/>`);
+  p.push(`<rect x="${cx+headW*0.08}" y="${eyeY}" width="${eyeW}" height="${eyeH}" rx="2" fill="white"/>`);
+  p.push(`<rect x="${cx-headW*0.33}" y="${eyeY+1}" width="${eyeW*0.6}" height="${eyeH*0.7}" rx="1" fill="#0a0a14"/>`);
+  p.push(`<rect x="${cx+headW*0.11}" y="${eyeY+1}" width="${eyeW*0.6}" height="${eyeH*0.7}" rx="1" fill="#0a0a14"/>`);
+  p.push(`<rect x="${cx-headW*0.38}" y="${eyeY-s*0.04}" width="${eyeW+2}" height="${s*0.025}" rx="1" fill="#1a0800" opacity="0.8"/>`);
+  p.push(`<rect x="${cx+headW*0.06}" y="${eyeY-s*0.04}" width="${eyeW+2}" height="${s*0.025}" rx="1" fill="#1a0800" opacity="0.8"/>`);
+  p.push(`<rect x="${cx-s*0.02}" y="${eyeY+eyeH+s*0.02}" width="${s*0.04}" height="${s*0.05}" rx="2" fill="${skin}" opacity="0.7"/>`);
+  p.push(`<rect x="${cx-s*0.07}" y="${headY+headH*0.72}" width="${s*0.14}" height="${s*0.03}" rx="2" fill="#8b1a00" opacity="0.8"/>`);
+  if (t.hasBand) p.push(`<rect x="${cx-headW/2-2}" y="${headY+headH*0.18}" width="${headW+4}" height="${s*0.06}" rx="3" fill="white" opacity="0.85"/>`);
+  if (t.hasTattoo) {
+    p.push(`<line x1="${cx-bodyW/2-armW/2}" y1="${armY+armH*0.3}" x2="${cx-bodyW/2-armW/2+s*0.04}" y2="${armY+armH*0.5}" stroke="#000" stroke-width="1.5" opacity="0.5"/>`);
+    p.push(`<line x1="${cx-bodyW/2-armW/2+s*0.04}" y1="${armY+armH*0.3}" x2="${cx-bodyW/2-armW/2}" y2="${armY+armH*0.5}" stroke="#000" stroke-width="1.5" opacity="0.5"/>`);
+  }
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${s} ${s}" width="${s}" height="${s}" aria-hidden="true">${p.join('')}</svg>`;
+}
+
 // Sponsored Prize Pool split layout for Top 10
 function getPrizeForRank(rank) {
   if (rank === 1) return 10000;
@@ -2363,7 +2269,7 @@ async function updateWalletBalance() {
       const p = new ethers.BrowserProvider(walletProvider);
       const bal = await p.getBalance(address);
       const el = document.getElementById('walletBalance');
-      if (el) { const formatted = Number(ethers.formatEther(bal)).toLocaleString(undefined, {minimumFractionDigits: 3, maximumFractionDigits: 3}); el.textContent = formatted+' CHZ'; el.style.display='inline-block'; }
+      if (el) { el.textContent = parseFloat(ethers.formatEther(bal)).toFixed(1)+' CHZ'; el.style.display='inline-block'; }
     } catch(e) {}
   }
 }
@@ -2467,7 +2373,7 @@ async function finalizeWalletConnection(walletProvider, walletType='wallet') {
   contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
   marketContract = new ethers.Contract(MARKET_ADDRESS, MARKET_ABI, signer);
   const connectBtn = document.getElementById('connectBtn');
-  if (connectBtn) { connectBtn.textContent = 'CONNECTED'; connectBtn.classList.add('connected'); }
+  if (connectBtn) { connectBtn.textContent = address.slice(0,6)+'...'+address.slice(-4); connectBtn.classList.add('connected'); }
   const walletAddressEl = document.getElementById('walletAddress');
   if (walletAddressEl) { walletAddressEl.textContent = address.slice(0,6)+'...'+address.slice(-4); walletAddressEl.style.display = 'inline-block'; }
   await updateWalletBalance();
@@ -2479,7 +2385,6 @@ async function finalizeWalletConnection(walletProvider, walletType='wallet') {
   document.body.classList.add('game-mode');
   updatePriceUI();
   await loadData();
-  maybeShowWcGuide();
 }
 async function connectWallet(){
   const walletProvider = getInjectedWalletProvider();
@@ -2591,39 +2496,18 @@ async function fetchEvents(){
 
 let ownerMap = {};
 
-async function readMarketplaceListingsBatch(marketReader, listingIds, batchSize = 36) {
-  const active = [];
-  const ids = [...new Set((listingIds || []).map(Number))].filter(Number.isFinite);
-  for (let offset = 0; offset < ids.length; offset += batchSize) {
-    const batch = ids.slice(offset, offset + batchSize);
-    const settled = await Promise.allSettled(batch.map(listingId =>
-      marketReader.getListing(listingId).then(listing => ({ listingId, listing }))
-    ));
-    settled.forEach(result => {
-      if (result.status !== 'fulfilled') return;
-      const { listingId, listing } = result.value;
-      if (!listing || !Boolean(listing[3])) return;
-      active.push({ listingId, listing });
-    });
-  }
-  return active;
-}
 async function loadData(options = {}){
   const silent = Boolean(options.silent);
   const startedOverlay = !silent && !isNetworkOverlayVisible();
   if (!silent) {
-    if (startedOverlay) showDataLoadingOverlay('Refreshing blockchain data...');
-    else {
-      setNetworkTitle('Loading WC album data');
-      updateDataLoadingStep(0, 'Refreshing blockchain data...');
-    }
+    if (startedOverlay) showNetworkOverlay('Refreshing blockchain data...');
+    else updateNetworkOverlay('Refreshing blockchain data...');
   }
   if (!silent) {
     document.getElementById('countryGridContainer').innerHTML = '<div style="text-align:center;color:#3d4a5a;padding:40px;grid-column:1/-1;"><span class="spin"></span> Querying Chiliz Blockchain...</div>';
   }
 
   try {
-    updateDataLoadingStep(0, 'Loading events from API / RPC...');
     let mints=[], sales=[], listed=[];
     try {
       const res = await fetch('/api/events');
@@ -2640,7 +2524,6 @@ async function loadData(options = {}){
       listed = ev.listed;
     }
 
-  updateDataLoadingStep(1, 'Reading mint price and total supply...');
   if (contract) {
     try {
       const p = await contract.mintPrice();
@@ -2664,7 +2547,6 @@ async function loadData(options = {}){
     if(ownerMap[tid]) ownerMap[tid].owner = s.buyer?.toLowerCase();
   });
 
-  updateDataLoadingStep(2, 'Building WC squad scores...');
   window.dreamScores = {};
   const score = (wallet, tokenId, dna) => {
     try{
@@ -2691,7 +2573,6 @@ async function loadData(options = {}){
     }
   });
 
-  updateDataLoadingStep(3, 'Scanning active marketplace listings...');
   marketByTeamPosition = {};
   marketFloorByTeamPosition = {};
   activeListingsByToken = {};
@@ -2700,17 +2581,24 @@ async function loadData(options = {}){
     const rp = await getReadProvider();
     const rmk = new ethers.Contract(MARKET_ADDRESS, MARKET_ABI, rp);
     const nextId = Number(await rmk.nextListingId());
-    const from = Math.max(0, nextId - 220);
-    const listingIdsToCheck = [];
-    for(let i = from; i < nextId; i++) listingIdsToCheck.push(i);
-    const activeMarketListings = await readMarketplaceListingsBatch(rmk, listingIdsToCheck, 36);
-    activeMarketListings.forEach(({ listingId: i, listing: l }) => {
+    const from = Math.max(0, nextId - 150);
+    const ids = Array.from({length: nextId - from}, (_, idx) => from + idx);
+    const listingResults = [];
+    for(let start = 0; start < ids.length; start += 25){
+      const batch = ids.slice(start, start + 25);
+      const settled = await Promise.allSettled(batch.map(i => rmk.getListing(i).then(l => ({i, l}))));
+      settled.forEach(result => {
+        if(result.status === 'fulfilled') listingResults.push(result.value);
+      });
+    }
+    for(const {i, l} of listingResults){
       try{
+        if(!Boolean(l[3])) continue; 
         const seller = String(l[0]).toLowerCase();
         const tokenId = Number(l[1]);
         const priceWei = l[2];
         const fig = ownerMap[tokenId];
-        if(!fig) return;
+        if(!fig) continue;
         const price = parseFloat(ethers.formatEther(priceWei));
         activeListingsByToken[tokenId] = {listingId: i, seller, price, priceWei};
         const tid = fig.teamId;
@@ -2742,23 +2630,18 @@ async function loadData(options = {}){
           marketFloorByTeamPosition[tid][pos] = {listingId: i, price, priceWei};
         }
       }catch(e){}
-    });
+    }
   }catch(e){ console.warn('Market scan error:', e); }
 
   // Independent sponsored pool presentation (English local)
-  document.getElementById('poolInfo').textContent = `Quest Prize Pool: ${SPONSORED_POOL.toLocaleString()} CHZ (Sponsor Funded) Â· Global TOP 10 Share Rewards`;
+  document.getElementById('poolInfo').textContent = `Quest Prize Pool: ${SPONSORED_POOL.toLocaleString()} CHZ (Sponsor Funded) · Global TOP 10 Share Rewards`;
 
-    updateDataLoadingStep(4, 'Rendering cards, albums and leaderboard...');
     renderStats();
     renderCountryHub();
     renderPitch();
     renderLeaderboard();
   } finally {
-    if (!silent && startedOverlay) {
-      finishDataLoadingSteps();
-      updateNetworkOverlay('Done. Dashboard updated.');
-      setTimeout(() => hideNetworkOverlay(), 350);
-    }
+    if (startedOverlay) hideNetworkOverlay();
   }
 }
 
@@ -2795,12 +2678,16 @@ function getGlobalLeaderboardData() {
   return Object.entries(window.dreamScores).map(([wallet, countryData]) => {
     let totalScore = 0;
     let activeCountriesCount = 0;
+    let cardsOwned = 0;
     Object.values(countryData).forEach(positionsObj => {
       const nationScore = Object.values(positionsObj).reduce((sum, item) => sum + item.weight, 0);
       if (nationScore > 0) activeCountriesCount++;
       totalScore += nationScore;
     });
-    return { wallet, score: totalScore, filled: activeCountriesCount };
+    try {
+      cardsOwned = Object.values(ownerMap || {}).filter(fig => fig.owner === wallet.toLowerCase()).length;
+    } catch(e) {}
+    return { wallet, score: totalScore, filled: activeCountriesCount, cards: cardsOwned };
   }).sort((a,b) => b.score - a.score);
 }
 
@@ -2823,7 +2710,7 @@ function renderStats() {
 
   // Resolving global position
   const players = getGlobalLeaderboardData();
-  let myGlobalRankVal = 'â€”';
+  let myGlobalRankVal = '—';
   let myEstPrizeVal = 0;
   
   const myIndex = players.findIndex(p => p.wallet.toLowerCase() === myAddr);
@@ -2834,9 +2721,9 @@ function renderStats() {
   }
   
   document.getElementById('myGlobalRank').textContent = myGlobalRankVal;
-  document.getElementById('myEstPayout').textContent = myEstPrizeVal >= 1000
-    ? `${(myEstPrizeVal / 1000).toLocaleString(undefined, {maximumFractionDigits: 1})}k CHZ`
-    : `${myEstPrizeVal.toLocaleString()} CHZ`;
+  document.getElementById('myEstPayout').textContent = myEstPrizeVal > 0
+    ? `${myEstPrizeVal.toLocaleString()} CHZ`
+    : '???,??? CHZ';
 }
 
 function filterFederation(fed, btnEl) {
@@ -2894,12 +2781,12 @@ function renderCountryHub() {
     let crownDisplay = '';
 
     card.innerHTML = `
-      <div>
+      <div class="country-card-main">
         ${crownDisplay}
         <div class="country-card-flag">${getFlagHtml(team)}</div>
-        <div class="country-card-name" style="margin-top:6px;">${team.name}</div>
+        <div class="country-card-name" style="margin-top:6px;">${teamAbbr(team)}</div>
       </div>
-      <div>
+      <div class="country-card-stats">
         <div class="country-card-score">${scoreDisplay}</div>
         <div class="country-card-completion" style="color:${compColor};">${compDisplay}</div>
       </div>
@@ -2971,9 +2858,9 @@ function renderPitch() {
         const hoverHtml = sheetActionsHtml ? `<div class="card-hover-actions">${sheetActionsHtml}</div>` : '';
 
         card.innerHTML = `
-          <div>
+          <div class="pos-card-top">
             <div class="pos-name">${POSITION_SHORT[pos]}</div>
-            <span class="pos-ball">&#9917;</span>
+            <span class="figure-mini">${makeFigureSVG(scored.dna, 80)}</span>
           </div>
           <div>
             <div class="pos-weight ${scored.rarity === 3 ? 'gold' : ''}">${scored.weight}</div>
@@ -2984,7 +2871,7 @@ function renderPitch() {
       } else {
         card.className = 'pos-card empty';
         let actionHtml = '';
-        // UĹĽywamy najtaĹ„szej figurki (floor) do bezpoĹ›redniego zakupu dla pustego slotu (bez zbÄ™dnego floor textu)
+        // Używamy najtańszej figurki (floor) do bezpośredniego zakupu dla pustego slotu (bez zbędnego floor textu)
         if (floor) {
           actionHtml = `<button onclick="buyFromMarket(${floor.listingId}, '${floor.price}')" class="btn-card-action">BUY<br>${floor.price} CHZ</button>`;
         } else {
@@ -2993,7 +2880,7 @@ function renderPitch() {
         sheetActionsHtml = actionHtml;
 
         card.innerHTML = `
-          <div>
+          <div class="pos-card-top">
             <div class="pos-name" style="color:#5a6a7a;">${POSITION_SHORT[pos]}</div>
             <span class="pos-ball" style="opacity: 0.15">&#9917;</span>
           </div>
@@ -3049,15 +2936,15 @@ function renderLeaderboard(){
       const rank = idx + 1;
       const isWinner = rank <= 10;
       const posClass = isWinner ? 'winner' : '';
-      const medal = rank <= 3 ? `<span class="rank-medal rank-${rank}">#${rank}</span>` : '';
+      const medal = rank === 1 ? '🥇' : rank === 2 ? '🥈' : rank === 3 ? '🥉' : '';
       const prizeAmount = getPrizeForRank(rank);
       const prizeDisplay = prizeAmount > 0 ? `<span class="lb-prize">${prizeAmount.toLocaleString()} CHZ</span>` : '<span class="lb-prize none">NO PRIZE</span>';
 
       return `
         <div class="lb-row ${isMe ? 'me' : ''} ${prizeAmount > 0 ? 'prize-row' : ''}">
           <div class="lb-pos ${posClass}">${medal || '#' + rank}</div>
-          <div class="lb-addr">${player.wallet.slice(0,6)}â€¦${player.wallet.slice(-4)} ${isMe ? '<span class="lb-you">YOU</span>' : ''}</div>
-          <div class="lb-completion">Active Albums: ${player.filled}/48</div>
+          <div class="lb-addr">${player.wallet.slice(0,6)}…${player.wallet.slice(-4)} ${isMe ? '<span class="lb-you">YOU</span>' : ''}</div>
+          <div class="lb-completion">${player.cards || 0} CARDS</div>
           <div class="lb-completion prize-cell">${prizeDisplay}</div>
           <div class="lb-score">${player.score} PTS</div>
         </div>
@@ -3071,14 +2958,14 @@ function renderLeaderboard(){
     if (includeMeRow) {
       html += `
         <div class="cutoff-line" style="margin: 16px 0 12px;">
-          âšˇ YOUR CURRENT STANDING POSITION âšˇ
+          ⚡ YOUR CURRENT STANDING POSITION ⚡
         </div>
       `;
       html += renderRow(players[myIndex], myIndex);
     } else if (players.length > 10) {
       html += `
         <div class="cutoff-line">
-          đźš¨ SPONSORED PRIZE THRESHOLD (TOP 10) â€” PLAYERS BELOW DO NOT QUALIFY FOR SPONSOR PRIZES đźš¨
+          🚨 SPONSORED PRIZE THRESHOLD (TOP 10) — PLAYERS BELOW DO NOT QUALIFY FOR SPONSOR PRIZES 🚨
         </div>
       `;
     }
@@ -3114,12 +3001,12 @@ function renderLeaderboard(){
       const rank = idx + 1;
       const isWinner = rank === 1;
       const posClass = isWinner ? 'winner' : '';
-      const medal = rank === 1 ? '<span class="rank-medal rank-1">#1</span>' : '';
+      const medal = rank === 1 ? '👑' : '';
 
       return `
         <div class="lb-row ${isMe ? 'me' : ''}">
           <div class="lb-pos ${posClass}">${medal || '#' + rank}</div>
-          <div class="lb-addr">${player.wallet.slice(0,6)}â€¦${player.wallet.slice(-4)} ${isMe ? '<span class="lb-you">YOU</span>' : ''}</div>
+          <div class="lb-addr">${player.wallet.slice(0,6)}…${player.wallet.slice(-4)} ${isMe ? '<span class="lb-you">YOU</span>' : ''}</div>
           <div class="lb-completion">Completed: ${player.completed}/11</div>
           <div class="lb-score" style="${isWinner ? 'color: #00ff87;' : ''}">${player.score} PTS</div>
         </div>
@@ -3133,7 +3020,7 @@ function renderLeaderboard(){
     if (includeMeRow) {
       html += `
         <div class="cutoff-line" style="margin: 16px 0 12px;">
-          âšˇ YOUR CURRENT STANDING POSITION âšˇ
+          ⚡ YOUR CURRENT STANDING POSITION ⚡
         </div>
       `;
       html += renderLocalRow(LocalCompetitors[myIndex], myIndex);
@@ -3358,7 +3245,7 @@ async function directMint() {
       renderLeaderboard();
 
       // Populating the successful mint popup content
-      const teamInfo = TEAMS.find(t => t.id === mintedCard.teamId) || {flag: "đźŹłď¸Ź", name: "Unknown", code: "us"};
+      const teamInfo = TEAMS.find(t => t.id === mintedCard.teamId) || {flag: "🏳️", name: "Unknown", code: "us"};
       const posName = POSITION_SHORT[mintedCard.position] || mintedCard.position;
       const rarityName = ['Common','Rare','Epic','Legendary'][mintedCard.rarity];
       const rarColor = ['#7a8899','#3b82f6','#c084fc','#ffc940'][mintedCard.rarity];
@@ -3378,7 +3265,7 @@ async function directMint() {
         const upgradeDiff = oldCard ? (mintedCard.weight - oldCard.weight) : mintedCard.weight;
         statusText = `
           <span style="display:inline-block; background:rgba(0,255,135,0.15); color:#00ff87; border:1px solid #00ff87; padding:6px 12px; border-radius:4px; font-weight:700; margin-bottom:12px; font-size:13px; text-transform:uppercase; letter-spacing:1px; animation: pulse 1.5s infinite;">
-            đź”Ą SQUAD UPGRADED! (+${upgradeDiff} PTS)
+            🔥 SQUAD UPGRADED! (+${upgradeDiff} PTS)
           </span>
           <p style="color:#7a8899;">Great pull! This card is heavier than your previous one. Your active National Squad weight and leaderboard score have increased.</p>
         `;
@@ -3418,7 +3305,7 @@ function shareOnX(){
   const selectedTeam = TEAMS.find(t => t.id === selectedTeamId);
   const myAddr = address?.toLowerCase();
   const stats = getTeamDetails(myAddr, selectedTeamId);
-  const text = `đźŹ† Competing for the sponsored 25,000 CHZ prize pool in WORLD CUP DREAM XI on @fan_tokens Block Kickers!\n\nMy ${selectedTeam.flag} ${selectedTeam.name} lineup has scored ${stats.score} PTS (${stats.completed}/11 positions finalized).\n\nBuild your squad and challenge me! âš˝đź”Ą\n\nblock-kickers.vercel.app/dream-xi`;
+  const text = `🏆 Competing for the sponsored 25,000 CHZ prize pool in WORLD CUP DREAM XI on @fan_tokens Block Kickers!\n\nMy ${selectedTeam.flag} ${selectedTeam.name} lineup has scored ${stats.score} PTS (${stats.completed}/11 positions finalized).\n\nBuild your squad and challenge me! ⚽🔥\n\nblock-kickers.vercel.app/dream-xi`;
   window.open('https://twitter.com/intent/tweet?text='+encodeURIComponent(text),'_blank');
 }
 
@@ -3447,7 +3334,7 @@ async function fetchCurrentBlock(){
     currentBlock = b;
     lastBlockTime = Date.now();
   } catch(e) {
-    console.warn("Wyszukiwanie bloku przez RPC nie powiodĹ‚o siÄ™:", e);
+    console.warn("Wyszukiwanie bloku przez RPC nie powiodło się:", e);
   }
 }
 
@@ -3469,8 +3356,6 @@ function updateCountdown(){
       if (el) el.textContent = '00';
     });
     document.getElementById('cdBlock').textContent = 'QUEST CONCLUDED AT BLOCK #'+DEADLINE_BLOCK.toLocaleString();
-    const wcTop = document.getElementById('wcNavCountdown');
-    if (wcTop) wcTop.innerHTML = '<span>WC END IN</span><b>00:00:00:00</b>';
     return;
   }
   const secsLeft = blocksLeft * 3;
@@ -3488,9 +3373,7 @@ function updateCountdown(){
   setDashCd('dashCdH', h);
   setDashCd('dashCdM', m);
   setDashCd('dashCdS', s);
-  document.getElementById('cdBlock').innerHTML = 'Deadline block: <a href="https://scan.chiliz.com/block/'+DEADLINE_BLOCK+'" target="_blank" style="color:#00ff87;text-decoration:none;">#'+DEADLINE_BLOCK.toLocaleString()+'</a> Â· Estimated Current: ~#'+estimated.toLocaleString()+' Â· '+blocksLeft.toLocaleString()+' blocks remaining';
-  const wcTopLive = document.getElementById('wcNavCountdown');
-  if (wcTopLive) wcTopLive.innerHTML = `<span>WC END IN</span><b>${String(d).padStart(2,'0')}:${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}</b>`;
+  document.getElementById('cdBlock').innerHTML = 'Deadline block: <a href="https://scan.chiliz.com/block/'+DEADLINE_BLOCK+'" target="_blank" style="color:#00ff87;text-decoration:none;">#'+DEADLINE_BLOCK.toLocaleString()+'</a> · Estimated Current: ~#'+estimated.toLocaleString()+' · '+blocksLeft.toLocaleString()+' blocks remaining';
 }
 
 fetchCurrentBlock();
