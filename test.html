@@ -1261,6 +1261,27 @@ function isMissingPrivySession(error) {
 }
 function rarityClassName(r){return ["common","rare","epic","legendary"][Number(r)] || "common";}
 function rarityColor(r){return ["#7a8899","#3b82f6","#c084fc","#ffc940"][Number(r)] || "#7a8899";}
+function normalizeChzPrice(value) {
+  if (value === undefined || value === null || value === "") return undefined;
+  try {
+    if (typeof value === "bigint") return Number(ethers.formatEther(value));
+    const text = String(value).trim();
+    if (!text) return undefined;
+    if (/^\d+$/.test(text) && text.length > 10) return Number(ethers.formatEther(BigInt(text)));
+    const num = Number(text);
+    if (!Number.isFinite(num)) return undefined;
+    if (num > 10000000000) return Number(ethers.formatEther(BigInt(Math.trunc(num))));
+    return num;
+  } catch(e) {
+    const fallback = Number(value);
+    return Number.isFinite(fallback) ? fallback : undefined;
+  }
+}
+function formatChzPrice(value) {
+  const price = normalizeChzPrice(value);
+  if (price === undefined) return "-";
+  return `${Number.isInteger(price) ? price : Number(price.toFixed(4))} CHZ`;
+}
 function makeQuestFigureSVG(dna, size = 72, faded = false) {
   const t = parseDNA(dna || 0n);
   const skinColors = ['#FDBCB4','#F1C27D','#E0AC69','#C68642','#8D5524','#4A2912'];
@@ -1710,7 +1731,7 @@ async function fetchEvents() {
       const data = await res.json();
       if (Array.isArray(data.mints)) {
         const mints = data.mints.map(m => ({type:"mint", owner:String(m.owner||"").toLowerCase(), tokenId:Number(m.tokenId), dna:BigInt(String(m.dna)), block:Number(m.block||0)}));
-        const sales = Array.isArray(data.sales) ? data.sales.map(s => ({type:"sale", buyer:String(s.buyer||"").toLowerCase(), tokenId:Number(s.tokenId), block:Number(s.block||0), price:s.price !== undefined ? Number(s.price) : undefined})).filter(s => s.tokenId) : [];
+        const sales = Array.isArray(data.sales) ? data.sales.map(s => ({type:"sale", buyer:String(s.buyer||"").toLowerCase(), tokenId:Number(s.tokenId), block:Number(s.block||0), price:normalizeChzPrice(s.price)})).filter(s => s.tokenId) : [];
         return {mints, sales};
       }
     }
@@ -1729,7 +1750,7 @@ async function fetchEvents() {
     const to = Math.min(from + chunk - 1, current);
     try {(await rc.queryFilter(rc.filters.FigureMinted(), from, to)).forEach(ev => mints.push({type:"mint", owner:String(ev.args.owner||"").toLowerCase(), tokenId:Number(ev.args.tokenId), dna:ev.args.dna, block:Number(ev.blockNumber||0)}));} catch(e) {}
     try {(await rmk.queryFilter(rmk.filters.Listed(), from, to)).forEach(ev => listed.push({listingId:Number(ev.args.listingId), tokenId:Number(ev.args.tokenId)}));} catch(e) {}
-    try {(await rmk.queryFilter(rmk.filters.Sold(), from, to)).forEach(ev => sold.push({listingId:Number(ev.args.listingId), buyer:String(ev.args.buyer||"").toLowerCase(), price:parseFloat(ethers.formatEther(ev.args.price || 0n)), block:Number(ev.blockNumber||0)}));} catch(e) {}
+    try {(await rmk.queryFilter(rmk.filters.Sold(), from, to)).forEach(ev => sold.push({listingId:Number(ev.args.listingId), buyer:String(ev.args.buyer||"").toLowerCase(), price:normalizeChzPrice(ev.args.price || 0n), block:Number(ev.blockNumber||0)}));} catch(e) {}
   }
   const listingToToken = new Map(listed.map(l => [l.listingId, l.tokenId]));
   const sales = sold.map(s => ({type:"sale", buyer:s.buyer, tokenId:listingToToken.get(s.listingId), price:s.price, block:s.block})).filter(s => s.tokenId);
@@ -1938,7 +1959,7 @@ function renderQuest(state) {
       <div class="feed-pos">${posLabel(e.position)}</div>
       <div class="feed-addr"><span class="event-type ${e.eventType}">${e.eventType.toUpperCase()}</span> ${shortAddr(e.wallet)}</div>
       <div class="feed-token">#${e.tokenId}</div>
-      <div class="feed-price">${e.price !== undefined ? String(e.price) + " CHZ" : "-"}</div>
+      <div class="feed-price">${formatChzPrice(e.price)}</div>
     </div>
   `).join("") : '<div class="loading">No USA events yet.</div>';
 }
