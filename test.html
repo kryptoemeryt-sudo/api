@@ -1804,6 +1804,70 @@ body.game-mode .snipe-row.snipe-table-row .snipe-price{width:auto!important;text
 body.game-mode .snipe-row.snipe-table-row .btn-snipe{width:100%!important;min-height:30px!important;font-size:9px!important;border-radius:6px!important;}
 body.game-mode .btn-snipe.cancel{background:rgba(239,68,68,.15)!important;border-color:rgba(239,68,68,.45)!important;color:#ef4444!important;}
 @media(max-width:700px){body.game-mode .snipe-row.snipe-table-row{grid-template-columns:44px minmax(0,1fr) 62px!important;gap:6px!important;padding:7px!important;}body.game-mode .snipe-row.snipe-table-row .snipe-pos{width:44px!important;min-height:40px!important;}body.game-mode .snipe-row.snipe-table-row .snipe-pos span{font-size:11px!important;}body.game-mode .snipe-row.snipe-table-row .snipe-pos small{font-size:6px!important;}body.game-mode .snipe-weight{font-size:10px!important;}body.game-mode .snipe-status{font-size:6px!important;padding:2px 4px!important;}body.game-mode .snipe-line-bottom{font-size:6px!important;gap:3px;}body.game-mode .snipe-line-bottom span{padding:1px 3px;}body.game-mode .snipe-row.snipe-table-row .snipe-price{font-size:10px!important;}body.game-mode .snipe-row.snipe-table-row .btn-snipe{min-height:24px!important;font-size:7px!important;}}
+
+/* Snipe and dashboard cleanup */
+.topnav{display:grid!important;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr)!important;align-items:center!important;}
+.wallet-actions{justify-self:end;}
+.nav-price-countdown{justify-self:center;display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(255,201,64,.34);background:rgba(255,201,64,.08);border-radius:8px;padding:6px 12px;font-family:'Black Ops One',sans-serif;color:#ffc940;letter-spacing:1px;white-space:nowrap;}
+.nav-price-countdown span{font-size:9px;color:#dde4f0;}
+.nav-price-countdown b{font-size:12px;color:#ffc940;font-weight:400;}
+body.game-mode #marketMissingAlert,.snipe-title-row{display:none!important;}
+body.game-mode .quest-topline{display:none!important;}
+body.game-mode .quest-card-cta{display:grid!important;grid-template-columns:auto 1fr auto;align-items:center;gap:8px;padding:10px 12px;border:1px solid rgba(255,201,64,.42);border-radius:8px;background:linear-gradient(135deg,rgba(255,201,64,.18),rgba(15,19,24,.96));color:#fff!important;text-decoration:none!important;min-height:48px;}
+body.game-mode .quest-card-cta .quest-flag{font-size:20px;line-height:1;filter:none;}
+body.game-mode .quest-card-cta span:not(.quest-flag){font-size:11px;line-height:1.05;white-space:normal;}
+body.game-mode .quest-card-cta b{font-family:'Black Ops One',sans-serif;color:#ffc940;font-size:12px;white-space:nowrap;font-weight:400;}
+body.game-mode .ledger-row,body.game-mode .feed-item{font-size:12px!important;line-height:1.25!important;padding:8px 9px!important;font-family:'Black Ops One',sans-serif!important;letter-spacing:.35px!important;}
+body.game-mode .ledger-row span,body.game-mode .feed-item span{font-size:inherit!important;}
+body.game-mode .feed-title,.ledger-header{font-size:12px!important;color:#fff!important;font-family:'Black Ops One',sans-serif!important;letter-spacing:1px!important;}
+body.game-mode .lb-row{grid-template-columns:42px minmax(0,1fr) 86px 120px 72px!important;gap:9px!important;}
+body.game-mode .lb-pos,body.game-mode .lb-score{font-size:16px!important;font-family:'Black Ops One',sans-serif!important;}
+body.game-mode .lb-completion{font-size:12px!important;color:#fff!important;font-family:'Black Ops One',sans-serif!important;letter-spacing:.6px!important;}
+body.game-mode .lb-cards{color:#ffc940!important;}
+@media(max-width:700px){.topnav{grid-template-columns:minmax(0,1fr) auto!important;}.nav-price-countdown{grid-column:1 / -1;grid-row:2;padding:4px 8px;margin:3px auto 0;}.nav-price-countdown span{font-size:7px}.nav-price-countdown b{font-size:10px}body.game-mode .quest-card-cta{min-height:42px;padding:8px;}body.game-mode .quest-card-cta span:not(.quest-flag){font-size:8px;}body.game-mode .quest-card-cta b{font-size:9px;}body.game-mode .ledger-row,body.game-mode .feed-item{font-size:9px!important;padding:6px!important;}body.game-mode .lb-row{grid-template-columns:24px minmax(0,1fr) 48px 58px 44px!important;gap:4px!important;}body.game-mode .lb-pos,body.game-mode .lb-score{font-size:9px!important;}body.game-mode .lb-completion{font-size:7px!important;}}
+
+/* Final snipe/rank polish */
+body.game-mode .stat-mini-grid span,
+body.game-mode .stat-mini-grid b,
+body.game-mode .portfolio-state-msg,
+body.game-mode .p-stat-lbl,
+body.game-mode .feed-container,
+body.game-mode .ledger-container,
+body.game-mode .lb-addr{
+  color:#fff!important;
+  font-family:'Black Ops One',sans-serif!important;
+  letter-spacing:.55px!important;
+}
+body.game-mode .stat-mini-grid span{font-size:10px!important;line-height:1.1!important;opacity:1!important;}
+body.game-mode .stat-mini-grid b{font-size:13px!important;line-height:1.1!important;font-weight:400!important;}
+body.game-mode .quest-link-card{gap:0!important;justify-content:center!important;align-content:center!important;}
+body.game-mode .quest-card-cta{height:100%;min-height:68px!important;box-shadow:inset 0 0 24px rgba(255,201,64,.08),0 0 20px rgba(255,201,64,.08)!important;}
+body.game-mode .quest-card-cta:hover{border-color:#ffc940!important;filter:brightness(1.08);}
+body.game-mode .quest-card-cta .quest-flag{font-size:28px!important;}
+body.game-mode .quest-card-cta span:not(.quest-flag){font-size:14px!important;}
+body.game-mode .quest-card-cta b{font-size:15px!important;}
+body.game-mode .quest-link-copy,.quest-soon-btn{display:none!important;}
+body.game-mode .ledger-row,body.game-mode .feed-item{font-size:14px!important;min-height:34px!important;}
+body.game-mode .feed-title,.ledger-header{font-size:14px!important;}
+body.game-mode .lb-row{min-height:44px!important;}
+body.game-mode .lb-addr{font-size:13px!important;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+body.game-mode .lb-completion{font-size:14px!important;}
+body.game-mode .lb-pos,body.game-mode .lb-score{font-size:18px!important;}
+body.game-mode .lb-prize-text{color:#00ff87!important;white-space:nowrap;}
+body.game-mode .lb-prize-text.none{color:#fff!important;opacity:.8;}
+@media(max-width:700px){
+  body.game-mode .stat-mini-grid span{font-size:7px!important;}
+  body.game-mode .stat-mini-grid b{font-size:9px!important;}
+  body.game-mode .quest-card-cta{min-height:48px!important;}
+  body.game-mode .quest-card-cta .quest-flag{font-size:20px!important;}
+  body.game-mode .quest-card-cta span:not(.quest-flag){font-size:9px!important;}
+  body.game-mode .quest-card-cta b{font-size:10px!important;}
+  body.game-mode .ledger-row,body.game-mode .feed-item{font-size:10px!important;min-height:28px!important;}
+  body.game-mode .feed-title,.ledger-header{font-size:10px!important;}
+  body.game-mode .lb-addr{font-size:8px!important;}
+  body.game-mode .lb-completion{font-size:8px!important;}
+  body.game-mode .lb-pos,body.game-mode .lb-score{font-size:10px!important;}
+}
 /* Network waiting overlay for blockchain actions */
 #networkOverlay{
   position:fixed;
@@ -1871,6 +1935,7 @@ body.network-busy{cursor:progress;}
     <span id="walletAddress" class="wallet-pill" style="color:#dde4f0;">0x0000...0000</span>
     <span id="walletBalance" class="wallet-pill" style="color:#00ff87;">0.0 CHZ</span>
   </div>
+  <div class="nav-price-countdown" id="navPriceCountdown"><span>50 CHZ IN</span><b>--</b></div>
   <div class="wallet-actions">
     <button class="btn-connect" id="connectBtn" onclick="openWalletChoice()">CONNECT</button>
   </div>
@@ -2009,40 +2074,13 @@ body.network-busy{cursor:progress;}
       <div class="stat-val" id="myGlobalRank" style="color:#818cf8;">-</div>
       <div class="stat-lbl">RANK</div>
       <div class="stat-mini-grid">
-        <span>TO 50 CHZ</span><b id="price50Countdown">--</b>
-        <span>TO 100 CHZ</span><b id="price100Countdown">--</b>
+        <span>CURRENT PRIZE</span><b id="topRankPrize">0 CHZ</b>
+        <span>PAID RANKS</span><b id="topPaidInfoRank">1</b>
       </div>
     </div>
     <div class="stat-card quest-link-card">
-      <div class="quest-topline"><span id="topPoolInfo">10,000 CHZ POOL</span><span id="topDeadlineInfo">--D --H</span></div>
-      <a class="quest-live-link" href="/nation-quest">USA NATION QUEST</a>
-      <div class="quest-link-copy">WC Album soon - every card matters!</div>
-      <button class="quest-soon-btn" type="button" disabled>WORLD CUP ALBUM SOON</button>
+      <a class="quest-live-link quest-card-cta" href="/nation-quest"><span class="quest-flag">&#127482;&#127480;</span><span>USA NATION QUEST</span><b>1,500 CHZ</b></a>
     </div>
-  </div>
-
-  <!-- MONIT POĹÄ„CZENIA PORTFELA -->
-  <div id="connectSection" class="connect-prompt">
-    <p>Connect your Chiliz Wallet to explore the tactical pitch, find the best deals, and start scoring.</p>
-    <button class="btn-connect-big" onclick="openWalletChoice()">CHOOSE WALLET</button>
-  </div>
-
-  <!-- PANEL GĹĂ“WNY ROZGRYWKI -->
-  <div id="gameSection" style="display:none;">
-
-    <div class="legacy-action-row" style="display:flex; justify-content:space-between; align-items:center; padding:0 24px 16px; flex-wrap:wrap; gap:12px;">
-      <button class="btn-share" onclick="shareOnX()">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-        &#128257; SHARE LINEUP ON X
-      </button>
-      <div style="display:flex; gap:8px;">
-        <button class="btn-share" onclick="toggleRulesModal(true)" style="border-color:#ffc940; color:#ffc940;">
-          &#8505; RULES
-        </button>
-        <button class="btn-share" onclick="loadData()" style="border-color:rgba(99,102,241,0.3); color:#818cf8;">
-          &#8635; REFRESH DATA
-        </button>
-      </div>
     </div>
 
     <!-- ASYMETRYCZNY UKĹAD ROZGRYWKI -->
@@ -2064,11 +2102,7 @@ body.network-busy{cursor:progress;}
           
           <!-- ZAKĹADKA 1: SNIPE DEALS -->
           <div id="deskTabSnipe" class="desk-tab-content">
-            <div class="snipe-title-row">
-              <div class="snipe-title">HOT LISTINGS (ARGENTINA SNIPER)</div>
-              <span style="font-family:'Share Tech Mono',monospace; color:#ffc940; font-size:11px;">MINT: 10 CHZ - RANDOM 48 WC TEAM</span>
-            </div>
-            <div id="marketMissingAlert"></div>
+            <div id="marketMissingAlert" style="display:none;"></div>
             <div class="market-filters">
               <button class="market-filter-btn active" id="filterAllDeals" onclick="setSnipeFilter('all')">ALL DEALS</button>
               <button class="market-filter-btn" id="filterMissingDeals" onclick="setSnipeFilter('missing')">MISSING POSITIONS</button>
@@ -4307,6 +4341,8 @@ function renderStats() {
   const setText = (id, value) => { const el = document.getElementById(id); if (el) el.textContent = value; };
   setText('topPlayersInfo', playerCount.toLocaleString());
   setText('topPaidInfo', paidPlacesVal.toLocaleString());
+  setText('topPaidInfoRank', paidPlacesVal.toLocaleString());
+  setText('topRankPrize', myEstPayoutVal > 0 ? myEstPayoutVal.toLocaleString(undefined, {maximumFractionDigits: 1}) + ' CHZ' : '0 CHZ');
   setText('topMintedInfo', formatCompactNumber(totalMintedGlobal));
   setText('topArgSupplyInfo', argSupply.toLocaleString());
   updatePriceCountdowns();
@@ -4494,15 +4530,15 @@ function renderLeaderboard(){
     const posClass = isWinner ? 'winner' : '';
     const medal = rank <= 3 ? getOrdinal(rank) : '';
     const prizeAmount = getPrizeForRank(rank, playerCount);
-    const prizeDisplay = prizeAmount > 0 ? `<span style="color:#00ff87;">Prize: ${prizeAmount.toLocaleString()} CHZ</span>` : '<span style="color:#5a6a7a;">No Prize</span>';
+    const prizeDisplay = prizeAmount > 0 ? `<span class="lb-prize-text">${prizeAmount.toLocaleString()} CHZ</span>` : '<span class="lb-prize-text none">0 CHZ</span>';
 
     return `
       <div class="lb-row ${isMe ? 'me' : ''}">
         <div class="lb-pos ${posClass}">${medal || '#' + rank}</div>
         <div class="lb-addr">${player.wallet.slice(0,6)}...${player.wallet.slice(-4)} ${isMe ? '<span class="lb-you">YOU</span>' : ''}</div>
-        <div class="lb-completion">Completed: ${player.completed}/11</div>
+        <div class="lb-completion lb-cards">${player.completed}/11 CARDS</div>
         <div class="lb-completion" style="margin-left: 12px; font-weight: 700;">${prizeDisplay}</div>
-        <div class="lb-score">${player.score} pts</div>
+        <div class="lb-score">${player.score} PTS</div>
       </div>
     `;
   };
@@ -4877,8 +4913,11 @@ function formatShortCountdown(targetMs) {
 
 function updatePriceCountdowns() {
   const setText = (id, value) => { const el = document.getElementById(id); if (el) el.textContent = value; };
-  setText('price50Countdown', formatShortCountdown(PRICE_STEP_50_AT));
+  const to50 = formatShortCountdown(PRICE_STEP_50_AT);
+  setText('price50Countdown', to50);
   setText('price100Countdown', formatShortCountdown(PRICE_STEP_100_AT));
+  const nav = document.getElementById('navPriceCountdown');
+  if (nav) nav.innerHTML = `<span>50 CHZ IN</span><b>${to50}</b>`;
 }
 /* HARMONOGRAM I LICZNIK BLOKĂ“W SYSTEMOWYCH */
 const BLOCK_TIME_MS = 3000;
