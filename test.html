@@ -638,6 +638,83 @@ button.stat.mint-stat,
   button.stat.mint-stat,
   .mint-stat{font-size:17px!important;}
 }
+
+/* Mobile QA pass: fixed overlay and identical card visuals */
+@media(max-width:900px){
+  html,body{width:100%!important;max-width:100%!important;overflow-x:hidden!important;}
+  .page{width:100%!important;max-width:100%!important;padding-left:6px!important;padding-right:6px!important;overflow-x:hidden!important;}
+  #networkOverlay{padding:12px!important;align-items:center!important;justify-content:center!important;overflow:hidden!important;}
+  .network-card{width:calc(100vw - 28px)!important;max-width:360px!important;margin:0 auto!important;padding:20px 14px!important;border-radius:10px!important;}
+  .network-title{font-size:14px!important;line-height:1.1!important;}
+  .network-text{font-size:10px!important;}
+  .network-steps{gap:7px!important;}
+  .network-step{grid-template-columns:16px minmax(0,1fr)!important;font-size:9px!important;letter-spacing:.5px!important;white-space:normal!important;line-height:1.05!important;}
+  .hero .panel{padding:8px!important;min-height:0!important;}
+  .hero-title{font-size:34px!important;line-height:.88!important;}
+  .hero-copy{font-size:13px!important;line-height:1.25!important;gap:4px!important;}
+  .stats{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:4px!important;}
+  .stat{min-width:0!important;min-height:54px!important;padding:5px 2px!important;border-radius:7px!important;overflow:hidden!important;}
+  .stat-value{font-size:15px!important;line-height:1!important;white-space:nowrap!important;}
+  .stat-label{font-size:5.5px!important;line-height:1.05!important;letter-spacing:0!important;white-space:normal!important;}
+  .arg-quest-flag{width:18px!important;height:12px!important;}
+  .arg-quest-stat{grid-template-columns:auto 1fr!important;gap:3px!important;}
+  .arg-quest-stat .stat-value{font-size:6.5px!important;white-space:nowrap!important;}
+  .arg-quest-stat .stat-label{font-size:5px!important;}
+  .my-squad-panel,.market-section{padding:6px!important;border-radius:8px!important;}
+  .section-title{font-size:8px!important;letter-spacing:.5px!important;margin-bottom:6px!important;}
+  .section-title .live{font-size:7px!important;}
+  .squad{grid-template-columns:repeat(11,minmax(0,1fr))!important;gap:3px!important;width:100%!important;overflow:hidden!important;}
+  .market-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:6px!important;width:100%!important;overflow-y:auto!important;overflow-x:hidden!important;max-height:288px!important;}
+  .slot,.market-card.slot{width:100%!important;min-width:0!important;max-width:none!important;padding:3px 2px!important;border-radius:6px!important;gap:2px!important;}
+  .slot{min-height:72px!important;}
+  .market-card.slot{min-height:142px!important;}
+  .card-fig-canvas,.slot-fig-canvas,.market-fig-canvas{height:38px!important;flex:0 0 38px!important;display:flex!important;align-items:center!important;justify-content:center!important;}
+  .card-fig-canvas svg,.slot-fig-canvas svg,.market-fig-canvas svg{width:36px!important;height:36px!important;margin:0 auto!important;display:block!important;}
+  .card-flag,.slot-fig-flag,.market-fig-flag{width:12px!important;height:8px!important;top:-1px!important;left:-1px!important;}
+  .card-pos,.slot-fig-canvas .slot-pos,.market-fig-canvas .slot-pos{font-size:5px!important;left:2px!important;bottom:2px!important;padding:1px 3px!important;border-radius:3px!important;}
+  .slot-check,.card-check{right:3px!important;top:2px!important;font-size:9px!important;}
+  .slot-info,.market-card .market-meta{min-height:14px!important;gap:2px!important;display:grid!important;grid-template-columns:1fr auto!important;align-items:end!important;}
+  .slot-count,.market-card .slot-count{font-size:9px!important;line-height:1!important;}
+  .slot-status,.market-card .slot-status{font-size:4.5px!important;line-height:1!important;letter-spacing:0!important;}
+  .slot-actions{margin-top:2px!important;gap:2px!important;}
+  .slot-action,.market-trade .slot-action{min-height:22px!important;font-size:6px!important;padding:4px 2px!important;border-radius:5px!important;}
+  .market-trade{gap:3px!important;margin-top:3px!important;}
+  .market-trade .market-price{font-size:8px!important;line-height:1!important;}
+  .opportunity-panel{padding:7px!important;margin-top:7px!important;gap:4px!important;}
+  .opportunity-title{font-size:8px!important;}
+  .opportunity-main{grid-template-columns:auto auto!important;gap:6px!important;}
+  .opportunity-main em{grid-column:1 / -1!important;justify-self:start!important;font-size:6px!important;}
+  .opportunity-main span{font-size:9px!important;}
+  .opportunity-main b{font-size:11px!important;}
+  .opportunity-text{font-size:7px!important;line-height:1.18!important;}
+}
+
+/* Final mobile fit guard */
+@media(max-width:900px){
+  #networkOverlay{box-sizing:border-box!important;width:100dvw!important;max-width:100dvw!important;left:0!important;right:0!important;padding:12px!important;overflow:hidden!important;}
+  #networkOverlay .network-card{box-sizing:border-box!important;width:min(330px, calc(100dvw - 24px))!important;min-width:0!important;max-width:calc(100dvw - 24px)!important;margin:0!important;padding:18px 14px!important;overflow:hidden!important;}
+  #networkOverlay .network-steps{width:100%!important;min-width:0!important;overflow:hidden!important;}
+  #networkOverlay .network-step{min-width:0!important;max-width:100%!important;white-space:normal!important;overflow:hidden!important;text-overflow:clip!important;grid-template-columns:16px minmax(0,1fr)!important;gap:7px!important;}
+  .market-card.slot .card-fig-canvas,.market-card.slot .market-fig-canvas,.my-squad-panel .slot .card-fig-canvas,.my-squad-panel .slot .slot-fig-canvas{display:flex!important;align-items:center!important;justify-content:center!important;}
+  .market-card.slot svg,.my-squad-panel .slot svg{display:block!important;margin:0 auto!important;}
+}
+
+/* Hard mobile overlay clamp for narrow browsers */
+@media(max-width:900px){
+  #networkOverlay{display:none!important;align-items:flex-start!important;justify-content:flex-start!important;padding:0!important;overflow:hidden!important;}
+  #networkOverlay.show{display:block!important;}
+  #networkOverlay .network-card{
+    position:fixed!important;
+    left:12px!important;
+    right:auto!important;
+    top:50%!important;
+    transform:translateY(-50%)!important;
+    width:min(300px, calc(100vw - 24px))!important;
+    min-width:0!important;
+    max-width:300px!important;
+    margin:0!important;
+  }
+}
 </style>
 </head>
 <body>
