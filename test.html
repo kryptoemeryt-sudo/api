@@ -2570,6 +2570,97 @@ body{padding-top:55px!important;}
   body.game-mode .lb-row > .lb-completion:not(.lb-cards){order:5!important;font-size:7px!important;text-align:right!important;}
   body.game-mode .lb-prize-text{font-size:7px!important;}
   body.game-mode .lb-you{font-size:6px!important;padding:1px 3px!important;margin-left:2px!important;}
+}
+/* Final mobile compact cockpit and image tab icons */
+@media(max-width:700px){
+  body.game-mode .page{
+    grid-template-rows:44px minmax(0,1fr)!important;
+    gap:4px!important;
+    padding:4px!important;
+  }
+  body.game-mode #statsRow{
+    grid-template-columns:repeat(4,minmax(0,1fr))!important;
+    gap:3px!important;
+    min-height:0!important;
+    height:44px!important;
+    align-items:stretch!important;
+  }
+  body.game-mode #statsRow .stat-card{
+    min-height:0!important;
+    height:44px!important;
+    padding:4px 2px!important;
+    border-radius:6px!important;
+    gap:1px!important;
+    overflow:hidden!important;
+  }
+  body.game-mode #statsRow .stat-val,
+  body.game-mode #statsRow #myEstPayout{
+    font-size:11px!important;
+    line-height:1!important;
+    margin:0!important;
+    padding:0!important;
+    white-space:nowrap!important;
+  }
+  body.game-mode #statsRow .stat-lbl{
+    font-size:5px!important;
+    line-height:1!important;
+    letter-spacing:.25px!important;
+    color:#fff!important;
+    margin:0!important;
+  }
+  body.game-mode .stat-mini-grid{display:none!important;}
+  body.game-mode .quest-card-cta{
+    min-height:0!important;
+    height:100%!important;
+    padding:3px 2px!important;
+    grid-template-columns:10px minmax(0,1fr)!important;
+    grid-template-rows:1fr 1fr!important;
+    gap:1px 3px!important;
+    align-content:center!important;
+  }
+  body.game-mode .quest-card-cta .quest-flag-img{width:8px!important;height:5px!important;grid-row:1 / 3!important;align-self:center!important;}
+  body.game-mode .quest-card-cta span{font-size:5px!important;line-height:1!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;}
+  body.game-mode .quest-card-cta b{font-size:7px!important;line-height:1!important;white-space:nowrap!important;}
+
+  body.game-mode .desk-tab-btn::before{
+    content:''!important;
+    width:18px!important;
+    height:18px!important;
+    display:block!important;
+    background-color:currentColor!important;
+    background-repeat:no-repeat!important;
+    background-position:center!important;
+    background-size:contain!important;
+  }
+  body.game-mode #btnDeskPitch::before{mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='9' fill='none' stroke='black' stroke-width='2'/%3E%3Cpath d='M12 7l4 3-1.5 5h-5L8 10zM4.5 10.5l3.5-.5M16 10l3.5.5M8.5 15l-2 3M15.5 15l2 3' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") center/contain no-repeat;}
+  body.game-mode #btnDeskSnipe::before{mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='8' fill='none' stroke='black' stroke-width='2'/%3E%3Ccircle cx='12' cy='12' r='4' fill='none' stroke='black' stroke-width='2'/%3E%3Cpath d='M12 2v4M12 18v4M2 12h4M18 12h4' stroke='black' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") center/contain no-repeat;}
+  body.game-mode #btnDeskPortfolio::before{mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 18h16M6 15l4-4 3 3 5-7' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M15 7h3v3' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E") center/contain no-repeat;}
+  body.game-mode #btnDeskFeed::before{mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M13 2L4 14h7l-1 8 10-13h-7z' fill='black'/%3E%3C/svg%3E") center/contain no-repeat;}
+  body.game-mode #btnDeskRanks::before{mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M8 21h8M12 17v4M7 4h10v4a5 5 0 01-10 0z' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/%3E%3Cpath d='M7 6H4a4 4 0 004 4M17 6h3a4 4 0 01-4 4' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") center/contain no-repeat;}
+  body.game-mode #btnDeskInfo::before{mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='9' fill='none' stroke='black' stroke-width='2'/%3E%3Cpath d='M12 11v6M12 7h.01' stroke='black' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E") center/contain no-repeat;}
+
+  body.game-mode .desk-tabs{min-height:32px!important;}
+  body.game-mode .desk-tab-btn{padding:6px 2px!important;min-height:32px!important;}
+  body.game-mode.mobile-pitch-tab .pitch-title-row{margin-bottom:3px!important;}
+  body.game-mode.mobile-pitch-tab .pitch-title{font-size:7px!important;letter-spacing:.5px!important;}
+  body.game-mode.mobile-pitch-tab .pitch-title-actions span{font-size:7px!important;}
+  body.game-mode.mobile-pitch-tab .btn-pitch-mint{font-size:6px!important;padding:3px 5px!important;}
+  body.game-mode.mobile-pitch-tab .pitch-wrap{padding:4px 3px!important;}
+  body.game-mode.mobile-pitch-tab .formation{gap:1px!important;justify-content:space-between!important;}
+  body.game-mode.mobile-pitch-tab .form-row{gap:3px!important;}
+  body.game-mode.mobile-pitch-tab .form-row.row-wings{padding:0 13%!important;}
+  body.game-mode.mobile-pitch-tab .form-row.row-mid{padding:0 3%!important;}
+  body.game-mode.mobile-pitch-tab .pos-card{
+    width:clamp(39px,11.8vw,47px)!important;
+    min-height:clamp(50px,8.15dvh,63px)!important;
+    max-height:66px!important;
+    padding:2px 1px!important;
+  }
+  body.game-mode.mobile-pitch-tab .pos-fig-canvas{height:clamp(30px,5.15dvh,38px)!important;}
+  body.game-mode.mobile-pitch-tab .pos-fig-canvas svg{width:clamp(30px,8.6vw,38px)!important;height:clamp(30px,8.6vw,38px)!important;}
+  body.game-mode.mobile-pitch-tab .pos-weight{font-size:9px!important;}
+  body.game-mode.mobile-pitch-tab .pos-rarity{font-size:4px!important;}
+  body.game-mode.mobile-pitch-tab .pos-fig-flag{width:12px!important;height:8px!important;}
 }</style>
 </head>
 <body>
