@@ -1192,6 +1192,85 @@ body.game-mode .wallet-actions #connectBtn.connected{display:inline-flex!importa
   .nav-countdown b,.nav-price-countdown b{color:#ffc940!important;}
 }
 
+
+/* PC polish: WC album selector, tabs and leaderboard readability */
+@media(min-width:701px){
+  body.game-mode .country-section,
+  body.game-mode .pitch-container,
+  body.game-mode .lb-section,
+  body.game-mode .leaderboard-list,
+  body.game-mode .lb-row,
+  body.game-mode .country-card,
+  body.game-mode .pos-card{color:#fff!important;}
+  body.game-mode .stat-lbl,
+  body.game-mode .pitch-title,
+  body.game-mode .country-card-name,
+  body.game-mode .country-card-fed,
+  body.game-mode .country-card-completion,
+  body.game-mode .lb-addr,
+  body.game-mode .lb-completion,
+  body.game-mode .lb-prize.none,
+  body.game-mode .pos-name,
+  body.game-mode .pos-rarity,
+  body.game-mode #selectedCountryCompletion,
+  body.game-mode .album-title-tools span,
+  body.game-mode .card-hover-note,
+  body.game-mode .stat-card,
+  body.game-mode .stat-lbl{color:#fff!important;}
+  body.game-mode .nation-selector-head{
+    display:grid!important;
+    grid-template-columns:auto minmax(0,1fr) auto!important;
+    align-items:center!important;
+    gap:10px!important;
+    margin-bottom:8px!important;
+    font-family:'Black Ops One',sans-serif!important;
+    color:#fff!important;
+    letter-spacing:1.4px!important;
+  }
+  body.game-mode .nation-selector-label,
+  body.game-mode .pitch-title,
+  body.game-mode .album-title-tools span,
+  body.game-mode .lb-toggle-btn,
+  body.game-mode .tab-btn{
+    font-family:'Black Ops One',sans-serif!important;
+    font-size:12px!important;
+    letter-spacing:1px!important;
+    color:#fff!important;
+    line-height:1!important;
+  }
+  body.game-mode .nation-filter-inline{
+    display:grid!important;
+    grid-template-columns:repeat(7,minmax(0,1fr))!important;
+    gap:5px!important;
+    margin:0!important;
+    min-width:0!important;
+    width:100%!important;
+    align-items:center!important;
+    overflow:visible!important;
+  }
+  body.game-mode .tab-btn{
+    padding:7px 5px!important;
+    min-height:28px!important;
+    border-radius:6px!important;
+    text-align:center!important;
+    white-space:nowrap!important;
+    overflow:hidden!important;
+    text-overflow:ellipsis!important;
+    background:#0f1318!important;
+    border-color:#1c2028!important;
+  }
+  body.game-mode .tab-btn.active{background:#818cf8!important;color:#000!important;border-color:#818cf8!important;}
+  body.game-mode .lb-toggle-btn{min-height:34px!important;padding:9px 10px!important;text-transform:uppercase!important;}
+  body.game-mode .lb-toggle-btn.active{color:#000!important;}
+  body.game-mode .country-grid{padding-top:0!important;}
+  body.game-mode .leaderboard-list{color:#fff!important;}
+  body.game-mode .lb-pos{display:flex!important;align-items:center!important;justify-content:center!important;color:#fff!important;}
+  .rank-medal{width:26px;height:26px;border-radius:999px;display:inline-grid;place-items:center;font-family:'Black Ops One',sans-serif;font-size:13px;line-height:1;color:#05070a;border:1px solid rgba(255,255,255,.18);box-shadow:0 0 14px rgba(0,0,0,.35);}
+  .rank-medal.rank-1{background:linear-gradient(135deg,#ffe68a,#ffc940 55%,#b77905);box-shadow:0 0 16px rgba(255,201,64,.32);}
+  .rank-medal.rank-2{background:linear-gradient(135deg,#f5f7fb,#a8b3c7 55%,#677184);box-shadow:0 0 14px rgba(200,220,255,.22);}
+  .rank-medal.rank-3{background:linear-gradient(135deg,#ffbf7a,#c46a24 55%,#7a3511);box-shadow:0 0 14px rgba(255,128,32,.22);}
+}
+
 </style>
 </head>
 <body>
@@ -1386,23 +1465,21 @@ body.game-mode .wallet-actions #connectBtn.connected{display:inline-flex!importa
       
       <!-- LEFT COLUMN: NATION SELECTOR -->
       <div class="left-col country-section">
-        <div class="pitch-title">
-          <span>NATION SELECTOR</span>
+        <div class="pitch-title nation-selector-head">
+          <span class="nation-selector-label">NATION SELECTOR</span>
+          <div class="filter-tabs nation-filter-inline">
+            <button class="tab-btn active" onclick="filterFederation('ALL', this)">ALL (48)</button>
+            <button class="tab-btn" onclick="filterFederation('UEFA', this)">UEFA</button>
+            <button class="tab-btn" onclick="filterFederation('CONMEBOL', this)">CONMEBOL</button>
+            <button class="tab-btn" onclick="filterFederation('CAF', this)">CAF</button>
+            <button class="tab-btn" onclick="filterFederation('AFC', this)">AFC</button>
+            <button class="tab-btn" onclick="filterFederation('CONCACAF', this)">CONCACAF</button>
+            <button class="tab-btn" onclick="filterFederation('OFC', this)">OFC</button>
+          </div>
           <span class="album-title-tools">
             <span style="font-family:'Share Tech Mono',monospace; color:#818cf8;">48 ALBUMS</span>
             <button class="dash-icon-btn" type="button" title="Refresh albums" onclick="loadData()">&#8635;</button>
           </span>
-        </div>
-
-        <!-- FEDERATION FILTER TABS -->
-        <div class="filter-tabs">
-          <button class="tab-btn active" onclick="filterFederation('ALL', this)">ALL (48)</button>
-          <button class="tab-btn" onclick="filterFederation('UEFA', this)">UEFA</button>
-          <button class="tab-btn" onclick="filterFederation('CONMEBOL', this)">CONMEBOL</button>
-          <button class="tab-btn" onclick="filterFederation('CAF', this)">CAF</button>
-          <button class="tab-btn" onclick="filterFederation('AFC', this)">AFC</button>
-          <button class="tab-btn" onclick="filterFederation('CONCACAF', this)">CONCACAF</button>
-          <button class="tab-btn" onclick="filterFederation('OFC', this)">OFC</button>
         </div>
 
         <div class="country-grid" id="countryGridContainer">
@@ -2923,7 +3000,7 @@ function renderLeaderboard(){
       const rank = idx + 1;
       const isWinner = rank <= 10;
       const posClass = isWinner ? 'winner' : '';
-      const medal = rank === 1 ? 'đźĄ‡' : rank === 2 ? 'đźĄ' : rank === 3 ? 'đźĄ‰' : '';
+      const medal = rank <= 3 ? `<span class="rank-medal rank-${rank}">${rank}</span>` : '';
       const prizeAmount = getPrizeForRank(rank);
       const prizeDisplay = prizeAmount > 0 ? `<span class="lb-prize">${prizeAmount.toLocaleString()} CHZ</span>` : '<span class="lb-prize none">NO PRIZE</span>';
 
@@ -2988,7 +3065,7 @@ function renderLeaderboard(){
       const rank = idx + 1;
       const isWinner = rank === 1;
       const posClass = isWinner ? 'winner' : '';
-      const medal = rank === 1 ? 'đź‘‘' : '';
+      const medal = rank === 1 ? '<span class="rank-medal rank-1">1</span>' : '';
 
       return `
         <div class="lb-row ${isMe ? 'me' : ''}">
