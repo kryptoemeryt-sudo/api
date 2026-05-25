@@ -1555,6 +1555,52 @@ body.game-mode .snipe-pos.rarity-3{--rar:#ffc940;color:#ffe08a;border-color:rgba
   body.game-mode .quest-live-link{font-size:10px;}
   body.game-mode .quest-link-card{min-height:76px;}
 }
+
+/* Desktop resizable pitch / snipe split */
+@media(min-width:701px){
+  body.game-mode #gameSection[style*="block"],
+  body.game-mode #gameSection{
+    --snipe-panel-width: clamp(360px, 32vw, 620px);
+    grid-template-columns:minmax(480px,1fr) 8px var(--snipe-panel-width) !important;
+    grid-template-areas:"pitch resize panel" !important;
+    column-gap:8px;
+  }
+  body.game-mode .layout-resizer{
+    grid-area:resize;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width:8px;
+    min-width:8px;
+    height:100%;
+    cursor:col-resize;
+    border:1px solid rgba(0,255,135,.18);
+    border-radius:999px;
+    background:linear-gradient(180deg,rgba(0,255,135,.08),rgba(116,172,223,.08));
+    box-shadow:0 0 16px rgba(0,255,135,.08), inset 0 0 8px rgba(0,255,135,.06);
+    touch-action:none;
+    opacity:.72;
+    transition:opacity .15s ease, border-color .15s ease, background .15s ease;
+  }
+  body.game-mode .layout-resizer::before{
+    content:"";
+    width:2px;
+    height:38px;
+    border-radius:999px;
+    background:repeating-linear-gradient(to bottom,#00ff87 0 4px,transparent 4px 8px);
+    opacity:.7;
+  }
+  body.game-mode .layout-resizer:hover,
+  body.game-mode .layout-resizer.dragging{
+    opacity:1;
+    border-color:rgba(0,255,135,.52);
+    background:linear-gradient(180deg,rgba(0,255,135,.16),rgba(116,172,223,.12));
+  }
+  body.resizing-layout{cursor:col-resize;user-select:none;}
+}
+@media(max-width:700px){
+  .layout-resizer{display:none!important;}
+}
 /* Network waiting overlay for blockchain actions */
 #networkOverlay{
   position:fixed;
@@ -1923,6 +1969,8 @@ body.network-busy{cursor:progress;}
 
         <!-- DZIENNIK TRANSAKCJI GĹĂ“WNYCH (LIVE FEED) -->
       </div>
+      <div class="layout-resizer" id="layoutResizer" title="Drag to resize pitch and Snipe Deals" aria-hidden="true"></div>
+
 
       <!-- PRAWA KOLUMNA: POSZERZONE BOISKO TAKTYCZNE -->
       <div class="right-col pitch-container">
@@ -3054,6 +3102,7 @@ async function finalizeWalletConnection(walletProvider, walletType = 'wallet') {
   const prizeStrip = document.getElementById('dashboardPrizeStrip');
   if (prizeStrip) prizeStrip.style.display = 'grid';
   document.body.classList.add('game-mode');
+  initDesktopLayoutResizer();
 
   await loadData();
   return true;
@@ -4573,7 +4622,56 @@ setInterval(updateCountdown, 1000);
 setInterval(fetchCurrentBlock, 30000);
 
 // PrzywrĂłcenie poĹ‚Ä…czenia portfela po przeĹ‚adowaniu strony
+function initDesktopLayoutResizer() {
+  const game = document.getElementById('gameSection');
+  const handle = document.getElementById('layoutResizer');
+  if (!game || !handle || handle.dataset.ready === '1') return;
+  handle.dataset.ready = '1';
+  const storageKey = 'dreamXiSnipePanelWidth';
+  const applyWidth = (width) => {
+    if (!width || !Number.isFinite(width)) return;
+    const viewport = Math.max(900, window.innerWidth || 1200);
+    const min = 360;
+    const max = Math.min(680, Math.max(380, viewport - 560));
+    const clamped = Math.max(min, Math.min(max, Math.round(width)));
+    game.style.setProperty('--snipe-panel-width', clamped + 'px');
+    try { localStorage.setItem(storageKey, String(clamped)); } catch(e) {}
+  };
+  try {
+    const saved = parseInt(localStorage.getItem(storageKey) || '', 10);
+    if (saved) applyWidth(saved);
+  } catch(e) {}
+
+  const startDrag = (event) => {
+    if (window.matchMedia && window.matchMedia('(max-width: 700px)').matches) return;
+    event.preventDefault();
+    handle.classList.add('dragging');
+    document.body.classList.add('resizing-layout');
+    const onMove = (moveEvent) => {
+      const rect = game.getBoundingClientRect();
+      const pointerX = moveEvent.clientX || 0;
+      const widthFromRight = rect.right - pointerX - 8;
+      applyWidth(widthFromRight);
+    };
+    const stopDrag = () => {
+      handle.classList.remove('dragging');
+      document.body.classList.remove('resizing-layout');
+      window.removeEventListener('pointermove', onMove);
+      window.removeEventListener('pointerup', stopDrag);
+      window.removeEventListener('pointercancel', stopDrag);
+    };
+    window.addEventListener('pointermove', onMove);
+    window.addEventListener('pointerup', stopDrag);
+    window.addEventListener('pointercancel', stopDrag);
+  };
+  handle.addEventListener('pointerdown', startDrag);
+  handle.addEventListener('dblclick', () => {
+    try { localStorage.removeItem(storageKey); } catch(e) {}
+    game.style.removeProperty('--snipe-panel-width');
+  });
+}
 window.addEventListener('load', async () => {
+  initDesktopLayoutResizer();
   maybeShowOnboarding();
   const walletProvider = getWalletProvider();
   if(walletProvider){
