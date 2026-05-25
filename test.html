@@ -2376,6 +2376,113 @@ body{padding-top:55px!important;}
   body.game-mode #deskTabInfo .info-action-btn{
     font-size:9px!important;
   }
+}
+/* Mobile tabbed workspace: pitch / market / desk */
+.mobile-pitch-tab-btn{display:none;}
+@media(max-width:700px){
+  body.game-mode .mobile-pitch-tab-btn{display:block!important;}
+  body.game-mode .page{height:calc(100dvh - 70px)!important;overflow:hidden!important;}
+  body.game-mode #gameSection{
+    display:flex!important;
+    flex-direction:column!important;
+    height:100%!important;
+    min-height:0!important;
+    overflow:hidden!important;
+    gap:6px!important;
+  }
+  body.game-mode .game-grid{display:contents!important;}
+  body.game-mode .left-control-panel{
+    order:1!important;
+    display:flex!important;
+    flex-direction:column!important;
+    min-height:0!important;
+    height:100%!important;
+    overflow:hidden!important;
+  }
+  body.game-mode .desk-section{
+    height:100%!important;
+    min-height:0!important;
+    display:flex!important;
+    flex-direction:column!important;
+  }
+  body.game-mode .desk-tabs{
+    display:grid!important;
+    grid-template-columns:repeat(6,minmax(0,1fr))!important;
+    flex:0 0 auto!important;
+    min-height:38px!important;
+  }
+  body.game-mode .desk-tab-btn{
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    min-width:0!important;
+    padding:8px 2px!important;
+    font-size:0!important;
+    line-height:1!important;
+    letter-spacing:0!important;
+    overflow:hidden!important;
+  }
+  body.game-mode .desk-tab-btn::before{
+    font-size:16px!important;
+    line-height:1!important;
+    color:inherit!important;
+    font-family:'Black Ops One',sans-serif!important;
+  }
+  body.game-mode #btnDeskPitch::before{content:'\26BD';}
+  body.game-mode #btnDeskSnipe::before{content:'\25CE';}
+  body.game-mode #btnDeskPortfolio::before{content:'\25B2';}
+  body.game-mode #btnDeskFeed::before{content:'\26A1';}
+  body.game-mode #btnDeskRanks::before{content:'\2605';}
+  body.game-mode #btnDeskInfo::before{content:'i';}
+  body.game-mode .desk-tab-content{
+    flex:1 1 auto!important;
+    min-height:0!important;
+    overflow:hidden!important;
+    padding:7px!important;
+  }
+  body.game-mode .right-col.pitch-container{
+    order:2!important;
+    display:none!important;
+    flex:1 1 auto!important;
+    min-height:0!important;
+    overflow:hidden!important;
+  }
+  body.game-mode.mobile-pitch-tab .left-control-panel{
+    height:auto!important;
+    flex:0 0 auto!important;
+    overflow:visible!important;
+  }
+  body.game-mode.mobile-pitch-tab .desk-section{
+    height:auto!important;
+    min-height:0!important;
+  }
+  body.game-mode.mobile-pitch-tab .desk-tab-content{display:none!important;}
+  body.game-mode.mobile-pitch-tab .right-col.pitch-container{
+    display:flex!important;
+    flex-direction:column!important;
+  }
+  body.game-mode:not(.mobile-pitch-tab) .right-col.pitch-container{display:none!important;}
+  body.game-mode.mobile-pitch-tab .pitch-wrap{
+    flex:1 1 auto!important;
+    min-height:0!important;
+    overflow:auto!important;
+    -webkit-overflow-scrolling:touch!important;
+  }
+  body.game-mode.mobile-pitch-tab .formation{
+    min-height:430px!important;
+    min-width:348px!important;
+  }
+  body.game-mode .snipe-list,
+  body.game-mode .ledger-container,
+  body.game-mode .feed-container,
+  body.game-mode .leaderboard-list{
+    overflow-y:auto!important;
+    -webkit-overflow-scrolling:touch!important;
+  }
+  .nav-countdown span,
+  .nav-price-countdown span{color:#fff!important;}
+  .nav-countdown b,
+  .nav-price-countdown b{color:#ffc940!important;}
 }</style>
 </head>
 <body>
@@ -2543,6 +2650,7 @@ body{padding-top:55px!important;}
         <!-- PRZEĹÄ„CZALNE KARTY (TABS: SNIPE / MY TRADING DESK) -->
         <div class="desk-section">
           <div class="desk-tabs">
+            <button class="desk-tab-btn mobile-pitch-tab-btn" id="btnDeskPitch" onclick="switchDeskTab('pitch')">&#9917; PITCH</button>
             <button class="desk-tab-btn active" id="btnDeskSnipe" onclick="switchDeskTab('snipe')">&#127919; SNIPE DEALS</button>
             <button class="desk-tab-btn" id="btnDeskPortfolio" onclick="switchDeskTab('portfolio')">&#128202; MY TRADING DESK</button>
             <button class="desk-tab-btn" id="btnDeskFeed" onclick="switchDeskTab('feed')">LIVE FEED</button>
@@ -3670,6 +3778,9 @@ function scrollToSquad() {
 }
 
 function switchDeskTab(tab) {
+  const isPitchTab = tab === 'pitch';
+  document.body.classList.toggle('mobile-pitch-tab', isPitchTab);
+  document.getElementById('btnDeskPitch')?.classList.toggle('active', isPitchTab);
   document.getElementById('btnDeskSnipe').classList.toggle('active', tab === 'snipe');
   document.getElementById('btnDeskPortfolio').classList.toggle('active', tab === 'portfolio');
   document.getElementById('btnDeskFeed')?.classList.toggle('active', tab === 'feed');
@@ -3677,6 +3788,10 @@ function switchDeskTab(tab) {
   document.getElementById('btnDeskInfo')?.classList.toggle('active', tab === 'info');
   document.getElementById('deskTabSnipe').style.display = tab === 'snipe' ? 'flex' : 'none';
   document.getElementById('deskTabPortfolio').style.display = tab === 'portfolio' ? 'flex' : 'none';
+  if (isPitchTab) {
+    document.getElementById('deskTabSnipe').style.display = 'none';
+    document.getElementById('deskTabPortfolio').style.display = 'none';
+  }
   const feedTab = document.getElementById('deskTabFeed');
   const ranksTab = document.getElementById('deskTabRanks');
   const infoTab = document.getElementById('deskTabInfo');
@@ -3836,6 +3951,7 @@ async function finalizeWalletConnection(walletProvider, walletType = 'wallet') {
   const prizeStrip = document.getElementById('dashboardPrizeStrip');
   if (prizeStrip) prizeStrip.style.display = 'grid';
   document.body.classList.add('game-mode');
+  if (window.matchMedia && window.matchMedia('(max-width: 700px)').matches) switchDeskTab('pitch');
   initDesktopLayoutResizer();
 
   try {
@@ -5378,14 +5494,14 @@ function updatePriceCountdowns() {
   const diff = PRICE_STEP_50_AT - Date.now();
   if (nav) {
     if (diff <= 0) {
-      nav.innerHTML = '<span>PRICE</span>50 CHZ LIVE';
+      nav.innerHTML = '<span>PRICE</span><b>50 CHZ LIVE</b>';
     } else {
       const d = Math.floor(diff / 86400000);
       const h = Math.floor((diff % 86400000) / 3600000);
       const m = Math.floor((diff % 3600000) / 60000);
       const sec = Math.floor((diff % 60000) / 1000);
       const pad = n => String(n).padStart(2, '0');
-      nav.innerHTML = `<span>50 CHZ IN</span>${pad(d)}:${pad(h)}:${pad(m)}:${pad(sec)}`;
+      nav.innerHTML = `<span>50 CHZ IN</span><b>${pad(d)}:${pad(h)}:${pad(m)}:${pad(sec)}</b>`;
     }
   }
 }
