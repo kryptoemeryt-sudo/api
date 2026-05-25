@@ -1717,6 +1717,18 @@ body.game-mode .stat-info-card:nth-child(3) .stat-mini-grid b{color:#fff!importa
   body.game-mode .pos-weight span{display:none!important;}
   body.game-mode .pos-position-chip{left:50%!important;right:auto!important;transform:translateX(-50%)!important;background:rgba(6,8,10,.45);border-radius:3px;padding:1px 3px;}
 }
+
+/* Card corner cleanup: flag above position */
+body.game-mode .pos-fig-flag{width:22px!important;height:15px!important;top:6px!important;left:6px!important;}
+body.game-mode .pos-position-chip{left:6px!important;right:auto!important;top:24px!important;transform:none!important;font-size:7px!important;padding:2px 4px!important;background:rgba(6,8,10,.62)!important;border:1px solid rgba(255,255,255,.12)!important;border-radius:4px!important;}
+@media(min-width:701px){
+  body.game-mode .pos-fig-flag{width:26px!important;height:17px!important;top:7px!important;left:7px!important;}
+  body.game-mode .pos-position-chip{left:7px!important;top:29px!important;font-size:8px!important;padding:2px 5px!important;}
+}
+@media(max-width:700px){
+  body.game-mode .pos-fig-flag{width:16px!important;height:11px!important;top:3px!important;left:3px!important;}
+  body.game-mode .pos-position-chip{left:3px!important;top:16px!important;font-size:5px!important;padding:1px 3px!important;}
+}
 /* Network waiting overlay for blockchain actions */
 #networkOverlay{
   position:fixed;
