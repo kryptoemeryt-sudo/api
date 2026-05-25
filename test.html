@@ -1237,89 +1237,155 @@ body.game-mode .pos-card.owned::after{top:-5px!important;right:-3px!important;z-
   body.game-mode .lb-prize{font-size:9px!important;color:#dde4f0!important;}
 }
 
-/* Final WC topbar aligned with Dream XI */
+
+
+/* Dream XI topbar 1:1 */
 .topnav{
   display:flex!important;
   align-items:center!important;
   justify-content:space-between!important;
-  gap:14px!important;
-  width:100%!important;
-  max-width:100%!important;
-  min-height:58px!important;
-  padding:10px 24px!important;
-  border-bottom:1px solid rgba(0,255,135,.18)!important;
-  background:rgba(6,8,10,.97)!important;
-  position:sticky!important;
+  padding:12px 28px!important;
+  border-bottom:1px solid rgba(0,255,135,0.14)!important;
+  background:rgba(5,7,10,0.96)!important;
+  backdrop-filter:blur(14px)!important;
+  position:fixed!important;
   top:0!important;
-  z-index:100!important;
-  backdrop-filter:blur(10px)!important;
+  left:0!important;
+  right:0!important;
+  width:100%!important;
+  z-index:1000!important;
   overflow:visible!important;
 }
-.topnav-logo.logo,.topnav .logo{
+body{padding-top:54px!important;}
+.topnav-logo.logo,
+.logo{
   font-family:'Black Ops One',sans-serif!important;
   font-size:18px!important;
   letter-spacing:2px!important;
   color:#dde4f0!important;
-  text-shadow:0 0 18px rgba(0,255,135,.16)!important;
+  text-shadow:0 0 18px rgba(0,255,135,0.16)!important;
   white-space:nowrap!important;
+  line-height:1!important;
 }
-.topnav-logo.logo span,.topnav .logo span{color:#00ff87!important;}
-.nav-right,.wallet-actions{display:flex!important;align-items:center!important;justify-content:flex-end!important;gap:12px!important;flex-shrink:0!important;}
-.wallet-addr,.wallet-bal,.wallet-pill{
+.topnav-logo.logo span,
+.logo span{color:#00ff87!important;}
+.nav-right,
+.wallet-actions{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:flex-end!important;
+  gap:12px!important;
+  flex-shrink:0!important;
+  min-width:0!important;
+}
+.wallet-addr{
   font-family:'Share Tech Mono',monospace!important;
   font-size:11px!important;
-  line-height:1!important;
-  background:transparent!important;
+  color:#7a8899!important;
+  white-space:nowrap!important;
+  background:none!important;
   border:0!important;
   padding:0!important;
-  border-radius:0!important;
-  letter-spacing:0!important;
-  white-space:nowrap!important;
 }
-.wallet-addr{color:#9fb0c4!important;}
-.wallet-bal{color:#ffc940!important;font-weight:700!important;}
-.nav-countdown{
+.wallet-bal{
+  font-family:'Black Ops One',sans-serif!important;
+  font-size:13px!important;
+  color:#ffc940!important;
+  white-space:nowrap!important;
+  background:none!important;
+  border:0!important;
+  padding:0!important;
+}
+.nav-countdown,
+.nav-price-countdown{
   position:absolute!important;
   left:50%!important;
   top:50%!important;
   transform:translate(-50%,-50%)!important;
-  display:inline-flex!important;
-  align-items:center!important;
-  justify-content:center!important;
-  gap:8px!important;
-  border:1px solid rgba(255,201,64,.36)!important;
+  font-family:'Black Ops One',sans-serif!important;
+  font-size:13px!important;
+  letter-spacing:2px!important;
+  color:#ffc940!important;
+  border:1px solid rgba(255,201,64,.34)!important;
   background:rgba(255,201,64,.08)!important;
   border-radius:8px!important;
-  padding:6px 13px!important;
-  font-family:'Black Ops One',sans-serif!important;
-  letter-spacing:1px!important;
+  padding:6px 12px!important;
   white-space:nowrap!important;
-  color:#ffc940!important;
-  box-shadow:0 0 18px rgba(255,201,64,.08)!important;
+  line-height:1!important;
 }
-.nav-countdown span{color:#dde4f0!important;font-size:10px!important;letter-spacing:1px!important;}
-.nav-countdown b{font-size:13px!important;color:#ffc940!important;font-weight:400!important;}
-.btn-connect.connected{background:rgba(0,255,135,.15)!important;border-color:#00ff87!important;color:#00ff87!important;}
+.nav-countdown span,
+.nav-price-countdown span{color:#dde4f0!important;font-size:10px!important;margin-right:8px!important;letter-spacing:1px!important;}
+.nav-countdown b,
+.nav-price-countdown b{font-size:13px!important;color:#ffc940!important;font-weight:400!important;}
+.btn-connect.connected{background:rgba(0,255,135,0.15)!important;border-color:#00ff87!important;color:#00ff87!important;}
 @media(max-width:768px){
   body{padding-top:72px!important;}
   .topnav{
     height:70px!important;
     min-height:70px!important;
-    padding:8px 10px!important;
     display:grid!important;
     grid-template-columns:minmax(0,1fr) auto!important;
-    grid-template-rows:auto auto!important;
-    align-content:center!important;
-    gap:4px 6px!important;
-    position:fixed!important;
+    grid-template-rows:34px 24px!important;
+    align-items:center!important;
+    gap:0 8px!important;
+    padding:7px 10px 6px!important;
   }
-  .topnav-logo.logo,.topnav .logo{grid-column:1!important;grid-row:1!important;font-size:13px!important;letter-spacing:1.4px!important;align-self:center!important;overflow:hidden!important;text-overflow:ellipsis!important;}
-  .topnav .wallet-actions,.topnav .nav-right{grid-column:2!important;grid-row:1!important;justify-self:end!important;gap:6px!important;}
+  .topnav-logo.logo,
+  .topnav .logo{
+    grid-column:1!important;
+    grid-row:1!important;
+    align-self:center!important;
+    justify-self:start!important;
+    font-size:13px!important;
+    line-height:1!important;
+    letter-spacing:1.4px!important;
+  }
+  .topnav .nav-right{
+    grid-column:2!important;
+    grid-row:1!important;
+    align-self:center!important;
+    justify-self:end!important;
+    min-width:0!important;
+    gap:6px!important;
+  }
+  .nav-countdown,
+  .nav-price-countdown{
+    grid-column:1 / -1!important;
+    grid-row:2!important;
+    position:static!important;
+    inset:auto!important;
+    transform:none!important;
+    justify-self:center!important;
+    align-self:center!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    gap:6px!important;
+    width:auto!important;
+    max-width:calc(100vw - 20px)!important;
+    padding:4px 8px!important;
+    margin:0!important;
+    overflow:hidden!important;
+    text-overflow:ellipsis!important;
+  }
   .wallet-addr{display:none!important;}
-  .wallet-bal{font-size:8px!important;max-width:74px!important;overflow:hidden!important;text-overflow:ellipsis!important;}
+  .wallet-bal{font-size:9px!important;max-width:76px!important;overflow:hidden!important;text-overflow:ellipsis!important;}
   .btn-connect{font-size:9px!important;padding:7px 9px!important;}
-  .nav-countdown{grid-column:1 / -1!important;grid-row:2!important;position:static!important;transform:none!important;justify-self:center!important;align-self:center!important;padding:4px 8px!important;gap:5px!important;}
-  .nav-countdown span,.nav-countdown b{font-size:9px!important;display:inline!important;}
+  .nav-countdown span,
+  .nav-price-countdown span,
+  .nav-countdown b,
+  .nav-price-countdown b{
+    display:inline!important;
+    margin:0!important;
+    color:#ffc940!important;
+    font-family:'Black Ops One',sans-serif!important;
+    font-size:10px!important;
+    line-height:1!important;
+    letter-spacing:1px!important;
+    font-weight:400!important;
+  }
+  .nav-countdown span,
+  .nav-price-countdown span{color:#fff!important;}
 }
 </style>
 </head>
@@ -1327,7 +1393,7 @@ body.game-mode .pos-card.owned::after{top:-5px!important;right:-3px!important;z-
 
 <nav class="topnav">
   <a href="https://block-kickers.vercel.app" class="topnav-logo logo" style="text-decoration:none;">&#9917; BLOCK <span>KICKERS</span></a>
-  <div class="nav-countdown" id="wcNavCountdown"><span>WC END IN</span><b>--:--:--:--</b></div>
+  <div class="nav-countdown" id="navPriceCountdown"><span>WC END IN</span>--:--:--:--</div>
   <div class="nav-right wallet-actions">
     <span id="walletAddress" class="wallet-addr" style="display:none;"></span>
     <span id="walletBalance" class="wallet-bal" style="display:none;"></span>
@@ -3457,8 +3523,8 @@ function updateCountdown(){
   setDashCd('dashCdH', h);
   setDashCd('dashCdM', m);
   setDashCd('dashCdS', s);
-  const wcNavCountdown = document.getElementById('wcNavCountdown');
-  if (wcNavCountdown) wcNavCountdown.innerHTML = `<span>WC END IN</span><b>${String(d).padStart(2,'0')}:${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}</b>`;
+  const navPriceCountdown = document.getElementById('navPriceCountdown');
+  if (navPriceCountdown) navPriceCountdown.innerHTML = `<span>WC END IN</span><b>${String(d).padStart(2,'0')}:${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}</b>`;
   document.getElementById('cdBlock').innerHTML = 'Deadline block: <a href="https://scan.chiliz.com/block/'+DEADLINE_BLOCK+'" target="_blank" style="color:#00ff87;text-decoration:none;">#'+DEADLINE_BLOCK.toLocaleString()+'</a> · Estimated Current: ~#'+estimated.toLocaleString()+' · '+blocksLeft.toLocaleString()+' blocks remaining';
 }
 
