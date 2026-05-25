@@ -463,6 +463,32 @@ body{padding-top:0!important;}
   .market-trade .market-price{font-size:9px!important;}
   .market-trade .slot-action{font-size:7px!important;min-height:24px!important;padding:4px 2px!important;}
 }
+
+/* Market width parity, hero line break, colored feed and opportunity panel */
+.hero-copy{display:grid!important;gap:5px!important;}
+.hero-copy span{display:block!important;}
+.mint-stat .stat-value{font-size:clamp(32px,3.8vw,52px)!important;color:#00ff87!important;text-shadow:0 0 16px rgba(0,255,135,.18)!important;}
+.squad,.market-grid{grid-template-columns:repeat(auto-fill,96px)!important;gap:8px!important;justify-content:start!important;}
+.my-squad-panel .squad{grid-template-columns:repeat(11,96px)!important;overflow-x:auto!important;padding-bottom:2px!important;}
+.slot,.market-card.slot{width:96px!important;min-width:96px!important;max-width:96px!important;}
+.market-card.slot{min-height:190px!important;}
+.event-type{display:inline-block;min-width:38px;font-family:'Black Ops One',sans-serif!important;font-size:13px!important;letter-spacing:.5px!important;}
+.event-type.mint{color:#00ff87!important;text-shadow:0 0 10px rgba(0,255,135,.18)!important;}
+.event-type.buy{color:#ffc940!important;text-shadow:0 0 10px rgba(255,201,64,.16)!important;}
+.opportunity-panel{margin-top:10px;border:1px solid rgba(255,201,64,.34);background:linear-gradient(135deg,rgba(255,201,64,.12),rgba(37,99,235,.10));border-radius:9px;padding:10px;display:grid;gap:6px;}
+.opportunity-title{font-family:'Black Ops One',sans-serif;color:#ffc940;font-size:13px;letter-spacing:1px;text-transform:uppercase;}
+.opportunity-main{display:grid;grid-template-columns:auto auto 1fr;gap:9px;align-items:baseline;font-family:'Black Ops One',sans-serif;}
+.opportunity-main span{color:#fff;font-size:15px;}.opportunity-main b{color:#00ff87;font-size:18px;}.opportunity-main em{color:#dde4f0;font-size:10px;font-style:normal;justify-self:end;}
+.opportunity-text{font-family:'Black Ops One',sans-serif;color:#fff;font-size:11px;line-height:1.25;}
+@media(max-width:900px){
+  .squad,.market-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:6px!important;}
+  .my-squad-panel .squad{grid-template-columns:repeat(11,minmax(0,1fr))!important;overflow-x:hidden!important;}
+  .slot,.market-card.slot{width:auto!important;min-width:0!important;max-width:none!important;}
+  .market-card.slot{min-height:142px!important;}
+  .event-type{font-size:9px!important;min-width:28px;}
+  .opportunity-panel{padding:7px;margin-top:7px;}
+  .opportunity-title{font-size:8px;}.opportunity-main span{font-size:9px;}.opportunity-main b{font-size:11px;}.opportunity-main em{font-size:6px;}.opportunity-text{font-size:7px;}
+}
 </style>
 </head>
 <body>
@@ -481,7 +507,7 @@ body{padding-top:0!important;}
     <div class="panel">
       <div class="quest-kicker"><span class="dot"></span> Open Nation Quest</div>
       <h1 class="hero-title">USA QUEST <span>1500 CHZ</span></h1>
-      <p class="hero-copy">First wallet to complete <strong>11/11 USA positions wins 1500 CHZ</strong>. Mint, buy, sell and upgrade directly on this quest page.</p>
+      <p class="hero-copy"><span>First wallet to complete <strong>11/11 USA positions wins 1500 CHZ</strong>.</span><span>Mint, buy, sell and upgrade directly on this quest page.</span></p>
     </div>
   </section>
   <div class="status-line" id="questStatus" style="display:none">Loading live quest status...</div>
@@ -519,6 +545,7 @@ body{padding-top:0!important;}
     <section class="panel market-section">
       <div class="section-title"><span>USA Market</span><span class="live" id="marketCount">Loading...</span></div>
       <div class="market-grid" id="marketGrid"><div class="loading" style="grid-column:1/-1"><span class="spin"></span>Loading USA listings...</div></div>
+      <div class="opportunity-panel" id="opportunityPanel"><div class="loading">Scanning opportunity...</div></div>
     </section>
 
     </div>
@@ -1341,6 +1368,7 @@ function renderQuest(state) {
   });
   renderSlots("mySlots", state.myOwnedSet, myByPosition, state.squadWinner?.wallet === address ? state.squadWinner.position : null, "mine");
   renderMarket(state);
+  renderOpportunity(state);
   renderRank(state);
 
   document.getElementById("cardWinnerBox").innerHTML = `<b>Dream XI Argentina</b><br>10k CHZ live race. Every card matters across Block Kickers quests.`;
@@ -1353,7 +1381,7 @@ function renderQuest(state) {
   document.getElementById("mintFeed").innerHTML = latest.length ? latest.map(e => `
     <div class="feed-row">
       <div class="feed-pos">${posLabel(e.position)}</div>
-      <div class="feed-addr">${e.eventType.toUpperCase()} ${shortAddr(e.wallet)}</div>
+      <div class="feed-addr"><span class="event-type ${e.eventType}">${e.eventType.toUpperCase()}</span> ${shortAddr(e.wallet)}</div>
       <div class="feed-token">#${e.tokenId}</div>
     </div>
   `).join("") : '<div class="loading">No USA events yet.</div>';
@@ -1388,6 +1416,24 @@ function renderMarket(state) {
   }).join("");
 }
 
+function renderOpportunity(state) {
+  const el = document.getElementById("opportunityPanel");
+  if (!el) return;
+  const listings = (state.listings || []).slice().sort((a,b) => a.price - b.price || b.weight - a.weight);
+  if (!listings.length) {
+    el.innerHTML = `<div class="opportunity-title">Opportunity</div><div class="opportunity-text">No USA listings right now. If you own a missing card, you can set the market.</div>`;
+    return;
+  }
+  const owned = address ? (state.myOwnedSet || new Set()) : new Set();
+  const targets = listings.map(l => ({...l, missingForMe: address && !owned.has(l.position)}));
+  const best = targets.find(l => l.missingForMe) || targets[0];
+  const highNeed = [...(state.walletPositions || new Map()).values()].filter(set => !set.has(best.position) && set.size >= 8).length;
+  el.innerHTML = `
+    <div class="opportunity-title">Opportunity</div>
+    <div class="opportunity-main"><span>${posLabel(best.position)}</span><b>${best.price} CHZ</b><em>${best.weight} PTS · ${rarityShort(best.rarity)}</em></div>
+    <div class="opportunity-text">${highNeed ? `${highNeed} near-complete players may need this position.` : `Watch this position. Last missing cards can sell far above floor.`}</div>
+  `;
+}
 function renderRank(state) {
   const list = document.getElementById("rankList");
   const count = document.getElementById("rankCount");
