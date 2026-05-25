@@ -558,6 +558,26 @@ button.stat.mint-stat .stat-label,
   button.stat.mint-stat .stat-value,
   .mint-stat .stat-value{font-size:14px!important;}
 }
+
+/* Hero-sized MINT label */
+.stats button.mint-stat .stat-value,
+button.stat.mint-stat .stat-value,
+.mint-stat .stat-value{
+  font-size:clamp(38px,5.4vw,82px)!important;
+  line-height:.86!important;
+  letter-spacing:1px!important;
+}
+.stats button.mint-stat,
+button.stat.mint-stat,
+.mint-stat{min-height:104px!important;}
+@media(max-width:900px){
+  .stats button.mint-stat .stat-value,
+  button.stat.mint-stat .stat-value,
+  .mint-stat .stat-value{font-size:clamp(18px,7vw,30px)!important;line-height:.9!important;}
+  .stats button.mint-stat,
+  button.stat.mint-stat,
+  .mint-stat{min-height:56px!important;}
+}
 </style>
 </head>
 <body>
