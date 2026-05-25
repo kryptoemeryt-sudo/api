@@ -146,14 +146,14 @@ a{text-decoration:none;color:inherit}
 .brand-ball::after{content:'';position:absolute;inset:3px;border-radius:50%;border:1px solid #06080a;opacity:.75;}
 .nav-actions{margin-left:auto!important}.btn{min-height:32px}.page{padding:10px!important;gap:10px!important;}
 .hero{grid-template-columns:minmax(0,1fr) minmax(360px,.92fr)!important;align-items:stretch!important;}
-.stats{grid-template-columns:repeat(3,minmax(0,1fr))!important;} .stats .stat:nth-child(4){display:none!important;}
+.stats{grid-template-columns:repeat(2,minmax(0,1fr))!important;width:calc(74.6% - 3px)!important;align-self:start!important;} .stats .stat:nth-child(n+3){display:none!important;}
 .stat-label{color:#dde4f0!important;font-family:'Black Ops One',sans-serif!important;font-size:10px!important;}
 .main-grid{grid-template-columns:minmax(0,1fr) minmax(300px,.34fr)!important;grid-auto-rows:auto!important;align-items:start!important;}
 .global-slots-panel{display:none!important;}
 .my-squad-panel{grid-column:1 / 2!important;grid-row:1!important;min-height:190px!important;}
 .market-section{grid-column:1 / 2!important;grid-row:2!important;margin-top:0!important;}
 .info-grid{grid-column:2 / 3!important;grid-row:1 / span 2!important;}
-.info-grid .callout.gold{display:none!important;}
+.info-grid .callout.gold{display:block!important;}
 .cross-quest{min-height:54px!important;border-color:rgba(88,210,255,.36)!important;background:linear-gradient(135deg,rgba(88,210,255,.13),rgba(0,255,135,.045))!important;}
 .cross-title{display:flex!important;align-items:center!important;gap:8px!important;font-size:14px!important;}
 .quest-arg-flag{width:30px;height:20px;object-fit:cover;border-radius:3px;box-shadow:0 0 0 1px rgba(255,255,255,.18)}
@@ -162,7 +162,7 @@ a{text-decoration:none;color:inherit}
 .slot{min-height:152px!important;border-radius:8px!important;padding:7px!important;justify-content:stretch!important;gap:4px!important;background:linear-gradient(180deg,rgba(15,19,24,.96),rgba(8,11,16,.94))!important;}
 .slot.done{border-color:rgba(0,255,135,.62)!important;background:linear-gradient(180deg,rgba(0,255,135,.18),rgba(15,19,24,.95))!important;}
 .slot.open{animation:none!important;border-color:rgba(255,201,64,.58)!important;background:linear-gradient(180deg,rgba(255,201,64,.14),rgba(15,19,24,.95))!important;}
-.slot-pos{position:absolute;left:6px;top:6px;z-index:5;font-size:9px!important;background:rgba(6,8,10,.72);border:1px solid rgba(255,255,255,.14);border-radius:4px;padding:2px 5px;}
+.slot-pos{position:absolute;left:6px;bottom:6px;z-index:5;font-size:9px!important;background:rgba(6,8,10,.72);border:1px solid rgba(255,255,255,.14);border-radius:4px;padding:2px 5px;}
 .slot-fig-canvas{height:76px!important;display:flex;align-items:center;justify-content:center;position:relative;background:radial-gradient(circle at 50% 86%,rgba(0,255,135,.13),transparent 44%);}
 .slot-fig-canvas svg{width:72px;height:72px;display:block;}
 .slot-fig-flag{position:absolute;top:3px;left:3px;width:22px;height:15px;object-fit:cover;border-radius:2px;box-shadow:0 0 0 1px rgba(255,255,255,.18),0 2px 7px rgba(0,0,0,.35)}
@@ -172,7 +172,7 @@ a{text-decoration:none;color:inherit}
 .slot-status{font-family:'Black Ops One',sans-serif!important;font-size:7px!important;color:#dde4f0!important;line-height:1!important;text-align:right!important;}
 .slot-actions{position:static!important;opacity:1!important;transform:none!important;margin-top:5px!important;width:100%!important;display:grid!important;grid-template-columns:1fr!important;gap:4px!important;}
 .slot-action{min-height:28px!important;width:100%!important;font-size:9px!important;padding:6px!important;border-radius:6px!important;}
-.slot.empty .slot-actions{display:none!important;}
+.slot-check{position:absolute;right:6px;top:5px;z-index:6;font-family:"Black Ops One",sans-serif;color:#00ff87;font-size:14px;line-height:1;text-shadow:0 0 10px rgba(0,255,135,.35)}.slot.empty .slot-check{display:none!important}.slot.empty .slot-actions{display:none!important;}
 .market-grid{grid-template-columns:repeat(auto-fill,minmax(112px,1fr))!important;gap:10px!important;max-height:348px!important;align-content:start!important;overflow-y:auto!important;}
 .market-card{display:flex!important;flex-direction:column!important;align-items:stretch!important;gap:0!important;min-height:188px!important;padding:0!important;border-radius:8px!important;overflow:hidden!important;background:linear-gradient(180deg,rgba(15,19,24,.98),rgba(8,11,16,.96))!important;}
 .market-card.mine{border-color:rgba(0,255,135,.68)!important;box-shadow:0 0 16px rgba(0,255,135,.15)!important;}
@@ -186,7 +186,7 @@ a{text-decoration:none;color:inherit}
 .network-card{width:min(92vw,420px)!important}.network-steps{display:none;margin-top:14px;text-align:left;border-top:1px solid rgba(255,255,255,.10);padding-top:12px;gap:8px}.network-steps.active{display:grid}.network-step{display:grid;grid-template-columns:18px minmax(0,1fr);align-items:center;gap:9px;font-family:'Black Ops One',sans-serif;font-size:11px;letter-spacing:.7px;color:#8fa4bb;text-transform:uppercase;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.network-step::before{content:'';width:13px;height:13px;border-radius:50%;border:1px solid rgba(143,164,187,.45);background:rgba(255,255,255,.03);justify-self:center}.network-step.active{color:#fff}.network-step.active::before{border-color:#ffc940;background:#ffc940;box-shadow:0 0 12px rgba(255,201,64,.25)}.network-step.done{color:#00ff87}.network-step.done::before{border-color:#00ff87;background:#00ff87;box-shadow:0 0 12px rgba(0,255,135,.32)}
 .network-ball{font-size:0!important;width:34px;height:34px;margin:0 auto 10px;border-radius:50%;background:#f8fafc;position:relative;animation:spin 1.1s linear infinite;box-shadow:inset 0 0 0 3px #06080a}.network-ball::before{content:''!important;position:absolute;left:50%;top:50%;width:13px;height:13px;background:#06080a;transform:translate(-50%,-50%) rotate(45deg);clip-path:polygon(50% 0,100% 38%,82% 100%,18% 100%,0 38%)}
 @media(max-width:900px){
-  .topnav{grid-template-columns:minmax(0,1fr)!important;height:auto!important;min-height:48px!important;padding:7px 8px!important}.nav-actions{grid-template-columns:32px repeat(3,minmax(0,1fr))!important;width:100%!important}.hero{grid-template-columns:1fr!important}.hero .panel.gold{display:block!important}.flag{width:42px!important;height:29px!important}.stats{grid-template-columns:repeat(3,minmax(0,1fr))!important}.stats .stat:nth-child(4){display:none!important}.main-grid{grid-template-columns:1fr!important}.my-squad-panel,.market-section,.info-grid{grid-column:auto!important;grid-row:auto!important}.global-slots-panel{display:none!important}.squad{grid-template-columns:repeat(11,minmax(0,1fr))!important;gap:3px!important}.slot{min-height:72px!important;padding:3px 2px!important}.slot-pos{font-size:5px!important;left:3px!important;top:3px!important;padding:1px 3px!important}.slot-fig-canvas{height:38px!important}.slot-fig-canvas svg{width:36px!important;height:36px!important}.slot-fig-flag{width:12px!important;height:8px!important;top:2px!important;left:2px!important}.slot-count{font-size:9px!important}.slot-status{font-size:4.5px!important}.slot-actions{display:none!important}.market-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;max-height:260px!important;gap:6px!important}.market-card{min-height:142px!important}.market-fig-canvas{height:62px!important}.market-fig-canvas svg{width:56px!important;height:56px!important}.market-name{font-size:8px!important}.market-sub{font-size:7px!important}.market-price{font-size:9px!important}.market-card .slot-action{font-size:7px!important;min-height:24px!important}.info-grid{display:none!important;}
+  .topnav{grid-template-columns:minmax(0,1fr)!important;height:auto!important;min-height:48px!important;padding:7px 8px!important}.nav-actions{grid-template-columns:32px repeat(3,minmax(0,1fr))!important;width:100%!important}.hero{grid-template-columns:1fr!important}.hero .panel.gold{display:block!important}.flag{width:42px!important;height:29px!important}.stats{grid-template-columns:repeat(2,minmax(0,1fr))!important;width:100%!important}.stats .stat:nth-child(n+3){display:none!important}.main-grid{grid-template-columns:1fr!important}.my-squad-panel,.market-section,.info-grid{grid-column:auto!important;grid-row:auto!important}.global-slots-panel{display:none!important}.squad{grid-template-columns:repeat(11,minmax(0,1fr))!important;gap:3px!important}.slot{min-height:72px!important;padding:3px 2px!important}.slot-pos{font-size:5px!important;left:3px!important;right:auto!important;bottom:3px!important;top:auto!important;padding:1px 3px!important}.slot-check{right:3px!important;top:2px!important;font-size:9px!important}.slot-fig-canvas{height:38px!important}.slot-fig-canvas svg{width:36px!important;height:36px!important}.slot-fig-flag{width:12px!important;height:8px!important;top:2px!important;left:2px!important}.slot-count{font-size:9px!important}.slot-status{font-size:4.5px!important}.slot-actions{display:none!important}.market-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;max-height:260px!important;gap:6px!important}.market-card{min-height:142px!important}.market-fig-canvas{height:62px!important}.market-fig-canvas svg{width:56px!important;height:56px!important}.market-name{font-size:8px!important}.market-sub{font-size:7px!important}.market-price{font-size:9px!important}.market-card .slot-action{font-size:7px!important;min-height:24px!important}.info-grid{display:none!important;}
 }
 </style>
 </head>
@@ -261,10 +261,14 @@ a{text-decoration:none;color:inherit}
       <div class="market-grid" id="marketGrid"><div class="loading" style="grid-column:1/-1"><span class="spin"></span>Loading USA listings...</div></div>
     </section>
 
-    <aside class="info-grid">
+    <aside class="info-grid quest-side-panel">
       <div class="callout gold">
-        <h3>Dream XI Argentina</h3>
-        <div class="winner-box" id="cardWinnerBox"><b>Dream XI Argentina</b><br>Live Argentina quest with 10k CHZ rewards.</div>
+        <h3>More Live Rewards</h3>
+        <a class="cross-quest" href="https://block-kickers.vercel.app/dream-xi" target="_blank" rel="noopener noreferrer" style="margin-top:0;">
+          <span><span class="cross-kicker">Argentina Dream XI</span><span class="cross-title"><img class="quest-arg-flag" src="https://flagcdn.com/w40/ar.png" alt="Argentina"> 10k CHZ race</span></span>
+          <span class="cross-prize">ARG</span>
+        </a>
+        <div class="winner-box" id="cardWinnerBox" style="margin-top:9px;">Every active quest adds more reason to hunt cards.</div>
       </div>
       <div class="callout">
         <h3>1500 CHZ Squad Prize</h3>
@@ -999,6 +1003,7 @@ function renderSlots(targetId, filledSet, byPosition, winnerPos = null, mode = "
     const statusText = best ? rarityName(best.rarity) : (floor ? "BUY CHZ" : "MISSING");
     el.innerHTML = `
       <div class="slot-pos">${pos.label}</div>
+      ${best ? `<div class="slot-check">&#10003;</div>` : ""}
       ${figureCanvas(visualCard, !best, "slot")}
       <div class="slot-info">
         <div class="slot-count ${rarityCls}">${scoreText}</div>
@@ -1060,7 +1065,7 @@ function renderQuest(state) {
   renderSlots("mySlots", state.myOwnedSet, myByPosition, state.squadWinner?.wallet === address ? state.squadWinner.position : null, "mine");
   renderMarket(state);
 
-  document.getElementById("cardWinnerBox").innerHTML = `<b>Dream XI Argentina</b><br><img class="quest-arg-flag" src="https://flagcdn.com/w40/ar.png" alt="Argentina"> Live Argentina quest with 10k CHZ rewards.`;
+  document.getElementById("cardWinnerBox").innerHTML = `<b>Dream XI Argentina</b><br>10k CHZ live race. Every card matters across Block Kickers quests.`;
   document.getElementById("squadWinnerBox").innerHTML = state.squadWinner
     ? `<b>1500 CHZ winner</b><br>${shortAddr(state.squadWinner.wallet)} completed USA squad<br>Block ${state.squadWinner.block || "pending"} - ${formatTime(state.squadWinner.time)}`
     : `No completed USA squad yet.<br>First wallet with all 11 positions wins <b>1500 CHZ</b>.`;
