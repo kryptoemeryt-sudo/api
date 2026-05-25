@@ -1013,6 +1013,14 @@ button.stat.mint-stat,
   .feed-row{grid-template-columns:30px minmax(0,1fr) auto auto!important;gap:5px!important;}
   .feed-price{font-size:7px!important;}
 }
+
+/* Final Argentina tile center and mint feed price */
+.arg-quest-stat{align-items:center!important;justify-items:center!important;text-align:center!important;}
+.arg-quest-stat .arg-quest-copy{display:grid!important;place-items:center!important;text-align:center!important;width:100%!important;}
+.arg-quest-stat .stat-value,.arg-quest-stat .stat-label{text-align:center!important;width:100%!important;}
+@media(min-width:901px){
+  .arg-quest-stat{grid-template-columns:auto minmax(0,1fr)!important;justify-content:center!important;}
+}
 </style>
 </head>
 <body>
@@ -1816,7 +1824,7 @@ async function buildState() {
   const events = [];
   mints.forEach(m => {
     const card = tokenInfo.get(m.tokenId);
-    if (card && card.teamId === USA_TEAM_ID) events.push({...card, wallet:m.owner, eventType:"mint", block:m.block});
+    if (card && card.teamId === USA_TEAM_ID) events.push({...card, wallet:m.owner, eventType:"mint", price:normalizeChzPrice(currentMintPrice) || 10, block:m.block});
   });
   sales.forEach(s => {
     const card = tokenInfo.get(s.tokenId);
