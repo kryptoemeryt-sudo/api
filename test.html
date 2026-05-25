@@ -1742,6 +1742,39 @@ body.game-mode .pos-position-chip{left:6px!important;right:auto!important;top:24
 body.game-mode .pos-position-chip{left:6px!important;right:auto!important;top:auto!important;bottom:6px!important;transform:none!important;font-size:7px!important;padding:2px 4px!important;background:rgba(6,8,10,.70)!important;border:1px solid rgba(255,255,255,.14)!important;border-radius:4px!important;}
 @media(min-width:701px){body.game-mode .pos-position-chip{left:7px!important;bottom:7px!important;font-size:8px!important;padding:2px 5px!important;}}
 @media(max-width:700px){body.game-mode .pos-position-chip{left:3px!important;bottom:3px!important;font-size:5px!important;padding:1px 3px!important;}}
+
+/* PC readability pass: clear text, visible card actions */
+@media(min-width:701px){
+  body.game-mode,
+  body.game-mode *{
+    text-shadow:none!important;
+  }
+  body.game-mode .pos-position-chip{
+    font-size:11px!important;
+    letter-spacing:1px!important;
+    line-height:1!important;
+    color:#fff!important;
+    background:rgba(6,8,10,.74)!important;
+    border:1px solid rgba(255,255,255,.16)!important;
+    box-shadow:none!important;
+  }
+  body.game-mode .pos-card .btn-card-action{
+    display:block!important;
+    opacity:1!important;
+    visibility:visible!important;
+    pointer-events:auto!important;
+  }
+  body.game-mode .pos-card-actions{
+    display:grid!important;
+  }
+  body.game-mode .btn-card-action,
+  body.game-mode .btn-snipe,
+  body.game-mode .quest-live-link,
+  body.game-mode .stat-val,
+  body.game-mode .stat-mini-grid b{
+    text-shadow:none!important;
+  }
+}
 /* Network waiting overlay for blockchain actions */
 #networkOverlay{
   position:fixed;
