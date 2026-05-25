@@ -4,7 +4,7 @@
     { "source": "/nqb", "destination": "/nation-quest-badges.html" },
     { "source": "/bkhome2", "destination": "/BlockKickers.html" },
     { "source": "/promo-stats", "destination": "/promo-stats.html" },
-    { "source": "/dream-xi", "destination": "/test.html" },
+    { "source": "/dream-xi", "destination": "/dream-xi.html" },
     { "source": "/gk-quest", "destination": "/goalkeeper-quest.html" },
     { "source": "/info", "destination": "/how-to-play-dream-ii.html" },
     { "source": "/dashboard", "destination": "/test.html" },
