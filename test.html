@@ -3481,16 +3481,24 @@ async function finalizeWalletConnection(walletProvider, walletType = 'wallet') {
     walletAddressEl.textContent = address.slice(0,6)+'...'+address.slice(-4);
     walletAddressEl.style.display = 'inline-block';
   }
-  await updateWalletBalance();
-  document.getElementById('connectSection').style.display = 'none';
-  document.getElementById('gameSection').style.display = 'block';
-  document.getElementById('statsRow').style.display = 'grid';
+    await updateWalletBalance();
+  const connectSection = document.getElementById('connectSection');
+  if (connectSection) connectSection.style.display = 'none';
+  const gameSection = document.getElementById('gameSection');
+  if (gameSection) gameSection.style.display = 'block';
+  const statsRow = document.getElementById('statsRow');
+  if (statsRow) statsRow.style.display = 'grid';
   const prizeStrip = document.getElementById('dashboardPrizeStrip');
   if (prizeStrip) prizeStrip.style.display = 'grid';
   document.body.classList.add('game-mode');
   initDesktopLayoutResizer();
 
-  await loadData();
+  try {
+    await loadData();
+  } catch(syncError) {
+    console.warn('Wallet connected, but initial data sync failed:', syncError);
+    showHeaderToast('Wallet connected. Data sync failed - press refresh.', true);
+  }
   return true;
 }
 
