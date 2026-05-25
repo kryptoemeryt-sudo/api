@@ -6,7 +6,9 @@
 <!-- Browser tab title -->
 <title>ARGENTINA DREAM XI - Block Kickers</title>
 <!-- Browser tab icon -->
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 64 64%27%3E%3Crect width=%2764%27 height=%2764%27 rx=%2714%27 fill=%27%2300ff87%27/%3E%3Cpath fill=%27%2306080a%27 d=%27M12 14h20c7 0 11 3 11 9 0 4-2 7-6 8 5 1 8 4 8 9 0 7-5 10-13 10H12V14zm12 9v6h6c3 0 5-1 5-3s-2-3-5-3h-6zm0 15v6h8c3 0 5-1 5-3s-2-3-5-3h-8z%27/%3E%3Cpath fill=%27%2306080a%27 d=%27M45 14h7v14l8-14h7L56 31l12 19h-8l-8-14v14h-7V14z%27 transform=%27translate(-8 0)%27/%3E%3C/svg%3E">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2306080a'/%3E%3Ctext x='32' y='47' text-anchor='middle' font-size='43'%3E%E2%9A%BD%3C/text%3E%3C/svg%3E">
+<link rel="shortcut icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2306080a'/%3E%3Ctext x='32' y='47' text-anchor='middle' font-size='43'%3E%E2%9A%BD%3C/text%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2306080a'/%3E%3Ctext x='32' y='47' text-anchor='middle' font-size='43'%3E%E2%9A%BD%3C/text%3E%3C/svg%3E">
 <link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Barlow+Condensed:wght@400;600;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.7.0/ethers.umd.min.js"></script>
 <style>
@@ -22,6 +24,22 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
 .topnav-logo span{color:#00ff87;}
 .btn-connect{background:rgba(0,255,135,0.1);border:1px solid rgba(0,255,135,0.3);color:#00ff87;padding:8px 16px;border-radius:6px;font-family:'Black Ops One',sans-serif;font-size:11px;letter-spacing:1px;cursor:pointer;}
 .btn-connect.connected{background:rgba(0,255,135,0.15);border-color:#00ff87;}
+.wallet-actions{display:flex;align-items:center;justify-content:flex-end;gap:8px;flex-shrink:0;}
+.btn-privy{background:rgba(129,140,248,0.1);border-color:rgba(129,140,248,0.42);color:#a5b4fc;}
+.btn-privy.connected{background:rgba(129,140,248,0.16);border-color:#a5b4fc;color:#dde4f0;}
+.wallet-modal{position:fixed;inset:0;background:rgba(0,0,0,0.72);backdrop-filter:blur(8px);z-index:5000;display:none;align-items:center;justify-content:center;padding:18px;}
+.wallet-modal.active{display:flex;}
+.wallet-panel{width:min(440px,100%);background:linear-gradient(180deg,#111820,#090d12);border:1px solid rgba(0,255,135,0.28);border-radius:12px;box-shadow:0 24px 80px rgba(0,0,0,0.55),0 0 32px rgba(0,255,135,0.08);padding:16px;}
+.wallet-panel-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px;}
+.wallet-panel-title{font-family:'Black Ops One',sans-serif;color:#dde4f0;font-size:17px;letter-spacing:1px;}
+.wallet-close{width:32px;height:32px;border-radius:8px;border:1px solid rgba(255,255,255,0.12);background:rgba(255,255,255,0.04);color:#dde4f0;cursor:pointer;font-size:18px;line-height:1;}
+.wallet-option{width:100%;display:grid;grid-template-columns:42px 1fr auto;align-items:center;gap:12px;text-align:left;border:1px solid rgba(255,255,255,0.09);background:rgba(255,255,255,0.035);border-radius:10px;padding:12px;margin-top:10px;cursor:pointer;color:#dde4f0;}
+.wallet-option:hover{border-color:rgba(0,255,135,0.35);background:rgba(0,255,135,0.055);}
+.wallet-option-icon{font-size:23px;width:42px;height:42px;display:grid;place-items:center;border-radius:9px;background:rgba(0,255,135,0.08);}
+.wallet-option-name{font-family:'Black Ops One',sans-serif;font-size:13px;letter-spacing:1px;color:#fff;}
+.wallet-option-desc{font-size:11px;color:#8da0b7;margin-top:4px;line-height:1.25;}
+.wallet-option-tag{font-family:'Share Tech Mono',monospace;font-size:10px;color:#00ff87;border:1px solid rgba(0,255,135,0.24);border-radius:999px;padding:3px 7px;white-space:nowrap;}
+.wallet-note{font-size:11px;color:#6f7f92;line-height:1.35;margin-top:12px;}
 
 /* SEKCJA HERO I NAGĹĂ“WEK */
 .hero{padding:48px 24px 40px;text-align:center;border-bottom:1px solid #1c2028;position:relative;overflow:hidden;}
@@ -1521,12 +1539,48 @@ body.network-busy{cursor:progress;}
 
 <nav class="topnav">
   <div class="topnav-left">
-    <a href="https://block-kickers.vercel.app" class="topnav-logo" style="text-decoration:none;">BLOCK <span>KICKERS</span></a>
+    <a href="https://block-kickers.vercel.app" class="topnav-logo" style="text-decoration:none;">&#9917; BLOCK <span>KICKERS</span></a>
     <span id="walletAddress" class="wallet-pill" style="color:#dde4f0;">0x0000...0000</span>
     <span id="walletBalance" class="wallet-pill" style="color:#00ff87;">0.0 CHZ</span>
   </div>
-  <button class="btn-connect" id="connectBtn" onclick="connectWallet()">CONNECT WALLET</button>
+  <div class="wallet-actions">
+    <button class="btn-connect" id="connectBtn" onclick="openWalletChoice()">CONNECT</button>
+  </div>
 </nav>
+
+<div class="wallet-modal" id="walletChoiceModal" onclick="closeWalletChoice(event)">
+  <div class="wallet-panel" onclick="event.stopPropagation()">
+    <div class="wallet-panel-head">
+      <div class="wallet-panel-title">Choose Wallet</div>
+      <button class="wallet-close" type="button" onclick="closeWalletChoice()">x</button>
+    </div>
+    <button class="wallet-option" type="button" onclick="connectInjectedFromChoice()">
+      <span class="wallet-option-icon">&#128188;</span>
+      <span>
+        <span class="wallet-option-name">MetaMask / Trust Browser</span>
+        <span class="wallet-option-desc">Use the wallet already injected into this browser.</span>
+      </span>
+      <span class="wallet-option-tag">APP</span>
+    </button>
+    <button class="wallet-option" type="button" onclick="connectWalletConnect()">
+      <span class="wallet-option-icon">&#128279;</span>
+      <span>
+        <span class="wallet-option-name">WalletConnect</span>
+        <span class="wallet-option-desc">Use Trust Wallet or MetaMask Mobile. Avoid Socios for mint/buy on mobile because it may revert transactions.</span>
+      </span>
+      <span class="wallet-option-tag">QR</span>
+    </button>
+    <button class="wallet-option" type="button" onclick="connectPrivyFromChoice()">
+      <span class="wallet-option-icon">&#9993;</span>
+      <span>
+        <span class="wallet-option-name">Privy Email Wallet</span>
+        <span class="wallet-option-desc">Create or restore an embedded wallet by email code.</span>
+      </span>
+      <span class="wallet-option-tag">NEW</span>
+    </button>
+    <div class="wallet-note">Recommended on mobile: Privy, Trust Wallet, or MetaMask Mobile. Socios Wallet may connect, but mint/buy transactions can revert.</div>
+  </div>
+</div>
 
 <div class="page">
 
@@ -1642,7 +1696,7 @@ body.network-busy{cursor:progress;}
   <!-- MONIT POĹÄ„CZENIA PORTFELA -->
   <div id="connectSection" class="connect-prompt">
     <p>Connect your Chiliz Wallet to explore the tactical pitch, find the best deals, and start scoring.</p>
-    <button class="btn-connect-big" onclick="connectWallet()">CONNECT WALLET</button>
+    <button class="btn-connect-big" onclick="openWalletChoice()">CHOOSE WALLET</button>
   </div>
 
   <!-- PANEL GĹĂ“WNY ROZGRYWKI -->
@@ -1925,6 +1979,7 @@ body.network-busy{cursor:progress;}
     <div class="network-ball">&#9917;</div>
     <div class="network-wait-title">Waiting for network</div>
     <div class="network-wait-text" id="networkOverlayText">Please confirm in your wallet and wait for Chiliz Chain.</div>
+    <button id="walletOpenBtn" type="button" onclick="openWalletConnectApp()" style="display:none;margin-top:12px;border:1px solid rgba(0,255,135,.42);background:rgba(0,255,135,.10);color:#00ff87;border-radius:7px;padding:9px 12px;font-family:'Black Ops One',sans-serif;font-size:10px;letter-spacing:1px;">OPEN WALLET APP</button>
   </div>
 </div>
 
@@ -2184,9 +2239,20 @@ const RULES_TRANSLATIONS = {
 };
 
 const PUBLIC_RPCS = ['https://chiliz-rpc.publicnode.com','https://rpc.chiliz.com'];
+const PRIVY_APP_ID = "cmpil29vr000r0cl27mvi078e";
+const PRIVY_CLIENT_ID = "client-WY6ZYpnr2u5M5Jusp4enZTZBmqhrikkMGUCjvgwWymidE";
+const PRIVY_MOBILE_CLIENT_ID = "client-WY6ZYpnr2u5M5Jusp4enZTZBmqhrikkMGUDTCFM16jcp4";
+const WALLETCONNECT_PROJECT_ID = "15671485110825e18107d31b379d9df6";
 
 let provider, signer, address;
 let contract, marketContract;
+let activeWalletProvider = null;
+let activeWalletType = '';
+let privyClient = null;
+let privyIframe = null;
+let privyMessageListener = null;
+let privySdk = null;
+let walletConnectProvider = null;
 let activeSellTokenId = null;
 
 window.dreamScores = {}; // portfel -> { teamId -> { pozycja -> {weight, tid, rarity, dna} } }
@@ -2266,13 +2332,90 @@ function showHeaderToast(message, isError = false) {
   }, 6000);
 }
 
-function getWalletProvider() {
+function readableError(error) {
+  if (!error) return 'Unknown error';
+  if (typeof error === 'string') return error;
+  const parts = [
+    error.shortMessage,
+    error.reason,
+    error.message,
+    error.code ? `code ${error.code}` : '',
+    error.data && error.data.message ? error.data.message : ''
+  ].filter(Boolean);
+  return parts.join(' | ') || 'Unknown error';
+}
+
+function isMissingPrivySession(error) {
+  const msg = readableError(error).toLowerCase();
+  return msg.includes('missing_or_invalid_token') ||
+         msg.includes('no tokens found') ||
+         msg.includes('not authenticated') ||
+         msg.includes('unauthorized');
+}
+
+function getInjectedWalletProvider() {
   const eth = window.ethereum;
   if (!eth) return null;
   if (Array.isArray(eth.providers) && eth.providers.length) {
     return eth.providers.find(p => p.isTrust) || eth.providers.find(p => p.isMetaMask) || eth.providers[0];
   }
   return eth;
+}
+
+function getWalletProvider() {
+  return activeWalletProvider || getInjectedWalletProvider();
+}
+
+function parseWalletChainId(chainId) {
+  if (typeof chainId === 'number') return chainId;
+  if (typeof chainId === 'bigint') return Number(chainId);
+  const text = String(chainId || '').trim();
+  if (!text) return NaN;
+  return text.toLowerCase().startsWith('0x') ? parseInt(text, 16) : parseInt(text, 10);
+}
+
+async function ensureChilizChain(walletProvider) {
+  const wantedChainId = '0x' + CHAIN_ID.toString(16);
+  let cid = await walletProvider.request({method:'eth_chainId'});
+  if (parseWalletChainId(cid) === CHAIN_ID) return true;
+  console.warn('Wallet is on chain', cid, 'trying to switch to', wantedChainId);
+
+  try {
+    await walletProvider.request({
+      method: 'wallet_switchEthereumChain',
+      params: [{ chainId: wantedChainId }]
+    });
+    cid = await walletProvider.request({method:'eth_chainId'});
+    return parseWalletChainId(cid) === CHAIN_ID;
+  } catch(e) {
+    const code = e && (e.code || e.data?.originalError?.code);
+    if (code === 4902 || String(e && e.message || '').toLowerCase().includes('unrecognized')) {
+      try {
+        await walletProvider.request({
+          method: 'wallet_addEthereumChain',
+          params: [{
+            chainId: wantedChainId,
+            chainName: 'Chiliz Chain',
+            nativeCurrency: { name: 'CHZ', symbol: 'CHZ', decimals: 18 },
+            rpcUrls: PUBLIC_RPCS,
+            blockExplorerUrls: ['https://scan.chiliz.com']
+          }]
+        });
+        cid = await walletProvider.request({method:'eth_chainId'});
+        return parseWalletChainId(cid) === CHAIN_ID;
+      } catch(addError) {
+        console.warn('Could not add Chiliz Chain', addError);
+      }
+    }
+    console.warn('Could not switch to Chiliz Chain', e);
+  }
+  let finalCid = 'unknown';
+  try {
+    finalCid = await walletProvider.request({method:'eth_chainId'});
+  } catch(chainError) {
+    finalCid = readableError(chainError);
+  }
+  throw new Error(`Wallet stayed on chain ${finalCid}; expected Chiliz Chain ${wantedChainId}`);
 }
 
 async function updateWalletBalance() {
@@ -2285,6 +2428,125 @@ async function updateWalletBalance() {
       const el = document.getElementById('walletBalance');
       if(el){ el.textContent = formatted+' CHZ'; el.style.display='inline-block'; }
     } catch(e) {}
+  }
+}
+
+function getChilizPrivyChain() {
+  return {
+    id: CHAIN_ID,
+    name: 'Chiliz Chain',
+    network: 'chiliz',
+    nativeCurrency: { name: 'CHZ', symbol: 'CHZ', decimals: 18 },
+    rpcUrls: { default: { http: PUBLIC_RPCS }, public: { http: PUBLIC_RPCS } },
+    blockExplorers: { default: { name: 'ChilizScan', url: 'https://scan.chiliz.com' } }
+  };
+}
+
+async function getPrivyClient() {
+  if (privyClient) return privyClient;
+  if (location.protocol === 'file:') {
+    throw new Error('Privy requires a hosted HTTPS origin. Upload to Vercel and add that domain in Privy Allowed origins.');
+  }
+  const sdk = await import('https://esm.sh/@privy-io/js-sdk-core@latest');
+  privySdk = sdk;
+  const Privy = sdk.default;
+  const storage = sdk.LocalStorage ? new sdk.LocalStorage() : {
+    get: key => Promise.resolve(localStorage.getItem(key)),
+    put: (key, value) => Promise.resolve(localStorage.setItem(key, value)),
+    del: key => Promise.resolve(localStorage.removeItem(key)),
+    getKeys: () => Promise.resolve(Object.keys(localStorage))
+  };
+  const chilizChain = getChilizPrivyChain();
+  privyClient = new Privy({
+    appId: PRIVY_APP_ID,
+    clientId: PRIVY_CLIENT_ID,
+    defaultChain: chilizChain,
+    supportedChains: [chilizChain],
+    storage
+  });
+
+  await privyClient.initialize();
+
+  if (privyClient.embeddedWallet && !privyIframe) {
+    privyIframe = document.createElement('iframe');
+    privyIframe.src = privyClient.embeddedWallet.getURL();
+    privyIframe.style.display = 'none';
+    privyIframe.setAttribute('aria-hidden', 'true');
+    document.body.appendChild(privyIframe);
+    privyClient.setMessagePoster(privyIframe.contentWindow);
+    privyMessageListener = event => {
+      if (event.source !== privyIframe.contentWindow) return;
+      const data = typeof event.data === 'string' ? JSON.parse(event.data) : event.data;
+      privyClient.embeddedWallet.onMessage(data);
+    };
+    window.addEventListener('message', privyMessageListener);
+  }
+
+  return privyClient;
+}
+
+function openWalletChoice() {
+  const modal = document.getElementById('walletChoiceModal');
+  if (modal) modal.classList.add('active');
+}
+
+function closeWalletChoice(event) {
+  if (event && event.target && event.currentTarget && event.target !== event.currentTarget) return;
+  const modal = document.getElementById('walletChoiceModal');
+  if (modal) modal.classList.remove('active');
+}
+
+async function connectInjectedFromChoice() {
+  closeWalletChoice();
+  await connectWallet();
+}
+
+async function connectPrivyFromChoice() {
+  closeWalletChoice();
+  await connectPrivyWallet();
+}
+
+async function connectWalletConnect() {
+  closeWalletChoice();
+  if (!WALLETCONNECT_PROJECT_ID) {
+    showHeaderToast('WalletConnect needs a Reown Project ID. Create one at cloud.reown.com and send it to me.', true);
+    return;
+  }
+  showNetworkOverlay('Opening WalletConnect...');
+  try {
+    showHeaderToast('WalletConnect tip: use Trust Wallet or MetaMask Mobile. Socios may revert mint/buy transactions.', true);
+    const mod = await import('https://esm.sh/@walletconnect/ethereum-provider@2');
+    const EthereumProvider = mod.default || mod.EthereumProvider;
+    walletConnectProvider = await EthereumProvider.init({
+      projectId: WALLETCONNECT_PROJECT_ID,
+      chains: [CHAIN_ID],
+      optionalChains: [CHAIN_ID],
+      chainId: CHAIN_ID,
+      rpcMap: { [CHAIN_ID]: PUBLIC_RPCS[0] },
+      showQrModal: true,
+      methods: [
+        'eth_sendTransaction',
+        'personal_sign',
+        'eth_signTypedData',
+        'wallet_switchEthereumChain',
+        'wallet_addEthereumChain'
+      ],
+      events: ['chainChanged', 'accountsChanged', 'disconnect'],
+      metadata: {
+        name: 'Block Kickers Dream XI',
+        description: 'Block Kickers Dream XI on Chiliz Chain',
+        url: location.origin,
+        icons: [location.origin + '/favicon.ico']
+      }
+    });
+    await walletConnectProvider.connect({ chains: [CHAIN_ID] });
+    const connected = await finalizeWalletConnection(walletConnectProvider, 'WalletConnect');
+    if (connected) showHeaderToast('WalletConnect wallet connected.');
+  } catch(e) {
+    console.error('WalletConnect failed:', e);
+    showHeaderToast('WalletConnect failed: '+readableError(e).slice(0, 170), true);
+  } finally {
+    hideNetworkOverlay();
   }
 }
 
@@ -2404,15 +2666,68 @@ function updateNetworkOverlay(message) {
   const text = document.getElementById('networkOverlayText');
   if (text && message) text.textContent = message;
 }
+function setWalletOpenButton(show) {
+  const btn = document.getElementById('walletOpenBtn');
+  if (btn) btn.style.display = show ? 'inline-flex' : 'none';
+}
 function hideNetworkOverlay() {
   networkOverlayDepth = Math.max(0, networkOverlayDepth - 1);
   if (networkOverlayDepth > 0) return;
   const overlay = document.getElementById('networkOverlay');
   if (overlay) overlay.classList.remove('show');
+  setWalletOpenButton(false);
   document.body.classList.remove('network-busy');
 }
 function isNetworkOverlayVisible() {
   return networkOverlayDepth > 0;
+}
+
+async function waitForTxOrFail(tx, label = 'Transaction') {
+  const hash = typeof tx === 'string' ? tx : tx?.hash;
+  const waitPromise = typeof tx?.wait === 'function'
+    ? tx.wait()
+    : provider.waitForTransaction(hash);
+  const timeoutMs = activeWalletType === 'WalletConnect' ? 90000 : 150000;
+  const timeoutPromise = new Promise((_, reject) => {
+    setTimeout(() => reject(new Error(`${label} confirmation timed out. Check wallet history or ChilizScan, then refresh.`)), timeoutMs);
+  });
+  const receipt = await Promise.race([waitPromise, timeoutPromise]);
+  if (!receipt) throw new Error(`${label} was not confirmed yet. Refresh in a moment.`);
+  if (Number(receipt.status) === 0) {
+    throw new Error(`${label} reverted on-chain. No card was minted or updated.`);
+  }
+  return receipt;
+}
+
+function getWalletConnectRedirectUrl() {
+  const meta = walletConnectProvider?.session?.peer?.metadata || {};
+  const redirect = meta.redirect || {};
+  let url = redirect.native || redirect.universal || '';
+  const name = String(meta.name || '').toLowerCase();
+  if (!url && name.includes('socios')) url = 'socios-mob://';
+  if (!url && name.includes('trust')) url = 'trust://';
+  if (!url && name.includes('metamask')) url = 'metamask://';
+  return url;
+}
+
+function openWalletConnectApp() {
+  const url = getWalletConnectRedirectUrl();
+  if (!url) {
+    showHeaderToast('Open your connected wallet app to confirm this WalletConnect request.', true);
+    return;
+  }
+  try {
+    window.location.href = url;
+  } catch(e) {
+    showHeaderToast('Open your connected wallet app to confirm this request.', true);
+  }
+}
+
+function promptWalletConnectConfirmation(message = 'Confirm this request in your connected wallet app.') {
+  if (activeWalletType !== 'WalletConnect') return;
+  updateNetworkOverlay(message + ' If the app does not open, tap OPEN WALLET APP.');
+  setWalletOpenButton(true);
+  setTimeout(openWalletConnectApp, 350);
 }
 function toggleRulesModal(show) {
   const modal = document.getElementById('rulesModal');
@@ -2605,44 +2920,150 @@ async function getReadProvider(){
   }
 }
 
+async function finalizeWalletConnection(walletProvider, walletType = 'wallet') {
+  if (!walletProvider || typeof walletProvider.request !== 'function') {
+    throw new Error('Selected wallet did not return a compatible provider.');
+  }
+
+  activeWalletProvider = walletProvider;
+  activeWalletType = walletType;
+
+  let accounts = [];
+  try {
+    accounts = await walletProvider.request({method:'eth_requestAccounts'});
+  } catch(e) {
+    accounts = await walletProvider.request({method:'eth_accounts'});
+  }
+
+  if (!accounts || !accounts.length) {
+    throw new Error('No wallet account selected.');
+  }
+
+  const onChiliz = await ensureChilizChain(walletProvider);
+  if(!onChiliz){
+    const chainText = await walletProvider.request({method:'eth_chainId'}).catch(() => 'unknown');
+    showHeaderToast(`Wrong network (${chainText}). Switch to Chiliz Chain (ID: 88888).`, true);
+    return false;
+  }
+
+  provider = new ethers.BrowserProvider(walletProvider);
+  signer = await provider.getSigner();
+  address = await signer.getAddress();
+
+  contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
+  marketContract = new ethers.Contract(MARKET_ADDRESS, MARKET_ABI, signer);
+
+  const connectBtn = document.getElementById('connectBtn');
+  if (connectBtn) {
+    connectBtn.textContent = address.slice(0,6)+'...'+address.slice(-4);
+    connectBtn.classList.add('connected');
+  }
+  const privyBtn = document.getElementById('privyBtn');
+  if (privyBtn && walletType === 'Privy') {
+    privyBtn.textContent = 'PRIVY ON';
+    privyBtn.classList.add('connected');
+  }
+  const walletAddressEl = document.getElementById('walletAddress');
+  if (walletAddressEl) {
+    walletAddressEl.textContent = address.slice(0,6)+'...'+address.slice(-4);
+    walletAddressEl.style.display = 'inline-block';
+  }
+  await updateWalletBalance();
+  document.getElementById('connectSection').style.display = 'none';
+  document.getElementById('gameSection').style.display = 'block';
+  document.getElementById('statsRow').style.display = 'grid';
+  const prizeStrip = document.getElementById('dashboardPrizeStrip');
+  if (prizeStrip) prizeStrip.style.display = 'grid';
+  document.body.classList.add('game-mode');
+
+  await loadData();
+  return true;
+}
+
 async function connectWallet(){
-  const walletProvider = getWalletProvider();
+  const walletProvider = getInjectedWalletProvider();
   if(!walletProvider){
     showHeaderToast('No compatible Web3 wallet detected. Open in MetaMask, Trust Wallet, or another EIP-1193 wallet browser.', true);
     return;
   }
   try{
-    await walletProvider.request({method:'eth_requestAccounts'});
-    const cid = await walletProvider.request({method:'eth_chainId'});
-    if(parseInt(cid,16) !== CHAIN_ID){
-      showHeaderToast('Wrong network! Please switch your wallet to Chiliz Chain (ID: 88888).', true);
-      return;
-    }
-    
-    provider = new ethers.BrowserProvider(walletProvider);
-    signer = await provider.getSigner();
-    address = await signer.getAddress();
-    
-    contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
-    marketContract = new ethers.Contract(MARKET_ADDRESS, MARKET_ABI, signer);
-    
-    document.getElementById('connectBtn').textContent = address.slice(0,6)+'...'+address.slice(-4);
-    document.getElementById('connectBtn').classList.add('connected');
-    const walletAddressEl = document.getElementById('walletAddress');
-    if (walletAddressEl) {
-      walletAddressEl.textContent = address.slice(0,6)+'...'+address.slice(-4);
-      walletAddressEl.style.display = 'inline-block';
-    }
-    await updateWalletBalance();
-    document.getElementById('connectSection').style.display = 'none';
-    document.getElementById('gameSection').style.display = 'block';
-    document.getElementById('statsRow').style.display = 'grid';
-    document.body.classList.add('game-mode');
-    
-    await loadData();
+    await finalizeWalletConnection(walletProvider, 'Injected');
   }catch(e){
     console.error(e);
     showHeaderToast('Error connecting wallet.', true);
+  }
+}
+
+async function connectPrivyWallet(){
+  showNetworkOverlay('Opening Privy wallet...');
+  try{
+    const client = await getPrivyClient();
+
+    let user = null;
+    try {
+      const current = await client.user.get();
+      user = current && current.user ? current.user : null;
+    } catch(sessionError) {
+      if (!isMissingPrivySession(sessionError)) throw sessionError;
+      user = null;
+    }
+
+    if (!user) {
+      hideNetworkOverlay();
+      const email = window.prompt('Enter email for Privy wallet login:');
+      if (!email) return;
+      showNetworkOverlay('Sending Privy login code...');
+      await client.auth.email.sendCode(email.trim());
+      hideNetworkOverlay();
+      const code = window.prompt('Enter the Privy code from your email:');
+      if (!code) return;
+      showNetworkOverlay('Confirming Privy login...');
+      const session = await client.auth.email.loginWithCode(email.trim(), code.trim());
+      user = session.user;
+    }
+
+    if (!privySdk || !privySdk.getUserEmbeddedEthereumWallet || !privySdk.getEntropyDetailsFromUser) {
+      throw new Error('Privy embedded wallet helpers are unavailable.');
+    }
+
+    let wallet = privySdk.getUserEmbeddedEthereumWallet(user);
+    if (!wallet) {
+      updateNetworkOverlay('Creating Privy embedded wallet...');
+      const created = await client.embeddedWallet.create({});
+      user = created.user;
+      wallet = privySdk.getUserEmbeddedEthereumWallet(user);
+    }
+
+    if (!wallet) {
+      throw new Error('Privy could not create or find an embedded wallet.');
+    }
+
+    updateNetworkOverlay('Preparing Privy wallet provider...');
+    const entropy = privySdk.getEntropyDetailsFromUser(user);
+    const walletProvider = await client.embeddedWallet.getEthereumProvider({
+      wallet,
+      entropyId: entropy.entropyId,
+      entropyIdVerifier: entropy.entropyIdVerifier
+    });
+
+    const connected = await finalizeWalletConnection(walletProvider, 'Privy');
+    if (connected) showHeaderToast('Privy wallet connected.');
+  }catch(e){
+    console.error('Privy connect failed:', e);
+    const msg = readableError(e);
+    if (msg.toLowerCase().includes('client')) {
+      showHeaderToast('Privy client error: '+msg.slice(0, 170), true);
+    } else if (msg.toLowerCase().includes('origin') || msg.toLowerCase().includes('domain')) {
+      showHeaderToast('Privy domain/origin error: add this site URL in Privy Allowed origins. '+msg.slice(0, 90), true);
+    } else if (msg.toLowerCase().includes('email')) {
+      showHeaderToast('Privy email login failed: '+msg.slice(0, 170), true);
+    } else if (msg.toLowerCase().includes('embedded')) {
+      showHeaderToast('Privy embedded wallet error: '+msg.slice(0, 170), true);
+    } else {
+      showHeaderToast('Privy failed: '+msg.slice(0, 190), true);
+    }
+  }finally{
+    hideNetworkOverlay();
   }
 }
 
@@ -3656,9 +4077,10 @@ async function cancelListing(listingId) {
   try {
     showHeaderToast('Cancelling listing...');
     updateNetworkOverlay('Waiting for wallet confirmation...');
+    promptWalletConnectConfirmation('Open your wallet app and confirm cancel listing.');
     const tx = await marketContract.cancelListing(listingId);
     updateNetworkOverlay('Cancel sent. Waiting for block confirmation...');
-    await tx.wait();
+    await waitForTxOrFail(tx, 'Cancel listing');
     showHeaderToast('Listing cancelled!');
     await loadData();
   } catch(e) { showHeaderToast('Cancellation failed.', true); }
@@ -3705,11 +4127,12 @@ async function buyFromMarket(listingId, priceChz, priceWeiRaw){
       return;
     }
     updateNetworkOverlay('Waiting for wallet confirmation and transaction hash...');
+    promptWalletConnectConfirmation('Open your wallet app and confirm marketplace buy.');
     const tx = await marketContract.buyFigure(listingId, { value: priceWei });
     showHeaderToast('Transaction sent to Chiliz Chain. Awaiting blockchain confirmation...');
     updateNetworkOverlay('Transaction sent. Waiting for block confirmation...');
     
-    const receipt = await tx.wait();
+    const receipt = await waitForTxOrFail(tx, 'Marketplace buy');
     if (boughtFig && myAddr) {
       localSaleEvents = localSaleEvents.filter(s => Number(s.listingId) !== Number(listingId));
       localSaleEvents.push({
@@ -3768,17 +4191,19 @@ async function sellFigure(tokenId, priceChz) {
     if (!isApproved) {
       showHeaderToast('One-time marketplace authorization required...');
       updateNetworkOverlay('Waiting for marketplace approval in your wallet...');
+      promptWalletConnectConfirmation('Open your wallet app and approve marketplace access.');
       const txApprove = await figContract.setApprovalForAll(MARKET_ADDRESS, true);
-      await txApprove.wait();
+      await waitForTxOrFail(txApprove, 'Marketplace approval');
       showHeaderToast('Approved! Creating marketplace listing...');
     }
 
     const priceWei = ethers.parseEther(priceChz);
     showHeaderToast(`Listing card #${tokenId} for ${priceChz} CHZ...`);
     updateNetworkOverlay(`Listing card for ${priceChz} CHZ...`);
+    promptWalletConnectConfirmation('Open your wallet app and confirm listing.');
     const txList = await marketContract.listFigure(tokenId, priceWei);
     updateNetworkOverlay('Listing sent. Waiting for block confirmation...');
-    await txList.wait();
+    await waitForTxOrFail(txList, 'List card');
     showHeaderToast('Card successfully listed on the marketplace!');
     toggleSellModal(false);
     await loadData();
@@ -3804,6 +4229,15 @@ async function directMint() {
   }
   showNetworkOverlay('Preparing card mint...');
   try {
+    const walletProvider = getWalletProvider();
+    if (!walletProvider) throw new Error('No active wallet provider.');
+    await ensureChilizChain(walletProvider);
+    provider = new ethers.BrowserProvider(walletProvider);
+    signer = await provider.getSigner();
+    address = await signer.getAddress();
+    contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
+    marketContract = new ethers.Contract(MARKET_ADDRESS, MARKET_ABI, signer);
+
     const referrer = getReferrer();
     const walletBalance = await provider.getBalance(address);
     if (walletBalance <= currentMintPrice) {
@@ -3812,11 +4246,50 @@ async function directMint() {
     }
     showHeaderToast(`Initializing card mint for ${ethers.formatEther(currentMintPrice)} CHZ...`);
     updateNetworkOverlay(`Minting random WC card for ${ethers.formatEther(currentMintPrice)} CHZ...`);
-    const tx = await contract.mint(referrer, { value: currentMintPrice });
+    if (activeWalletType === 'WalletConnect') {
+      updateNetworkOverlay('Checking mint on Chiliz Chain before opening wallet...');
+      await contract.mint.staticCall(referrer, { value: currentMintPrice }).catch(err => {
+        throw new Error('Mint pre-check failed: '+readableError(err));
+      });
+    }
+    let tx;
+    if (activeWalletType === 'Privy') {
+      const iface = new ethers.Interface(ABI);
+      const feeData = await provider.getFeeData().catch(() => null);
+      const gasPrice = feeData?.gasPrice || 2500000000000n;
+      const gasHex = ethers.toQuantity(650000n);
+      const txHash = await walletProvider.request({
+        method: 'eth_sendTransaction',
+        params: [{
+          from: address,
+          to: CONTRACT_ADDRESS,
+          data: iface.encodeFunctionData('mint', [referrer]),
+          value: ethers.toQuantity(currentMintPrice),
+          gas: gasHex,
+          gasLimit: gasHex,
+          gasPrice: ethers.toQuantity(gasPrice),
+          chainId: '0x' + CHAIN_ID.toString(16),
+          type: '0x0'
+        }]
+      });
+      tx = { hash: txHash, wait: () => provider.waitForTransaction(txHash) };
+    } else {
+      const txOptions = { value: currentMintPrice };
+    if (activeWalletType !== 'WalletConnect') {
+      try {
+        const gasEstimate = await contract.mint.estimateGas(referrer, { value: currentMintPrice });
+        txOptions.gasLimit = gasEstimate + (gasEstimate / 5n);
+      } catch(err) {
+        console.warn('Mint gas estimate skipped:', err);
+      }
+    }
+      promptWalletConnectConfirmation('Open your wallet app and confirm mint.');
+      tx = await contract.mint(referrer, txOptions);
+    }
     showHeaderToast('Mint transaction sent. Awaiting block confirmation...');
     updateNetworkOverlay('Mint sent. Waiting for block confirmation...');
     
-    const receipt = await tx.wait();
+    const receipt = await waitForTxOrFail(tx, 'Mint');
     showHeaderToast('Generative card minted successfully!');
 
     let mintedCard = null;
