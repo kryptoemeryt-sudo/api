@@ -489,6 +489,27 @@ body{padding-top:0!important;}
   .opportunity-panel{padding:7px;margin-top:7px;}
   .opportunity-title{font-size:8px;}.opportunity-main span{font-size:9px;}.opportunity-main b{font-size:11px;}.opportunity-main em{font-size:6px;}.opportunity-text{font-size:7px;}
 }
+
+/* Final sizing and profit-aware action polish */
+.main-grid{grid-template-columns:minmax(0,1fr) minmax(250px,25vw)!important;}
+.quest-side-panel{width:100%!important;max-width:none!important;}
+.stats{grid-template-columns:repeat(4,minmax(0,1fr))!important;}
+.mint-stat{background:#00ff87!important;border-color:#00ff87!important;color:#06101f!important;box-shadow:0 0 28px rgba(0,255,135,.20)!important;}
+.mint-stat:hover{background:#00ff87!important;color:#06101f!important;filter:brightness(1.06)!important;}
+.mint-stat .stat-value{font-size:clamp(22px,3vw,36px)!important;color:#06101f!important;text-shadow:none!important;}
+.mint-stat .stat-label{color:#06101f!important;}
+.my-squad-panel .squad{grid-template-columns:repeat(11,minmax(104px,1fr))!important;overflow-x:hidden!important;}
+.market-grid{grid-template-columns:repeat(auto-fill,minmax(104px,1fr))!important;}
+.slot,.market-card.slot{width:100%!important;min-width:0!important;max-width:none!important;}
+.market-card.slot{min-height:194px!important;}
+.opportunity-main b{white-space:nowrap!important;}
+@media(max-width:900px){
+  .main-grid{grid-template-columns:1fr!important;}
+  .mint-stat .stat-value{font-size:14px!important;}
+  .my-squad-panel .squad{grid-template-columns:repeat(11,minmax(0,1fr))!important;}
+  .market-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;}
+  .market-card.slot{min-height:142px!important;}
+}
 </style>
 </head>
 <body>
@@ -1420,18 +1441,29 @@ function renderOpportunity(state) {
   const el = document.getElementById("opportunityPanel");
   if (!el) return;
   const listings = (state.listings || []).slice().sort((a,b) => a.price - b.price || b.weight - a.weight);
+  const reward = 1500;
+  const maxSmartBuy = 500;
   if (!listings.length) {
     el.innerHTML = `<div class="opportunity-title">Opportunity</div><div class="opportunity-text">No USA listings right now. If you own a missing card, you can set the market.</div>`;
     return;
   }
   const owned = address ? (state.myOwnedSet || new Set()) : new Set();
-  const targets = listings.map(l => ({...l, missingForMe: address && !owned.has(l.position)}));
-  const best = targets.find(l => l.missingForMe) || targets[0];
-  const highNeed = [...(state.walletPositions || new Map()).values()].filter(set => !set.has(best.position) && set.size >= 8).length;
+  const nearCompleteByPos = pos => [...(state.walletPositions || new Map()).values()].filter(set => !set.has(pos) && set.size >= 8).length;
+  const targets = listings.map(l => ({...l, missingForMe: address && !owned.has(l.position), near: nearCompleteByPos(l.position)}));
+  const sane = targets.filter(l => l.price <= maxSmartBuy).sort((a,b) => Number(b.missingForMe) - Number(a.missingForMe) || b.near - a.near || a.price - b.price || b.weight - a.weight)[0];
+  const cheapest = targets[0];
+  if (!sane) {
+    el.innerHTML = `
+      <div class="opportunity-title">Opportunity</div>
+      <div class="opportunity-main"><span>WAIT</span><b>${cheapest.price} CHZ</b><em>LOW EDGE</em></div>
+      <div class="opportunity-text">Cheapest USA card is above the smart buy zone. With a ${reward} CHZ prize, avoid overpaying unless it completes your 11/11.</div>
+    `;
+    return;
+  }
   el.innerHTML = `
     <div class="opportunity-title">Opportunity</div>
-    <div class="opportunity-main"><span>${posLabel(best.position)}</span><b>${best.price} CHZ</b><em>${best.weight} PTS · ${rarityShort(best.rarity)}</em></div>
-    <div class="opportunity-text">${highNeed ? `${highNeed} near-complete players may need this position.` : `Watch this position. Last missing cards can sell far above floor.`}</div>
+    <div class="opportunity-main"><span>${posLabel(sane.position)}</span><b>${sane.price} CHZ</b><em>${sane.weight} PTS - ${rarityShort(sane.rarity)}</em></div>
+    <div class="opportunity-text">Smart zone: under ${maxSmartBuy} CHZ. ${sane.near ? `${sane.near} near-complete players may need this slot.` : `Best when it fills your missing position.`}</div>
   `;
 }
 function renderRank(state) {
