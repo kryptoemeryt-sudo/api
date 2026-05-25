@@ -329,6 +329,48 @@ body{padding-top:0!important;}
   .topnav .wallet-info.balance{font-size:9px!important;}
   .topnav .btn-connect{font-size:8px!important;padding:6px 8px!important;}
 }
+
+/* USA Nation Quest visual pass */
+:root{--usa-blue:#2563eb;--usa-blue2:#0b1f4d;--usa-red:#ef4444;--usa-white:#f8fafc;--usa-gold:#ffc940;}
+.page{background:radial-gradient(circle at 9% 0%,rgba(37,99,235,.20),transparent 30%),radial-gradient(circle at 86% 10%,rgba(239,68,68,.13),transparent 32%),linear-gradient(180deg,#05070b,#070b13 38%,#06080a)!important;}
+.hero .panel{border-color:rgba(37,99,235,.46)!important;background:linear-gradient(110deg,rgba(11,31,77,.94),rgba(8,13,24,.96) 46%,rgba(119,16,29,.28))!important;box-shadow:0 0 34px rgba(37,99,235,.10),inset 0 0 28px rgba(255,255,255,.025)!important;}
+.quest-kicker{border-color:rgba(248,250,252,.30)!important;background:linear-gradient(90deg,rgba(37,99,235,.26),rgba(239,68,68,.12))!important;color:#fff!important;}
+.hero-title{color:#fff!important;text-shadow:0 0 20px rgba(37,99,235,.18)!important;}
+.hero-title span{color:#ef4444!important;text-shadow:0 0 24px rgba(239,68,68,.22)!important;}
+.hero-copy,.hero-copy strong{color:#fff!important;}
+.hero-copy strong{color:#ffc940!important;}
+.stats .stat{border-color:rgba(37,99,235,.32)!important;background:linear-gradient(180deg,rgba(37,99,235,.10),rgba(15,19,24,.96))!important;}
+.stats .stat:nth-child(1){border-color:rgba(0,255,135,.38)!important;}
+.stats .stat:nth-child(2){border-color:rgba(239,68,68,.34)!important;}
+.my-squad-panel,.market-section,.quest-side-panel .panel,.quest-side-panel .callout{border-color:rgba(37,99,235,.34)!important;background:linear-gradient(180deg,rgba(10,22,46,.96),rgba(8,12,20,.98))!important;}
+.my-squad-panel .section-title span:first-child,.market-section .section-title span:first-child{color:#fff!important;}
+.slot.done{border-color:rgba(37,99,235,.78)!important;background:linear-gradient(180deg,rgba(37,99,235,.26),rgba(15,19,24,.95))!important;box-shadow:0 0 18px rgba(37,99,235,.18),inset 0 0 18px rgba(37,99,235,.12)!important;}
+.slot.rarity-3{border-color:rgba(255,201,64,.82)!important;}
+.slot.open{border-color:rgba(239,68,68,.72)!important;background:linear-gradient(180deg,rgba(239,68,68,.18),rgba(15,19,24,.96))!important;box-shadow:0 0 18px rgba(239,68,68,.14),inset 0 0 16px rgba(239,68,68,.08)!important;}
+.my-squad-panel .slot.empty .slot-actions{display:grid!important;opacity:1!important;transform:none!important;}
+.my-squad-panel .slot.empty .slot-actions:empty{display:none!important;}
+.my-squad-panel .slot.empty .slot-action.buy{background:linear-gradient(135deg,#ffc940,#f59e0b)!important;color:#06101f!important;border-color:#ffc940!important;box-shadow:0 0 14px rgba(255,201,64,.18)!important;}
+.slot-action.buy:hover,.market-card .slot-action.buy:hover{background:#fff!important;color:#0b1f4d!important;border-color:#fff!important;box-shadow:0 0 20px rgba(255,255,255,.20)!important;}
+.slot-action.sell:hover,.market-card .slot-action.sell:hover{background:#ef4444!important;color:#fff!important;border-color:#ef4444!important;box-shadow:0 0 20px rgba(239,68,68,.28)!important;}
+.arg-quest-stat{display:grid!important;grid-template-columns:auto 1fr!important;grid-template-rows:1fr!important;gap:10px!important;text-align:left!important;align-items:center!important;justify-content:start!important;border-color:rgba(116,172,223,.78)!important;background:linear-gradient(135deg,rgba(116,172,223,.30),rgba(255,255,255,.08) 48%,rgba(116,172,223,.16))!important;box-shadow:0 0 22px rgba(116,172,223,.16)!important;}
+.arg-quest-stat:hover{border-color:#74acdf!important;background:linear-gradient(135deg,rgba(116,172,223,.42),rgba(255,255,255,.13),rgba(116,172,223,.20))!important;}
+.arg-quest-flag{width:42px;height:28px;object-fit:cover;border-radius:4px;box-shadow:0 0 0 1px rgba(255,255,255,.25),0 4px 12px rgba(0,0,0,.32);}
+.arg-quest-copy{min-width:0;}
+.arg-quest-stat .stat-value{font-size:16px!important;color:#fff!important;line-height:1!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.arg-quest-stat .stat-label{font-size:10px!important;color:#74acdf!important;margin-top:4px!important;}
+.trading-tips{border-color:rgba(255,201,64,.36)!important;background:linear-gradient(180deg,rgba(255,201,64,.11),rgba(10,22,46,.95))!important;}
+.trading-tips h3{color:#ffc940!important;}
+.trading-tips ul{list-style:none;display:grid;gap:7px;margin:0;padding:0;}
+.trading-tips li{position:relative;padding-left:16px;color:#fff;font-size:15px;line-height:1.22;}
+.trading-tips li::before{content:'$';position:absolute;left:0;top:0;color:#00ff87;font-family:'Black Ops One',sans-serif;font-size:12px;}
+@media(max-width:900px){
+  .arg-quest-stat{gap:5px!important;padding:7px 6px!important;}
+  .arg-quest-flag{width:26px;height:18px;}
+  .arg-quest-stat .stat-value{font-size:9px!important;}
+  .arg-quest-stat .stat-label{font-size:6px!important;}
+  .my-squad-panel .slot.empty .slot-actions{display:grid!important;}
+  .trading-tips{display:none!important;}
+}
 </style>
 </head>
 <body>
@@ -360,8 +402,11 @@ body{padding-top:0!important;}
     <div class="stat"><div class="stat-value" id="statCompleted">- / 11</div><div class="stat-label">USA Positions</div></div>
     <div class="stat"><div class="stat-value gold" id="statLeader">- / 11</div><div class="stat-label" id="statLeaderLabel">Quest Leader</div></div>
     <a class="stat arg-quest-stat" href="https://block-kickers.vercel.app/dream-xi">
-      <div class="stat-value gold">ARG</div>
-      <div class="stat-label">Dream XI 10k CHZ</div>
+      <img class="arg-quest-flag" src="https://flagcdn.com/w80/ar.png" alt="Argentina" loading="lazy">
+      <div class="arg-quest-copy">
+        <div class="stat-value gold">ARGENTINA</div>
+        <div class="stat-label">Dream XI 10k CHZ</div>
+      </div>
     </a>
     <div class="stat"><div class="stat-value blue" id="myCompleted">- / 11</div><div class="stat-label">My USA Squad</div></div>
     <div class="stat"><div class="stat-value gold" id="statUsaCards">-</div><div class="stat-label">USA Cards Minted</div></div>
@@ -391,6 +436,14 @@ body{padding-top:0!important;}
       <div class="callout">
         <h3>1500 CHZ Squad Prize</h3>
         <div class="winner-box" id="squadWinnerBox">First wallet to complete all 11 USA positions wins.</div>
+      </div>
+      <div class="callout trading-tips">
+        <h3>Trading Tips</h3>
+        <ul>
+          <li>If you own a card another player is missing, list it higher.</li>
+          <li>A last missing position can be worth 500 CHZ or more if it unlocks profit.</li>
+          <li>Watch USA Rank and Latest Events, then price rare positions aggressively.</li>
+        </ul>
       </div>
       <div class="panel" style="padding:10px">
         <div class="section-title"><span>USA Rank</span><span class="live" id="rankCount">LIVE</span></div>
