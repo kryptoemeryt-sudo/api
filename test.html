@@ -35,7 +35,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
 .wallet-option-desc{font-size:11px;color:#8da0b7;margin-top:4px;line-height:1.25;}
 .wallet-option-tag{font-family:'Share Tech Mono',monospace;font-size:10px;color:#00ff87;border:1px solid rgba(0,255,135,0.24);border-radius:999px;padding:3px 7px;white-space:nowrap;}
 .wallet-note{font-size:11px;color:#6f7f92;line-height:1.35;margin-top:12px;}
-body.game-mode .wallet-actions #connectBtn.connected{display:none;}
+body.game-mode .wallet-actions #connectBtn.connected{display:inline-flex!important;}
 
 /* HERO & HEADER */
 .hero{padding:22px 24px 20px;text-align:left;border-bottom:1px solid #1c2028;position:relative;overflow:hidden;display:grid;grid-template-columns:minmax(280px,0.95fr) minmax(300px,1.2fr) minmax(280px,0.85fr);gap:16px;align-items:stretch;}
@@ -1406,7 +1406,17 @@ body{padding-top:55px!important;}
     font-weight:400!important;
   }
 }
-</style>
+
+/* Keep connected wallet button visible like Dream XI */
+body.game-mode .wallet-actions #connectBtn.connected,
+body.game-mode .nav-right #connectBtn.connected{
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  background:rgba(0,255,135,0.15)!important;
+  border-color:#00ff87!important;
+  color:#00ff87!important;
+}</style>
 </head>
 <body>
 
