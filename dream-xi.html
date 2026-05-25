@@ -938,6 +938,18 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
 .dream-guide-grid .guide-step{background:linear-gradient(145deg,rgba(15,19,24,.98),rgba(0,255,135,.045));border-color:rgba(0,255,135,.18);}
 .dream-guide-grid .guide-step-title{color:#fff!important;font-size:12px!important;}
 .dream-guide-grid .guide-step-text{color:#dde4f0!important;font-size:14px!important;}
+
+.dream-guide-examples{margin-top:12px;border:1px solid rgba(129,140,248,.28);border-radius:9px;background:rgba(129,140,248,.055);overflow:hidden;}
+.dream-guide-examples summary{list-style:none;cursor:pointer;padding:11px 12px;font-family:'Black Ops One',sans-serif;color:#818cf8;font-size:12px;letter-spacing:1px;display:flex;align-items:center;justify-content:space-between;gap:10px;}
+.dream-guide-examples summary::-webkit-details-marker{display:none;}
+.dream-guide-examples summary::after{content:'+';color:#ffc940;font-size:16px;line-height:1;}
+.dream-guide-examples[open] summary::after{content:'-';}
+.dream-guide-example-list{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:0 10px 10px;}
+.dream-guide-example{border:1px solid rgba(255,255,255,.08);border-radius:8px;background:rgba(6,8,10,.54);padding:9px;}
+.dream-guide-example b{display:block;font-family:'Black Ops One',sans-serif;color:#ffc940;font-size:10px;letter-spacing:.8px;margin-bottom:5px;}
+.dream-guide-example span{display:block;color:#dde4f0;font-size:13px;line-height:1.25;}
+@media(max-width:700px){.dream-guide-example-list{grid-template-columns:1fr;gap:6px}.dream-guide-examples summary{font-size:10px;padding:9px 10px}.dream-guide-example span{font-size:12px}}
+
 .guide-dont-show{display:flex;align-items:center;gap:8px;margin-top:12px;color:#dde4f0;font-family:'Share Tech Mono',monospace;font-size:12px;cursor:pointer;}
 .guide-dont-show input{accent-color:#00ff87;width:16px;height:16px;}
 .dream-guide-start{font-family:'Black Ops One',sans-serif!important;letter-spacing:1px!important;}
@@ -3314,6 +3326,15 @@ body.game-mode .snipe-weight .pts-label{color:var(--rar,#fff)!important;}
       </div>
     </div>
     <div class="tip-box"><strong>KEY STRATEGY</strong><br>Sell = profit now, but another player can score your card. Hold = protect your rank and control scarce positions.</div>
+    <details class="dream-guide-examples">
+      <summary>SHOW REAL EXAMPLES</summary>
+      <div class="dream-guide-example-list">
+        <div class="dream-guide-example"><b>EXAMPLE 1: SCORE THEN SELL</b><span>You mint an Epic ST for 10 CHZ. It enters your wallet, scores for your Dream XI, then you can list it. Your score history stays saved.</span></div>
+        <div class="dream-guide-example"><b>EXAMPLE 2: HOLD TO BLOCK</b><span>You own the only strong LW on the market. If a rival needs LW to pass you, holding it can be stronger than selling cheap.</span></div>
+        <div class="dream-guide-example"><b>EXAMPLE 3: UPGRADE POSITION</b><span>You already scored a 18 PTS RB. Later you buy a 36 PTS RB. Only the stronger RB counts, so your squad gains +18 PTS.</span></div>
+        <div class="dream-guide-example"><b>EXAMPLE 4: LAST MISSING CARD</b><span>If another player is 10/11 and your card completes his squad, that card may be worth far above floor. Check demand before listing.</span></div>
+      </div>
+    </details>
     <label class="guide-dont-show"><input id="dontShowDreamXiGuide" type="checkbox"> Don&apos;t show again</label>
     <button class="btn-card-action upgrade dream-guide-start" onclick="toggleOnboardingModal(false, document.getElementById('dontShowDreamXiGuide')?.checked)" style="margin-top:14px; padding:12px; font-size:12px;">START PLAYING</button>
   </div>
@@ -4490,6 +4511,7 @@ async function finalizeWalletConnection(walletProvider, walletType = 'wallet') {
     console.warn('Wallet connected, but initial data sync failed:', syncError);
     showHeaderToast('Wallet connected. Data sync failed - press refresh.', true);
   }
+  maybeShowOnboarding();
   return true;
 }
 
@@ -6218,7 +6240,6 @@ function initDesktopLayoutResizer() {
 }
 window.addEventListener('load', async () => {
   initDesktopLayoutResizer();
-  maybeShowOnboarding();
   const walletProvider = getWalletProvider();
   if(walletProvider){
     try{
