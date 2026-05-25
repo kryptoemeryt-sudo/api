@@ -1001,6 +1001,18 @@ button.stat.mint-stat,
   .market-trade .market-price{margin:0!important;padding:0!important;line-height:1!important;}
   .market-trade .slot-action{margin:0!important;min-height:19px!important;}
 }
+
+/* Final market no-bottom-gap and feed price column */
+.market-card.slot{min-height:auto!important;height:auto!important;padding-bottom:4px!important;}
+.market-trade{align-self:stretch!important;}
+.market-trade .slot-action{margin-bottom:0!important;}
+.feed-row{grid-template-columns:42px minmax(0,1fr) auto auto!important;}
+.feed-price{font-family:'Black Ops One',sans-serif;color:#ffc940;font-size:11px;white-space:nowrap;text-align:right;}
+@media(max-width:900px){
+  .market-card.slot{min-height:auto!important;height:auto!important;padding-bottom:3px!important;}
+  .feed-row{grid-template-columns:30px minmax(0,1fr) auto auto!important;gap:5px!important;}
+  .feed-price{font-size:7px!important;}
+}
 </style>
 </head>
 <body>
@@ -1207,8 +1219,41 @@ function rarityName(r){return ["Common","Rare","Epic","Legendary"][r] || "Common
 function rarityShort(r){return ["COM","RAR","EPI","LEG"][Number(r)] || "COM";}
 function posLabel(id){return POSITIONS.find(p => p.id === Number(id))?.label || String(id);}
 function readableError(error) {
-  const msg = error?.shortMessage || error?.reason || error?.message || String(error || "Unknown error");
+  const parts = [];
+  const push = v => { if (v !== undefined && v !== null && String(v).trim()) parts.push(String(v)); };
+  push(error?.shortMessage);
+  push(error?.reason);
+  push(error?.message);
+  push(error?.data?.message);
+  push(error?.error?.message);
+  push(error?.info?.error?.message);
+  push(error?.cause?.message);
+  try {
+    const json = JSON.stringify(error, (key, value) => typeof value === "bigint" ? value.toString() : value);
+    if (json && json !== "{}") parts.push(json);
+  } catch(e) {}
+  const msg = parts.length ? parts.join(" | ") : String(error || "Unknown error");
   return msg.replace(/\s+/g, " ").trim();
+}
+function isInsufficientFundsError(error) {
+  const text = readableError(error).toLowerCase();
+  return text.includes("insufficient funds")
+    || text.includes("exceeds balance")
+    || text.includes("insufficient balance")
+    || text.includes("not enough funds")
+    || text.includes("not enough chz")
+    || text.includes("balance too low")
+    || text.includes("lack of funds")
+    || text.includes("gas required exceeds allowance")
+    || text.includes("gas fee exceeds")
+    || text.includes("cannot afford");
+}
+function transactionFailMessage(action, error, amountText = "") {
+  if (isInsufficientFundsError(error)) {
+    const amount = amountText ? ` Required: ${amountText} + gas.` : " You need CHZ for gas.";
+    return `${action} failed: not enough CHZ in your wallet.${amount}`;
+  }
+  return `${action} failed. Check balance, network, and wallet confirmation.`;
 }
 function isMissingPrivySession(error) {
   const text = readableError(error).toLowerCase();
@@ -1567,7 +1612,7 @@ async function directMint() {
     await loadQuest(true, true);
   } catch(e) {
     console.error(e);
-    alert("Mint failed. Check CHZ balance, network, and wallet confirmation.");
+    alert(transactionFailMessage("Mint", e, `${ethers.formatEther(currentMintPrice)} CHZ`));
   } finally {
     hideOverlay();
   }
@@ -1595,7 +1640,7 @@ async function buyListing(listingId, priceChz) {
     await loadQuest(true, true);
   } catch(e) {
     console.error(e);
-    alert("Buy failed. Check balance, listing status and wallet confirmation.");
+    alert(transactionFailMessage("Buy", e, `${priceChz} CHZ`));
   } finally {
     hideOverlay();
   }
@@ -1629,7 +1674,7 @@ async function listCard(tokenId) {
     await loadQuest(true, true);
   } catch(e) {
     console.error(e);
-    alert("Listing failed. The card may already be listed or unavailable.");
+    alert(transactionFailMessage("Listing", e));
   } finally {
     hideOverlay();
   }
@@ -1649,7 +1694,7 @@ async function cancelListing(listingId) {
     await loadQuest(true, true);
   } catch(e) {
     console.error(e);
-    alert("Cancel failed. Make sure this is your listing.");
+    alert(transactionFailMessage("Cancel", e));
   } finally {
     hideOverlay();
   }
@@ -1665,7 +1710,7 @@ async function fetchEvents() {
       const data = await res.json();
       if (Array.isArray(data.mints)) {
         const mints = data.mints.map(m => ({type:"mint", owner:String(m.owner||"").toLowerCase(), tokenId:Number(m.tokenId), dna:BigInt(String(m.dna)), block:Number(m.block||0)}));
-        const sales = Array.isArray(data.sales) ? data.sales.map(s => ({type:"sale", buyer:String(s.buyer||"").toLowerCase(), tokenId:Number(s.tokenId), block:Number(s.block||0)})).filter(s => s.tokenId) : [];
+        const sales = Array.isArray(data.sales) ? data.sales.map(s => ({type:"sale", buyer:String(s.buyer||"").toLowerCase(), tokenId:Number(s.tokenId), block:Number(s.block||0), price:s.price !== undefined ? Number(s.price) : undefined})).filter(s => s.tokenId) : [];
         return {mints, sales};
       }
     }
@@ -1684,10 +1729,10 @@ async function fetchEvents() {
     const to = Math.min(from + chunk - 1, current);
     try {(await rc.queryFilter(rc.filters.FigureMinted(), from, to)).forEach(ev => mints.push({type:"mint", owner:String(ev.args.owner||"").toLowerCase(), tokenId:Number(ev.args.tokenId), dna:ev.args.dna, block:Number(ev.blockNumber||0)}));} catch(e) {}
     try {(await rmk.queryFilter(rmk.filters.Listed(), from, to)).forEach(ev => listed.push({listingId:Number(ev.args.listingId), tokenId:Number(ev.args.tokenId)}));} catch(e) {}
-    try {(await rmk.queryFilter(rmk.filters.Sold(), from, to)).forEach(ev => sold.push({listingId:Number(ev.args.listingId), buyer:String(ev.args.buyer||"").toLowerCase(), block:Number(ev.blockNumber||0)}));} catch(e) {}
+    try {(await rmk.queryFilter(rmk.filters.Sold(), from, to)).forEach(ev => sold.push({listingId:Number(ev.args.listingId), buyer:String(ev.args.buyer||"").toLowerCase(), price:parseFloat(ethers.formatEther(ev.args.price || 0n)), block:Number(ev.blockNumber||0)}));} catch(e) {}
   }
   const listingToToken = new Map(listed.map(l => [l.listingId, l.tokenId]));
-  const sales = sold.map(s => ({type:"sale", buyer:s.buyer, tokenId:listingToToken.get(s.listingId), block:s.block})).filter(s => s.tokenId);
+  const sales = sold.map(s => ({type:"sale", buyer:s.buyer, tokenId:listingToToken.get(s.listingId), price:s.price, block:s.block})).filter(s => s.tokenId);
   return {mints, sales};
 }
 
@@ -1754,7 +1799,7 @@ async function buildState() {
   });
   sales.forEach(s => {
     const card = tokenInfo.get(s.tokenId);
-    if (card && card.teamId === USA_TEAM_ID) events.push({...card, wallet:s.buyer, eventType:"buy", block:s.block});
+    if (card && card.teamId === USA_TEAM_ID) events.push({...card, wallet:s.buyer, eventType:"buy", price:s.price, block:s.block});
   });
   events.sort((a,b) => (a.block || 0) - (b.block || 0) || a.tokenId - b.tokenId);
 
@@ -1893,6 +1938,7 @@ function renderQuest(state) {
       <div class="feed-pos">${posLabel(e.position)}</div>
       <div class="feed-addr"><span class="event-type ${e.eventType}">${e.eventType.toUpperCase()}</span> ${shortAddr(e.wallet)}</div>
       <div class="feed-token">#${e.tokenId}</div>
+      <div class="feed-price">${e.price !== undefined ? String(e.price) + " CHZ" : "-"}</div>
     </div>
   `).join("") : '<div class="loading">No USA events yet.</div>';
 }
