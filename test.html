@@ -1601,6 +1601,72 @@ body.game-mode .snipe-pos.rarity-3{--rar:#ffc940;color:#ffe08a;border-color:rgba
 @media(max-width:700px){
   .layout-resizer{display:none!important;}
 }
+
+/* Home-style figure cards on Dream XI pitch */
+.pos-card{overflow:hidden;cursor:pointer;}
+body.game-mode .pos-card{
+  background:linear-gradient(180deg,rgba(15,19,24,.98),rgba(8,11,15,.96));
+  border:1px solid #1c2028;
+  border-radius:8px;
+  padding:0;
+  min-height:124px;
+  width:88px;
+  justify-content:stretch;
+  box-shadow:inset 0 0 24px rgba(0,0,0,.18);
+  backdrop-filter:none;
+}
+body.game-mode .pos-card:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(0,0,0,.38),0 0 18px rgba(0,255,135,.08);}
+body.game-mode .pos-card.r3{background:linear-gradient(160deg,rgba(255,201,64,.24),rgba(15,19,24,.97) 54%,rgba(255,201,64,.08));border-color:rgba(255,201,64,.72);box-shadow:inset 0 0 28px rgba(255,201,64,.12),0 0 16px rgba(255,201,64,.13);}
+body.game-mode .pos-card.r2{background:linear-gradient(160deg,rgba(168,85,247,.22),rgba(15,19,24,.97) 56%,rgba(168,85,247,.07));border-color:rgba(168,85,247,.55);}
+body.game-mode .pos-card.r1{background:linear-gradient(160deg,rgba(59,130,246,.2),rgba(15,19,24,.97) 56%,rgba(59,130,246,.06));border-color:rgba(59,130,246,.45);}
+body.game-mode .pos-card.owned{}
+body.game-mode .pos-card.owned::after{top:5px;right:6px;font-size:11px;z-index:5;text-shadow:0 0 8px rgba(0,255,135,.42);}
+body.game-mode .pos-card.empty{opacity:.72;background:linear-gradient(180deg,rgba(15,19,24,.76),rgba(8,11,15,.92));border-style:dashed;}
+body.game-mode .pos-fig-canvas{height:78px;background:radial-gradient(circle at 50% 85%,rgba(0,255,135,.12),transparent 42%);position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+body.game-mode .pos-fig-canvas svg{width:74px;height:74px;display:block;}
+body.game-mode .pos-fig-svg{width:100%;height:100%;display:flex;align-items:center;justify-content:center;position:relative;z-index:2;}
+body.game-mode .pos-position-chip{position:absolute;top:5px;right:6px;z-index:4;font-family:'Black Ops One',sans-serif;font-size:8px;line-height:1;color:#dde4f0;letter-spacing:.5px;text-shadow:0 2px 6px rgba(0,0,0,.7);}
+body.game-mode .pos-fig-canvas.empty{background:radial-gradient(circle at 50% 85%,rgba(116,172,223,.08),transparent 42%);}
+body.game-mode .pos-card-actions{display:grid;gap:3px;min-height:0;}
+body.game-mode .pos-card-actions:empty{display:none;}
+body.game-mode .pos-card-actions div{line-height:1.05;}
+body.game-mode .pos-fig-flag{position:absolute;top:5px;left:6px;width:24px;height:16px;object-fit:cover;border-radius:2px;box-shadow:0 0 0 1px rgba(255,255,255,.18),0 2px 8px rgba(0,0,0,.35);z-index:4;background:#111;}
+body.game-mode .pos-info{padding:6px 7px 7px;border-top:1px solid rgba(255,255,255,.035);display:grid;gap:3px;}
+body.game-mode .pos-name{font-family:'Black Ops One',sans-serif;font-size:10px;color:#dde4f0;letter-spacing:.7px;line-height:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:left;}
+body.game-mode .pos-row{display:flex;align-items:center;justify-content:space-between;gap:4px;min-width:0;}
+body.game-mode .pos-weight{font-family:'Black Ops One',sans-serif;font-size:13px;color:#00ff87;line-height:1;white-space:nowrap;}
+body.game-mode .pos-weight span{font-size:8px;color:#6f7f92;}
+body.game-mode .pos-weight.gold{color:#ffc940;}
+body.game-mode .pos-weight.empty{color:#4b5563;font-size:13px;}
+body.game-mode .pos-rarity{display:inline-block;padding:2px 5px;border-radius:4px;font-size:7px!important;font-weight:700;letter-spacing:.7px;white-space:nowrap;font-family:'Black Ops One',sans-serif;line-height:1;}
+body.game-mode .pos-rarity.rb0{background:rgba(107,114,128,.25);color:#cbd5e1!important;border:1px solid rgba(107,114,128,.35);}
+body.game-mode .pos-rarity.rb1{background:rgba(59,130,246,.2);color:#60a5fa!important;border:1px solid rgba(59,130,246,.4);}
+body.game-mode .pos-rarity.rb2{background:rgba(168,85,247,.2);color:#c084fc!important;border:1px solid rgba(168,85,247,.4);}
+body.game-mode .pos-rarity.rb3{background:rgba(255,201,64,.2);color:#fbbf24!important;border:1px solid rgba(255,201,64,.5);box-shadow:0 0 8px rgba(255,201,64,.2);}
+body.game-mode .pos-ball{font-size:22px;margin:0;opacity:.28;}
+body.game-mode .pos-card .btn-card-action{font-size:6px;padding:3px 2px;margin-top:2px;border-radius:4px;}
+@media(min-width:701px){
+  body.game-mode .pos-card .btn-card-action{display:none;}
+  body.game-mode .pos-card:hover .btn-card-action{display:block;}
+  body.game-mode .formation{min-height:560px;}
+}
+@media(max-width:700px){
+  body.game-mode .pos-card{width:54px;min-height:78px;border-radius:6px;}
+  body.game-mode .pos-fig-canvas{height:48px;}
+  body.game-mode .pos-fig-canvas svg{width:45px;height:45px;}
+  body.game-mode .pos-fig-flag{width:17px;height:12px;top:3px;left:3px;}
+  body.game-mode .pos-info{padding:4px 3px;gap:2px;}
+  body.game-mode .pos-name{font-size:6px;text-align:center;letter-spacing:.2px;}
+  body.game-mode .pos-weight{font-size:9px;}
+  body.game-mode .pos-weight span{font-size:6px;}
+  body.game-mode .pos-rarity{font-size:5px!important;padding:1px 3px;letter-spacing:.2px;}
+  body.game-mode .pos-card .btn-card-action{display:none;}
+  body.game-mode .pos-card.owned::after{top:2px;right:3px;font-size:8px;}
+  body.game-mode .pos-card{min-height:94px;}
+  body.game-mode .pos-card .btn-card-action{display:block;font-size:4.7px!important;padding:1px!important;margin-top:1px!important;border-radius:3px;line-height:1.05;}
+  body.game-mode .pos-card-actions{gap:1px;}
+  body.game-mode .pos-position-chip{top:3px;right:3px;font-size:5px;}
+}
 /* Network waiting overlay for blockchain actions */
 #networkOverlay{
   position:fixed;
@@ -4041,6 +4107,66 @@ function renderStats() {
   document.getElementById('myEstPayout').textContent = `${myEstPayoutVal.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})} CHZ`;
 }
 
+
+function makeDreamFigureSVG(dna, size = 80) {
+  const t = parseDNA(dna);
+  const teamObj = TEAMS[t.teamId % TEAMS.length] || ARGENTINA_TEAM_DATA;
+  const teamName = typeof teamObj === 'string' ? teamObj : teamObj.name;
+  const SHIRT = {Australia:'#FFD700',Iran:'#239F40',Iraq:'#CC0001',Japan:'#BC002D',Jordan:'#007A3D',Qatar:'#8D153A','Saudi Arabia':'#006C35','South Korea':'#CD2E3A',Uzbekistan:'#1EB53A',Algeria:'#006233','Cape Verde':'#003893','DR Congo':'#007FFF',Egypt:'#CE1126',Ghana:'#006B3F','Ivory Coast':'#F77F00',Morocco:'#C1272D',Senegal:'#00853F','South Africa':'#007749',Tunisia:'#E70013',Canada:'#FF0000',Curacao:'#002B7F',Haiti:'#00209F',Mexico:'#006847',Panama:'#DA121A',USA:'#002868',Argentina:'#74ACDF',Brazil:'#009C3B',Colombia:'#FCD116',Ecuador:'#FFD100',Paraguay:'#D52B1E',Uruguay:'#5EB6E4','New Zealand':'#00247D',Austria:'#ED2939',Belgium:'#111111',Bosnia:'#002395',Croatia:'#FF0000','Czech Rep.':'#D7141A',England:'#EEEEEE',France:'#002395',Germany:'#111111',Netherlands:'#FF6600',Norway:'#EF2B2D',Portugal:'#006600',Scotland:'#003087',Spain:'#AA151B',Sweden:'#006AA7',Switzerland:'#FF0000',Turkey:'#E30A17'};
+  const SKIN = ['#FDBCB4','#F1C27D','#E0AC69','#C68642','#8D5524','#4A2912'];
+  const RARC = ['#6b7280','#3b82f6','#a855f7','#f59e0b'];
+  const n = typeof dna === 'bigint' ? dna : BigInt(String(dna || 0));
+  const shirt = SHIRT[teamName] || '#1d4ed8';
+  const skin = SKIN[Number((n >> 18n) % 6n)] || SKIN[2];
+  const rar = RARC[t.rarity] || '#6b7280';
+  const pos = t.position || 10;
+  const isLight = ['#FFD700','#FCD116','#FFD100','#EEEEEE'].includes(shirt);
+  const numC = isLight ? '#000' : '#fff';
+  const bootC = t.hasGoldenBoots ? '#FFD700' : '#111';
+  const s = size, cx = s/2;
+  const headY=s*0.12, headW=s*0.30, headH=s*0.28;
+  const bodyY=headY+headH*0.85, bodyW=s*0.40, bodyH=s*0.28;
+  const legW=s*0.10, legH=s*0.22, legGap=s*0.04;
+  const legY=bodyY+bodyH*0.85;
+  const armW=s*0.09, armH=s*0.20, armY=bodyY+s*0.02;
+  const bootH=s*0.09, handR=s*0.06;
+  const p=[];
+  p.push('<svg viewBox="0 0 '+s+' '+s+'" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Block Kickers figure">');
+  p.push('<ellipse cx="'+cx+'" cy="'+(legY+legH+bootH+s*0.03)+'" rx="'+(bodyW*0.55)+'" ry="'+(s*0.04)+'" fill="'+rar+'" opacity="0.22"/>');
+  p.push('<rect x="'+(cx-legW-legGap)+'" y="'+legY+'" width="'+legW+'" height="'+legH+'" rx="3" fill="'+shirt+'"/>');
+  p.push('<rect x="'+(cx+legGap)+'" y="'+legY+'" width="'+legW+'" height="'+legH+'" rx="3" fill="'+shirt+'"/>');
+  const sockY=legY+legH*0.65;
+  p.push('<rect x="'+(cx-legW-legGap)+'" y="'+sockY+'" width="'+legW+'" height="'+(legH*0.38)+'" rx="2" fill="white"/>');
+  p.push('<rect x="'+(cx+legGap)+'" y="'+sockY+'" width="'+legW+'" height="'+(legH*0.38)+'" rx="2" fill="white"/>');
+  const bootY=legY+legH;
+  p.push('<rect x="'+(cx-legW-legGap-2)+'" y="'+bootY+'" width="'+(legW+4)+'" height="'+bootH+'" rx="3" fill="'+bootC+'"/>');
+  p.push('<rect x="'+(cx+legGap-2)+'" y="'+bootY+'" width="'+(legW+4)+'" height="'+bootH+'" rx="3" fill="'+bootC+'"/>');
+  p.push('<rect x="'+(cx-bodyW/2)+'" y="'+(bodyY+bodyH*0.78)+'" width="'+bodyW+'" height="'+(s*0.09)+'" rx="3" fill="'+shirt+'cc"/>');
+  p.push('<rect x="'+(cx-bodyW/2)+'" y="'+bodyY+'" width="'+bodyW+'" height="'+(bodyH*0.85)+'" rx="5" fill="'+shirt+'"/>');
+  p.push('<text x="'+cx+'" y="'+(bodyY+bodyH*0.55)+'" text-anchor="middle" font-family="Arial Black" font-size="'+(s*0.13)+'" font-weight="900" fill="'+numC+'" opacity="0.9">'+pos+'</text>');
+  p.push('<rect x="'+(cx-bodyW/2-armW+2)+'" y="'+armY+'" width="'+armW+'" height="'+armH+'" rx="3" fill="'+shirt+'" transform="rotate(7,'+(cx-bodyW/2)+','+armY+')"/>');
+  p.push('<rect x="'+(cx+bodyW/2-2)+'" y="'+armY+'" width="'+armW+'" height="'+armH+'" rx="3" fill="'+shirt+'" transform="rotate(-7,'+(cx+bodyW/2)+','+armY+')"/>');
+  p.push('<circle cx="'+(cx-bodyW/2-s*0.04)+'" cy="'+(armY+armH)+'" r="'+handR+'" fill="'+skin+'"/>');
+  p.push('<circle cx="'+(cx+bodyW/2+s*0.04)+'" cy="'+(armY+armH)+'" r="'+handR+'" fill="'+skin+'"/>');
+  if(t.hasGloves){p.push('<circle cx="'+(cx-bodyW/2-s*0.04)+'" cy="'+(armY+armH)+'" r="'+(handR+2)+'" fill="none" stroke="#FFD700" stroke-width="2"/>');p.push('<circle cx="'+(cx+bodyW/2+s*0.04)+'" cy="'+(armY+armH)+'" r="'+(handR+2)+'" fill="none" stroke="#FFD700" stroke-width="2"/>');}
+  p.push('<rect x="'+(cx-s*0.04)+'" y="'+(bodyY-s*0.05)+'" width="'+(s*0.08)+'" height="'+(s*0.07)+'" rx="2" fill="'+skin+'"/>');
+  p.push('<rect x="'+(cx-headW/2)+'" y="'+headY+'" width="'+headW+'" height="'+headH+'" rx="6" fill="'+skin+'"/>');
+  p.push('<rect x="'+(cx-headW/2-s*0.03)+'" y="'+(headY+headH*0.25)+'" width="'+(s*0.04)+'" height="'+(s*0.08)+'" rx="2" fill="'+skin+'"/>');
+  p.push('<rect x="'+(cx+headW/2-s*0.01)+'" y="'+(headY+headH*0.25)+'" width="'+(s*0.04)+'" height="'+(s*0.08)+'" rx="2" fill="'+skin+'"/>');
+  if(t.hasEarring){p.push('<circle cx="'+(cx-headW/2-1)+'" cy="'+(headY+headH*0.38)+'" r="'+(s*0.025)+'" fill="#FFD700"/>');}
+  const eyeY=headY+headH*0.32, eyeW=s*0.07, eyeH=s*0.05;
+  p.push('<rect x="'+(cx-headW*0.36)+'" y="'+eyeY+'" width="'+eyeW+'" height="'+eyeH+'" rx="2" fill="white"/>');
+  p.push('<rect x="'+(cx+headW*0.08)+'" y="'+eyeY+'" width="'+eyeW+'" height="'+eyeH+'" rx="2" fill="white"/>');
+  const hair = Number((n >> 16n) % 4n);
+  if(hair===0)p.push('<rect x="'+(cx-headW/2)+'" y="'+(headY-2)+'" width="'+headW+'" height="'+(s*0.08)+'" rx="4" fill="#5b3418"/>');
+  else if(hair===1)p.push('<rect x="'+(cx-headW/2)+'" y="'+(headY-3)+'" width="'+headW+'" height="'+(s*0.10)+'" rx="5" fill="#111"/>');
+  else if(hair===2)p.push('<rect x="'+(cx-headW/2)+'" y="'+(headY-3)+'" width="'+headW+'" height="'+(s*0.09)+'" rx="5" fill="#d6a85f"/>');
+  else p.push('<path d="M'+(cx-headW/2)+' '+(headY+s*0.04)+' Q'+cx+' '+(headY-s*0.07)+' '+(cx+headW/2)+' '+(headY+s*0.04)+'" fill="#3b2414"/>');
+  if(t.hasTattoo){p.push('<rect x="'+(cx+bodyW/2+s*0.015)+'" y="'+(armY+s*0.04)+'" width="'+(s*0.025)+'" height="'+(s*0.08)+'" rx="1" fill="#111" opacity="0.55"/>');}
+  if(t.hasBand){p.push('<rect x="'+(cx-bodyW/2)+'" y="'+(bodyY+s*0.05)+'" width="'+bodyW+'" height="'+(s*0.035)+'" fill="#fff" opacity="0.35"/>');}
+  p.push('</svg>');
+  return p.join('');
+}
 function renderPitch() {
   const grid = document.getElementById('pitchFormationGrid');
   grid.innerHTML = '';
@@ -4077,8 +4203,9 @@ function renderPitch() {
       const floor = marketFloorByPos[pos];
 
       if (scored) {
-        const rarColor = ['#7a8899','#3b82f6','#c084fc','#ffc940'][scored.rarity];
-        card.className = 'pos-card owned';
+        const rarityName = ['Common','Rare','Epic','Legendary'][scored.rarity] || 'Common';
+        const rarityShort = ['COM','RAR','EPI','LEG'][scored.rarity] || 'COM';
+        card.className = `pos-card owned r${scored.rarity}`;
         
         let actionHtml = '';
         if (mkt && mkt.weight > scored.weight) {
@@ -4100,16 +4227,21 @@ function renderPitch() {
         const listingMark = activeListingIdForMeta !== undefined ? '<div style="margin-top:4px;font-size:8px;color:#ef4444;font-family:Share Tech Mono,monospace;">LISTED</div>' : '';
 
         card.innerHTML = `
-          <div>
-            <div class="pos-name">${POSITION_SHORT[pos]}</div>
-            <span class="pos-ball">&#9917;</span>
+          <div class="pos-fig-canvas">
+            <img class="pos-fig-flag" src="https://flagcdn.com/w40/${ARGENTINA_TEAM_DATA.code}.png" alt="Argentina" loading="lazy">
+            <div class="pos-position-chip">${POSITION_SHORT[pos]}</div>
+            <div class="pos-fig-svg">${makeDreamFigureSVG(scored.dna, 92)}</div>
           </div>
-          <div>
-            <div class="pos-weight ${scored.rarity === 3 ? 'gold' : ''}">${scored.weight}</div>
-            <div class="pos-rarity" style="color:${rarColor}">${['Common','Rare','Epic','Legendary'][scored.rarity]}</div>
-            ${actionHtml}
-            ${sellBtnHtml}
-            ${listingMark}
+          <div class="pos-info">
+            <div class="pos-row">
+              <div class="pos-weight ${scored.rarity === 3 ? 'gold' : ''}">&#9889; ${scored.weight}<span>/100</span></div>
+              <div class="pos-rarity rb${scored.rarity}" title="${rarityName}">${rarityShort}</div>
+            </div>
+            <div class="pos-card-actions">
+              ${actionHtml}
+              ${sellBtnHtml}
+              ${listingMark}
+            </div>
           </div>
         `;
       } else {
@@ -4120,14 +4252,16 @@ function renderPitch() {
         }
 
         card.innerHTML = `
-          <div>
-            <div class="pos-name" style="color:#5a6a7a;">${POSITION_SHORT[pos]}</div>
-            <span class="pos-ball" style="opacity:0.35;">&#9917;</span>
+          <div class="pos-fig-canvas empty">
+            <div class="pos-position-chip">${POSITION_SHORT[pos]}</div>
+            <span class="pos-ball">&#9917;</span>
           </div>
-          <div>
-            <div class="pos-weight empty">-</div>
-            <div class="pos-rarity" style="color:#5a6a7a;">EMPTY SLOT</div>
-            ${actionHtml}
+          <div class="pos-info">
+            <div class="pos-row">
+              <div class="pos-weight empty">-</div>
+              <div class="pos-rarity rb0">OPEN</div>
+            </div>
+            <div class="pos-card-actions">${actionHtml}</div>
           </div>
         `;
       }
