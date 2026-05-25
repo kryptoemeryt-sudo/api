@@ -2494,7 +2494,6 @@ body{padding-top:55px!important;}
     font-weight:700!important;
     display:block!important;
   }
-  body.game-mode #btnDeskPitch::before{content:'âš˝'!important;}
   body.game-mode #btnDeskSnipe::before{content:'â—‰'!important;}
   body.game-mode #btnDeskPortfolio::before{content:'â–˛'!important;}
   body.game-mode #btnDeskFeed::before{content:'âšˇ'!important;}
@@ -2872,6 +2871,38 @@ body.game-mode .snipe-weight .pts-label{color:var(--rar,#fff)!important;}
 .network-wait-card{width:min(92vw,420px)!important;}
 .network-step{font-size:clamp(10px,2.5vw,12px)!important;letter-spacing:.8px!important;}
 @media(max-width:700px){.network-wait-card{width:min(92vw,360px)!important;}.network-step{font-size:10px!important;}}
+
+/* Mobile tab soccer ball drawn in CSS only: no glyphs, no emoji */
+@media(max-width:700px){
+  body.game-mode #btnDeskPitch::before{
+    content:''!important;
+    display:inline-block!important;
+    width:20px!important;
+    height:20px!important;
+    flex:0 0 20px!important;
+    border-radius:50%!important;
+    border:2px solid #06080a!important;
+    mask:none!important;
+    -webkit-mask:none!important;
+    background-image:
+      radial-gradient(circle at 50% 50%, #06080a 0 17%, transparent 18%),
+      radial-gradient(circle at 50% 17%, #06080a 0 7%, transparent 8%),
+      radial-gradient(circle at 82% 43%, #06080a 0 7%, transparent 8%),
+      radial-gradient(circle at 68% 82%, #06080a 0 7%, transparent 8%),
+      radial-gradient(circle at 32% 82%, #06080a 0 7%, transparent 8%),
+      radial-gradient(circle at 18% 43%, #06080a 0 7%, transparent 8%),
+      radial-gradient(circle, #f8fafc 0 64%, #cbd5e1 65% 100%)!important;
+    background-color:#f8fafc!important;
+    background-size:100% 100%!important;
+    background-position:center!important;
+    background-repeat:no-repeat!important;
+    box-shadow:0 0 0 1px rgba(255,255,255,.12),0 0 8px rgba(0,255,135,.10)!important;
+  }
+  body.game-mode #btnDeskPitch.active::before{
+    border-color:#00ff87!important;
+    box-shadow:0 0 0 1px rgba(0,255,135,.6),0 0 10px rgba(0,255,135,.28)!important;
+  }
+}
 </style>
 </head>
 <body>
