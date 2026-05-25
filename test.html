@@ -2686,7 +2686,56 @@ body{padding-top:55px!important;}
 .mobile-pitch-action-title{font-family:'Black Ops One',sans-serif;color:#00ff87;font-size:13px;letter-spacing:1px;margin-bottom:12px;text-align:center;}
 .mobile-pitch-action-body{display:grid;gap:8px;}
 .mobile-pitch-action-body .btn-card-action{display:block!important;font-size:11px!important;padding:11px 8px!important;border-radius:8px!important;line-height:1.15!important;min-height:40px!important;}
-.mobile-pitch-action-body div{font-family:'Black Ops One',sans-serif!important;font-size:10px!important;text-align:center!important;color:#ef4444!important;}</style>
+.mobile-pitch-action-body div{font-family:'Black Ops One',sans-serif!important;font-size:10px!important;text-align:center!important;color:#ef4444!important;}
+/* Final polish: clean icons, home-style sell modal, desktop pitch fit */
+.score-bolt{color:#fff!important;text-shadow:none!important;filter:none!important;}
+body.game-mode .pos-weight.gold .score-bolt{color:#fff!important;}
+@media(max-width:700px){
+  body.game-mode #btnDeskPitch::before{
+    filter:none!important;
+    box-shadow:none!important;
+    border:0!important;
+    background-color:transparent!important;
+    mask:none!important;
+    -webkit-mask:none!important;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='28' fill='%23f8fafc'/%3E%3Cpath d='M32 15l11 8-4 13H25l-4-13zM11 31l10-8 4 13-9 9M53 31l-10-8-4 13 9 9M24 55l1-19h14l1 19' fill='%2306080a'/%3E%3Cpath d='M32 4a28 28 0 1028 28A28 28 0 0032 4zm0 4a24 24 0 11-24 24A24 24 0 0132 8z' fill='%2306080a'/%3E%3C/svg%3E")!important;
+    background-size:contain!important;
+    background-position:center!important;
+    background-repeat:no-repeat!important;
+  }
+}
+#sellModal{z-index:6400!important;background:rgba(6,8,10,.86)!important;backdrop-filter:blur(8px)!important;padding:16px!important;align-items:center!important;justify-content:center!important;}
+.sell-panel{background:linear-gradient(180deg,#111820,#070b10);border:1px solid rgba(0,255,135,.32);border-radius:14px;max-width:430px;width:100%;padding:18px;position:relative;box-shadow:0 22px 80px rgba(0,0,0,.62),0 0 28px rgba(0,255,135,.10);}
+.sell-close{position:absolute;top:12px;right:12px;width:34px;height:34px;border-radius:8px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.05);color:#dde4f0;font-size:20px;cursor:pointer;line-height:1;}
+.sell-title{font-family:'Black Ops One',sans-serif;font-size:20px;color:#00ff87;letter-spacing:1px;margin:0 42px 12px 0;text-transform:uppercase;}
+.sell-card-preview{background:linear-gradient(180deg,rgba(0,255,135,.10),rgba(15,19,24,.96));border:1px solid rgba(0,255,135,.30);border-radius:10px;padding:12px;margin-bottom:14px;box-shadow:inset 0 0 18px rgba(0,255,135,.08);}
+.sell-card-info{font-family:'Share Tech Mono',monospace;font-size:12px;color:#c9d7e8;line-height:1.55;display:grid;gap:3px;}
+.sell-card-info strong{font-family:'Black Ops One',sans-serif;color:#fff;font-size:10px;letter-spacing:.6px;}
+.sell-price-box{background:rgba(6,8,10,.78);border:1px solid rgba(255,201,64,.30);border-radius:10px;padding:12px;margin-bottom:14px;}
+.sell-price-label{display:block;font-family:'Black Ops One',sans-serif;font-size:12px;letter-spacing:1px;color:#ffc940;margin-bottom:8px;text-transform:uppercase;}
+.sell-stepper{display:grid;grid-template-columns:46px 1fr 46px;gap:8px;align-items:center;}
+.sell-step-btn{height:44px;border-radius:8px;border:1px solid rgba(0,255,135,.35);background:rgba(0,255,135,.10);color:#00ff87;font-family:'Black Ops One',sans-serif;font-size:20px;cursor:pointer;touch-action:none;}
+.sell-step-btn:active,.sell-step-btn:hover{background:#00ff87;color:#000;}
+.sell-price-input{width:100%;height:44px;background:#06080a;border:1px solid #1c2028;border-radius:8px;color:#dde4f0;font-family:'Black Ops One',sans-serif;font-size:18px;text-align:center;}
+.sell-submit{padding:13px!important;font-size:12px!important;border-radius:8px!important;width:100%;}
+@media(min-width:701px){
+  body.game-mode #statsRow{grid-template-columns:minmax(76px,.55fr) minmax(120px,.8fr) minmax(120px,.8fr) minmax(180px,1.15fr)!important;}
+  body.game-mode .pitch-wrap{overflow:hidden!important;padding:18px 16px!important;}
+  body.game-mode .formation{min-height:0!important;height:100%!important;gap:clamp(8px,1.45vh,16px)!important;justify-content:center!important;}
+  body.game-mode .form-row{gap:clamp(10px,1.2vw,18px)!important;}
+  body.game-mode .form-row.row-wings{padding:0 20%!important;}
+  body.game-mode .form-row.row-mid{padding:0 12%!important;}
+  body.game-mode .form-row.row-defense{padding:0 6%!important;}
+  body.game-mode .pos-card{width:clamp(92px,6.6vw,112px)!important;min-height:clamp(132px,17vh,158px)!important;}
+  body.game-mode .pos-fig-canvas{height:clamp(84px,11.5vh,104px)!important;}
+  body.game-mode .pos-fig-canvas svg{width:clamp(80px,10.5vh,100px)!important;height:clamp(80px,10.5vh,100px)!important;}
+  body.game-mode .pos-rarity{font-size:6px!important;padding:2px 4px!important;letter-spacing:.35px!important;}
+}
+@media(max-width:700px){
+  .sell-panel{max-width:360px;padding:16px;}
+  .sell-title{font-size:18px;}
+  .sell-submit{font-size:11px!important;}
+}</style>
 </head>
 <body>
 
@@ -2814,11 +2863,11 @@ body{padding-top:55px!important;}
   <!-- STATYSTYKI DRUĹ»YNY GRACZA -->
   <div class="stats-container" id="statsRow" style="display:none;">
     <div class="stat-card stat-info-card">
-      <div class="stat-val highlight" id="myCompCount">0 / 11</div>
-      <div class="stat-lbl">POSITIONS</div>
+      <div class="stat-val" id="myGlobalRank" style="color:#818cf8;">-</div>
+      <div class="stat-lbl">RANK</div>
       <div class="stat-mini-grid">
-        <span>PLAYERS</span><b id="topPlayersInfo">0</b>
-        <span>PAID</span><b id="topPaidInfo">1</b>
+        <span>CURRENT PRIZE</span><b id="topRankPrize">0 CHZ</b>
+        <span>PAID RANKS</span><b id="topPaidInfoRank">1</b>
       </div>
     </div>
     <div class="stat-card stat-info-card">
@@ -2830,11 +2879,11 @@ body{padding-top:55px!important;}
       </div>
     </div>
     <div class="stat-card stat-info-card">
-      <div class="stat-val" id="myGlobalRank" style="color:#818cf8;">-</div>
-      <div class="stat-lbl">RANK</div>
+      <div class="stat-val highlight" id="myCompCount">0 / 11</div>
+      <div class="stat-lbl">POSITIONS</div>
       <div class="stat-mini-grid">
-        <span>CURRENT PRIZE</span><b id="topRankPrize">0 CHZ</b>
-        <span>PAID RANKS</span><b id="topPaidInfoRank">1</b>
+        <span>PLAYERS</span><b id="topPlayersInfo">0</b>
+        <span>PAID</span><b id="topPaidInfo">1</b>
       </div>
     </div>
     <div class="stat-card quest-link-card">
@@ -3060,18 +3109,24 @@ body{padding-top:55px!important;}
 </div>
 
 <!-- MODAL: WYSTAWIENIE OFERTY NA RYNKU -->
-<div id="sellModal" class="modal-overlay">
-  <div class="modal-content" style="max-width:400px;">
-    <button onclick="toggleSellModal(false)" class="modal-close">&times;</button>
-    <h2 style="font-family:'Black Ops One',sans-serif; font-size:20px; color:#ef4444; margin-bottom:12px;">List Card on Marketplace</h2>
-    <div id="sellCardInfo" style="margin-bottom:16px; font-size:14px; color:#dde4f0; line-height:1.5; display: flex; flex-direction: column; align-items: flex-start; gap: 4px;">
-      <!-- Dynamiczne info karty -->
+<div id="sellModal" class="modal-overlay sell-modal-shell">
+  <div class="sell-panel">
+    <button onclick="toggleSellModal(false)" class="sell-close">&times;</button>
+    <h2 class="sell-title">SELL PLAYER CARD</h2>
+    <div class="sell-card-preview">
+      <div id="sellCardInfo" class="sell-card-info">
+        <!-- Dynamiczne info karty -->
+      </div>
     </div>
-    <div style="margin-bottom:20px;">
-      <label style="display:block; font-size:11px; letter-spacing:1px; color:#5a6a7a; margin-bottom:6px; text-transform:uppercase;">Listing Price (CHZ)</label>
-      <input type="number" id="sellPriceInput" step="0.1" min="0.1" placeholder="10.0" style="width:100%; background:#06080a; border:1px solid #1c2028; padding:10px; border-radius:6px; color:#dde4f0; font-family:'Share Tech Mono',monospace; font-size:16px;">
+    <div class="sell-price-box">
+      <label class="sell-price-label">LISTING PRICE (CHZ)</label>
+      <div class="sell-stepper">
+        <button type="button" class="sell-step-btn" data-step="-1">-</button>
+        <input type="number" id="sellPriceInput" class="sell-price-input" step="1" min="1" placeholder="40">
+        <button type="button" class="sell-step-btn" data-step="1">+</button>
+      </div>
     </div>
-    <button class="btn-card-action upgrade" id="btnSubmitSell" onclick="submitSellCard()" style="padding:10px; font-size:11px; text-transform:uppercase;">Confirm & List Card</button>
+    <button class="btn-card-action upgrade sell-submit" id="btnSubmitSell" onclick="submitSellCard()">LIST CARD FOR SALE</button>
   </div>
 </div>
 
@@ -3927,6 +3982,7 @@ function setRulesLanguage(lang) {
 function toggleSellModal(show) {
   const modal = document.getElementById('sellModal');
   modal.style.display = show ? 'flex' : 'none';
+  if (show) initSellStepper();
 }
 
 function toggleMintSuccessModal(show) {
@@ -4003,17 +4059,52 @@ function switchDeskTab(tab) {
   if (infoTab) infoTab.style.display = tab === 'info' ? 'flex' : 'none';
 }
 
+let sellStepperReady = false;
+let sellStepTimer = null;
+let sellStepDelayTimer = null;
+function changeSellPrice(delta) {
+  const input = document.getElementById('sellPriceInput');
+  if (!input) return;
+  const current = Math.max(1, Math.round(parseFloat(input.value || '1') || 1));
+  input.value = Math.max(1, current + delta);
+}
+function stopSellStepHold() {
+  clearTimeout(sellStepDelayTimer);
+  clearInterval(sellStepTimer);
+  sellStepDelayTimer = null;
+  sellStepTimer = null;
+}
+function initSellStepper() {
+  if (sellStepperReady) return;
+  sellStepperReady = true;
+  document.querySelectorAll('.sell-step-btn').forEach(btn => {
+    const delta = Number(btn.dataset.step || 0);
+    const start = (event) => {
+      event.preventDefault();
+      changeSellPrice(delta);
+      stopSellStepHold();
+      sellStepDelayTimer = setTimeout(() => {
+        sellStepTimer = setInterval(() => changeSellPrice(delta), 85);
+      }, 380);
+    };
+    btn.addEventListener('pointerdown', start);
+    btn.addEventListener('pointerup', stopSellStepHold);
+    btn.addEventListener('pointerleave', stopSellStepHold);
+    btn.addEventListener('pointercancel', stopSellStepHold);
+  });
+}
 function openSellModal(tokenId, pos, weight, rarity) {
+  if (typeof closeMobilePitchCardActions === 'function') closeMobilePitchCardActions();
   activeSellTokenId = tokenId;
   const posName = POSITION_SHORT[pos] || pos;
   const rarityName = ['Common','Rare','Epic','Legendary'][rarity];
   
   document.getElementById('sellCardInfo').innerHTML = `
-    <strong>National Team:</strong> ${getFlagHtml()} Argentina<br>
-    <strong>Tactical Position:</strong> ${posName}<br>
-    <strong>Rarity Class:</strong> ${rarityName}<br>
-    <strong>Card Weight:</strong> ${weight} pts<br>
-    <strong>Token ID:</strong> #${tokenId}
+    <span><strong>Team:</strong> ${getFlagHtml()} Argentina</span>
+    <span><strong>Position:</strong> ${posName}</span>
+    <span><strong>Rarity:</strong> ${rarityName}</span>
+    <span><strong>Score:</strong> ${weight} PTS</span>
+    <span><strong>Token ID:</strong> #${tokenId}</span>
   `;
   document.getElementById('sellPriceInput').value = "40";
   toggleSellModal(true);
@@ -5241,12 +5332,9 @@ FORMATION.forEach(row => {
         card.className = `pos-card owned r${scored.rarity}`;
         
         let actionHtml = '';
-        if (mkt) {
-          const buyLabel = mkt.weight > scored.weight
-            ? `UPGRADE +${mkt.weight - scored.weight}<br>${mkt.weight} PTS / ${mkt.price} CHZ`
-            : `BUY MARKET CARD<br>${mkt.weight} PTS / ${mkt.price} CHZ`;
-          const buyClass = mkt.weight > scored.weight ? 'btn-card-action upgrade' : 'btn-card-action';
-          actionHtml = `<button onclick="buyFromMarket(${mkt.listingId}, '${mkt.price}', '${mkt.priceWei}')" class="${buyClass}">${buyLabel}</button>`;
+        if (mkt && mkt.weight > scored.weight) {
+          const buyLabel = `UPGRADE +${mkt.weight - scored.weight}<br>${mkt.weight} PTS / ${mkt.price} CHZ`;
+          actionHtml = `<button onclick="buyFromMarket(${mkt.listingId}, '${mkt.price}', '${mkt.priceWei}')" class="btn-card-action upgrade">${buyLabel}</button>`;
         }
 
         let sellBtnHtml = '';
@@ -5272,7 +5360,7 @@ FORMATION.forEach(row => {
           </div>
           <div class="pos-info">
             <div class="pos-row">
-              <div class="pos-weight ${scored.rarity === 3 ? 'gold' : ''}">&#9889; ${scored.weight}</div>
+              <div class="pos-weight ${scored.rarity === 3 ? 'gold' : ''}"><span class="score-bolt">&#9889;</span> ${scored.weight}</div>
               <div class="pos-rarity rb${scored.rarity}" title="${rarityName}">${rarityShort}</div>
             </div>
             <div class="pos-card-actions">
