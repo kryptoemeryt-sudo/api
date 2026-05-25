@@ -618,6 +618,26 @@ button.stat.mint-stat,
   button.stat.mint-stat,
   .mint-stat{font-size:clamp(17px,6vw,26px)!important;}
 }
+
+/* MINT same size as Players number */
+.stats button.mint-stat .stat-value,
+button.stat.mint-stat .stat-value,
+.mint-stat .stat-value{
+  font-size:clamp(22px,3vw,36px)!important;
+  line-height:1!important;
+  letter-spacing:0!important;
+}
+.stats button.mint-stat,
+button.stat.mint-stat,
+.mint-stat{font-size:clamp(22px,3vw,36px)!important;}
+@media(max-width:900px){
+  .stats button.mint-stat .stat-value,
+  button.stat.mint-stat .stat-value,
+  .mint-stat .stat-value,
+  .stats button.mint-stat,
+  button.stat.mint-stat,
+  .mint-stat{font-size:17px!important;}
+}
 </style>
 </head>
 <body>
