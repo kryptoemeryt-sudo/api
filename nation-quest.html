@@ -104,6 +104,9 @@ a{text-decoration:none;color:inherit}
 .modal-panel{width:min(92vw,520px);background:linear-gradient(180deg,rgba(15,19,24,.98),rgba(6,8,10,.96));border:1px solid rgba(0,255,135,.35);border-radius:12px;padding:16px;box-shadow:0 24px 80px rgba(0,0,0,.68),0 0 28px rgba(0,255,135,.08)}
 .modal-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px}.modal-title{font-family:'Black Ops One',sans-serif;color:#00ff87;font-size:16px;letter-spacing:1px}.modal-close{border:1px solid #1c2028;background:#0f1318;color:#dde4f0;border-radius:7px;width:32px;height:32px;cursor:pointer;font-size:20px}
 .sell-list{display:grid;gap:8px;max-height:330px;overflow:auto}.sell-row{display:grid;grid-template-columns:52px 1fr 80px;gap:8px;align-items:center;border:1px solid #1c2028;background:#0f1318;border-radius:8px;padding:8px}.sell-input{width:100%;background:#06080a;border:1px solid #1c2028;border-radius:7px;color:#dde4f0;font-family:'Black Ops One',sans-serif;padding:8px;text-align:center}
+.mint-result-panel{max-width:470px!important;text-align:center;border-color:rgba(0,255,135,.46)!important;background:linear-gradient(180deg,rgba(8,18,35,.98),rgba(6,8,10,.97))!important;box-shadow:0 24px 80px rgba(0,0,0,.68),0 0 34px rgba(0,255,135,.12)!important}
+.mint-result-body{display:grid;gap:12px}.mint-result-visual{display:grid;place-items:center;min-height:110px;border:1px solid rgba(0,255,135,.22);border-radius:10px;background:radial-gradient(circle at 50% 30%,rgba(0,255,135,.12),transparent 64%),rgba(15,19,24,.72);padding:10px}.mint-result-visual .slot-fig-canvas{height:92px!important;margin:0 auto}.mint-result-visual svg{width:86px!important;height:86px!important}.mint-result-title{font-family:'Black Ops One',sans-serif;font-size:22px;line-height:1;color:#fff;letter-spacing:1px}.mint-result-title .usa-blue{color:#3b82f6}.mint-result-title .usa-red{color:#ef4444}.mint-result-sub{font-size:15px;line-height:1.3;color:#dde4f0}.mint-result-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.mint-result-stat{border:1px solid #1c2028;background:#0f1318;border-radius:8px;padding:9px 6px}.mint-result-stat b{display:block;font-family:'Black Ops One',sans-serif;font-size:17px;line-height:1;color:#00ff87}.mint-result-stat span{display:block;margin-top:4px;font-family:'Share Tech Mono',monospace;font-size:10px;color:#fff;text-transform:uppercase}.mint-result-note{border:1px solid rgba(255,201,64,.28);background:rgba(255,201,64,.07);border-radius:9px;padding:10px;font-size:14px;line-height:1.28;color:#fff}.mint-result-primary{width:100%;border:1px solid rgba(0,255,135,.52);background:#00ff87;color:#06100b;border-radius:9px;min-height:44px;font-family:'Black Ops One',sans-serif;font-size:13px;letter-spacing:1px;cursor:pointer}.mint-result-primary:hover{filter:brightness(1.08)}
+@media(max-width:900px){.mint-result-panel{max-width:calc(100vw - 24px)!important}.mint-result-title{font-size:19px}.mint-result-sub,.mint-result-note{font-size:13px}.mint-result-grid{gap:6px}.mint-result-stat b{font-size:14px}.mint-result-stat span{font-size:8px}.mint-result-primary{font-size:12px}}
 
 /* USA Nation Quest quick guide */
 .nation-guide-panel{max-width:680px!important;background:linear-gradient(180deg,rgba(8,18,35,.98),rgba(6,8,10,.97))!important;border-color:rgba(59,130,246,.45)!important;box-shadow:0 24px 80px rgba(0,0,0,.68),0 0 34px rgba(59,130,246,.14)!important;}
@@ -1175,6 +1178,19 @@ button.stat.mint-stat,
   </div>
 </div>
 
+<div class="modal" id="mintResultModal">
+  <div class="modal-panel mint-result-panel">
+    <div class="modal-head"><div class="modal-title">CARD MINTED</div><button class="modal-close" onclick="closeMintResultModal()">&times;</button></div>
+    <div class="mint-result-body">
+      <div class="mint-result-visual" id="mintResultVisual"></div>
+      <div id="mintResultMain"></div>
+      <div class="mint-result-grid" id="mintResultStats"></div>
+      <div class="mint-result-note" id="mintResultNote"></div>
+      <button class="mint-result-primary" onclick="continueMintToSquad()">CONTINUE TO SQUAD</button>
+    </div>
+  </div>
+</div>
+
 <div class="modal" id="nationGuideModal">
   <div class="modal-panel nation-guide-panel">
     <div class="modal-head"><div class="modal-title">USA QUEST GUIDE</div><button class="modal-close" onclick="toggleNationGuide(false, false)">&times;</button></div>
@@ -1488,7 +1504,70 @@ function openWalletModal(){document.getElementById("walletModal").classList.add(
 function closeWalletModal(){document.getElementById("walletModal").classList.remove("show");}
 function closeSellModal(){document.getElementById("sellModal").classList.remove("show");}
 function closeActionModal(){document.getElementById("actionModal").classList.remove("show");}
-function isMobileActions(){return window.matchMedia && window.matchMedia("(max-width: 900px)").matches;}
+function closeMintResultModal(){document.getElementById("mintResultModal")?.classList.remove("show");}
+function continueMintToSquad(){
+  closeMintResultModal();
+  const squad = document.querySelector(".squad-panel") || document.querySelector(".my-squad-panel") || document.getElementById("mySquadGrid");
+  if (squad) squad.scrollIntoView({behavior:"smooth", block:"center", inline:"nearest"});
+}
+function parseMintedCardFromReceipt(receipt) {
+  if (!receipt || !receipt.logs) return null;
+  const iface = new ethers.Interface(ABI);
+  for (const log of receipt.logs) {
+    try {
+      const parsed = iface.parseLog(log);
+      if (parsed && parsed.name === "FigureMinted") {
+        return {
+          owner: String(parsed.args.owner).toLowerCase(),
+          tokenId: Number(parsed.args.tokenId),
+          dna: parsed.args.dna,
+          teamId: Number(parsed.args.teamId),
+          position: Number(parsed.args.position),
+          rarity: Number(parsed.args.rarity),
+          weight: Number(parsed.args.weight)
+        };
+      }
+    } catch(e) {}
+  }
+  return null;
+}
+function showMintResultModal(card) {
+  const modal = document.getElementById("mintResultModal");
+  if (!modal) return;
+  const visual = document.getElementById("mintResultVisual");
+  const main = document.getElementById("mintResultMain");
+  const stats = document.getElementById("mintResultStats");
+  const note = document.getElementById("mintResultNote");
+  if (!card) {
+    visual.innerHTML = `<div style="font-size:38px;color:#00ff87;font-family:'Black Ops One',sans-serif">OK</div>`;
+    main.innerHTML = `<div class="mint-result-title">CARD CONFIRMED</div><div class="mint-result-sub">Transaction confirmed. Quest data was refreshed from Chiliz Chain.</div>`;
+    stats.innerHTML = "";
+    note.textContent = "If the card is a USA position, it is now visible in your squad or reserves after the refresh.";
+    modal.classList.add("show");
+    return;
+  }
+  const isUsa = Number(card.teamId) === USA_TEAM_ID;
+  const position = posLabel(card.position);
+  const rarity = rarityName(card.rarity);
+  const rarityShortName = rarityShort(card.rarity);
+  const scoreColor = rarityColor(card.rarity);
+  const figure = isUsa
+    ? figureCanvas(card, false, "slot", position)
+    : `<div class="slot-fig-canvas card-fig-canvas">${makeQuestFigureSVG(card.dna, 72, false)}</div>`;
+  visual.innerHTML = figure;
+  main.innerHTML = isUsa
+    ? `<div class="mint-result-title"><span class="usa-blue">USA</span> CARD SCORED</div><div class="mint-result-sub">This card counts for the USA Quest. Your squad/rank has been refreshed.</div>`
+    : `<div class="mint-result-title">WC CARD MINTED</div><div class="mint-result-sub">Not a USA card, but it is still part of your Block Kickers collection.</div>`;
+  stats.innerHTML = `
+    <div class="mint-result-stat"><b>${position}</b><span>Position</span></div>
+    <div class="mint-result-stat"><b style="color:${scoreColor}">${card.weight}</b><span>Score</span></div>
+    <div class="mint-result-stat"><b style="color:${scoreColor}">${rarityShortName}</b><span>${rarity}</span></div>
+  `;
+  note.innerHTML = isUsa
+    ? "If this was a new USA position or a stronger card, your USA squad updates immediately. You can keep it, sell it, or use it to block a scarce position."
+    : "Nation Quest rewards are for USA positions. This mint can still matter for other quests, trading, or future album mechanics.";
+  modal.classList.add("show");
+}function isMobileActions(){return window.matchMedia && window.matchMedia("(max-width: 900px)").matches;}
 
 function toggleNationGuide(show, remember = false) {
   const modal = document.getElementById("nationGuideModal");
@@ -1711,8 +1790,10 @@ async function directMint() {
     updateOverlay("Mint sent. Waiting for block confirmation...");
     const receipt = await tx.wait();
     if (receipt && Number(receipt.status) === 0) throw new Error("Mint reverted on-chain.");
+    const mintedCard = parseMintedCardFromReceipt(receipt);
     updateOverlay("Mint confirmed. Updating quest state...");
     await loadQuest(true, true);
+    showMintResultModal(mintedCard);
   } catch(e) {
     console.error(e);
     alert(transactionFailMessage("Mint", e, `${ethers.formatEther(currentMintPrice)} CHZ`));
@@ -1721,7 +1802,8 @@ async function directMint() {
   }
 }
 
-async function requireSigner() {
+async function requireSigner
+() {
   if (!signer) await openWalletModal();
   return Boolean(signer);
 }
