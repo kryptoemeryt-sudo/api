@@ -2735,6 +2735,40 @@ body.game-mode .pos-weight.gold .score-bolt{color:#fff!important;}
   .sell-panel{max-width:360px;padding:16px;}
   .sell-title{font-size:18px;}
   .sell-submit{font-size:11px!important;}
+}
+/* Final mobile rank/feed + visible pitch buys; desktop equal stat cards */
+@media(min-width:701px){
+  body.game-mode #statsRow{grid-template-columns:repeat(3,minmax(0,1fr)) minmax(180px,1.15fr)!important;}
+  body.game-mode #statsRow .stat-info-card{min-width:0!important;}
+}
+body.game-mode .pos-card.empty.has-market{opacity:1!important;border-color:rgba(0,255,135,.45)!important;background:linear-gradient(180deg,rgba(0,255,135,.08),rgba(8,11,15,.94))!important;box-shadow:inset 0 0 16px rgba(0,255,135,.07)!important;}
+body.game-mode .pos-card.empty.has-market .pos-rarity{background:rgba(0,255,135,.16)!important;color:#00ff87!important;border-color:rgba(0,255,135,.42)!important;}
+body.game-mode .pos-card.empty.has-market .pos-card-actions{display:grid!important;}
+body.game-mode .btn-card-action.buy-market{background:rgba(0,255,135,.12)!important;border-color:rgba(0,255,135,.46)!important;color:#00ff87!important;}
+body.game-mode .btn-card-action.buy-market:hover{background:#00ff87!important;color:#000!important;}
+@media(max-width:700px){
+  body.game-mode #deskTabRanks .pitch-title #poolInfo{display:none!important;}
+  body.game-mode #deskTabRanks .pitch-title{font-size:8px!important;margin-bottom:4px!important;}
+  body.game-mode .leaderboard-list{padding:4px!important;}
+  body.game-mode .lb-row{
+    grid-template-columns:18px minmax(58px,1fr) 28px 40px 38px!important;
+    gap:3px!important;
+    min-height:26px!important;
+    padding:4px 5px!important;
+    align-items:center!important;
+  }
+  body.game-mode .lb-row > *{min-width:0!important;margin:0!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;line-height:1!important;}
+  body.game-mode .lb-pos{font-size:7px!important;text-align:left!important;width:auto!important;}
+  body.game-mode .lb-addr{font-size:6.6px!important;letter-spacing:.2px!important;}
+  body.game-mode .lb-cards{font-size:6.5px!important;text-align:center!important;color:#ffc940!important;}
+  body.game-mode .lb-prize-cell{font-size:6.3px!important;text-align:right!important;}
+  body.game-mode .lb-prize-text{font-size:6.3px!important;}
+  body.game-mode .lb-score{font-size:6.6px!important;text-align:right!important;}
+  body.game-mode .lb-you{display:none!important;}
+  body.game-mode .feed-header,.ledger-header{padding-left:2px!important;overflow:visible!important;}
+  body.game-mode .feed-title,.ledger-header{font-size:9px!important;letter-spacing:.55px!important;overflow:visible!important;text-indent:0!important;padding-left:0!important;}
+  body.game-mode .desk-tab-content{padding-left:8px!important;}
+  body.game-mode.mobile-pitch-tab .pos-card.empty.has-market .pos-card-actions{display:none!important;}
 }</style>
 </head>
 <body>
@@ -5374,7 +5408,8 @@ FORMATION.forEach(row => {
         card.className = 'pos-card empty';
         let actionHtml = '';
         if (floor) {
-          actionHtml = `<button onclick="buyFromMarket(${floor.listingId}, '${floor.price}', '${floor.priceWei}')" class="btn-card-action">BUY ${floor.weight || '-'} PTS<br>${floor.price} CHZ</button>`;
+          card.classList.add('has-market');
+          actionHtml = `<button onclick="buyFromMarket(${floor.listingId}, '${floor.price}', '${floor.priceWei}')" class="btn-card-action buy-market">BUY ${floor.weight || '-'} PTS<br>${floor.price} CHZ</button>`;
         }
 
         card.innerHTML = `
@@ -5440,8 +5475,8 @@ function renderLeaderboard(){
       <div class="lb-row ${isMe ? 'me' : ''}">
         <div class="lb-pos ${posClass}">${medal || '#' + rank}</div>
         <div class="lb-addr">${player.wallet.slice(0,6)}...${player.wallet.slice(-4)} ${isMe ? '<span class="lb-you">YOU</span>' : ''}</div>
-        <div class="lb-completion lb-cards">${player.completed}/11 CARDS</div>
-        <div class="lb-completion" style="margin-left: 12px; font-weight: 700;">${prizeDisplay}</div>
+        <div class="lb-completion lb-cards">${player.completed}/11</div>
+        <div class="lb-completion lb-prize-cell">${prizeDisplay}</div>
         <div class="lb-score">${player.score} PTS</div>
       </div>
     `;
