@@ -1239,7 +1239,11 @@ body.game-mode .pos-card.owned::after{top:-5px!important;right:-3px!important;z-
 
 
 
-/* Dream XI topbar 1:1 */
+
+
+
+/* Exact home-style top navigation */
+body{padding-top:55px!important;}
 .topnav{
   display:flex!important;
   align-items:center!important;
@@ -1252,11 +1256,10 @@ body.game-mode .pos-card.owned::after{top:-5px!important;right:-3px!important;z-
   top:0!important;
   left:0!important;
   right:0!important;
-  width:100%!important;
-  z-index:1000!important;
+  z-index:100!important;
+  height:55px!important;
   overflow:visible!important;
 }
-body{padding-top:54px!important;}
 .topnav-logo.logo,
 .logo{
   font-family:'Black Ops One',sans-serif!important;
@@ -1306,11 +1309,12 @@ body{padding-top:54px!important;}
   font-size:13px!important;
   letter-spacing:2px!important;
   color:#ffc940!important;
-  border:1px solid rgba(255,201,64,.34)!important;
-  background:rgba(255,201,64,.08)!important;
-  border-radius:8px!important;
   padding:6px 12px!important;
+  border:1px solid rgba(255,201,64,.24)!important;
+  border-radius:7px!important;
+  background:rgba(255,201,64,.045)!important;
   white-space:nowrap!important;
+  display:block!important;
   line-height:1!important;
 }
 .nav-countdown span,
@@ -1320,6 +1324,19 @@ body{padding-top:54px!important;}
 .btn-connect.connected{background:rgba(0,255,135,0.15)!important;border-color:#00ff87!important;color:#00ff87!important;}
 @media(max-width:768px){
   body{padding-top:72px!important;}
+  .topnav{height:48px!important;padding:10px 12px!important;}
+  .topnav-logo.logo,.logo{font-size:13px!important;letter-spacing:1.4px!important;}
+  .wallet-actions,.nav-right{gap:6px!important;}
+  .wallet-addr{font-size:8px!important;max-width:86px!important;overflow:hidden!important;text-overflow:ellipsis!important;}
+  .wallet-bal{font-size:9px!important;}
+  .btn-connect{font-size:9px!important;padding:7px 9px!important;}
+  .nav-countdown,.nav-price-countdown{top:48px!important;left:50%!important;transform:translateX(-50%)!important;font-size:9px!important;letter-spacing:1px!important;padding:4px 7px!important;background:rgba(5,7,10,.96)!important;}
+  .nav-countdown span,.nav-price-countdown span{display:none!important;}
+}
+
+/* Final mobile header/quest/info alignment */
+@media(max-width:700px){
+  body{padding-top:70px!important;}
   .topnav{
     height:70px!important;
     min-height:70px!important;
@@ -1329,6 +1346,7 @@ body{padding-top:54px!important;}
     align-items:center!important;
     gap:0 8px!important;
     padding:7px 10px 6px!important;
+    overflow:hidden!important;
   }
   .topnav-logo.logo,
   .topnav .logo{
@@ -1338,15 +1356,14 @@ body{padding-top:54px!important;}
     justify-self:start!important;
     font-size:13px!important;
     line-height:1!important;
-    letter-spacing:1.4px!important;
   }
+  .topnav .wallet-actions,
   .topnav .nav-right{
     grid-column:2!important;
     grid-row:1!important;
     align-self:center!important;
     justify-self:end!important;
     min-width:0!important;
-    gap:6px!important;
   }
   .nav-countdown,
   .nav-price-countdown{
@@ -1362,15 +1379,19 @@ body{padding-top:54px!important;}
     justify-content:center!important;
     gap:6px!important;
     width:auto!important;
-    max-width:calc(100vw - 20px)!important;
-    padding:4px 8px!important;
-    margin:0!important;
-    overflow:hidden!important;
-    text-overflow:ellipsis!important;
+    max-width:calc(100vw - 24px)!important;
+    margin:0 auto!important;
+    padding:4px 9px!important;
+    background:rgba(255,201,64,.08)!important;
+    border:1px solid rgba(255,201,64,.42)!important;
+    border-radius:7px!important;
+    color:#ffc940!important;
+    font-family:'Black Ops One',sans-serif!important;
+    font-size:10px!important;
+    line-height:1!important;
+    letter-spacing:1px!important;
+    white-space:nowrap!important;
   }
-  .wallet-addr{display:none!important;}
-  .wallet-bal{font-size:9px!important;max-width:76px!important;overflow:hidden!important;text-overflow:ellipsis!important;}
-  .btn-connect{font-size:9px!important;padding:7px 9px!important;}
   .nav-countdown span,
   .nav-price-countdown span,
   .nav-countdown b,
@@ -1384,8 +1405,6 @@ body{padding-top:54px!important;}
     letter-spacing:1px!important;
     font-weight:400!important;
   }
-  .nav-countdown span,
-  .nav-price-countdown span{color:#fff!important;}
 }
 </style>
 </head>
