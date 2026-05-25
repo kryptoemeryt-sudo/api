@@ -2903,6 +2903,48 @@ body.game-mode .snipe-weight .pts-label{color:var(--rar,#fff)!important;}
     box-shadow:0 0 0 1px rgba(0,255,135,.6),0 0 10px rgba(0,255,135,.28)!important;
   }
 }
+
+/* Mobile pitch tab player icon: pure CSS, replaces soccer ball */
+@media(max-width:700px){
+  body.game-mode #btnDeskPitch::before{
+    content:''!important;
+    display:inline-block!important;
+    width:20px!important;
+    height:20px!important;
+    flex:0 0 20px!important;
+    border:0!important;
+    border-radius:0!important;
+    mask:none!important;
+    -webkit-mask:none!important;
+    background-color:transparent!important;
+    background-image:
+      radial-gradient(circle at 50% 18%, #f2c078 0 16%, transparent 17%),
+      linear-gradient(#00ff87 0 0),
+      linear-gradient(#0b63d1 0 0),
+      linear-gradient(#0b63d1 0 0),
+      linear-gradient(#dde4f0 0 0),
+      linear-gradient(#dde4f0 0 0)!important;
+    background-size:
+      100% 100%,
+      12px 9px,
+      4px 7px,
+      4px 7px,
+      5px 3px,
+      5px 3px!important;
+    background-position:
+      center,
+      50% 44%,
+      39% 77%,
+      61% 77%,
+      35% 96%,
+      65% 96%!important;
+    background-repeat:no-repeat!important;
+    box-shadow:none!important;
+  }
+  body.game-mode #btnDeskPitch.active::before{
+    filter:drop-shadow(0 0 5px rgba(0,255,135,.38))!important;
+  }
+}
 </style>
 </head>
 <body>
