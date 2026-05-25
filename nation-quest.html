@@ -7,7 +7,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Barlow+Condensed:wght@400;600;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.7.0/ethers.umd.min.js"></script>
-<link rel="icon" href='data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"%3E%3Crect width="64" height="64" rx="12" fill="%2306080a"/%3E%3Ctext x="32" y="43" text-anchor="middle" font-size="38"%3E%E2%9A%BD%3C/text%3E%3C/svg%3E'>
+<link rel="icon" type="image/svg+xml" href='data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"%3E%3Crect width="64" height="64" rx="14" fill="%2306080a"/%3E%3Ctext x="32" y="47" text-anchor="middle" font-size="43"%3E%E2%9A%BD%3C/text%3E%3C/svg%3E'>
+<link rel="shortcut icon" type="image/svg+xml" href='data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"%3E%3Crect width="64" height="64" rx="14" fill="%2306080a"/%3E%3Ctext x="32" y="47" text-anchor="middle" font-size="43"%3E%E2%9A%BD%3C/text%3E%3C/svg%3E'>
+<link rel="apple-touch-icon" href='data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"%3E%3Crect width="64" height="64" rx="14" fill="%2306080a"/%3E%3Ctext x="32" y="47" text-anchor="middle" font-size="43"%3E%E2%9A%BD%3C/text%3E%3C/svg%3E'>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{width:100%;max-width:100%;min-height:100%;background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;overflow-x:hidden}
@@ -133,70 +135,941 @@ a{text-decoration:none;color:inherit}
   .stats{grid-template-columns:repeat(4,minmax(0,1fr));gap:5px}.stat{min-height:58px;padding:7px 3px}.stat-value{font-size:17px}.stat-label{font-size:7px;letter-spacing:.2px}
   .squad{gap:3px}.slot{min-height:64px;padding:5px 2px;border-radius:6px}.slot.has-actions{cursor:pointer}.slot-pos{font-size:7px}.slot-ball{font-size:11px}.slot-count{font-size:10px}.slot-status{font-size:5px}.slot-actions{display:none}.slot-action{font-size:6px;padding:3px 4px}.section-title{font-size:8px;letter-spacing:.6px}.section-title .live{font-size:7px}.callout p{font-size:13px}.feed{max-height:150px}.feed-row{grid-template-columns:34px 1fr auto;padding:6px}.feed-pos{font-size:9px}.feed-addr,.feed-token{font-size:8px}.market-section{grid-column:auto}.market-grid{max-height:180px;grid-template-columns:1fr}.market-card{grid-template-columns:36px 1fr 78px}.market-card .slot-action{width:70px}
 }
+
+/* Nation Quest refresh: home-like topbar, hidden completed global slots, Dream XI-style squad and market */
+.topnav{
+  position:sticky!important;top:0!important;z-index:100!important;height:54px!important;padding:8px 18px!important;
+  display:flex!important;align-items:center!important;justify-content:space-between!important;gap:12px!important;
+  background:rgba(6,8,10,.97)!important;border-bottom:1px solid #1c2028!important;backdrop-filter:blur(10px)!important;
+}
+.brand{font-size:15px!important;letter-spacing:2px!important;color:#dde4f0!important;white-space:nowrap!important;}
+.brand-ball{width:18px!important;height:18px!important;flex:0 0 18px!important;border-radius:50%!important;background:#f8fafc!important;position:relative!important;box-shadow:inset 0 0 0 2px #06080a!important;font-size:0!important;overflow:hidden!important;}
+.brand-ball::before{content:'';position:absolute;left:50%;top:50%;width:7px;height:7px;background:#06080a;transform:translate(-50%,-50%) rotate(45deg);clip-path:polygon(50% 0,100% 38%,82% 100%,18% 100%,0 38%);}
+.brand-ball::after{content:'';position:absolute;inset:3px;border-radius:50%;border:1px solid #06080a;opacity:.75;}
+.nav-actions{margin-left:auto!important}.btn{min-height:32px}.page{padding:10px!important;gap:10px!important;}
+.hero{grid-template-columns:1fr!important;align-items:stretch!important;}
+.stats{grid-template-columns:repeat(2,minmax(0,1fr))!important;width:calc(74.6% - 3px)!important;align-self:start!important;} .stats .stat:nth-child(n+3){display:none!important;}
+.stat-label{color:#dde4f0!important;font-family:'Black Ops One',sans-serif!important;font-size:10px!important;}
+.main-grid{grid-template-columns:minmax(0,1fr) minmax(300px,.34fr)!important;grid-auto-rows:auto!important;align-items:start!important;}
+.global-slots-panel{display:none!important;}
+.my-squad-panel{grid-column:1 / 2!important;grid-row:1!important;min-height:190px!important;}
+.market-section{grid-column:1 / 2!important;grid-row:2!important;margin-top:0!important;}
+.info-grid{grid-column:2 / 3!important;grid-row:1 / span 2!important;}
+.info-grid .callout.gold{display:block!important;}
+.cross-quest{min-height:54px!important;border-color:rgba(88,210,255,.36)!important;background:linear-gradient(135deg,rgba(88,210,255,.13),rgba(0,255,135,.045))!important;}
+.cross-title{display:flex!important;align-items:center!important;gap:8px!important;font-size:14px!important;}
+.quest-arg-flag{width:30px;height:20px;object-fit:cover;border-radius:3px;box-shadow:0 0 0 1px rgba(255,255,255,.18)}
+.status-line{display:none!important;}
+.squad{grid-template-columns:repeat(11,minmax(72px,1fr))!important;gap:8px!important;align-items:stretch!important;}
+.slot{min-height:152px!important;border-radius:8px!important;padding:7px!important;justify-content:stretch!important;gap:4px!important;background:linear-gradient(180deg,rgba(15,19,24,.96),rgba(8,11,16,.94))!important;}
+.slot.done{border-color:rgba(0,255,135,.62)!important;background:linear-gradient(180deg,rgba(0,255,135,.18),rgba(15,19,24,.95))!important;}
+.slot.open{animation:none!important;border-color:rgba(255,201,64,.58)!important;background:linear-gradient(180deg,rgba(255,201,64,.14),rgba(15,19,24,.95))!important;}
+.slot-pos{font-size:9px!important;background:rgba(6,8,10,.72);border:1px solid rgba(255,255,255,.14);border-radius:4px;padding:2px 5px;} .slot-fig-canvas .slot-pos{position:absolute!important;left:5px!important;bottom:4px!important;top:auto!important;z-index:5;}
+.slot-fig-canvas{height:76px!important;display:flex;align-items:center;justify-content:center;position:relative;background:radial-gradient(circle at 50% 86%,rgba(0,255,135,.13),transparent 44%);}
+.slot-fig-canvas svg{width:72px;height:72px;display:block;}
+.slot-fig-flag{position:absolute;top:-1px;left:-1px;width:22px;height:15px;object-fit:cover;border-radius:2px;box-shadow:0 0 0 1px rgba(255,255,255,.18),0 2px 7px rgba(0,0,0,.35)}
+.slot-info{display:grid;grid-template-columns:1fr auto;gap:4px;align-items:end;margin-top:auto;}
+.slot-count{font-size:18px!important;color:#00ff87!important;line-height:1!important;text-align:left!important;}
+.slot-count.legendary{color:#ffc940!important}.slot-count.epic{color:#c084fc!important}.slot-count.rare{color:#3b82f6!important}
+.slot-status{font-family:'Black Ops One',sans-serif!important;font-size:7px!important;color:#dde4f0!important;line-height:1!important;text-align:right!important;}
+.slot-actions{position:static!important;opacity:1!important;transform:none!important;margin-top:5px!important;width:100%!important;display:grid!important;grid-template-columns:1fr!important;gap:4px!important;}
+.slot-action{min-height:28px!important;width:100%!important;font-size:9px!important;padding:6px!important;border-radius:6px!important;}
+.slot-check{position:absolute;right:6px;top:5px;z-index:6;font-family:"Black Ops One",sans-serif;color:#00ff87;font-size:14px;line-height:1;text-shadow:0 0 10px rgba(0,255,135,.35)}.slot.empty .slot-check{display:none!important}.slot.empty .slot-actions{display:none!important;}
+.market-grid{grid-template-columns:repeat(auto-fill,minmax(112px,1fr))!important;gap:10px!important;max-height:348px!important;align-content:start!important;overflow-y:auto!important;}
+.market-card{display:flex!important;flex-direction:column!important;align-items:stretch!important;gap:0!important;min-height:188px!important;padding:0!important;border-radius:8px!important;overflow:hidden!important;background:linear-gradient(180deg,rgba(15,19,24,.98),rgba(8,11,16,.96))!important;}
+.market-card.mine{border-color:rgba(0,255,135,.68)!important;box-shadow:0 0 16px rgba(0,255,135,.15)!important;}
+.market-fig-canvas{height:86px;display:flex;align-items:center;justify-content:center;position:relative;background:radial-gradient(circle at 50% 82%,rgba(0,255,135,.12),transparent 43%);}
+.market-fig-canvas svg{width:76px;height:76px;display:block;}
+.market-fig-flag{position:absolute;top:-1px;left:-1px;width:23px;height:16px;object-fit:cover;border-radius:2px;box-shadow:0 0 0 1px rgba(255,255,255,.18),0 2px 7px rgba(0,0,0,.35)}
+.market-meta{padding:7px 8px 8px!important;display:grid;gap:4px;}
+.market-pos{position:absolute;right:5px;top:5px;width:auto!important;height:auto!important;min-width:28px!important;padding:3px 5px!important;font-size:8px!important;background:rgba(6,8,10,.70)!important;z-index:4;}
+.market-name{font-size:11px!important;color:#fff!important;}.market-sub{font-size:9px!important;color:#dde4f0!important;}.market-price{font-size:13px!important;text-align:left!important;color:#ffc940!important;}
+.market-card .slot-action{width:100%!important;min-height:28px!important;font-size:9px!important;margin-top:2px!important;}
+.network-card{width:min(92vw,420px)!important}.network-steps{display:none;margin-top:14px;text-align:left;border-top:1px solid rgba(255,255,255,.10);padding-top:12px;gap:8px}.network-steps.active{display:grid}.network-step{display:grid;grid-template-columns:18px minmax(0,1fr);align-items:center;gap:9px;font-family:'Black Ops One',sans-serif;font-size:11px;letter-spacing:.7px;color:#8fa4bb;text-transform:uppercase;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.network-step::before{content:'';width:13px;height:13px;border-radius:50%;border:1px solid rgba(143,164,187,.45);background:rgba(255,255,255,.03);justify-self:center}.network-step.active{color:#fff}.network-step.active::before{border-color:#ffc940;background:#ffc940;box-shadow:0 0 12px rgba(255,201,64,.25)}.network-step.done{color:#00ff87}.network-step.done::before{border-color:#00ff87;background:#00ff87;box-shadow:0 0 12px rgba(0,255,135,.32)}
+.network-ball{font-size:0!important;width:34px;height:34px;margin:0 auto 10px;border-radius:50%;background:#f8fafc;position:relative;animation:spin 1.1s linear infinite;box-shadow:inset 0 0 0 3px #06080a}.network-ball::before{content:''!important;position:absolute;left:50%;top:50%;width:13px;height:13px;background:#06080a;transform:translate(-50%,-50%) rotate(45deg);clip-path:polygon(50% 0,100% 38%,82% 100%,18% 100%,0 38%)}
+@media(max-width:900px){
+  .topnav{grid-template-columns:minmax(0,1fr)!important;height:auto!important;min-height:48px!important;padding:7px 8px!important}.nav-actions{grid-template-columns:32px repeat(3,minmax(0,1fr))!important;width:100%!important}.hero{grid-template-columns:1fr!important}.hero .panel.gold{display:block!important}.flag{width:42px!important;height:29px!important}.stats{grid-template-columns:repeat(2,minmax(0,1fr))!important;width:100%!important}.stats .stat:nth-child(3){display:flex!important}.stats .stat:nth-child(n+4){display:none!important}.main-grid{grid-template-columns:1fr!important}.my-squad-panel,.market-section,.info-grid{grid-column:auto!important;grid-row:auto!important}.global-slots-panel{display:none!important}.squad{grid-template-columns:repeat(11,minmax(0,1fr))!important;gap:3px!important}.slot{min-height:72px!important;padding:3px 2px!important}.slot-fig-canvas .slot-pos{font-size:5px!important;left:2px!important;right:auto!important;bottom:2px!important;top:auto!important;padding:1px 3px!important}.slot-check{right:3px!important;top:2px!important;font-size:9px!important}.slot-fig-canvas{height:38px!important}.slot-fig-canvas svg{width:36px!important;height:36px!important}.slot-fig-flag{width:12px!important;height:8px!important;top:-1px!important;left:-1px!important}.slot-count{font-size:9px!important}.slot-status{font-size:4.5px!important}.slot-actions{display:none!important}.market-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;max-height:260px!important;gap:6px!important}.market-card{min-height:142px!important}.market-fig-canvas{height:62px!important}.market-fig-canvas svg{width:56px!important;height:56px!important}.market-name{font-size:8px!important}.market-sub{font-size:7px!important}.market-price{font-size:9px!important}.market-card .slot-action{font-size:7px!important;min-height:24px!important}.info-grid{display:none!important;}
+}
+
+/* Nation Quest composition pass: home-style nav and compact PC layout */
+body{padding-top:0!important;}
+.page{padding:68px 10px 18px!important;gap:10px!important;min-height:100vh!important;background:radial-gradient(circle at 15% 0%,rgba(0,255,135,.10),transparent 28%),radial-gradient(circle at 86% 8%,rgba(255,201,64,.08),transparent 30%),#06080a!important;}
+.topnav{position:fixed!important;top:0!important;left:0!important;right:0!important;z-index:100!important;height:54px!important;min-height:54px!important;padding:12px 28px!important;border-bottom:1px solid rgba(0,255,135,.14)!important;background:rgba(5,7,10,.96)!important;backdrop-filter:blur(14px)!important;display:flex!important;align-items:center!important;justify-content:space-between!important;gap:12px!important;}
+.top-left{display:flex!important;align-items:center!important;gap:10px!important;min-width:0!important;}
+.brand{font-size:18px!important;letter-spacing:2px!important;text-shadow:0 0 18px rgba(0,255,135,.16)!important;}
+.brand-ball{width:19px!important;height:19px!important;flex:0 0 19px!important;}
+.nav-actions{display:flex!important;align-items:center!important;justify-content:flex-end!important;gap:12px!important;margin-left:auto!important;width:auto!important;min-width:0!important;}
+.pill{display:none!important;}
+.wallet-info{font-size:11px!important;padding:5px 8px!important;border-radius:6px!important;max-width:none!important;}
+.btn{min-height:32px!important;padding:8px 18px!important;border-radius:6px!important;font-size:11px!important;letter-spacing:1px!important;}
+.btn.secondary,.btn.x-link{background:rgba(255,255,255,.045)!important;border-color:rgba(255,255,255,.10)!important;color:#8da0b7!important;box-shadow:none!important;}
+.btn.secondary:hover,.btn.x-link:hover{border-color:rgba(0,255,135,.40)!important;color:#00ff87!important;background:rgba(0,255,135,.08)!important;}
+.hero{grid-template-columns:1fr!important;min-height:0!important;}
+.hero .panel{display:grid!important;grid-template-columns:minmax(260px,.52fr) minmax(360px,1fr) auto!important;align-items:center!important;gap:18px!important;min-height:132px!important;padding:18px!important;}
+.quest-kicker{margin:0!important;align-self:start!important;white-space:nowrap!important;}
+.hero-title{font-size:clamp(36px,3.7vw,58px)!important;margin:0!important;}
+.hero-copy{font-size:20px!important;max-width:720px!important;margin:0!important;}
+.mint-row{margin:0!important;display:grid!important;gap:7px!important;justify-items:end!important;align-content:center!important;}
+.mint-row .btn{min-width:230px!important;}
+.wallet-note{font-size:10px!important;max-width:240px!important;text-align:right!important;}
+.stats{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;width:calc(100% - 380px)!important;gap:10px!important;}
+.stats .stat:nth-child(n+3){display:none!important;}
+.main-grid{display:grid!important;grid-template-columns:minmax(0,1fr) 370px!important;gap:10px!important;align-items:start!important;}
+.quest-left-column{grid-column:1!important;display:grid!important;grid-template-columns:1fr!important;gap:10px!important;min-width:0!important;}
+.my-squad-panel,.market-section{grid-column:auto!important;grid-row:auto!important;margin:0!important;width:100%!important;}
+.info-grid{grid-column:2!important;grid-row:1!important;display:grid!important;gap:10px!important;align-content:start!important;}
+.my-squad-panel{min-height:0!important;}
+.squad{grid-template-columns:repeat(11,minmax(76px,1fr))!important;}
+.slot{min-height:148px!important;}
+.market-grid{max-height:none!important;min-height:210px!important;grid-template-columns:repeat(auto-fill,minmax(116px,1fr))!important;}
+.market-card{min-height:188px!important;}
+@media(max-width:900px){
+  .page{padding:96px 6px 16px!important;gap:7px!important;}
+  .topnav{height:auto!important;min-height:48px!important;padding:7px 8px!important;display:grid!important;grid-template-columns:1fr!important;gap:6px!important;}
+  .top-left{gap:6px!important;overflow:hidden!important;}
+  .brand{font-size:11px!important;letter-spacing:1px!important;}
+  .brand-ball{width:16px!important;height:16px!important;flex-basis:16px!important;}
+  .wallet-info{font-size:7px!important;padding:3px 4px!important;max-width:76px!important;overflow:hidden!important;text-overflow:ellipsis!important;}
+  .nav-actions{width:100%!important;display:grid!important;grid-template-columns:32px repeat(3,minmax(0,1fr))!important;gap:5px!important;}
+  .nav-actions .btn{width:100%!important;min-width:0!important;padding:7px 6px!important;font-size:8px!important;overflow:hidden!important;text-overflow:ellipsis!important;}
+  .hero .panel{display:block!important;min-height:0!important;padding:8px!important;}
+  .quest-kicker{margin-bottom:8px!important;}
+  .hero-title{font-size:39px!important;}
+  .hero-copy{font-size:16px!important;margin-top:10px!important;}
+  .mint-row{display:flex!important;justify-content:flex-start!important;margin-top:12px!important;}
+  .mint-row .btn{min-width:0!important;width:auto!important;}
+  .wallet-note{text-align:left!important;max-width:100%!important;}
+  .stats{width:100%!important;}
+  .main-grid{grid-template-columns:1fr!important;}
+  .quest-left-column{grid-column:1!important;}
+  .info-grid{display:none!important;}
+  .squad{grid-template-columns:repeat(11,minmax(0,1fr))!important;}
+  .slot{min-height:72px!important;}
+  .market-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;max-height:260px!important;min-height:0!important;}
+}
+
+/* Nation Quest polish pass: exact home-like header, compact hero, visible actions */
+.brand{display:flex!important;align-items:center!important;gap:9px!important;font-family:'Black Ops One',sans-serif!important;font-size:18px!important;letter-spacing:2px!important;color:#dde4f0!important;text-shadow:0 0 18px rgba(0,255,135,.16)!important;white-space:nowrap!important;}
+.brand b{color:#00ff87!important;font-weight:400!important;}
+.topnav{padding:12px 28px!important;}
+.hero .panel{grid-template-columns:310px minmax(260px,1fr) 250px!important;grid-template-areas:"kicker title cta" "copy title cta"!important;align-items:center!important;min-height:120px!important;}
+.quest-kicker{grid-area:kicker!important;align-self:end!important;width:100%!important;}
+.hero-title{grid-area:title!important;justify-self:start!important;text-align:left!important;font-size:clamp(38px,3.9vw,62px)!important;line-height:.9!important;}
+.hero-copy{grid-area:copy!important;font-size:19px!important;color:#dde4f0!important;line-height:1.35!important;}
+.hero-copy strong,.winner-box strong{color:#ffc940!important;}
+.mint-row{grid-area:cta!important;justify-self:end!important;}
+.stats{grid-template-columns:repeat(3,minmax(0,1fr))!important;width:calc(100% - 380px)!important;}
+.stats .stat:nth-child(3){display:flex!important;} .stats .stat:nth-child(n+4){display:none!important;}
+.arg-quest-stat{border-color:rgba(255,201,64,.42)!important;background:linear-gradient(135deg,rgba(255,201,64,.14),rgba(0,255,135,.045))!important;}
+.arg-quest-stat:hover{border-color:#ffc940!important;box-shadow:0 0 20px rgba(255,201,64,.15)!important;filter:brightness(1.06)!important;}
+.stat-label,.section-title,.slot-status,.market-sub,.winner-box,.feed-addr,.loading,.wallet-note,.wallet-option-desc,.wallet-modal-note,.network-text{color:#dde4f0!important;}
+.section-title .live,.feed-token{color:#00ff87!important;}
+.slot-action{transition:transform .14s ease, filter .14s ease, box-shadow .14s ease, background .14s ease, color .14s ease!important;}
+.slot-action:hover,.slot-action:focus-visible{transform:translateY(-1px) scale(1.02)!important;filter:brightness(1.18)!important;outline:none!important;}
+.slot-action.buy:hover,.slot-action.buy:focus-visible{background:#ffc940!important;color:#06080a!important;border-color:#ffc940!important;box-shadow:0 0 18px rgba(255,201,64,.28)!important;}
+.slot-action.sell:hover,.slot-action.sell:focus-visible{background:#ef4444!important;color:#fff!important;border-color:#ef4444!important;box-shadow:0 0 18px rgba(239,68,68,.28)!important;}
+.rank-list{display:grid;gap:7px;max-height:180px;overflow:auto;padding-right:4px;}
+.rank-row{display:grid;grid-template-columns:34px minmax(0,1fr) 52px;gap:8px;align-items:center;border:1px solid #1c2028;background:#0f1318;border-radius:7px;padding:8px;}
+.rank-pos{font-family:'Black Ops One',sans-serif;color:#ffc940;font-size:12px;}
+.rank-wallet{font-family:'Share Tech Mono',monospace;color:#dde4f0;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.rank-progress{font-family:'Black Ops One',sans-serif;color:#00ff87;font-size:12px;text-align:right;}
+.rank-you{display:inline-block;margin-left:5px;padding:1px 5px;border-radius:4px;background:rgba(0,255,135,.14);color:#00ff87;font-family:'Black Ops One',sans-serif;font-size:9px;}
+@media(max-width:900px){
+  .topnav{padding:7px 8px!important;}
+  .hero .panel{display:block!important;}
+  .stats{grid-template-columns:repeat(3,minmax(0,1fr))!important;width:100%!important;}
+  .arg-quest-stat .stat-value{font-size:14px!important;}
+  .arg-quest-stat .stat-label{font-size:6px!important;}
+}
+
+/* Exact home-style top navigation for Nation Quest */
+.topnav{display:flex!important;align-items:center!important;justify-content:space-between!important;padding:12px 28px!important;border-bottom:1px solid rgba(0,255,135,0.14)!important;background:rgba(5,7,10,0.96)!important;backdrop-filter:blur(14px)!important;position:fixed!important;top:0!important;left:0!important;right:0!important;z-index:100!important;height:auto!important;min-height:54px!important;}
+.topnav .brand{font-family:'Black Ops One',sans-serif!important;font-size:18px!important;letter-spacing:2px!important;color:#dde4f0!important;text-shadow:0 0 18px rgba(0,255,135,0.16)!important;text-decoration:none!important;display:block!important;white-space:nowrap!important;}
+.topnav .brand b{color:#00ff87!important;font-weight:400!important;}
+.nav-countdown{position:absolute!important;left:50%!important;top:50%!important;transform:translate(-50%,-50%)!important;font-family:'Black Ops One',sans-serif!important;font-size:13px!important;letter-spacing:2px!important;color:#ffc940!important;padding:6px 12px!important;border:1px solid rgba(255,201,64,.24)!important;border-radius:7px!important;background:rgba(255,201,64,.045)!important;white-space:nowrap!important;line-height:1!important;}
+.nav-countdown span{color:#dde4f0!important;font-size:10px!important;margin-right:8px!important;letter-spacing:1px!important;}
+.nav-right{display:flex!important;align-items:center!important;gap:12px!important;margin-left:auto!important;}
+.wallet-info{display:none;border:0!important;background:transparent!important;border-radius:0!important;padding:0!important;font-family:'Share Tech Mono',monospace!important;white-space:nowrap!important;}
+.wallet-info.addr{color:#7a8899!important;font-size:11px!important;}
+.wallet-info.balance{color:#ffc940!important;font-family:'Black Ops One',sans-serif!important;font-size:13px!important;}
+.btn-connect{background:rgba(0,255,135,0.10)!important;border:1px solid rgba(0,255,135,0.30)!important;color:#00ff87!important;padding:8px 18px!important;border-radius:6px!important;font-family:'Black Ops One',sans-serif!important;font-size:11px!important;letter-spacing:1px!important;cursor:pointer!important;transition:all .2s!important;min-height:0!important;box-shadow:none!important;}
+.btn-connect:hover{background:rgba(0,255,135,0.20)!important;}
+.btn-connect.connected{background:rgba(0,255,135,0.14)!important;border-color:rgba(0,255,135,0.55)!important;color:#00ff87!important;}
+@media(max-width:900px){
+  .topnav{display:grid!important;grid-template-columns:1fr!important;gap:6px!important;padding:7px 8px!important;min-height:48px!important;}
+  .topnav .brand{font-size:11px!important;letter-spacing:1px!important;overflow:hidden!important;text-overflow:ellipsis!important;}
+  .nav-countdown{position:static!important;transform:none!important;justify-self:center!important;grid-row:2!important;font-size:10px!important;padding:5px 9px!important;}
+  .nav-countdown span{font-size:8px!important;margin-right:5px!important;}
+  .nav-right{grid-row:1!important;justify-self:end!important;gap:5px!important;}
+  .wallet-info.addr{display:none!important;}
+  .wallet-info.balance{font-size:9px!important;}
+  .btn-connect{font-size:8px!important;padding:6px 8px!important;}
+}
+
+/* Final home-identical nav override */
+.topnav{display:flex!important;align-items:center!important;justify-content:space-between!important;padding:12px 28px!important;border-bottom:1px solid rgba(0,255,135,0.14)!important;background:rgba(5,7,10,0.96)!important;backdrop-filter:blur(14px)!important;position:fixed!important;top:0!important;left:0!important;right:0!important;z-index:100!important;height:auto!important;min-height:54px!important;}
+.topnav .logo{font-family:'Black Ops One',sans-serif!important;font-size:18px!important;letter-spacing:2px!important;color:#dde4f0!important;text-shadow:0 0 18px rgba(0,255,135,0.16)!important;text-decoration:none!important;white-space:nowrap!important;line-height:1!important;}
+.topnav .logo span{color:#00ff87!important;}
+.topnav .nav-countdown{position:absolute!important;left:50%!important;top:50%!important;transform:translate(-50%,-50%)!important;font-family:'Black Ops One',sans-serif!important;font-size:13px!important;letter-spacing:2px!important;color:#ffc940!important;padding:6px 12px!important;border:1px solid rgba(255,201,64,.24)!important;border-radius:7px!important;background:rgba(255,201,64,.045)!important;white-space:nowrap!important;line-height:1!important;}
+.topnav .nav-countdown span{color:#dde4f0!important;font-size:10px!important;margin-right:8px!important;letter-spacing:1px!important;}
+.topnav .nav-right{display:flex!important;align-items:center!important;gap:12px!important;margin-left:auto!important;}
+.topnav .wallet-info{border:0!important;background:transparent!important;border-radius:0!important;padding:0!important;white-space:nowrap!important;line-height:1!important;}
+.topnav .wallet-info.addr{font-family:'Share Tech Mono',monospace!important;font-size:11px!important;color:#7a8899!important;}
+.topnav .wallet-info.balance{font-family:'Black Ops One',sans-serif!important;font-size:13px!important;color:#ffc940!important;}
+.topnav .btn-connect{background:rgba(0,255,135,0.10)!important;border:1px solid rgba(0,255,135,0.30)!important;color:#00ff87!important;padding:8px 18px!important;border-radius:6px!important;font-family:'Black Ops One',sans-serif!important;font-size:11px!important;letter-spacing:1px!important;cursor:pointer!important;transition:all .2s!important;min-height:0!important;box-shadow:none!important;line-height:1.2!important;}
+.topnav .btn-connect:hover{background:rgba(0,255,135,0.20)!important;}
+.topnav .btn-connect.connected{background:rgba(0,255,135,0.14)!important;border-color:rgba(0,255,135,0.55)!important;color:#00ff87!important;}
+@media(max-width:900px){
+  .topnav{display:grid!important;grid-template-columns:1fr auto!important;grid-template-rows:auto auto!important;gap:4px 8px!important;padding:7px 10px!important;min-height:54px!important;}
+  .topnav .logo{font-size:11px!important;letter-spacing:1px!important;align-self:center!important;}
+  .topnav .nav-right{grid-column:2!important;grid-row:1!important;gap:5px!important;justify-self:end!important;}
+  .topnav .nav-countdown{position:static!important;transform:none!important;grid-column:1 / -1!important;grid-row:2!important;justify-self:center!important;font-size:10px!important;padding:5px 9px!important;}
+  .topnav .nav-countdown span{font-size:8px!important;margin-right:5px!important;}
+  .topnav .wallet-info.addr{display:none!important;}
+  .topnav .wallet-info.balance{font-size:9px!important;}
+  .topnav .btn-connect{font-size:8px!important;padding:6px 8px!important;}
+}
+
+/* USA Nation Quest visual pass */
+:root{--usa-blue:#2563eb;--usa-blue2:#0b1f4d;--usa-red:#ef4444;--usa-white:#f8fafc;--usa-gold:#ffc940;}
+.page{background:radial-gradient(circle at 9% 0%,rgba(37,99,235,.20),transparent 30%),radial-gradient(circle at 86% 10%,rgba(239,68,68,.13),transparent 32%),linear-gradient(180deg,#05070b,#070b13 38%,#06080a)!important;}
+.hero .panel{border-color:rgba(37,99,235,.46)!important;background:linear-gradient(110deg,rgba(11,31,77,.94),rgba(8,13,24,.96) 46%,rgba(119,16,29,.28))!important;box-shadow:0 0 34px rgba(37,99,235,.10),inset 0 0 28px rgba(255,255,255,.025)!important;}
+.quest-kicker{border-color:rgba(248,250,252,.30)!important;background:linear-gradient(90deg,rgba(37,99,235,.26),rgba(239,68,68,.12))!important;color:#fff!important;}
+.hero-title{color:#fff!important;text-shadow:0 0 20px rgba(37,99,235,.18)!important;}
+.hero-title span{color:#ef4444!important;text-shadow:0 0 24px rgba(239,68,68,.22)!important;}
+.hero-copy,.hero-copy strong{color:#fff!important;}
+.hero-copy strong{color:#ffc940!important;}
+.stats .stat{border-color:rgba(37,99,235,.32)!important;background:linear-gradient(180deg,rgba(37,99,235,.10),rgba(15,19,24,.96))!important;}
+.stats .stat:nth-child(1){border-color:rgba(0,255,135,.38)!important;}
+.stats .stat:nth-child(2){border-color:rgba(239,68,68,.34)!important;}
+.my-squad-panel,.market-section,.quest-side-panel .panel,.quest-side-panel .callout{border-color:rgba(37,99,235,.34)!important;background:linear-gradient(180deg,rgba(10,22,46,.96),rgba(8,12,20,.98))!important;}
+.my-squad-panel .section-title span:first-child,.market-section .section-title span:first-child{color:#fff!important;}
+.slot.done{border-color:rgba(37,99,235,.78)!important;background:linear-gradient(180deg,rgba(37,99,235,.26),rgba(15,19,24,.95))!important;box-shadow:0 0 18px rgba(37,99,235,.18),inset 0 0 18px rgba(37,99,235,.12)!important;}
+.slot.rarity-3{border-color:rgba(255,201,64,.82)!important;}
+.slot.open{border-color:rgba(239,68,68,.72)!important;background:linear-gradient(180deg,rgba(239,68,68,.18),rgba(15,19,24,.96))!important;box-shadow:0 0 18px rgba(239,68,68,.14),inset 0 0 16px rgba(239,68,68,.08)!important;}
+.my-squad-panel .slot.empty .slot-actions{display:grid!important;opacity:1!important;transform:none!important;}
+.my-squad-panel .slot.empty .slot-actions:empty{display:none!important;}
+.my-squad-panel .slot.empty .slot-action.buy{background:linear-gradient(135deg,#ffc940,#f59e0b)!important;color:#06101f!important;border-color:#ffc940!important;box-shadow:0 0 14px rgba(255,201,64,.18)!important;}
+.slot-action.buy:hover,.market-card .slot-action.buy:hover{background:#fff!important;color:#0b1f4d!important;border-color:#fff!important;box-shadow:0 0 20px rgba(255,255,255,.20)!important;}
+.slot-action.sell:hover,.market-card .slot-action.sell:hover{background:#ef4444!important;color:#fff!important;border-color:#ef4444!important;box-shadow:0 0 20px rgba(239,68,68,.28)!important;}
+.arg-quest-stat{display:grid!important;grid-template-columns:auto 1fr!important;grid-template-rows:1fr!important;gap:10px!important;text-align:left!important;align-items:center!important;justify-content:start!important;border-color:rgba(116,172,223,.78)!important;background:linear-gradient(135deg,rgba(116,172,223,.30),rgba(255,255,255,.08) 48%,rgba(116,172,223,.16))!important;box-shadow:0 0 22px rgba(116,172,223,.16)!important;}
+.arg-quest-stat:hover{border-color:#74acdf!important;background:linear-gradient(135deg,rgba(116,172,223,.42),rgba(255,255,255,.13),rgba(116,172,223,.20))!important;}
+.arg-quest-flag{width:42px;height:28px;object-fit:cover;border-radius:4px;box-shadow:0 0 0 1px rgba(255,255,255,.25),0 4px 12px rgba(0,0,0,.32);}
+.arg-quest-copy{min-width:0;}
+.arg-quest-stat .stat-value{font-size:16px!important;color:#fff!important;line-height:1!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.arg-quest-stat .stat-label{font-size:10px!important;color:#74acdf!important;margin-top:4px!important;}
+.trading-tips{border-color:rgba(255,201,64,.36)!important;background:linear-gradient(180deg,rgba(255,201,64,.11),rgba(10,22,46,.95))!important;}
+.trading-tips h3{color:#ffc940!important;}
+.trading-tips ul{list-style:none;display:grid;gap:7px;margin:0;padding:0;}
+.trading-tips li{position:relative;padding-left:16px;color:#fff;font-size:15px;line-height:1.22;}
+.trading-tips li::before{content:'$';position:absolute;left:0;top:0;color:#00ff87;font-family:'Black Ops One',sans-serif;font-size:12px;}
+@media(max-width:900px){
+  .arg-quest-stat{gap:5px!important;padding:7px 6px!important;}
+  .arg-quest-flag{width:26px;height:18px;}
+  .arg-quest-stat .stat-value{font-size:9px!important;}
+  .arg-quest-stat .stat-label{font-size:6px!important;}
+  .my-squad-panel .slot.empty .slot-actions{display:grid!important;}
+  .trading-tips{display:none!important;}
+}
+
+/* Unified USA card layout: squad and market use the same visual map */
+.card-fig-canvas{height:76px!important;display:flex!important;align-items:center!important;justify-content:center!important;position:relative!important;background:radial-gradient(circle at 50% 86%,rgba(0,255,135,.13),transparent 44%)!important;}
+.card-fig-canvas svg{width:72px!important;height:72px!important;display:block!important;}
+.card-flag{position:absolute!important;top:-1px!important;left:-1px!important;width:22px!important;height:15px!important;object-fit:cover!important;border-radius:2px!important;box-shadow:0 0 0 1px rgba(255,255,255,.18),0 2px 7px rgba(0,0,0,.35)!important;z-index:4!important;}
+.card-pos{position:absolute!important;left:5px!important;bottom:4px!important;top:auto!important;right:auto!important;z-index:5!important;font-family:'Black Ops One',sans-serif!important;font-size:9px!important;color:#dde4f0!important;background:rgba(6,8,10,.72)!important;border:1px solid rgba(255,255,255,.14)!important;border-radius:4px!important;padding:2px 5px!important;line-height:1!important;}
+.card-check{position:absolute!important;right:6px!important;top:5px!important;z-index:6!important;font-family:'Black Ops One',sans-serif!important;color:#00ff87!important;font-size:14px!important;line-height:1!important;text-shadow:0 0 10px rgba(0,255,135,.35)!important;}
+.market-card.slot{display:flex!important;flex-direction:column!important;align-items:stretch!important;justify-content:stretch!important;gap:4px!important;padding:7px!important;min-height:188px!important;position:relative!important;overflow:hidden!important;}
+.market-card .market-pos{display:none!important;}
+.market-card .market-meta{padding:0!important;display:grid!important;grid-template-columns:1fr auto!important;gap:4px!important;align-items:end!important;margin-top:auto!important;}
+.market-card .slot-count{font-size:18px!important;line-height:1!important;text-align:left!important;}
+.market-card .slot-status{font-family:'Black Ops One',sans-serif!important;font-size:7px!important;line-height:1!important;text-align:right!important;}
+.market-trade{display:grid!important;gap:4px!important;margin-top:5px!important;}
+.market-trade .market-sub{font-size:9px!important;color:#dde4f0!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;}
+.market-trade .market-price{font-family:'Black Ops One',sans-serif!important;font-size:13px!important;color:#ffc940!important;text-align:left!important;line-height:1!important;}
+.market-trade .slot-action{width:100%!important;min-height:28px!important;font-size:9px!important;margin-top:0!important;}
+@media(max-width:900px){
+  .card-fig-canvas{height:38px!important;}
+  .card-fig-canvas svg{width:36px!important;height:36px!important;}
+  .card-flag{width:12px!important;height:8px!important;top:-1px!important;left:-1px!important;}
+  .card-pos{font-size:5px!important;left:2px!important;bottom:2px!important;padding:1px 3px!important;}
+  .card-check{right:3px!important;top:2px!important;font-size:9px!important;}
+  .market-card.slot{min-height:142px!important;padding:3px 2px!important;}
+  .market-card .slot-count{font-size:9px!important;}
+  .market-card .slot-status{font-size:4.5px!important;}
+  .market-trade .market-sub{font-size:7px!important;}
+  .market-trade .market-price{font-size:9px!important;}
+  .market-trade .slot-action{font-size:7px!important;min-height:24px!important;}
+}
+
+/* Cleaner quest actions and OPS typography pass */
+.hero .panel{grid-template-columns:minmax(280px,.62fr) minmax(420px,1fr)!important;grid-template-areas:"kicker title" "copy title"!important;}
+.mint-row,.wallet-note{display:none!important;}
+.stats{grid-template-columns:repeat(4,minmax(0,1fr))!important;width:100%!important;}
+.stats .stat:nth-child(1),.stats .stat:nth-child(2),.stats .stat:nth-child(3),.stats .stat:nth-child(4){display:flex!important;}
+.stats .stat:nth-child(n+5){display:none!important;}
+.stat,.stat *,.section-title,.section-title *,.callout,.callout *,.winner-box,.winner-box *,.rank-list,.rank-list *,.feed,.feed *,.market-card,.market-card *,.slot,.slot *{font-family:'Black Ops One',sans-serif!important;}
+.stat-label{font-size:11px!important;color:#fff!important;letter-spacing:.8px!important;}
+.mint-stat{border-color:rgba(0,255,135,.72)!important;background:linear-gradient(135deg,rgba(0,255,135,.28),rgba(37,99,235,.13))!important;color:#00ff87!important;cursor:pointer!important;min-height:82px!important;box-shadow:0 0 24px rgba(0,255,135,.14)!important;}
+.mint-stat:hover{background:linear-gradient(135deg,#00ff87,rgba(255,255,255,.16))!important;color:#06101f!important;border-color:#00ff87!important;transform:translateY(-1px);}
+.mint-stat .stat-value{font-size:clamp(28px,3.2vw,42px)!important;color:inherit!important;}
+.mint-stat .stat-label{color:inherit!important;}
+.arg-quest-stat .stat-value{font-size:clamp(14px,1.4vw,20px)!important;}
+.my-squad-panel .slot.empty .slot-count{color:#00ff87!important;}
+.my-squad-panel .slot.empty .slot-status{font-size:6px!important;color:#fff!important;}
+.market-trade .market-sub{display:none!important;}
+.quest-side-panel .callout,.quest-side-panel .panel{padding:12px!important;}
+.quest-side-panel h3,.quest-side-panel .section-title{font-size:13px!important;letter-spacing:1px!important;color:#fff!important;}
+.quest-side-panel .winner-box,.quest-side-panel li,.quest-side-panel p,.rank-wallet,.feed-addr{font-size:12px!important;line-height:1.25!important;color:#fff!important;}
+.rank-progress,.feed-token,.section-title .live{font-size:12px!important;color:#00ff87!important;}
+.feed-pos,.rank-pos{font-size:12px!important;color:#ffc940!important;}
+@media(max-width:900px){
+  .hero .panel{display:block!important;}
+  .stats{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:4px!important;}
+  .stat{min-height:56px!important;padding:6px 3px!important;}
+  .stat-label{font-size:5.7px!important;letter-spacing:.1px!important;}
+  .mint-stat .stat-value{font-size:14px!important;}
+  .arg-quest-stat .stat-value{font-size:7px!important;}
+  .my-squad-panel .slot.empty .slot-status{font-size:4.5px!important;}
+}
+
+/* Final card parity pass: market cards and squad cards share the same figure box */
+.squad{grid-template-columns:repeat(11,minmax(86px,1fr))!important;gap:8px!important;align-items:stretch!important;}
+.slot,.market-card.slot{border-radius:8px!important;padding:7px!important;min-height:150px!important;display:flex!important;flex-direction:column!important;align-items:stretch!important;justify-content:stretch!important;gap:4px!important;position:relative!important;overflow:hidden!important;}
+.card-fig-canvas,.slot-fig-canvas,.market-fig-canvas{height:76px!important;display:flex!important;align-items:center!important;justify-content:center!important;position:relative!important;background:radial-gradient(circle at 50% 86%,rgba(0,255,135,.13),transparent 44%)!important;flex:0 0 76px!important;}
+.card-fig-canvas svg,.slot-fig-canvas svg,.market-fig-canvas svg{width:72px!important;height:72px!important;display:block!important;margin:0 auto!important;}
+.card-flag,.slot-fig-flag,.market-fig-flag{position:absolute!important;top:-1px!important;left:-1px!important;width:22px!important;height:15px!important;object-fit:cover!important;border-radius:2px!important;box-shadow:0 0 0 1px rgba(255,255,255,.18),0 2px 7px rgba(0,0,0,.35)!important;z-index:4!important;}
+.card-pos,.slot-fig-canvas .slot-pos,.market-fig-canvas .slot-pos{position:absolute!important;left:5px!important;bottom:4px!important;top:auto!important;right:auto!important;z-index:5!important;font-family:'Black Ops One',sans-serif!important;font-size:9px!important;color:#dde4f0!important;background:rgba(6,8,10,.72)!important;border:1px solid rgba(255,255,255,.14)!important;border-radius:4px!important;padding:2px 5px!important;line-height:1!important;}
+.slot-check,.card-check{position:absolute!important;right:6px!important;top:5px!important;z-index:6!important;font-family:'Black Ops One',sans-serif!important;color:#00ff87!important;font-size:14px!important;line-height:1!important;text-shadow:0 0 10px rgba(0,255,135,.35)!important;}
+.slot-info,.market-card .market-meta{padding:0!important;display:grid!important;grid-template-columns:1fr auto!important;gap:4px!important;align-items:end!important;margin-top:auto!important;min-height:22px!important;}
+.slot-count,.market-card .slot-count{font-family:'Black Ops One',sans-serif!important;font-size:18px!important;line-height:1!important;text-align:left!important;color:#00ff87!important;}
+.slot-status,.market-card .slot-status{font-family:'Black Ops One',sans-serif!important;font-size:8px!important;line-height:1!important;text-align:right!important;letter-spacing:.3px!important;color:#dde4f0!important;}
+.market-grid{grid-template-columns:repeat(auto-fill,minmax(86px,96px))!important;gap:8px!important;align-items:start!important;justify-content:start!important;}
+.market-card.slot{width:100%!important;min-width:0!important;}
+.market-trade{display:grid!important;gap:4px!important;margin-top:4px!important;}
+.market-trade .market-price{font-size:12px!important;text-align:left!important;line-height:1!important;}
+.market-trade .slot-action{min-height:28px!important;width:100%!important;font-size:9px!important;padding:6px 4px!important;}
+@media(max-width:900px){
+  .squad{grid-template-columns:repeat(11,minmax(0,1fr))!important;gap:3px!important;}
+  .slot,.market-card.slot{min-height:72px!important;padding:3px 2px!important;border-radius:6px!important;gap:2px!important;}
+  .card-fig-canvas,.slot-fig-canvas,.market-fig-canvas{height:38px!important;flex-basis:38px!important;}
+  .card-fig-canvas svg,.slot-fig-canvas svg,.market-fig-canvas svg{width:36px!important;height:36px!important;}
+  .card-flag,.slot-fig-flag,.market-fig-flag{width:12px!important;height:8px!important;top:-1px!important;left:-1px!important;}
+  .card-pos,.slot-fig-canvas .slot-pos,.market-fig-canvas .slot-pos{font-size:5px!important;left:2px!important;bottom:2px!important;padding:1px 3px!important;}
+  .slot-check,.card-check{right:3px!important;top:2px!important;font-size:9px!important;}
+  .slot-info,.market-card .market-meta{min-height:14px!important;gap:2px!important;}
+  .slot-count,.market-card .slot-count{font-size:9px!important;}
+  .slot-status,.market-card .slot-status{font-size:4.5px!important;letter-spacing:0!important;}
+  .market-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:6px!important;}
+  .market-trade .market-price{font-size:9px!important;}
+  .market-trade .slot-action{font-size:7px!important;min-height:24px!important;padding:4px 2px!important;}
+}
+
+/* Market width parity, hero line break, colored feed and opportunity panel */
+.hero-copy{display:grid!important;gap:5px!important;}
+.hero-copy span{display:block!important;}
+.mint-stat .stat-value{font-size:clamp(32px,3.8vw,52px)!important;color:#00ff87!important;text-shadow:0 0 16px rgba(0,255,135,.18)!important;}
+.squad,.market-grid{grid-template-columns:repeat(auto-fill,96px)!important;gap:8px!important;justify-content:start!important;}
+.my-squad-panel .squad{grid-template-columns:repeat(11,96px)!important;overflow-x:auto!important;padding-bottom:2px!important;}
+.slot,.market-card.slot{width:96px!important;min-width:96px!important;max-width:96px!important;}
+.market-card.slot{min-height:190px!important;}
+.event-type{display:inline-block;min-width:38px;font-family:'Black Ops One',sans-serif!important;font-size:13px!important;letter-spacing:.5px!important;}
+.event-type.mint{color:#00ff87!important;text-shadow:0 0 10px rgba(0,255,135,.18)!important;}
+.event-type.buy{color:#ffc940!important;text-shadow:0 0 10px rgba(255,201,64,.16)!important;}
+.opportunity-panel{margin-top:10px;border:1px solid rgba(255,201,64,.34);background:linear-gradient(135deg,rgba(255,201,64,.12),rgba(37,99,235,.10));border-radius:9px;padding:10px;display:grid;gap:6px;}
+.opportunity-title{font-family:'Black Ops One',sans-serif;color:#ffc940;font-size:13px;letter-spacing:1px;text-transform:uppercase;}
+.opportunity-main{display:grid;grid-template-columns:auto auto 1fr;gap:9px;align-items:baseline;font-family:'Black Ops One',sans-serif;}
+.opportunity-main span{color:#fff;font-size:15px;}.opportunity-main b{color:#00ff87;font-size:18px;}.opportunity-main em{color:#dde4f0;font-size:10px;font-style:normal;justify-self:end;}
+.opportunity-text{font-family:'Black Ops One',sans-serif;color:#fff;font-size:11px;line-height:1.25;}
+@media(max-width:900px){
+  .squad,.market-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:6px!important;}
+  .my-squad-panel .squad{grid-template-columns:repeat(11,minmax(0,1fr))!important;overflow-x:hidden!important;}
+  .slot,.market-card.slot{width:auto!important;min-width:0!important;max-width:none!important;}
+  .market-card.slot{min-height:142px!important;}
+  .event-type{font-size:9px!important;min-width:28px;}
+  .opportunity-panel{padding:7px;margin-top:7px;}
+  .opportunity-title{font-size:8px;}.opportunity-main span{font-size:9px;}.opportunity-main b{font-size:11px;}.opportunity-main em{font-size:6px;}.opportunity-text{font-size:7px;}
+}
+
+/* Final sizing and profit-aware action polish */
+.main-grid{grid-template-columns:minmax(0,1fr) minmax(250px,25vw)!important;}
+.quest-side-panel{width:100%!important;max-width:none!important;}
+.stats{grid-template-columns:repeat(4,minmax(0,1fr))!important;}
+.mint-stat{background:#00ff87!important;border-color:#00ff87!important;color:#06101f!important;box-shadow:0 0 28px rgba(0,255,135,.20)!important;}
+.mint-stat:hover{background:#00ff87!important;color:#06101f!important;filter:brightness(1.06)!important;}
+.mint-stat .stat-value{font-size:clamp(22px,3vw,36px)!important;color:#06101f!important;text-shadow:none!important;}
+.mint-stat .stat-label{color:#06101f!important;}
+.my-squad-panel .squad{grid-template-columns:repeat(11,minmax(104px,1fr))!important;overflow-x:hidden!important;}
+.market-grid{grid-template-columns:repeat(auto-fill,minmax(104px,1fr))!important;}
+.slot,.market-card.slot{width:100%!important;min-width:0!important;max-width:none!important;}
+.market-card.slot{min-height:194px!important;}
+.opportunity-main b{white-space:nowrap!important;}
+@media(max-width:900px){
+  .main-grid{grid-template-columns:1fr!important;}
+  .mint-stat .stat-value{font-size:14px!important;}
+  .my-squad-panel .squad{grid-template-columns:repeat(11,minmax(0,1fr))!important;}
+  .market-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;}
+  .market-card.slot{min-height:142px!important;}
+}
+
+/* Absolute final mint tile and side width fix */
+.main-grid{grid-template-columns:minmax(0,calc(75% - 2.5px)) minmax(250px,calc(25% - 7.5px))!important;gap:10px!important;align-items:start!important;}
+.quest-side-panel{width:100%!important;min-width:0!important;max-width:none!important;}
+.stats{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:10px!important;}
+.stats button.mint-stat,
+button.stat.mint-stat,
+.mint-stat{
+  appearance:none!important;
+  -webkit-appearance:none!important;
+  background:#00ff87!important;
+  background-color:#00ff87!important;
+  background-image:none!important;
+  border:1px solid #00ff87!important;
+  color:#06101f!important;
+  opacity:1!important;
+  box-shadow:0 0 26px rgba(0,255,135,.24), inset 0 0 0 1px rgba(255,255,255,.12)!important;
+}
+.stats button.mint-stat:hover,
+button.stat.mint-stat:hover,
+.mint-stat:hover{
+  background:#00ff87!important;
+  background-color:#00ff87!important;
+  background-image:none!important;
+  color:#06101f!important;
+  filter:brightness(1.06)!important;
+}
+.stats button.mint-stat .stat-value,
+button.stat.mint-stat .stat-value,
+.mint-stat .stat-value{
+  color:#06101f!important;
+  font-size:clamp(22px,3vw,36px)!important;
+  line-height:1!important;
+  text-shadow:none!important;
+}
+.stats button.mint-stat .stat-label,
+button.stat.mint-stat .stat-label,
+.mint-stat .stat-label{
+  color:#06101f!important;
+  opacity:1!important;
+}
+@media(max-width:900px){
+  .main-grid{grid-template-columns:1fr!important;}
+  .stats{gap:4px!important;}
+  .stats button.mint-stat .stat-value,
+  button.stat.mint-stat .stat-value,
+  .mint-stat .stat-value{font-size:14px!important;}
+}
+
+/* Hero-sized MINT label */
+.stats button.mint-stat .stat-value,
+button.stat.mint-stat .stat-value,
+.mint-stat .stat-value{
+  font-size:clamp(38px,5.4vw,82px)!important;
+  line-height:.86!important;
+  letter-spacing:1px!important;
+}
+.stats button.mint-stat,
+button.stat.mint-stat,
+.mint-stat{min-height:104px!important;}
+@media(max-width:900px){
+  .stats button.mint-stat .stat-value,
+  button.stat.mint-stat .stat-value,
+  .mint-stat .stat-value{font-size:clamp(18px,7vw,30px)!important;line-height:.9!important;}
+  .stats button.mint-stat,
+  button.stat.mint-stat,
+  .mint-stat{min-height:56px!important;}
+}
+
+/* Fix loaded-state MINT markup and home-style loading ball */
+.stats button.mint-stat .stat-value,
+button.stat.mint-stat .stat-value,
+.mint-stat .stat-value{
+  font-size:clamp(34px,4.8vw,68px)!important;
+  line-height:.88!important;
+  color:#06101f!important;
+  text-shadow:none!important;
+}
+.stats button.mint-stat,
+button.stat.mint-stat,
+.mint-stat{
+  font-size:clamp(34px,4.8vw,68px)!important;
+  background:#00ff87!important;
+  background-color:#00ff87!important;
+  background-image:none!important;
+  color:#06101f!important;
+}
+.network-ball{
+  width:auto!important;
+  height:auto!important;
+  margin:0 auto 10px!important;
+  border-radius:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  font-size:34px!important;
+  line-height:1!important;
+  animation:spin 1.1s linear infinite!important;
+  text-shadow:0 0 18px rgba(0,255,135,.22)!important;
+}
+.network-ball::before,.network-ball::after{content:none!important;display:none!important;}
+@media(max-width:900px){
+  .stats button.mint-stat .stat-value,
+  button.stat.mint-stat .stat-value,
+  .mint-stat .stat-value,
+  .stats button.mint-stat,
+  button.stat.mint-stat,
+  .mint-stat{font-size:clamp(17px,6vw,26px)!important;}
+}
+
+/* MINT same size as Players number */
+.stats button.mint-stat .stat-value,
+button.stat.mint-stat .stat-value,
+.mint-stat .stat-value{
+  font-size:clamp(22px,3vw,36px)!important;
+  line-height:1!important;
+  letter-spacing:0!important;
+}
+.stats button.mint-stat,
+button.stat.mint-stat,
+.mint-stat{font-size:clamp(22px,3vw,36px)!important;}
+@media(max-width:900px){
+  .stats button.mint-stat .stat-value,
+  button.stat.mint-stat .stat-value,
+  .mint-stat .stat-value,
+  .stats button.mint-stat,
+  button.stat.mint-stat,
+  .mint-stat{font-size:17px!important;}
+}
+
+/* Mobile QA pass: fixed overlay and identical card visuals */
+@media(max-width:900px){
+  html,body{width:100%!important;max-width:100%!important;overflow-x:hidden!important;}
+  .page{width:100%!important;max-width:100%!important;padding-left:6px!important;padding-right:6px!important;overflow-x:hidden!important;}
+  #networkOverlay{padding:12px!important;align-items:center!important;justify-content:center!important;overflow:hidden!important;}
+  .network-card{width:calc(100vw - 28px)!important;max-width:360px!important;margin:0 auto!important;padding:20px 14px!important;border-radius:10px!important;}
+  .network-title{font-size:14px!important;line-height:1.1!important;}
+  .network-text{font-size:10px!important;}
+  .network-steps{gap:7px!important;}
+  .network-step{grid-template-columns:16px minmax(0,1fr)!important;font-size:9px!important;letter-spacing:.5px!important;white-space:normal!important;line-height:1.05!important;}
+  .hero .panel{padding:8px!important;min-height:0!important;}
+  .hero-title{font-size:34px!important;line-height:.88!important;}
+  .hero-copy{font-size:13px!important;line-height:1.25!important;gap:4px!important;}
+  .stats{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:4px!important;}
+  .stat{min-width:0!important;min-height:54px!important;padding:5px 2px!important;border-radius:7px!important;overflow:hidden!important;}
+  .stat-value{font-size:15px!important;line-height:1!important;white-space:nowrap!important;}
+  .stat-label{font-size:5.5px!important;line-height:1.05!important;letter-spacing:0!important;white-space:normal!important;}
+  .arg-quest-flag{width:18px!important;height:12px!important;}
+  .arg-quest-stat{grid-template-columns:auto 1fr!important;gap:3px!important;}
+  .arg-quest-stat .stat-value{font-size:6.5px!important;white-space:nowrap!important;}
+  .arg-quest-stat .stat-label{font-size:5px!important;}
+  .my-squad-panel,.market-section{padding:6px!important;border-radius:8px!important;}
+  .section-title{font-size:8px!important;letter-spacing:.5px!important;margin-bottom:6px!important;}
+  .section-title .live{font-size:7px!important;}
+  .squad{grid-template-columns:repeat(11,minmax(0,1fr))!important;gap:3px!important;width:100%!important;overflow:hidden!important;}
+  .market-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:6px!important;width:100%!important;overflow-y:auto!important;overflow-x:hidden!important;max-height:288px!important;}
+  .slot,.market-card.slot{width:100%!important;min-width:0!important;max-width:none!important;padding:3px 2px!important;border-radius:6px!important;gap:2px!important;}
+  .slot{min-height:72px!important;}
+  .market-card.slot{min-height:142px!important;}
+  .card-fig-canvas,.slot-fig-canvas,.market-fig-canvas{height:38px!important;flex:0 0 38px!important;display:flex!important;align-items:center!important;justify-content:center!important;}
+  .card-fig-canvas svg,.slot-fig-canvas svg,.market-fig-canvas svg{width:36px!important;height:36px!important;margin:0 auto!important;display:block!important;}
+  .card-flag,.slot-fig-flag,.market-fig-flag{width:12px!important;height:8px!important;top:-1px!important;left:-1px!important;}
+  .card-pos,.slot-fig-canvas .slot-pos,.market-fig-canvas .slot-pos{font-size:5px!important;left:2px!important;bottom:2px!important;padding:1px 3px!important;border-radius:3px!important;}
+  .slot-check,.card-check{right:3px!important;top:2px!important;font-size:9px!important;}
+  .slot-info,.market-card .market-meta{min-height:14px!important;gap:2px!important;display:grid!important;grid-template-columns:1fr auto!important;align-items:end!important;}
+  .slot-count,.market-card .slot-count{font-size:9px!important;line-height:1!important;}
+  .slot-status,.market-card .slot-status{font-size:4.5px!important;line-height:1!important;letter-spacing:0!important;}
+  .slot-actions{margin-top:2px!important;gap:2px!important;}
+  .slot-action,.market-trade .slot-action{min-height:22px!important;font-size:6px!important;padding:4px 2px!important;border-radius:5px!important;}
+  .market-trade{gap:3px!important;margin-top:3px!important;}
+  .market-trade .market-price{font-size:8px!important;line-height:1!important;}
+  .opportunity-panel{padding:7px!important;margin-top:7px!important;gap:4px!important;}
+  .opportunity-title{font-size:8px!important;}
+  .opportunity-main{grid-template-columns:auto auto!important;gap:6px!important;}
+  .opportunity-main em{grid-column:1 / -1!important;justify-self:start!important;font-size:6px!important;}
+  .opportunity-main span{font-size:9px!important;}
+  .opportunity-main b{font-size:11px!important;}
+  .opportunity-text{font-size:7px!important;line-height:1.18!important;}
+}
+
+/* Final mobile fit guard */
+@media(max-width:900px){
+  #networkOverlay{box-sizing:border-box!important;width:100dvw!important;max-width:100dvw!important;left:0!important;right:0!important;padding:12px!important;overflow:hidden!important;}
+  #networkOverlay .network-card{box-sizing:border-box!important;width:min(330px, calc(100dvw - 24px))!important;min-width:0!important;max-width:calc(100dvw - 24px)!important;margin:0!important;padding:18px 14px!important;overflow:hidden!important;}
+  #networkOverlay .network-steps{width:100%!important;min-width:0!important;overflow:hidden!important;}
+  #networkOverlay .network-step{min-width:0!important;max-width:100%!important;white-space:normal!important;overflow:hidden!important;text-overflow:clip!important;grid-template-columns:16px minmax(0,1fr)!important;gap:7px!important;}
+  .market-card.slot .card-fig-canvas,.market-card.slot .market-fig-canvas,.my-squad-panel .slot .card-fig-canvas,.my-squad-panel .slot .slot-fig-canvas{display:flex!important;align-items:center!important;justify-content:center!important;}
+  .market-card.slot svg,.my-squad-panel .slot svg{display:block!important;margin:0 auto!important;}
+}
+
+/* Hard mobile overlay clamp for narrow browsers */
+@media(max-width:900px){
+  #networkOverlay{display:none!important;align-items:flex-start!important;justify-content:flex-start!important;padding:0!important;overflow:hidden!important;}
+  #networkOverlay.show{display:block!important;}
+  #networkOverlay .network-card{
+    position:fixed!important;
+    left:12px!important;
+    right:auto!important;
+    top:50%!important;
+    transform:translateY(-50%)!important;
+    width:min(300px, calc(100vw - 24px))!important;
+    min-width:0!important;
+    max-width:300px!important;
+    margin:0!important;
+  }
+}
+
+/* Final request pass: mobile centering, USA title, no opportunity */
+.usa-title-blue{color:#3b82f6!important;text-shadow:0 0 16px rgba(59,130,246,.30)!important;}
+.opportunity-panel{display:none!important;}
+.slot-status:empty{display:none!important;}
+
+@media(max-width:900px){
+  #networkOverlay{display:none!important;align-items:center!important;justify-content:center!important;padding:12px!important;overflow:hidden!important;}
+  #networkOverlay.show{display:flex!important;}
+  #networkOverlay .network-card{
+    position:fixed!important;
+    left:50%!important;
+    top:50%!important;
+    right:auto!important;
+    transform:translate(-50%,-50%)!important;
+    width:min(310px, calc(100vw - 24px))!important;
+    max-width:calc(100vw - 24px)!important;
+    min-width:0!important;
+    margin:0!important;
+  }
+  .topnav{grid-template-columns:auto minmax(0,1fr) auto!important;align-items:center!important;gap:6px!important;}
+  .topnav .nav-countdown{
+    position:static!important;
+    transform:none!important;
+    grid-column:auto!important;
+    grid-row:auto!important;
+    justify-self:center!important;
+    min-width:0!important;
+    max-width:100%!important;
+    padding:4px 6px!important;
+    font-size:7.5px!important;
+    letter-spacing:.4px!important;
+    white-space:nowrap!important;
+  }
+  .topnav .nav-countdown span{font-size:7.5px!important;margin-right:3px!important;letter-spacing:.2px!important;color:#fff!important;}
+  .nav-right{min-width:0!important;gap:4px!important;}
+  .nav-right .wallet-info{display:none!important;}
+  .btn-connect{font-size:7px!important;padding:6px 7px!important;}
+  .arg-quest-stat{align-items:center!important;justify-items:center!important;text-align:center!important;}
+  .arg-quest-stat .arg-quest-copy{display:grid!important;place-items:center!important;text-align:center!important;}
+  .market-card.slot .card-fig-canvas,
+  .market-card.slot .market-fig-canvas{height:46px!important;flex-basis:46px!important;}
+  .market-card.slot .card-fig-canvas svg,
+  .market-card.slot .market-fig-canvas svg{width:44px!important;height:44px!important;}
+  .my-squad-panel .slot .card-fig-canvas,
+  .my-squad-panel .slot .slot-fig-canvas{height:42px!important;flex-basis:42px!important;}
+  .my-squad-panel .slot .card-fig-canvas svg,
+  .my-squad-panel .slot .slot-fig-canvas svg{width:40px!important;height:40px!important;}
+  .market-card.slot{min-height:150px!important;}
+}
+
+/* Final mobile overlay true viewport centering */
+@media(max-width:900px){
+  #networkOverlay .network-card{
+    width:min(280px, calc(100vw - 24px))!important;
+    max-width:min(280px, calc(100vw - 24px))!important;
+    left:calc((100vw - min(280px, calc(100vw - 24px))) / 2)!important;
+    top:50%!important;
+    transform:translateY(-50%)!important;
+  }
+}
+
+/* USA header, compact mobile nav, larger market figures */
+.hero-title{display:grid!important;gap:2px!important;}
+.hero-title .title-line{display:block!important;color:#fff!important;}
+.hero-title .title-line .usa-title-blue{display:inline!important;color:#3b82f6!important;text-shadow:0 0 16px rgba(59,130,246,.30)!important;}
+.hero-title .title-prize{display:block!important;color:#ef4444!important;text-shadow:0 0 20px rgba(239,68,68,.22)!important;}
+
+.market-card.slot .card-fig-canvas,
+.market-card.slot .market-fig-canvas{height:92px!important;flex-basis:92px!important;}
+.market-card.slot .card-fig-canvas svg,
+.market-card.slot .market-fig-canvas svg{width:88px!important;height:88px!important;}
+
+@media(max-width:900px){
+  .hero-title{font-size:36px!important;line-height:.88!important;text-align:left!important;}
+  .hero-title .title-prize{font-size:1em!important;}
+  .topnav{
+    display:grid!important;
+    grid-template-columns:auto minmax(82px,1fr) auto auto!important;
+    align-items:center!important;
+    gap:5px!important;
+    min-height:42px!important;
+    padding:6px!important;
+  }
+  .topnav .logo{font-size:9px!important;letter-spacing:.7px!important;white-space:nowrap!important;min-width:0!important;}
+  .topnav .nav-countdown{
+    position:static!important;
+    transform:none!important;
+    grid-column:auto!important;
+    grid-row:auto!important;
+    justify-self:center!important;
+    width:auto!important;
+    max-width:100%!important;
+    padding:4px 5px!important;
+    font-size:6.5px!important;
+    letter-spacing:.1px!important;
+    white-space:nowrap!important;
+  }
+  .topnav .nav-countdown span{
+    font-size:6.5px!important;
+    margin-right:2px!important;
+    letter-spacing:0!important;
+    color:#fff!important;
+  }
+  .nav-right{display:contents!important;}
+  #walletAddress{display:none!important;}
+  #walletBalance{
+    display:inline-flex!important;
+    grid-column:auto!important;
+    justify-self:end!important;
+    max-width:58px!important;
+    overflow:hidden!important;
+    text-overflow:ellipsis!important;
+    white-space:nowrap!important;
+    font-size:6.5px!important;
+    padding:3px 4px!important;
+  }
+  #connectBtn{
+    grid-column:auto!important;
+    justify-self:end!important;
+    min-width:52px!important;
+    max-width:76px!important;
+    overflow:hidden!important;
+    text-overflow:ellipsis!important;
+    white-space:nowrap!important;
+    font-size:6.8px!important;
+    padding:6px 5px!important;
+  }
+  .market-card.slot .card-fig-canvas,
+  .market-card.slot .market-fig-canvas{height:58px!important;flex-basis:58px!important;}
+  .market-card.slot .card-fig-canvas svg,
+  .market-card.slot .market-fig-canvas svg{width:56px!important;height:56px!important;}
+  .market-card.slot{min-height:164px!important;}
+}
+
+/* Final compact mobile cleanup */
+.slot-count:empty,.slot-status:empty{display:none!important;}
+.slot.empty .slot-info{display:none!important;}
+
+@media(max-width:900px){
+  .page{padding-top:2px!important;gap:4px!important;}
+  .hero{margin-top:0!important;}
+  .hero .panel{padding:6px!important;margin-top:0!important;}
+
+  .topnav{
+    position:fixed!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:space-between!important;
+    min-height:40px!important;
+    height:40px!important;
+    padding:5px 7px!important;
+    gap:5px!important;
+  }
+  .topnav .logo{
+    flex:0 0 auto!important;
+    font-size:9px!important;
+    letter-spacing:.5px!important;
+    max-width:112px!important;
+    overflow:hidden!important;
+    white-space:nowrap!important;
+  }
+  .topnav .nav-countdown{
+    position:absolute!important;
+    left:50%!important;
+    top:50%!important;
+    transform:translate(-50%,-50%)!important;
+    grid-column:auto!important;
+    grid-row:auto!important;
+    justify-self:auto!important;
+    padding:3px 5px!important;
+    font-size:6px!important;
+    letter-spacing:0!important;
+    max-width:112px!important;
+    overflow:hidden!important;
+    white-space:nowrap!important;
+    z-index:1!important;
+  }
+  .topnav .nav-countdown span{
+    font-size:6px!important;
+    letter-spacing:0!important;
+    margin-right:2px!important;
+    color:#fff!important;
+  }
+  .topnav .nav-right{
+    display:flex!important;
+    align-items:center!important;
+    justify-content:flex-end!important;
+    gap:4px!important;
+    margin-left:auto!important;
+    min-width:0!important;
+    position:relative!important;
+    z-index:2!important;
+  }
+  .topnav #walletAddress{display:none!important;}
+  .topnav #walletBalance{
+    display:inline-flex!important;
+    max-width:54px!important;
+    overflow:hidden!important;
+    text-overflow:ellipsis!important;
+    white-space:nowrap!important;
+    font-size:6.2px!important;
+    padding:0!important;
+    border:0!important;
+    background:transparent!important;
+  }
+  .topnav #connectBtn{
+    max-width:68px!important;
+    min-width:48px!important;
+    overflow:hidden!important;
+    text-overflow:ellipsis!important;
+    white-space:nowrap!important;
+    font-size:6.4px!important;
+    padding:5px 5px!important;
+  }
+
+  .arg-quest-stat{
+    display:flex!important;
+    flex-direction:column!important;
+    align-items:center!important;
+    justify-content:center!important;
+    text-align:center!important;
+    gap:3px!important;
+  }
+  .arg-quest-stat .arg-quest-copy{display:grid!important;place-items:center!important;text-align:center!important;width:100%!important;}
+
+  .market-card.slot{
+    min-height:142px!important;
+    padding:3px!important;
+    gap:1px!important;
+    justify-content:space-between!important;
+  }
+  .market-card.slot .card-fig-canvas,
+  .market-card.slot .market-fig-canvas{
+    height:70px!important;
+    flex:0 0 70px!important;
+    margin:0!important;
+  }
+  .market-card.slot .card-fig-canvas svg,
+  .market-card.slot .market-fig-canvas svg{
+    width:70px!important;
+    height:70px!important;
+  }
+  .market-card .market-meta{min-height:12px!important;margin-top:0!important;}
+  .market-trade{margin-top:1px!important;gap:2px!important;}
+  .market-trade .market-price{font-size:8px!important;}
+  .market-trade .slot-action{min-height:20px!important;padding:3px 2px!important;}
+}
+
+/* Final mobile top spacing */
+@media(max-width:900px){
+  .page{padding-top:44px!important;}
+}
+
+/* Market score and price tight line */
+.market-card .market-meta{min-height:0!important;margin-top:0!important;display:block!important;}
+.market-score-line{display:flex!important;align-items:baseline!important;justify-content:space-between!important;gap:6px!important;width:100%!important;line-height:1!important;}
+.market-score-line .slot-count{font-size:18px!important;line-height:1!important;color:inherit!important;}
+.market-score-line .slot-status{font-size:8px!important;line-height:1!important;color:inherit!important;text-align:right!important;}
+.market-trade{margin-top:0!important;gap:2px!important;}
+.market-trade .market-price{margin:0!important;line-height:1!important;}
+@media(max-width:900px){
+  .market-score-line .slot-count{font-size:10px!important;}
+  .market-score-line .slot-status{font-size:5px!important;}
+  .market-card .market-meta{min-height:0!important;}
+  .market-trade{margin-top:0!important;gap:1px!important;}
+  .market-trade .market-price{font-size:8px!important;}
+}
+
+/* Final market compaction and price sort visual */
+.market-card.slot{justify-content:flex-start!important;gap:2px!important;}
+.market-card .market-meta{margin:0!important;padding:0!important;min-height:0!important;display:block!important;}
+.market-score-line{margin:0!important;padding:0!important;}
+.market-trade{margin:0!important;padding:0!important;gap:2px!important;}
+.market-trade .market-price{margin:0!important;padding:0!important;line-height:1!important;}
+.market-trade .slot-action{margin:0!important;}
+@media(max-width:900px){
+  .market-card.slot{justify-content:flex-start!important;gap:1px!important;min-height:132px!important;}
+  .market-card.slot .card-fig-canvas,.market-card.slot .market-fig-canvas{height:68px!important;flex:0 0 68px!important;margin:0!important;}
+  .market-card.slot .card-fig-canvas svg,.market-card.slot .market-fig-canvas svg{width:68px!important;height:68px!important;}
+  .market-card .market-meta{margin:0!important;padding:0!important;min-height:0!important;}
+  .market-score-line{margin:0!important;padding:0!important;line-height:1!important;}
+  .market-trade{margin:0!important;padding:0!important;gap:1px!important;}
+  .market-trade .market-price{margin:0!important;padding:0!important;line-height:1!important;}
+  .market-trade .slot-action{margin:0!important;min-height:19px!important;}
+}
+
+/* Final market no-bottom-gap and feed price column */
+.market-card.slot{min-height:auto!important;height:auto!important;padding-bottom:4px!important;}
+.market-trade{align-self:stretch!important;}
+.market-trade .slot-action{margin-bottom:0!important;}
+.feed-row{grid-template-columns:42px minmax(0,1fr) auto auto!important;}
+.feed-price{font-family:'Black Ops One',sans-serif;color:#ffc940;font-size:11px;white-space:nowrap;text-align:right;}
+@media(max-width:900px){
+  .market-card.slot{min-height:auto!important;height:auto!important;padding-bottom:3px!important;}
+  .feed-row{grid-template-columns:30px minmax(0,1fr) auto auto!important;gap:5px!important;}
+  .feed-price{font-size:7px!important;}
+}
+
+/* Final Argentina tile center and mint feed price */
+.arg-quest-stat{align-items:center!important;justify-items:center!important;text-align:center!important;}
+.arg-quest-stat .arg-quest-copy{display:grid!important;place-items:center!important;text-align:center!important;width:100%!important;}
+.arg-quest-stat .stat-value,.arg-quest-stat .stat-label{text-align:center!important;width:100%!important;}
+@media(min-width:901px){
+  .arg-quest-stat{grid-template-columns:auto minmax(0,1fr)!important;justify-content:center!important;}
+}
 </style>
 </head>
 <body>
 <div class="page">
   <header class="topnav">
-    <div class="top-left">
-      <a class="brand" href="/"><span class="brand-ball">⚽</span><span>BLOCK <b>KICKERS</b></span></a>
+    <a class="logo" href="/">&#9917; BLOCK <span>KICKERS</span></a>
+    <div class="nav-countdown" id="navPriceCountdown"><span>50 CHZ IN</span>--:--:--:--</div>
+    <div class="nav-right">
       <span id="walletAddress" class="wallet-info addr">0x0000...0000</span>
       <span id="walletBalance" class="wallet-info balance">0.0 CHZ</span>
-    </div>
-    <div class="nav-actions">
-      <span class="pill" id="walletPill">NO WALLET</span>
-      <a class="btn x-link" href="https://x.com/fan_tokens" target="_blank" rel="noopener noreferrer" aria-label="Open fan_tokens on X">X</a>
-      <button class="btn secondary" id="connectBtn" type="button" onclick="openWalletModal()">CONNECT</button>
-      <button class="btn secondary" id="refreshBtn" type="button" onclick="manualRefresh()">REFRESH</button>
-      <button class="btn" id="mintBtn" type="button" onclick="directMint()">MINT 10 CHZ</button>
+      <button class="btn-connect" id="connectBtn" type="button" onclick="openWalletModal()">CONNECT</button>
     </div>
   </header>
 
   <section class="hero">
     <div class="panel">
       <div class="quest-kicker"><span class="dot"></span> Open Nation Quest</div>
-      <h1 class="hero-title">USA QUEST <span>1500 CHZ</span></h1>
-      <p class="hero-copy">The missing USA card has been found by the creator wallet, so the reward rolls into the main race. First wallet to complete <strong>11/11 USA positions wins 1500 CHZ</strong>.</p>
-      <div class="mint-row">
-        <button class="btn" id="heroMintBtn" type="button" onclick="directMint()">MINT RANDOM WC CARD</button>
-        <span class="wallet-note" id="mintNote">Connect wallet or mint directly in a Web3 browser.</span>
-      </div>
-    </div>
-    <div class="panel gold">
-      <div class="usa-card">
-        <img class="flag" src="https://flagcdn.com/w160/us.png" alt="USA flag">
-        <div>
-          <div class="usa-title">USA SQUAD RACE</div>
-          <div class="usa-sub">First complete wallet wins the squad prize</div>
-        </div>
-      </div>
-      <div class="reward">1500 <small>CHZ</small></div>
-      <div class="reward-label">Rolled-up prize for the first complete USA squad</div>
-      <a class="cross-quest" href="https://block-kickers.vercel.app/dream-xi" target="_blank" rel="noopener noreferrer">
-        <span>
-          <span class="cross-kicker">More Live Rewards</span>
-          <span class="cross-title">Dream XI Argentina</span>
-        </span>
-        <span class="cross-prize">10k CHZ</span>
-      </a>
-      <div class="status-line" id="questStatus">Loading live quest status...</div>
+      <h1 class="hero-title"><span class="title-line"><span class="usa-title-blue">USA</span> QUEST</span><span class="title-prize">1500 CHZ</span></h1>
+      <p class="hero-copy"><span>First wallet to complete <strong>11/11 USA positions wins 1500 CHZ</strong>.</span><span>Mint, buy, sell and upgrade directly on this quest page.</span></p>
     </div>
   </section>
+  <div class="status-line" id="questStatus" style="display:none">Loading live quest status...</div>
 
   <section class="stats">
-    <div class="stat"><div class="stat-value" id="statCompleted">- / 11</div><div class="stat-label">USA Positions</div></div>
+    <div class="stat"><div class="stat-value" id="statCompleted">-</div><div class="stat-label">Players</div></div>
     <div class="stat"><div class="stat-value gold" id="statLeader">- / 11</div><div class="stat-label" id="statLeaderLabel">Quest Leader</div></div>
+    <a class="stat arg-quest-stat" href="https://block-kickers.vercel.app/dream-xi">
+      <img class="arg-quest-flag" src="https://flagcdn.com/w80/ar.png" alt="Argentina" loading="lazy">
+      <div class="arg-quest-copy">
+        <div class="stat-value gold">ARGENTINA</div>
+        <div class="stat-label">Dream XI 10k CHZ</div>
+      </div>
+    </a>
+    <button class="stat mint-stat" id="heroMintBtn" type="button" onclick="directMint()">
+      <div class="stat-value">MINT</div>
+      <div class="stat-label">Random WC Card</div>
+    </button>
     <div class="stat"><div class="stat-value blue" id="myCompleted">- / 11</div><div class="stat-label">My USA Squad</div></div>
     <div class="stat"><div class="stat-value gold" id="statUsaCards">-</div><div class="stat-label">USA Cards Minted</div></div>
   </section>
 
   <main class="main-grid">
-    <section class="panel">
+    <section class="panel global-slots-panel">
       <div class="section-title"><span>Global USA Slots</span><span class="live" id="updatedAt">Reading chain...</span></div>
       <div class="squad" id="globalSlots"><div class="loading" style="grid-column:1/-1"><span class="spin"></span>Loading USA positions...</div></div>
     </section>
 
-    <section class="panel">
+    <div class="quest-left-column">
+    <section class="panel my-squad-panel">
       <div class="section-title"><span>My USA Squad</span><span class="live" id="myStatus">Connect wallet</span></div>
       <div class="squad" id="mySlots"><div class="loading" style="grid-column:1/-1">Connect wallet to track your 1500 CHZ squad race.</div></div>
     </section>
@@ -206,14 +1079,25 @@ a{text-decoration:none;color:inherit}
       <div class="market-grid" id="marketGrid"><div class="loading" style="grid-column:1/-1"><span class="spin"></span>Loading USA listings...</div></div>
     </section>
 
-    <aside class="info-grid">
-      <div class="callout gold">
-        <h3>Reward Rolled Up</h3>
-        <div class="winner-box" id="cardWinnerBox">The 500 CHZ card hunt reward is now added to the main USA squad prize.</div>
-      </div>
+    </div>
+
+    <aside class="info-grid quest-side-panel">
+      <div id="cardWinnerBox" style="display:none"></div>
       <div class="callout">
         <h3>1500 CHZ Squad Prize</h3>
         <div class="winner-box" id="squadWinnerBox">First wallet to complete all 11 USA positions wins.</div>
+      </div>
+      <div class="callout trading-tips">
+        <h3>Trading Tips</h3>
+        <ul>
+          <li>If you own a card another player is missing, list it higher.</li>
+          <li>A last missing position can be worth 500 CHZ or more if it unlocks profit.</li>
+          <li>Watch USA Rank and Latest Events, then price rare positions aggressively.</li>
+        </ul>
+      </div>
+      <div class="panel" style="padding:10px">
+        <div class="section-title"><span>USA Rank</span><span class="live" id="rankCount">LIVE</span></div>
+        <div class="rank-list" id="rankList"><div class="loading">Loading rank...</div></div>
       </div>
       <div class="panel" style="padding:10px">
         <div class="section-title"><span>Latest USA Events</span><span class="live" id="feedCount">LIVE</span></div>
@@ -266,6 +1150,7 @@ a{text-decoration:none;color:inherit}
     <div class="network-ball">⚽</div>
     <div class="network-title">Waiting for network</div>
     <div class="network-text" id="networkText">Please confirm in your wallet and wait for Chiliz Chain.</div>
+    <div class="network-steps" id="networkSteps" aria-live="polite"></div>
   </div>
 </div>
 
@@ -321,26 +1206,190 @@ function parseDNA(dna) {
   const n = typeof dna === "bigint" ? dna : BigInt(String(dna));
   const teamId = Number(n % 48n);
   const position = Number((n >> 6n) % 11n) + 1;
-  const rarity = Number((n >> 10n) % 4n);
-  const base = [10,18,38,82][rarity] || 10;
-  const weight = base + Number((n >> 16n) % 8n);
-  return {teamId, position, rarity, weight};
+  const rarRand = Number((n >> 10n) % 10000n);
+  const rarity = rarRand < 100 ? 3 : rarRand < 1000 ? 2 : rarRand < 3000 ? 1 : 0;
+  const hasGoldenBoots = Number((n >> 24n) % 100n) < 5;
+  const hasTattoo = Number((n >> 30n) % 100n) < 15;
+  const hasEarring = Number((n >> 27n) % 100n) < 25;
+  const hasBand = Number((n >> 28n) % 100n) < 25;
+  const hasGloves = Number((n >> 29n) % 100n) < 20;
+  const skinTone = Number((n >> 32n) % 6n);
+  let weight = [10,18,36,82][rarity];
+  if (hasGoldenBoots) weight += 8;
+  if (hasTattoo) weight += 5;
+  if (hasEarring) weight += 3;
+  if (hasBand) weight += 2;
+  if (hasGloves && position === 1) weight += 2;
+  return {teamId, position, rarity, weight, hasGoldenBoots, hasTattoo, hasEarring, hasBand, hasGloves, skinTone};
 }
 function shortAddr(addr){return addr ? `${addr.slice(0,6)}...${addr.slice(-4)}` : "0x...";}
 function rarityName(r){return ["Common","Rare","Epic","Legendary"][r] || "Common";}
+function rarityShort(r){return ["COM","RAR","EPI","LEG"][Number(r)] || "COM";}
 function posLabel(id){return POSITIONS.find(p => p.id === Number(id))?.label || String(id);}
 function readableError(error) {
-  const msg = error?.shortMessage || error?.reason || error?.message || String(error || "Unknown error");
+  const parts = [];
+  const push = v => { if (v !== undefined && v !== null && String(v).trim()) parts.push(String(v)); };
+  push(error?.shortMessage);
+  push(error?.reason);
+  push(error?.message);
+  push(error?.data?.message);
+  push(error?.error?.message);
+  push(error?.info?.error?.message);
+  push(error?.cause?.message);
+  try {
+    const json = JSON.stringify(error, (key, value) => typeof value === "bigint" ? value.toString() : value);
+    if (json && json !== "{}") parts.push(json);
+  } catch(e) {}
+  const msg = parts.length ? parts.join(" | ") : String(error || "Unknown error");
   return msg.replace(/\s+/g, " ").trim();
+}
+function isInsufficientFundsError(error) {
+  const text = readableError(error).toLowerCase();
+  return text.includes("insufficient funds")
+    || text.includes("exceeds balance")
+    || text.includes("insufficient balance")
+    || text.includes("not enough funds")
+    || text.includes("not enough chz")
+    || text.includes("balance too low")
+    || text.includes("lack of funds")
+    || text.includes("gas required exceeds allowance")
+    || text.includes("gas fee exceeds")
+    || text.includes("cannot afford");
+}
+function transactionFailMessage(action, error, amountText = "") {
+  if (isInsufficientFundsError(error)) {
+    const amount = amountText ? ` Required: ${amountText} + gas.` : " You need CHZ for gas.";
+    return `${action} failed: not enough CHZ in your wallet.${amount}`;
+  }
+  return `${action} failed. Check balance, network, and wallet confirmation.`;
 }
 function isMissingPrivySession(error) {
   const text = readableError(error).toLowerCase();
   return text.includes("missing_or_invalid_token") || text.includes("no tokens found") || text.includes("invalid token");
 }
-function ballIcon(){return '<span style="font-family:Arial, sans-serif;font-weight:900;">⚽</span>';}
+function rarityClassName(r){return ["common","rare","epic","legendary"][Number(r)] || "common";}
+function rarityColor(r){return ["#7a8899","#3b82f6","#c084fc","#ffc940"][Number(r)] || "#7a8899";}
+function normalizeChzPrice(value) {
+  if (value === undefined || value === null || value === "") return undefined;
+  try {
+    if (typeof value === "bigint") return Number(ethers.formatEther(value));
+    const text = String(value).trim();
+    if (!text) return undefined;
+    if (/^\d+$/.test(text) && text.length > 10) return Number(ethers.formatEther(BigInt(text)));
+    const num = Number(text);
+    if (!Number.isFinite(num)) return undefined;
+    if (num > 10000000000) return Number(ethers.formatEther(BigInt(Math.trunc(num))));
+    return num;
+  } catch(e) {
+    const fallback = Number(value);
+    return Number.isFinite(fallback) ? fallback : undefined;
+  }
+}
+function formatChzPrice(value) {
+  const price = normalizeChzPrice(value);
+  if (price === undefined) return "-";
+  return `${Number.isInteger(price) ? price : Number(price.toFixed(4))} CHZ`;
+}
+function makeQuestFigureSVG(dna, size = 72, faded = false) {
+  const t = parseDNA(dna || 0n);
+  const skinColors = ['#FDBCB4','#F1C27D','#E0AC69','#C68642','#8D5524','#4A2912'];
+  const rarityGlow = ['#6b7280','#3b82f6','#a855f7','#f59e0b'];
+  const shirt = '#002868';
+  const skin = skinColors[Math.min(t.skinTone || 2, 5)];
+  const rar = rarityGlow[t.rarity] || '#6b7280';
+  const pos = t.position || 10;
+  const numC = '#fff';
+  const bootC = t.hasGoldenBoots ? '#FFD700' : '#111';
+  const opacity = faded ? .34 : 1;
+  const s = size, cx = s / 2;
+  const headY = s * 0.12, headW = s * 0.30, headH = s * 0.28;
+  const bodyY = headY + headH * 0.85, bodyW = s * 0.40, bodyH = s * 0.28;
+  const legW = s * 0.10, legH = s * 0.22, legGap = s * 0.04;
+  const legY = bodyY + bodyH * 0.85;
+  const armW = s * 0.09, armH = s * 0.20, armY = bodyY + s * 0.02;
+  const bootH = s * 0.09, handR = s * 0.06;
+  const p = [];
+  p.push('<ellipse cx="'+cx+'" cy="'+(legY+legH+bootH+s*0.03)+'" rx="'+(bodyW*0.55)+'" ry="'+(s*0.04)+'" fill="'+rar+'" opacity="0.2"/>');
+  p.push('<rect x="'+(cx-legW-legGap)+'" y="'+legY+'" width="'+legW+'" height="'+legH+'" rx="3" fill="'+shirt+'"/>');
+  p.push('<rect x="'+(cx+legGap)+'" y="'+legY+'" width="'+legW+'" height="'+legH+'" rx="3" fill="'+shirt+'"/>');
+  const sockY = legY + legH * 0.65;
+  p.push('<rect x="'+(cx-legW-legGap)+'" y="'+sockY+'" width="'+legW+'" height="'+(legH*0.38)+'" rx="2" fill="white"/>');
+  p.push('<rect x="'+(cx+legGap)+'" y="'+sockY+'" width="'+legW+'" height="'+(legH*0.38)+'" rx="2" fill="white"/>');
+  const bootY = legY + legH;
+  p.push('<rect x="'+(cx-legW-legGap-2)+'" y="'+bootY+'" width="'+(legW+4)+'" height="'+bootH+'" rx="3" fill="'+bootC+'"/>');
+  p.push('<rect x="'+(cx+legGap-2)+'" y="'+bootY+'" width="'+(legW+4)+'" height="'+bootH+'" rx="3" fill="'+bootC+'"/>');
+  p.push('<rect x="'+(cx-bodyW/2)+'" y="'+(bodyY+bodyH*0.78)+'" width="'+bodyW+'" height="'+(s*0.09)+'" rx="3" fill="'+shirt+'cc"/>');
+  p.push('<rect x="'+(cx-bodyW/2)+'" y="'+bodyY+'" width="'+bodyW+'" height="'+(bodyH*0.85)+'" rx="5" fill="'+shirt+'"/>');
+  p.push('<text x="'+cx+'" y="'+(bodyY+bodyH*0.55)+'" text-anchor="middle" font-family="Arial Black" font-size="'+(s*0.13)+'" font-weight="900" fill="'+numC+'" opacity="0.9">'+pos+'</text>');
+  p.push('<rect x="'+(cx-bodyW/2-armW+2)+'" y="'+armY+'" width="'+armW+'" height="'+armH+'" rx="3" fill="'+shirt+'" transform="rotate(7,'+(cx-bodyW/2)+','+armY+')"/>');
+  p.push('<rect x="'+(cx+bodyW/2-2)+'" y="'+armY+'" width="'+armW+'" height="'+armH+'" rx="3" fill="'+shirt+'" transform="rotate(-7,'+(cx+bodyW/2)+','+armY+')"/>');
+  p.push('<circle cx="'+(cx-bodyW/2-s*0.04)+'" cy="'+(armY+armH)+'" r="'+handR+'" fill="'+skin+'"/>');
+  p.push('<circle cx="'+(cx+bodyW/2+s*0.04)+'" cy="'+(armY+armH)+'" r="'+handR+'" fill="'+skin+'"/>');
+  if (t.hasGloves) {
+    p.push('<circle cx="'+(cx-bodyW/2-s*0.04)+'" cy="'+(armY+armH)+'" r="'+(handR+2)+'" fill="none" stroke="#FFD700" stroke-width="2"/>');
+    p.push('<circle cx="'+(cx+bodyW/2+s*0.04)+'" cy="'+(armY+armH)+'" r="'+(handR+2)+'" fill="none" stroke="#FFD700" stroke-width="2"/>');
+  }
+  p.push('<rect x="'+(cx-s*0.04)+'" y="'+(bodyY-s*0.05)+'" width="'+(s*0.08)+'" height="'+(s*0.07)+'" rx="2" fill="'+skin+'"/>');
+  p.push('<rect x="'+(cx-headW/2)+'" y="'+headY+'" width="'+headW+'" height="'+headH+'" rx="6" fill="'+skin+'"/>');
+  p.push('<rect x="'+(cx-headW/2-s*0.03)+'" y="'+(headY+headH*0.25)+'" width="'+(s*0.04)+'" height="'+(s*0.08)+'" rx="2" fill="'+skin+'"/>');
+  p.push('<rect x="'+(cx+headW/2-s*0.01)+'" y="'+(headY+headH*0.25)+'" width="'+(s*0.04)+'" height="'+(s*0.08)+'" rx="2" fill="'+skin+'"/>');
+  if (t.hasEarring) p.push('<circle cx="'+(cx-headW/2-1)+'" cy="'+(headY+headH*0.38)+'" r="'+(s*0.025)+'" fill="#FFD700"/>');
+  const eyeY = headY + headH * 0.32, eyeW = s * 0.07, eyeH = s * 0.05;
+  p.push('<rect x="'+(cx-headW*0.36)+'" y="'+eyeY+'" width="'+eyeW+'" height="'+eyeH+'" rx="2" fill="white"/>');
+  p.push('<rect x="'+(cx+headW*0.08)+'" y="'+eyeY+'" width="'+eyeW+'" height="'+eyeH+'" rx="2" fill="white"/>');
+  p.push('<rect x="'+(cx-headW*0.33)+'" y="'+(eyeY+1)+'" width="'+(eyeW*0.6)+'" height="'+(eyeH*0.7)+'" rx="1" fill="#0a0a14"/>');
+  p.push('<rect x="'+(cx+headW*0.11)+'" y="'+(eyeY+1)+'" width="'+(eyeW*0.6)+'" height="'+(eyeH*0.7)+'" rx="1" fill="#0a0a14"/>');
+  p.push('<rect x="'+(cx-headW*0.38)+'" y="'+(eyeY-s*0.04)+'" width="'+(eyeW+2)+'" height="'+(s*0.025)+'" rx="1" fill="#1a0800" opacity="0.8"/>');
+  p.push('<rect x="'+(cx+headW*0.06)+'" y="'+(eyeY-s*0.04)+'" width="'+(eyeW+2)+'" height="'+(s*0.025)+'" rx="1" fill="#1a0800" opacity="0.8"/>');
+  p.push('<rect x="'+(cx-s*0.02)+'" y="'+(eyeY+eyeH+s*0.02)+'" width="'+(s*0.04)+'" height="'+(s*0.05)+'" rx="2" fill="'+skin+'" opacity="0.7"/>');
+  p.push('<rect x="'+(cx-s*0.07)+'" y="'+(headY+headH*0.72)+'" width="'+(s*0.14)+'" height="'+(s*0.03)+'" rx="2" fill="#8b1a00" opacity="0.8"/>');
+  if (t.hasBand) p.push('<rect x="'+(cx-headW/2-2)+'" y="'+(headY+headH*0.18)+'" width="'+(headW+4)+'" height="'+(s*0.06)+'" rx="3" fill="white" opacity="0.85"/>');
+  if (t.hasTattoo) {
+    p.push('<line x1="'+(cx-bodyW/2-armW/2)+'" y1="'+(armY+armH*0.3)+'" x2="'+(cx-bodyW/2-armW/2+s*0.04)+'" y2="'+(armY+armH*0.5)+'" stroke="#000" stroke-width="1.5" opacity="0.5"/>');
+    p.push('<line x1="'+(cx-bodyW/2-armW/2+s*0.04)+'" y1="'+(armY+armH*0.3)+'" x2="'+(cx-bodyW/2-armW/2)+'" y2="'+(armY+armH*0.5)+'" stroke="#000" stroke-width="1.5" opacity="0.5"/>');
+  }
+  return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 '+s+' '+s+'" width="'+s+'" height="'+s+'" style="opacity:'+opacity+'">'+p.join('')+'</svg>';
+}
+const QUEST_CARD_LAYOUT = {
+  flag: "https://flagcdn.com/w40/us.png",
+  flagAlt: "USA",
+  figureSize: {slot: 72, market: 72}
+};
+function figureCanvas(card, faded = false, cls = "slot", posLabelText = "") {
+  const dna = card?.dna || card?.tokenId || 0;
+  const size = QUEST_CARD_LAYOUT.figureSize[cls] || QUEST_CARD_LAYOUT.figureSize.slot;
+  return `<div class="${cls}-fig-canvas card-fig-canvas ${faded ? "empty" : ""}">
+    <img class="${cls}-fig-flag card-flag" src="${QUEST_CARD_LAYOUT.flag}" alt="${QUEST_CARD_LAYOUT.flagAlt}" loading="lazy">
+    ${posLabelText ? `<div class="slot-pos card-pos">${posLabelText}</div>` : ""}
+    ${makeQuestFigureSVG(dna, size, faded)}
+  </div>`;
+}
+function ballIcon(){return figureCanvas(null, true);}
 function showOverlay(msg){document.getElementById("networkText").textContent = msg;document.getElementById("networkOverlay").classList.add("show");}
 function updateOverlay(msg){document.getElementById("networkText").textContent = msg;}
-function hideOverlay(){document.getElementById("networkOverlay").classList.remove("show");}
+function hideOverlay(){
+  document.getElementById("networkOverlay").classList.remove("show");
+  resetLoadingSteps();
+}
+const LOAD_STEPS = ["Events / API", "USA cards", "Marketplace", "Render quest"];
+function setNetworkTitle(text){ const el = document.querySelector(".network-title"); if (el && text) el.textContent = text; }
+function renderLoadingSteps(active = 0){
+  const el = document.getElementById("networkSteps");
+  if (!el) return;
+  el.classList.add("active");
+  el.innerHTML = LOAD_STEPS.map((label, idx) => `<div class="network-step ${idx < active ? "done" : idx === active ? "active" : ""}">${label}</div>`).join("");
+}
+function showDataLoading(msg = "Reading Nation Quest data..."){
+  setNetworkTitle("Loading Nation Quest");
+  showOverlay(msg);
+  renderLoadingSteps(0);
+}
+function updateDataLoading(index, msg){
+  updateOverlay(msg || LOAD_STEPS[index] || "Loading data...");
+  renderLoadingSteps(index);
+}
+function finishLoadingSteps(){ renderLoadingSteps(LOAD_STEPS.length); updateOverlay("Done. Dashboard updated."); }
+function resetLoadingSteps(){ const el = document.getElementById("networkSteps"); if (el) { el.classList.remove("active"); el.innerHTML = ""; } setNetworkTitle("Waiting for network"); }
 function formatTime(ts){return ts ? new Date(ts * 1000).toLocaleString([], {month:"short", day:"2-digit", hour:"2-digit", minute:"2-digit"}) : "time pending";}
 function refreshRemainingMs(){return Math.max(0, REFRESH_COOLDOWN_MS - (Date.now() - Number(localStorage.getItem(REFRESH_KEY) || 0)));}
 function markRefresh(){localStorage.setItem(REFRESH_KEY, String(Date.now()));}
@@ -399,18 +1448,18 @@ async function finalizeWalletConnection(walletProvider, label) {
   provider = browserProvider;
   contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
   marketContract = new ethers.Contract(MARKET_ADDRESS, MARKET_ABI, signer);
-  document.getElementById("walletPill").textContent = `${label} ${shortAddr(address)}`;
+  const walletPill = document.getElementById("walletPill");
+  if (walletPill) walletPill.textContent = `${label} ${shortAddr(address)}`;
   const addrEl = document.getElementById("walletAddress");
   const balEl = document.getElementById("walletBalance");
   const connectBtn = document.getElementById("connectBtn");
   if (addrEl) { addrEl.textContent = shortAddr(address); addrEl.style.display = "inline-flex"; }
   if (balEl) {
     const bal = await browserProvider.getBalance(address).catch(() => 0n);
-    balEl.textContent = `${Number(ethers.formatEther(bal)).toFixed(1)} CHZ`;
+    balEl.textContent = `${Number(ethers.formatEther(bal)).toFixed(3)} CHZ`;
     balEl.style.display = "inline-flex";
   }
-  if (connectBtn) connectBtn.classList.add("connected");
-  document.getElementById("mintNote").textContent = `Connected: ${shortAddr(address)}`;
+  if (connectBtn) { connectBtn.textContent = shortAddr(address); connectBtn.classList.add("connected"); }
   await loadQuest(true, true);
 }
 
@@ -592,7 +1641,7 @@ async function directMint() {
     await loadQuest(true, true);
   } catch(e) {
     console.error(e);
-    alert("Mint failed. Check CHZ balance, network, and wallet confirmation.");
+    alert(transactionFailMessage("Mint", e, `${ethers.formatEther(currentMintPrice)} CHZ`));
   } finally {
     hideOverlay();
   }
@@ -620,7 +1669,7 @@ async function buyListing(listingId, priceChz) {
     await loadQuest(true, true);
   } catch(e) {
     console.error(e);
-    alert("Buy failed. Check balance, listing status and wallet confirmation.");
+    alert(transactionFailMessage("Buy", e, `${priceChz} CHZ`));
   } finally {
     hideOverlay();
   }
@@ -654,7 +1703,7 @@ async function listCard(tokenId) {
     await loadQuest(true, true);
   } catch(e) {
     console.error(e);
-    alert("Listing failed. The card may already be listed or unavailable.");
+    alert(transactionFailMessage("Listing", e));
   } finally {
     hideOverlay();
   }
@@ -674,7 +1723,7 @@ async function cancelListing(listingId) {
     await loadQuest(true, true);
   } catch(e) {
     console.error(e);
-    alert("Cancel failed. Make sure this is your listing.");
+    alert(transactionFailMessage("Cancel", e));
   } finally {
     hideOverlay();
   }
@@ -690,7 +1739,7 @@ async function fetchEvents() {
       const data = await res.json();
       if (Array.isArray(data.mints)) {
         const mints = data.mints.map(m => ({type:"mint", owner:String(m.owner||"").toLowerCase(), tokenId:Number(m.tokenId), dna:BigInt(String(m.dna)), block:Number(m.block||0)}));
-        const sales = Array.isArray(data.sales) ? data.sales.map(s => ({type:"sale", buyer:String(s.buyer||"").toLowerCase(), tokenId:Number(s.tokenId), block:Number(s.block||0)})).filter(s => s.tokenId) : [];
+        const sales = Array.isArray(data.sales) ? data.sales.map(s => ({type:"sale", buyer:String(s.buyer||"").toLowerCase(), tokenId:Number(s.tokenId), block:Number(s.block||0), price:normalizeChzPrice(s.price)})).filter(s => s.tokenId) : [];
         return {mints, sales};
       }
     }
@@ -709,26 +1758,41 @@ async function fetchEvents() {
     const to = Math.min(from + chunk - 1, current);
     try {(await rc.queryFilter(rc.filters.FigureMinted(), from, to)).forEach(ev => mints.push({type:"mint", owner:String(ev.args.owner||"").toLowerCase(), tokenId:Number(ev.args.tokenId), dna:ev.args.dna, block:Number(ev.blockNumber||0)}));} catch(e) {}
     try {(await rmk.queryFilter(rmk.filters.Listed(), from, to)).forEach(ev => listed.push({listingId:Number(ev.args.listingId), tokenId:Number(ev.args.tokenId)}));} catch(e) {}
-    try {(await rmk.queryFilter(rmk.filters.Sold(), from, to)).forEach(ev => sold.push({listingId:Number(ev.args.listingId), buyer:String(ev.args.buyer||"").toLowerCase(), block:Number(ev.blockNumber||0)}));} catch(e) {}
+    try {(await rmk.queryFilter(rmk.filters.Sold(), from, to)).forEach(ev => sold.push({listingId:Number(ev.args.listingId), buyer:String(ev.args.buyer||"").toLowerCase(), price:normalizeChzPrice(ev.args.price || 0n), block:Number(ev.blockNumber||0)}));} catch(e) {}
   }
   const listingToToken = new Map(listed.map(l => [l.listingId, l.tokenId]));
-  const sales = sold.map(s => ({type:"sale", buyer:s.buyer, tokenId:listingToToken.get(s.listingId), block:s.block})).filter(s => s.tokenId);
+  const sales = sold.map(s => ({type:"sale", buyer:s.buyer, tokenId:listingToToken.get(s.listingId), price:s.price, block:s.block})).filter(s => s.tokenId);
   return {mints, sales};
 }
 
+async function readListingsBatch(marketReader, ids, batchSize = 36) {
+  const active = [];
+  for (let offset = 0; offset < ids.length; offset += batchSize) {
+    const batch = ids.slice(offset, offset + batchSize);
+    const settled = await Promise.allSettled(batch.map(listingId => marketReader.getListing(listingId).then(listing => ({listingId, listing}))));
+    settled.forEach(result => {
+      if (result.status !== "fulfilled") return;
+      const {listingId, listing} = result.value;
+      if (!listing || !Boolean(listing[3])) return;
+      active.push({listingId, listing});
+    });
+  }
+  return active;
+}
 async function fetchActiveListings(tokenInfo) {
   const readMarket = marketContract || new ethers.Contract(MARKET_ADDRESS, MARKET_ABI, provider);
   const listings = [];
   try {
     const nextId = Number(await readMarket.nextListingId());
     const from = Math.max(0, nextId - 400);
-    for (let i = from; i < nextId; i++) {
+    const listingIds = [];
+    for (let i = from; i < nextId; i++) listingIds.push(i);
+    const activeListings = await readListingsBatch(readMarket, listingIds, 36);
+    activeListings.forEach(({listingId:i, listing:l}) => {
       try {
-        const l = await readMarket.getListing(i);
-        if (!Boolean(l[3])) continue;
         const tokenId = Number(l[1]);
         const card = tokenInfo.get(tokenId);
-        if (!card || card.teamId !== USA_TEAM_ID) continue;
+        if (!card || card.teamId !== USA_TEAM_ID) return;
         const priceWei = l[2];
         listings.push({
           ...card,
@@ -739,7 +1803,7 @@ async function fetchActiveListings(tokenInfo) {
           price:Number(ethers.formatEther(priceWei))
         });
       } catch(e) {}
-    }
+    });
   } catch(e) {
     console.warn("Market listings unavailable", e);
   }
@@ -760,11 +1824,11 @@ async function buildState() {
   const events = [];
   mints.forEach(m => {
     const card = tokenInfo.get(m.tokenId);
-    if (card && card.teamId === USA_TEAM_ID) events.push({...card, wallet:m.owner, eventType:"mint", block:m.block});
+    if (card && card.teamId === USA_TEAM_ID) events.push({...card, wallet:m.owner, eventType:"mint", price:normalizeChzPrice(currentMintPrice) || 10, block:m.block});
   });
   sales.forEach(s => {
     const card = tokenInfo.get(s.tokenId);
-    if (card && card.teamId === USA_TEAM_ID) events.push({...card, wallet:s.buyer, eventType:"buy", block:s.block});
+    if (card && card.teamId === USA_TEAM_ID) events.push({...card, wallet:s.buyer, eventType:"buy", price:s.price, block:s.block});
   });
   events.sort((a,b) => (a.block || 0) - (b.block || 0) || a.tokenId - b.tokenId);
 
@@ -813,20 +1877,25 @@ function renderSlots(targetId, filledSet, byPosition, winnerPos = null, mode = "
     const unlistedCards = cards.filter(card => !listedTokens.has(Number(card.tokenId)));
     const sellable = mode === "mine" && unlistedCards.length;
     const ownListing = myListed[0];
+    const visualCard = best || floor || {tokenId: pos.id, dna: BigInt(pos.id * 1000), rarity:0, weight:0};
+    const rarity = best?.rarity ?? floor?.rarity ?? 0;
+    const rarityCls = rarityClassName(rarity);
     const el = document.createElement("div");
-    el.className = `slot ${done ? "done" : "open"} ${mode === "mine" && best ? `rarity-${best.rarity}` : ""} ${winnerPos === pos.id ? "win" : ""}`;
-    const openCount = mode === "global" ? "-" : (floor ? `${floor.price}` : "-");
-    const openStatus = mode === "global" ? "OPEN" : (floor ? "BUY CHZ" : "MISSING");
+    el.className = `slot ${done ? "done" : "open empty"} ${best ? `rarity-${best.rarity}` : ""} ${winnerPos === pos.id ? "win" : ""}`;
     const actionHtml = mode === "mine" ? `
-        ${floor ? `<button class="slot-action buy" onclick="buyListing(${floor.listingId}, '${floor.price}')">BUY</button>` : ""}
+        ${floor ? `<button class="slot-action buy" onclick="buyListing(${floor.listingId}, '${floor.price}')">BUY ${floor.price} CHZ</button>` : ""}
         ${ownListing && !sellable ? `<button class="slot-action sell" onclick="cancelListing(${ownListing.listingId})">CANCEL</button>` : ""}
         ${sellable ? `<button class="slot-action sell" onclick="openSellCards(${pos.id})">SELL</button>` : ""}
       ` : "";
+    const scoreText = best ? `${best.weight}` : "";
+    const statusText = best ? rarityShort(best.rarity) : "";
     el.innerHTML = `
-      <div class="slot-pos">${pos.label}</div>
-      <div class="slot-ball">${ballIcon()}</div>
-      <div class="slot-count">${done ? (cards.length ? cards.length + "x" : "OK") : openCount}</div>
-      <div class="slot-status">${done ? "✓" : openStatus}</div>
+      ${best ? `<div class="slot-check">&#10003;</div>` : ""}
+      ${figureCanvas(visualCard, !best, "slot", pos.label)}
+      <div class="slot-info">
+        <div class="slot-count ${rarityCls}">${scoreText}</div>
+        <div class="slot-status">${statusText}</div>
+      </div>
       ${mode === "mine" && actionHtml.trim() ? `<div class="slot-actions">${actionHtml}</div>` : ""}
     `;
     if (mode === "mine" && actionHtml.trim()) {
@@ -839,7 +1908,6 @@ function renderSlots(targetId, filledSet, byPosition, winnerPos = null, mode = "
     target.appendChild(el);
   });
 }
-
 function renderQuest(state) {
   latestState = state;
   const byPosition = new Map();
@@ -847,9 +1915,10 @@ function renderQuest(state) {
     if (!byPosition.has(card.position)) byPosition.set(card.position, []);
     byPosition.get(card.position).push(card);
   });
-  document.getElementById("statCompleted").textContent = `${state.globalPositions.size} / 11`;
+  document.getElementById("statCompleted").textContent = String([...state.walletPositions.values()].filter(set => set.size > 0).length);
+  const leaderIsMe = Boolean(address && state.leader?.wallet && state.leader.wallet === address);
   document.getElementById("statLeader").textContent = state.leader?.wallet ? `${state.leader.count} / 11` : "- / 11";
-  document.getElementById("statLeaderLabel").textContent = state.leader?.wallet ? `Leader ${shortAddr(state.leader.wallet)}` : "Quest Leader";
+  document.getElementById("statLeaderLabel").textContent = state.leader?.wallet ? `Leader ${leaderIsMe ? "YOU" : shortAddr(state.leader.wallet)}` : "Quest Leader";
   document.getElementById("statUsaCards").textContent = String(state.usaCards.length);
   document.getElementById("myCompleted").textContent = address ? `${state.myOwnedSet.size} / 11` : "- / 11";
   document.getElementById("myStatus").textContent = address ? shortAddr(address) : "Connect wallet";
@@ -858,9 +1927,10 @@ function renderQuest(state) {
   const closed = Boolean(state.squadWinner);
   ["mintBtn","heroMintBtn"].forEach(id => {
     const btn = document.getElementById(id);
+    if (!btn) return;
     btn.disabled = closed;
     btn.classList.toggle("closed", closed);
-    btn.textContent = closed ? "NO REWARDS" : (id === "mintBtn" ? "MINT 10 CHZ" : "MINT FOR 1500 CHZ RACE");
+    btn.innerHTML = closed ? '<div class="stat-value">NO REWARDS</div><div class="stat-label">Quest Closed</div>' : '<div class="stat-value">MINT</div><div class="stat-label">Random WC Card</div>';
   });
 
   const questStatus = document.getElementById("questStatus");
@@ -868,7 +1938,7 @@ function renderQuest(state) {
   if (closed) {
     questStatus.textContent = `1500 CHZ SQUAD WINNER: ${shortAddr(state.squadWinner.wallet)}`;
   } else if (state.cardWinner) {
-    questStatus.textContent = `MISSING CARD FOUND: ${posLabel(state.cardWinner.position)} - 500 CHZ ROLLED INTO 1500 CHZ SQUAD PRIZE`;
+    questStatus.textContent = `USA SQUAD RACE LIVE - FIRST 11/11 WINS 1500 CHZ`;
   } else if (state.missing.length === 1) {
     questStatus.textContent = `1 CARD LEFT: ${state.missing[0].label} - REWARD IS NOW 1500 CHZ FOR FULL SQUAD`;
   } else {
@@ -883,10 +1953,9 @@ function renderQuest(state) {
   });
   renderSlots("mySlots", state.myOwnedSet, myByPosition, state.squadWinner?.wallet === address ? state.squadWinner.position : null, "mine");
   renderMarket(state);
+  renderRank(state);
 
-  document.getElementById("cardWinnerBox").innerHTML = state.cardWinner
-    ? `<b>500 CHZ rolled up</b><br>Missing card was found: ${posLabel(state.cardWinner.position)}<br>Added to the main 1500 CHZ squad prize.`
-    : `Card hunt reward is included in the main prize.<br>Missing: <b>${state.missing.map(p => p.label).join(", ") || "none"}</b>`;
+  document.getElementById("cardWinnerBox").innerHTML = `<b>Dream XI Argentina</b><br>10k CHZ live race. Every card matters across Block Kickers quests.`;
   document.getElementById("squadWinnerBox").innerHTML = state.squadWinner
     ? `<b>1500 CHZ winner</b><br>${shortAddr(state.squadWinner.wallet)} completed USA squad<br>Block ${state.squadWinner.block || "pending"} - ${formatTime(state.squadWinner.time)}`
     : `No completed USA squad yet.<br>First wallet with all 11 positions wins <b>1500 CHZ</b>.`;
@@ -896,15 +1965,16 @@ function renderQuest(state) {
   document.getElementById("mintFeed").innerHTML = latest.length ? latest.map(e => `
     <div class="feed-row">
       <div class="feed-pos">${posLabel(e.position)}</div>
-      <div class="feed-addr">${e.eventType.toUpperCase()} ${shortAddr(e.wallet)}</div>
+      <div class="feed-addr"><span class="event-type ${e.eventType}">${e.eventType.toUpperCase()}</span> ${shortAddr(e.wallet)}</div>
       <div class="feed-token">#${e.tokenId}</div>
+      <div class="feed-price">${formatChzPrice(e.price)}</div>
     </div>
   `).join("") : '<div class="loading">No USA events yet.</div>';
 }
 
 function renderMarket(state) {
   const grid = document.getElementById("marketGrid");
-  const listings = state.listings || [];
+  const listings = (state.listings || []).slice().sort((a,b) => a.price - b.price || b.weight - a.weight);
   document.getElementById("marketCount").textContent = `${listings.length} LISTINGS`;
   if (!listings.length) {
     grid.innerHTML = '<div class="loading" style="grid-column:1/-1">No USA cards listed right now.</div>';
@@ -912,17 +1982,73 @@ function renderMarket(state) {
   }
   grid.innerHTML = listings.slice(0, 40).map(l => {
     const mine = address && l.seller === address;
+    const rar = rarityClassName(l.rarity);
     return `
-      <div class="market-card rarity-${l.rarity} ${mine ? "mine" : ""}">
-        <div class="market-pos">${posLabel(l.position)}</div>
-        <div class="market-meta">
-          <div class="market-name">${l.weight} PTS ${rarityName(l.rarity)}</div>
-          <div class="market-sub ${mine ? "you" : ""}">#${l.tokenId} - ${mine ? "YOU" : shortAddr(l.seller)}</div>
+      <div class="market-card slot rarity-${l.rarity} ${mine ? "mine done" : ""}">
+        ${mine ? `<div class="slot-check card-check">&#10003;</div>` : ""}
+        ${figureCanvas(l, false, "market", posLabel(l.position))}
+        <div class="slot-info market-meta">
+          <div class="market-score-line" style="color:${rarityColor(l.rarity)}"><span class="slot-count ${rar}">${l.weight}</span><span class="slot-status">${rarityShort(l.rarity)}</span></div>
         </div>
-        <div>
+        <div class="market-trade">
+          <div class="market-sub ${mine ? "you" : ""}">${mine ? "YOU" : "LISTED"} - #${l.tokenId}</div>
           <div class="market-price">${l.price} CHZ</div>
           <button class="slot-action ${mine ? "sell" : "buy"}" onclick="${mine ? `cancelListing(${l.listingId})` : `buyListing(${l.listingId}, '${l.price}')`}">${mine ? "CANCEL" : "BUY"}</button>
         </div>
+      </div>
+    `;
+  }).join("");
+}
+
+function renderOpportunity(state) {
+  const el = document.getElementById("opportunityPanel");
+  if (!el) return;
+  const listings = (state.listings || []).slice().sort((a,b) => a.price - b.price || b.weight - a.weight);
+  const reward = 1500;
+  const maxSmartBuy = 500;
+  if (!listings.length) {
+    el.innerHTML = `<div class="opportunity-title">Opportunity</div><div class="opportunity-text">No USA listings right now. If you own a missing card, you can set the market.</div>`;
+    return;
+  }
+  const owned = address ? (state.myOwnedSet || new Set()) : new Set();
+  const nearCompleteByPos = pos => [...(state.walletPositions || new Map()).values()].filter(set => !set.has(pos) && set.size >= 8).length;
+  const targets = listings.map(l => ({...l, missingForMe: address && !owned.has(l.position), near: nearCompleteByPos(l.position)}));
+  const sane = targets.filter(l => l.price <= maxSmartBuy).sort((a,b) => Number(b.missingForMe) - Number(a.missingForMe) || b.near - a.near || a.price - b.price || b.weight - a.weight)[0];
+  const cheapest = targets[0];
+  if (!sane) {
+    el.innerHTML = `
+      <div class="opportunity-title">Opportunity</div>
+      <div class="opportunity-main"><span>WAIT</span><b>${cheapest.price} CHZ</b><em>LOW EDGE</em></div>
+      <div class="opportunity-text">Cheapest USA card is above the smart buy zone. With a ${reward} CHZ prize, avoid overpaying unless it completes your 11/11.</div>
+    `;
+    return;
+  }
+  el.innerHTML = `
+    <div class="opportunity-title">Opportunity</div>
+    <div class="opportunity-main"><span>${posLabel(sane.position)}</span><b>${sane.price} CHZ</b><em>${sane.weight} PTS - ${rarityShort(sane.rarity)}</em></div>
+    <div class="opportunity-text">Smart zone: under ${maxSmartBuy} CHZ. ${sane.near ? `${sane.near} near-complete players may need this slot.` : `Best when it fills your missing position.`}</div>
+  `;
+}
+function renderRank(state) {
+  const list = document.getElementById("rankList");
+  const count = document.getElementById("rankCount");
+  if (!list) return;
+  const rows = [...(state.walletPositions || new Map()).entries()]
+    .map(([wallet, set]) => ({wallet, count: set.size}))
+    .filter(row => row.count > 0)
+    .sort((a,b) => b.count - a.count || a.wallet.localeCompare(b.wallet));
+  if (count) count.textContent = `${rows.length} PLAYERS`;
+  if (!rows.length) {
+    list.innerHTML = '<div class="loading">No USA squads scored yet.</div>';
+    return;
+  }
+  list.innerHTML = rows.slice(0, 10).map((row, idx) => {
+    const isMe = Boolean(address && row.wallet === address);
+    return `
+      <div class="rank-row ${isMe ? "me" : ""}">
+        <div class="rank-pos">#${idx + 1}</div>
+        <div class="rank-wallet">${shortAddr(row.wallet)}${isMe ? '<span class="rank-you">YOU</span>' : ''}</div>
+        <div class="rank-progress">${row.count}/11</div>
       </div>
     `;
   }).join("");
@@ -976,7 +2102,7 @@ async function loadQuest(silent = false, force = false) {
     if (status) status.textContent = `Refresh in ${sec}s`;
     return;
   }
-  if (!silent) showOverlay("Reading Nation Quest data...");
+  if (!silent) showDataLoading("Reading Nation Quest data...");
   try {
     const state = await buildState();
     renderQuest(state);
@@ -986,7 +2112,7 @@ async function loadQuest(silent = false, force = false) {
     console.error(error);
     document.getElementById("questStatus").textContent = "Error loading live quest data. Refresh the page.";
   } finally {
-    if (!silent) hideOverlay();
+    if (!silent) setTimeout(() => hideOverlay(), 300);
   }
 }
 
@@ -1000,6 +2126,21 @@ window.addEventListener("load", async () => {
   }
 });
 setInterval(() => loadQuest(true, true), 45000);
+
+function updateNavPriceCountdown(){
+  const el = document.getElementById("navPriceCountdown");
+  if (!el) return;
+  const target = new Date("2026-05-31T22:00:00Z").getTime();
+  const left = Math.max(0, target - Date.now());
+  const total = Math.floor(left / 1000);
+  const d = Math.floor(total / 86400);
+  const h = Math.floor((total % 86400) / 3600);
+  const m = Math.floor((total % 3600) / 60);
+  const sec = total % 60;
+  el.innerHTML = `<span>50 CHZ IN</span>${String(d).padStart(2,"0")}:${String(h).padStart(2,"0")}:${String(m).padStart(2,"0")}:${String(sec).padStart(2,"0")}`;
+}
+updateNavPriceCountdown();
+setInterval(updateNavPriceCountdown, 1000);
 </script>
 </body>
 </html>
