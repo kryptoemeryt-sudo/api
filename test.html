@@ -2661,7 +2661,32 @@ body{padding-top:55px!important;}
   body.game-mode.mobile-pitch-tab .pos-weight{font-size:9px!important;}
   body.game-mode.mobile-pitch-tab .pos-rarity{font-size:4px!important;}
   body.game-mode.mobile-pitch-tab .pos-fig-flag{width:12px!important;height:8px!important;}
-}</style>
+}
+/* Final mobile readability: stat cards, pitch icon, bigger cards and tap actions */
+@media(max-width:700px){
+  body.game-mode #statsRow .stat-info-card{align-items:center!important;justify-content:center!important;text-align:center!important;}
+  body.game-mode #statsRow .stat-info-card .stat-val{font-size:13px!important;line-height:1!important;text-align:center!important;width:100%!important;}
+  body.game-mode #statsRow .stat-info-card .stat-lbl{font-size:6px!important;line-height:1!important;letter-spacing:.45px!important;text-align:center!important;width:100%!important;}
+  body.game-mode .desk-tab-btn::before{width:19px!important;height:19px!important;}
+  body.game-mode #btnDeskPitch::before{width:20px!important;height:20px!important;background-color:transparent!important;mask:none!important;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='29' fill='%23fff' stroke='%23000' stroke-width='4'/%3E%3Cpath d='M32 17l11 8-4 13H25l-4-13z' fill='%23000'/%3E%3Cpath d='M13 27l8-2 4 13-8 7M51 27l-8-2-4 13 8 7M24 55l1-17h14l1 17' fill='none' stroke='%23000' stroke-width='4' stroke-linejoin='round'/%3E%3C/svg%3E")!important;background-size:contain!important;background-position:center!important;background-repeat:no-repeat!important;}
+  body.game-mode.mobile-pitch-tab .form-row{gap:4px!important;}
+  body.game-mode.mobile-pitch-tab .form-row.row-wings{padding:0 12%!important;}
+  body.game-mode.mobile-pitch-tab .form-row.row-mid{padding:0 2%!important;}
+  body.game-mode.mobile-pitch-tab .pos-card{width:clamp(43px,12.9vw,51px)!important;min-height:clamp(56px,8.95dvh,70px)!important;max-height:74px!important;}
+  body.game-mode.mobile-pitch-tab .pos-card.in-wallet{border-color:#00ff87!important;box-shadow:0 0 0 1px rgba(0,255,135,.75),0 0 12px rgba(0,255,135,.22),inset 0 0 12px rgba(0,255,135,.10)!important;}
+  body.game-mode.mobile-pitch-tab .pos-fig-canvas{height:clamp(34px,5.75dvh,43px)!important;}
+  body.game-mode.mobile-pitch-tab .pos-fig-canvas svg{width:clamp(34px,9.7vw,43px)!important;height:clamp(34px,9.7vw,43px)!important;}
+  body.game-mode.mobile-pitch-tab .pos-rarity{font-size:3.6px!important;padding:1px 2px!important;letter-spacing:0!important;border-radius:3px!important;}
+  body.game-mode.mobile-pitch-tab .pos-card-actions{display:none!important;}
+}
+.mobile-pitch-action-sheet{position:fixed;inset:0;z-index:6200;display:none;align-items:flex-end;justify-content:center;background:rgba(0,0,0,.58);backdrop-filter:blur(5px);padding:12px;}
+.mobile-pitch-action-sheet.active{display:flex;}
+.mobile-pitch-action-panel{width:min(360px,100%);background:linear-gradient(180deg,#111820,#070b10);border:1px solid rgba(0,255,135,.36);border-radius:14px;padding:14px;box-shadow:0 18px 70px rgba(0,0,0,.62),0 0 24px rgba(0,255,135,.10);position:relative;}
+.mobile-pitch-action-close{position:absolute;top:9px;right:9px;width:30px;height:30px;border-radius:8px;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.05);color:#fff;font-family:'Black Ops One',sans-serif;}
+.mobile-pitch-action-title{font-family:'Black Ops One',sans-serif;color:#00ff87;font-size:13px;letter-spacing:1px;margin-bottom:12px;text-align:center;}
+.mobile-pitch-action-body{display:grid;gap:8px;}
+.mobile-pitch-action-body .btn-card-action{display:block!important;font-size:11px!important;padding:11px 8px!important;border-radius:8px!important;line-height:1.15!important;min-height:40px!important;}
+.mobile-pitch-action-body div{font-family:'Black Ops One',sans-serif!important;font-size:10px!important;text-align:center!important;color:#ef4444!important;}</style>
 </head>
 <body>
 
@@ -5161,6 +5186,30 @@ function makeDreamFigureSVG(dna, size = 80) {
   p.push('</svg>');
   return p.join('');
 }
+function openMobilePitchCardActions(actionHtml) {
+  let modal = document.getElementById('mobilePitchActionSheet');
+  if (!modal) {
+    modal = document.createElement('div');
+    modal.id = 'mobilePitchActionSheet';
+    modal.className = 'mobile-pitch-action-sheet';
+    modal.onclick = (event) => { if (event.target === modal) closeMobilePitchCardActions(); };
+    modal.innerHTML = `
+      <div class="mobile-pitch-action-panel">
+        <button type="button" class="mobile-pitch-action-close" onclick="closeMobilePitchCardActions()">x</button>
+        <div class="mobile-pitch-action-title">CARD ACTIONS</div>
+        <div class="mobile-pitch-action-body" id="mobilePitchActionBody"></div>
+      </div>
+    `;
+    document.body.appendChild(modal);
+  }
+  const body = document.getElementById('mobilePitchActionBody');
+  if (body) body.innerHTML = actionHtml;
+  modal.classList.add('active');
+}
+function closeMobilePitchCardActions() {
+  const modal = document.getElementById('mobilePitchActionSheet');
+  if (modal) modal.classList.remove('active');
+}
 function renderPitch() {
   const grid = document.getElementById('pitchFormationGrid');
   grid.innerHTML = '';
@@ -5192,14 +5241,19 @@ FORMATION.forEach(row => {
         card.className = `pos-card owned r${scored.rarity}`;
         
         let actionHtml = '';
-        if (mkt && mkt.weight > scored.weight) {
-          actionHtml = `<button onclick="buyFromMarket(${mkt.listingId}, '${mkt.price}', '${mkt.priceWei}')" class="btn-card-action upgrade">UPGRADE +${mkt.weight - scored.weight}<br>${mkt.weight} PTS / ${mkt.price} CHZ</button>`;
+        if (mkt) {
+          const buyLabel = mkt.weight > scored.weight
+            ? `UPGRADE +${mkt.weight - scored.weight}<br>${mkt.weight} PTS / ${mkt.price} CHZ`
+            : `BUY MARKET CARD<br>${mkt.weight} PTS / ${mkt.price} CHZ`;
+          const buyClass = mkt.weight > scored.weight ? 'btn-card-action upgrade' : 'btn-card-action';
+          actionHtml = `<button onclick="buyFromMarket(${mkt.listingId}, '${mkt.price}', '${mkt.priceWei}')" class="${buyClass}">${buyLabel}</button>`;
         }
 
         let sellBtnHtml = '';
         const currentOwnerInfo = ownerMap[scored.tid];
         const currentlyOwnsScored = myAddr && currentOwnerInfo && currentOwnerInfo.owner === myAddr;
         if (currentlyOwnsScored) {
+          card.classList.add('in-wallet');
           const activeListingId = activeListingsByTokenId[scored.tid];
           if (activeListingId !== undefined) {
             sellBtnHtml = `<button onclick="cancelListing(${activeListingId})" class="btn-card-action sell">CANCEL LISTING</button>`;
@@ -5249,6 +5303,16 @@ FORMATION.forEach(row => {
           </div>
         `;
       }
+      card.addEventListener('click', (event) => {
+        if (!(window.matchMedia && window.matchMedia('(max-width: 700px)').matches)) return;
+        if (event.target.closest('button')) return;
+        const actions = card.querySelector('.pos-card-actions');
+        if (actions && actions.textContent.trim()) {
+          event.preventDefault();
+          event.stopPropagation();
+          openMobilePitchCardActions(actions.innerHTML);
+        }
+      });
       rowEl.appendChild(card);
     });
     grid.appendChild(rowEl);
