@@ -510,6 +510,54 @@ body{padding-top:0!important;}
   .market-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;}
   .market-card.slot{min-height:142px!important;}
 }
+
+/* Absolute final mint tile and side width fix */
+.main-grid{grid-template-columns:minmax(0,calc(75% - 2.5px)) minmax(250px,calc(25% - 7.5px))!important;gap:10px!important;align-items:start!important;}
+.quest-side-panel{width:100%!important;min-width:0!important;max-width:none!important;}
+.stats{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:10px!important;}
+.stats button.mint-stat,
+button.stat.mint-stat,
+.mint-stat{
+  appearance:none!important;
+  -webkit-appearance:none!important;
+  background:#00ff87!important;
+  background-color:#00ff87!important;
+  background-image:none!important;
+  border:1px solid #00ff87!important;
+  color:#06101f!important;
+  opacity:1!important;
+  box-shadow:0 0 26px rgba(0,255,135,.24), inset 0 0 0 1px rgba(255,255,255,.12)!important;
+}
+.stats button.mint-stat:hover,
+button.stat.mint-stat:hover,
+.mint-stat:hover{
+  background:#00ff87!important;
+  background-color:#00ff87!important;
+  background-image:none!important;
+  color:#06101f!important;
+  filter:brightness(1.06)!important;
+}
+.stats button.mint-stat .stat-value,
+button.stat.mint-stat .stat-value,
+.mint-stat .stat-value{
+  color:#06101f!important;
+  font-size:clamp(22px,3vw,36px)!important;
+  line-height:1!important;
+  text-shadow:none!important;
+}
+.stats button.mint-stat .stat-label,
+button.stat.mint-stat .stat-label,
+.mint-stat .stat-label{
+  color:#06101f!important;
+  opacity:1!important;
+}
+@media(max-width:900px){
+  .main-grid{grid-template-columns:1fr!important;}
+  .stats{gap:4px!important;}
+  .stats button.mint-stat .stat-value,
+  button.stat.mint-stat .stat-value,
+  .mint-stat .stat-value{font-size:14px!important;}
+}
 </style>
 </head>
 <body>
