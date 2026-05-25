@@ -2327,10 +2327,7 @@ document.addEventListener('DOMContentLoaded', setupDesktopDashboardLayout);
             <span style="color:var(--text2);">Jun 11 (WC Start)</span>
             <span style="color:var(--text2);">100 CHZ</span>
           </div>
-          <div style="display:flex;justify-content:space-between;font-size:13px;">
-            <span style="color:var(--text2);">END 20.07 (WC End)</span>
-            <span style="color:var(--text2);">END</span>
-          </div>
+          <div class="price-end-row" style="grid-column:1/-1;font-size:12px;color:var(--text2);text-align:center;line-height:1.18;white-space:normal;min-width:0;">END 20.07 (WC End)</div>
           <div class="mobile-price-countdown-row" style="display:none;text-align:center;font-size:13px;color:var(--gold);padding-top:6px;border-top:1px solid rgba(255,201,64,0.16);">
             <span style="display:block;color:var(--text2);font-size:10px;margin-bottom:2px;">50 CHZ IN</span>
             <strong id="mobilePriceCountdown">--:--:--:--</strong>
@@ -2792,13 +2789,21 @@ function skinColor(tone) {
 }
 
 class Figure3D {
-  constructor(canvas, dna, spin = true) {
+  constructor(canvas, dna, spin = true, highQuality = false) {
     this.canvas = canvas;
+    this.highQuality = highQuality;
     this.t = parseDNA(dna);
     this.spin = spin;
     this.visible = true;
     this.fid = null;
     this.init();
+  }
+
+
+  getRenderPixelRatio() {
+    const base = window.devicePixelRatio || 1;
+    if (this.highQuality) return Math.min(Math.max(base, 2.5), 4);
+    return (this.canvas.clientWidth > 200) ? Math.min(base, 2) : 1;
   }
 
   init() {
@@ -2816,13 +2821,16 @@ class Figure3D {
     this.ren = new THREE.WebGLRenderer({
       canvas:this.canvas,
       alpha:true,
-      antialias:false,
-      powerPreference:'low-power',
+      antialias:this.highQuality,
+      powerPreference:this.highQuality ? 'high-performance' : 'low-power',
       failIfMajorPerformanceCaveat:false
     });
-    const dpr = (this.canvas.clientWidth > 200) ? Math.min(window.devicePixelRatio, 2) : 1;
+    const dpr = this.getRenderPixelRatio();
     this.ren.setPixelRatio(dpr);
     this.ren.setSize(w, h, false);
+
+    // Oversample hero/modal canvases so CSS scaling stays crisp on desktop.
+    this.canvas.style.imageRendering = 'auto';
 
     // IntersectionObserver - pauzuj gdy poza ekranem
     if(window.IntersectionObserver){
@@ -2838,7 +2846,7 @@ class Figure3D {
         const nw = this.canvas.clientWidth;
         const nh = this.canvas.clientHeight;
         if(nw>0 && nh>0){
-          this.ren.setPixelRatio(Math.min(window.devicePixelRatio,2));
+          this.ren.setPixelRatio(this.getRenderPixelRatio());
           this.ren.setSize(nw, nh, false);
           this.cam.aspect = nw/nh;
           this.cam.updateProjectionMatrix();
@@ -4197,7 +4205,7 @@ function openModal(tid,dna){
   wrap.innerHTML='';
   const cv=document.createElement('canvas');cv.style.cssText='width:100%;height:100%';
   wrap.appendChild(cv);
-  requestAnimationFrame(()=>{modalRen=new Figure3D(cv,dna,true);});
+  requestAnimationFrame(()=>{modalRen=new Figure3D(cv,dna,true,true);});
   document.getElementById('modal').classList.add('show');
 }
 
@@ -4221,13 +4229,13 @@ function initHero(){
   const randDna=BigInt(Math.floor(Math.random()*1e15))*BigInt(Math.floor(Math.random()*1e15))+BigInt(Math.floor(Math.random()*1e15));
   // Desktop canvas
   const cv=document.getElementById('heroCanvas');
-  if(cv && cv.clientWidth > 0) heroRen=new Figure3D(cv,randDna,true);
+  if(cv && cv.clientWidth > 0) heroRen=new Figure3D(cv,randDna,true,true);
   // Mobile canvas - ustaw jawny rozmiar przed inicjalizacjÄ…
   const cvm=document.getElementById('heroCanvasMobile');
   if(cvm){
     cvm.width=110; cvm.height=140;
     cvm.style.width='110px'; cvm.style.height='140px';
-    new Figure3D(cvm,randDna,true);
+    new Figure3D(cvm,randDna,true,true);
   }
 }
 
