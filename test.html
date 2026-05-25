@@ -1775,6 +1775,35 @@ body.game-mode .pos-position-chip{left:6px!important;right:auto!important;top:au
     text-shadow:none!important;
   }
 }
+
+/* Center pitch squad after removing legend */
+body.game-mode .pitch-wrap{display:flex!important;align-items:center!important;justify-content:center!important;}
+body.game-mode .formation{width:100%;justify-content:center!important;}
+@media(min-width:701px){
+  body.game-mode .pitch-wrap{min-height:calc(100% - 42px)!important;}
+}
+
+/* Snipe Deals readable table layout */
+body.game-mode .snipe-row.snipe-table-row{grid-template-columns:58px minmax(0,1fr) 90px!important;gap:10px!important;padding:9px 10px!important;border-radius:8px!important;background:linear-gradient(90deg,rgba(15,19,24,.98),rgba(8,11,15,.94))!important;border:1px solid rgba(255,255,255,.10)!important;box-shadow:inset 3px 0 0 var(--rar,#5a6a7a)!important;}
+body.game-mode .snipe-row.snipe-table-row:hover{border-color:rgba(0,255,135,.30)!important;background:linear-gradient(90deg,rgba(15,26,23,.98),rgba(8,11,15,.94))!important;}
+body.game-mode .snipe-row.snipe-table-row .snipe-pos{width:58px!important;min-height:48px!important;border-radius:7px!important;padding:5px 0!important;background:rgba(255,255,255,.035)!important;box-shadow:none!important;}
+body.game-mode .snipe-row.snipe-table-row .snipe-pos span{font-size:14px!important;font-family:'Black Ops One',sans-serif!important;color:#fff!important;letter-spacing:.8px!important;}
+body.game-mode .snipe-row.snipe-table-row .snipe-pos small{display:block!important;font-size:7px!important;font-family:'Black Ops One',sans-serif!important;color:var(--rar,#dde4f0)!important;letter-spacing:.8px!important;}
+body.game-mode .snipe-main{min-width:0;display:grid;gap:5px;align-content:center;}
+body.game-mode .snipe-line-top{display:flex;align-items:center;gap:7px;min-width:0;}
+body.game-mode .snipe-weight{font-family:'Black Ops One',sans-serif;font-size:14px;color:#fff;white-space:nowrap;}
+body.game-mode .snipe-status{font-family:'Black Ops One',sans-serif;font-size:8px;letter-spacing:.7px;border-radius:5px;padding:3px 6px;white-space:nowrap;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.05);color:#dde4f0;}
+body.game-mode .snipe-status.missing{color:#ffc940;border-color:rgba(255,201,64,.38);background:rgba(255,201,64,.09);}
+body.game-mode .snipe-status.upgrade{color:#00ff87;border-color:rgba(0,255,135,.38);background:rgba(0,255,135,.09);}
+body.game-mode .snipe-status.mine{color:#00ff87;border-color:rgba(0,255,135,.55);background:rgba(0,255,135,.14);}
+body.game-mode .snipe-status.reserve{color:#dde4f0;border-color:rgba(221,228,240,.22);}
+body.game-mode .snipe-line-bottom{display:flex;align-items:center;gap:6px;flex-wrap:wrap;font-family:'Black Ops One',sans-serif;font-size:8px;letter-spacing:.45px;color:#dde4f0;line-height:1.1;}
+body.game-mode .snipe-line-bottom span{border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.035);border-radius:4px;padding:2px 5px;white-space:nowrap;}
+body.game-mode .snipe-row.snipe-table-row .snipe-action{display:grid!important;grid-template-columns:1fr;gap:5px;align-items:center;justify-items:stretch;}
+body.game-mode .snipe-row.snipe-table-row .snipe-price{width:auto!important;text-align:center!important;font-size:14px!important;font-family:'Black Ops One',sans-serif!important;color:#ffc940!important;}
+body.game-mode .snipe-row.snipe-table-row .btn-snipe{width:100%!important;min-height:30px!important;font-size:9px!important;border-radius:6px!important;}
+body.game-mode .btn-snipe.cancel{background:rgba(239,68,68,.15)!important;border-color:rgba(239,68,68,.45)!important;color:#ef4444!important;}
+@media(max-width:700px){body.game-mode .snipe-row.snipe-table-row{grid-template-columns:44px minmax(0,1fr) 62px!important;gap:6px!important;padding:7px!important;}body.game-mode .snipe-row.snipe-table-row .snipe-pos{width:44px!important;min-height:40px!important;}body.game-mode .snipe-row.snipe-table-row .snipe-pos span{font-size:11px!important;}body.game-mode .snipe-row.snipe-table-row .snipe-pos small{font-size:6px!important;}body.game-mode .snipe-weight{font-size:10px!important;}body.game-mode .snipe-status{font-size:6px!important;padding:2px 4px!important;}body.game-mode .snipe-line-bottom{font-size:6px!important;gap:3px;}body.game-mode .snipe-line-bottom span{padding:1px 3px;}body.game-mode .snipe-row.snipe-table-row .snipe-price{font-size:10px!important;}body.game-mode .snipe-row.snipe-table-row .btn-snipe{min-height:24px!important;font-size:7px!important;}}
 /* Network waiting overlay for blockchain actions */
 #networkOverlay{
   position:fixed;
@@ -1970,7 +1999,7 @@ body.network-busy{cursor:progress;}
     </div>
     <div class="stat-card stat-info-card">
       <div class="stat-val gold" id="myScoreText">0 pts</div>
-      <div class="stat-lbl">WEIGHT</div>
+      <div class="stat-lbl">SCORE</div>
       <div class="stat-mini-grid">
         <span>TOTAL MINTED</span><b id="topMintedInfo">0</b>
         <span>ARG SUPPLY</span><b id="topArgSupplyInfo">0</b>
@@ -3991,21 +4020,35 @@ function renderSnipeMarket(listings) {
     const badgesHtml = getPositionBadges(deal.pos, floor);
     const pressureLine = getPressureLine(deal.pos);
 
+    const isMine = myAddr && activeListingsByTokenId[deal.tokenId] !== undefined;
+    const ownedWeight = scored ? scored.weight : 0;
+    const statusText = isMine ? 'YOU' : (!scored ? 'MISSING' : isUpgrade ? `+${deal.weight - ownedWeight} UPGRADE` : 'RESERVE');
+    const statusClass = isMine ? 'mine' : (!scored ? 'missing' : isUpgrade ? 'upgrade' : 'reserve');
+    const supplyCount = circulationByPos[deal.pos] || 0;
+    const needText = pressureLine ? pressureLine.replace(/<[^>]*>/g, '') : '';
+
     html += `
-      <div class="snipe-row">
-        <div class="snipe-details">
-          <div class="snipe-pos rarity-${deal.rarity}" style="--rar:${rarColor};"><span>${POSITION_SHORT[deal.pos]}</span><small>${deal.weight} pts</small></div>
-          <div class="snipe-info-text">
-            <span class="desktop-deal-main" style="color:${rarColor}; font-weight:600;">${rarName}</span> <span class="desktop-deal-main deal-points">${deal.weight} pts</span>${upgradeLabel ? `<br>${upgradeLabel}` : ``}
-            ${badgesHtml}
-            ${pressureLine}
+      <div class="snipe-row snipe-table-row rarity-${deal.rarity}" style="--rar:${rarColor};">
+        <div class="snipe-pos rarity-${deal.rarity}" style="--rar:${rarColor};">
+          <span>${POSITION_SHORT[deal.pos]}</span>
+          <small>${rarName.slice(0,3).toUpperCase()}</small>
+        </div>
+        <div class="snipe-main">
+          <div class="snipe-line-top">
+            <span class="snipe-weight">${deal.weight} PTS</span>
+            <span class="snipe-status ${statusClass}">${statusText}</span>
+          </div>
+          <div class="snipe-line-bottom">
+            <span>MINTED x${supplyCount}</span>
+            ${needText ? `<span>${needText}</span>` : ''}
+            ${floor ? `<span>FLOOR ${floor.price} CHZ</span>` : ''}
           </div>
         </div>
         <div class="snipe-action">
           <span class="snipe-price">${deal.price} CHZ</span>
-          ${(myAddr && activeListingsByTokenId[deal.tokenId] !== undefined)
-            ? `<button onclick="cancelListing(${deal.listingId})" class="btn-snipe" style="background:rgba(239,68,68,0.15);border-color:rgba(239,68,68,0.4);color:#ef4444;">CANCEL</button>`
-            : `<button onclick="buyFromMarket(${deal.listingId}, '${deal.price}', '${deal.priceWei}')" class="btn-snipe">SNIPE</button>`
+          ${isMine
+            ? `<button onclick="cancelListing(${deal.listingId})" class="btn-snipe cancel">CANCEL</button>`
+            : `<button onclick="buyFromMarket(${deal.listingId}, '${deal.price}', '${deal.priceWei}')" class="btn-snipe">BUY</button>`
           }
         </div>
       </div>
@@ -4340,17 +4383,7 @@ function renderPitch() {
   document.getElementById('selectedCountryCompletion').textContent = `${compCount}/11 POSITIONS COMPLETED`;
 
   const myTeamPositions = window.dreamScores[myAddr] || {};
-
-  const legendEl = document.createElement('div');
-  legendEl.className = 'legend';
-  legendEl.innerHTML = `
-    <div class="legend-item"><div class="legend-dot" style="background:rgba(0,255,135,0.3); border:1px solid rgba(0,255,135,0.6);"></div>You Own</div>
-    <div class="legend-item"><div class="legend-dot" style="background:rgba(99,102,241,0.3); border:1px solid rgba(99,102,241,0.6);"></div>Best Scored (History)</div>
-    <div class="legend-item"><div class="legend-dot" style="background:rgba(255,201,64,0.3); border:1px solid rgba(255,201,64,0.6);"></div>On Marketplace</div>
-  `;
-  grid.appendChild(legendEl);
-
-  FORMATION.forEach(row => {
+FORMATION.forEach(row => {
     const rowEl = document.createElement('div');
     const rowClass = row.length === 1 && row[0] === 9 ? 'row-attack'
       : row.includes(11) || row.includes(7) ? 'row-wings'
