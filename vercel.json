@@ -1,25 +1,5 @@
 {
   "rewrites": [
-    /*
-    OLD ORDER:
-    { "source": "/nation-quest", "destination": "/nation-quest.html" },
-    { "source": "/nqb", "destination": "/nation-quest-badges.html" },
-    { "source": "/bkhome2", "destination": "/BlockKickers.html" },
-    { "source": "/promo-stats", "destination": "/promo-stats.html" },
-    { "source": "/dream-xi", "destination": "/dream-xi.html" },
-    { "source": "/gk-quest", "destination": "/goalkeeper-quest.html" },
-    { "source": "/info", "destination": "/how-to-play-dream-ii.html" },
-    { "source": "/dashboard", "destination": "/test.html" },
-    { "source": "/", "destination": "/home.html" },
-    { "source": "/v2", "destination": "/home_v2.html" },
-    { "source": "/testt", "destination": "/test.html" },
-    { "source": "/dream-xi-old", "destination": "/ARG%20Dashboard.html" },
-    { "source": "/ftfr", "destination": "/fan-token-flow-radar.html" },
-    { "source": "/soli", "destination": "/solana-smart-money-radar.html" },
-    { "source": "/wallet", "destination": "/dream-xi-walletconnect.html" },
-    { "source": "/dream-xi-wc", "destination": "/final-dream-xi-wc.html" }
-    */
-
     { "source": "/", "destination": "/home.html" },
     { "source": "/bkhome2", "destination": "/BlockKickers.html" },
     { "source": "/v2", "destination": "/home_v2.html" },
@@ -42,3 +22,23 @@
     { "source": "/dream-xi-old", "destination": "/ARG%20Dashboard.html" }
   ]
 }
+
+/*
+    OLD ORDER:
+    { "source": "/nation-quest", "destination": "/nation-quest.html" },
+    { "source": "/nqb", "destination": "/nation-quest-badges.html" },
+    { "source": "/bkhome2", "destination": "/BlockKickers.html" },
+    { "source": "/promo-stats", "destination": "/promo-stats.html" },
+    { "source": "/dream-xi", "destination": "/dream-xi.html" },
+    { "source": "/gk-quest", "destination": "/goalkeeper-quest.html" },
+    { "source": "/info", "destination": "/how-to-play-dream-ii.html" },
+    { "source": "/dashboard", "destination": "/test.html" },
+    { "source": "/", "destination": "/home.html" },
+    { "source": "/v2", "destination": "/home_v2.html" },
+    { "source": "/testt", "destination": "/test.html" },
+    { "source": "/dream-xi-old", "destination": "/ARG%20Dashboard.html" },
+    { "source": "/ftfr", "destination": "/fan-token-flow-radar.html" },
+    { "source": "/soli", "destination": "/solana-smart-money-radar.html" },
+    { "source": "/wallet", "destination": "/dream-xi-walletconnect.html" },
+    { "source": "/dream-xi-wc", "destination": "/final-dream-xi-wc.html" }
+    */
