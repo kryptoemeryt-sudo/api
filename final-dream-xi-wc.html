@@ -35,7 +35,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
 .wallet-option-desc{font-size:11px;color:#8da0b7;margin-top:4px;line-height:1.25;}
 .wallet-option-tag{font-family:'Share Tech Mono',monospace;font-size:10px;color:#00ff87;border:1px solid rgba(0,255,135,0.24);border-radius:999px;padding:3px 7px;white-space:nowrap;}
 .wallet-note{font-size:11px;color:#6f7f92;line-height:1.35;margin-top:12px;}
-body.game-mode .wallet-actions #connectBtn.connected{display:none;}
+body.game-mode .wallet-actions #connectBtn.connected{display:inline-flex!important;}
 
 /* HERO & HEADER */
 .hero{padding:22px 24px 20px;text-align:left;border-bottom:1px solid #1c2028;position:relative;overflow:hidden;display:grid;grid-template-columns:minmax(280px,0.95fr) minmax(300px,1.2fr) minmax(280px,0.85fr);gap:16px;align-items:stretch;}
@@ -773,6 +773,158 @@ body.game-mode .lb-row{display:grid;grid-template-columns:34px minmax(0,1fr) 92p
 body.game-mode .lb-addr{font-size:10px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 body.game-mode .lb-completion{font-size:9px;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 body.game-mode .lb-score{font-size:12px;text-align:right;white-space:nowrap;}
+body.game-mode .stat-lbl,
+body.game-mode .pitch-title,
+body.game-mode .countdown-sub,
+body.game-mode .lb-completion,
+body.game-mode .wallet-note,
+body.game-mode .flow-kicker,
+body.game-mode .schedule-date,
+body.game-mode .pos-rarity,
+body.game-mode .card-hover-note{color:#dde4f0 !important;}
+.album-count-label{font-family:'Share Tech Mono',monospace;color:#818cf8;}
+.completion-label{font-family:'Share Tech Mono',monospace;color:#818cf8;font-size:12px;}
+body.game-mode .squad-score{display:inline-block;margin-left:8px;color:#00ff87;font-family:'Black Ops One',sans-serif;font-size:11px;letter-spacing:1px;}
+.pos-card-top{display:grid;grid-template-rows:auto 1fr;align-items:center;justify-items:center;min-height:0;width:100%;}
+.figure-mini{width:34px;height:34px;margin:0 auto;display:grid;place-items:center;line-height:0;}
+.figure-mini svg{width:100%;height:100%;display:block;}
+.pos-card.owned::after{top:-5px;right:-3px;background:#0a0e14;border:1px solid rgba(0,255,135,.45);border-radius:50%;width:14px;height:14px;display:grid;place-items:center;font-size:9px;line-height:1;z-index:8;}
+@media(min-width:701px){
+  body.game-mode .nation-selector-title{
+    display:grid;
+    grid-template-columns:max-content minmax(0,1fr) max-content;
+    align-items:center;
+    gap:8px;
+    margin-bottom:7px;
+  }
+  body.game-mode .nation-selector-title .filter-tabs{
+    display:grid;
+    grid-template-columns:repeat(7,minmax(0,1fr));
+    gap:5px;
+    margin:0;
+    min-width:0;
+  }
+  body.game-mode .album-title-tools{justify-content:flex-end;min-width:0;}
+  body.game-mode .album-count-label,
+  body.game-mode .completion-label,
+  body.game-mode .squad-score,
+  body.game-mode .lb-toggle-btn{
+    font-family:'Black Ops One',sans-serif;
+    font-size:13px !important;
+    letter-spacing:1.5px;
+  }
+  body.game-mode .album-count-label,
+  body.game-mode .completion-label{color:#818cf8;}
+  body.game-mode .pitch-title,
+  body.game-mode .dash-prize-title,
+  body.game-mode .stat-lbl,
+  body.game-mode .countdown-sub,
+  body.game-mode .lb-info{
+    color:#dde4f0 !important;
+  }
+  body.game-mode .tab-btn{
+    font-size:12px;
+    padding:6px 4px;
+    letter-spacing:.7px;
+    color:#dde4f0;
+  }
+  body.game-mode .country-grid{
+    overflow:hidden;
+    grid-template-columns:repeat(6,minmax(0,1fr));
+    grid-auto-rows:minmax(30px,1fr);
+    gap:5px;
+    padding-right:0;
+  }
+  body.game-mode .country-card{
+    min-height:30px;
+    padding:5px 7px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    align-items:center;
+    justify-items:center;
+    text-align:center;
+    gap:4px 8px;
+  }
+  body.game-mode .country-card-main{
+    min-width:0;
+    width:100%;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:2px;
+  }
+  body.game-mode .country-card-stats{
+    width:100%;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    line-height:1.05;
+    white-space:nowrap;
+  }
+  body.game-mode .country-card-flag{
+    width:auto;
+    flex-shrink:0;
+    justify-content:center;
+    align-self:center;
+  }
+  body.game-mode .country-card .flag-img{
+    width:38px;
+    height:25px;
+  }
+  body.game-mode .country-card-name{
+    width:auto;
+    margin-top:0!important;
+    text-align:center;
+    font-family:'Black Ops One',sans-serif;
+    font-size:16px;
+    letter-spacing:.6px;
+    color:#dde4f0;
+  }
+  body.game-mode .country-card-score{
+    font-family:'Black Ops One',sans-serif;
+    font-size:16px;
+    margin-top:0;
+    color:#dde4f0;
+  }
+  body.game-mode .country-card-completion{
+    font-size:13px;
+    font-family:'Black Ops One',sans-serif;
+  }
+  body.game-mode .pos-name{
+    font-family:'Black Ops One',sans-serif;
+    font-size:11px;
+    color:#dde4f0;
+  }
+  body.game-mode .pitch-title #selectedCountryTitle{
+    color:#dde4f0;
+    font-size:13px;
+  }
+  body.game-mode .squad-score{font-size:13px!important;}
+  body.game-mode .pos-card-top{
+    min-height:45px;
+    width:100%;
+    align-items:center;
+    justify-items:center;
+  }
+  body.game-mode .figure-mini{
+    width:38px;
+    height:38px;
+  }
+  body.game-mode .lb-row{
+    grid-template-columns:40px minmax(0,1fr) 110px 122px 82px;
+  }
+  body.game-mode .lb-addr,
+  body.game-mode .lb-completion,
+  body.game-mode .lb-score,
+  body.game-mode .lb-prize{
+    font-family:'Black Ops One',sans-serif;
+    font-size:13px;
+    letter-spacing:.5px;
+    color:#dde4f0;
+  }
+}
 .pos-card.rarity-1 .pos-name,.pos-card.rarity-1 .pos-ball{color:#93c5fd;}
 .pos-card.rarity-2 .pos-name,.pos-card.rarity-2 .pos-ball{color:#d8b4fe;}
 .pos-card.rarity-3 .pos-name,.pos-card.rarity-3 .pos-ball{color:#ffe08a;}
@@ -803,6 +955,13 @@ body.game-mode .lb-score{font-size:12px;text-align:right;white-space:nowrap;}
   body.game-mode #statsRow .stat-val{font-size:15px;}
   body.game-mode #statsRow #myEstPayout{font-size:15px!important;}
   body.game-mode #statsRow .stat-lbl{font-size:6px;letter-spacing:.2px;line-height:1.05;color:#9fb0c4;font-weight:700;}
+  body.game-mode #statsRow .stat-lbl,
+  body.game-mode .pitch-title,
+  body.game-mode .lb-completion,
+  body.game-mode .countdown-sub,
+  body.game-mode .pos-rarity,
+  body.game-mode .dash-prize-title,
+  body.game-mode .card-hover-note{color:#dde4f0!important;}
   body.game-mode .game-grid{grid-template-columns:1fr;grid-template-rows:auto minmax(0,1fr);gap:6px;}
   body.game-mode .country-section{grid-column:1 / -1;grid-row:2 / 3;}
   body.game-mode .pitch-container{grid-column:1 / -1;grid-row:1 / 2;}
@@ -854,6 +1013,8 @@ body.game-mode .lb-score{font-size:12px;text-align:right;white-space:nowrap;}
   body.game-mode .pos-ball{font-size:12px;}
   body.game-mode .pos-weight{font-size:11px;}
   body.game-mode .pos-rarity{font-size:5px;}
+  body.game-mode .pos-card-top{min-height:32px;align-items:center;justify-items:center;}
+  body.game-mode .figure-mini{width:24px;height:24px;margin:auto;}
   body.game-mode .btn-card-action{font-size:5px;padding:2px 1px;margin-top:2px;}
   body.game-mode .pos-card.has-actions{cursor:pointer;}
   body.game-mode .card-hover-actions{display:none;}
@@ -864,12 +1025,12 @@ body.game-mode .lb-score{font-size:12px;text-align:right;white-space:nowrap;}
   body.game-mode .lb-toggle-container{margin-bottom:5px;}
   body.game-mode .lb-toggle-btn{font-size:6px;padding:5px 2px;}
   body.game-mode .leaderboard-list{padding:5px;}
-  body.game-mode .lb-row{grid-template-columns:22px minmax(0,1fr) 44px 58px 42px;gap:4px;padding:5px;}
-  body.game-mode .lb-pos{font-size:9px;width:auto;}
-  body.game-mode .lb-addr{font-size:8px;}
-  body.game-mode .lb-completion{font-size:7px;}
-  body.game-mode .lb-score{font-size:8px;}
-  body.game-mode .lb-prize{font-size:8px;}
+  body.game-mode .lb-row{grid-template-columns:22px minmax(0,1fr) 52px 64px 44px;gap:4px;padding:5px;}
+  body.game-mode .lb-pos{font-size:10px;width:auto;}
+  body.game-mode .lb-addr{font-size:9px;}
+  body.game-mode .lb-completion{font-size:8px;}
+  body.game-mode .lb-score{font-size:9px;}
+  body.game-mode .lb-prize{font-size:9px;}
   body.game-mode .lb-prize.none{font-size:7px;}
 }
 
@@ -1038,18 +1199,234 @@ body.game-mode .lb-score{font-size:12px;text-align:right;white-space:nowrap;}
     padding:clamp(4px,.75dvh,6px);
   }
 }
-</style>
+
+/* Final WC Album readability pass */
+body.game-mode .stat-lbl,
+body.game-mode .pitch-title,
+body.game-mode .lb-completion,
+body.game-mode .countdown-sub,
+body.game-mode .pos-rarity,
+body.game-mode .dash-prize-title,
+body.game-mode .card-hover-note,
+body.game-mode .wallet-note{color:#dde4f0!important;}
+body.game-mode .pos-card-top{display:grid!important;grid-template-rows:auto minmax(0,1fr);align-items:center!important;justify-items:center!important;width:100%;}
+body.game-mode .figure-mini{display:grid!important;place-items:center!important;margin:auto!important;line-height:0!important;}
+body.game-mode .figure-mini svg{display:block!important;width:100%!important;height:100%!important;}
+body.game-mode .pos-card.owned::after{top:-5px!important;right:-3px!important;z-index:8!important;}
+@media(min-width:701px){
+  body.game-mode .country-card{grid-template-columns:1fr 1fr!important;text-align:center!important;justify-items:center!important;}
+  body.game-mode .country-card-main,
+  body.game-mode .country-card-stats{align-items:center!important;justify-content:center!important;text-align:center!important;}
+  body.game-mode .country-card-main{flex-direction:column!important;}
+  body.game-mode .country-card .flag-img{width:40px!important;height:27px!important;}
+  body.game-mode .country-card-name{font-size:17px!important;text-align:center!important;}
+  body.game-mode .country-card-score{font-size:17px!important;text-align:center!important;}
+  body.game-mode .country-card-completion{font-size:14px!important;text-align:center!important;}
+  body.game-mode .lb-addr,
+  body.game-mode .lb-completion,
+  body.game-mode .lb-score,
+  body.game-mode .lb-prize{font-family:'Black Ops One',sans-serif!important;font-size:13px!important;color:#dde4f0!important;}
+}
+@media(max-width:700px){
+  body.game-mode .figure-mini{width:24px!important;height:24px!important;}
+  body.game-mode .pos-card-top{min-height:32px!important;}
+  body.game-mode .lb-row{grid-template-columns:22px minmax(0,1fr) 52px 64px 44px!important;}
+  body.game-mode .lb-addr{font-size:9px!important;color:#dde4f0!important;}
+  body.game-mode .lb-completion{font-size:8px!important;color:#dde4f0!important;}
+  body.game-mode .lb-score,
+  body.game-mode .lb-prize{font-size:9px!important;color:#dde4f0!important;}
+}
+
+
+
+
+
+
+/* Exact home-style top navigation */
+body{padding-top:55px!important;}
+.topnav{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  padding:12px 28px!important;
+  border-bottom:1px solid rgba(0,255,135,0.14)!important;
+  background:rgba(5,7,10,0.96)!important;
+  backdrop-filter:blur(14px)!important;
+  position:fixed!important;
+  top:0!important;
+  left:0!important;
+  right:0!important;
+  z-index:100!important;
+  height:55px!important;
+  overflow:visible!important;
+}
+.topnav-logo.logo,
+.logo{
+  font-family:'Black Ops One',sans-serif!important;
+  font-size:18px!important;
+  letter-spacing:2px!important;
+  color:#dde4f0!important;
+  text-shadow:0 0 18px rgba(0,255,135,0.16)!important;
+  white-space:nowrap!important;
+  line-height:1!important;
+}
+.topnav-logo.logo span,
+.logo span{color:#00ff87!important;}
+.nav-right,
+.wallet-actions{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:flex-end!important;
+  gap:12px!important;
+  flex-shrink:0!important;
+  min-width:0!important;
+}
+.wallet-addr{
+  font-family:'Share Tech Mono',monospace!important;
+  font-size:11px!important;
+  color:#7a8899!important;
+  white-space:nowrap!important;
+  background:none!important;
+  border:0!important;
+  padding:0!important;
+}
+.wallet-bal{
+  font-family:'Black Ops One',sans-serif!important;
+  font-size:13px!important;
+  color:#ffc940!important;
+  white-space:nowrap!important;
+  background:none!important;
+  border:0!important;
+  padding:0!important;
+}
+.nav-countdown,
+.nav-price-countdown{
+  position:absolute!important;
+  left:50%!important;
+  top:50%!important;
+  transform:translate(-50%,-50%)!important;
+  font-family:'Black Ops One',sans-serif!important;
+  font-size:13px!important;
+  letter-spacing:2px!important;
+  color:#ffc940!important;
+  padding:6px 12px!important;
+  border:1px solid rgba(255,201,64,.24)!important;
+  border-radius:7px!important;
+  background:rgba(255,201,64,.045)!important;
+  white-space:nowrap!important;
+  display:block!important;
+  line-height:1!important;
+}
+.nav-countdown span,
+.nav-price-countdown span{color:#dde4f0!important;font-size:10px!important;margin-right:8px!important;letter-spacing:1px!important;}
+.nav-countdown b,
+.nav-price-countdown b{font-size:13px!important;color:#ffc940!important;font-weight:400!important;}
+.btn-connect.connected{background:rgba(0,255,135,0.15)!important;border-color:#00ff87!important;color:#00ff87!important;}
+@media(max-width:768px){
+  body{padding-top:72px!important;}
+  .topnav{height:48px!important;padding:10px 12px!important;}
+  .topnav-logo.logo,.logo{font-size:13px!important;letter-spacing:1.4px!important;}
+  .wallet-actions,.nav-right{gap:6px!important;}
+  .wallet-addr{font-size:8px!important;max-width:86px!important;overflow:hidden!important;text-overflow:ellipsis!important;}
+  .wallet-bal{font-size:9px!important;}
+  .btn-connect{font-size:9px!important;padding:7px 9px!important;}
+  .nav-countdown,.nav-price-countdown{top:48px!important;left:50%!important;transform:translateX(-50%)!important;font-size:9px!important;letter-spacing:1px!important;padding:4px 7px!important;background:rgba(5,7,10,.96)!important;}
+  .nav-countdown span,.nav-price-countdown span{display:none!important;}
+}
+
+/* Final mobile header/quest/info alignment */
+@media(max-width:700px){
+  body{padding-top:70px!important;}
+  .topnav{
+    height:70px!important;
+    min-height:70px!important;
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr) auto!important;
+    grid-template-rows:34px 24px!important;
+    align-items:center!important;
+    gap:0 8px!important;
+    padding:7px 10px 6px!important;
+    overflow:hidden!important;
+  }
+  .topnav-logo.logo,
+  .topnav .logo{
+    grid-column:1!important;
+    grid-row:1!important;
+    align-self:center!important;
+    justify-self:start!important;
+    font-size:13px!important;
+    line-height:1!important;
+  }
+  .topnav .wallet-actions,
+  .topnav .nav-right{
+    grid-column:2!important;
+    grid-row:1!important;
+    align-self:center!important;
+    justify-self:end!important;
+    min-width:0!important;
+  }
+  .nav-countdown,
+  .nav-price-countdown{
+    grid-column:1 / -1!important;
+    grid-row:2!important;
+    position:static!important;
+    inset:auto!important;
+    transform:none!important;
+    justify-self:center!important;
+    align-self:center!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    gap:6px!important;
+    width:auto!important;
+    max-width:calc(100vw - 24px)!important;
+    margin:0 auto!important;
+    padding:4px 9px!important;
+    background:rgba(255,201,64,.08)!important;
+    border:1px solid rgba(255,201,64,.42)!important;
+    border-radius:7px!important;
+    color:#ffc940!important;
+    font-family:'Black Ops One',sans-serif!important;
+    font-size:10px!important;
+    line-height:1!important;
+    letter-spacing:1px!important;
+    white-space:nowrap!important;
+  }
+  .nav-countdown span,
+  .nav-price-countdown span,
+  .nav-countdown b,
+  .nav-price-countdown b{
+    display:inline!important;
+    margin:0!important;
+    color:#ffc940!important;
+    font-family:'Black Ops One',sans-serif!important;
+    font-size:10px!important;
+    line-height:1!important;
+    letter-spacing:1px!important;
+    font-weight:400!important;
+  }
+}
+
+/* Keep connected wallet button visible like Dream XI */
+body.game-mode .wallet-actions #connectBtn.connected,
+body.game-mode .nav-right #connectBtn.connected{
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  background:rgba(0,255,135,0.15)!important;
+  border-color:#00ff87!important;
+  color:#00ff87!important;
+}</style>
 </head>
 <body>
 
 <nav class="topnav">
-  <div class="topnav-left">
-    <a href="https://block-kickers.vercel.app" class="topnav-logo" style="text-decoration:none;">&#9917; BLOCK <span>KICKERS</span></a>
-    <span id="walletAddress" class="wallet-pill" style="color:#dde4f0;">0x0000...0000</span>
-    <span id="walletBalance" class="wallet-pill" style="color:#00ff87;">0.0 CHZ</span>
-  </div>
-  <div class="wallet-actions">
-    <button class="btn-connect" id="connectBtn" onclick="openWalletChoice()">CONNECT WALLET</button>
+  <a href="https://block-kickers.vercel.app" class="topnav-logo logo" style="text-decoration:none;">&#9917; BLOCK <span>KICKERS</span></a>
+  <div class="nav-countdown" id="navPriceCountdown"><span>WC END IN</span>--:--:--:--</div>
+  <div class="nav-right wallet-actions">
+    <span id="walletAddress" class="wallet-addr" style="display:none;"></span>
+    <span id="walletBalance" class="wallet-bal" style="display:none;"></span>
+    <button class="btn-connect" id="connectBtn" onclick="openWalletChoice()">CONNECT</button>
   </div>
 </nav>
 
@@ -1189,7 +1566,7 @@ body.game-mode .lb-score{font-size:12px;text-align:right;white-space:nowrap;}
       <div class="stat-lbl">Global Position</div>
     </div>
     <div class="stat-card" style="background:rgba(0,255,135,0.03); border-color:rgba(0,255,135,0.2);">
-      <div class="stat-val" id="myEstPayout" style="color:#00ff87; font-size:24px; padding-top:6px;">0.00 CHZ</div>
+      <div class="stat-val" id="myEstPayout" style="color:#00ff87; font-size:24px; padding-top:6px;">???,??? CHZ</div>
       <div class="stat-lbl">Est. Quest Reward (TOP 10)</div>
     </div>
   </div>
@@ -1233,23 +1610,21 @@ body.game-mode .lb-score{font-size:12px;text-align:right;white-space:nowrap;}
       
       <!-- LEFT COLUMN: NATION SELECTOR -->
       <div class="left-col country-section">
-        <div class="pitch-title">
+        <div class="pitch-title nation-selector-title">
           <span>NATION SELECTOR</span>
+          <div class="filter-tabs">
+            <button class="tab-btn active" onclick="filterFederation('ALL', this)">ALL (48)</button>
+            <button class="tab-btn" onclick="filterFederation('UEFA', this)">UEFA</button>
+            <button class="tab-btn" onclick="filterFederation('CONMEBOL', this)">CONMEBOL</button>
+            <button class="tab-btn" onclick="filterFederation('CAF', this)">CAF</button>
+            <button class="tab-btn" onclick="filterFederation('AFC', this)">AFC</button>
+            <button class="tab-btn" onclick="filterFederation('CONCACAF', this)">CONCACAF</button>
+            <button class="tab-btn" onclick="filterFederation('OFC', this)">OFC</button>
+          </div>
           <span class="album-title-tools">
-            <span style="font-family:'Share Tech Mono',monospace; color:#818cf8;">48 ALBUMS</span>
+            <span class="album-count-label">48 ALBUMS</span>
             <button class="dash-icon-btn" type="button" title="Refresh albums" onclick="loadData()">&#8635;</button>
           </span>
-        </div>
-
-        <!-- FEDERATION FILTER TABS -->
-        <div class="filter-tabs">
-          <button class="tab-btn active" onclick="filterFederation('ALL', this)">ALL (48)</button>
-          <button class="tab-btn" onclick="filterFederation('UEFA', this)">UEFA</button>
-          <button class="tab-btn" onclick="filterFederation('CONMEBOL', this)">CONMEBOL</button>
-          <button class="tab-btn" onclick="filterFederation('CAF', this)">CAF</button>
-          <button class="tab-btn" onclick="filterFederation('AFC', this)">AFC</button>
-          <button class="tab-btn" onclick="filterFederation('CONCACAF', this)">CONCACAF</button>
-          <button class="tab-btn" onclick="filterFederation('OFC', this)">OFC</button>
         </div>
 
         <div class="country-grid" id="countryGridContainer">
@@ -1264,7 +1639,7 @@ body.game-mode .lb-score{font-size:12px;text-align:right;white-space:nowrap;}
             <span id="selectedCountryTitle">TACTICAL PITCH</span>
           </div>
           <button class="dash-mint-btn" onclick="directMint()">MINT</button>
-          <span style="font-family:'Share Tech Mono',monospace; color:#818cf8; font-size:12px;" id="selectedCountryCompletion">0/11 COMPLETED</span>
+          <span class="completion-label" id="selectedCountryCompletion">0/11 COMPLETED</span>
         </div>
 
         <div class="pitch-wrap">
@@ -1478,6 +1853,18 @@ const TEAMS = [
   {id:46, name:"Switzerland",    flag:"🇨🇭", code:"ch", fed:"UEFA"},
   {id:47, name:"Turkey",        flag:"🇹🇷", code:"tr", fed:"UEFA"}
 ];
+
+const TEAM_ABBR = {
+  'Australia':'AUS','Iran':'IRN','Iraq':'IRQ','Japan':'JPN','Jordan':'JOR','Qatar':'QAT','Saudi Arabia':'KSA','South Korea':'KOR','Uzbekistan':'UZB',
+  'Algeria':'ALG','Cape Verde':'CPV','DR Congo':'DRC','Egypt':'EGY','Ghana':'GHA','Ivory Coast':'CIV','Morocco':'MAR','Senegal':'SEN','South Africa':'RSA','Tunisia':'TUN',
+  'Canada':'CAN','Curacao':'CUR','Haiti':'HAI','Mexico':'MEX','Panama':'PAN','USA':'USA',
+  'Argentina':'ARG','Brazil':'BRA','Colombia':'COL','Ecuador':'ECU','Paraguay':'PAR','Uruguay':'URU',
+  'New Zealand':'NZL','Austria':'AUT','Belgium':'BEL','Bosnia':'BIH','Croatia':'CRO','Czech Rep.':'CZE','England':'ENG','France':'FRA','Germany':'GER','Netherlands':'NED','Norway':'NOR','Portugal':'POR','Scotland':'SCO','Spain':'ESP','Sweden':'SWE','Switzerland':'SUI','Turkey':'TUR'
+};
+
+function teamAbbr(team) {
+  return TEAM_ABBR[team?.name] || String(team?.name || '').slice(0, 3).toUpperCase();
+}
 
 // Multilanguage Rules Data (Polski oraz kluczowa reguła transferowa zaimplementowane)
 const RULES_TRANSLATIONS = {
@@ -1921,6 +2308,77 @@ function getFlagHtml(team, isLarge = false) {
   `;
 }
 
+function makeFigureSVG(dna, size = 80) {
+  const t = parseDNA(dna);
+  const team = TEAMS[t.teamId % TEAMS.length] || {};
+  const SHIRT = {
+    'Australia':'#FFD700','Iran':'#239F40','Iraq':'#CC0001','Japan':'#BC002D','Jordan':'#007A3D','Qatar':'#8D153A',
+    'Saudi Arabia':'#006C35','South Korea':'#CD2E3A','Uzbekistan':'#1EB53A','Algeria':'#006233','Cape Verde':'#003893',
+    'DR Congo':'#007FFF','Egypt':'#CE1126','Ghana':'#006B3F','Ivory Coast':'#F77F00','Morocco':'#C1272D','Senegal':'#00853F',
+    'South Africa':'#007749','Tunisia':'#E70013','Canada':'#FF0000','Curacao':'#002B7F','Haiti':'#00209F','Mexico':'#006847',
+    'Panama':'#DA121A','USA':'#002868','Argentina':'#74ACDF','Brazil':'#009C3B','Colombia':'#FCD116','Ecuador':'#FFD100',
+    'Paraguay':'#D52B1E','Uruguay':'#5EB6E4','New Zealand':'#00247D','Austria':'#ED2939','Belgium':'#111111','Bosnia':'#002395',
+    'Croatia':'#FF0000','Czech Rep.':'#D7141A','England':'#EEEEEE','France':'#002395','Germany':'#111111','Netherlands':'#FF6600',
+    'Norway':'#EF2B2D','Portugal':'#006600','Scotland':'#003087','Spain':'#AA151B','Sweden':'#006AA7','Switzerland':'#FF0000','Turkey':'#E30A17'
+  };
+  const SKIN = ['#FDBCB4','#F1C27D','#E0AC69','#C68642','#8D5524','#4A2912'];
+  const RARC = ['#6b7280','#3b82f6','#a855f7','#f59e0b'];
+  const shirt = SHIRT[team.name] || '#0066cc';
+  const skin = SKIN[Number((BigInt(String(dna)) >> 18n) % 6n)];
+  const rar = RARC[t.rarity] || '#6b7280';
+  const isLight = ['#FFD700','#FCD116','#FFD100','#EEEEEE'].includes(shirt);
+  const numC = isLight ? '#000' : '#fff';
+  const bootC = t.hasGoldenBoots ? '#FFD700' : '#111';
+  const s = size, cx = s / 2;
+  const headY = s * 0.12, headW = s * 0.30, headH = s * 0.28;
+  const bodyY = headY + headH * 0.85, bodyW = s * 0.40, bodyH = s * 0.28;
+  const legW = s * 0.10, legH = s * 0.22, legGap = s * 0.04;
+  const legY = bodyY + bodyH * 0.85;
+  const armW = s * 0.09, armH = s * 0.20, armY = bodyY + s * 0.02;
+  const bootH = s * 0.09, handR = s * 0.06;
+  const p = [];
+  p.push(`<ellipse cx="${cx}" cy="${legY+legH+bootH+s*0.03}" rx="${bodyW*0.55}" ry="${s*0.04}" fill="${rar}" opacity="0.24"/>`);
+  p.push(`<rect x="${cx-legW-legGap}" y="${legY}" width="${legW}" height="${legH}" rx="3" fill="${shirt}"/>`);
+  p.push(`<rect x="${cx+legGap}" y="${legY}" width="${legW}" height="${legH}" rx="3" fill="${shirt}"/>`);
+  const sockY = legY + legH * 0.65;
+  p.push(`<rect x="${cx-legW-legGap}" y="${sockY}" width="${legW}" height="${legH*0.38}" rx="2" fill="white"/>`);
+  p.push(`<rect x="${cx+legGap}" y="${sockY}" width="${legW}" height="${legH*0.38}" rx="2" fill="white"/>`);
+  const bootY = legY + legH;
+  p.push(`<rect x="${cx-legW-legGap-2}" y="${bootY}" width="${legW+4}" height="${bootH}" rx="3" fill="${bootC}"/>`);
+  p.push(`<rect x="${cx+legGap-2}" y="${bootY}" width="${legW+4}" height="${bootH}" rx="3" fill="${bootC}"/>`);
+  p.push(`<rect x="${cx-bodyW/2}" y="${bodyY+bodyH*0.78}" width="${bodyW}" height="${s*0.09}" rx="3" fill="${shirt}cc"/>`);
+  p.push(`<rect x="${cx-bodyW/2}" y="${bodyY}" width="${bodyW}" height="${bodyH*0.85}" rx="5" fill="${shirt}"/>`);
+  p.push(`<text x="${cx}" y="${bodyY+bodyH*0.55}" text-anchor="middle" font-family="Arial Black" font-size="${s*0.13}" font-weight="900" fill="${numC}" opacity="0.9">${t.position}</text>`);
+  p.push(`<rect x="${cx-bodyW/2-armW+2}" y="${armY}" width="${armW}" height="${armH}" rx="3" fill="${shirt}" transform="rotate(7,${cx-bodyW/2},${armY})"/>`);
+  p.push(`<rect x="${cx+bodyW/2-2}" y="${armY}" width="${armW}" height="${armH}" rx="3" fill="${shirt}" transform="rotate(-7,${cx+bodyW/2},${armY})"/>`);
+  p.push(`<circle cx="${cx-bodyW/2-s*0.04}" cy="${armY+armH}" r="${handR}" fill="${skin}"/>`);
+  p.push(`<circle cx="${cx+bodyW/2+s*0.04}" cy="${armY+armH}" r="${handR}" fill="${skin}"/>`);
+  if (t.hasGloves) {
+    p.push(`<circle cx="${cx-bodyW/2-s*0.04}" cy="${armY+armH}" r="${handR+2}" fill="none" stroke="#FFD700" stroke-width="2"/>`);
+    p.push(`<circle cx="${cx+bodyW/2+s*0.04}" cy="${armY+armH}" r="${handR+2}" fill="none" stroke="#FFD700" stroke-width="2"/>`);
+  }
+  p.push(`<rect x="${cx-s*0.04}" y="${bodyY-s*0.05}" width="${s*0.08}" height="${s*0.07}" rx="2" fill="${skin}"/>`);
+  p.push(`<rect x="${cx-headW/2}" y="${headY}" width="${headW}" height="${headH}" rx="6" fill="${skin}"/>`);
+  p.push(`<rect x="${cx-headW/2-s*0.03}" y="${headY+headH*0.25}" width="${s*0.04}" height="${s*0.08}" rx="2" fill="${skin}"/>`);
+  p.push(`<rect x="${cx+headW/2-s*0.01}" y="${headY+headH*0.25}" width="${s*0.04}" height="${s*0.08}" rx="2" fill="${skin}"/>`);
+  if (t.hasEarring) p.push(`<circle cx="${cx-headW/2-1}" cy="${headY+headH*0.38}" r="${s*0.025}" fill="#FFD700"/>`);
+  const eyeY = headY + headH * 0.32, eyeW = s * 0.07, eyeH = s * 0.05;
+  p.push(`<rect x="${cx-headW*0.36}" y="${eyeY}" width="${eyeW}" height="${eyeH}" rx="2" fill="white"/>`);
+  p.push(`<rect x="${cx+headW*0.08}" y="${eyeY}" width="${eyeW}" height="${eyeH}" rx="2" fill="white"/>`);
+  p.push(`<rect x="${cx-headW*0.33}" y="${eyeY+1}" width="${eyeW*0.6}" height="${eyeH*0.7}" rx="1" fill="#0a0a14"/>`);
+  p.push(`<rect x="${cx+headW*0.11}" y="${eyeY+1}" width="${eyeW*0.6}" height="${eyeH*0.7}" rx="1" fill="#0a0a14"/>`);
+  p.push(`<rect x="${cx-headW*0.38}" y="${eyeY-s*0.04}" width="${eyeW+2}" height="${s*0.025}" rx="1" fill="#1a0800" opacity="0.8"/>`);
+  p.push(`<rect x="${cx+headW*0.06}" y="${eyeY-s*0.04}" width="${eyeW+2}" height="${s*0.025}" rx="1" fill="#1a0800" opacity="0.8"/>`);
+  p.push(`<rect x="${cx-s*0.02}" y="${eyeY+eyeH+s*0.02}" width="${s*0.04}" height="${s*0.05}" rx="2" fill="${skin}" opacity="0.7"/>`);
+  p.push(`<rect x="${cx-s*0.07}" y="${headY+headH*0.72}" width="${s*0.14}" height="${s*0.03}" rx="2" fill="#8b1a00" opacity="0.8"/>`);
+  if (t.hasBand) p.push(`<rect x="${cx-headW/2-2}" y="${headY+headH*0.18}" width="${headW+4}" height="${s*0.06}" rx="3" fill="white" opacity="0.85"/>`);
+  if (t.hasTattoo) {
+    p.push(`<line x1="${cx-bodyW/2-armW/2}" y1="${armY+armH*0.3}" x2="${cx-bodyW/2-armW/2+s*0.04}" y2="${armY+armH*0.5}" stroke="#000" stroke-width="1.5" opacity="0.5"/>`);
+    p.push(`<line x1="${cx-bodyW/2-armW/2+s*0.04}" y1="${armY+armH*0.3}" x2="${cx-bodyW/2-armW/2}" y2="${armY+armH*0.5}" stroke="#000" stroke-width="1.5" opacity="0.5"/>`);
+  }
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${s} ${s}" width="${s}" height="${s}" aria-hidden="true">${p.join('')}</svg>`;
+}
+
 // Sponsored Prize Pool split layout for Top 10
 function getPrizeForRank(rank) {
   if (rank === 1) return 10000;
@@ -1990,7 +2448,7 @@ async function updateWalletBalance() {
       const p = new ethers.BrowserProvider(walletProvider);
       const bal = await p.getBalance(address);
       const el = document.getElementById('walletBalance');
-      if (el) { el.textContent = parseFloat(ethers.formatEther(bal)).toFixed(1)+' CHZ'; el.style.display='inline-block'; }
+      if (el) { el.textContent = parseFloat(ethers.formatEther(bal)).toFixed(3)+' CHZ'; el.style.display='inline-block'; }
     } catch(e) {}
   }
 }
@@ -2094,7 +2552,7 @@ async function finalizeWalletConnection(walletProvider, walletType='wallet') {
   contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
   marketContract = new ethers.Contract(MARKET_ADDRESS, MARKET_ABI, signer);
   const connectBtn = document.getElementById('connectBtn');
-  if (connectBtn) { connectBtn.textContent = address.slice(0,6)+'...'+address.slice(-4); connectBtn.classList.add('connected'); }
+  if (connectBtn) { connectBtn.textContent = 'CONNECTED'; connectBtn.classList.add('connected'); }
   const walletAddressEl = document.getElementById('walletAddress');
   if (walletAddressEl) { walletAddressEl.textContent = address.slice(0,6)+'...'+address.slice(-4); walletAddressEl.style.display = 'inline-block'; }
   await updateWalletBalance();
@@ -2303,9 +2761,17 @@ async function loadData(options = {}){
     const rmk = new ethers.Contract(MARKET_ADDRESS, MARKET_ABI, rp);
     const nextId = Number(await rmk.nextListingId());
     const from = Math.max(0, nextId - 150);
-    for(let i = from; i < nextId; i++){
+    const ids = Array.from({length: nextId - from}, (_, idx) => from + idx);
+    const listingResults = [];
+    for(let start = 0; start < ids.length; start += 25){
+      const batch = ids.slice(start, start + 25);
+      const settled = await Promise.allSettled(batch.map(i => rmk.getListing(i).then(l => ({i, l}))));
+      settled.forEach(result => {
+        if(result.status === 'fulfilled') listingResults.push(result.value);
+      });
+    }
+    for(const {i, l} of listingResults){
       try{
-        const l = await rmk.getListing(i);
         if(!Boolean(l[3])) continue; 
         const seller = String(l[0]).toLowerCase();
         const tokenId = Number(l[1]);
@@ -2391,12 +2857,16 @@ function getGlobalLeaderboardData() {
   return Object.entries(window.dreamScores).map(([wallet, countryData]) => {
     let totalScore = 0;
     let activeCountriesCount = 0;
+    let cardsOwned = 0;
     Object.values(countryData).forEach(positionsObj => {
       const nationScore = Object.values(positionsObj).reduce((sum, item) => sum + item.weight, 0);
       if (nationScore > 0) activeCountriesCount++;
       totalScore += nationScore;
     });
-    return { wallet, score: totalScore, filled: activeCountriesCount };
+    try {
+      cardsOwned = Object.values(ownerMap || {}).filter(fig => fig.owner === wallet.toLowerCase()).length;
+    } catch(e) {}
+    return { wallet, score: totalScore, filled: activeCountriesCount, cards: cardsOwned };
   }).sort((a,b) => b.score - a.score);
 }
 
@@ -2430,9 +2900,9 @@ function renderStats() {
   }
   
   document.getElementById('myGlobalRank').textContent = myGlobalRankVal;
-  document.getElementById('myEstPayout').textContent = myEstPrizeVal >= 1000
-    ? `${(myEstPrizeVal / 1000).toLocaleString(undefined, {maximumFractionDigits: 1})}k CHZ`
-    : `${myEstPrizeVal.toLocaleString()} CHZ`;
+  document.getElementById('myEstPayout').textContent = myEstPrizeVal > 0
+    ? `${myEstPrizeVal.toLocaleString()} CHZ`
+    : '???,??? CHZ';
 }
 
 function filterFederation(fed, btnEl) {
@@ -2490,12 +2960,12 @@ function renderCountryHub() {
     let crownDisplay = '';
 
     card.innerHTML = `
-      <div>
+      <div class="country-card-main">
         ${crownDisplay}
         <div class="country-card-flag">${getFlagHtml(team)}</div>
-        <div class="country-card-name" style="margin-top:6px;">${team.name}</div>
+        <div class="country-card-name" style="margin-top:6px;">${teamAbbr(team)}</div>
       </div>
-      <div>
+      <div class="country-card-stats">
         <div class="country-card-score">${scoreDisplay}</div>
         <div class="country-card-completion" style="color:${compColor};">${compDisplay}</div>
       </div>
@@ -2567,9 +3037,9 @@ function renderPitch() {
         const hoverHtml = sheetActionsHtml ? `<div class="card-hover-actions">${sheetActionsHtml}</div>` : '';
 
         card.innerHTML = `
-          <div>
+          <div class="pos-card-top">
             <div class="pos-name">${POSITION_SHORT[pos]}</div>
-            <span class="pos-ball">&#9917;</span>
+            <span class="figure-mini">${makeFigureSVG(scored.dna, 80)}</span>
           </div>
           <div>
             <div class="pos-weight ${scored.rarity === 3 ? 'gold' : ''}">${scored.weight}</div>
@@ -2589,7 +3059,7 @@ function renderPitch() {
         sheetActionsHtml = actionHtml;
 
         card.innerHTML = `
-          <div>
+          <div class="pos-card-top">
             <div class="pos-name" style="color:#5a6a7a;">${POSITION_SHORT[pos]}</div>
             <span class="pos-ball" style="opacity: 0.15">&#9917;</span>
           </div>
@@ -2653,7 +3123,7 @@ function renderLeaderboard(){
         <div class="lb-row ${isMe ? 'me' : ''} ${prizeAmount > 0 ? 'prize-row' : ''}">
           <div class="lb-pos ${posClass}">${medal || '#' + rank}</div>
           <div class="lb-addr">${player.wallet.slice(0,6)}…${player.wallet.slice(-4)} ${isMe ? '<span class="lb-you">YOU</span>' : ''}</div>
-          <div class="lb-completion">Active Albums: ${player.filled}/48</div>
+          <div class="lb-completion">${player.cards || 0} CARDS</div>
           <div class="lb-completion prize-cell">${prizeDisplay}</div>
           <div class="lb-score">${player.score} PTS</div>
         </div>
@@ -3082,6 +3552,8 @@ function updateCountdown(){
   setDashCd('dashCdH', h);
   setDashCd('dashCdM', m);
   setDashCd('dashCdS', s);
+  const navPriceCountdown = document.getElementById('navPriceCountdown');
+  if (navPriceCountdown) navPriceCountdown.innerHTML = `<span>WC END IN</span><b>${String(d).padStart(2,'0')}:${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}</b>`;
   document.getElementById('cdBlock').innerHTML = 'Deadline block: <a href="https://scan.chiliz.com/block/'+DEADLINE_BLOCK+'" target="_blank" style="color:#00ff87;text-decoration:none;">#'+DEADLINE_BLOCK.toLocaleString()+'</a> · Estimated Current: ~#'+estimated.toLocaleString()+' · '+blocksLeft.toLocaleString()+' blocks remaining';
 }
 
