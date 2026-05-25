@@ -661,7 +661,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
   background: rgba(0,255,135,0.06);
 }
 .pos-card.owned::after{
-  content: '\2713';
+  content: '';
   position: absolute;
   top: 2px;
   right: 4px;
@@ -1738,7 +1738,8 @@ body.game-mode .pos-position-chip{left:6px!important;right:auto!important;top:24
 .network-step.active{color:#fff;}
 .network-step.active::before{border-color:#ffc940;background:radial-gradient(circle,#ffc940 0 35%,rgba(255,201,64,.14) 38% 100%);box-shadow:0 0 12px rgba(255,201,64,.24);}
 .network-step.done{color:#00ff87;}
-.network-step.done::before{content:'âś“';display:grid;place-items:center;color:#06080a;font-family:'Black Ops One',sans-serif;font-size:9px;background:#00ff87;border-color:#00ff87;box-shadow:0 0 12px rgba(0,255,135,.28);}
+.network-step.done::before{content:'';display:grid;place-items:center;background:#00ff87;border-color:#00ff87;box-shadow:0 0 12px rgba(0,255,135,.28);position:relative;}
+.network-step.done::after{content:'';grid-column:1;grid-row:1;width:7px;height:4px;border-left:2px solid #06080a;border-bottom:2px solid #06080a;transform:rotate(-45deg);justify-self:center;align-self:center;margin-top:-1px;}
 body.game-mode .pos-position-chip{left:6px!important;right:auto!important;top:auto!important;bottom:6px!important;transform:none!important;font-size:7px!important;padding:2px 4px!important;background:rgba(6,8,10,.70)!important;border:1px solid rgba(255,255,255,.14)!important;border-radius:4px!important;}
 @media(min-width:701px){body.game-mode .pos-position-chip{left:7px!important;bottom:7px!important;font-size:8px!important;padding:2px 5px!important;}}
 @media(max-width:700px){body.game-mode .pos-position-chip{left:3px!important;bottom:3px!important;font-size:5px!important;padding:1px 3px!important;}}
@@ -2825,7 +2826,40 @@ body.game-mode .snipe-weight{color:var(--rar,#fff)!important;}
 body.game-mode .snipe-weight .pts-label{color:var(--rar,#fff)!important;}
 @media(max-width:700px){
   body.game-mode .btn-pitch-share{min-width:54px!important;font-size:6px!important;}
-}</style>
+}
+/* Stable CSS checkmarks: avoids broken glyphs on mobile/desktop browsers */
+.pos-card.owned::after{
+  content:''!important;
+  width:8px!important;
+  height:5px!important;
+  border-left:2px solid #00ff87!important;
+  border-bottom:2px solid #00ff87!important;
+  border-top:0!important;
+  border-right:0!important;
+  background:transparent!important;
+  color:transparent!important;
+  transform:rotate(-45deg)!important;
+  z-index:8!important;
+  line-height:1!important;
+}
+.network-step.done::before{content:''!important;}
+.network-step.done::after{
+  content:''!important;
+  grid-column:1!important;
+  grid-row:1!important;
+  width:7px!important;
+  height:4px!important;
+  border-left:2px solid #06080a!important;
+  border-bottom:2px solid #06080a!important;
+  border-top:0!important;
+  border-right:0!important;
+  transform:rotate(-45deg)!important;
+  justify-self:center!important;
+  align-self:center!important;
+  margin-top:-1px!important;
+}
+@media(max-width:700px){.pos-card.owned::after{width:7px!important;height:4px!important;border-left-width:2px!important;border-bottom-width:2px!important;}}
+</style>
 </head>
 <body>
 
