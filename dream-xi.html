@@ -928,6 +928,21 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
 #onboardingModal .btn-card-action{position:sticky;bottom:0;z-index:2;}
 
 /* KLASA DLA ZAKÄąÂADEK WYBORU JĂ„ÂZYKA */
+
+/* Dream XI quick guide onboarding */
+.dream-guide-panel{background:linear-gradient(180deg,#111820,#070b10)!important;border-color:rgba(0,255,135,.34)!important;box-shadow:0 24px 80px rgba(0,0,0,.65),0 0 34px rgba(0,255,135,.10)!important;}
+.dream-guide-kicker{font-family:'Share Tech Mono',monospace;color:#ffc940;font-size:11px;letter-spacing:3px;margin-bottom:6px;text-transform:uppercase;}
+.dream-guide-title{font-family:'Black Ops One',sans-serif;font-size:28px;color:#00ff87;margin-bottom:8px;letter-spacing:1px;}
+.dream-guide-copy{color:#dde4f0!important;font-size:16px;line-height:1.35;margin-bottom:12px;}
+.dream-guide-grid{display:grid!important;grid-template-columns:1fr 1fr;gap:10px!important;}
+.dream-guide-grid .guide-step{background:linear-gradient(145deg,rgba(15,19,24,.98),rgba(0,255,135,.045));border-color:rgba(0,255,135,.18);}
+.dream-guide-grid .guide-step-title{color:#fff!important;font-size:12px!important;}
+.dream-guide-grid .guide-step-text{color:#dde4f0!important;font-size:14px!important;}
+.guide-dont-show{display:flex;align-items:center;gap:8px;margin-top:12px;color:#dde4f0;font-family:'Share Tech Mono',monospace;font-size:12px;cursor:pointer;}
+.guide-dont-show input{accent-color:#00ff87;width:16px;height:16px;}
+.dream-guide-start{font-family:'Black Ops One',sans-serif!important;letter-spacing:1px!important;}
+@media(max-width:700px){.dream-guide-grid{grid-template-columns:1fr!important;gap:7px!important}.dream-guide-title{font-size:20px}.dream-guide-copy{font-size:13px!important}.dream-guide-grid .guide-step-text{font-size:12px!important}.guide-dont-show{font-size:11px}}
+
 .tab-btn{background:#0f1318;border:1px solid #1c2028;color:#7a8899;padding:6px 12px;border-radius:6px;font-family:'Black Ops One',sans-serif;font-size:10px;letter-spacing:1px;cursor:pointer;transition:all 0.2s;}
 .tab-btn:hover{border-color:#818cf8;color:#dde4f0;}
 .tab-btn.active{background:#818cf8;color:#000;border-color:#818cf8;}
@@ -3263,35 +3278,44 @@ body.game-mode .snipe-weight .pts-label{color:var(--rar,#fff)!important;}
 
 <!-- MODAL: ZASADY W WIELU JĂ„ÂZYKACH (TABY BEZ FLAG) -->
 <div id="onboardingModal" class="modal-overlay">
-  <div class="modal-content" style="max-width:560px;">
-    <button onclick="toggleOnboardingModal(false, true)" class="modal-close">&times;</button>
-    <h2 style="font-family:'Black Ops One',sans-serif; font-size:24px; color:#00ff87; margin-bottom:8px;">MINT. SCORE. SELL.</h2>
-    <p style="color:#7a8899;line-height:1.4;">Argentina Dream XI is a rotation quest. Score cards when they enter your wallet, then decide if you hold, sell, or hunt the next upgrade.</p>
-    <div class="guide-steps">
+  <div class="modal-content dream-guide-panel" style="max-width:680px;">
+    <button onclick="toggleOnboardingModal(false, false)" class="modal-close">&times;</button>
+    <div class="dream-guide-kicker">ARGENTINA DREAM XI</div>
+    <h2 class="dream-guide-title">QUICK GUIDE</h2>
+    <p class="dream-guide-copy">This is not only mint and luck. A card can score, be sold, or be held to block other players.</p>
+    <div class="guide-steps dream-guide-grid">
       <div class="guide-step">
         <div class="guide-step-num">01</div>
         <div>
-          <div class="guide-step-title">MINT OR BUY</div>
-          <div class="guide-step-text">Mint a random WC card for 10 CHZ or buy Argentina cards from the market.</div>
+          <div class="guide-step-title">SCORE</div>
+          <div class="guide-step-text">Mint or buy a card. When it enters your wallet, it scores for your Dream XI history.</div>
         </div>
       </div>
       <div class="guide-step">
         <div class="guide-step-num">02</div>
         <div>
-          <div class="guide-step-title">SCORE</div>
-          <div class="guide-step-text">Argentina cards score when they enter your wallet. Your best card per position becomes your squad weight.</div>
+          <div class="guide-step-title">SELL OR HOLD</div>
+          <div class="guide-step-text">After scoring, sell it for CHZ or hold it to block competitors from using the same card.</div>
         </div>
       </div>
       <div class="guide-step">
         <div class="guide-step-num">03</div>
         <div>
-          <div class="guide-step-title">SELL & HUNT</div>
-          <div class="guide-step-text">No need to HODL. Your score stays saved, so you can sell, recycle CHZ, and chase missing or stronger positions.</div>
+          <div class="guide-step-title">UPGRADE</div>
+          <div class="guide-step-text">Only your best scored card per position counts. A stronger card upgrades your squad.</div>
+        </div>
+      </div>
+      <div class="guide-step">
+        <div class="guide-step-num">04</div>
+        <div>
+          <div class="guide-step-title">TRADE SMART</div>
+          <div class="guide-step-text">Missing positions can be worth more than rarity. Check who needs your card before listing low.</div>
         </div>
       </div>
     </div>
-    <div class="tip-box"><strong>LIVE TIP SYSTEM</strong><br>After important mints, the game will warn you when a card looks scarce or when it may be better to sell instead of listing too low.</div>
-    <button class="btn-card-action upgrade" onclick="toggleOnboardingModal(false, true)" style="margin-top:18px; padding:10px; font-size:11px;">START QUEST</button>
+    <div class="tip-box"><strong>KEY STRATEGY</strong><br>Sell = profit now, but another player can score your card. Hold = protect your rank and control scarce positions.</div>
+    <label class="guide-dont-show"><input id="dontShowDreamXiGuide" type="checkbox"> Don&apos;t show again</label>
+    <button class="btn-card-action upgrade dream-guide-start" onclick="toggleOnboardingModal(false, document.getElementById('dontShowDreamXiGuide')?.checked)" style="margin-top:14px; padding:12px; font-size:12px;">START PLAYING</button>
   </div>
 </div>
 
@@ -4228,13 +4252,13 @@ function toggleOnboardingModal(show, remember = false) {
   if (!modal) return;
   modal.style.display = show ? 'flex' : 'none';
   if (!show && remember) {
-    try { localStorage.setItem('dreamXiGuideSeen', '1'); } catch(e) {}
+    try { localStorage.setItem('dreamXiQuickGuideSeen', '1'); } catch(e) {}
   }
 }
 
 function maybeShowOnboarding() {
   try {
-    if (localStorage.getItem('dreamXiGuideSeen') === '1') return;
+    if (localStorage.getItem('dreamXiQuickGuideSeen') === '1') return;
   } catch(e) {}
   setTimeout(() => toggleOnboardingModal(true), 500);
 }
