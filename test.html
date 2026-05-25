@@ -2121,6 +2121,77 @@ body{padding-top:55px!important;}
   .nav-countdown,.nav-price-countdown{top:48px!important;left:50%!important;transform:translateX(-50%)!important;font-size:9px!important;letter-spacing:1px!important;padding:4px 7px!important;background:rgba(5,7,10,.96)!important;}
   .nav-countdown span,.nav-price-countdown span{display:none!important;}
 }
+
+/* PC-only typography pass requested */
+@media(min-width:701px){
+  .nav-countdown,
+  .nav-price-countdown,
+  .nav-countdown span,
+  .nav-price-countdown span,
+  .nav-countdown b,
+  .nav-price-countdown b{
+    font-size:13px!important;
+    line-height:1!important;
+    letter-spacing:2px!important;
+  }
+  .nav-countdown span,
+  .nav-price-countdown span{margin-right:8px!important;}
+  body.game-mode .stat-mini-grid,
+  body.game-mode .stat-mini-grid span,
+  body.game-mode .stat-mini-grid b{
+    font-family:'Black Ops One',sans-serif!important;
+    font-size:13px!important;
+    line-height:1.08!important;
+    letter-spacing:.75px!important;
+    color:#fff!important;
+    font-weight:400!important;
+  }
+  body.game-mode .stat-mini-grid{gap:6px 12px!important;}
+  body.game-mode .desk-tab-btn{
+    font-size:12px!important;
+    letter-spacing:1.2px!important;
+    padding:11px 8px!important;
+    color:#dde4f0!important;
+  }
+  body.game-mode .desk-tab-btn.active{color:#00ff87!important;}
+  body.game-mode .desk-tab-content .pitch-title,
+  body.game-mode #deskTabRanks .pitch-title,
+  body.game-mode #deskTabInfo .pitch-title,
+  body.game-mode .feed-title,
+  body.game-mode .ledger-header{
+    font-size:12px!important;
+    letter-spacing:1.3px!important;
+    color:#fff!important;
+    font-family:'Black Ops One',sans-serif!important;
+  }
+  body.game-mode #deskTabInfo .how-title{
+    font-size:14px!important;
+    line-height:1.12!important;
+    letter-spacing:.8px!important;
+    color:#fff!important;
+    font-family:'Black Ops One',sans-serif!important;
+  }
+  body.game-mode #deskTabInfo .how-desc,
+  body.game-mode #deskTabInfo .info-mini-stats,
+  body.game-mode #deskTabInfo .info-mini-stats span,
+  body.game-mode #deskTabInfo .info-mini-stats b,
+  body.game-mode #deskTabInfo .info-action-btn{
+    font-size:13px!important;
+    line-height:1.2!important;
+    letter-spacing:.55px!important;
+    color:#fff!important;
+    font-family:'Black Ops One',sans-serif!important;
+  }
+  body.game-mode #deskTabInfo .how-card{padding:12px!important;}
+  body.game-mode .quest-card-cta{grid-template-columns:44px 1fr auto!important;}
+  body.game-mode .quest-card-cta .quest-flag-img{
+    width:34px!important;
+    height:23px!important;
+    object-fit:cover!important;
+    border-radius:3px!important;
+    box-shadow:0 0 0 1px rgba(255,255,255,.18),0 2px 8px rgba(0,0,0,.35)!important;
+  }
+}
 </style>
 </head>
 <body>
@@ -2273,7 +2344,7 @@ body{padding-top:55px!important;}
       </div>
     </div>
     <div class="stat-card quest-link-card">
-      <a class="quest-live-link quest-card-cta" href="/nation-quest"><span class="quest-flag">&#127482;&#127480;</span><span>USA NATION QUEST</span><b>1,500 CHZ</b></a>
+      <a class="quest-live-link quest-card-cta" href="/nation-quest"><img class="quest-flag-img" src="https://flagcdn.com/w80/us.png" alt="USA" loading="lazy"><span>USA NATION QUEST</span><b>1,500 CHZ</b></a>
     </div>
     </div>
 
