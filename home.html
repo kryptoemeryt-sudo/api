@@ -152,6 +152,14 @@ h1 .accent{color:var(--green);text-shadow:0 0 30px var(--green-glow);}
 .modal-x{background:none;border:none;color:var(--text2);font-size:18px;cursor:pointer;padding:4px;}
 .modal-3d{height:280px;background:linear-gradient(145deg,#0c0e14,#090b10);}
 .modal-3d canvas{width:100%!important;height:100%!important;}
+@media (min-width:769px){
+  .modal{
+    width:min(760px,92vw);
+  }
+  .modal-3d{
+    height:clamp(460px,58vh,560px);
+  }
+}
 .modal-body{padding:18px 22px;}
 .trait-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px;}
 .trait{background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:7px;padding:9px 12px;}
@@ -4205,7 +4213,7 @@ function openModal(tid,dna){
   wrap.innerHTML='';
   const cv=document.createElement('canvas');cv.style.cssText='width:100%;height:100%';
   wrap.appendChild(cv);
-  requestAnimationFrame(()=>{modalRen=new Figure3D(cv,dna,true,true);});
+  requestAnimationFrame(()=>{modalRen=new Figure3D(cv,dna,true,window.matchMedia('(min-width: 769px)').matches);});
   document.getElementById('modal').classList.add('show');
 }
 
