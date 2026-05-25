@@ -968,6 +968,21 @@ button.stat.mint-stat,
 @media(max-width:900px){
   .page{padding-top:44px!important;}
 }
+
+/* Market score and price tight line */
+.market-card .market-meta{min-height:0!important;margin-top:0!important;display:block!important;}
+.market-score-line{display:flex!important;align-items:baseline!important;justify-content:space-between!important;gap:6px!important;width:100%!important;line-height:1!important;}
+.market-score-line .slot-count{font-size:18px!important;line-height:1!important;color:inherit!important;}
+.market-score-line .slot-status{font-size:8px!important;line-height:1!important;color:inherit!important;text-align:right!important;}
+.market-trade{margin-top:0!important;gap:2px!important;}
+.market-trade .market-price{margin:0!important;line-height:1!important;}
+@media(max-width:900px){
+  .market-score-line .slot-count{font-size:10px!important;}
+  .market-score-line .slot-status{font-size:5px!important;}
+  .market-card .market-meta{min-height:0!important;}
+  .market-trade{margin-top:0!important;gap:1px!important;}
+  .market-trade .market-price{font-size:8px!important;}
+}
 </style>
 </head>
 <body>
@@ -1880,8 +1895,7 @@ function renderMarket(state) {
         ${mine ? `<div class="slot-check card-check">&#10003;</div>` : ""}
         ${figureCanvas(l, false, "market", posLabel(l.position))}
         <div class="slot-info market-meta">
-          <div class="slot-count ${rar}" style="color:${rarityColor(l.rarity)}">${l.weight}</div>
-          <div class="slot-status" style="color:${rarityColor(l.rarity)}">${rarityShort(l.rarity)}</div>
+          <div class="market-score-line" style="color:${rarityColor(l.rarity)}"><span class="slot-count ${rar}">${l.weight}</span><span class="slot-status">${rarityShort(l.rarity)}</span></div>
         </div>
         <div class="market-trade">
           <div class="market-sub ${mine ? "you" : ""}">${mine ? "YOU" : "LISTED"} - #${l.tokenId}</div>
