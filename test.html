@@ -1729,6 +1729,19 @@ body.game-mode .pos-position-chip{left:6px!important;right:auto!important;top:24
   body.game-mode .pos-fig-flag{width:16px!important;height:11px!important;top:3px!important;left:3px!important;}
   body.game-mode .pos-position-chip{left:3px!important;top:16px!important;font-size:5px!important;padding:1px 3px!important;}
 }
+
+/* Data loading checklist + card position bottom-left */
+.network-steps{display:none;margin-top:14px;text-align:left;border-top:1px solid rgba(255,255,255,.10);padding-top:12px;gap:7px;}
+.network-steps.active{display:grid;}
+.network-step{display:grid;grid-template-columns:18px 1fr;align-items:center;gap:8px;font-family:'Black Ops One',sans-serif;font-size:10px;letter-spacing:.7px;color:#8fa4bb;text-transform:uppercase;line-height:1.15;}
+.network-step::before{content:'';width:13px;height:13px;border-radius:50%;border:1px solid rgba(143,164,187,.45);background:rgba(255,255,255,.03);box-shadow:inset 0 0 8px rgba(0,0,0,.35);}
+.network-step.active{color:#fff;}
+.network-step.active::before{border-color:#ffc940;background:radial-gradient(circle,#ffc940 0 35%,rgba(255,201,64,.14) 38% 100%);box-shadow:0 0 12px rgba(255,201,64,.24);}
+.network-step.done{color:#00ff87;}
+.network-step.done::before{content:'✓';display:grid;place-items:center;color:#06080a;font-family:'Black Ops One',sans-serif;font-size:9px;background:#00ff87;border-color:#00ff87;box-shadow:0 0 12px rgba(0,255,135,.28);}
+body.game-mode .pos-position-chip{left:6px!important;right:auto!important;top:auto!important;bottom:6px!important;transform:none!important;font-size:7px!important;padding:2px 4px!important;background:rgba(6,8,10,.70)!important;border:1px solid rgba(255,255,255,.14)!important;border-radius:4px!important;}
+@media(min-width:701px){body.game-mode .pos-position-chip{left:7px!important;bottom:7px!important;font-size:8px!important;padding:2px 5px!important;}}
+@media(max-width:700px){body.game-mode .pos-position-chip{left:3px!important;bottom:3px!important;font-size:5px!important;padding:1px 3px!important;}}
 /* Network waiting overlay for blockchain actions */
 #networkOverlay{
   position:fixed;
@@ -2234,6 +2247,7 @@ body.network-busy{cursor:progress;}
     <div class="network-ball">&#9917;</div>
     <div class="network-wait-title">Waiting for network</div>
     <div class="network-wait-text" id="networkOverlayText">Please confirm in your wallet and wait for Chiliz Chain.</div>
+    <div class="network-steps" id="networkOverlaySteps" aria-live="polite"></div>
     <button id="walletOpenBtn" type="button" onclick="openWalletConnectApp()" style="display:none;margin-top:12px;border:1px solid rgba(0,255,135,.42);background:rgba(0,255,135,.10);color:#00ff87;border-radius:7px;padding:9px 12px;font-family:'Black Ops One',sans-serif;font-size:10px;letter-spacing:1px;">OPEN WALLET APP</button>
   </div>
 </div>
@@ -2930,11 +2944,54 @@ function hideNetworkOverlay() {
   if (networkOverlayDepth > 0) return;
   const overlay = document.getElementById('networkOverlay');
   if (overlay) overlay.classList.remove('show');
+  resetNetworkOverlayContent();
   setWalletOpenButton(false);
   document.body.classList.remove('network-busy');
 }
 function isNetworkOverlayVisible() {
   return networkOverlayDepth > 0;
+}
+const DATA_LOAD_STEPS = [
+  'Events / API',
+  'Recent blocks',
+  'Mint price + supply',
+  'Squad scores',
+  'Marketplace listings',
+  'Render dashboard'
+];
+
+function setNetworkTitle(text) {
+  const title = document.querySelector('#networkOverlay .network-wait-title');
+  if (title && text) title.textContent = text;
+}
+
+function renderDataLoadSteps(activeIndex = 0) {
+  const steps = document.getElementById('networkOverlaySteps');
+  if (!steps) return;
+  steps.classList.add('active');
+  steps.innerHTML = DATA_LOAD_STEPS.map((label, index) => {
+    const cls = index < activeIndex ? 'done' : index === activeIndex ? 'active' : '';
+    return `<div class="network-step ${cls}">${label}</div>`;
+  }).join('');
+}
+
+function showDataLoadingOverlay(message = 'Loading blockchain data...') {
+  showNetworkOverlay(message);
+  setNetworkTitle('Loading Dream XI data');
+  renderDataLoadSteps(0);
+}
+
+function updateDataLoadingStep(index, message) {
+  updateNetworkOverlay(message || DATA_LOAD_STEPS[index] || 'Loading data...');
+  renderDataLoadSteps(index);
+}
+
+function finishDataLoadingSteps() { renderDataLoadSteps(DATA_LOAD_STEPS.length); }
+
+function resetNetworkOverlayContent() {
+  setNetworkTitle('Waiting for network');
+  const steps = document.getElementById('networkOverlaySteps');
+  if (steps) { steps.classList.remove('active'); steps.innerHTML = ''; }
 }
 
 async function waitForTxOrFail(tx, label = 'Transaction') {
@@ -3621,6 +3678,7 @@ function setSnipeFilter(mode) {
 }
 
 async function loadDataCore(){
+  updateDataLoadingStep(0, 'Loading events from API / RPC...');
   document.getElementById('pitchFormationGrid').innerHTML = '<div style="text-align:center;color:#3d4a5a;padding:40px;grid-column:1/-1;"><span class="spin"></span> Querying Chiliz Blockchain data...</div>';
 
   let mints=[], sales=[], listed=[];
@@ -3657,6 +3715,7 @@ async function loadDataCore(){
     listed = ev.listed;
   }
 
+  updateDataLoadingStep(1, 'Checking recent blocks on Chiliz Chain...');
   try {
     const recent = await fetchRecentEvents();
     recent.mints.forEach(mint => {
@@ -3694,6 +3753,7 @@ async function loadDataCore(){
     }
   });
 
+  updateDataLoadingStep(2, 'Reading mint price and total supply...');
   if (contract) {
     try {
       const p = await contract.mintPrice();
@@ -3725,6 +3785,7 @@ async function loadDataCore(){
     }
   });
 
+  updateDataLoadingStep(3, 'Building Argentina squad scores...');
   window.dreamScores = {};
   const score = (wallet, tokenId, dna) => {
     try{
@@ -3781,6 +3842,7 @@ async function loadDataCore(){
     } catch(e){}
   });
 
+  updateDataLoadingStep(4, 'Scanning active marketplace listings...');
   try{
     const rp = await getReadProvider();
     const rmk = new ethers.Contract(MARKET_ADDRESS, MARKET_ABI, rp);
@@ -3831,6 +3893,7 @@ async function loadDataCore(){
   const paidPlaces = getPaidPlaces(playerCount);
   document.getElementById('poolInfo').textContent = `Quest Prize Pool: ${PRIZE_POOL_CHZ.toLocaleString()} CHZ - ${paidPlaces || 1} paid ranks from ${playerCount} collectors`;
 
+  updateDataLoadingStep(5, 'Rendering cards, market, leaderboard and feed...');
   currentMarketListings = rawMarketListings;
   renderStats();
   renderPitch();
@@ -3844,15 +3907,20 @@ async function loadDataCore(){
 
 async function loadData() {
   const startedOverlay = !isNetworkOverlayVisible();
-  if (startedOverlay) showNetworkOverlay('Refreshing blockchain data...');
-  else updateNetworkOverlay('Refreshing blockchain data...');
+  if (startedOverlay) showDataLoadingOverlay('Reading events and current game state...');
+  else {
+    setNetworkTitle('Loading Dream XI data');
+    updateDataLoadingStep(0, 'Reading events and current game state...');
+  }
   try {
-    return await loadDataCore();
+    const result = await loadDataCore();
+    finishDataLoadingSteps();
+    updateNetworkOverlay('Done. Dashboard updated.');
+    return result;
   } finally {
-    if (startedOverlay) hideNetworkOverlay();
+    if (startedOverlay) setTimeout(() => hideNetworkOverlay(), 350);
   }
 }
-// Renderowanie snajpera gieĹ‚dy okazji (Snipe deals)
 function renderSnipeMarket(listings) {
   const container = document.getElementById('snipeListContainer');
   const myAddr = address?.toLowerCase();
