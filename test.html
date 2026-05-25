@@ -2782,7 +2782,33 @@ body.game-mode #btnDeskFeed::before{mask-image:url("data:image/svg+xml,%3Csvg xm
 body.game-mode #btnDeskRanks::before{mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M8 21h8M12 17v4M7 4h10v4a5 5 0 01-10 0z' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/%3E%3Cpath d='M7 6H4a4 4 0 004 4M17 6h3a4 4 0 01-4 4' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");-webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M8 21h8M12 17v4M7 4h10v4a5 5 0 01-10 0z' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/%3E%3Cpath d='M7 6H4a4 4 0 004 4M17 6h3a4 4 0 01-4 4' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");}
 body.game-mode #btnDeskInfo::before{mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='9' fill='none' stroke='black' stroke-width='2'/%3E%3Cpath d='M12 11v6M12 7h.01' stroke='black' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E");-webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='9' fill='none' stroke='black' stroke-width='2'/%3E%3Cpath d='M12 11v6M12 7h.01' stroke='black' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E");}
 @media(min-width:701px){body.game-mode .snipe-row.snipe-table-row .btn-snipe{font-size:14px!important;}body.game-mode .quest-split-card{display:grid!important;grid-template-columns:1fr 1fr!important;gap:8px!important;padding:8px!important;}body.game-mode .quest-split-card .quest-card-cta{min-height:0!important;height:100%!important;padding:8px!important;grid-template-columns:auto minmax(0,1fr)!important;grid-template-rows:auto auto!important;}body.game-mode .quest-split-card .quest-card-cta b{grid-column:2!important;font-size:12px!important;white-space:normal!important;line-height:1.05!important;}body.game-mode .quest-split-card .quest-flag-img{grid-row:1 / 3!important;width:34px!important;height:23px!important;}body.game-mode .quest-badge-icon{grid-row:1 / 3!important;font-size:28px!important;line-height:1!important;color:#ffc940!important;}}
-@media(max-width:700px){#toast{width:min(94vw,360px)!important;font-size:10px!important;padding:10px 12px!important;}body.game-mode .quest-split-card .wc-soon-cta{display:none!important;}}</style>
+@media(max-width:700px){#toast{width:min(94vw,360px)!important;font-size:10px!important;padding:10px 12px!important;}body.game-mode .quest-split-card .wc-soon-cta{display:none!important;}}
+/* Final PC icon-only tabs + mobile pitch share */
+@media(min-width:701px){
+  body.game-mode .desk-tabs{grid-template-columns:repeat(5,42px)!important;justify-content:start!important;gap:6px!important;}
+  body.game-mode .desk-tab-btn{
+    width:42px!important;
+    min-width:42px!important;
+    height:38px!important;
+    min-height:38px!important;
+    padding:0!important;
+    font-size:0!important;
+    letter-spacing:0!important;
+    border-radius:8px!important;
+    overflow:hidden!important;
+  }
+  body.game-mode .desk-tab-btn::before{width:19px!important;height:19px!important;margin:0!important;}
+  body.game-mode #btnDeskPitch.mobile-pitch-tab-btn{display:none!important;}
+  body.game-mode .btn-pitch-mint{font-size:14px!important;line-height:1!important;padding:8px 13px!important;min-height:34px!important;border-radius:7px!important;}
+  body.game-mode .btn-pitch-share{display:none!important;}
+  body.game-mode .wc-soon-cta{cursor:default!important;pointer-events:none!important;}
+}
+@media(max-width:700px){
+  body.game-mode.mobile-pitch-tab #selectedCountryCompletion{display:none!important;}
+  body.game-mode .btn-pitch-share{display:inline-flex!important;align-items:center!important;justify-content:center!important;min-width:28px!important;padding:3px 7px!important;color:#fff!important;border-color:rgba(255,255,255,.28)!important;background:rgba(255,255,255,.06)!important;font-size:8px!important;}
+  body.game-mode .pitch-title-actions{gap:3px!important;}
+  body.game-mode.mobile-pitch-tab .btn-pitch-refresh{max-width:none!important;font-size:6px!important;padding:3px 5px!important;}
+}</style>
 </head>
 <body>
 
@@ -2935,7 +2961,7 @@ body.game-mode #btnDeskInfo::before{mask-image:url("data:image/svg+xml,%3Csvg xm
     </div>
     <div class="stat-card quest-link-card quest-split-card">
       <a class="quest-live-link quest-card-cta" href="/nation-quest"><img class="quest-flag-img" src="https://flagcdn.com/w80/us.png" alt="USA" loading="lazy"><span>USA NATION QUEST</span><b>1,500 CHZ</b></a>
-      <a class="quest-live-link quest-card-cta wc-soon-cta" href="/dream-xi-wc"><span class="quest-badge-icon">&#127894;</span><span>WORLD CUP ALBUM SOON</span><b>EVERY CARD MATTERS</b></a>
+      <div class="quest-live-link quest-card-cta wc-soon-cta"><span class="quest-badge-icon">&#127894;</span><span>WORLD CUP ALBUM SOON</span><b>EVERY CARD MATTERS</b></div>
     </div>
     </div>
 
@@ -3076,6 +3102,7 @@ body.game-mode #btnDeskInfo::before{mask-image:url("data:image/svg+xml,%3Csvg xm
           <div class="pitch-title-actions">
             <span style="font-family:'Share Tech Mono',monospace; color:#818cf8; font-size:12px;" id="selectedCountryCompletion">0/11 COMPLETED</span>
             <button class="btn-pitch-mint btn-pitch-refresh" onclick="loadData()">&#8635; Refresh</button>
+            <button class="btn-pitch-mint btn-pitch-share" onclick="shareOnX()">X</button>
             <button class="btn-pitch-mint" onclick="directMint()">&#127922; Mint</button>
           </div>
         </div>
