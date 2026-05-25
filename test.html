@@ -148,10 +148,10 @@ a{text-decoration:none;color:inherit}
 .hero{grid-template-columns:minmax(0,1fr) minmax(360px,.92fr)!important;align-items:stretch!important;}
 .stats{grid-template-columns:repeat(3,minmax(0,1fr))!important;} .stats .stat:nth-child(4){display:none!important;}
 .stat-label{color:#dde4f0!important;font-family:'Black Ops One',sans-serif!important;font-size:10px!important;}
-.main-grid{grid-template-columns:minmax(0,3fr) minmax(300px,.82fr)!important;grid-auto-rows:auto!important;align-items:start!important;}
+.main-grid{grid-template-columns:minmax(0,1fr) minmax(300px,.34fr)!important;grid-auto-rows:auto!important;align-items:start!important;}
 .global-slots-panel{display:none!important;}
-.my-squad-panel{grid-column:1 / 2!important;min-height:190px!important;}
-.market-section{grid-column:1 / 2!important;}
+.my-squad-panel{grid-column:1 / 2!important;grid-row:1!important;min-height:190px!important;}
+.market-section{grid-column:1 / 2!important;grid-row:2!important;margin-top:0!important;}
 .info-grid{grid-column:2 / 3!important;grid-row:1 / span 2!important;}
 .info-grid .callout.gold{display:none!important;}
 .cross-quest{min-height:54px!important;border-color:rgba(88,210,255,.36)!important;background:linear-gradient(135deg,rgba(88,210,255,.13),rgba(0,255,135,.045))!important;}
@@ -377,10 +377,21 @@ function parseDNA(dna) {
   const n = typeof dna === "bigint" ? dna : BigInt(String(dna));
   const teamId = Number(n % 48n);
   const position = Number((n >> 6n) % 11n) + 1;
-  const rarity = Number((n >> 10n) % 4n);
-  const base = [10,18,38,82][rarity] || 10;
-  const weight = base + Number((n >> 16n) % 8n);
-  return {teamId, position, rarity, weight};
+  const rarRand = Number((n >> 10n) % 10000n);
+  const rarity = rarRand < 100 ? 3 : rarRand < 1000 ? 2 : rarRand < 3000 ? 1 : 0;
+  const hasGoldenBoots = Number((n >> 24n) % 100n) < 5;
+  const hasTattoo = Number((n >> 30n) % 100n) < 15;
+  const hasEarring = Number((n >> 27n) % 100n) < 25;
+  const hasBand = Number((n >> 28n) % 100n) < 25;
+  const hasGloves = Number((n >> 29n) % 100n) < 20;
+  const skinTone = Number((n >> 32n) % 6n);
+  let weight = [10,18,36,82][rarity];
+  if (hasGoldenBoots) weight += 8;
+  if (hasTattoo) weight += 5;
+  if (hasEarring) weight += 3;
+  if (hasBand) weight += 2;
+  if (hasGloves && position === 1) weight += 2;
+  return {teamId, position, rarity, weight, hasGoldenBoots, hasTattoo, hasEarring, hasBand, hasGloves, skinTone};
 }
 function shortAddr(addr){return addr ? `${addr.slice(0,6)}...${addr.slice(-4)}` : "0x...";}
 function rarityName(r){return ["Common","Rare","Epic","Legendary"][r] || "Common";}
@@ -396,28 +407,65 @@ function isMissingPrivySession(error) {
 function rarityClassName(r){return ["common","rare","epic","legendary"][Number(r)] || "common";}
 function rarityColor(r){return ["#7a8899","#3b82f6","#c084fc","#ffc940"][Number(r)] || "#7a8899";}
 function makeQuestFigureSVG(dna, size = 72, faded = false) {
-  let n = 0n;
-  try { n = typeof dna === "bigint" ? dna : BigInt(String(dna || 0)); } catch(e) { n = 0n; }
-  const skin = ["#f2c078","#b8753d","#8a4f2a","#f0d0a0"][Number((n >> 18n) % 4n)];
-  const hair = ["#2b1a10","#5a341c","#d8dbe2","#111827"][Number((n >> 22n) % 4n)];
-  const shirt = ["#1d4ed8","#ef4444","#f8fafc","#0f9f6e"][Number((n >> 26n) % 4n)];
-  const number = Number((n >> 6n) % 11n) + 1;
-  const opacity = faded ? .32 : 1;
-  return `<svg viewBox="0 0 80 80" width="${size}" height="${size}" style="opacity:${opacity}">
-    <ellipse cx="40" cy="70" rx="20" ry="5" fill="rgba(0,0,0,.35)"/>
-    <circle cx="40" cy="18" r="10" fill="${skin}"/>
-    <path d="M30 16c3-9 17-9 20 0v3H30z" fill="${hair}"/>
-    <rect x="25" y="30" width="30" height="25" rx="6" fill="${shirt}"/>
-    <text x="40" y="47" text-anchor="middle" font-family="Arial Black,Arial" font-size="13" fill="#fff">${number}</text>
-    <rect x="16" y="34" width="11" height="20" rx="5" fill="${skin}"/>
-    <rect x="53" y="34" width="11" height="20" rx="5" fill="${skin}"/>
-    <rect x="29" y="54" width="9" height="14" rx="3" fill="#111827"/>
-    <rect x="42" y="54" width="9" height="14" rx="3" fill="#111827"/>
-    <rect x="27" y="67" width="12" height="4" rx="2" fill="#f8fafc"/>
-    <rect x="41" y="67" width="12" height="4" rx="2" fill="#f8fafc"/>
-  </svg>`;
-}
-function figureCanvas(card, faded = false, cls = "slot") {
+  const t = parseDNA(dna || 0n);
+  const skinColors = ['#FDBCB4','#F1C27D','#E0AC69','#C68642','#8D5524','#4A2912'];
+  const rarityGlow = ['#6b7280','#3b82f6','#a855f7','#f59e0b'];
+  const shirt = '#002868';
+  const skin = skinColors[Math.min(t.skinTone || 2, 5)];
+  const rar = rarityGlow[t.rarity] || '#6b7280';
+  const pos = t.position || 10;
+  const numC = '#fff';
+  const bootC = t.hasGoldenBoots ? '#FFD700' : '#111';
+  const opacity = faded ? .34 : 1;
+  const s = size, cx = s / 2;
+  const headY = s * 0.12, headW = s * 0.30, headH = s * 0.28;
+  const bodyY = headY + headH * 0.85, bodyW = s * 0.40, bodyH = s * 0.28;
+  const legW = s * 0.10, legH = s * 0.22, legGap = s * 0.04;
+  const legY = bodyY + bodyH * 0.85;
+  const armW = s * 0.09, armH = s * 0.20, armY = bodyY + s * 0.02;
+  const bootH = s * 0.09, handR = s * 0.06;
+  const p = [];
+  p.push('<ellipse cx="'+cx+'" cy="'+(legY+legH+bootH+s*0.03)+'" rx="'+(bodyW*0.55)+'" ry="'+(s*0.04)+'" fill="'+rar+'" opacity="0.2"/>');
+  p.push('<rect x="'+(cx-legW-legGap)+'" y="'+legY+'" width="'+legW+'" height="'+legH+'" rx="3" fill="'+shirt+'"/>');
+  p.push('<rect x="'+(cx+legGap)+'" y="'+legY+'" width="'+legW+'" height="'+legH+'" rx="3" fill="'+shirt+'"/>');
+  const sockY = legY + legH * 0.65;
+  p.push('<rect x="'+(cx-legW-legGap)+'" y="'+sockY+'" width="'+legW+'" height="'+(legH*0.38)+'" rx="2" fill="white"/>');
+  p.push('<rect x="'+(cx+legGap)+'" y="'+sockY+'" width="'+legW+'" height="'+(legH*0.38)+'" rx="2" fill="white"/>');
+  const bootY = legY + legH;
+  p.push('<rect x="'+(cx-legW-legGap-2)+'" y="'+bootY+'" width="'+(legW+4)+'" height="'+bootH+'" rx="3" fill="'+bootC+'"/>');
+  p.push('<rect x="'+(cx+legGap-2)+'" y="'+bootY+'" width="'+(legW+4)+'" height="'+bootH+'" rx="3" fill="'+bootC+'"/>');
+  p.push('<rect x="'+(cx-bodyW/2)+'" y="'+(bodyY+bodyH*0.78)+'" width="'+bodyW+'" height="'+(s*0.09)+'" rx="3" fill="'+shirt+'cc"/>');
+  p.push('<rect x="'+(cx-bodyW/2)+'" y="'+bodyY+'" width="'+bodyW+'" height="'+(bodyH*0.85)+'" rx="5" fill="'+shirt+'"/>');
+  p.push('<text x="'+cx+'" y="'+(bodyY+bodyH*0.55)+'" text-anchor="middle" font-family="Arial Black" font-size="'+(s*0.13)+'" font-weight="900" fill="'+numC+'" opacity="0.9">'+pos+'</text>');
+  p.push('<rect x="'+(cx-bodyW/2-armW+2)+'" y="'+armY+'" width="'+armW+'" height="'+armH+'" rx="3" fill="'+shirt+'" transform="rotate(7,'+(cx-bodyW/2)+','+armY+')"/>');
+  p.push('<rect x="'+(cx+bodyW/2-2)+'" y="'+armY+'" width="'+armW+'" height="'+armH+'" rx="3" fill="'+shirt+'" transform="rotate(-7,'+(cx+bodyW/2)+','+armY+')"/>');
+  p.push('<circle cx="'+(cx-bodyW/2-s*0.04)+'" cy="'+(armY+armH)+'" r="'+handR+'" fill="'+skin+'"/>');
+  p.push('<circle cx="'+(cx+bodyW/2+s*0.04)+'" cy="'+(armY+armH)+'" r="'+handR+'" fill="'+skin+'"/>');
+  if (t.hasGloves) {
+    p.push('<circle cx="'+(cx-bodyW/2-s*0.04)+'" cy="'+(armY+armH)+'" r="'+(handR+2)+'" fill="none" stroke="#FFD700" stroke-width="2"/>');
+    p.push('<circle cx="'+(cx+bodyW/2+s*0.04)+'" cy="'+(armY+armH)+'" r="'+(handR+2)+'" fill="none" stroke="#FFD700" stroke-width="2"/>');
+  }
+  p.push('<rect x="'+(cx-s*0.04)+'" y="'+(bodyY-s*0.05)+'" width="'+(s*0.08)+'" height="'+(s*0.07)+'" rx="2" fill="'+skin+'"/>');
+  p.push('<rect x="'+(cx-headW/2)+'" y="'+headY+'" width="'+headW+'" height="'+headH+'" rx="6" fill="'+skin+'"/>');
+  p.push('<rect x="'+(cx-headW/2-s*0.03)+'" y="'+(headY+headH*0.25)+'" width="'+(s*0.04)+'" height="'+(s*0.08)+'" rx="2" fill="'+skin+'"/>');
+  p.push('<rect x="'+(cx+headW/2-s*0.01)+'" y="'+(headY+headH*0.25)+'" width="'+(s*0.04)+'" height="'+(s*0.08)+'" rx="2" fill="'+skin+'"/>');
+  if (t.hasEarring) p.push('<circle cx="'+(cx-headW/2-1)+'" cy="'+(headY+headH*0.38)+'" r="'+(s*0.025)+'" fill="#FFD700"/>');
+  const eyeY = headY + headH * 0.32, eyeW = s * 0.07, eyeH = s * 0.05;
+  p.push('<rect x="'+(cx-headW*0.36)+'" y="'+eyeY+'" width="'+eyeW+'" height="'+eyeH+'" rx="2" fill="white"/>');
+  p.push('<rect x="'+(cx+headW*0.08)+'" y="'+eyeY+'" width="'+eyeW+'" height="'+eyeH+'" rx="2" fill="white"/>');
+  p.push('<rect x="'+(cx-headW*0.33)+'" y="'+(eyeY+1)+'" width="'+(eyeW*0.6)+'" height="'+(eyeH*0.7)+'" rx="1" fill="#0a0a14"/>');
+  p.push('<rect x="'+(cx+headW*0.11)+'" y="'+(eyeY+1)+'" width="'+(eyeW*0.6)+'" height="'+(eyeH*0.7)+'" rx="1" fill="#0a0a14"/>');
+  p.push('<rect x="'+(cx-headW*0.38)+'" y="'+(eyeY-s*0.04)+'" width="'+(eyeW+2)+'" height="'+(s*0.025)+'" rx="1" fill="#1a0800" opacity="0.8"/>');
+  p.push('<rect x="'+(cx+headW*0.06)+'" y="'+(eyeY-s*0.04)+'" width="'+(eyeW+2)+'" height="'+(s*0.025)+'" rx="1" fill="#1a0800" opacity="0.8"/>');
+  p.push('<rect x="'+(cx-s*0.02)+'" y="'+(eyeY+eyeH+s*0.02)+'" width="'+(s*0.04)+'" height="'+(s*0.05)+'" rx="2" fill="'+skin+'" opacity="0.7"/>');
+  p.push('<rect x="'+(cx-s*0.07)+'" y="'+(headY+headH*0.72)+'" width="'+(s*0.14)+'" height="'+(s*0.03)+'" rx="2" fill="#8b1a00" opacity="0.8"/>');
+  if (t.hasBand) p.push('<rect x="'+(cx-headW/2-2)+'" y="'+(headY+headH*0.18)+'" width="'+(headW+4)+'" height="'+(s*0.06)+'" rx="3" fill="white" opacity="0.85"/>');
+  if (t.hasTattoo) {
+    p.push('<line x1="'+(cx-bodyW/2-armW/2)+'" y1="'+(armY+armH*0.3)+'" x2="'+(cx-bodyW/2-armW/2+s*0.04)+'" y2="'+(armY+armH*0.5)+'" stroke="#000" stroke-width="1.5" opacity="0.5"/>');
+    p.push('<line x1="'+(cx-bodyW/2-armW/2+s*0.04)+'" y1="'+(armY+armH*0.3)+'" x2="'+(cx-bodyW/2-armW/2)+'" y2="'+(armY+armH*0.5)+'" stroke="#000" stroke-width="1.5" opacity="0.5"/>');
+  }
+  return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 '+s+' '+s+'" width="'+s+'" height="'+s+'" style="opacity:'+opacity+'">'+p.join('')+'</svg>';
+}function figureCanvas(card, faded = false, cls = "slot") {
   const dna = card?.dna || card?.tokenId || 0;
   return `<div class="${cls}-fig-canvas ${faded ? "empty" : ""}">
     <img class="${cls}-fig-flag" src="https://flagcdn.com/w40/us.png" alt="USA" loading="lazy">
