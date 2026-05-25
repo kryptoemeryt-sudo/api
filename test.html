@@ -400,6 +400,37 @@ body{padding-top:0!important;}
   .market-trade .market-price{font-size:9px!important;}
   .market-trade .slot-action{font-size:7px!important;min-height:24px!important;}
 }
+
+/* Cleaner quest actions and OPS typography pass */
+.hero .panel{grid-template-columns:minmax(280px,.62fr) minmax(420px,1fr)!important;grid-template-areas:"kicker title" "copy title"!important;}
+.mint-row,.wallet-note{display:none!important;}
+.stats{grid-template-columns:repeat(4,minmax(0,1fr))!important;width:100%!important;}
+.stats .stat:nth-child(1),.stats .stat:nth-child(2),.stats .stat:nth-child(3),.stats .stat:nth-child(4){display:flex!important;}
+.stats .stat:nth-child(n+5){display:none!important;}
+.stat,.stat *,.section-title,.section-title *,.callout,.callout *,.winner-box,.winner-box *,.rank-list,.rank-list *,.feed,.feed *,.market-card,.market-card *,.slot,.slot *{font-family:'Black Ops One',sans-serif!important;}
+.stat-label{font-size:11px!important;color:#fff!important;letter-spacing:.8px!important;}
+.mint-stat{border-color:rgba(0,255,135,.72)!important;background:linear-gradient(135deg,rgba(0,255,135,.28),rgba(37,99,235,.13))!important;color:#00ff87!important;cursor:pointer!important;min-height:82px!important;box-shadow:0 0 24px rgba(0,255,135,.14)!important;}
+.mint-stat:hover{background:linear-gradient(135deg,#00ff87,rgba(255,255,255,.16))!important;color:#06101f!important;border-color:#00ff87!important;transform:translateY(-1px);}
+.mint-stat .stat-value{font-size:clamp(28px,3.2vw,42px)!important;color:inherit!important;}
+.mint-stat .stat-label{color:inherit!important;}
+.arg-quest-stat .stat-value{font-size:clamp(14px,1.4vw,20px)!important;}
+.my-squad-panel .slot.empty .slot-count{color:#00ff87!important;}
+.my-squad-panel .slot.empty .slot-status{font-size:6px!important;color:#fff!important;}
+.market-trade .market-sub{display:none!important;}
+.quest-side-panel .callout,.quest-side-panel .panel{padding:12px!important;}
+.quest-side-panel h3,.quest-side-panel .section-title{font-size:13px!important;letter-spacing:1px!important;color:#fff!important;}
+.quest-side-panel .winner-box,.quest-side-panel li,.quest-side-panel p,.rank-wallet,.feed-addr{font-size:12px!important;line-height:1.25!important;color:#fff!important;}
+.rank-progress,.feed-token,.section-title .live{font-size:12px!important;color:#00ff87!important;}
+.feed-pos,.rank-pos{font-size:12px!important;color:#ffc940!important;}
+@media(max-width:900px){
+  .hero .panel{display:block!important;}
+  .stats{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:4px!important;}
+  .stat{min-height:56px!important;padding:6px 3px!important;}
+  .stat-label{font-size:5.7px!important;letter-spacing:.1px!important;}
+  .mint-stat .stat-value{font-size:14px!important;}
+  .arg-quest-stat .stat-value{font-size:7px!important;}
+  .my-squad-panel .slot.empty .slot-status{font-size:4.5px!important;}
+}
 </style>
 </head>
 <body>
@@ -419,16 +450,12 @@ body{padding-top:0!important;}
       <div class="quest-kicker"><span class="dot"></span> Open Nation Quest</div>
       <h1 class="hero-title">USA QUEST <span>1500 CHZ</span></h1>
       <p class="hero-copy">First wallet to complete <strong>11/11 USA positions wins 1500 CHZ</strong>. Mint, buy, sell and upgrade directly on this quest page.</p>
-      <div class="mint-row">
-        <button class="btn" id="heroMintBtn" type="button" onclick="directMint()">MINT RANDOM WC CARD</button>
-        <span class="wallet-note" id="mintNote">Connect wallet or mint directly in a Web3 browser.</span>
-      </div>
     </div>
   </section>
   <div class="status-line" id="questStatus" style="display:none">Loading live quest status...</div>
 
   <section class="stats">
-    <div class="stat"><div class="stat-value" id="statCompleted">- / 11</div><div class="stat-label">USA Positions</div></div>
+    <div class="stat"><div class="stat-value" id="statCompleted">-</div><div class="stat-label">Players</div></div>
     <div class="stat"><div class="stat-value gold" id="statLeader">- / 11</div><div class="stat-label" id="statLeaderLabel">Quest Leader</div></div>
     <a class="stat arg-quest-stat" href="https://block-kickers.vercel.app/dream-xi">
       <img class="arg-quest-flag" src="https://flagcdn.com/w80/ar.png" alt="Argentina" loading="lazy">
@@ -437,6 +464,10 @@ body{padding-top:0!important;}
         <div class="stat-label">Dream XI 10k CHZ</div>
       </div>
     </a>
+    <button class="stat mint-stat" id="heroMintBtn" type="button" onclick="directMint()">
+      <div class="stat-value">MINT</div>
+      <div class="stat-label">Random WC Card</div>
+    </button>
     <div class="stat"><div class="stat-value blue" id="myCompleted">- / 11</div><div class="stat-label">My USA Squad</div></div>
     <div class="stat"><div class="stat-value gold" id="statUsaCards">-</div><div class="stat-label">USA Cards Minted</div></div>
   </section>
@@ -784,7 +815,6 @@ async function finalizeWalletConnection(walletProvider, label) {
     balEl.style.display = "inline-flex";
   }
   if (connectBtn) { connectBtn.textContent = "CONNECTED"; connectBtn.classList.add("connected"); }
-  document.getElementById("mintNote").textContent = `Connected: ${shortAddr(address)}`;
   await loadQuest(true, true);
 }
 
@@ -1212,8 +1242,8 @@ function renderSlots(targetId, filledSet, byPosition, winnerPos = null, mode = "
         ${ownListing && !sellable ? `<button class="slot-action sell" onclick="cancelListing(${ownListing.listingId})">CANCEL</button>` : ""}
         ${sellable ? `<button class="slot-action sell" onclick="openSellCards(${pos.id})">SELL</button>` : ""}
       ` : "";
-    const scoreText = best ? `${best.weight}` : (floor ? `${floor.price}` : "-");
-    const statusText = best ? rarityName(best.rarity) : (floor ? "BUY CHZ" : "MISSING");
+    const scoreText = best ? `${best.weight}` : "-";
+    const statusText = best ? rarityName(best.rarity) : (floor ? "ON MARKET" : "MISSING");
     el.innerHTML = `
       ${best ? `<div class="slot-check">&#10003;</div>` : ""}
       ${figureCanvas(visualCard, !best, "slot", pos.label)}
@@ -1240,7 +1270,7 @@ function renderQuest(state) {
     if (!byPosition.has(card.position)) byPosition.set(card.position, []);
     byPosition.get(card.position).push(card);
   });
-  document.getElementById("statCompleted").textContent = `${state.globalPositions.size} / 11`;
+  document.getElementById("statCompleted").textContent = String([...state.walletPositions.values()].filter(set => set.size > 0).length);
   const leaderIsMe = Boolean(address && state.leader?.wallet && state.leader.wallet === address);
   document.getElementById("statLeader").textContent = state.leader?.wallet ? `${state.leader.count} / 11` : "- / 11";
   document.getElementById("statLeaderLabel").textContent = state.leader?.wallet ? `Leader ${leaderIsMe ? "YOU" : shortAddr(state.leader.wallet)}` : "Quest Leader";
@@ -1255,7 +1285,7 @@ function renderQuest(state) {
     if (!btn) return;
     btn.disabled = closed;
     btn.classList.toggle("closed", closed);
-    btn.textContent = closed ? "NO REWARDS" : (id === "mintBtn" ? "MINT 10 CHZ" : "MINT FOR 1500 CHZ RACE");
+    btn.textContent = closed ? "NO REWARDS" : "MINT";
   });
 
   const questStatus = document.getElementById("questStatus");
@@ -1316,7 +1346,7 @@ function renderMarket(state) {
           <div class="slot-status" style="color:${rarityColor(l.rarity)}">${rarityName(l.rarity)}</div>
         </div>
         <div class="market-trade">
-          <div class="market-sub ${mine ? "you" : ""}">${mine ? "YOU" : shortAddr(l.seller)} - #${l.tokenId}</div>
+          <div class="market-sub ${mine ? "you" : ""}">${mine ? "YOU" : "LISTED"} - #${l.tokenId}</div>
           <div class="market-price">${l.price} CHZ</div>
           <button class="slot-action ${mine ? "sell" : "buy"}" onclick="${mine ? `cancelListing(${l.listingId})` : `buyListing(${l.listingId}, '${l.price}')`}">${mine ? "CANCEL" : "BUY"}</button>
         </div>
