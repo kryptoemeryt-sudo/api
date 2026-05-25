@@ -4205,7 +4205,7 @@ function openModal(tid,dna){
   wrap.innerHTML='';
   const cv=document.createElement('canvas');cv.style.cssText='width:100%;height:100%';
   wrap.appendChild(cv);
-  requestAnimationFrame(()=>{modalRen=new Figure3D(cv,dna,true,true);});
+  requestAnimationFrame(()=>{modalRen=new Figure3D(cv,dna,true,window.matchMedia('(min-width: 769px)').matches);});
   document.getElementById('modal').classList.add('show');
 }
 
