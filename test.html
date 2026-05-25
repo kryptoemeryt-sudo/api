@@ -776,6 +776,79 @@ button.stat.mint-stat,
     transform:translateY(-50%)!important;
   }
 }
+
+/* USA header, compact mobile nav, larger market figures */
+.hero-title{display:grid!important;gap:2px!important;}
+.hero-title .title-line{display:block!important;color:#fff!important;}
+.hero-title .title-line .usa-title-blue{display:inline!important;color:#3b82f6!important;text-shadow:0 0 16px rgba(59,130,246,.30)!important;}
+.hero-title .title-prize{display:block!important;color:#ef4444!important;text-shadow:0 0 20px rgba(239,68,68,.22)!important;}
+
+.market-card.slot .card-fig-canvas,
+.market-card.slot .market-fig-canvas{height:92px!important;flex-basis:92px!important;}
+.market-card.slot .card-fig-canvas svg,
+.market-card.slot .market-fig-canvas svg{width:88px!important;height:88px!important;}
+
+@media(max-width:900px){
+  .hero-title{font-size:36px!important;line-height:.88!important;text-align:left!important;}
+  .hero-title .title-prize{font-size:1em!important;}
+  .topnav{
+    display:grid!important;
+    grid-template-columns:auto minmax(82px,1fr) auto auto!important;
+    align-items:center!important;
+    gap:5px!important;
+    min-height:42px!important;
+    padding:6px!important;
+  }
+  .topnav .logo{font-size:9px!important;letter-spacing:.7px!important;white-space:nowrap!important;min-width:0!important;}
+  .topnav .nav-countdown{
+    position:static!important;
+    transform:none!important;
+    grid-column:auto!important;
+    grid-row:auto!important;
+    justify-self:center!important;
+    width:auto!important;
+    max-width:100%!important;
+    padding:4px 5px!important;
+    font-size:6.5px!important;
+    letter-spacing:.1px!important;
+    white-space:nowrap!important;
+  }
+  .topnav .nav-countdown span{
+    font-size:6.5px!important;
+    margin-right:2px!important;
+    letter-spacing:0!important;
+    color:#fff!important;
+  }
+  .nav-right{display:contents!important;}
+  #walletAddress{display:none!important;}
+  #walletBalance{
+    display:inline-flex!important;
+    grid-column:auto!important;
+    justify-self:end!important;
+    max-width:58px!important;
+    overflow:hidden!important;
+    text-overflow:ellipsis!important;
+    white-space:nowrap!important;
+    font-size:6.5px!important;
+    padding:3px 4px!important;
+  }
+  #connectBtn{
+    grid-column:auto!important;
+    justify-self:end!important;
+    min-width:52px!important;
+    max-width:76px!important;
+    overflow:hidden!important;
+    text-overflow:ellipsis!important;
+    white-space:nowrap!important;
+    font-size:6.8px!important;
+    padding:6px 5px!important;
+  }
+  .market-card.slot .card-fig-canvas,
+  .market-card.slot .market-fig-canvas{height:58px!important;flex-basis:58px!important;}
+  .market-card.slot .card-fig-canvas svg,
+  .market-card.slot .market-fig-canvas svg{width:56px!important;height:56px!important;}
+  .market-card.slot{min-height:164px!important;}
+}
 </style>
 </head>
 <body>
@@ -793,7 +866,7 @@ button.stat.mint-stat,
   <section class="hero">
     <div class="panel">
       <div class="quest-kicker"><span class="dot"></span> Open Nation Quest</div>
-      <h1 class="hero-title"><span class="usa-title-blue">USA</span> QUEST <span>1500 CHZ</span></h1>
+      <h1 class="hero-title"><span class="title-line"><span class="usa-title-blue">USA</span> QUEST</span><span class="title-prize">1500 CHZ</span></h1>
       <p class="hero-copy"><span>First wallet to complete <strong>11/11 USA positions wins 1500 CHZ</strong>.</span><span>Mint, buy, sell and upgrade directly on this quest page.</span></p>
     </div>
   </section>
@@ -1160,7 +1233,7 @@ async function finalizeWalletConnection(walletProvider, label) {
     balEl.textContent = `${Number(ethers.formatEther(bal)).toFixed(3)} CHZ`;
     balEl.style.display = "inline-flex";
   }
-  if (connectBtn) { connectBtn.textContent = "CONNECTED"; connectBtn.classList.add("connected"); }
+  if (connectBtn) { connectBtn.textContent = shortAddr(address); connectBtn.classList.add("connected"); }
   await loadQuest(true, true);
 }
 
