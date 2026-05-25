@@ -715,6 +715,67 @@ button.stat.mint-stat,
     margin:0!important;
   }
 }
+
+/* Final request pass: mobile centering, USA title, no opportunity */
+.usa-title-blue{color:#3b82f6!important;text-shadow:0 0 16px rgba(59,130,246,.30)!important;}
+.opportunity-panel{display:none!important;}
+.slot-status:empty{display:none!important;}
+
+@media(max-width:900px){
+  #networkOverlay{display:none!important;align-items:center!important;justify-content:center!important;padding:12px!important;overflow:hidden!important;}
+  #networkOverlay.show{display:flex!important;}
+  #networkOverlay .network-card{
+    position:fixed!important;
+    left:50%!important;
+    top:50%!important;
+    right:auto!important;
+    transform:translate(-50%,-50%)!important;
+    width:min(310px, calc(100vw - 24px))!important;
+    max-width:calc(100vw - 24px)!important;
+    min-width:0!important;
+    margin:0!important;
+  }
+  .topnav{grid-template-columns:auto minmax(0,1fr) auto!important;align-items:center!important;gap:6px!important;}
+  .topnav .nav-countdown{
+    position:static!important;
+    transform:none!important;
+    grid-column:auto!important;
+    grid-row:auto!important;
+    justify-self:center!important;
+    min-width:0!important;
+    max-width:100%!important;
+    padding:4px 6px!important;
+    font-size:7.5px!important;
+    letter-spacing:.4px!important;
+    white-space:nowrap!important;
+  }
+  .topnav .nav-countdown span{font-size:7.5px!important;margin-right:3px!important;letter-spacing:.2px!important;color:#fff!important;}
+  .nav-right{min-width:0!important;gap:4px!important;}
+  .nav-right .wallet-info{display:none!important;}
+  .btn-connect{font-size:7px!important;padding:6px 7px!important;}
+  .arg-quest-stat{align-items:center!important;justify-items:center!important;text-align:center!important;}
+  .arg-quest-stat .arg-quest-copy{display:grid!important;place-items:center!important;text-align:center!important;}
+  .market-card.slot .card-fig-canvas,
+  .market-card.slot .market-fig-canvas{height:46px!important;flex-basis:46px!important;}
+  .market-card.slot .card-fig-canvas svg,
+  .market-card.slot .market-fig-canvas svg{width:44px!important;height:44px!important;}
+  .my-squad-panel .slot .card-fig-canvas,
+  .my-squad-panel .slot .slot-fig-canvas{height:42px!important;flex-basis:42px!important;}
+  .my-squad-panel .slot .card-fig-canvas svg,
+  .my-squad-panel .slot .slot-fig-canvas svg{width:40px!important;height:40px!important;}
+  .market-card.slot{min-height:150px!important;}
+}
+
+/* Final mobile overlay true viewport centering */
+@media(max-width:900px){
+  #networkOverlay .network-card{
+    width:min(280px, calc(100vw - 24px))!important;
+    max-width:min(280px, calc(100vw - 24px))!important;
+    left:calc((100vw - min(280px, calc(100vw - 24px))) / 2)!important;
+    top:50%!important;
+    transform:translateY(-50%)!important;
+  }
+}
 </style>
 </head>
 <body>
@@ -732,7 +793,7 @@ button.stat.mint-stat,
   <section class="hero">
     <div class="panel">
       <div class="quest-kicker"><span class="dot"></span> Open Nation Quest</div>
-      <h1 class="hero-title">USA QUEST <span>1500 CHZ</span></h1>
+      <h1 class="hero-title"><span class="usa-title-blue">USA</span> QUEST <span>1500 CHZ</span></h1>
       <p class="hero-copy"><span>First wallet to complete <strong>11/11 USA positions wins 1500 CHZ</strong>.</span><span>Mint, buy, sell and upgrade directly on this quest page.</span></p>
     </div>
   </section>
@@ -771,7 +832,6 @@ button.stat.mint-stat,
     <section class="panel market-section">
       <div class="section-title"><span>USA Market</span><span class="live" id="marketCount">Loading...</span></div>
       <div class="market-grid" id="marketGrid"><div class="loading" style="grid-column:1/-1"><span class="spin"></span>Loading USA listings...</div></div>
-      <div class="opportunity-panel" id="opportunityPanel"><div class="loading">Scanning opportunity...</div></div>
     </section>
 
     </div>
@@ -1529,7 +1589,7 @@ function renderSlots(targetId, filledSet, byPosition, winnerPos = null, mode = "
         ${sellable ? `<button class="slot-action sell" onclick="openSellCards(${pos.id})">SELL</button>` : ""}
       ` : "";
     const scoreText = best ? `${best.weight}` : "-";
-    const statusText = best ? rarityShort(best.rarity) : (floor ? "BUY" : "MISS");
+    const statusText = best ? rarityShort(best.rarity) : (floor ? "" : "MISS");
     el.innerHTML = `
       ${best ? `<div class="slot-check">&#10003;</div>` : ""}
       ${figureCanvas(visualCard, !best, "slot", pos.label)}
@@ -1594,7 +1654,6 @@ function renderQuest(state) {
   });
   renderSlots("mySlots", state.myOwnedSet, myByPosition, state.squadWinner?.wallet === address ? state.squadWinner.position : null, "mine");
   renderMarket(state);
-  renderOpportunity(state);
   renderRank(state);
 
   document.getElementById("cardWinnerBox").innerHTML = `<b>Dream XI Argentina</b><br>10k CHZ live race. Every card matters across Block Kickers quests.`;
