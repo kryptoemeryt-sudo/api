@@ -104,6 +104,29 @@ a{text-decoration:none;color:inherit}
 .modal-panel{width:min(92vw,520px);background:linear-gradient(180deg,rgba(15,19,24,.98),rgba(6,8,10,.96));border:1px solid rgba(0,255,135,.35);border-radius:12px;padding:16px;box-shadow:0 24px 80px rgba(0,0,0,.68),0 0 28px rgba(0,255,135,.08)}
 .modal-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px}.modal-title{font-family:'Black Ops One',sans-serif;color:#00ff87;font-size:16px;letter-spacing:1px}.modal-close{border:1px solid #1c2028;background:#0f1318;color:#dde4f0;border-radius:7px;width:32px;height:32px;cursor:pointer;font-size:20px}
 .sell-list{display:grid;gap:8px;max-height:330px;overflow:auto}.sell-row{display:grid;grid-template-columns:52px 1fr 80px;gap:8px;align-items:center;border:1px solid #1c2028;background:#0f1318;border-radius:8px;padding:8px}.sell-input{width:100%;background:#06080a;border:1px solid #1c2028;border-radius:7px;color:#dde4f0;font-family:'Black Ops One',sans-serif;padding:8px;text-align:center}
+
+/* USA Nation Quest quick guide */
+.nation-guide-panel{max-width:680px!important;background:linear-gradient(180deg,rgba(8,18,35,.98),rgba(6,8,10,.97))!important;border-color:rgba(59,130,246,.45)!important;box-shadow:0 24px 80px rgba(0,0,0,.68),0 0 34px rgba(59,130,246,.14)!important;}
+.nation-guide-kicker{font-family:'Share Tech Mono',monospace;color:#ffc940;font-size:11px;letter-spacing:3px;margin-bottom:6px;text-transform:uppercase;}
+.nation-guide-title{font-family:'Black Ops One',sans-serif;font-size:28px;line-height:.95;margin-bottom:8px;letter-spacing:1px;color:#fff;}
+.nation-guide-title .usa-blue{color:#3b82f6;text-shadow:0 0 16px rgba(59,130,246,.32);}.nation-guide-title .usa-red{color:#ef4444;text-shadow:0 0 16px rgba(239,68,68,.22);}
+.nation-guide-copy{color:#dde4f0!important;font-size:16px;line-height:1.35;margin-bottom:12px;}
+.nation-guide-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px;}
+.nation-guide-step{display:grid;grid-template-columns:34px 1fr;gap:9px;align-items:start;background:linear-gradient(145deg,rgba(15,19,24,.96),rgba(59,130,246,.07));border:1px solid rgba(59,130,246,.22);border-radius:9px;padding:10px;}
+.nation-guide-num{height:28px;border-radius:7px;display:grid;place-items:center;background:rgba(0,255,135,.12);border:1px solid rgba(0,255,135,.26);font-family:'Black Ops One',sans-serif;color:#00ff87;font-size:11px;}
+.nation-guide-step-title{font-family:'Black Ops One',sans-serif;color:#fff;font-size:12px;letter-spacing:.8px;margin-bottom:4px;}
+.nation-guide-step-text{color:#dde4f0;font-size:14px;line-height:1.28;}
+.nation-guide-examples{margin-top:12px;border:1px solid rgba(255,201,64,.32);border-radius:9px;background:rgba(255,201,64,.055);overflow:hidden;}
+.nation-guide-examples summary{list-style:none;cursor:pointer;padding:11px 12px;font-family:'Black Ops One',sans-serif;color:#ffc940;font-size:12px;letter-spacing:1px;display:flex;align-items:center;justify-content:space-between;gap:10px;}
+.nation-guide-examples summary::-webkit-details-marker{display:none}.nation-guide-examples summary::after{content:'+';color:#00ff87;font-size:16px;line-height:1}.nation-guide-examples[open] summary::after{content:'-'}
+.nation-example-list{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:0 10px 10px;}
+.nation-example{border:1px solid rgba(255,255,255,.08);border-radius:8px;background:rgba(6,8,10,.56);padding:9px;}
+.nation-example b{display:block;font-family:'Black Ops One',sans-serif;color:#00ff87;font-size:10px;letter-spacing:.8px;margin-bottom:5px;}.nation-example span{display:block;color:#dde4f0;font-size:13px;line-height:1.25;}
+.nation-guide-note{margin-top:12px;border:1px solid rgba(0,255,135,.26);background:rgba(0,255,135,.07);border-radius:8px;padding:10px;color:#dde4f0;font-size:14px;line-height:1.3;}.nation-guide-note strong{font-family:'Black Ops One',sans-serif;color:#00ff87;font-size:11px;letter-spacing:.8px;}
+.nation-guide-dont-show{display:flex;align-items:center;gap:8px;margin-top:12px;color:#dde4f0;font-family:'Share Tech Mono',monospace;font-size:12px;cursor:pointer;}.nation-guide-dont-show input{accent-color:#00ff87;width:16px;height:16px;}
+.nation-guide-start{width:100%;margin-top:14px;min-height:42px;font-size:12px!important;}
+@media(max-width:900px){.nation-guide-panel{max-width:calc(100vw - 24px)!important;padding:14px!important}.nation-guide-title{font-size:22px}.nation-guide-copy{font-size:13px!important}.nation-guide-grid,.nation-example-list{grid-template-columns:1fr;gap:7px}.nation-guide-step-text,.nation-example span,.nation-guide-note{font-size:12px}.nation-guide-examples summary{font-size:10px;padding:9px 10px}.nation-guide-dont-show{font-size:11px}}
+
 .wallet-options{display:grid;gap:8px}.wallet-option{width:100%;display:grid;grid-template-columns:42px 1fr auto;align-items:center;gap:12px;border:1px solid #1c2028;background:#0f1318;color:#dde4f0;border-radius:9px;padding:12px;text-align:left;cursor:pointer}.wallet-option:hover{border-color:rgba(0,255,135,.35);background:rgba(0,255,135,.055)}.wallet-option-icon{font-size:23px;width:42px;height:42px;display:grid;place-items:center;border-radius:9px;background:rgba(0,255,135,.08)}.wallet-option-name{display:block;font-family:'Black Ops One',sans-serif;color:#fff;font-size:13px;letter-spacing:1px}.wallet-option-desc{display:block;font-family:'Share Tech Mono',monospace;color:#7a8899;font-size:11px;margin-top:4px;line-height:1.25}.wallet-option-tag{font-family:'Share Tech Mono',monospace;font-size:10px;color:#00ff87;border:1px solid rgba(0,255,135,.24);border-radius:999px;padding:3px 7px;white-space:nowrap}.wallet-modal-note{font-family:'Share Tech Mono',monospace;color:#7a8899;font-size:11px;margin-top:10px;line-height:1.35}
 .action-sheet-body{display:grid;gap:9px}.action-sheet-body .slot-action{width:100%;min-height:42px;font-size:12px}
 .info-grid{display:grid;grid-template-columns:1fr;gap:10px}
@@ -1152,6 +1175,33 @@ button.stat.mint-stat,
   </div>
 </div>
 
+<div class="modal" id="nationGuideModal">
+  <div class="modal-panel nation-guide-panel">
+    <div class="modal-head"><div class="modal-title">USA QUEST GUIDE</div><button class="modal-close" onclick="toggleNationGuide(false, false)">&times;</button></div>
+    <div class="nation-guide-kicker">OPEN NATION QUEST</div>
+    <div class="nation-guide-title"><span class="usa-blue">USA</span> QUEST<br><span class="usa-red">1500 CHZ</span></div>
+    <p class="nation-guide-copy">This quest is a race. The first wallet to complete all 11 USA positions wins the 1500 CHZ squad prize.</p>
+    <div class="nation-guide-grid">
+      <div class="nation-guide-step"><div class="nation-guide-num">01</div><div><div class="nation-guide-step-title">COMPLETE 11/11</div><div class="nation-guide-step-text">Unlike Dream XI ranking, this reward is for the first wallet that scores every USA position.</div></div></div>
+      <div class="nation-guide-step"><div class="nation-guide-num">02</div><div><div class="nation-guide-step-title">MINT OR BUY</div><div class="nation-guide-step-text">Mint random cards or buy exact missing USA positions directly from the squad and market.</div></div></div>
+      <div class="nation-guide-step"><div class="nation-guide-num">03</div><div><div class="nation-guide-step-title">SELL MISSING CARDS</div><div class="nation-guide-step-text">If you own a position another player needs, list it higher. Scarcity matters more than floor.</div></div></div>
+      <div class="nation-guide-step"><div class="nation-guide-num">04</div><div><div class="nation-guide-step-title">WATCH THE RANK</div><div class="nation-guide-step-text">USA Rank shows who is close. A player at 10/11 may pay more for the final position.</div></div></div>
+    </div>
+    <details class="nation-guide-examples">
+      <summary>SHOW REAL EXAMPLES</summary>
+      <div class="nation-example-list">
+        <div class="nation-example"><b>EXAMPLE 1: YOU ARE 8/11</b><span>You can buy missing positions from the USA squad cards. Every new position moves you closer to the 1500 CHZ race.</span></div>
+        <div class="nation-example"><b>EXAMPLE 2: LAST CARD POWER</b><span>If another player is 10/11 and needs your LW, listing it at 300-500 CHZ can still make sense for him.</span></div>
+        <div class="nation-example"><b>EXAMPLE 3: SELL DUPLICATES</b><span>A duplicate does not add a new position for you, but it can be the exact missing card for another wallet.</span></div>
+        <div class="nation-example"><b>EXAMPLE 4: QUEST ENDS</b><span>When someone completes 11/11 first, the squad prize is claimed. Until then, trading can decide the winner.</span></div>
+      </div>
+    </details>
+    <div class="nation-guide-note"><strong>DREAM XI DIFFERENCE</strong><br>Dream XI scores by best positions and leaderboard. USA Quest is a completion race: first full USA squad wins.</div>
+    <label class="nation-guide-dont-show"><input id="dontShowNationGuide" type="checkbox"> Don&apos;t show again</label>
+    <button class="btn nation-guide-start" onclick="toggleNationGuide(false, document.getElementById('dontShowNationGuide')?.checked)">START USA QUEST</button>
+  </div>
+</div>
+
 <div id="networkOverlay" aria-live="polite" aria-busy="true">
   <div class="network-card">
     <div class="network-ball">⚽</div>
@@ -1439,6 +1489,22 @@ function closeWalletModal(){document.getElementById("walletModal").classList.rem
 function closeSellModal(){document.getElementById("sellModal").classList.remove("show");}
 function closeActionModal(){document.getElementById("actionModal").classList.remove("show");}
 function isMobileActions(){return window.matchMedia && window.matchMedia("(max-width: 900px)").matches;}
+
+function toggleNationGuide(show, remember = false) {
+  const modal = document.getElementById("nationGuideModal");
+  if (!modal) return;
+  modal.classList.toggle("show", Boolean(show));
+  if (!show && remember) {
+    try { localStorage.setItem("nationQuestGuideSeen", "1"); } catch(e) {}
+  }
+}
+function maybeShowNationGuide() {
+  try {
+    if (localStorage.getItem("nationQuestGuideSeen") === "1") return;
+  } catch(e) {}
+  setTimeout(() => toggleNationGuide(true), 450);
+}
+
 function openActionModal(title, html) {
   document.getElementById("actionTitle").textContent = title;
   document.getElementById("actionBody").innerHTML = html || '<div class="loading">No actions available.</div>';
@@ -1468,6 +1534,7 @@ async function finalizeWalletConnection(walletProvider, label) {
   }
   if (connectBtn) { connectBtn.textContent = shortAddr(address); connectBtn.classList.add("connected"); }
   await loadQuest(true, true);
+  maybeShowNationGuide();
 }
 
 async function connectInjected() {
