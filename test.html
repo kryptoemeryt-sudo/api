@@ -2192,7 +2192,191 @@ body{padding-top:55px!important;}
     box-shadow:0 0 0 1px rgba(255,255,255,.18),0 2px 8px rgba(0,0,0,.35)!important;
   }
 }
-</style>
+
+/* Mobile-only polish */
+@media(max-width:700px){
+  body{padding-top:76px!important;}
+  .topnav{
+    height:76px!important;
+    min-height:76px!important;
+    padding:8px 10px 28px!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:space-between!important;
+  }
+  .nav-countdown,
+  .nav-price-countdown{
+    top:auto!important;
+    bottom:6px!important;
+    left:50%!important;
+    transform:translateX(-50%)!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    gap:6px!important;
+    width:auto!important;
+    min-width:168px!important;
+    padding:3px 8px!important;
+    font-size:9px!important;
+    line-height:1!important;
+    letter-spacing:1px!important;
+    text-align:center!important;
+    white-space:nowrap!important;
+  }
+  .nav-countdown span,
+  .nav-price-countdown span{
+    display:inline!important;
+    margin:0!important;
+    font-size:9px!important;
+    line-height:1!important;
+    letter-spacing:1px!important;
+  }
+  .nav-countdown b,
+  .nav-price-countdown b{
+    font-size:9px!important;
+    line-height:1!important;
+    letter-spacing:1px!important;
+  }
+  body.game-mode .quest-card-cta{
+    grid-template-columns:18px 1fr auto!important;
+    gap:5px!important;
+  }
+  body.game-mode .quest-card-cta .quest-flag-img{
+    width:9px!important;
+    height:6px!important;
+    border-radius:1px!important;
+    object-fit:cover!important;
+    box-shadow:none!important;
+  }
+  body.game-mode #deskTabInfo .pitch-title,
+  body.game-mode #deskTabInfo .how-title,
+  body.game-mode #deskTabInfo .how-desc,
+  body.game-mode #deskTabInfo .info-mini-stats,
+  body.game-mode #deskTabInfo .info-mini-stats span,
+  body.game-mode #deskTabInfo .info-mini-stats b,
+  body.game-mode #deskTabInfo .info-action-btn{
+    font-family:'Black Ops One',sans-serif!important;
+    font-size:10px!important;
+    line-height:1.18!important;
+    letter-spacing:.45px!important;
+    color:#fff!important;
+  }
+  body.game-mode #deskTabInfo .pitch-title{font-size:10px!important;letter-spacing:.8px!important;}
+  body.game-mode #deskTabInfo .how-title{font-size:10px!important;}
+  body.game-mode #deskTabInfo .how-desc{font-size:9px!important;}
+  body.game-mode #deskTabInfo .how-card{padding:8px!important;}
+  body.game-mode #deskTabInfo .info-actions{gap:5px!important;}
+  body.game-mode #deskTabInfo .info-action-btn{padding:6px 4px!important;}
+}
+
+/* Final mobile header/quest/info alignment */
+@media(max-width:700px){
+  body{padding-top:70px!important;}
+  .topnav{
+    height:70px!important;
+    min-height:70px!important;
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr) auto!important;
+    grid-template-rows:34px 24px!important;
+    align-items:center!important;
+    gap:0 8px!important;
+    padding:7px 10px 6px!important;
+    overflow:hidden!important;
+  }
+  .topnav-logo.logo,
+  .topnav .logo{
+    grid-column:1!important;
+    grid-row:1!important;
+    align-self:center!important;
+    justify-self:start!important;
+    font-size:13px!important;
+    line-height:1!important;
+  }
+  .topnav .wallet-actions,
+  .topnav .nav-right{
+    grid-column:2!important;
+    grid-row:1!important;
+    align-self:center!important;
+    justify-self:end!important;
+    min-width:0!important;
+  }
+  .nav-countdown,
+  .nav-price-countdown{
+    grid-column:1 / -1!important;
+    grid-row:2!important;
+    position:static!important;
+    inset:auto!important;
+    transform:none!important;
+    justify-self:center!important;
+    align-self:center!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    gap:6px!important;
+    width:auto!important;
+    max-width:calc(100vw - 24px)!important;
+    margin:0 auto!important;
+    padding:4px 9px!important;
+    background:rgba(255,201,64,.08)!important;
+    border:1px solid rgba(255,201,64,.42)!important;
+    border-radius:7px!important;
+    color:#ffc940!important;
+    font-family:'Black Ops One',sans-serif!important;
+    font-size:10px!important;
+    line-height:1!important;
+    letter-spacing:1px!important;
+    white-space:nowrap!important;
+  }
+  .nav-countdown span,
+  .nav-price-countdown span,
+  .nav-countdown b,
+  .nav-price-countdown b{
+    display:inline!important;
+    margin:0!important;
+    color:#ffc940!important;
+    font-family:'Black Ops One',sans-serif!important;
+    font-size:10px!important;
+    line-height:1!important;
+    letter-spacing:1px!important;
+    font-weight:400!important;
+  }
+  body.game-mode .quest-card-cta{
+    grid-template-columns:14px minmax(0,1fr) auto!important;
+    gap:5px!important;
+    align-items:center!important;
+  }
+  body.game-mode .quest-card-cta .quest-flag-img{
+    width:8px!important;
+    height:5px!important;
+    min-width:8px!important;
+    object-fit:cover!important;
+    border-radius:1px!important;
+    box-shadow:none!important;
+  }
+  body.game-mode #deskTabInfo .pitch-title,
+  body.game-mode #deskTabInfo .how-title,
+  body.game-mode #deskTabInfo .how-desc,
+  body.game-mode #deskTabInfo .info-mini-stats,
+  body.game-mode #deskTabInfo .info-mini-stats span,
+  body.game-mode #deskTabInfo .info-mini-stats b,
+  body.game-mode #deskTabInfo .info-action-btn{
+    font-family:'Black Ops One',sans-serif!important;
+    color:#fff!important;
+    line-height:1.18!important;
+    letter-spacing:.45px!important;
+  }
+  body.game-mode #deskTabInfo .pitch-title,
+  body.game-mode #deskTabInfo .how-title{
+    font-size:10px!important;
+  }
+  body.game-mode #deskTabInfo .how-desc,
+  body.game-mode #deskTabInfo .info-mini-stats,
+  body.game-mode #deskTabInfo .info-mini-stats span,
+  body.game-mode #deskTabInfo .info-mini-stats b,
+  body.game-mode #deskTabInfo .info-action-btn{
+    font-size:9px!important;
+  }
+}</style>
 </head>
 <body>
 
