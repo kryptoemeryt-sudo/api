@@ -1257,6 +1257,25 @@ const MARKET_ABI = [
 const POSITIONS = [
   {id:1,label:"GK"},{id:2,label:"RB"},{id:3,label:"LB"},{id:4,label:"CB A"},{id:5,label:"CB B"},{id:6,label:"DM"},{id:7,label:"RW"},{id:8,label:"MID"},{id:9,label:"ST"},{id:10,label:"#10"},{id:11,label:"LW"}
 ];
+const TEAM_META = [
+  {name:"Australia", code:"au", flag:"🇦🇺"},{name:"Iran", code:"ir", flag:"🇮🇷"},{name:"Iraq", code:"iq", flag:"🇮🇶"},{name:"Japan", code:"jp", flag:"🇯🇵"},
+  {name:"Jordan", code:"jo", flag:"🇯🇴"},{name:"Qatar", code:"qa", flag:"🇶🇦"},{name:"Saudi Arabia", code:"sa", flag:"🇸🇦"},{name:"South Korea", code:"kr", flag:"🇰🇷"},
+  {name:"Uzbekistan", code:"uz", flag:"🇺🇿"},{name:"Algeria", code:"dz", flag:"🇩🇿"},{name:"Cape Verde", code:"cv", flag:"🇨🇻"},{name:"DR Congo", code:"cd", flag:"🇨🇩"},
+  {name:"Egypt", code:"eg", flag:"🇪🇬"},{name:"Ghana", code:"gh", flag:"🇬🇭"},{name:"Ivory Coast", code:"ci", flag:"🇨🇮"},{name:"Morocco", code:"ma", flag:"🇲🇦"},
+  {name:"Senegal", code:"sn", flag:"🇸🇳"},{name:"South Africa", code:"za", flag:"🇿🇦"},{name:"Tunisia", code:"tn", flag:"🇹🇳"},{name:"Canada", code:"ca", flag:"🇨🇦"},
+  {name:"Curacao", code:"cw", flag:"🇨🇼"},{name:"Haiti", code:"ht", flag:"🇭🇹"},{name:"Mexico", code:"mx", flag:"🇲🇽"},{name:"Panama", code:"pa", flag:"🇵🇦"},
+  {name:"USA", code:"us", flag:"🇺🇸"},{name:"Argentina", code:"ar", flag:"🇦🇷"},{name:"Brazil", code:"br", flag:"🇧🇷"},{name:"Colombia", code:"co", flag:"🇨🇴"},
+  {name:"Ecuador", code:"ec", flag:"🇪🇨"},{name:"Paraguay", code:"py", flag:"🇵🇾"},{name:"Uruguay", code:"uy", flag:"🇺🇾"},{name:"New Zealand", code:"nz", flag:"🇳🇿"},
+  {name:"Austria", code:"at", flag:"🇦🇹"},{name:"Belgium", code:"be", flag:"🇧🇪"},{name:"Bosnia", code:"ba", flag:"🇧🇦"},{name:"Croatia", code:"hr", flag:"🇭🇷"},
+  {name:"Czech Rep.", code:"cz", flag:"🇨🇿"},{name:"England", code:"gb-eng", flag:"🏴"},{name:"France", code:"fr", flag:"🇫🇷"},{name:"Germany", code:"de", flag:"🇩🇪"},
+  {name:"Netherlands", code:"nl", flag:"🇳🇱"},{name:"Norway", code:"no", flag:"🇳🇴"},{name:"Portugal", code:"pt", flag:"🇵🇹"},{name:"Scotland", code:"gb-sct", flag:"🏴"},
+  {name:"Spain", code:"es", flag:"🇪🇸"},{name:"Sweden", code:"se", flag:"🇸🇪"},{name:"Switzerland", code:"ch", flag:"🇨🇭"},{name:"Turkey", code:"tr", flag:"🇹🇷"}
+];
+function teamMeta(id){return TEAM_META[Number(id)] || {name:`Team #${id}`, code:"", flag:"🏳️"};}
+function teamFlagHtml(team, size = 56) {
+  if (team?.code) return `<img src="https://flagcdn.com/w80/${team.code}.png" alt="${team.name}" style="width:${size}px;height:${Math.round(size * 0.66)}px;object-fit:cover;border-radius:4px;box-shadow:0 2px 8px rgba(0,0,0,.45)" onerror="this.replaceWith(document.createTextNode('${team.flag || "🏳️"}'))">`;
+  return `<span style="font-size:${Math.round(size * 0.55)}px">${team?.flag || "🏳️"}</span>`;
+}
 let provider = new ethers.JsonRpcProvider(PUBLIC_RPC);
 let browserProvider = null;
 let signer = null;
@@ -1547,6 +1566,8 @@ function showMintResultModal(card) {
     return;
   }
   const isUsa = Number(card.teamId) === USA_TEAM_ID;
+  const team = teamMeta(card.teamId);
+  const countryHtml = `<div style="display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:8px">${teamFlagHtml(team, 58)}<span style="font-family:'Black Ops One',sans-serif;color:#fff;font-size:18px;letter-spacing:.8px">${team.name.toUpperCase()}</span></div>`;
   const position = posLabel(card.position);
   const rarity = rarityName(card.rarity);
   const rarityShortName = rarityShort(card.rarity);
@@ -1555,13 +1576,13 @@ function showMintResultModal(card) {
     ? figureCanvas(card, false, "slot", position)
     : `<div class="slot-fig-canvas card-fig-canvas">${makeQuestFigureSVG(card.dna, 72, false)}</div>`;
   visual.innerHTML = figure;
-  main.innerHTML = isUsa
+  main.innerHTML = countryHtml + (isUsa
     ? `<div class="mint-result-title"><span class="usa-blue">USA</span> CARD SCORED</div><div class="mint-result-sub">This card counts for the USA Quest. Your squad/rank has been refreshed.</div>`
-    : `<div class="mint-result-title">WC CARD MINTED</div><div class="mint-result-sub">Not a USA card, but it is still part of your Block Kickers collection.</div>`;
+    : `<div class="mint-result-title">WC CARD MINTED</div><div class="mint-result-sub">This is a ${team.name} card. It is not a USA Quest card, but it still belongs to your Block Kickers collection.</div>`);
   stats.innerHTML = `
+    <div class="mint-result-stat"><b>${team.name.length > 9 ? team.name.slice(0, 9) : team.name}</b><span>Country</span></div>
     <div class="mint-result-stat"><b>${position}</b><span>Position</span></div>
-    <div class="mint-result-stat"><b style="color:${scoreColor}">${card.weight}</b><span>Score</span></div>
-    <div class="mint-result-stat"><b style="color:${scoreColor}">${rarityShortName}</b><span>${rarity}</span></div>
+    <div class="mint-result-stat"><b style="color:${scoreColor}">${card.weight}</b><span>${rarityShortName}</span></div>
   `;
   note.innerHTML = isUsa
     ? "If this was a new USA position or a stronger card, your USA squad updates immediately. You can keep it, sell it, or use it to block a scarce position."
