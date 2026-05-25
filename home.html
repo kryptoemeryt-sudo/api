@@ -5639,11 +5639,11 @@ function openMintSuccess(tid, dna){
   ).join('');
 
   const extras = [];
-  if(t.hasGoldenBoots) extras.push('<span style="background:rgba(255,201,64,0.15);border:1px solid rgba(255,201,64,0.4);color:var(--gold);padding:3px 8px;border-radius:4px;font-size:11px;">đź‘ź Golden Boots +8</span>');
-  if(t.hasTattoo) extras.push('<span style="background:rgba(255,255,255,0.05);border:1px solid var(--border);color:var(--text2);padding:3px 8px;border-radius:4px;font-size:11px;">đźŽ¨ Tattoo +5</span>');
-  if(t.hasEarring) extras.push('<span style="background:rgba(255,255,255,0.05);border:1px solid var(--border);color:var(--text2);padding:3px 8px;border-radius:4px;font-size:11px;">đź‘‚ Earring +3</span>');
-  if(t.hasBand) extras.push('<span style="background:rgba(255,255,255,0.05);border:1px solid var(--border);color:var(--text2);padding:3px 8px;border-radius:4px;font-size:11px;">đźŽ€ Headband +2</span>');
-  if(t.hasGloves) extras.push('<span style="background:rgba(255,255,255,0.05);border:1px solid var(--border);color:var(--text2);padding:3px 8px;border-radius:4px;font-size:11px;">đź§¤ Gloves +2</span>');
+  if(t.hasGoldenBoots) extras.push('<span style="background:rgba(255,201,64,0.15);border:1px solid rgba(255,201,64,0.4);color:var(--gold);padding:3px 8px;border-radius:4px;font-size:11px;">GOLD BOOTS +8</span>');
+  if(t.hasTattoo) extras.push('<span style="background:rgba(255,255,255,0.05);border:1px solid var(--border);color:var(--text2);padding:3px 8px;border-radius:4px;font-size:11px;">TATTOO +5</span>');
+  if(t.hasEarring) extras.push('<span style="background:rgba(255,255,255,0.05);border:1px solid var(--border);color:var(--text2);padding:3px 8px;border-radius:4px;font-size:11px;">EARRING +3</span>');
+  if(t.hasBand) extras.push('<span style="background:rgba(255,255,255,0.05);border:1px solid var(--border);color:var(--text2);padding:3px 8px;border-radius:4px;font-size:11px;">HEADBAND +2</span>');
+  if(t.hasGloves) extras.push('<span style="background:rgba(255,255,255,0.05);border:1px solid var(--border);color:var(--text2);padding:3px 8px;border-radius:4px;font-size:11px;">GLOVES +2</span>');
   document.getElementById('mintPopupExtras').innerHTML = extras.join('') || '<span style="font-size:12px;color:var(--text3);">No accessories</span>';
 
   document.getElementById('mintSuccessModal').classList.add('show');
@@ -5842,11 +5842,11 @@ Knowledge beats luck - pick the right nation!
     <div style="margin-top:20px;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:20px;">
       <div style="font-size:13px;color:var(--text2);margin-bottom:12px;letter-spacing:1px;">ACCESSORIES ADD WEIGHT</div>
       <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;">
-        <span style="background:rgba(255,201,64,0.15);border:1px solid rgba(255,201,64,0.4);color:var(--gold);padding:4px 10px;border-radius:4px;font-size:12px;">đź‘ź Golden Boots +8</span>
-        <span style="background:rgba(255,255,255,0.05);border:1px solid var(--border);color:var(--text2);padding:4px 10px;border-radius:4px;font-size:12px;">đźŽ¨ Tattoo +5</span>
-        <span style="background:rgba(255,255,255,0.05);border:1px solid var(--border);color:var(--text2);padding:4px 10px;border-radius:4px;font-size:12px;">đź‘‚ Earring +3</span>
-        <span style="background:rgba(255,255,255,0.05);border:1px solid var(--border);color:var(--text2);padding:4px 10px;border-radius:4px;font-size:12px;">đźŽ€ Headband +2</span>
-        <span style="background:rgba(255,255,255,0.05);border:1px solid var(--border);color:var(--text);padding:4px 10px;border-radius:4px;font-size:12px;">đź§¤ Gloves +2 <span style="color:var(--text3);font-size:10px;">(#1 only)</span></span>
+        <span style="background:rgba(255,201,64,0.15);border:1px solid rgba(255,201,64,0.4);color:var(--gold);padding:4px 10px;border-radius:4px;font-size:12px;">GOLD BOOTS +8</span>
+        <span style="background:rgba(255,255,255,0.05);border:1px solid var(--border);color:var(--text2);padding:4px 10px;border-radius:4px;font-size:12px;">TATTOO +5</span>
+        <span style="background:rgba(255,255,255,0.05);border:1px solid var(--border);color:var(--text2);padding:4px 10px;border-radius:4px;font-size:12px;">EARRING +3</span>
+        <span style="background:rgba(255,255,255,0.05);border:1px solid var(--border);color:var(--text2);padding:4px 10px;border-radius:4px;font-size:12px;">HEADBAND +2</span>
+        <span style="background:rgba(255,255,255,0.05);border:1px solid var(--border);color:var(--text);padding:4px 10px;border-radius:4px;font-size:12px;">GLOVES +2 <span style="color:var(--text3);font-size:10px;">(#1 only)</span></span>
       </div>
       <div style="font-size:13px;color:var(--text3);line-height:1.8;">
         <span style="color:var(--gold)">Example:</span> Legendary #10 + Golden Boots + Tattoo + Earring + Headband = <span style="color:var(--green);font-weight:700;">100 pts</span><br>
