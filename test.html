@@ -1236,18 +1236,102 @@ body.game-mode .pos-card.owned::after{top:-5px!important;right:-3px!important;z-
   body.game-mode .lb-score,
   body.game-mode .lb-prize{font-size:9px!important;color:#dde4f0!important;}
 }
+
+/* Final WC topbar aligned with Dream XI */
+.topnav{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  gap:14px!important;
+  width:100%!important;
+  max-width:100%!important;
+  min-height:58px!important;
+  padding:10px 24px!important;
+  border-bottom:1px solid rgba(0,255,135,.18)!important;
+  background:rgba(6,8,10,.97)!important;
+  position:sticky!important;
+  top:0!important;
+  z-index:100!important;
+  backdrop-filter:blur(10px)!important;
+  overflow:visible!important;
+}
+.topnav-logo.logo,.topnav .logo{
+  font-family:'Black Ops One',sans-serif!important;
+  font-size:18px!important;
+  letter-spacing:2px!important;
+  color:#dde4f0!important;
+  text-shadow:0 0 18px rgba(0,255,135,.16)!important;
+  white-space:nowrap!important;
+}
+.topnav-logo.logo span,.topnav .logo span{color:#00ff87!important;}
+.nav-right,.wallet-actions{display:flex!important;align-items:center!important;justify-content:flex-end!important;gap:12px!important;flex-shrink:0!important;}
+.wallet-addr,.wallet-bal,.wallet-pill{
+  font-family:'Share Tech Mono',monospace!important;
+  font-size:11px!important;
+  line-height:1!important;
+  background:transparent!important;
+  border:0!important;
+  padding:0!important;
+  border-radius:0!important;
+  letter-spacing:0!important;
+  white-space:nowrap!important;
+}
+.wallet-addr{color:#9fb0c4!important;}
+.wallet-bal{color:#ffc940!important;font-weight:700!important;}
+.nav-countdown{
+  position:absolute!important;
+  left:50%!important;
+  top:50%!important;
+  transform:translate(-50%,-50%)!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:8px!important;
+  border:1px solid rgba(255,201,64,.36)!important;
+  background:rgba(255,201,64,.08)!important;
+  border-radius:8px!important;
+  padding:6px 13px!important;
+  font-family:'Black Ops One',sans-serif!important;
+  letter-spacing:1px!important;
+  white-space:nowrap!important;
+  color:#ffc940!important;
+  box-shadow:0 0 18px rgba(255,201,64,.08)!important;
+}
+.nav-countdown span{color:#dde4f0!important;font-size:10px!important;letter-spacing:1px!important;}
+.nav-countdown b{font-size:13px!important;color:#ffc940!important;font-weight:400!important;}
+.btn-connect.connected{background:rgba(0,255,135,.15)!important;border-color:#00ff87!important;color:#00ff87!important;}
+@media(max-width:768px){
+  body{padding-top:72px!important;}
+  .topnav{
+    height:70px!important;
+    min-height:70px!important;
+    padding:8px 10px!important;
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr) auto!important;
+    grid-template-rows:auto auto!important;
+    align-content:center!important;
+    gap:4px 6px!important;
+    position:fixed!important;
+  }
+  .topnav-logo.logo,.topnav .logo{grid-column:1!important;grid-row:1!important;font-size:13px!important;letter-spacing:1.4px!important;align-self:center!important;overflow:hidden!important;text-overflow:ellipsis!important;}
+  .topnav .wallet-actions,.topnav .nav-right{grid-column:2!important;grid-row:1!important;justify-self:end!important;gap:6px!important;}
+  .wallet-addr{display:none!important;}
+  .wallet-bal{font-size:8px!important;max-width:74px!important;overflow:hidden!important;text-overflow:ellipsis!important;}
+  .btn-connect{font-size:9px!important;padding:7px 9px!important;}
+  .nav-countdown{grid-column:1 / -1!important;grid-row:2!important;position:static!important;transform:none!important;justify-self:center!important;align-self:center!important;padding:4px 8px!important;gap:5px!important;}
+  .nav-countdown span,.nav-countdown b{font-size:9px!important;display:inline!important;}
+}
 </style>
 </head>
 <body>
 
 <nav class="topnav">
-  <div class="topnav-left">
-    <a href="https://block-kickers.vercel.app" class="topnav-logo" style="text-decoration:none;">&#9917; BLOCK <span>KICKERS</span></a>
-    <span id="walletAddress" class="wallet-pill" style="color:#dde4f0;">0x0000...0000</span>
-    <span id="walletBalance" class="wallet-pill" style="color:#00ff87;">0.0 CHZ</span>
-  </div>
-  <div class="wallet-actions">
-    <button class="btn-connect" id="connectBtn" onclick="openWalletChoice()">CONNECT WALLET</button>
+  <a href="https://block-kickers.vercel.app" class="topnav-logo logo" style="text-decoration:none;">&#9917; BLOCK <span>KICKERS</span></a>
+  <div class="nav-countdown" id="wcNavCountdown"><span>WC END IN</span><b>--:--:--:--</b></div>
+  <div class="nav-right wallet-actions">
+    <span id="walletAddress" class="wallet-addr" style="display:none;"></span>
+    <span id="walletBalance" class="wallet-bal" style="display:none;"></span>
+    <button class="btn-connect" id="connectBtn" onclick="openWalletChoice()">CONNECT</button>
   </div>
 </nav>
 
@@ -2269,7 +2353,7 @@ async function updateWalletBalance() {
       const p = new ethers.BrowserProvider(walletProvider);
       const bal = await p.getBalance(address);
       const el = document.getElementById('walletBalance');
-      if (el) { el.textContent = parseFloat(ethers.formatEther(bal)).toFixed(1)+' CHZ'; el.style.display='inline-block'; }
+      if (el) { el.textContent = parseFloat(ethers.formatEther(bal)).toFixed(3)+' CHZ'; el.style.display='inline-block'; }
     } catch(e) {}
   }
 }
@@ -2373,7 +2457,7 @@ async function finalizeWalletConnection(walletProvider, walletType='wallet') {
   contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
   marketContract = new ethers.Contract(MARKET_ADDRESS, MARKET_ABI, signer);
   const connectBtn = document.getElementById('connectBtn');
-  if (connectBtn) { connectBtn.textContent = address.slice(0,6)+'...'+address.slice(-4); connectBtn.classList.add('connected'); }
+  if (connectBtn) { connectBtn.textContent = 'CONNECTED'; connectBtn.classList.add('connected'); }
   const walletAddressEl = document.getElementById('walletAddress');
   if (walletAddressEl) { walletAddressEl.textContent = address.slice(0,6)+'...'+address.slice(-4); walletAddressEl.style.display = 'inline-block'; }
   await updateWalletBalance();
@@ -3373,6 +3457,8 @@ function updateCountdown(){
   setDashCd('dashCdH', h);
   setDashCd('dashCdM', m);
   setDashCd('dashCdS', s);
+  const wcNavCountdown = document.getElementById('wcNavCountdown');
+  if (wcNavCountdown) wcNavCountdown.innerHTML = `<span>WC END IN</span><b>${String(d).padStart(2,'0')}:${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}</b>`;
   document.getElementById('cdBlock').innerHTML = 'Deadline block: <a href="https://scan.chiliz.com/block/'+DEADLINE_BLOCK+'" target="_blank" style="color:#00ff87;text-decoration:none;">#'+DEADLINE_BLOCK.toLocaleString()+'</a> · Estimated Current: ~#'+estimated.toLocaleString()+' · '+blocksLeft.toLocaleString()+' blocks remaining';
 }
 
