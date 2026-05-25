@@ -983,6 +983,24 @@ button.stat.mint-stat,
   .market-trade{margin-top:0!important;gap:1px!important;}
   .market-trade .market-price{font-size:8px!important;}
 }
+
+/* Final market compaction and price sort visual */
+.market-card.slot{justify-content:flex-start!important;gap:2px!important;}
+.market-card .market-meta{margin:0!important;padding:0!important;min-height:0!important;display:block!important;}
+.market-score-line{margin:0!important;padding:0!important;}
+.market-trade{margin:0!important;padding:0!important;gap:2px!important;}
+.market-trade .market-price{margin:0!important;padding:0!important;line-height:1!important;}
+.market-trade .slot-action{margin:0!important;}
+@media(max-width:900px){
+  .market-card.slot{justify-content:flex-start!important;gap:1px!important;min-height:132px!important;}
+  .market-card.slot .card-fig-canvas,.market-card.slot .market-fig-canvas{height:68px!important;flex:0 0 68px!important;margin:0!important;}
+  .market-card.slot .card-fig-canvas svg,.market-card.slot .market-fig-canvas svg{width:68px!important;height:68px!important;}
+  .market-card .market-meta{margin:0!important;padding:0!important;min-height:0!important;}
+  .market-score-line{margin:0!important;padding:0!important;line-height:1!important;}
+  .market-trade{margin:0!important;padding:0!important;gap:1px!important;}
+  .market-trade .market-price{margin:0!important;padding:0!important;line-height:1!important;}
+  .market-trade .slot-action{margin:0!important;min-height:19px!important;}
+}
 </style>
 </head>
 <body>
@@ -1881,7 +1899,7 @@ function renderQuest(state) {
 
 function renderMarket(state) {
   const grid = document.getElementById("marketGrid");
-  const listings = state.listings || [];
+  const listings = (state.listings || []).slice().sort((a,b) => a.price - b.price || b.weight - a.weight);
   document.getElementById("marketCount").textContent = `${listings.length} LISTINGS`;
   if (!listings.length) {
     grid.innerHTML = '<div class="loading" style="grid-column:1/-1">No USA cards listed right now.</div>';
