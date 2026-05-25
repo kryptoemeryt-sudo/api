@@ -1272,6 +1272,10 @@ const TEAM_META = [
   {name:"Spain", code:"es", flag:"🇪🇸"},{name:"Sweden", code:"se", flag:"🇸🇪"},{name:"Switzerland", code:"ch", flag:"🇨🇭"},{name:"Turkey", code:"tr", flag:"🇹🇷"}
 ];
 function teamMeta(id){return TEAM_META[Number(id)] || {name:`Team #${id}`, code:"", flag:"🏳️"};}
+function teamShortName(team){
+  const special = {"Czech Rep.":"CZE","DR Congo":"COD","Ivory Coast":"CIV","South Africa":"RSA","New Zealand":"NZL","Saudi Arabia":"KSA","South Korea":"KOR","Cape Verde":"CPV","Curacao":"CUW","England":"ENG","Scotland":"SCO","Turkey":"TUR"};
+  return special[team?.name] || String(team?.name || "---").replace(/[^A-Za-z]/g, "").slice(0,3).toUpperCase();
+}
 function teamFlagHtml(team, size = 56) {
   if (team?.code) return `<img src="https://flagcdn.com/w80/${team.code}.png" alt="${team.name}" style="width:${size}px;height:${Math.round(size * 0.66)}px;object-fit:cover;border-radius:4px;box-shadow:0 2px 8px rgba(0,0,0,.45)" onerror="this.replaceWith(document.createTextNode('${team.flag || "🏳️"}'))">`;
   return `<span style="font-size:${Math.round(size * 0.55)}px">${team?.flag || "🏳️"}</span>`;
@@ -1580,7 +1584,7 @@ function showMintResultModal(card) {
     ? `<div class="mint-result-title"><span class="usa-blue">USA</span> CARD SCORED</div><div class="mint-result-sub">This card counts for the USA Quest. Your squad/rank has been refreshed.</div>`
     : `<div class="mint-result-title">WC CARD MINTED</div><div class="mint-result-sub">This is a ${team.name} card. It is not a USA Quest card, but it still belongs to your Block Kickers collection.</div>`);
   stats.innerHTML = `
-    <div class="mint-result-stat"><b>${team.name.length > 9 ? team.name.slice(0, 9) : team.name}</b><span>Country</span></div>
+    <div class="mint-result-stat"><b>${teamShortName(team)}</b><span>Country</span></div>
     <div class="mint-result-stat"><b>${position}</b><span>Position</span></div>
     <div class="mint-result-stat"><b style="color:${scoreColor}">${card.weight}</b><span>${rarityShortName}</span></div>
   `;
