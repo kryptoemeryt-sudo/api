@@ -431,6 +431,38 @@ body{padding-top:0!important;}
   .arg-quest-stat .stat-value{font-size:7px!important;}
   .my-squad-panel .slot.empty .slot-status{font-size:4.5px!important;}
 }
+
+/* Final card parity pass: market cards and squad cards share the same figure box */
+.squad{grid-template-columns:repeat(11,minmax(86px,1fr))!important;gap:8px!important;align-items:stretch!important;}
+.slot,.market-card.slot{border-radius:8px!important;padding:7px!important;min-height:150px!important;display:flex!important;flex-direction:column!important;align-items:stretch!important;justify-content:stretch!important;gap:4px!important;position:relative!important;overflow:hidden!important;}
+.card-fig-canvas,.slot-fig-canvas,.market-fig-canvas{height:76px!important;display:flex!important;align-items:center!important;justify-content:center!important;position:relative!important;background:radial-gradient(circle at 50% 86%,rgba(0,255,135,.13),transparent 44%)!important;flex:0 0 76px!important;}
+.card-fig-canvas svg,.slot-fig-canvas svg,.market-fig-canvas svg{width:72px!important;height:72px!important;display:block!important;margin:0 auto!important;}
+.card-flag,.slot-fig-flag,.market-fig-flag{position:absolute!important;top:-1px!important;left:-1px!important;width:22px!important;height:15px!important;object-fit:cover!important;border-radius:2px!important;box-shadow:0 0 0 1px rgba(255,255,255,.18),0 2px 7px rgba(0,0,0,.35)!important;z-index:4!important;}
+.card-pos,.slot-fig-canvas .slot-pos,.market-fig-canvas .slot-pos{position:absolute!important;left:5px!important;bottom:4px!important;top:auto!important;right:auto!important;z-index:5!important;font-family:'Black Ops One',sans-serif!important;font-size:9px!important;color:#dde4f0!important;background:rgba(6,8,10,.72)!important;border:1px solid rgba(255,255,255,.14)!important;border-radius:4px!important;padding:2px 5px!important;line-height:1!important;}
+.slot-check,.card-check{position:absolute!important;right:6px!important;top:5px!important;z-index:6!important;font-family:'Black Ops One',sans-serif!important;color:#00ff87!important;font-size:14px!important;line-height:1!important;text-shadow:0 0 10px rgba(0,255,135,.35)!important;}
+.slot-info,.market-card .market-meta{padding:0!important;display:grid!important;grid-template-columns:1fr auto!important;gap:4px!important;align-items:end!important;margin-top:auto!important;min-height:22px!important;}
+.slot-count,.market-card .slot-count{font-family:'Black Ops One',sans-serif!important;font-size:18px!important;line-height:1!important;text-align:left!important;color:#00ff87!important;}
+.slot-status,.market-card .slot-status{font-family:'Black Ops One',sans-serif!important;font-size:8px!important;line-height:1!important;text-align:right!important;letter-spacing:.3px!important;color:#dde4f0!important;}
+.market-grid{grid-template-columns:repeat(auto-fill,minmax(86px,96px))!important;gap:8px!important;align-items:start!important;justify-content:start!important;}
+.market-card.slot{width:100%!important;min-width:0!important;}
+.market-trade{display:grid!important;gap:4px!important;margin-top:4px!important;}
+.market-trade .market-price{font-size:12px!important;text-align:left!important;line-height:1!important;}
+.market-trade .slot-action{min-height:28px!important;width:100%!important;font-size:9px!important;padding:6px 4px!important;}
+@media(max-width:900px){
+  .squad{grid-template-columns:repeat(11,minmax(0,1fr))!important;gap:3px!important;}
+  .slot,.market-card.slot{min-height:72px!important;padding:3px 2px!important;border-radius:6px!important;gap:2px!important;}
+  .card-fig-canvas,.slot-fig-canvas,.market-fig-canvas{height:38px!important;flex-basis:38px!important;}
+  .card-fig-canvas svg,.slot-fig-canvas svg,.market-fig-canvas svg{width:36px!important;height:36px!important;}
+  .card-flag,.slot-fig-flag,.market-fig-flag{width:12px!important;height:8px!important;top:-1px!important;left:-1px!important;}
+  .card-pos,.slot-fig-canvas .slot-pos,.market-fig-canvas .slot-pos{font-size:5px!important;left:2px!important;bottom:2px!important;padding:1px 3px!important;}
+  .slot-check,.card-check{right:3px!important;top:2px!important;font-size:9px!important;}
+  .slot-info,.market-card .market-meta{min-height:14px!important;gap:2px!important;}
+  .slot-count,.market-card .slot-count{font-size:9px!important;}
+  .slot-status,.market-card .slot-status{font-size:4.5px!important;letter-spacing:0!important;}
+  .market-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:6px!important;}
+  .market-trade .market-price{font-size:9px!important;}
+  .market-trade .slot-action{font-size:7px!important;min-height:24px!important;padding:4px 2px!important;}
+}
 </style>
 </head>
 <body>
@@ -634,6 +666,7 @@ function parseDNA(dna) {
 }
 function shortAddr(addr){return addr ? `${addr.slice(0,6)}...${addr.slice(-4)}` : "0x...";}
 function rarityName(r){return ["Common","Rare","Epic","Legendary"][r] || "Common";}
+function rarityShort(r){return ["COM","RAR","EPI","LEG"][Number(r)] || "COM";}
 function posLabel(id){return POSITIONS.find(p => p.id === Number(id))?.label || String(id);}
 function readableError(error) {
   const msg = error?.shortMessage || error?.reason || error?.message || String(error || "Unknown error");
@@ -1243,7 +1276,7 @@ function renderSlots(targetId, filledSet, byPosition, winnerPos = null, mode = "
         ${sellable ? `<button class="slot-action sell" onclick="openSellCards(${pos.id})">SELL</button>` : ""}
       ` : "";
     const scoreText = best ? `${best.weight}` : "-";
-    const statusText = best ? rarityName(best.rarity) : (floor ? "ON MARKET" : "MISSING");
+    const statusText = best ? rarityShort(best.rarity) : (floor ? "BUY" : "MISS");
     el.innerHTML = `
       ${best ? `<div class="slot-check">&#10003;</div>` : ""}
       ${figureCanvas(visualCard, !best, "slot", pos.label)}
@@ -1343,7 +1376,7 @@ function renderMarket(state) {
         ${figureCanvas(l, false, "market", posLabel(l.position))}
         <div class="slot-info market-meta">
           <div class="slot-count ${rar}" style="color:${rarityColor(l.rarity)}">${l.weight}</div>
-          <div class="slot-status" style="color:${rarityColor(l.rarity)}">${rarityName(l.rarity)}</div>
+          <div class="slot-status" style="color:${rarityColor(l.rarity)}">${rarityShort(l.rarity)}</div>
         </div>
         <div class="market-trade">
           <div class="market-sub ${mine ? "you" : ""}">${mine ? "YOU" : "LISTED"} - #${l.tokenId}</div>
