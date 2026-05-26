@@ -1192,6 +1192,56 @@ button.stat.mint-stat,
   .mint-result-sub{font-size:10px!important;}
   .mint-result-note{font-size:8px!important;}
 }
+
+/* Unified Block Kickers loading / blockchain overlay */
+#networkOverlay{position:fixed!important;inset:0!important;z-index:7000!important;display:none!important;align-items:center!important;justify-content:center!important;background:rgba(2,6,8,.82)!important;backdrop-filter:blur(8px)!important;padding:max(14px,env(safe-area-inset-top)) max(14px,env(safe-area-inset-right)) max(14px,env(safe-area-inset-bottom)) max(14px,env(safe-area-inset-left))!important;box-sizing:border-box!important;overflow:hidden!important;}
+#networkOverlay.show{display:flex!important;}
+#networkOverlay .network-wait-card,#networkOverlay .network-card{width:min(360px,calc(100dvw - 28px))!important;max-width:calc(100dvw - 28px)!important;margin:0!important;position:relative!important;left:auto!important;right:auto!important;top:auto!important;transform:none!important;display:grid!important;justify-items:center!important;gap:10px!important;text-align:center!important;box-sizing:border-box!important;overflow:hidden!important;background:linear-gradient(180deg,rgba(11,19,30,.98),rgba(6,8,10,.97))!important;border:1px solid rgba(0,255,135,.46)!important;border-radius:14px!important;padding:22px 18px 18px!important;box-shadow:0 24px 80px rgba(0,0,0,.68),0 0 34px rgba(0,255,135,.12)!important;color:#dde4f0!important;}
+#networkOverlay .network-ball{width:58px!important;height:58px!important;border-radius:50%!important;margin:0 0 2px!important;position:relative!important;display:grid!important;place-items:center!important;font-size:0!important;background:radial-gradient(circle at 50% 50%,#fff 0 30%,#0b0f16 31% 43%,#fff 44% 100%)!important;border:5px solid #00ff87!important;box-shadow:0 0 22px rgba(0,255,135,.38),inset 0 0 0 2px rgba(0,0,0,.65)!important;animation:bkOverlaySpin 1.05s linear infinite!important;}
+#networkOverlay .network-ball::before{content:""!important;position:absolute;width:16px;height:16px;background:#0b0f16;clip-path:polygon(50% 0,100% 38%,82% 100%,18% 100%,0 38%);}
+#networkOverlay .network-ball::after{content:""!important;position:absolute;inset:9px;border-radius:50%;background:conic-gradient(from 18deg,#0b0f16 0 10deg,transparent 10deg 72deg,#0b0f16 72deg 84deg,transparent 84deg 144deg,#0b0f16 144deg 156deg,transparent 156deg 216deg,#0b0f16 216deg 228deg,transparent 228deg 288deg,#0b0f16 288deg 300deg,transparent 300deg 360deg);opacity:.9;}
+@keyframes bkOverlaySpin{to{transform:rotate(360deg)}}
+#networkOverlay .network-wait-title,#networkOverlay .network-title{font-family:'Black Ops One',sans-serif!important;color:#00ff87!important;font-size:17px!important;line-height:1.05!important;letter-spacing:1px!important;text-transform:uppercase!important;margin:0!important;}
+#networkOverlay .network-wait-text,#networkOverlay .network-text{font-family:'Share Tech Mono',monospace!important;color:#dde4f0!important;font-size:12px!important;line-height:1.35!important;max-width:300px!important;margin:0 auto!important;}
+#networkOverlay .network-steps{width:100%!important;display:grid!important;gap:7px!important;margin-top:4px!important;}
+#networkOverlay .network-step{display:grid!important;grid-template-columns:16px minmax(0,1fr)!important;align-items:center!important;gap:8px!important;text-align:left!important;color:#dde4f0!important;font-family:'Black Ops One',sans-serif!important;font-size:9px!important;letter-spacing:.5px!important;text-transform:uppercase!important;}
+#networkOverlay .network-step::before{content:"";width:10px;height:10px;border-radius:50%;background:#18212c;border:1px solid rgba(255,255,255,.16);box-shadow:none;}
+#networkOverlay .network-step.active::before{background:#ffc940;border-color:#ffc940;box-shadow:0 0 12px rgba(255,201,64,.35);}
+#networkOverlay .network-step.done::before{background:#00ff87;border-color:#00ff87;box-shadow:0 0 12px rgba(0,255,135,.35);}
+#networkOverlay #walletOpenBtn{display:none;margin-top:4px;border:1px solid rgba(0,255,135,.46)!important;background:rgba(0,255,135,.12)!important;color:#00ff87!important;border-radius:8px!important;padding:10px 12px!important;font-family:'Black Ops One',sans-serif!important;font-size:10px!important;letter-spacing:1px!important;cursor:pointer!important;}
+@media(max-width:700px){#networkOverlay{padding:12px!important;}#networkOverlay .network-wait-card,#networkOverlay .network-card{width:min(330px,calc(100dvw - 24px))!important;max-width:calc(100dvw - 24px)!important;padding:18px 14px 16px!important;border-radius:12px!important;}#networkOverlay .network-ball{width:50px!important;height:50px!important;border-width:4px!important;}#networkOverlay .network-wait-title,#networkOverlay .network-title{font-size:14px!important;}#networkOverlay .network-wait-text,#networkOverlay .network-text{font-size:10px!important;}}
+
+/* Final unified network loader: clean spinner, no fake ball/emoji */
+#networkOverlay .network-ball{
+  width:48px!important;
+  height:48px!important;
+  margin:0 0 4px!important;
+  border-radius:50%!important;
+  position:relative!important;
+  display:block!important;
+  font-size:0!important;
+  line-height:0!important;
+  color:transparent!important;
+  background:transparent!important;
+  border:3px solid rgba(221,228,240,.18)!important;
+  border-top-color:#00ff87!important;
+  border-right-color:#ffc940!important;
+  box-shadow:0 0 18px rgba(0,255,135,.18)!important;
+  text-shadow:none!important;
+  animation:bkOverlaySpin .85s linear infinite!important;
+}
+#networkOverlay .network-ball::before,
+#networkOverlay .network-ball::after{
+  content:none!important;
+  display:none!important;
+}
+@media(max-width:700px){
+  #networkOverlay .network-ball{
+    width:42px!important;
+    height:42px!important;
+    border-width:3px!important;
+  }
+}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
