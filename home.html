@@ -3317,14 +3317,14 @@ function switchHowTab(tab, btn){
 
 
 function openStrategyIntro(){
-  try { if(localStorage.getItem('bkStrategyIntroSeen')) return; } catch(e) {}
+  try { if(localStorage.getItem('bkStrategyIntroSeenV2')) return; } catch(e) {}
   const modal = document.getElementById('strategyIntroModal');
-  if(modal) setTimeout(() => modal.classList.add('show'), 900);
+  if(modal) setTimeout(() => modal.classList.add('show'), 350);
 }
 function closeStrategyIntro(dontShow=false){
   const modal = document.getElementById('strategyIntroModal');
   if(modal) modal.classList.remove('show');
-  if(dontShow){ try { localStorage.setItem('bkStrategyIntroSeen','1'); } catch(e) {} }
+  if(dontShow){ try { localStorage.setItem('bkStrategyIntroSeenV2','1'); } catch(e) {} }
 }
 function closeNqWelcome(dontShow){
   document.getElementById('nqWelcomeModal').classList.remove('show');
