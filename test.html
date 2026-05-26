@@ -1567,6 +1567,14 @@ button.stat.mint-stat,
   .hero-copy .rule-main{max-width:820px!important;white-space:normal!important;}
   .hero-copy .rule-flow{max-width:820px!important;white-space:normal!important;margin-top:4px!important;}
 }
+
+/* PC keep quest rule in one line */
+@media(min-width:901px){
+  .hero .panel{grid-template-columns:minmax(0,1fr) 430px!important;gap:14px!important;}
+  .hero-copy{max-width:none!important;min-width:0!important;}
+  .hero-copy .rule-main{font-size:clamp(16px,1.38vw,20px)!important;white-space:nowrap!important;letter-spacing:.1px!important;}
+  .hero-title{font-size:clamp(28px,2.35vw,40px)!important;white-space:nowrap!important;}
+}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
