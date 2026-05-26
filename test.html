@@ -1586,7 +1586,7 @@ function showMintResultModal(card) {
   stats.innerHTML = `
     <div class="mint-result-stat"><b>${teamShortName(team)}</b><span>Country</span></div>
     <div class="mint-result-stat"><b>${position}</b><span>Position</span></div>
-    <div class="mint-result-stat"><b style="color:${scoreColor}">${rarityName.toUpperCase()}</b><span>Rarity</span></div>
+    <div class="mint-result-stat"><b style="color:${scoreColor}">${rarity.toUpperCase()}</b><span>Rarity</span></div>
     <div class="mint-result-stat"><b style="color:${scoreColor}">${card.weight}</b><span>PTS</span></div>
   `;
   note.innerHTML = isUsa
@@ -1818,8 +1818,17 @@ async function directMint() {
     if (receipt && Number(receipt.status) === 0) throw new Error("Mint reverted on-chain.");
     const mintedCard = parseMintedCardFromReceipt(receipt);
     updateOverlay("Mint confirmed. Updating quest state...");
-    await loadQuest(true, true);
-    showMintResultModal(mintedCard);
+    try {
+      await loadQuest(true, true);
+    } catch(syncError) {
+      console.warn("Post-mint quest refresh failed:", syncError);
+    }
+    try {
+      showMintResultModal(mintedCard);
+    } catch(popupError) {
+      console.error("Post-mint popup failed:", popupError);
+      showMintResultModal(null);
+    }
   } catch(e) {
     console.error(e);
     alert(transactionFailMessage("Mint", e, `${ethers.formatEther(currentMintPrice)} CHZ`));
