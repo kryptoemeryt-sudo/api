@@ -1263,6 +1263,177 @@ button.stat.mint-stat,
 .sell-signal-title{font-family:'Black Ops One',sans-serif;color:#00ff87;font-size:11px;letter-spacing:.7px;margin:9px 0 6px;}
 .demand-empty{border:1px solid #1c2028;background:#0f1318;border-radius:8px;padding:10px;font-family:'Share Tech Mono',monospace;color:#fff;font-size:11px;line-height:1.35;}
 @media(max-width:900px){.demand-panel{display:none!important;}}
+
+/* PC investor dashboard cleanup: focused trading view, no repeated explainer cards */
+@media(min-width:901px){
+  body{background:#06080a!important;}
+  .page{
+    max-width:1920px!important;
+    margin:0 auto!important;
+    padding:66px 12px 16px!important;
+    gap:8px!important;
+    display:grid!important;
+    grid-template-rows:auto auto minmax(0,1fr)!important;
+    min-height:100vh!important;
+  }
+  .hero{margin:0!important;}
+  .hero .panel{
+    min-height:92px!important;
+    display:grid!important;
+    grid-template-columns:230px minmax(260px,.52fr) minmax(0,1fr)!important;
+    gap:18px!important;
+    align-items:center!important;
+    padding:14px 18px!important;
+    border-color:rgba(59,130,246,.28)!important;
+    background:linear-gradient(90deg,rgba(10,26,54,.92),rgba(8,12,20,.96) 50%,rgba(191,10,48,.10))!important;
+  }
+  .quest-kicker{
+    margin:0!important;
+    width:100%!important;
+    justify-content:center!important;
+    font-family:'Black Ops One',sans-serif!important;
+    font-size:10px!important;
+    letter-spacing:2px!important;
+    color:#00ff87!important;
+    border-color:rgba(0,255,135,.28)!important;
+  }
+  .hero-title{font-size:clamp(34px,3.1vw,52px)!important;line-height:.86!important;white-space:nowrap!important;}
+  .hero-copy{
+    margin:0!important;
+    max-width:none!important;
+    color:#fff!important;
+    font-family:'Black Ops One',sans-serif!important;
+    font-size:15px!important;
+    line-height:1.35!important;
+    display:grid!important;
+    gap:5px!important;
+  }
+  .hero-copy strong{color:#ffc940!important;font-weight:400!important;}
+  .status-line,.trading-tips,.quest-side-panel>.callout:not(.gold){display:none!important;}
+
+  .stats{
+    width:100%!important;
+    display:grid!important;
+    grid-template-columns:repeat(4,minmax(0,1fr))!important;
+    gap:8px!important;
+  }
+  .stats .stat{min-height:68px!important;padding:9px 12px!important;border-radius:8px!important;background:linear-gradient(180deg,rgba(15,19,24,.98),rgba(8,11,16,.96))!important;}
+  .stats .stat:nth-child(n+5){display:none!important;}
+  .stat-value{font-size:clamp(22px,1.8vw,30px)!important;line-height:1!important;}
+  .stat-label{font-family:'Black Ops One',sans-serif!important;font-size:9px!important;color:#fff!important;letter-spacing:.7px!important;margin-top:5px!important;}
+  .arg-quest-stat{border-color:rgba(116,172,223,.46)!important;background:linear-gradient(135deg,rgba(116,172,223,.18),rgba(255,255,255,.04))!important;}
+  .mint-stat{background:#00ff87!important;border-color:#00ff87!important;color:#041009!important;box-shadow:0 0 24px rgba(0,255,135,.18)!important;}
+  .mint-stat .stat-value,.mint-stat .stat-label{color:#041009!important;}
+
+  .main-grid{
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr) 390px!important;
+    gap:10px!important;
+    align-items:start!important;
+    min-height:0!important;
+  }
+  .quest-left-column{display:grid!important;grid-template-columns:1fr!important;gap:10px!important;min-width:0!important;}
+  .my-squad-panel,.market-section,.quest-side-panel>.panel{
+    border-radius:10px!important;
+    background:linear-gradient(180deg,rgba(9,16,31,.98),rgba(6,9,15,.98))!important;
+    border-color:rgba(59,130,246,.24)!important;
+  }
+  .my-squad-panel{min-height:0!important;padding:12px!important;}
+  .section-title{
+    margin-bottom:9px!important;
+    font-family:'Black Ops One',sans-serif!important;
+    color:#fff!important;
+    font-size:13px!important;
+    letter-spacing:1.4px!important;
+  }
+  .section-title .live{font-family:'Black Ops One',sans-serif!important;font-size:10px!important;color:#00ff87!important;letter-spacing:.8px!important;}
+  .squad{grid-template-columns:repeat(11,minmax(0,1fr))!important;gap:7px!important;}
+  .slot{min-height:142px!important;padding:7px 5px!important;}
+  .slot-fig-canvas{height:72px!important;}
+  .slot-fig-canvas svg{width:70px!important;height:70px!important;}
+  .slot-count{font-size:18px!important;}
+  .slot-status{font-size:7px!important;}
+  .slot-action{min-height:28px!important;font-size:9px!important;}
+
+  .market-section{padding:12px!important;}
+  .market-grid{
+    grid-template-columns:repeat(auto-fill,minmax(118px,1fr))!important;
+    gap:9px!important;
+    max-height:424px!important;
+    overflow:auto!important;
+    padding-right:5px!important;
+  }
+  .market-card.slot{min-height:184px!important;}
+  .market-fig-canvas{height:84px!important;}
+  .market-fig-canvas svg{width:78px!important;height:78px!important;}
+  .market-meta{padding:7px 8px!important;gap:3px!important;}
+  .market-name,.market-sub{display:none!important;}
+  .market-price{font-size:13px!important;line-height:1!important;margin-top:0!important;}
+  .market-card .slot-action{min-height:28px!important;font-size:9px!important;margin-top:2px!important;}
+
+  .quest-side-panel{
+    display:grid!important;
+    grid-template-columns:1fr!important;
+    gap:10px!important;
+    align-content:start!important;
+    grid-column:2!important;
+    grid-row:1 / span 2!important;
+  }
+  .quest-side-panel .callout.gold{display:none!important;}
+  .demand-panel{order:1!important;}
+  .quest-side-panel>.panel:nth-of-type(2){order:2!important;}
+  .quest-side-panel>.panel:nth-of-type(3){order:3!important;}
+  .demand-panel,.quest-side-panel>.panel{padding:10px!important;}
+  .demand-row,.sell-signal-row{grid-template-columns:42px minmax(0,1fr) 86px!important;padding:9px!important;}
+  .demand-title{font-size:12px!important;}
+  .demand-sub{font-size:9px!important;}
+  .demand-price{font-size:12px!important;}
+  .rank-list{max-height:210px!important;overflow:auto!important;padding-right:4px!important;}
+  .rank-row{min-height:36px!important;padding:7px 9px!important;}
+  .feed{max-height:245px!important;}
+  .winner-box,.loading,.feed-addr,.feed-token{color:#fff!important;}
+}
+
+/* PC squad fit fix: keep all 11 USA positions visible */
+@media(min-width:901px){
+  .main-grid{grid-template-columns:minmax(0,1fr) 360px!important;}
+  .squad{grid-template-columns:repeat(11,minmax(0,1fr))!important;gap:5px!important;overflow:visible!important;}
+  .slot{min-width:0!important;max-width:100%!important;min-height:132px!important;padding:6px 4px!important;}
+  .slot-fig-canvas{height:64px!important;min-width:0!important;}
+  .slot-fig-canvas svg{width:62px!important;height:62px!important;}
+  .slot-actions{min-width:0!important;width:100%!important;}
+  .slot-action{min-width:0!important;width:100%!important;white-space:normal!important;font-size:7px!important;letter-spacing:.2px!important;padding:5px 2px!important;}
+  .slot-count{font-size:16px!important;}
+  .slot-status{font-size:6px!important;}
+  .market-grid{max-height:398px!important;}
+}
+
+/* PC final composition: squad full width, market + investor tools below */
+@media(min-width:901px){
+  .main-grid{
+    grid-template-columns:minmax(0,1fr) 360px!important;
+    grid-auto-rows:auto!important;
+    align-items:start!important;
+  }
+  .quest-left-column{display:contents!important;}
+  .my-squad-panel{grid-column:1 / -1!important;grid-row:1!important;min-height:0!important;}
+  .market-section{grid-column:1 / 2!important;grid-row:2!important;}
+  .quest-side-panel{grid-column:2 / 3!important;grid-row:2!important;}
+  .squad{grid-template-columns:repeat(11,minmax(0,1fr))!important;gap:8px!important;}
+  .slot{min-height:142px!important;padding:7px 5px!important;}
+  .slot-fig-canvas{height:72px!important;}
+  .slot-fig-canvas svg{width:70px!important;height:70px!important;}
+  .slot-action{font-size:8px!important;min-height:28px!important;}
+  .market-grid{max-height:398px!important;}
+}
+
+/* PC right rail priority: investor tools before passive feed */
+@media(min-width:901px){
+  .quest-side-panel > .panel{order:4!important;}
+  .quest-side-panel > .demand-panel{order:1!important;}
+  .quest-side-panel > .panel:has(#rankList){order:2!important;}
+  .quest-side-panel > .panel:has(#mintFeed){order:3!important;}
+}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
