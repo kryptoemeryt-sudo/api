@@ -1434,6 +1434,46 @@ button.stat.mint-stat,
   .quest-side-panel > .panel:has(#rankList){order:2!important;}
   .quest-side-panel > .panel:has(#mintFeed){order:3!important;}
 }
+
+/* PC redistribution: use free space below market instead of a tall right rail */
+@media(min-width:901px){
+  .main-grid{
+    grid-template-columns:minmax(0,1fr) 360px!important;
+    grid-template-rows:auto auto auto!important;
+    align-items:start!important;
+  }
+  .quest-left-column{display:contents!important;}
+  .my-squad-panel{grid-column:1 / -1!important;grid-row:1!important;}
+  .market-section{grid-column:1 / 2!important;grid-row:2!important;}
+  .quest-side-panel{display:contents!important;}
+  .quest-side-panel>.callout,.quest-side-panel>#cardWinnerBox{display:none!important;}
+  .quest-side-panel>.demand-panel{grid-column:1 / 2!important;grid-row:3!important;align-self:start!important;}
+  .quest-side-panel>.panel:has(#rankList){grid-column:2 / 3!important;grid-row:2!important;align-self:start!important;}
+  .quest-side-panel>.panel:has(#mintFeed){grid-column:2 / 3!important;grid-row:3!important;align-self:start!important;}
+  .market-grid{max-height:340px!important;}
+  .rank-list{max-height:340px!important;overflow:auto!important;}
+  .feed{max-height:230px!important;overflow:auto!important;}
+  .demand-list{grid-template-columns:repeat(2,minmax(0,1fr))!important;}
+  .sell-signal-list{grid-template-columns:repeat(2,minmax(0,1fr))!important;}
+  .demand-empty{grid-column:1 / -1!important;}
+}
+
+/* PC height trim: title strip instead of explainer hero */
+@media(min-width:901px){
+  .hero .panel{
+    min-height:74px!important;
+    grid-template-columns:1fr auto!important;
+    padding:10px 18px!important;
+  }
+  .quest-kicker,.hero-copy{display:none!important;}
+  .hero-title{font-size:clamp(30px,2.7vw,44px)!important;display:flex!important;gap:16px!important;align-items:center!important;}
+  .hero-title .title-line,.hero-title .title-prize{display:inline!important;}
+  .stats .stat{min-height:58px!important;padding:7px 10px!important;}
+  .slot{min-height:126px!important;}
+  .slot-fig-canvas{height:60px!important;}
+  .slot-fig-canvas svg{width:58px!important;height:58px!important;}
+  .market-grid{max-height:300px!important;}
+}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
