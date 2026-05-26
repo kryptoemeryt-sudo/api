@@ -2839,35 +2839,15 @@ function toggleMintSuccessModal(show) {
 }
 
 function renderCardResult(title, card, statusHtml) {
-  if (!card) {
-    const titleEl = document.getElementById('cardResultTitle');
-    if (titleEl) titleEl.textContent = title;
-    document.getElementById('mintedCardVisual').innerHTML = `
-      <div style="font-size:38px; margin-bottom:8px;">&#9917;</div>
-      <div style="font-family:'Black Ops One',sans-serif; font-size:20px; color:#dde4f0; margin-bottom:6px;">CARD CONFIRMED</div>
-      <div style="font-family:'Share Tech Mono',monospace; font-size:14px; color:#7a8899;">Waiting for marketplace index</div>
-    `;
-    document.getElementById('mintedCardStatus').innerHTML = statusHtml;
-    toggleMintSuccessModal(true);
+  const oldModal = document.getElementById('mintSuccessModal');
+  if (oldModal) oldModal.style.display = 'none';
+  if (card) {
+    const upgraded = String(statusHtml || '').toUpperCase().includes('UPGRADED') || String(title || '').toUpperCase().includes('PURCHASED');
+    showMintResultModal(card, { isUpgrade: upgraded });
     return;
   }
-  const teamInfo = TEAMS.find(t => t.id === card.teamId) || {name: 'Unknown', code: 'us'};
-  const posName = POSITION_SHORT[card.position] || card.position;
-  const rarityName = ['Common','Rare','Epic','Legendary'][card.rarity] || 'Common';
-  const rarColor = ['#7a8899','#3b82f6','#c084fc','#ffc940'][card.rarity] || '#7a8899';
-  const titleEl = document.getElementById('cardResultTitle');
-  if (titleEl) titleEl.textContent = title;
-  document.getElementById('mintedCardVisual').innerHTML = `
-    <div style="font-size:32px; margin-bottom:8px;">${getFlagHtml(teamInfo, true)}</div>
-    <div style="font-family:'Black Ops One',sans-serif; font-size:18px; color:#dde4f0; margin-bottom:4px;">${teamInfo.name.toUpperCase()}</div>
-    <div style="font-family:'Share Tech Mono',monospace; font-size:14px; color:#5a6a7a; margin-bottom:8px;">Position: ${posName}</div>
-    <div style="font-family:'Black Ops One',sans-serif; font-size:36px; color:${rarColor}; line-height:1;">${card.weight} <span style="font-size:16px;">PTS</span></div>
-    <div style="font-size:11px; font-family:'Share Tech Mono',monospace; color:${rarColor}; margin-top:4px; text-transform:uppercase;">${rarityName}</div>
-  `;
-  document.getElementById('mintedCardStatus').innerHTML = statusHtml;
-  toggleMintSuccessModal(true);
+  showMintResultModal(null, {});
 }
-
 function applyScoredCardLocally(wallet, card) {
   if (!wallet || !card) return null;
   const w = wallet.toLowerCase();
