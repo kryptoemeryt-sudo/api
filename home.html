@@ -2210,6 +2210,56 @@ body.dash-active .quest-label{font-size:8px !important;margin-top:3px !important
 .strategy-btn.secondary{background:rgba(255,255,255,.04);color:#dde4f0;border-color:#1c2028;}
 .strategy-skip{display:block;margin:10px auto 0;background:none;border:none;color:#7a8899;font-family:'Share Tech Mono',monospace;font-size:10px;cursor:pointer;}
 @media(max-width:600px){.strategy-panel{padding:12px;width:calc(100vw - 16px);max-height:calc(100dvh - 16px)}.strategy-title{font-size:24px}.strategy-sub{font-size:15px}.strategy-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.strategy-line{font-size:13px}.strategy-example p{font-size:11px}.strategy-actions{grid-template-columns:1fr}.strategy-btn{min-height:38px;font-size:10px}}
+
+/* Unified Block Kickers loading / blockchain overlay */
+#networkOverlay{position:fixed!important;inset:0!important;z-index:7000!important;display:none!important;align-items:center!important;justify-content:center!important;background:rgba(2,6,8,.82)!important;backdrop-filter:blur(8px)!important;padding:max(14px,env(safe-area-inset-top)) max(14px,env(safe-area-inset-right)) max(14px,env(safe-area-inset-bottom)) max(14px,env(safe-area-inset-left))!important;box-sizing:border-box!important;overflow:hidden!important;}
+#networkOverlay.show{display:flex!important;}
+#networkOverlay .network-wait-card,#networkOverlay .network-card{width:min(360px,calc(100dvw - 28px))!important;max-width:calc(100dvw - 28px)!important;margin:0!important;position:relative!important;left:auto!important;right:auto!important;top:auto!important;transform:none!important;display:grid!important;justify-items:center!important;gap:10px!important;text-align:center!important;box-sizing:border-box!important;overflow:hidden!important;background:linear-gradient(180deg,rgba(11,19,30,.98),rgba(6,8,10,.97))!important;border:1px solid rgba(0,255,135,.46)!important;border-radius:14px!important;padding:22px 18px 18px!important;box-shadow:0 24px 80px rgba(0,0,0,.68),0 0 34px rgba(0,255,135,.12)!important;color:#dde4f0!important;}
+#networkOverlay .network-ball{width:58px!important;height:58px!important;border-radius:50%!important;margin:0 0 2px!important;position:relative!important;display:grid!important;place-items:center!important;font-size:0!important;background:radial-gradient(circle at 50% 50%,#fff 0 30%,#0b0f16 31% 43%,#fff 44% 100%)!important;border:5px solid #00ff87!important;box-shadow:0 0 22px rgba(0,255,135,.38),inset 0 0 0 2px rgba(0,0,0,.65)!important;animation:bkOverlaySpin 1.05s linear infinite!important;}
+#networkOverlay .network-ball::before{content:""!important;position:absolute;width:16px;height:16px;background:#0b0f16;clip-path:polygon(50% 0,100% 38%,82% 100%,18% 100%,0 38%);}
+#networkOverlay .network-ball::after{content:""!important;position:absolute;inset:9px;border-radius:50%;background:conic-gradient(from 18deg,#0b0f16 0 10deg,transparent 10deg 72deg,#0b0f16 72deg 84deg,transparent 84deg 144deg,#0b0f16 144deg 156deg,transparent 156deg 216deg,#0b0f16 216deg 228deg,transparent 228deg 288deg,#0b0f16 288deg 300deg,transparent 300deg 360deg);opacity:.9;}
+@keyframes bkOverlaySpin{to{transform:rotate(360deg)}}
+#networkOverlay .network-wait-title,#networkOverlay .network-title{font-family:'Black Ops One',sans-serif!important;color:#00ff87!important;font-size:17px!important;line-height:1.05!important;letter-spacing:1px!important;text-transform:uppercase!important;margin:0!important;}
+#networkOverlay .network-wait-text,#networkOverlay .network-text{font-family:'Share Tech Mono',monospace!important;color:#dde4f0!important;font-size:12px!important;line-height:1.35!important;max-width:300px!important;margin:0 auto!important;}
+#networkOverlay .network-steps{width:100%!important;display:grid!important;gap:7px!important;margin-top:4px!important;}
+#networkOverlay .network-step{display:grid!important;grid-template-columns:16px minmax(0,1fr)!important;align-items:center!important;gap:8px!important;text-align:left!important;color:#dde4f0!important;font-family:'Black Ops One',sans-serif!important;font-size:9px!important;letter-spacing:.5px!important;text-transform:uppercase!important;}
+#networkOverlay .network-step::before{content:"";width:10px;height:10px;border-radius:50%;background:#18212c;border:1px solid rgba(255,255,255,.16);box-shadow:none;}
+#networkOverlay .network-step.active::before{background:#ffc940;border-color:#ffc940;box-shadow:0 0 12px rgba(255,201,64,.35);}
+#networkOverlay .network-step.done::before{background:#00ff87;border-color:#00ff87;box-shadow:0 0 12px rgba(0,255,135,.35);}
+#networkOverlay #walletOpenBtn{display:none;margin-top:4px;border:1px solid rgba(0,255,135,.46)!important;background:rgba(0,255,135,.12)!important;color:#00ff87!important;border-radius:8px!important;padding:10px 12px!important;font-family:'Black Ops One',sans-serif!important;font-size:10px!important;letter-spacing:1px!important;cursor:pointer!important;}
+@media(max-width:700px){#networkOverlay{padding:12px!important;}#networkOverlay .network-wait-card,#networkOverlay .network-card{width:min(330px,calc(100dvw - 24px))!important;max-width:calc(100dvw - 24px)!important;padding:18px 14px 16px!important;border-radius:12px!important;}#networkOverlay .network-ball{width:50px!important;height:50px!important;border-width:4px!important;}#networkOverlay .network-wait-title,#networkOverlay .network-title{font-size:14px!important;}#networkOverlay .network-wait-text,#networkOverlay .network-text{font-size:10px!important;}}
+
+/* Final unified network loader: clean spinner, no fake ball/emoji */
+#networkOverlay .network-ball{
+  width:48px!important;
+  height:48px!important;
+  margin:0 0 4px!important;
+  border-radius:50%!important;
+  position:relative!important;
+  display:block!important;
+  font-size:0!important;
+  line-height:0!important;
+  color:transparent!important;
+  background:transparent!important;
+  border:3px solid rgba(221,228,240,.18)!important;
+  border-top-color:#00ff87!important;
+  border-right-color:#ffc940!important;
+  box-shadow:0 0 18px rgba(0,255,135,.18)!important;
+  text-shadow:none!important;
+  animation:bkOverlaySpin .85s linear infinite!important;
+}
+#networkOverlay .network-ball::before,
+#networkOverlay .network-ball::after{
+  content:none!important;
+  display:none!important;
+}
+@media(max-width:700px){
+  #networkOverlay .network-ball{
+    width:42px!important;
+    height:42px!important;
+    border-width:3px!important;
+  }
+}
 </style>
 </head>
 <body>
@@ -3316,16 +3366,18 @@ function switchHowTab(tab, btn){
 
 
 
-function openStrategyIntro(){
-  try { if(localStorage.getItem('bkStrategyIntroSeenV2')) return; } catch(e) {}
+function openStrategyIntro(force=false){
+  try { if(!force && localStorage.getItem('bkStrategyIntroSeenV3')) return; } catch(e) {}
   const modal = document.getElementById('strategyIntroModal');
-  if(modal) setTimeout(() => modal.classList.add('show'), 350);
+  if(modal) setTimeout(() => modal.classList.add('show'), 250);
 }
 function closeStrategyIntro(dontShow=false){
   const modal = document.getElementById('strategyIntroModal');
   if(modal) modal.classList.remove('show');
-  if(dontShow){ try { localStorage.setItem('bkStrategyIntroSeenV2','1'); } catch(e) {} }
+  if(dontShow){ try { localStorage.setItem('bkStrategyIntroSeenV3','1'); } catch(e) {} }
 }
+document.addEventListener('DOMContentLoaded', () => setTimeout(() => openStrategyIntro(), 450));
+window.addEventListener('pageshow', () => setTimeout(() => openStrategyIntro(), 450));
 function closeNqWelcome(dontShow){
   document.getElementById('nqWelcomeModal').classList.remove('show');
   if(dontShow) localStorage.setItem('nqWelcomeSeen','1');
@@ -3441,6 +3493,28 @@ const PUBLIC_RPCS = [
 let _readProvider = null;
 
 // ZwrĂłÄ‡ dziaĹ‚ajÄ…cy read-only provider (JsonRpcProvider, nie MetaMask)
+
+let networkOverlayDepth = 0;
+function showNetworkOverlay(message = 'Please confirm in your wallet and wait for Chiliz Chain.') {
+  networkOverlayDepth += 1;
+  const overlay = document.getElementById('networkOverlay');
+  const text = document.getElementById('networkOverlayText');
+  if (text) text.textContent = message;
+  if (overlay) overlay.classList.add('show');
+}
+function updateNetworkOverlay(message) {
+  const text = document.getElementById('networkOverlayText');
+  if (text && message) text.textContent = message;
+}
+function hideNetworkOverlay() {
+  networkOverlayDepth = Math.max(0, networkOverlayDepth - 1);
+  if (networkOverlayDepth > 0) return;
+  const overlay = document.getElementById('networkOverlay');
+  if (overlay) overlay.classList.remove('show');
+  const btn = document.getElementById('walletOpenBtn');
+  if (btn) btn.style.display = 'none';
+}
+function isNetworkOverlayVisible(){ return networkOverlayDepth > 0; }
 async function getReadProvider(){
   if(_readProvider){
     try{ await _readProvider.getBlockNumber(); return _readProvider; }
@@ -4158,10 +4232,13 @@ async function doMint(){
   const btn=document.getElementById('mintBtn');
   btn.disabled=true;
   btn.innerHTML='<span class="spin"></span>MINTING...';
+  showNetworkOverlay('Preparing card mint...');
   try{
+    updateNetworkOverlay('Checking mint price...');
     const price=await contract.mintPrice();
     const referrer=getReferrerFromURL();
     let tx;
+    updateNetworkOverlay('Waiting for wallet confirmation...');
     if(activeWalletType === 'Privy' && activeWalletProvider){
       const iface = new ethers.Interface(ABI);
       const feeData = await provider.getFeeData().catch(() => null);
@@ -4186,7 +4263,9 @@ async function doMint(){
       tx=await contract.mint(referrer,{value:price,gasLimit:400000});
     }
     showToast('Transaction sent...','ok');
+    updateNetworkOverlay('Mint sent. Waiting for block confirmation...');
     const receipt=await tx.wait();
+    updateNetworkOverlay('Mint confirmed. Updating collection...');
     const iface=new ethers.Interface(ABI);
     for(const log of receipt.logs){
       try{
@@ -4194,8 +4273,8 @@ async function doMint(){
         if(p&&p.name==='FigureMinted'){
           const tid=Number(p.args.tokenId);
           const dna=p.args.dna;
-          showToast(`Figure #${tid} minted! đźŽ‰`,'ok');
-          eventsCache = null; // odĹ›wieĹĽ eventy przy nastÄ™pnym loadCollection
+          showToast(`Figure #${tid} minted!`,'ok');
+          eventsCache = null;
           _apiCache = null;
           addToCollection(tid,dna);
           showMintResultModal({tokenId: tid, dna, ...parseDNA(dna)});
@@ -4204,13 +4283,15 @@ async function doMint(){
       }catch(e){}
     }
     await updateStats();
-  }catch(err){showToast('Error: '+(err.reason||err.message||'Failed'),'err');}
-  btn.disabled=false;
-  btn.innerHTML='MINT FIGURE';
+  }catch(err){
+    showToast('Error: '+(err.reason||err.message||'Failed'),'err');
+  }finally{
+    hideNetworkOverlay();
+    btn.disabled=false;
+    btn.innerHTML='MINT FIGURE';
+  }
 }
-
-// ============================================================
-//  COLLECTION
+//  COLLECTION//  COLLECTION
 // ============================================================
 async function loadCollection(){
   if(!contract||!address)return;
@@ -5088,67 +5169,83 @@ async function confirmList() {
   if (!priceStr || parseFloat(priceStr) <= 0) { showToast('Enter a valid price', 'err'); return; }
   const btn = document.querySelector('#listModal .btn-list-confirm');
   if (btn) { btn.disabled = true; btn.textContent = '...'; }
+  showNetworkOverlay('Preparing marketplace listing...');
   try {
+    updateNetworkOverlay('Checking marketplace approval...');
     const approved = await contract.isApprovedForAll(address, MARKET_ADDRESS);
     if (!approved) {
       showToast('Approving market...', 'ok');
+      updateNetworkOverlay('Waiting for marketplace approval...');
       const tx0 = await contract.setApprovalForAll(MARKET_ADDRESS, true, {gasLimit: 100000});
+      updateNetworkOverlay('Approval sent. Waiting for block confirmation...');
       await tx0.wait();
     }
+    updateNetworkOverlay(`Listing card for ${priceStr} CHZ...`);
     const tx = await marketContract.listFigure(selectedListToken.tid, ethers.parseEther(priceStr), {gasLimit: 200000});
     showToast('Listing...', 'ok');
+    updateNetworkOverlay('Listing sent. Waiting for block confirmation...');
     await tx.wait();
     showToast(`Listed for ${priceStr} CHZ!`, 'ok');
+    updateNetworkOverlay('Listing confirmed. Refreshing market...');
     closeListModal();
     await loadMarket();
     renderCollection();
   } catch(err) {
     showToast('Error: ' + (err.reason || err.message || 'Failed'), 'err');
+  } finally {
+    hideNetworkOverlay();
+    if (btn) { btn.disabled = false; btn.textContent = 'LIST FOR SALE'; }
   }
-  if (btn) { btn.disabled = false; btn.textContent = 'LIST FOR SALE'; }
 }
-
 async function doBuyFigure(listingId, priceEth) {
   if (!marketContract) return;
+  showNetworkOverlay(`Buying card for ${priceEth} CHZ...`);
   try {
+    updateNetworkOverlay('Waiting for wallet confirmation...');
     const tx = await marketContract.buyFigure(listingId, {value: ethers.parseEther(priceEth), gasLimit: 250000});
     showToast('Buying...', 'ok');
+    updateNetworkOverlay('Buy sent. Waiting for block confirmation...');
     await tx.wait();
-    showToast('Figure purchased! đźŽ‰', 'ok');
-    // WyczyĹ›Ä‡ wszystkie cache - nowa sprzedaĹĽ musi byÄ‡ pobrana od nowa
+    showToast('Figure purchased!', 'ok');
     salesCache = null;
     eventsCache = null;
     _apiCache = null;
+    updateNetworkOverlay('Purchase confirmed. Updating dashboard...');
     await updateStats();
     await loadMarket();
     await loadCollection();
   } catch(err) {
-    showToast('Error: ' + (err.reason || err.message || 'Failed'), 'err');
+    const msg = err.reason || err.message || 'Failed';
+    showToast(msg.toLowerCase().includes('insufficient') ? 'Not enough CHZ for this buy.' : 'Error: ' + msg, 'err');
+  } finally {
+    hideNetworkOverlay();
   }
 }
-
 async function doCancelListing(listingId, tokenId) {
   if (!marketContract) return;
+  showNetworkOverlay('Cancelling marketplace listing...');
   try {
+    updateNetworkOverlay('Waiting for wallet confirmation...');
     const tx = await marketContract.cancelListing(listingId, {gasLimit: 150000});
     showToast('Cancelling...', 'ok');
+    updateNetworkOverlay('Cancel sent. Waiting for block confirmation...');
     await tx.wait();
     localListedFigures.delete(Number(tokenId));
     allMarketListings = allMarketListings.filter(l => l.id !== Number(listingId));
     showToast('Listing cancelled!', 'ok');
+    updateNetworkOverlay('Listing cancelled. Refreshing market...');
     await loadMarket();
     renderCollection();
-    // OdĹ›wieĹĽ modal jeĹ›li otwarty
     if(currentModalToken && Number(currentModalToken.tid) === Number(tokenId)){
       openModal(Number(tokenId), currentModalToken.dna);
     }
   } catch(err) {
     showToast('Error: ' + (err.reason || err.message || 'Failed'), 'err');
+  } finally {
+    hideNetworkOverlay();
   }
 }
-
-// ============================================================
-//  CLAIM REWARDS
+//  CLAIM REWARDS//  CLAIM REWARDS
 // ============================================================
 
 // Proofs loaded from merkle_output.json after tournament
@@ -5249,20 +5346,25 @@ async function loadClaimSection(){
 async function doRefund(){
   const btn = document.querySelector('#claimBox button');
   if(btn){ btn.disabled=true; btn.innerHTML='<span class="spin"></span>REFUNDING...'; }
+  showNetworkOverlay('Preparing refund claim...');
   try{
+    updateNetworkOverlay('Waiting for wallet confirmation...');
     const tx = await contract.claimRefund({gasLimit:200000});
     showToast('Refund transaction sent...','ok');
+    updateNetworkOverlay('Refund sent. Waiting for block confirmation...');
     await tx.wait();
-    showToast('Refund claimed! âś…','ok');
+    showToast('Refund claimed!','ok');
+    updateNetworkOverlay('Refund confirmed. Updating balance...');
     await loadClaimSection();
     const bal = await provider.getBalance(address);
     document.getElementById('navBal').textContent = parseFloat(ethers.formatEther(bal)).toFixed(3)+' CHZ';
   }catch(err){
     showToast('Error: '+(err.reason||err.message||'Failed'),'err');
     if(btn){ btn.disabled=false; btn.textContent='CLAIM REFUND'; }
+  }finally{
+    hideNetworkOverlay();
   }
 }
-
 async function doClaim(){
   const addrLower = address.toLowerCase();
   const proof = MERKLE_PROOFS[addrLower];
@@ -5271,29 +5373,32 @@ async function doClaim(){
   const btn = document.getElementById('claimBtn');
   btn.disabled = true;
   btn.innerHTML = '<span class="spin"></span>CLAIMING...';
+  showNetworkOverlay('Preparing reward claim...');
 
   try{
+    updateNetworkOverlay('Waiting for wallet confirmation...');
     const tx = await contract.claimReward(
       BigInt(proof.amount),
       proof.merkleProof,
       { gasLimit: 200000 }
     );
     showToast('Transaction sent...','ok');
+    updateNetworkOverlay('Claim sent. Waiting for block confirmation...');
     await tx.wait();
-    showToast('Reward claimed! đźŽ‰','ok');
+    showToast('Reward claimed!','ok');
+    updateNetworkOverlay('Reward confirmed. Updating balance...');
     await loadClaimSection();
-    // Update balance
     const bal = await provider.getBalance(address);
     document.getElementById('navBal').textContent = parseFloat(ethers.formatEther(bal)).toFixed(3)+' CHZ';
   }catch(err){
     showToast('Error: '+(err.reason||err.message||'Failed'),'err');
     btn.disabled = false;
     btn.innerHTML = 'CLAIM REWARD';
+  }finally{
+    hideNetworkOverlay();
   }
 }
-
-// ============================================================
-//  LEADERBOARD
+//  LEADERBOARD//  LEADERBOARD
 // ============================================================
 let lbRenderers = {};
 let lbPage = 0;
@@ -6819,5 +6924,14 @@ async function loadCountryLb(){
   </p>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+
+<div id="networkOverlay" aria-live="polite" aria-busy="true">
+  <div class="network-wait-card">
+    <div class="network-ball" aria-hidden="true"></div>
+    <div class="network-wait-title">Waiting for network</div>
+    <div class="network-wait-text" id="networkOverlayText">Please confirm in your wallet and wait for Chiliz Chain.</div>
+    <button id="walletOpenBtn" type="button">OPEN WALLET APP</button>
+  </div>
+</div>
 </body>
 </html>
