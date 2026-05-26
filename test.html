@@ -2143,6 +2143,46 @@ body.dash-active .quest-label{font-size:8px !important;margin-top:3px !important
   .mint-result-note{font-size:11px!important;line-height:1.35!important;}
   .mint-result-note span{font-size:10px!important;}
 }
+
+/* Mint result mobile viewport fit */
+@media(max-width:900px){
+  .mint-result-modal.show,
+  .modal.show:has(.mint-result-panel){
+    align-items:center!important;
+    justify-content:center!important;
+    padding:8px!important;
+  }
+  .mint-result-modal .mint-result-panel,
+  .modal.show .mint-result-panel{
+    width:calc(100vw - 16px)!important;
+    max-width:calc(100vw - 16px)!important;
+    max-height:calc(100dvh - 16px)!important;
+    overflow:auto!important;
+    padding:10px!important;
+    border-radius:10px!important;
+  }
+  .mint-result-body{gap:7px!important;}
+  .mint-result-visual{min-height:190px!important;padding:6px!important;}
+  .mint-3d-stage{min-height:176px!important;}
+  .mint-result-title{font-size:17px!important;}
+  .mint-result-sub{font-size:11px!important;line-height:1.18!important;}
+  .mint-result-grid{gap:5px!important;}
+  .mint-result-stat{padding:6px 3px!important;border-radius:7px!important;}
+  .mint-result-stat b{font-size:12px!important;}
+  .mint-result-stat span{font-size:6.5px!important;margin-top:3px!important;}
+  .mint-result-note{font-size:9px!important;line-height:1.22!important;padding:7px!important;}
+  .mint-result-note span{font-size:8px!important;margin-top:3px!important;}
+  .mint-result-primary{min-height:38px!important;font-size:10px!important;border-radius:8px!important;}
+}
+@media(max-width:430px){
+  .mint-result-modal .mint-result-panel,
+  .modal.show .mint-result-panel{max-height:calc(100dvh - 10px)!important;padding:8px!important;}
+  .mint-result-visual{min-height:160px!important;}
+  .mint-3d-stage{min-height:148px!important;}
+  .mint-result-title{font-size:15px!important;}
+  .mint-result-sub{font-size:10px!important;}
+  .mint-result-note{font-size:8px!important;}
+}
 </style>
 </head>
 <body>
@@ -6409,7 +6449,7 @@ function showMintResultModal(card, options = {}) {
   const rarityShort = bkMintRarityShort(card.rarity);
   const scoreColor = bkMintRarityColor(card.rarity);
   const copy = bkMintQuestCopy(card, team, Boolean(options.isUpgrade));
-  const countryHtml = '<div style="display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:8px">' + bkMintTeamFlagHtml(team, 58) + '<span style="font-family:&quot;Black Ops One&quot;,sans-serif;color:#fff;font-size:18px;letter-spacing:.8px">' + team.name.toUpperCase() + '</span></div>';
+  const countryHtml = '<div style="display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:8px">' + bkMintTeamFlagHtml(team, 38) + '<span style="font-family:&quot;Black Ops One&quot;,sans-serif;color:#fff;font-size:18px;letter-spacing:.8px">' + team.name.toUpperCase() + '</span></div>';
   visual.innerHTML = bkMintFigureHtml(card);
   bkRenderMintFigure3D(visual, card);
   main.innerHTML = countryHtml + '<div class="mint-result-title">' + copy.title + '</div><div class="mint-result-sub">' + copy.sub + '</div>';
