@@ -2183,6 +2183,33 @@ body.dash-active .quest-label{font-size:8px !important;margin-top:3px !important
   .mint-result-sub{font-size:10px!important;}
   .mint-result-note{font-size:8px!important;}
 }
+
+/* Entry strategy popup */
+.strategy-modal{position:fixed;inset:0;background:rgba(2,6,8,.78);backdrop-filter:blur(7px);z-index:6200;display:none;align-items:center;justify-content:center;padding:16px;}
+.strategy-modal.show{display:flex;}
+.strategy-panel{width:min(92vw,560px);max-height:calc(100dvh - 24px);overflow:auto;background:linear-gradient(180deg,rgba(11,19,30,.98),rgba(6,8,10,.98));border:1px solid rgba(0,255,135,.42);border-radius:14px;padding:16px;box-shadow:0 24px 80px rgba(0,0,0,.68),0 0 34px rgba(0,255,135,.12);}
+.strategy-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px;}
+.strategy-kicker{font-family:'Black Ops One',sans-serif;font-size:11px;letter-spacing:2px;color:#ffc940;text-transform:uppercase;}
+.strategy-close{width:32px;height:32px;border-radius:8px;border:1px solid #1c2028;background:#0f1318;color:#dde4f0;font-size:20px;line-height:1;cursor:pointer;}
+.strategy-title{font-family:'Black Ops One',sans-serif;font-size:30px;line-height:.95;color:#fff;margin-bottom:8px;letter-spacing:1px;}
+.strategy-title span{color:#00ff87;text-shadow:0 0 18px rgba(0,255,135,.24);}
+.strategy-sub{font-family:'Barlow Condensed',sans-serif;font-size:18px;line-height:1.28;color:#dde4f0;margin-bottom:12px;}
+.strategy-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;margin:12px 0;}
+.strategy-stat{background:#0f1318;border:1px solid #1c2028;border-radius:8px;padding:8px 5px;text-align:center;}
+.strategy-stat b{display:block;font-family:'Black Ops One',sans-serif;font-size:17px;line-height:1;color:#00ff87;}
+.strategy-stat span{display:block;margin-top:4px;font-family:'Share Tech Mono',monospace;font-size:8px;letter-spacing:.6px;color:#fff;text-transform:uppercase;}
+.strategy-flow{display:grid;gap:7px;margin:12px 0;}
+.strategy-line{display:grid;grid-template-columns:26px 1fr;gap:8px;align-items:start;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.08);border-radius:9px;padding:9px 10px;color:#dde4f0;font-size:15px;line-height:1.25;}
+.strategy-line i{font-style:normal;font-size:17px;text-align:center;}
+.strategy-example{border:1px solid rgba(255,201,64,.36);background:linear-gradient(135deg,rgba(255,201,64,.12),rgba(0,255,135,.055));border-radius:10px;padding:12px;margin:12px 0;}
+.strategy-example-title{font-family:'Black Ops One',sans-serif;font-size:13px;color:#ffc940;letter-spacing:1px;margin-bottom:7px;text-transform:uppercase;}
+.strategy-example p{font-family:'Black Ops One',sans-serif;font-size:13px;line-height:1.35;color:#fff;margin:0;letter-spacing:.2px;}
+.strategy-example strong{color:#00ff87;}
+.strategy-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px;}
+.strategy-btn{border:1px solid rgba(0,255,135,.45);background:#00ff87;color:#06100b;border-radius:9px;min-height:42px;font-family:'Black Ops One',sans-serif;font-size:12px;letter-spacing:1px;cursor:pointer;}
+.strategy-btn.secondary{background:rgba(255,255,255,.04);color:#dde4f0;border-color:#1c2028;}
+.strategy-skip{display:block;margin:10px auto 0;background:none;border:none;color:#7a8899;font-family:'Share Tech Mono',monospace;font-size:10px;cursor:pointer;}
+@media(max-width:600px){.strategy-panel{padding:12px;width:calc(100vw - 16px);max-height:calc(100dvh - 16px)}.strategy-title{font-size:24px}.strategy-sub{font-size:15px}.strategy-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.strategy-line{font-size:13px}.strategy-example p{font-size:11px}.strategy-actions{grid-template-columns:1fr}.strategy-btn{min-height:38px;font-size:10px}}
 </style>
 </head>
 <body>
@@ -2543,6 +2570,37 @@ document.addEventListener('DOMContentLoaded', setupDesktopDashboardLayout);
   <div class="market-list" id="marketList"><div class="market-empty">CONNECT WALLET TO SEE LISTINGS</div></div>
 </div>
 
+
+<div class="strategy-modal" id="strategyIntroModal" onclick="if(event.target===this)closeStrategyIntro()">
+  <div class="strategy-panel">
+    <div class="strategy-head">
+      <div class="strategy-kicker">Block Kickers Strategy</div>
+      <button class="strategy-close" onclick="closeStrategyIntro()">&times;</button>
+    </div>
+    <div class="strategy-title">NOT JUST <span>AN NFT</span></div>
+    <div class="strategy-sub">Every figure can matter: quests, leaderboard, country champion races, marketplace profit and the future World Cup Album.</div>
+    <div class="strategy-stats">
+      <div class="strategy-stat"><b>1,500+</b><span>Mints</span></div>
+      <div class="strategy-stat"><b>14k+</b><span>CHZ Pools</span></div>
+      <div class="strategy-stat"><b>30</b><span>Players</span></div>
+      <div class="strategy-stat"><b>10 CHZ</b><span>Early Mint</span></div>
+    </div>
+    <div class="strategy-flow">
+      <div class="strategy-line"><i>🎴</i><div>Mint cards for active and upcoming quests.</div></div>
+      <div class="strategy-line"><i>📈</i><div>Trade positions other players need.</div></div>
+      <div class="strategy-line"><i>🔒</i><div>Hold rare or scarce positions to block competitors.</div></div>
+    </div>
+    <div class="strategy-example">
+      <div class="strategy-example-title">Example: USA Quest</div>
+      <p>You mint a USA card for <strong>10 CHZ</strong>. Another player has <strong>10/11</strong> and needs exactly that position. You list it for <strong>500 CHZ</strong>. You get <strong>50x ROI</strong>, they complete the quest and claim the prize. <strong>Win-win.</strong></p>
+    </div>
+    <div class="strategy-actions">
+      <button class="strategy-btn" onclick="closeStrategyIntro(); window.location.href='/nation-quest'">CHECK QUESTS</button>
+      <button class="strategy-btn secondary" onclick="closeStrategyIntro(); openQuickHowModal()">HOW IT WORKS</button>
+    </div>
+    <button class="strategy-skip" onclick="closeStrategyIntro(true)">DON'T SHOW AGAIN</button>
+  </div>
+</div>
 <!-- CHANGELOG MODAL -->
 <!-- MINT SUCCESS MODAL -->
 <!-- NATION QUEST WELCOME POPUP -->
@@ -3257,6 +3315,17 @@ function switchHowTab(tab, btn){
 }
 
 
+
+function openStrategyIntro(){
+  try { if(localStorage.getItem('bkStrategyIntroSeen')) return; } catch(e) {}
+  const modal = document.getElementById('strategyIntroModal');
+  if(modal) setTimeout(() => modal.classList.add('show'), 900);
+}
+function closeStrategyIntro(dontShow=false){
+  const modal = document.getElementById('strategyIntroModal');
+  if(modal) modal.classList.remove('show');
+  if(dontShow){ try { localStorage.setItem('bkStrategyIntroSeen','1'); } catch(e) {} }
+}
 function closeNqWelcome(dontShow){
   document.getElementById('nqWelcomeModal').classList.remove('show');
   if(dontShow) localStorage.setItem('nqWelcomeSeen','1');
@@ -5863,6 +5932,7 @@ window.addEventListener('load', async () => {
   fetchInitialPrice();
   loadActivityFeed();
   loadTicker();
+  openStrategyIntro();
   showNqWelcome();
   // Auto-connect dla MetaMask
   if(window.ethereum){
