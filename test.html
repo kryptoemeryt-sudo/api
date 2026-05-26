@@ -2116,6 +2116,11 @@ body.dash-active .quest-label{font-size:8px !important;margin-top:3px !important
     margin:0 auto!important;
   }
 }
+
+.mint-3d-stage{width:100%;height:100%;min-height:inherit;display:grid;place-items:center;position:relative;}
+.mint-3d-canvas{width:100%!important;height:100%!important;display:block;}
+.mint-3d-fallback{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;}
+@media(max-width:900px){.mint-result-visual{min-height:220px!important}.mint-3d-stage{min-height:196px!important}}
 </style>
 </head>
 <body>
@@ -6237,7 +6242,93 @@ function bkUnifiedMintFigureSVG(dna, size = 92) {
 }
 function bkMintFigureHtml(card){
   const dna = card?.dna || 0n;
-  return '<div class="card-fig-canvas">' + bkUnifiedMintFigureSVG(dna, 92) + '</div>';
+  return '<div class="mint-3d-stage"><canvas class="mint-3d-canvas" aria-label="3D minted figure"></canvas><div class="mint-3d-fallback card-fig-canvas">' + bkUnifiedMintFigureSVG(dna, 92) + '</div></div>';
+}
+function bkRenderMintFigure3D(visual, card){
+  if (!visual || !card || typeof THREE === 'undefined') return;
+  const canvas = visual.querySelector('.mint-3d-canvas');
+  const fallback = visual.querySelector('.mint-3d-fallback');
+  if (!canvas) return;
+  try {
+    const dna = card.dna || 0n;
+    const t = parseDNA(dna);
+    const teams = (typeof TEAMS !== 'undefined' && Array.isArray(TEAMS)) ? TEAMS : [];
+    const teamRaw = teams[t.teamId % Math.max(teams.length, 1)] || {};
+    const teamName = typeof teamRaw === 'string' ? teamRaw : (teamRaw.name || (Number(t.teamId) === 24 ? 'USA' : ''));
+    const shirtMap = {'Australia':0xFFD700,'Iran':0x239F40,'Iraq':0xCC0001,'Japan':0xBC002D,'Jordan':0x007A3D,'Qatar':0x8D153A,'Saudi Arabia':0x006C35,'South Korea':0xCD2E3A,'Uzbekistan':0x1EB53A,'Algeria':0x006233,'Cape Verde':0x003893,'DR Congo':0x007FFF,'Egypt':0xCE1126,'Ghana':0x006B3F,'Ivory Coast':0xF77F00,'Morocco':0xC1272D,'Senegal':0x00853F,'South Africa':0x007749,'Tunisia':0xE70013,'Canada':0xFF0000,'Curacao':0x002B7F,'Haiti':0x00209F,'Mexico':0x006847,'Panama':0xDA121A,'United States':0x002868,'USA':0x002868,'Argentina':0x74ACDF,'Brazil':0x009C3B,'Colombia':0xFCD116,'Ecuador':0xFFD100,'Paraguay':0xD52B1E,'Uruguay':0x5EB6E4,'New Zealand':0x00247D,'Austria':0xED2939,'Belgium':0x111111,'Bosnia':0x002395,'Croatia':0xFF0000,'Czech Rep.':0xD7141A,'England':0xEEEEEE,'France':0x002395,'Germany':0x111111,'Netherlands':0xFF6600,'Norway':0xEF2B2D,'Portugal':0x006600,'Scotland':0x003087,'Spain':0xAA151B,'Sweden':0x006AA7,'Switzerland':0xFF0000,'Turkey':0xE30A17};
+    const skinMap = [0xFDBCB4,0xF1C27D,0xE0AC69,0xC68642,0x8D5524,0x4A2912];
+    const rarityMap = [0x6b7280,0x3b82f6,0xa855f7,0xffc940];
+    const shirt = shirtMap[teamName] || 0x1d4ed8;
+    const skin = skinMap[Math.min(Number(t.skinTone || 2), 5)] || skinMap[2];
+    const rarity = rarityMap[Number(t.rarity || 0)] || rarityMap[0];
+    const hairColors = [0x3b1f12,0x6b3a16,0xf5d08a,0x111827];
+    const hair = hairColors[Number((BigInt(String(dna || 0)) >> 20n) % 4n)] || hairColors[0];
+    const scene = new THREE.Scene();
+    const width = canvas.clientWidth || 280;
+    const height = canvas.clientHeight || 280;
+    const cam = new THREE.PerspectiveCamera(35, width / height, 0.1, 100);
+    cam.position.set(0, 1.15, 6.4);
+    cam.lookAt(0, 1.05, 0);
+    const renderer = new THREE.WebGLRenderer({canvas, alpha:true, antialias:true, powerPreference:'high-performance'});
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    renderer.setPixelRatio(dpr);
+    renderer.setSize(width, height, false);
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    scene.add(new THREE.AmbientLight(0xffffff, .55));
+    const key = new THREE.DirectionalLight(0xffffff, 1.15); key.position.set(3,5,4); key.castShadow = true; scene.add(key);
+    const rim = new THREE.PointLight(rarity, .95, 7); rim.position.set(-2,1.8,2.8); scene.add(rim);
+    const mat = (color, opts={}) => new THREE.MeshStandardMaterial({color, roughness:opts.roughness ?? .62, metalness:opts.metalness ?? .08, emissive:opts.emissive || 0x000000, emissiveIntensity:opts.emissiveIntensity || 0});
+    const kitMat = mat(shirt, Number(t.rarity) >= 2 ? {roughness:.34,metalness:.24,emissive:shirt,emissiveIntensity:.035} : {});
+    const skinMat = mat(skin, {roughness:.72});
+    const darkMat = mat(0x090909, {roughness:.72});
+    const whiteMat = mat(0xffffff, {roughness:.64});
+    const hairMat = mat(hair, {roughness:.8});
+    const goldMat = mat(0xffc940, {roughness:.18,metalness:.72,emissive:0xffc940,emissiveIntensity:.15});
+    const group = new THREE.Group();
+    const box = (w,h,d,m,x,y,z,rx=0) => { const mesh = new THREE.Mesh(new THREE.BoxGeometry(w,h,d), m); mesh.position.set(x,y,z); mesh.castShadow=true; group.add(mesh); return mesh; };
+    const sph = (r,m,x,y,z, sx=1, sy=1, sz=1) => { const mesh = new THREE.Mesh(new THREE.SphereGeometry(r,18,14), m); mesh.scale.set(sx,sy,sz); mesh.position.set(x,y,z); mesh.castShadow=true; group.add(mesh); return mesh; };
+    box(.58,.78,.34,kitMat,0,1.18,0);
+    box(.62,.22,.36,kitMat,0,.75,0);
+    box(.15,.58,.16,kitMat,-.18,.37,0); box(.15,.58,.16,kitMat,.18,.37,0);
+    box(.16,.20,.17,whiteMat,-.18,.05,.01); box(.16,.20,.17,whiteMat,.18,.05,.01);
+    box(.22,.12,.34,t.hasGoldenBoots ? goldMat : darkMat,-.18,-.10,.06); box(.22,.12,.34,t.hasGoldenBoots ? goldMat : darkMat,.18,-.10,.06);
+    box(.16,.55,.16,kitMat,-.43,1.08,0); box(.16,.55,.16,kitMat,.43,1.08,0);
+    sph(.13,skinMat,-.45,.73,.02,1,1,1); sph(.13,skinMat,.45,.73,.02,1,1,1);
+    if (t.hasGloves) { sph(.16,goldMat,-.45,.73,.02,1,1,1); sph(.16,goldMat,.45,.73,.02,1,1,1); }
+    box(.16,.18,.16,skinMat,0,1.62,0);
+    sph(.36,skinMat,0,1.98,0,1,.98,.92);
+    box(.56,.16,.42,hairMat,0,2.23,.02);
+    box(.13,.08,.04,whiteMat,-.13,2.03,.32); box(.13,.08,.04,whiteMat,.13,2.03,.32);
+    box(.06,.045,.045,darkMat,-.13,2.03,.35); box(.06,.045,.045,darkMat,.13,2.03,.35);
+    box(.17,.04,.035,mat(0x7c2d12),0,1.83,.34);
+    if (t.hasEarring) sph(.045,goldMat,-.34,1.96,.01);
+    if (t.hasBand) box(.68,.09,.45,whiteMat,0,2.13,.02);
+    if (t.hasTattoo) { box(.10,.05,.18,darkMat,-.50,1.10,.09); }
+    const numberCanvas = document.createElement('canvas'); numberCanvas.width = 128; numberCanvas.height = 128;
+    const ctx = numberCanvas.getContext('2d'); ctx.clearRect(0,0,128,128); ctx.fillStyle = [0xFFD700,0xFCD116,0xFFD100,0xEEEEEE].includes(shirt) ? '#06100b' : '#ffffff'; ctx.font = '900 62px Arial Black, Arial'; ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.fillText(String(t.position || 10), 64, 64);
+    const tex = new THREE.CanvasTexture(numberCanvas);
+    const numPlane = new THREE.Mesh(new THREE.PlaneGeometry(.46,.46), new THREE.MeshBasicMaterial({map:tex, transparent:true, depthWrite:false}));
+    numPlane.position.set(0,1.22,.185); group.add(numPlane);
+    const ground = new THREE.Mesh(new THREE.CircleGeometry(1.1,40), new THREE.MeshStandardMaterial({color:0x10242a, transparent:true, opacity:.62, roughness:.9}));
+    ground.rotation.x = -Math.PI/2; ground.position.y = -.18; ground.receiveShadow = true; scene.add(ground);
+    group.position.y = -.05; group.rotation.y = -.18; scene.add(group);
+    if (fallback) fallback.style.display = 'none'; canvas.style.display = 'block';
+    let frame = 0;
+    const animate = () => {
+      if (!canvas.isConnected) { renderer.dispose(); return; }
+      frame += .012;
+      group.rotation.y = Math.sin(frame) * .18;
+      group.position.y = -.05 + Math.sin(frame * 1.6) * .025;
+      renderer.render(scene, cam);
+      requestAnimationFrame(animate);
+    };
+    animate();
+  } catch(e) {
+    console.warn('Mint 3D render fallback:', e);
+    if (canvas) canvas.style.display = 'none';
+    if (fallback) fallback.style.display = 'flex';
+  }
 }
 function bkMintQuestCopy(card, team, isUpgrade){
   const ctx = window.BK_MINT_CONTEXT || {};
@@ -6287,6 +6378,7 @@ function showMintResultModal(card, options = {}) {
   const copy = bkMintQuestCopy(card, team, Boolean(options.isUpgrade));
   const countryHtml = '<div style="display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:8px">' + bkMintTeamFlagHtml(team, 58) + '<span style="font-family:&quot;Black Ops One&quot;,sans-serif;color:#fff;font-size:18px;letter-spacing:.8px">' + team.name.toUpperCase() + '</span></div>';
   visual.innerHTML = bkMintFigureHtml(card);
+  bkRenderMintFigure3D(visual, card);
   main.innerHTML = countryHtml + '<div class="mint-result-title">' + copy.title + '</div><div class="mint-result-sub">' + copy.sub + '</div>';
   stats.innerHTML = '<div class="mint-result-stat"><b>' + bkMintTeamShort(team) + '</b><span>Country</span></div>'
     + '<div class="mint-result-stat"><b>' + position + '</b><span>Position</span></div>'
