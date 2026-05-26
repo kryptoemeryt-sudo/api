@@ -1246,15 +1246,15 @@ button.stat.mint-stat,
 /* USA Investor Radar: converts quest progress into market pricing signals */
 .demand-panel{padding:10px!important;border-color:rgba(37,99,235,.48)!important;background:linear-gradient(180deg,rgba(10,28,58,.98),rgba(8,12,20,.98))!important;box-shadow:inset 0 0 26px rgba(37,99,235,.10),0 0 24px rgba(37,99,235,.08)!important;}
 .demand-list,.sell-signal-list{display:grid;gap:7px;}
-.demand-row,.sell-signal-row{display:grid;grid-template-columns:42px minmax(0,1fr) 86px;gap:8px;align-items:center;border:1px solid rgba(37,99,235,.36);background:linear-gradient(90deg,rgba(37,99,235,.14),rgba(15,19,24,.96));border-radius:8px;padding:8px;}
+.demand-row,.sell-signal-row{display:grid;grid-template-columns:46px minmax(0,1fr) 100px;gap:9px;align-items:center;border:1px solid rgba(37,99,235,.36);background:linear-gradient(90deg,rgba(37,99,235,.14),rgba(15,19,24,.96));border-radius:8px;padding:10px 9px;}
 .demand-row.hot,.sell-signal-row.hot{border-color:rgba(255,201,64,.58);background:linear-gradient(90deg,rgba(255,201,64,.16),rgba(15,19,24,.96));box-shadow:0 0 16px rgba(255,201,64,.10);}
 .demand-row.dead,.sell-signal-row.dead{border-color:rgba(239,68,68,.34);background:linear-gradient(90deg,rgba(239,68,68,.10),rgba(15,19,24,.96));}
-.demand-pos{font-family:'Black Ops One',sans-serif;color:#ffc940;font-size:14px;line-height:1;text-align:center;}
+.demand-pos{font-family:'Black Ops One',sans-serif;color:#ffc940;font-size:16px;line-height:1;text-align:center;}
 .demand-main{min-width:0;display:grid;gap:3px;}
-.demand-title{font-family:'Black Ops One',sans-serif;color:#fff;font-size:11px;letter-spacing:.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.demand-sub{font-family:'Share Tech Mono',monospace;color:#fff;font-size:10px;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.demand-title{font-family:'Black Ops One',sans-serif;color:#fff;font-size:13px;letter-spacing:.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.demand-sub{font-family:'Black Ops One',sans-serif;color:#fff;font-size:10px;line-height:1.18;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;letter-spacing:.3px;}
 .demand-sub strong{font-family:'Black Ops One',sans-serif;color:#ffc940;font-weight:400;}
-.demand-price{font-family:'Black Ops One',sans-serif;color:#00ff87;font-size:10px;text-align:right;white-space:nowrap;line-height:1.12;}
+.demand-price{font-family:'Black Ops One',sans-serif;color:#00ff87;font-size:13px;text-align:right;white-space:nowrap;line-height:1.08;}
 .demand-price.low{color:#ffc940;}
 .demand-price.dead{color:#ef4444;}
 .demand-tag{display:inline-block;margin-left:4px;padding:1px 4px;border-radius:4px;background:rgba(0,255,135,.12);color:#00ff87;font-family:'Black Ops One',sans-serif;font-size:8px;}
@@ -3050,33 +3050,30 @@ function renderDemandRadar(state) {
   const count = document.getElementById('demandCount');
   if (!radar || !signals) return;
   const rows = getDemandRows(state).filter(row => row.needed > 0);
-  const hotRows = rows.filter(row => (row.bestMissing?.count || 0) >= 7 || row.myOwned > 0).slice(0, 5);
+  const hotRows = rows.filter(row => (row.bestMissing?.count || 0) >= 9).slice(0, 4);
   const edges = hotRows.filter(row => row.edge).length;
-  if (count) count.textContent = `${edges} EDGES`;
+  if (count) count.textContent = `${hotRows.length} CLOSE`;
   radar.innerHTML = hotRows.length ? hotRows.map(row => {
     const buyer = row.bestMissing;
     const hot = row.edge && (buyer?.count || 0) >= 9;
     const dead = buyer && row.smartAsk <= 0;
-    const floorText = row.floor ? `floor ${formatChzPrice(row.floor.price)}` : 'no floor';
     const buyerText = buyer ? `${buyer.count}/11 ${shortAddr(buyer.wallet)}` : '-';
-    const budgetText = buyer ? `<span class="investor-metric">spent <b>${investorChz(row.spent)}</b></span><span class="investor-metric">BE <b>${investorChz(row.breakEven)}</b></span>` : 'waiting for buyer data';
-    const ownerTag = row.myOwned ? `<span class="demand-tag">YOU OWN x${row.myOwned}</span>` : '';
+    const ownerTag = row.myOwned ? `<span class="demand-tag">YOU OWN</span>` : '';
     const priceClass = dead ? 'dead' : (row.edge ? '' : 'low');
-    const priceText = dead ? 'NO<br>EDGE' : `ASK ${investorChz(row.smartAsk)}<br>CHZ`;
+    const priceText = dead ? 'NO<br>EDGE' : `${investorChz(row.smartAsk)}<br>CHZ`;
     return `
       <div class="demand-row ${hot ? 'hot' : ''} ${dead ? 'dead' : ''}">
         <div class="demand-pos">${posLabel(row.position)}</div>
         <div class="demand-main">
-          <div class="demand-title">Buyer budget ${ownerTag}</div>
-          <div class="demand-sub"><strong>${buyerText}</strong> - ${budgetText}</div>
-          <div class="demand-sub">${floorText} - supply x${row.supply} - ${row.needed} wallets miss it</div>
+          <div class="demand-title">${buyerText} ${ownerTag}</div>
+          <div class="demand-sub">SPENT ${investorChz(row.spent)} CHZ - STILL PROFITABLE</div>
         </div>
         <div class="demand-price ${priceClass}">${priceText}</div>
       </div>
     `;
-  }).join('') : '<div class="demand-empty">No active USA buyer pressure yet. As wallets reach 7/11, this panel starts pricing their remaining budget.</div>';
+  }).join('') : '<div class="demand-empty">Investor Radar activates only when a wallet reaches 9/11 or 10/11. No noise, only close buyers.</div>';
 
-  const ownedSignals = rows.filter(row => row.myOwned > 0 && row.needed > 0).slice(0, 4);
+  const ownedSignals = rows.filter(row => row.myOwned > 0 && row.needed > 0 && (row.bestMissing?.count || 0) >= 9).slice(0, 4);
   signals.innerHTML = address ? (ownedSignals.length ? ownedSignals.map(row => {
     const buyer = row.bestMissing;
     const hot = row.edge && (buyer?.count || 0) >= 9;
@@ -3086,14 +3083,13 @@ function renderDemandRadar(state) {
       <div class="sell-signal-row ${hot ? 'hot' : ''} ${dead ? 'dead' : ''}">
         <div class="demand-pos">${posLabel(row.position)}</div>
         <div class="demand-main">
-          <div class="demand-title">Your card is leverage</div>
-          <div class="demand-sub">${buyer ? `best buyer ${buyer.count}/11 - spent ${investorChz(row.spent)} CHZ` : `${row.needed} wallets need it`}</div>
-          <div class="demand-sub">Break-even ${investorChz(row.breakEven)} CHZ - keep buyer profit alive.</div>
+          <div class="demand-title">Your ${posLabel(row.position)} can sell</div>
+          <div class="demand-sub">${buyer ? `${buyer.count}/11 buyer - spent ${investorChz(row.spent)} CHZ` : `${row.needed} wallets need it`}</div>
         </div>
         <div class="demand-price ${dead ? 'dead' : ''}">${action}<br>CHZ</div>
       </div>
     `;
-  }).join('') : '<div class="demand-empty">No direct sell signal yet. Mint or buy scarce USA positions, then this desk will show who can still pay for them profitably.</div>') : '<div class="demand-empty">Connect wallet to see which of your USA cards can be priced against buyer budgets.</div>';
+  }).join('') : '<div class="demand-empty">No close buyer yet. Trading Desk wakes up only for 9/11 or 10/11 wallets.</div>') : '<div class="demand-empty">Connect wallet to see which of your USA cards can be priced against buyer budgets.</div>';
 }
 function renderRank(state) {
   const list = document.getElementById("rankList");
