@@ -1474,6 +1474,44 @@ button.stat.mint-stat,
   .slot-fig-canvas svg{width:58px!important;height:58px!important;}
   .market-grid{max-height:300px!important;}
 }
+
+/* PC quest rules restored as compact rule strip */
+@media(min-width:901px){
+  .hero .panel{
+    grid-template-columns:1fr!important;
+    gap:6px!important;
+    min-height:98px!important;
+    align-content:center!important;
+  }
+  .hero-title{justify-self:end!important;}
+  .hero-copy{
+    display:grid!important;
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+    gap:8px!important;
+    margin:0!important;
+    max-width:none!important;
+    width:100%!important;
+    font-family:'Black Ops One',sans-serif!important;
+    font-size:11px!important;
+    line-height:1.18!important;
+    color:#fff!important;
+  }
+  .hero-copy span{
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    min-height:30px!important;
+    padding:6px 9px!important;
+    border:1px solid rgba(59,130,246,.28)!important;
+    background:rgba(6,8,10,.34)!important;
+    border-radius:7px!important;
+    text-align:center!important;
+  }
+  .hero-copy span:first-child::before{content:'RULE: ';color:#3b82f6;margin-right:4px;}
+  .hero-copy span:first-child::after{content:' - FIRST WALLET WINS';color:#ef4444;margin-left:4px;}
+  .hero-copy span:nth-child(2)::before{content:'FLOW: ';color:#00ff87;margin-right:4px;}
+  .hero-copy strong{color:#ffc940!important;font-weight:400!important;}
+}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
