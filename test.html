@@ -1054,6 +1054,46 @@ button.stat.mint-stat,
 .rank-list::-webkit-scrollbar-track{background:rgba(6,8,10,.65)!important;border-radius:5px!important;}
 .rank-list::-webkit-scrollbar-thumb{background:rgba(0,255,135,.38)!important;border-radius:5px!important;border:1px solid rgba(0,255,135,.16)!important;}
 .rank-list::-webkit-scrollbar-thumb:hover{background:rgba(0,255,135,.58)!important;}
+
+/* Mint result popup figure must stay large like home.html, even on mobile. */
+.mint-result-visual .slot-fig-canvas,
+.mint-result-visual .card-fig-canvas{
+  height:92px!important;
+  flex:0 0 92px!important;
+  width:110px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  margin:0 auto!important;
+}
+.mint-result-visual .slot-fig-canvas svg,
+.mint-result-visual .card-fig-canvas svg{
+  width:86px!important;
+  height:86px!important;
+  display:block!important;
+  margin:0 auto!important;
+}
+.mint-result-visual .slot-fig-flag,
+.mint-result-visual .card-flag{
+  width:24px!important;
+  height:16px!important;
+  top:0!important;
+  left:0!important;
+}
+.mint-result-visual .slot-pos,
+.mint-result-visual .card-pos{
+  font-size:8px!important;
+  left:5px!important;
+  bottom:4px!important;
+  padding:2px 5px!important;
+}
+@media(max-width:900px){
+  .mint-result-visual{min-height:118px!important;padding:12px!important;}
+  .mint-result-visual .slot-fig-canvas,
+  .mint-result-visual .card-fig-canvas{height:96px!important;flex-basis:96px!important;width:112px!important;}
+  .mint-result-visual .slot-fig-canvas svg,
+  .mint-result-visual .card-fig-canvas svg{width:90px!important;height:90px!important;}
+}
 </style>
 </head>
 <body>
@@ -1554,6 +1594,57 @@ function parseMintedCardFromReceipt(receipt) {
   }
   return null;
 }
+function bkUnifiedMintFigureSVG(dna, size = 92) {
+  const t = parseDNA(dna || 0n);
+  const teams = (typeof TEAMS !== 'undefined' && Array.isArray(TEAMS)) ? TEAMS : [];
+  const teamRaw = teams[t.teamId % Math.max(teams.length, 1)] || {};
+  const teamName = typeof teamRaw === 'string' ? teamRaw : (teamRaw.name || (Number(t.teamId) === 24 ? 'USA' : ''));
+  const SHIRT = {'Australia':'#FFD700','Iran':'#239F40','Iraq':'#CC0001','Japan':'#BC002D','Jordan':'#007A3D','Qatar':'#8D153A','Saudi Arabia':'#006C35','South Korea':'#CD2E3A','Uzbekistan':'#1EB53A','Algeria':'#006233','Cape Verde':'#003893','DR Congo':'#007FFF','Egypt':'#CE1126','Ghana':'#006B3F','Ivory Coast':'#F77F00','Morocco':'#C1272D','Senegal':'#00853F','South Africa':'#007749','Tunisia':'#E70013','Canada':'#FF0000','Curacao':'#002B7F','Haiti':'#00209F','Mexico':'#006847','Panama':'#DA121A','United States':'#002868','USA':'#002868','Argentina':'#74ACDF','Brazil':'#009C3B','Colombia':'#FCD116','Ecuador':'#FFD100','Paraguay':'#D52B1E','Uruguay':'#5EB6E4','New Zealand':'#00247D','Austria':'#ED2939','Belgium':'#111111','Bosnia':'#002395','Croatia':'#FF0000','Czech Rep.':'#D7141A','England':'#EEEEEE','France':'#002395','Germany':'#111111','Netherlands':'#FF6600','Norway':'#EF2B2D','Portugal':'#006600','Scotland':'#003087','Spain':'#AA151B','Sweden':'#006AA7','Switzerland':'#FF0000','Turkey':'#E30A17'};
+  const SKIN = ['#FDBCB4','#F1C27D','#E0AC69','#C68642','#8D5524','#4A2912'];
+  const RARC = ['#6b7280','#3b82f6','#a855f7','#f59e0b'];
+  const shirt = SHIRT[teamName] || '#1d4ed8';
+  const skin = SKIN[Math.min(Number(t.skinTone || 2), 5)] || SKIN[2];
+  const rar = RARC[Number(t.rarity || 0)] || RARC[0];
+  const pos = Number(t.position || 10);
+  const isLight = ['#FFD700','#FCD116','#FFD100','#EEEEEE'].includes(shirt);
+  const numC = isLight ? '#06100b' : '#fff';
+  const bootC = t.hasGoldenBoots ? '#FFD700' : '#111';
+  const hair = ['#3b1f12','#6b3a16','#f5d08a','#111827'][Number((BigInt(String(dna || 0)) >> 20n) % 4n)] || '#3b1f12';
+  const s = size, cx = s / 2;
+  const headY = s * .13, headW = s * .30, headH = s * .27;
+  const bodyY = headY + headH * .86, bodyW = s * .40, bodyH = s * .29;
+  const legW = s * .10, legH = s * .22, legGap = s * .04, legY = bodyY + bodyH * .83;
+  const armW = s * .09, armH = s * .20, armY = bodyY + s * .02, handR = s * .06;
+  const p = [];
+  p.push('<ellipse cx="'+cx+'" cy="'+(legY+legH+s*.12)+'" rx="'+(bodyW*.62)+'" ry="'+(s*.045)+'" fill="'+rar+'" opacity=".22"/>');
+  p.push('<rect x="'+(cx-legW-legGap)+'" y="'+legY+'" width="'+legW+'" height="'+legH+'" rx="3" fill="'+shirt+'"/>');
+  p.push('<rect x="'+(cx+legGap)+'" y="'+legY+'" width="'+legW+'" height="'+legH+'" rx="3" fill="'+shirt+'"/>');
+  p.push('<rect x="'+(cx-legW-legGap)+'" y="'+(legY+legH*.64)+'" width="'+legW+'" height="'+(legH*.38)+'" rx="2" fill="#fff"/>');
+  p.push('<rect x="'+(cx+legGap)+'" y="'+(legY+legH*.64)+'" width="'+legW+'" height="'+(legH*.38)+'" rx="2" fill="#fff"/>');
+  p.push('<rect x="'+(cx-legW-legGap-2)+'" y="'+(legY+legH)+'" width="'+(legW+4)+'" height="'+(s*.085)+'" rx="3" fill="'+bootC+'"/>');
+  p.push('<rect x="'+(cx+legGap-2)+'" y="'+(legY+legH)+'" width="'+(legW+4)+'" height="'+(s*.085)+'" rx="3" fill="'+bootC+'"/>');
+  p.push('<rect x="'+(cx-bodyW/2-armW+2)+'" y="'+armY+'" width="'+armW+'" height="'+armH+'" rx="3" fill="'+shirt+'" transform="rotate(7 '+(cx-bodyW/2)+' '+armY+')"/>');
+  p.push('<rect x="'+(cx+bodyW/2-2)+'" y="'+armY+'" width="'+armW+'" height="'+armH+'" rx="3" fill="'+shirt+'" transform="rotate(-7 '+(cx+bodyW/2)+' '+armY+')"/>');
+  p.push('<circle cx="'+(cx-bodyW/2-s*.04)+'" cy="'+(armY+armH)+'" r="'+handR+'" fill="'+skin+'"/>');
+  p.push('<circle cx="'+(cx+bodyW/2+s*.04)+'" cy="'+(armY+armH)+'" r="'+handR+'" fill="'+skin+'"/>');
+  if (t.hasGloves) { p.push('<circle cx="'+(cx-bodyW/2-s*.04)+'" cy="'+(armY+armH)+'" r="'+(handR+2)+'" fill="none" stroke="#FFD700" stroke-width="2"/>'); p.push('<circle cx="'+(cx+bodyW/2+s*.04)+'" cy="'+(armY+armH)+'" r="'+(handR+2)+'" fill="none" stroke="#FFD700" stroke-width="2"/>'); }
+  p.push('<rect x="'+(cx-bodyW/2)+'" y="'+bodyY+'" width="'+bodyW+'" height="'+bodyH+'" rx="6" fill="'+shirt+'"/>');
+  p.push('<text x="'+cx+'" y="'+(bodyY+bodyH*.58)+'" text-anchor="middle" font-family="Arial Black,Arial,sans-serif" font-size="'+(s*.14)+'" font-weight="900" fill="'+numC+'">'+pos+'</text>');
+  p.push('<rect x="'+(cx-s*.04)+'" y="'+(bodyY-s*.05)+'" width="'+(s*.08)+'" height="'+(s*.07)+'" rx="2" fill="'+skin+'"/>');
+  p.push('<rect x="'+(cx-headW/2-s*.02)+'" y="'+(headY-s*.015)+'" width="'+(headW+s*.04)+'" height="'+(headH*.32)+'" rx="6" fill="'+hair+'"/>');
+  p.push('<rect x="'+(cx-headW/2)+'" y="'+headY+'" width="'+headW+'" height="'+headH+'" rx="7" fill="'+skin+'"/>');
+  p.push('<rect x="'+(cx-headW/2-s*.03)+'" y="'+(headY+headH*.25)+'" width="'+(s*.04)+'" height="'+(s*.08)+'" rx="2" fill="'+skin+'"/>');
+  p.push('<rect x="'+(cx+headW/2-s*.01)+'" y="'+(headY+headH*.25)+'" width="'+(s*.04)+'" height="'+(s*.08)+'" rx="2" fill="'+skin+'"/>');
+  if (t.hasEarring) p.push('<circle cx="'+(cx-headW/2-1)+'" cy="'+(headY+headH*.40)+'" r="'+(s*.025)+'" fill="#FFD700"/>');
+  p.push('<rect x="'+(cx-headW*.36)+'" y="'+(headY+headH*.34)+'" width="'+(s*.07)+'" height="'+(s*.05)+'" rx="2" fill="#fff"/>');
+  p.push('<rect x="'+(cx+headW*.08)+'" y="'+(headY+headH*.34)+'" width="'+(s*.07)+'" height="'+(s*.05)+'" rx="2" fill="#fff"/>');
+  p.push('<rect x="'+(cx-headW*.33)+'" y="'+(headY+headH*.35)+'" width="'+(s*.045)+'" height="'+(s*.035)+'" rx="1" fill="#0a0a14"/>');
+  p.push('<rect x="'+(cx+headW*.11)+'" y="'+(headY+headH*.35)+'" width="'+(s*.045)+'" height="'+(s*.035)+'" rx="1" fill="#0a0a14"/>');
+  p.push('<rect x="'+(cx-s*.07)+'" y="'+(headY+headH*.72)+'" width="'+(s*.14)+'" height="'+(s*.03)+'" rx="2" fill="#7c2d12" opacity=".85"/>');
+  if (t.hasBand) p.push('<rect x="'+(cx-headW/2-2)+'" y="'+(headY+headH*.18)+'" width="'+(headW+4)+'" height="'+(s*.055)+'" rx="3" fill="#fff" opacity=".9"/>');
+  if (t.hasTattoo) p.push('<path d="M'+(cx-bodyW/2-armW/2)+' '+(armY+armH*.35)+' l'+(s*.04)+' '+(s*.04)+' m0 -'+(s*.04)+' l-'+(s*.04)+' '+(s*.04)+'" stroke="#111" stroke-width="1.5" opacity=".55"/>');
+  return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 '+s+' '+s+'" width="'+s+'" height="'+s+'">'+p.join('')+'</svg>';
+}
 function showMintResultModal(card) {
   const modal = document.getElementById("mintResultModal");
   if (!modal) return;
@@ -1576,9 +1667,7 @@ function showMintResultModal(card) {
   const rarity = rarityName(card.rarity);
   const rarityShortName = rarityShort(card.rarity);
   const scoreColor = rarityColor(card.rarity);
-  const figure = isUsa
-    ? figureCanvas(card, false, "slot", position)
-    : `<div class="slot-fig-canvas card-fig-canvas">${makeQuestFigureSVG(card.dna, 72, false)}</div>`;
+  const figure = `<div class="card-fig-canvas">${bkUnifiedMintFigureSVG(card.dna, 92)}</div>`;
   visual.innerHTML = figure;
   main.innerHTML = countryHtml + (isUsa
     ? `<div class="mint-result-title"><span class="usa-blue">USA</span> CARD SCORED</div><div class="mint-result-sub">This card counts for the USA Quest. Your squad/rank has been refreshed.</div>`
