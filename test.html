@@ -1512,6 +1512,61 @@ button.stat.mint-stat,
   .hero-copy span:nth-child(2)::before{content:'FLOW: ';color:#00ff87;margin-right:4px;}
   .hero-copy strong{color:#ffc940!important;font-weight:400!important;}
 }
+
+/* PC readable quest rules strip */
+@media(min-width:901px){
+  .hero .panel{
+    grid-template-columns:minmax(0,1fr) auto!important;
+    gap:20px!important;
+    min-height:96px!important;
+    padding:14px 22px!important;
+  }
+  .hero-title{grid-column:2!important;grid-row:1 / 3!important;justify-self:end!important;align-self:center!important;}
+  .hero-copy{
+    grid-column:1!important;
+    grid-row:1 / 3!important;
+    display:grid!important;
+    grid-template-columns:1fr!important;
+    gap:6px!important;
+    align-self:center!important;
+    max-width:760px!important;
+  }
+  .hero-copy span{
+    justify-content:flex-start!important;
+    min-height:0!important;
+    padding:0!important;
+    border:0!important;
+    background:transparent!important;
+    text-align:left!important;
+    white-space:normal!important;
+  }
+  .hero-copy span:first-child{
+    font-size:22px!important;
+    line-height:1.08!important;
+    letter-spacing:.5px!important;
+    color:#fff!important;
+  }
+  .hero-copy span:first-child::before{content:'FIRST WALLET TO COMPLETE ';color:#fff;margin-right:0;}
+  .hero-copy span:first-child::after{content:' WINS';color:#ef4444;margin-left:6px;}
+  .hero-copy span:first-child strong{font-size:1em!important;color:#ffc940!important;}
+  .hero-copy span:nth-child(2){font-size:13px!important;color:#00ff87!important;letter-spacing:.7px!important;}
+  .hero-copy span:nth-child(2)::before{content:'FLOW: ';color:#3b82f6;margin-right:4px;}
+}
+
+/* PC fixed hero rules copy without duplicated pseudo text */
+@media(min-width:901px){
+  .hero-copy span:first-child::before,.hero-copy span:first-child::after,.hero-copy span:nth-child(2)::before{content:none!important;display:none!important;}
+  .hero-copy .rule-main{font-size:21px!important;line-height:1.05!important;color:#fff!important;letter-spacing:.4px!important;}
+  .hero-copy .rule-main strong{color:#ffc940!important;font-weight:400!important;}
+  .hero-copy .rule-flow{font-size:11px!important;color:#00ff87!important;letter-spacing:.7px!important;}
+}
+
+/* PC natural hero rules text flow */
+@media(min-width:901px){
+  .hero-copy span{display:block!important;min-height:0!important;padding:0!important;}
+  .hero-copy .rule-main{max-width:820px!important;white-space:normal!important;}
+  .hero-copy .rule-flow{max-width:820px!important;white-space:normal!important;margin-top:4px!important;}
+}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
@@ -1531,7 +1586,7 @@ button.stat.mint-stat,
     <div class="panel">
       <div class="quest-kicker"><span class="dot"></span> Open Nation Quest</div>
       <h1 class="hero-title"><span class="title-line"><span class="usa-title-blue">USA</span> QUEST</span><span class="title-prize">1500 CHZ</span></h1>
-      <p class="hero-copy"><span>First wallet to complete <strong>11/11 USA positions wins 1500 CHZ</strong>.</span><span>Mint, buy, sell and upgrade directly on this quest page.</span></p>
+      <p class="hero-copy"><span class="rule-main">FIRST WALLET TO COMPLETE <strong>11/11 USA POSITIONS</strong> WINS <strong>1500 CHZ</strong></span><span class="rule-flow">FLOW: MINT, BUY, SELL AND UPGRADE DIRECTLY ON THIS QUEST PAGE</span></p>
     </div>
   </section>
   <div class="status-line" id="questStatus" style="display:none">Loading live quest status...</div>
