@@ -2085,6 +2085,37 @@ body.dash-active .quest-label{font-size:8px !important;margin-top:3px !important
 .mint-result-body{display:grid;gap:12px}.mint-result-visual{display:grid;place-items:center;min-height:110px;border:1px solid rgba(0,255,135,.22);border-radius:10px;background:radial-gradient(circle at 50% 30%,rgba(0,255,135,.12),transparent 64%),rgba(15,19,24,.72);padding:10px}.mint-result-visual .card-fig-canvas{height:92px!important;margin:0 auto;display:grid;place-items:center}.mint-result-visual svg{width:86px!important;height:86px!important}.mint-result-title{font-family:'Black Ops One',sans-serif;font-size:22px;line-height:1;color:#fff;letter-spacing:1px}.mint-result-title .usa-blue{color:#3b82f6}.mint-result-title .usa-red{color:#ef4444}.mint-result-title .arg-blue{color:#74ACDF}.mint-result-sub{font-size:15px;line-height:1.3;color:#dde4f0}.mint-result-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}.mint-result-stat{border:1px solid #1c2028;background:#0f1318;border-radius:8px;padding:9px 6px}.mint-result-stat b{display:block;font-family:'Black Ops One',sans-serif;font-size:17px;line-height:1;color:#00ff87}.mint-result-stat span{display:block;margin-top:4px;font-family:'Share Tech Mono',monospace;font-size:10px;color:#fff;text-transform:uppercase}.mint-result-note{border:1px solid rgba(255,201,64,.28);background:rgba(255,201,64,.07);border-radius:9px;padding:10px;font-size:14px;line-height:1.28;color:#fff}.mint-result-primary{width:100%;border:1px solid rgba(0,255,135,.52);background:#00ff87;color:#06100b;border-radius:9px;min-height:44px;font-family:'Black Ops One',sans-serif;font-size:13px;letter-spacing:1px;cursor:pointer}.mint-result-primary:hover{filter:brightness(1.08)}
 @media(max-width:900px){.mint-result-modal .mint-result-panel{max-width:calc(100vw - 24px)!important}.mint-result-title{font-size:19px}.mint-result-sub,.mint-result-note{font-size:13px}.mint-result-grid{gap:6px}.mint-result-stat b{font-size:14px}.mint-result-stat span{font-size:8px}.mint-result-primary{font-size:12px}}
 
+
+/* Desktop mint popup: oversized figure preview. Mobile keeps compact sizing. */
+@media(min-width:901px){
+  .mint-result-modal .mint-result-panel,
+  .modal.show .mint-result-panel{
+    width:min(92vw,620px)!important;
+    max-width:620px!important;
+  }
+  .mint-result-visual{
+    min-height:310px!important;
+    padding:18px!important;
+  }
+  .mint-result-visual .card-fig-canvas,
+  .mint-result-visual .slot-fig-canvas{
+    height:276px!important;
+    flex:0 0 276px!important;
+    width:310px!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    margin:0 auto!important;
+  }
+  .mint-result-visual .card-fig-canvas svg,
+  .mint-result-visual .slot-fig-canvas svg,
+  .mint-result-visual svg{
+    width:258px!important;
+    height:258px!important;
+    display:block!important;
+    margin:0 auto!important;
+  }
+}
 </style>
 </head>
 <body>
