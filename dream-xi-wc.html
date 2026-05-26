@@ -4,19 +4,38 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>WORLD CUP DREAM XI - Block Kickers</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%2306080a'/%3E%3Cpath d='M16 12h25c4 0 7 3 7 7v34H23c-4 0-7-3-7-7V12z' fill='%2300ff87'/%3E%3Cpath d='M22 12h26v36H24c-1 0-2 1-2 2V12z' fill='%23101822' stroke='%23ffc940' stroke-width='3'/%3E%3Cpath d='M28 23h14M28 31h14M28 39h10' stroke='%23dde4f0' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E">
 <link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Barlow+Condensed:wght@400;600;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.7.0/ethers.umd.min.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
-body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;font-size:16px;min-height:100vh;}
-.page{max-width:1440px;margin:0 auto;padding:0 0 60px;}
+html{width:100%;max-width:100%;overflow-x:hidden;}
+body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;font-size:16px;min-height:100vh;width:100%;max-width:100%;overflow-x:hidden;}
+.page{width:100%;max-width:1440px;margin:0 auto;padding:0 0 60px;overflow-x:hidden;}
 
 /* NAVIGATION */
-.topnav{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;border-bottom:1px solid #1c2028;background:rgba(6,8,10,0.97);position:sticky;top:0;z-index:100;backdrop-filter:blur(10px);}
+.topnav{display:flex;align-items:center;justify-content:space-between;width:100%;max-width:100%;min-width:0;padding:14px 24px;border-bottom:1px solid #1c2028;background:rgba(6,8,10,0.97);position:sticky;top:0;z-index:100;backdrop-filter:blur(10px);overflow:hidden;}
 .topnav-logo{font-family:'Black Ops One',sans-serif;font-size:13px;letter-spacing:2px;color:#dde4f0;}
 .topnav-logo span{color:#00ff87;}
 .btn-connect{background:rgba(0,255,135,0.1);border:1px solid rgba(0,255,135,0.3);color:#00ff87;padding:8px 16px;border-radius:6px;font-family:'Black Ops One',sans-serif;font-size:11px;letter-spacing:1px;cursor:pointer;}
 .btn-connect.connected{background:rgba(0,255,135,0.15);border-color:#00ff87;}
+.topnav-left{display:flex;align-items:center;gap:8px;min-width:0;max-width:100%;overflow:hidden;}
+.wallet-actions{display:flex;align-items:center;gap:8px;min-width:0;flex-shrink:0;}
+.wallet-pill{font-family:'Share Tech Mono',monospace;font-size:11px;display:none;background:rgba(0,255,135,0.06);border:1px solid rgba(0,255,135,0.2);padding:4px 7px;border-radius:5px;letter-spacing:0;white-space:nowrap;line-height:1;}
+.wallet-modal{position:fixed;inset:0;background:rgba(0,0,0,0.72);backdrop-filter:blur(8px);z-index:5000;display:none;align-items:center;justify-content:center;padding:18px;}
+.wallet-modal.active{display:flex;}
+.wallet-panel{width:min(440px,100%);background:linear-gradient(180deg,#111820,#090d12);border:1px solid rgba(0,255,135,0.28);border-radius:12px;box-shadow:0 24px 80px rgba(0,0,0,0.55),0 0 32px rgba(0,255,135,0.08);padding:16px;}
+.wallet-panel-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px;}
+.wallet-panel-title{font-family:'Black Ops One',sans-serif;color:#dde4f0;font-size:17px;letter-spacing:1px;}
+.wallet-close{width:32px;height:32px;border-radius:8px;border:1px solid rgba(255,255,255,0.12);background:rgba(255,255,255,0.04);color:#dde4f0;cursor:pointer;font-size:18px;line-height:1;}
+.wallet-option{width:100%;display:grid;grid-template-columns:42px 1fr auto;align-items:center;gap:12px;text-align:left;border:1px solid rgba(255,255,255,0.09);background:rgba(255,255,255,0.035);border-radius:10px;padding:12px;margin-top:10px;cursor:pointer;color:#dde4f0;}
+.wallet-option:hover{border-color:rgba(0,255,135,0.35);background:rgba(0,255,135,0.055);}
+.wallet-option-icon{font-size:23px;width:42px;height:42px;display:grid;place-items:center;border-radius:9px;background:rgba(0,255,135,0.08);}
+.wallet-option-name{font-family:'Black Ops One',sans-serif;font-size:13px;letter-spacing:1px;color:#fff;}
+.wallet-option-desc{font-size:11px;color:#8da0b7;margin-top:4px;line-height:1.25;}
+.wallet-option-tag{font-family:'Share Tech Mono',monospace;font-size:10px;color:#00ff87;border:1px solid rgba(0,255,135,0.24);border-radius:999px;padding:3px 7px;white-space:nowrap;}
+.wallet-note{font-size:11px;color:#6f7f92;line-height:1.35;margin-top:12px;}
+body.game-mode .wallet-actions #connectBtn.connected{display:inline-flex!important;}
 
 /* HERO & HEADER */
 .hero{padding:22px 24px 20px;text-align:left;border-bottom:1px solid #1c2028;position:relative;overflow:hidden;display:grid;grid-template-columns:minmax(280px,0.95fr) minmax(300px,1.2fr) minmax(280px,0.85fr);gap:16px;align-items:stretch;}
@@ -110,6 +129,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
 .country-grid::-webkit-scrollbar { width: 4px; }
 .country-grid::-webkit-scrollbar-track { background: #06080a; }
 .country-grid::-webkit-scrollbar-thumb { background: #1c2028; border-radius: 2px; }
+*{scrollbar-width:thin;scrollbar-color:rgba(0,255,135,.38) rgba(6,8,10,.65);}
 
 .country-card {
   background: #0f1318;
@@ -127,7 +147,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
 }
 .country-card:hover {
   border-color: #818cf8;
-  transform: translateY(-2px);
+  transform: none;
 }
 .country-card.selected {
   border-color: #00ff87;
@@ -138,12 +158,15 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
   margin-bottom: 4px;
   display: flex;
   justify-content: center;
+  align-items:center;
 }
+.country-card .flag-container{margin-right:0!important;}
 .country-card-name {
   font-weight: 700;
   font-size: 13px;
   color: #dde4f0;
   line-height: 1.2;
+  text-align:center;
 }
 .country-card-fed {
   font-size: 8px;
@@ -170,15 +193,15 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
 
 /* FLAGS CDN RENDERING */
 .flag-img {
-  width: 24px;
-  height: 16px;
+  width: 30px;
+  height: 20px;
   border-radius: 2px;
   object-fit: cover;
   box-shadow: 0 1px 3px rgba(0,0,0,0.4);
 }
 .flag-img-lg {
-  width: 32px;
-  height: 22px;
+  width: 44px;
+  height: 30px;
   border-radius: 3px;
   object-fit: cover;
   box-shadow: 0 2px 4px rgba(0,0,0,0.5);
@@ -266,11 +289,40 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
   position: relative;
   z-index: 2;
 }
+.formation.album-horizontal{
+  display:grid;
+  grid-template-columns:1fr;
+  align-items:center;
+  gap:12px;
+  min-width:0;
+}
 .form-row {
   display: flex;
   justify-content: center;
   gap: 12px;
 }
+.formation.album-horizontal .form-row{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  min-width:0;
+}
+.formation.album-horizontal .row-defense{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.formation.album-horizontal .row-mid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;}
+.formation.album-horizontal .row-wide-attack,
+.formation.album-horizontal .row-striker{display:grid;grid-template-columns:1fr;gap:8px;}
+.formation.album-horizontal .row-attack{display:grid;grid-template-columns:1fr;gap:8px;}
+.formation.album-horizontal .row-wings{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.formation.album-horizontal .row-keeper{display:grid;grid-template-columns:1fr;gap:8px;}
+.formation.album-horizontal .row-single{
+  display:grid;
+  grid-template-columns:repeat(11,minmax(42px,1fr));
+  width:100%;
+  gap:8px;
+}
+.formation.album-horizontal .row-single .pos-card{width:100%;min-width:0;}
 
 .pos-card{
   background: rgba(15, 19, 24, 0.9);
@@ -352,6 +404,81 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
 .btn-card-action:hover{background:#ffc940;color:#000;}
 .btn-card-action.upgrade{background:rgba(0,255,135,0.1);border-color:rgba(0,255,135,0.3);color:#00ff87;}
 .btn-card-action.upgrade:hover{background:#00ff87;color:#000;}
+.btn-card-action[style*="239,68,68"]:hover{background:#ef4444!important;color:#fff!important;border-color:#ef4444!important;}
+.card-hover-actions{
+  position:absolute;
+  inset:4px;
+  z-index:5;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  gap:4px;
+  padding:4px;
+  border-radius:5px;
+  background:rgba(6,8,10,.94);
+  border:1px solid rgba(0,255,135,.22);
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .16s ease, transform .16s ease;
+  transform:scale(.98);
+}
+.pos-card:hover .card-hover-actions,
+.pos-card:focus-within .card-hover-actions{
+  opacity:1;
+  pointer-events:auto;
+  transform:scale(1);
+}
+.card-hover-note{
+  font-family:'Share Tech Mono',monospace;
+  font-size:7px;
+  color:#ffc940;
+  line-height:1.05;
+  text-transform:uppercase;
+}
+.card-hover-actions .btn-card-action{margin-top:0;}
+.slot-action-modal{position:fixed;inset:0;z-index:5200;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.68);backdrop-filter:blur(6px);padding:12px 14px 22vh;}
+.slot-action-modal.active{display:flex;}
+.slot-action-panel{width:min(430px,100%);background:linear-gradient(180deg,#111820,#070b10);border:1px solid rgba(0,255,135,.36);border-radius:12px;padding:16px;box-shadow:0 18px 70px rgba(0,0,0,.58),0 0 28px rgba(0,255,135,.10);}
+.slot-action-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px;}
+.slot-action-title{font-family:'Black Ops One',sans-serif;font-size:15px;color:#dde4f0;letter-spacing:1px;}
+.slot-action-close{width:34px;height:34px;border-radius:8px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.05);color:#dde4f0;cursor:pointer;font-size:20px;line-height:1;}
+.slot-action-body{display:grid;gap:10px;}
+.slot-action-body .btn-card-action{font-size:15px;padding:15px 12px;border-radius:8px;margin:0;letter-spacing:.8px;}
+.slot-action-body .card-hover-note{font-size:15px;text-align:center;font-family:'Black Ops One',sans-serif;letter-spacing:.8px;color:#ffc940;border:1px solid rgba(255,201,64,.30);background:rgba(255,201,64,.08);border-radius:8px;padding:11px 8px;}
+
+.dash-mint-btn{border:1px solid rgba(0,255,135,.50);background:linear-gradient(135deg,#00ff87,#00c96a);color:#000;border-radius:8px;padding:8px 14px;font-family:'Black Ops One',sans-serif;font-size:11px;letter-spacing:1px;cursor:pointer;box-shadow:0 0 16px rgba(0,255,135,.14);white-space:nowrap;}
+.dash-mint-btn:hover{filter:brightness(1.08);}
+.dash-icon-btn{width:26px;height:26px;border:1px solid rgba(129,140,248,.36);background:rgba(129,140,248,.08);color:#818cf8;border-radius:7px;display:inline-flex;align-items:center;justify-content:center;font-size:16px;line-height:1;cursor:pointer;font-family:'Share Tech Mono',monospace;}
+.dash-icon-btn:hover{border-color:#00ff87;color:#00ff87;background:rgba(0,255,135,.10);}
+.album-title-tools{display:inline-flex;align-items:center;gap:8px;}
+@keyframes scoredGlow{0%,100%{box-shadow:0 0 18px rgba(0,255,135,.22),inset 0 0 18px rgba(0,255,135,.12);transform:translateY(0) scale(1);}35%{box-shadow:0 0 34px rgba(0,255,135,.70),0 0 18px rgba(255,201,64,.35),inset 0 0 28px rgba(0,255,135,.22);transform:translateY(-2px) scale(1.035);}70%{box-shadow:0 0 26px rgba(116,172,223,.58),inset 0 0 22px rgba(116,172,223,.16);transform:translateY(0) scale(1.015);}}
+.pos-card.just-scored{animation:scoredGlow 1.15s ease-in-out 4;border-color:#00ff87!important;position:relative;z-index:3;}
+.pos-card.just-scored::before{content:"NEW";position:absolute;top:-8px;right:-5px;background:#00ff87;color:#000;border:1px solid rgba(0,0,0,.35);border-radius:5px;padding:2px 4px;font-family:'Black Ops One',sans-serif;font-size:7px;letter-spacing:.5px;box-shadow:0 0 12px rgba(0,255,135,.42);}
+
+.sell-modal-shell{display:none;position:fixed;inset:0;background:rgba(6,8,10,0.86);backdrop-filter:blur(8px);z-index:5300;align-items:center;justify-content:center;padding:16px;}
+.sell-panel{background:linear-gradient(180deg,#111820,#070b10);border:1px solid rgba(0,255,135,.32);border-radius:14px;max-width:430px;width:100%;padding:18px;position:relative;box-shadow:0 22px 80px rgba(0,0,0,.62),0 0 28px rgba(0,255,135,.10);}
+.sell-close{position:absolute;top:12px;right:12px;width:34px;height:34px;border-radius:8px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.05);color:#dde4f0;font-size:20px;cursor:pointer;line-height:1;}
+.sell-title{font-family:'Black Ops One',sans-serif;font-size:19px;color:#00ff87;letter-spacing:1px;margin-bottom:12px;}
+.sell-card-preview{background:linear-gradient(180deg,rgba(0,255,135,.10),rgba(15,19,24,.96));border:1px solid rgba(0,255,135,.30);border-radius:10px;padding:12px;margin-bottom:14px;box-shadow:inset 0 0 18px rgba(0,255,135,.08);}
+.sell-card-info{font-family:'Share Tech Mono',monospace;font-size:12px;color:#c9d7e8;line-height:1.55;display:grid;gap:3px;}
+.sell-price-box{background:rgba(6,8,10,.78);border:1px solid rgba(255,201,64,.30);border-radius:10px;padding:12px;margin-bottom:14px;}
+.sell-price-label{font-family:'Black Ops One',sans-serif;font-size:11px;letter-spacing:1px;color:#ffc940;margin-bottom:8px;text-transform:uppercase;}
+.sell-stepper{display:grid;grid-template-columns:46px 1fr 46px;gap:8px;align-items:center;}
+.sell-step-btn{height:44px;border-radius:8px;border:1px solid rgba(0,255,135,.35);background:rgba(0,255,135,.10);color:#00ff87;font-family:'Black Ops One',sans-serif;font-size:20px;cursor:pointer;touch-action:none;}
+.sell-step-btn:active{background:#00ff87;color:#000;}
+.sell-price-input{width:100%;height:44px;background:#06080a;border:1px solid #1c2028;border-radius:8px;color:#dde4f0;font-family:'Black Ops One',sans-serif;font-size:18px;text-align:center;}
+.sell-submit{padding:12px!important;font-size:12px!important;border-radius:8px!important;}
+.card-result-modal{display:none;position:fixed;inset:0;background:rgba(6,8,10,0.86);backdrop-filter:blur(8px);z-index:5350;align-items:center;justify-content:center;padding:16px;}
+.card-result-panel{background:linear-gradient(180deg,#111820,#070b10);border:1px solid rgba(0,255,135,.36);border-radius:14px;max-width:450px;width:100%;padding:22px;position:relative;box-shadow:0 22px 80px rgba(0,0,0,.62),0 0 30px rgba(0,255,135,.12);text-align:center;}
+.card-result-close{position:absolute;top:12px;right:12px;width:34px;height:34px;border-radius:8px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.05);color:#dde4f0;font-size:20px;cursor:pointer;line-height:1;}
+.card-result-icon{font-size:46px;margin-bottom:10px;animation:pulse 2s infinite;}
+.card-result-panel > div[style*="font-size: 50px"]{font-size:0!important;margin-bottom:10px!important;}
+.card-result-panel > div[style*="font-size: 50px"]::before{content:"\26BD";font-size:46px;animation:pulse 2s infinite;display:inline-block;}
+.card-result-title{font-family:'Black Ops One',sans-serif;font-size:24px;color:#00ff87;margin-bottom:14px;letter-spacing:1px;text-transform:uppercase;}
+.card-result-visual{background:linear-gradient(180deg,rgba(0,255,135,.08),rgba(6,8,10,.94));border:1px solid rgba(0,255,135,.26);border-radius:10px;padding:18px;margin-bottom:16px;display:inline-block;width:100%;box-shadow:inset 0 0 22px rgba(0,255,135,.08);}
+.card-result-status{font-family:'Barlow Condensed',sans-serif;font-size:17px;line-height:1.35;margin-bottom:18px;color:#9fb1c7;}
+.card-result-badge{display:inline-block;background:rgba(0,255,135,0.15);color:#00ff87;border:1px solid #00ff87;padding:7px 13px;border-radius:6px;font-weight:700;margin-bottom:12px;font-size:14px;text-transform:uppercase;letter-spacing:1px;animation:pulse 1.5s infinite;}
+.card-result-badge.reserve{background:rgba(122,136,153,0.15);color:#7a8899;border-color:#1c2028;animation:none;}
 
 /* LEADERBOARD STANDINGS */
 .lb-section{padding: 0 24px 24px;}
@@ -382,12 +509,16 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
 
 .lb-row{display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:8px;margin-bottom:6px;background:#0f1318;border:1px solid #1c2028;position:relative;}
 .lb-row.me{border-color:rgba(0,255,135,0.3);background:rgba(0,255,135,0.04);}
+.lb-row.prize-row{border-color:rgba(255,201,64,.42);background:linear-gradient(90deg,rgba(255,201,64,.11),rgba(15,19,24,.96));box-shadow:inset 4px 0 0 rgba(255,201,64,.85),0 0 14px rgba(255,201,64,.08);}
 .lb-pos{font-family:'Black Ops One',sans-serif;font-size:16px;color:#5a6a7a;width:32px;flex-shrink:0;}
 .lb-pos.winner{color:#ffc940;} 
 .lb-addr{font-family:'Share Tech Mono',monospace;font-size:13px;color:#dde4f0;flex:1;}
 .lb-completion{font-size:12px;color:#7a8899;font-family:'Share Tech Mono',monospace;margin-right:12px;}
 .lb-score{font-family:'Black Ops One',sans-serif;font-size:16px;color:#818cf8;}
 .lb-you{font-size:10px;color:#00ff87;letter-spacing:1px;background:rgba(0,255,135,0.1);padding:2px 6px;border-radius:4px;margin-left:8px;}
+.lb-prize{font-family:'Black Ops One',sans-serif;color:#00ff87;font-size:14px;text-align:right;white-space:nowrap;text-shadow:0 0 10px rgba(0,255,135,.16);}
+.lb-prize.none{font-family:'Share Tech Mono',monospace;color:#5a6a7a;font-size:11px;text-shadow:none;}
+.prize-cell{margin-left:0!important;font-weight:700;text-align:right;}
 
 /* CUTOFF STANDINGS DIVIDERS */
 .cutoff-line{display:flex;align-items:center;justify-content:center;gap:12px;margin:12px 0;padding:8px;background:rgba(239,68,68,0.05);border:1px dotted rgba(239,68,68,0.4);border-radius:6px;font-size:11px;font-family:'Share Tech Mono',monospace;color:#ef4444;letter-spacing:1px;}
@@ -543,14 +674,894 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
   .leaderboard-list{padding:8px;}
   .lb-row{padding:7px 10px;margin-bottom:5px;}
 }
+
+/* Dream XI style compact dashboard */
+body.game-mode{overflow:hidden;height:100vh;width:100%;max-width:100%;display:flex;flex-direction:column;}
+body.game-mode .topnav{position:relative;flex:0 0 auto;width:100%;max-width:100%;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;}
+body.game-mode .hero,
+body.game-mode #connectSection,
+body.game-mode #gameSection > div:first-child{display:none !important;}
+body.game-mode .page{width:100%;max-width:none;height:auto;flex:1 1 auto;min-height:0;padding:8px;display:grid;grid-template-rows:auto auto auto minmax(0,1fr) minmax(120px,18vh);gap:7px;overflow:hidden;}
+.dashboard-prize-strip{display:none;}
+body.game-mode .dashboard-prize-strip{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:12px;border:1px solid rgba(255,201,64,.42);background:linear-gradient(90deg,rgba(255,201,64,.16),rgba(0,255,135,.065),rgba(116,172,223,.08));border-radius:10px;padding:7px 12px;box-shadow:0 0 22px rgba(255,201,64,.08);}
+.dash-prize-title{font-family:'Black Ops One',sans-serif;color:#ffc940;font-size:12px;letter-spacing:1.5px;white-space:nowrap;}
+.dash-prize-value{font-family:'Black Ops One',sans-serif;color:#00ff87;font-size:22px;line-height:1;text-align:center;text-shadow:0 0 12px rgba(0,255,135,.2);}
+.dash-deadline{display:flex;align-items:center;gap:5px;font-family:'Black Ops One',sans-serif;color:#dde4f0;font-size:15px;letter-spacing:1px;white-space:nowrap;}
+.dash-deadline span{min-width:27px;text-align:center;color:#74ACDF;}
+.dash-deadline small{font-family:'Share Tech Mono',monospace;font-size:8px;color:#5a6a7a;margin-left:2px;}
+body.game-mode #statsRow{display:grid !important;margin:0;grid-template-columns:.8fr .7fr .65fr 1fr;gap:8px;min-height:0;}
+body.game-mode #statsRow .stat-card{padding:6px 10px;border-radius:8px;min-height:48px;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+body.game-mode #statsRow .stat-val{font-size:clamp(17px,1.65vw,22px);line-height:1;}
+body.game-mode #statsRow #myEstPayout{font-size:clamp(17px,1.65vw,22px)!important;padding-top:0!important;}
+body.game-mode #statsRow .stat-lbl{font-size:9px;letter-spacing:.8px;color:#8fa4bb;font-weight:700;text-shadow:0 0 8px rgba(116,172,223,.18);}
+body.game-mode #gameSection{display:contents !important;min-height:0;overflow:hidden;}
+body.game-mode .game-grid{grid-row:3 / 5;display:grid;grid-template-columns:1fr;grid-template-rows:auto minmax(0,1fr);gap:8px;padding:0;min-height:0;overflow:hidden;width:100%;}
+body.game-mode .country-section,
+body.game-mode .pitch-container,
+body.game-mode .lb-section{background:#0a0e14;border:1px solid #1c2028;border-radius:10px;padding:10px;min-height:0;overflow:hidden;}
+body.game-mode .country-section{display:flex;flex-direction:column;order:2;width:100%;grid-column:1 / -1;grid-row:2 / 3;}
+body.game-mode .filter-tabs{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px;margin-bottom:8px;flex-shrink:0;}
+body.game-mode .tab-btn{font-size:8px;padding:6px 4px;letter-spacing:.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+body.game-mode .country-grid{flex:1;min-height:0;max-height:none;overflow:auto;grid-template-columns:repeat(6,minmax(0,1fr));grid-auto-rows:minmax(74px,1fr);gap:6px;padding-right:3px;align-items:stretch;}
+body.game-mode .country-card{height:100%;min-height:0;min-width:0;overflow:hidden;padding:5px 3px;border-radius:7px;align-items:center;text-align:center;justify-content:center;gap:2px;background:radial-gradient(circle at 50% 0%,rgba(116,172,223,.08),transparent 60%),#0f1318;}
+body.game-mode .country-card,
+body.game-mode .country-card:hover,
+body.game-mode .country-card.selected{transform:none!important;}
+body.game-mode .country-card.album-empty{opacity:.72;border-color:rgba(90,106,122,.28);background:linear-gradient(180deg,rgba(15,19,24,.96),rgba(8,11,16,.94));}
+body.game-mode .country-card.album-low{border-color:rgba(239,68,68,.50);background:linear-gradient(180deg,rgba(239,68,68,.16),rgba(15,19,24,.95));box-shadow:0 0 12px rgba(239,68,68,.10),inset 0 0 14px rgba(239,68,68,.08);}
+body.game-mode .country-card.album-mid{border-color:rgba(249,115,22,.52);background:linear-gradient(180deg,rgba(249,115,22,.16),rgba(15,19,24,.95));box-shadow:0 0 14px rgba(249,115,22,.11),inset 0 0 16px rgba(249,115,22,.08);}
+body.game-mode .country-card.album-hot{border-color:rgba(255,201,64,.58);background:linear-gradient(180deg,rgba(255,201,64,.18),rgba(22,18,9,.95));box-shadow:0 0 16px rgba(255,201,64,.14),inset 0 0 18px rgba(255,201,64,.09);}
+body.game-mode .country-card.album-complete{border-color:rgba(0,255,135,.72);background:linear-gradient(180deg,rgba(0,255,135,.22),rgba(15,19,24,.95));box-shadow:0 0 18px rgba(0,255,135,.18),inset 0 0 18px rgba(0,255,135,.12);}
+body.game-mode .country-card > div{width:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+body.game-mode .country-card-flag{font-size:18px;margin:0;min-height:0;width:100%;display:flex;justify-content:center;overflow:hidden;line-height:1;}
+body.game-mode .country-card .flag-container{max-width:100%;height:auto;overflow:hidden;}
+body.game-mode .country-card .flag-img{width:clamp(24px,3.4vw,36px);height:clamp(16px,2.25vw,24px);display:block;}
+body.game-mode .country-card-name{font-size:clamp(8px,1.02vw,12px);line-height:1;margin-top:2px!important;text-align:center;width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+body.game-mode .country-card-fed{display:none;}
+body.game-mode .country-card-score{font-size:clamp(9px,1.15vw,13px);line-height:1;margin-top:2px;}
+body.game-mode .country-card-completion{font-size:clamp(6px,.82vw,9px);line-height:1;font-family:'Black Ops One',sans-serif;letter-spacing:.3px;}
+body.game-mode .country-card.selected{border-color:#00ff87;box-shadow:0 0 14px rgba(0,255,135,.18),inset 0 0 18px rgba(0,255,135,.12);}
+body.game-mode .country-card:has(.country-card-crown){border-color:rgba(255,201,64,.42);box-shadow:inset 0 0 18px rgba(255,201,64,.08);}
+body.game-mode .pitch-container{display:flex;flex-direction:column;order:1;width:100%;grid-column:1 / -1;grid-row:1 / 2;}
+body.game-mode .pitch-title-row{margin-bottom:7px;flex-shrink:0;}
+body.game-mode .pitch-title{font-size:10px;letter-spacing:1.4px;margin-bottom:7px;}
+body.game-mode .squad-score{display:inline-block;margin-left:8px;color:#00ff87;font-family:'Black Ops One',sans-serif;font-size:11px;letter-spacing:1px;}
+body.game-mode .pitch-wrap{flex:0 0 auto;min-height:0;overflow:hidden;padding:10px;border-radius:12px;background:linear-gradient(90deg,rgba(0,255,135,.075),rgba(15,19,24,.94),rgba(116,172,223,.06));border:1px solid rgba(0,255,135,.28);box-shadow:inset 0 0 24px rgba(0,255,135,.05),0 0 18px rgba(0,255,135,.06);}
+body.game-mode .pitch-wrap::before,
+body.game-mode .pitch-center-line,
+body.game-mode .pitch-center-circle,
+body.game-mode .pitch-penalty-area-top,
+body.game-mode .pitch-penalty-area-bottom{display:none;}
+body.game-mode .formation{height:auto;min-height:0;min-width:0;gap:6px;justify-content:center;}
+body.game-mode .formation.album-horizontal{height:auto;min-height:0;min-width:0;grid-template-columns:1fr;gap:8px;align-items:center;}
+body.game-mode .form-row{gap:7px;}
+body.game-mode .form-row.row-wings{padding:0 23%;}
+body.game-mode .form-row.row-mid{padding:0 15%;}
+body.game-mode .form-row.row-defense{padding:0 8%;}
+body.game-mode .formation.album-horizontal .form-row{padding:0;gap:7px;}
+body.game-mode .formation.album-horizontal .row-defense,
+body.game-mode .formation.album-horizontal .row-mid,
+body.game-mode .formation.album-horizontal .row-attack,
+body.game-mode .formation.album-horizontal .row-wide-attack,
+body.game-mode .formation.album-horizontal .row-striker,
+body.game-mode .formation.album-horizontal .row-wings,
+body.game-mode .formation.album-horizontal .row-keeper,
+body.game-mode .formation.album-horizontal .row-single{padding:0;}
+body.game-mode .formation.album-horizontal .row-single{grid-template-columns:repeat(11,minmax(0,1fr));gap:7px;width:100%;}
+body.game-mode .pos-card{width:clamp(62px,7.2vh,78px);min-height:clamp(72px,9vh,90px);padding:5px 4px;border-radius:6px;}
+body.game-mode .formation.album-horizontal .row-single .pos-card{width:100%;}
+body.game-mode .pos-ball{font-size:15px;margin:0;}
+body.game-mode .pos-name{font-size:7px;}
+body.game-mode .pos-weight{font-size:clamp(16px,2.3vh,20px);}
+body.game-mode .pos-rarity{font-size:7px;}
+body.game-mode .btn-card-action{font-size:6px;padding:3px 2px;}
+body.game-mode .pos-card.rarity-1{border-color:rgba(59,130,246,.72);background:linear-gradient(180deg,rgba(59,130,246,.28),rgba(15,19,24,.94));box-shadow:0 0 16px rgba(59,130,246,.18),inset 0 0 18px rgba(59,130,246,.10);}
+body.game-mode .pos-card.rarity-2{border-color:rgba(192,132,252,.78);background:linear-gradient(180deg,rgba(192,132,252,.30),rgba(15,19,24,.94));box-shadow:0 0 18px rgba(192,132,252,.20),inset 0 0 18px rgba(192,132,252,.12);}
+body.game-mode .pos-card.rarity-3{border-color:rgba(255,201,64,.88);background:linear-gradient(180deg,rgba(255,201,64,.32),rgba(28,22,10,.94));box-shadow:0 0 22px rgba(255,201,64,.25),inset 0 0 20px rgba(255,201,64,.13);}
+body.game-mode .lb-section{grid-row:5;margin:0;max-height:none;display:flex;flex-direction:column;}
+body.game-mode .lb-title-row{display:none;}
+body.game-mode .lb-toggle-container{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:7px;flex-shrink:0;}
+body.game-mode .lb-toggle-btn{font-size:8px;padding:7px 5px;}
+body.game-mode .leaderboard-list{flex:1;min-height:0;overflow:auto;padding:8px;}
+body.game-mode .leaderboard-list::-webkit-scrollbar,
+body.game-mode .country-grid::-webkit-scrollbar{width:5px;height:5px;}
+body.game-mode .leaderboard-list::-webkit-scrollbar-track,
+body.game-mode .country-grid::-webkit-scrollbar-track{background:rgba(6,8,10,.65);border-radius:5px;}
+body.game-mode .leaderboard-list::-webkit-scrollbar-thumb,
+body.game-mode .country-grid::-webkit-scrollbar-thumb{background:rgba(0,255,135,.34);border-radius:5px;border:1px solid rgba(0,255,135,.18);}
+body.game-mode .lb-row{display:grid;grid-template-columns:34px minmax(0,1fr) 92px 110px 70px;gap:7px;align-items:center;padding:7px 8px;margin-bottom:5px;}
+body.game-mode .lb-addr{font-size:10px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+body.game-mode .lb-completion{font-size:9px;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+body.game-mode .lb-score{font-size:12px;text-align:right;white-space:nowrap;}
+body.game-mode .stat-lbl,
+body.game-mode .pitch-title,
+body.game-mode .countdown-sub,
+body.game-mode .lb-completion,
+body.game-mode .wallet-note,
+body.game-mode .flow-kicker,
+body.game-mode .schedule-date,
+body.game-mode .pos-rarity,
+body.game-mode .card-hover-note{color:#dde4f0 !important;}
+.album-count-label{font-family:'Share Tech Mono',monospace;color:#818cf8;}
+.completion-label{font-family:'Share Tech Mono',monospace;color:#818cf8;font-size:12px;}
+body.game-mode .squad-score{display:inline-block;margin-left:8px;color:#00ff87;font-family:'Black Ops One',sans-serif;font-size:11px;letter-spacing:1px;}
+.pos-card-top{display:grid;grid-template-rows:auto 1fr;align-items:center;justify-items:center;min-height:0;width:100%;}
+.figure-mini{width:34px;height:34px;margin:0 auto;display:grid;place-items:center;line-height:0;}
+.figure-mini svg{width:100%;height:100%;display:block;}
+.pos-card.owned::after{top:-5px;right:-3px;background:#0a0e14;border:1px solid rgba(0,255,135,.45);border-radius:50%;width:14px;height:14px;display:grid;place-items:center;font-size:9px;line-height:1;z-index:8;}
+@media(min-width:701px){
+  body.game-mode .nation-selector-title{
+    display:grid;
+    grid-template-columns:max-content minmax(0,1fr) max-content;
+    align-items:center;
+    gap:8px;
+    margin-bottom:7px;
+  }
+  body.game-mode .nation-selector-title .filter-tabs{
+    display:grid;
+    grid-template-columns:repeat(7,minmax(0,1fr));
+    gap:5px;
+    margin:0;
+    min-width:0;
+  }
+  body.game-mode .album-title-tools{justify-content:flex-end;min-width:0;}
+  body.game-mode .album-count-label,
+  body.game-mode .completion-label,
+  body.game-mode .squad-score,
+  body.game-mode .lb-toggle-btn{
+    font-family:'Black Ops One',sans-serif;
+    font-size:13px !important;
+    letter-spacing:1.5px;
+  }
+  body.game-mode .album-count-label,
+  body.game-mode .completion-label{color:#818cf8;}
+  body.game-mode .pitch-title,
+  body.game-mode .dash-prize-title,
+  body.game-mode .stat-lbl,
+  body.game-mode .countdown-sub,
+  body.game-mode .lb-info{
+    color:#dde4f0 !important;
+  }
+  body.game-mode .tab-btn{
+    font-size:12px;
+    padding:6px 4px;
+    letter-spacing:.7px;
+    color:#dde4f0;
+  }
+  body.game-mode .country-grid{
+    overflow:hidden;
+    grid-template-columns:repeat(6,minmax(0,1fr));
+    grid-auto-rows:minmax(30px,1fr);
+    gap:5px;
+    padding-right:0;
+  }
+  body.game-mode .country-card{
+    min-height:30px;
+    padding:5px 7px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    align-items:center;
+    justify-items:center;
+    text-align:center;
+    gap:4px 8px;
+  }
+  body.game-mode .country-card-main{
+    min-width:0;
+    width:100%;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:2px;
+  }
+  body.game-mode .country-card-stats{
+    width:100%;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    line-height:1.05;
+    white-space:nowrap;
+  }
+  body.game-mode .country-card-flag{
+    width:auto;
+    flex-shrink:0;
+    justify-content:center;
+    align-self:center;
+  }
+  body.game-mode .country-card .flag-img{
+    width:38px;
+    height:25px;
+  }
+  body.game-mode .country-card-name{
+    width:auto;
+    margin-top:0!important;
+    text-align:center;
+    font-family:'Black Ops One',sans-serif;
+    font-size:16px;
+    letter-spacing:.6px;
+    color:#dde4f0;
+  }
+  body.game-mode .country-card-score{
+    font-family:'Black Ops One',sans-serif;
+    font-size:16px;
+    margin-top:0;
+    color:#dde4f0;
+  }
+  body.game-mode .country-card-completion{
+    font-size:13px;
+    font-family:'Black Ops One',sans-serif;
+  }
+  body.game-mode .pos-name{
+    font-family:'Black Ops One',sans-serif;
+    font-size:11px;
+    color:#dde4f0;
+  }
+  body.game-mode .pitch-title #selectedCountryTitle{
+    color:#dde4f0;
+    font-size:13px;
+  }
+  body.game-mode .squad-score{font-size:13px!important;}
+  body.game-mode .pos-card-top{
+    min-height:45px;
+    width:100%;
+    align-items:center;
+    justify-items:center;
+  }
+  body.game-mode .figure-mini{
+    width:38px;
+    height:38px;
+  }
+  body.game-mode .lb-row{
+    grid-template-columns:40px minmax(0,1fr) 110px 122px 82px;
+  }
+  body.game-mode .lb-addr,
+  body.game-mode .lb-completion,
+  body.game-mode .lb-score,
+  body.game-mode .lb-prize{
+    font-family:'Black Ops One',sans-serif;
+    font-size:13px;
+    letter-spacing:.5px;
+    color:#dde4f0;
+  }
+}
+.pos-card.rarity-1 .pos-name,.pos-card.rarity-1 .pos-ball{color:#93c5fd;}
+.pos-card.rarity-2 .pos-name,.pos-card.rarity-2 .pos-ball{color:#d8b4fe;}
+.pos-card.rarity-3 .pos-name,.pos-card.rarity-3 .pos-ball{color:#ffe08a;}
+#networkOverlay{position:fixed;inset:0;z-index:6000;display:none;align-items:center;justify-content:center;background:rgba(2,6,8,.78);backdrop-filter:blur(7px);padding:max(16px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-right)) max(16px,env(safe-area-inset-bottom)) max(16px,env(safe-area-inset-left));}
+#networkOverlay.show{display:flex;}
+.network-wait-card{width:min(88vw,340px);background:linear-gradient(180deg,rgba(15,19,24,.98),rgba(6,8,10,.96));border:1px solid rgba(0,255,135,.35);border-radius:12px;padding:24px 18px 20px;text-align:center;box-shadow:0 24px 80px rgba(0,0,0,.68),0 0 28px rgba(0,255,135,.08);}
+.network-ball{font-size:34px;animation:spin 1.1s linear infinite;margin-bottom:10px;text-shadow:0 0 18px rgba(0,255,135,.25);}
+.network-wait-title{font-family:'Black Ops One',sans-serif;color:#00ff87;font-size:16px;letter-spacing:1px;margin-bottom:8px;}
+.network-wait-text{font-family:'Share Tech Mono',monospace;color:#8fa4bb;font-size:12px;line-height:1.35;}
+#toast{display:none!important;}
+
+@media(max-width:700px){
+  body.game-mode .topnav{height:auto;min-height:44px;padding:7px 9px;}
+  body.game-mode .topnav-logo{font-size:10px;letter-spacing:1px;}
+  body.game-mode .topnav-left{gap:5px;min-width:0;overflow:hidden;}
+  body.game-mode .wallet-actions{gap:5px;min-width:0;}
+  body.game-mode .wallet-pill{font-size:7px;padding:3px 4px;max-width:clamp(54px,22vw,86px);overflow:hidden;text-overflow:ellipsis;}
+  body.game-mode .btn-connect{font-size:8px;padding:6px 7px;letter-spacing:.5px;}
+  body.game-mode .page{height:auto;padding:6px;grid-template-rows:auto auto auto minmax(0,1fr) minmax(132px,20vh);gap:5px;}
+  body.game-mode .dashboard-prize-strip{grid-template-columns:1fr auto;padding:6px 8px;border-radius:8px;gap:6px;}
+  body.game-mode .dash-prize-title{font-size:8px;letter-spacing:.8px;grid-column:1/2;}
+  body.game-mode .dash-prize-value{font-size:15px;text-align:left;grid-column:1/2;}
+  body.game-mode .dash-deadline{grid-column:2/3;grid-row:1/3;font-size:12px;gap:3px;letter-spacing:.5px;}
+  body.game-mode .dash-deadline span{min-width:18px;}
+  body.game-mode .dash-deadline small{display:none;}
+  body.game-mode #statsRow{grid-template-columns:repeat(4,minmax(0,1fr));gap:3px;}
+  body.game-mode #statsRow .stat-card{min-height:58px;padding:6px 3px;}
+  body.game-mode #statsRow .stat-val{font-size:15px;}
+  body.game-mode #statsRow #myEstPayout{font-size:15px!important;}
+  body.game-mode #statsRow .stat-lbl{font-size:6px;letter-spacing:.2px;line-height:1.05;color:#9fb0c4;font-weight:700;}
+  body.game-mode #statsRow .stat-lbl,
+  body.game-mode .pitch-title,
+  body.game-mode .lb-completion,
+  body.game-mode .countdown-sub,
+  body.game-mode .pos-rarity,
+  body.game-mode .dash-prize-title,
+  body.game-mode .card-hover-note{color:#dde4f0!important;}
+  body.game-mode .game-grid{grid-template-columns:1fr;grid-template-rows:auto minmax(0,1fr);gap:6px;}
+  body.game-mode .country-section{grid-column:1 / -1;grid-row:2 / 3;}
+  body.game-mode .pitch-container{grid-column:1 / -1;grid-row:1 / 2;}
+  body.game-mode .country-section,
+  body.game-mode .pitch-container,
+  body.game-mode .lb-section{padding:6px;border-radius:8px;}
+  body.game-mode .filter-tabs{grid-template-columns:repeat(7,minmax(0,1fr));gap:3px;margin-bottom:4px;}
+  body.game-mode .tab-btn{font-size:5px;padding:4px 1px;}
+  body.game-mode .country-grid{grid-template-columns:repeat(6,minmax(0,1fr));grid-template-rows:none;grid-auto-rows:minmax(58px,1fr);gap:3px;overflow:auto;padding-right:2px;}
+  body.game-mode .country-card{min-height:0;padding:3px 1px;justify-content:center;gap:1px;}
+  body.game-mode .country-card.album-empty{opacity:.72;border-color:rgba(90,106,122,.24);background:linear-gradient(180deg,rgba(15,19,24,.96),rgba(8,11,16,.94));}
+  body.game-mode .country-card.album-low{border-color:rgba(239,68,68,.50);background:linear-gradient(180deg,rgba(239,68,68,.16),rgba(15,19,24,.95));box-shadow:0 0 8px rgba(239,68,68,.10),inset 0 0 10px rgba(239,68,68,.08);}
+  body.game-mode .country-card.album-mid{border-color:rgba(249,115,22,.52);background:linear-gradient(180deg,rgba(249,115,22,.16),rgba(15,19,24,.95));box-shadow:0 0 9px rgba(249,115,22,.11),inset 0 0 10px rgba(249,115,22,.08);}
+  body.game-mode .country-card.album-hot{border-color:rgba(255,201,64,.58);background:linear-gradient(180deg,rgba(255,201,64,.18),rgba(22,18,9,.95));box-shadow:0 0 10px rgba(255,201,64,.14),inset 0 0 11px rgba(255,201,64,.10);}
+  body.game-mode .country-card.album-complete{border-color:rgba(0,255,135,.72);background:linear-gradient(180deg,rgba(0,255,135,.22),rgba(15,19,24,.95));box-shadow:0 0 11px rgba(0,255,135,.18),inset 0 0 11px rgba(0,255,135,.12);}
+  body.game-mode .country-card.selected{border-color:#00ff87;outline:2px solid rgba(0,255,135,.88);outline-offset:-2px;box-shadow:0 0 14px rgba(0,255,135,.32),inset 0 0 14px rgba(0,255,135,.18);}
+  body.game-mode .country-card-flag{font-size:12px;min-height:13px;}
+  body.game-mode .country-card .flag-img{width:22px;height:15px;}
+  body.game-mode .country-card-name{font-size:7px;line-height:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;}
+  body.game-mode .country-card-fed,
+  body.game-mode .country-card-completion{font-size:6px;}
+  body.game-mode .country-card-score{font-size:7.2px;margin-top:1px;}
+  body.game-mode .country-card-completion{font-size:5px;}
+  body.game-mode .pitch-title-row{margin-bottom:4px;}
+  body.game-mode .pitch-title{font-size:8px;letter-spacing:.7px;margin-bottom:4px;}
+  body.game-mode .squad-score{margin-left:4px;font-size:7px;}
+  body.game-mode #selectedCountryCompletion{font-size:8px!important;}
+  body.game-mode .dash-mint-btn{padding:6px 7px;font-size:7px;border-radius:6px;}
+  body.game-mode .pitch-wrap{padding:7px 5px;border-radius:9px;}
+  body.game-mode .formation{gap:3px;min-height:0;min-width:0;}
+  body.game-mode .formation.album-horizontal{min-height:0;min-width:0;grid-template-columns:1fr;gap:3px;}
+  body.game-mode .form-row{gap:4px;}
+  body.game-mode .form-row.row-wings{padding:0 19%;}
+  body.game-mode .form-row.row-mid{padding:0 8%;}
+  body.game-mode .form-row.row-defense{padding:0 1%;}
+  body.game-mode .formation.album-horizontal .form-row{padding:0;gap:4px;}
+  body.game-mode .formation.album-horizontal .row-defense,
+  body.game-mode .formation.album-horizontal .row-mid,
+  body.game-mode .formation.album-horizontal .row-attack,
+  body.game-mode .formation.album-horizontal .row-wide-attack,
+  body.game-mode .formation.album-horizontal .row-striker,
+  body.game-mode .formation.album-horizontal .row-wings,
+  body.game-mode .formation.album-horizontal .row-keeper,
+  body.game-mode .formation.album-horizontal .row-single{padding:0;}
+  body.game-mode .formation.album-horizontal .row-single{grid-template-columns:repeat(11,minmax(0,1fr));gap:2px;width:100%;}
+  body.game-mode .pos-card{width:46px;min-height:56px;padding:3px 2px;border-radius:5px;}
+  body.game-mode .formation.album-horizontal .row-single .pos-card{width:100%;min-height:clamp(50px,7dvh,62px);padding:3px 1px;}
+  body.game-mode .pos-name{font-size:6px;}
+  body.game-mode .pos-ball{font-size:12px;}
+  body.game-mode .pos-weight{font-size:11px;}
+  body.game-mode .pos-rarity{font-size:5px;}
+  body.game-mode .pos-card-top{min-height:32px;align-items:center;justify-items:center;}
+  body.game-mode .figure-mini{width:24px;height:24px;margin:auto;}
+  body.game-mode .btn-card-action{font-size:5px;padding:2px 1px;margin-top:2px;}
+  body.game-mode .pos-card.has-actions{cursor:pointer;}
+  body.game-mode .card-hover-actions{display:none;}
+  body.game-mode .card-hover-note{font-size:5px;}
+  body.game-mode .pitch-center-circle,
+  body.game-mode .pitch-penalty-area-top,
+  body.game-mode .pitch-penalty-area-bottom{display:none;}
+  body.game-mode .lb-toggle-container{margin-bottom:5px;}
+  body.game-mode .lb-toggle-btn{font-size:6px;padding:5px 2px;}
+  body.game-mode .leaderboard-list{padding:5px;}
+  body.game-mode .lb-row{grid-template-columns:22px minmax(0,1fr) 52px 64px 44px;gap:4px;padding:5px;}
+  body.game-mode .lb-pos{font-size:10px;width:auto;}
+  body.game-mode .lb-addr{font-size:9px;}
+  body.game-mode .lb-completion{font-size:8px;}
+  body.game-mode .lb-score{font-size:9px;}
+  body.game-mode .lb-prize{font-size:9px;}
+  body.game-mode .lb-prize.none{font-size:7px;}
+}
+
+@media(max-width:700px) and (pointer:fine){
+  body.game-mode .topnav{height:auto;min-height:36px;padding:5px 8px;}
+  body.game-mode .topnav-left{gap:4px;}
+  body.game-mode .page{height:auto;padding:4px;grid-template-rows:auto auto auto minmax(0,1fr) minmax(96px,17vh);gap:4px;}
+  body.game-mode #statsRow{grid-template-columns:.75fr .65fr .62fr .9fr;gap:4px;}
+  body.game-mode #statsRow .stat-card{min-height:44px;padding:4px 5px;}
+  body.game-mode #statsRow .stat-val,
+  body.game-mode #statsRow #myEstPayout{font-size:12px!important;}
+  body.game-mode #statsRow .stat-lbl{font-size:5.4px;letter-spacing:.2px;color:#9fb0c4;font-weight:700;}
+  body.game-mode .dashboard-prize-strip{grid-template-columns:auto 1fr auto;padding:4px 7px;gap:6px;}
+  body.game-mode .dash-prize-title{font-size:6px;letter-spacing:.5px;grid-column:auto;}
+  body.game-mode .dash-prize-value{font-size:12px;text-align:center;grid-column:auto;}
+  body.game-mode .dash-deadline{grid-column:auto;grid-row:auto;font-size:9px;gap:2px;}
+  body.game-mode .dash-deadline span{min-width:14px;}
+  body.game-mode .game-grid{grid-template-columns:1fr;grid-template-rows:auto minmax(0,1fr);gap:4px;}
+  body.game-mode .country-section,
+  body.game-mode .pitch-container,
+  body.game-mode .lb-section{padding:5px;border-radius:7px;}
+  body.game-mode .filter-tabs{grid-template-columns:repeat(7,minmax(0,1fr));gap:3px;margin-bottom:5px;}
+  body.game-mode .tab-btn{font-size:5px;padding:3px 2px;}
+  body.game-mode .country-grid{grid-template-columns:repeat(6,minmax(0,1fr));grid-template-rows:none;grid-auto-rows:minmax(52px,1fr);gap:3px;overflow:auto;padding-right:2px;}
+  body.game-mode .country-card{min-height:0;padding:2px 1px;gap:1px;}
+  body.game-mode .country-card.album-low{box-shadow:0 0 7px rgba(239,68,68,.10),inset 0 0 9px rgba(239,68,68,.08);}
+  body.game-mode .country-card.album-mid{box-shadow:0 0 8px rgba(249,115,22,.11),inset 0 0 9px rgba(249,115,22,.08);}
+  body.game-mode .country-card.album-hot{box-shadow:0 0 9px rgba(255,201,64,.14),inset 0 0 10px rgba(255,201,64,.10);}
+  body.game-mode .country-card.album-complete{box-shadow:0 0 10px rgba(0,255,135,.18),inset 0 0 10px rgba(0,255,135,.12);}
+  body.game-mode .country-card.selected{border-color:#00ff87;outline:2px solid rgba(0,255,135,.88);outline-offset:-2px;box-shadow:0 0 12px rgba(0,255,135,.30),inset 0 0 12px rgba(0,255,135,.18);}
+  body.game-mode .country-card-flag{font-size:11px;min-height:12px;}
+  body.game-mode .country-card .flag-img{width:21px;height:14px;}
+  body.game-mode .country-card-name{font-size:6.4px;line-height:1;margin-top:1px!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;}
+  body.game-mode .country-card-score{font-size:6.6px;margin-top:1px;}
+  body.game-mode .country-card-completion{font-size:4.8px;}
+  body.game-mode .pitch-title-row{margin-bottom:3px;}
+  body.game-mode .pitch-title{font-size:6px;letter-spacing:.6px;margin-bottom:3px;}
+  body.game-mode .squad-score{margin-left:3px;font-size:5.5px;}
+  body.game-mode #selectedCountryCompletion{font-size:6px!important;}
+  body.game-mode .dash-mint-btn{padding:5px 6px;font-size:6px;}
+  body.game-mode .pitch-wrap{padding:5px;border-radius:8px;}
+  body.game-mode .formation{min-height:0;min-width:0;}
+  body.game-mode .formation.album-horizontal .row-single{gap:2px;}
+  body.game-mode .formation.album-horizontal .row-single .pos-card{min-height:50px;padding:2px 1px;}
+  body.game-mode .pos-name{font-size:5px;}
+  body.game-mode .pos-ball{font-size:10px;}
+  body.game-mode .pos-weight{font-size:10px;}
+  body.game-mode .pos-rarity{font-size:4.5px;}
+  body.game-mode .pitch-center-circle{width:42px;height:42px;}
+  body.game-mode .pitch-penalty-area-top,
+  body.game-mode .pitch-penalty-area-bottom{width:28px;height:84px;}
+  body.game-mode .lb-title-row{margin-bottom:3px;}
+  body.game-mode .lb-toggle-container{gap:4px;margin-bottom:4px;}
+  body.game-mode .lb-toggle-btn{font-size:5px;padding:4px 2px;}
+  body.game-mode .leaderboard-list{padding:4px;}
+  body.game-mode .lb-row{grid-template-columns:18px minmax(0,1fr) 40px 50px 36px;gap:3px;padding:4px;margin-bottom:3px;}
+}
+
+@media(max-width:700px) and (min-aspect-ratio:2/5) and (max-aspect-ratio:3/5){
+  body.game-mode{height:100dvh;min-height:100dvh;}
+  body.game-mode .topnav{
+    min-height:clamp(34px,5.4dvh,48px);
+    padding:clamp(4px,.8dvh,8px) clamp(6px,1.7vw,10px);
+  }
+  body.game-mode .topnav-left{gap:clamp(3px,1vw,6px);}
+  body.game-mode .wallet-actions{gap:clamp(3px,1vw,6px);}
+  body.game-mode .topnav-logo{font-size:clamp(9px,2.6vw,12px);}
+  body.game-mode .wallet-pill{font-size:clamp(6px,1.85vw,8px);padding:clamp(2px,.45dvh,4px) clamp(3px,1vw,5px);max-width:clamp(48px,22vw,88px);}
+
+  body.game-mode .page{
+    padding:clamp(3px,1vw,6px);
+    gap:clamp(3px,.65dvh,6px);
+    grid-template-rows:
+      minmax(42px,7.2dvh)
+      minmax(38px,5.9dvh)
+      minmax(104px,15.2dvh)
+      minmax(0,1fr)
+      minmax(108px,17.5dvh);
+  }
+
+  body.game-mode #statsRow{gap:clamp(2px,.8vw,4px);}
+  body.game-mode #statsRow .stat-card{
+    min-height:0;
+    padding:clamp(3px,.8dvh,7px) clamp(2px,.8vw,5px);
+    border-radius:clamp(6px,1.8vw,9px);
+  }
+  body.game-mode #statsRow .stat-val,
+  body.game-mode #statsRow #myEstPayout{
+    font-size:clamp(12px,4.1vw,18px)!important;
+  }
+  body.game-mode #statsRow .stat-lbl{font-size:clamp(4.5px,1.55vw,6px);}
+  body.game-mode #statsRow .stat-lbl{color:#9fb0c4;font-weight:700;}
+
+  body.game-mode .dashboard-prize-strip{
+    padding:clamp(4px,.75dvh,7px) clamp(6px,1.8vw,9px);
+    gap:clamp(4px,1.2vw,8px);
+    border-radius:clamp(6px,1.8vw,9px);
+  }
+  body.game-mode .dash-prize-title{font-size:clamp(6px,1.9vw,9px);}
+  body.game-mode .dash-prize-value{font-size:clamp(13px,4.2vw,19px);}
+  body.game-mode .dash-deadline{font-size:clamp(10px,3.2vw,14px);}
+  body.game-mode .dash-deadline span{min-width:clamp(15px,4.5vw,22px);}
+
+  body.game-mode .game-grid{gap:clamp(3px,.7dvh,6px);}
+  body.game-mode .country-section{grid-column:1 / -1;grid-row:2 / 3;}
+  body.game-mode .pitch-container{grid-column:1 / -1;grid-row:1 / 2;}
+  body.game-mode .country-section,
+  body.game-mode .pitch-container,
+  body.game-mode .lb-section{
+    padding:clamp(4px,1.2vw,7px);
+    border-radius:clamp(7px,2vw,10px);
+  }
+  body.game-mode .pitch-title-row{margin-bottom:clamp(3px,.55dvh,5px);}
+  body.game-mode .pitch-title{font-size:clamp(6px,2vw,9px);letter-spacing:clamp(.4px,.22vw,1px);}
+  body.game-mode .squad-score{font-size:clamp(6px,1.9vw,8px);}
+  body.game-mode #selectedCountryCompletion{font-size:clamp(6px,2vw,8px)!important;}
+  body.game-mode .dash-mint-btn{padding:clamp(5px,.8dvh,7px) clamp(6px,1.8vw,9px);font-size:clamp(6px,1.8vw,8px);}
+  body.game-mode .pitch-wrap{padding:clamp(4px,1.2vw,7px);border-radius:clamp(7px,2vw,10px);}
+  body.game-mode .formation.album-horizontal .row-single{gap:clamp(1px,.55vw,3px);}
+  body.game-mode .formation.album-horizontal .row-single .pos-card{
+    min-height:clamp(48px,7.5dvh,66px);
+    padding:clamp(2px,.55dvh,4px) 1px;
+  }
+  body.game-mode .pos-name{font-size:clamp(5px,1.6vw,7px);}
+  body.game-mode .pos-ball{font-size:clamp(10px,3vw,13px);}
+  body.game-mode .pos-weight{font-size:clamp(10px,3.3vw,14px);}
+  body.game-mode .pos-rarity{font-size:clamp(4.5px,1.45vw,6px);}
+
+  body.game-mode .filter-tabs{
+    gap:clamp(2px,.65vw,4px);
+    margin-bottom:clamp(3px,.6dvh,5px);
+  }
+  body.game-mode .tab-btn{
+    font-size:clamp(4.6px,1.55vw,6px);
+    padding:clamp(3px,.55dvh,5px) 1px;
+  }
+  body.game-mode .country-grid{
+    grid-template-columns:repeat(6,minmax(0,1fr));
+    grid-template-rows:none;
+    grid-auto-rows:minmax(clamp(46px,7.2dvh,64px),1fr);
+    gap:clamp(2px,.75vw,4px);
+    overflow:auto;
+    padding-right:2px;
+  }
+  body.game-mode .country-card{
+    min-height:0;
+    padding:clamp(1px,.35dvh,3px) 1px;
+    border-radius:clamp(5px,1.5vw,8px);
+  }
+  body.game-mode .country-card.album-low{box-shadow:0 0 clamp(6px,1.9vw,9px) rgba(239,68,68,.10),inset 0 0 clamp(8px,2.4vw,11px) rgba(239,68,68,.08);}
+  body.game-mode .country-card.album-mid{box-shadow:0 0 clamp(7px,2vw,10px) rgba(249,115,22,.11),inset 0 0 clamp(8px,2.4vw,11px) rgba(249,115,22,.08);}
+  body.game-mode .country-card.album-hot{box-shadow:0 0 clamp(8px,2.2vw,11px) rgba(255,201,64,.14),inset 0 0 clamp(9px,2.5vw,12px) rgba(255,201,64,.10);}
+  body.game-mode .country-card.album-complete{box-shadow:0 0 clamp(9px,2.4vw,12px) rgba(0,255,135,.18),inset 0 0 clamp(9px,2.5vw,12px) rgba(0,255,135,.12);}
+  body.game-mode .country-card.selected{border-color:#00ff87;outline:2px solid rgba(0,255,135,.88);outline-offset:-2px;box-shadow:0 0 clamp(11px,3vw,15px) rgba(0,255,135,.30),inset 0 0 clamp(10px,2.8vw,14px) rgba(0,255,135,.18);}
+  body.game-mode .country-card .flag-img{width:clamp(18px,6vw,26px);height:clamp(12px,4vw,18px);}
+  body.game-mode .country-card-name{font-size:clamp(5.5px,1.86vw,7.4px);}
+  body.game-mode .country-card-score{font-size:clamp(6px,2.04vw,8.4px);}
+  body.game-mode .country-card-completion{font-size:clamp(4.5px,1.45vw,5.6px);}
+
+  body.game-mode .lb-toggle-container{margin-bottom:clamp(3px,.55dvh,5px);}
+  body.game-mode .lb-toggle-btn{font-size:clamp(5px,1.55vw,6.5px);padding:clamp(4px,.65dvh,6px) 2px;}
+  body.game-mode .leaderboard-list{padding:clamp(4px,1vw,6px);}
+  body.game-mode .lb-row{
+    grid-template-columns:clamp(18px,5vw,24px) minmax(0,1fr) clamp(38px,12vw,52px) clamp(50px,15vw,68px) clamp(40px,12vw,52px);
+    gap:clamp(3px,.8vw,5px);
+    padding:clamp(4px,.75dvh,6px);
+  }
+}
+
+/* Final WC Album readability pass */
+body.game-mode .stat-lbl,
+body.game-mode .pitch-title,
+body.game-mode .lb-completion,
+body.game-mode .countdown-sub,
+body.game-mode .pos-rarity,
+body.game-mode .dash-prize-title,
+body.game-mode .card-hover-note,
+body.game-mode .wallet-note{color:#dde4f0!important;}
+body.game-mode .pos-card-top{display:grid!important;grid-template-rows:auto minmax(0,1fr);align-items:center!important;justify-items:center!important;width:100%;}
+body.game-mode .figure-mini{display:grid!important;place-items:center!important;margin:auto!important;line-height:0!important;}
+body.game-mode .figure-mini svg{display:block!important;width:100%!important;height:100%!important;}
+body.game-mode .pos-card.owned::after{top:-5px!important;right:-3px!important;z-index:8!important;}
+@media(min-width:701px){
+  body.game-mode .country-card{grid-template-columns:1fr 1fr!important;text-align:center!important;justify-items:center!important;}
+  body.game-mode .country-card-main,
+  body.game-mode .country-card-stats{align-items:center!important;justify-content:center!important;text-align:center!important;}
+  body.game-mode .country-card-main{flex-direction:column!important;}
+  body.game-mode .country-card .flag-img{width:40px!important;height:27px!important;}
+  body.game-mode .country-card-name{font-size:17px!important;text-align:center!important;}
+  body.game-mode .country-card-score{font-size:17px!important;text-align:center!important;}
+  body.game-mode .country-card-completion{font-size:14px!important;text-align:center!important;}
+  body.game-mode .lb-addr,
+  body.game-mode .lb-completion,
+  body.game-mode .lb-score,
+  body.game-mode .lb-prize{font-family:'Black Ops One',sans-serif!important;font-size:13px!important;color:#dde4f0!important;}
+}
+@media(max-width:700px){
+  body.game-mode .figure-mini{width:24px!important;height:24px!important;}
+  body.game-mode .pos-card-top{min-height:32px!important;}
+  body.game-mode .lb-row{grid-template-columns:22px minmax(0,1fr) 52px 64px 44px!important;}
+  body.game-mode .lb-addr{font-size:9px!important;color:#dde4f0!important;}
+  body.game-mode .lb-completion{font-size:8px!important;color:#dde4f0!important;}
+  body.game-mode .lb-score,
+  body.game-mode .lb-prize{font-size:9px!important;color:#dde4f0!important;}
+}
+
+
+
+
+
+
+/* Exact home-style top navigation */
+body{padding-top:55px!important;}
+.topnav{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  padding:12px 28px!important;
+  border-bottom:1px solid rgba(0,255,135,0.14)!important;
+  background:rgba(5,7,10,0.96)!important;
+  backdrop-filter:blur(14px)!important;
+  position:fixed!important;
+  top:0!important;
+  left:0!important;
+  right:0!important;
+  z-index:100!important;
+  height:55px!important;
+  overflow:visible!important;
+}
+.topnav-logo.logo,
+.logo{
+  font-family:'Black Ops One',sans-serif!important;
+  font-size:18px!important;
+  letter-spacing:2px!important;
+  color:#dde4f0!important;
+  text-shadow:0 0 18px rgba(0,255,135,0.16)!important;
+  white-space:nowrap!important;
+  line-height:1!important;
+}
+.topnav-logo.logo span,
+.logo span{color:#00ff87!important;}
+.nav-right,
+.wallet-actions{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:flex-end!important;
+  gap:12px!important;
+  flex-shrink:0!important;
+  min-width:0!important;
+}
+.wallet-addr{
+  font-family:'Share Tech Mono',monospace!important;
+  font-size:11px!important;
+  color:#7a8899!important;
+  white-space:nowrap!important;
+  background:none!important;
+  border:0!important;
+  padding:0!important;
+}
+.wallet-bal{
+  font-family:'Black Ops One',sans-serif!important;
+  font-size:13px!important;
+  color:#ffc940!important;
+  white-space:nowrap!important;
+  background:none!important;
+  border:0!important;
+  padding:0!important;
+}
+.nav-countdown,
+.nav-price-countdown{
+  position:absolute!important;
+  left:50%!important;
+  top:50%!important;
+  transform:translate(-50%,-50%)!important;
+  font-family:'Black Ops One',sans-serif!important;
+  font-size:13px!important;
+  letter-spacing:2px!important;
+  color:#ffc940!important;
+  padding:6px 12px!important;
+  border:1px solid rgba(255,201,64,.24)!important;
+  border-radius:7px!important;
+  background:rgba(255,201,64,.045)!important;
+  white-space:nowrap!important;
+  display:block!important;
+  line-height:1!important;
+}
+.nav-countdown span,
+.nav-price-countdown span{color:#dde4f0!important;font-size:10px!important;margin-right:8px!important;letter-spacing:1px!important;}
+.nav-countdown b,
+.nav-price-countdown b{font-size:13px!important;color:#ffc940!important;font-weight:400!important;}
+.btn-connect.connected{background:rgba(0,255,135,0.15)!important;border-color:#00ff87!important;color:#00ff87!important;}
+@media(max-width:768px){
+  body{padding-top:72px!important;}
+  .topnav{height:48px!important;padding:10px 12px!important;}
+  .topnav-logo.logo,.logo{font-size:13px!important;letter-spacing:1.4px!important;}
+  .wallet-actions,.nav-right{gap:6px!important;}
+  .wallet-addr{font-size:8px!important;max-width:86px!important;overflow:hidden!important;text-overflow:ellipsis!important;}
+  .wallet-bal{font-size:9px!important;}
+  .btn-connect{font-size:9px!important;padding:7px 9px!important;}
+  .nav-countdown,.nav-price-countdown{top:48px!important;left:50%!important;transform:translateX(-50%)!important;font-size:9px!important;letter-spacing:1px!important;padding:4px 7px!important;background:rgba(5,7,10,.96)!important;}
+  .nav-countdown span,.nav-price-countdown span{display:none!important;}
+}
+
+/* Final mobile header/quest/info alignment */
+@media(max-width:700px){
+  body{padding-top:70px!important;}
+  .topnav{
+    height:70px!important;
+    min-height:70px!important;
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr) auto!important;
+    grid-template-rows:34px 24px!important;
+    align-items:center!important;
+    gap:0 8px!important;
+    padding:7px 10px 6px!important;
+    overflow:hidden!important;
+  }
+  .topnav-logo.logo,
+  .topnav .logo{
+    grid-column:1!important;
+    grid-row:1!important;
+    align-self:center!important;
+    justify-self:start!important;
+    font-size:13px!important;
+    line-height:1!important;
+  }
+  .topnav .wallet-actions,
+  .topnav .nav-right{
+    grid-column:2!important;
+    grid-row:1!important;
+    align-self:center!important;
+    justify-self:end!important;
+    min-width:0!important;
+  }
+  .nav-countdown,
+  .nav-price-countdown{
+    grid-column:1 / -1!important;
+    grid-row:2!important;
+    position:static!important;
+    inset:auto!important;
+    transform:none!important;
+    justify-self:center!important;
+    align-self:center!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    gap:6px!important;
+    width:auto!important;
+    max-width:calc(100vw - 24px)!important;
+    margin:0 auto!important;
+    padding:4px 9px!important;
+    background:rgba(255,201,64,.08)!important;
+    border:1px solid rgba(255,201,64,.42)!important;
+    border-radius:7px!important;
+    color:#ffc940!important;
+    font-family:'Black Ops One',sans-serif!important;
+    font-size:10px!important;
+    line-height:1!important;
+    letter-spacing:1px!important;
+    white-space:nowrap!important;
+  }
+  .nav-countdown span,
+  .nav-price-countdown span,
+  .nav-countdown b,
+  .nav-price-countdown b{
+    display:inline!important;
+    margin:0!important;
+    color:#ffc940!important;
+    font-family:'Black Ops One',sans-serif!important;
+    font-size:10px!important;
+    line-height:1!important;
+    letter-spacing:1px!important;
+    font-weight:400!important;
+  }
+}
+
+/* Keep connected wallet button visible like Dream XI */
+body.game-mode .wallet-actions #connectBtn.connected,
+body.game-mode .nav-right #connectBtn.connected{
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  background:rgba(0,255,135,0.15)!important;
+  border-color:#00ff87!important;
+  color:#00ff87!important;
+}
+/* Shared mint result popup - synced with Nation Quest */
+.mint-result-modal{position:fixed;inset:0;z-index:6100;display:none;align-items:center;justify-content:center;background:rgba(2,6,8,.78);backdrop-filter:blur(7px);padding:16px}
+.mint-result-modal.show{display:flex}
+.mint-result-modal .mint-result-panel{width:min(92vw,470px)!important;text-align:center;border:1px solid rgba(0,255,135,.46)!important;border-radius:12px!important;padding:16px!important;background:linear-gradient(180deg,rgba(8,18,35,.98),rgba(6,8,10,.97))!important;box-shadow:0 24px 80px rgba(0,0,0,.68),0 0 34px rgba(0,255,135,.12)!important;color:#dde4f0!important}
+.mint-result-modal .mint-result-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px}.mint-result-modal .mint-result-head-title{font-family:'Black Ops One',sans-serif;color:#00ff87;font-size:16px;letter-spacing:1px}.mint-result-modal .mint-result-close{border:1px solid #1c2028;background:#0f1318;color:#dde4f0;border-radius:7px;width:32px;height:32px;cursor:pointer;font-size:20px;line-height:1}
+.mint-result-body{display:grid;gap:12px}.mint-result-visual{display:grid;place-items:center;min-height:110px;border:1px solid rgba(0,255,135,.22);border-radius:10px;background:radial-gradient(circle at 50% 30%,rgba(0,255,135,.12),transparent 64%),rgba(15,19,24,.72);padding:10px}.mint-result-visual .card-fig-canvas{height:92px!important;margin:0 auto;display:grid;place-items:center}.mint-result-visual svg{width:86px!important;height:86px!important}.mint-result-title{font-family:'Black Ops One',sans-serif;font-size:22px;line-height:1;color:#fff;letter-spacing:1px}.mint-result-title .usa-blue{color:#3b82f6}.mint-result-title .usa-red{color:#ef4444}.mint-result-title .arg-blue{color:#74ACDF}.mint-result-sub{font-size:15px;line-height:1.3;color:#dde4f0}.mint-result-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}.mint-result-stat{border:1px solid #1c2028;background:#0f1318;border-radius:8px;padding:9px 6px}.mint-result-stat b{display:block;font-family:'Black Ops One',sans-serif;font-size:17px;line-height:1;color:#00ff87}.mint-result-stat span{display:block;margin-top:4px;font-family:'Share Tech Mono',monospace;font-size:10px;color:#fff;text-transform:uppercase}.mint-result-note{border:1px solid rgba(255,201,64,.28);background:rgba(255,201,64,.07);border-radius:9px;padding:10px;font-size:14px;line-height:1.28;color:#fff}.mint-result-primary{width:100%;border:1px solid rgba(0,255,135,.52);background:#00ff87;color:#06100b;border-radius:9px;min-height:44px;font-family:'Black Ops One',sans-serif;font-size:13px;letter-spacing:1px;cursor:pointer}.mint-result-primary:hover{filter:brightness(1.08)}
+@media(max-width:900px){.mint-result-modal .mint-result-panel{max-width:calc(100vw - 24px)!important}.mint-result-title{font-size:19px}.mint-result-sub,.mint-result-note{font-size:13px}.mint-result-grid{gap:6px}.mint-result-stat b{font-size:14px}.mint-result-stat span{font-size:8px}.mint-result-primary{font-size:12px}}
+
+
+/* Desktop mint popup: oversized figure preview. Mobile keeps compact sizing. */
+@media(min-width:901px){
+  .mint-result-modal .mint-result-panel,
+  .modal.show .mint-result-panel{
+    width:min(92vw,620px)!important;
+    max-width:420px!important;
+  }
+  .mint-result-visual{
+    min-height:360px!important;
+    padding:18px!important;
+  }
+  .mint-result-visual .card-fig-canvas,
+  .mint-result-visual .slot-fig-canvas{
+    height:340px!important;
+    flex:0 0 340px!important;
+    width:420px!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    margin:0 auto!important;
+  }
+  .mint-result-visual .card-fig-canvas svg,
+  .mint-result-visual .slot-fig-canvas svg,
+  .mint-result-visual svg{
+    width:330px!important;
+    height:330px!important;
+    display:block!important;
+    margin:0 auto!important;
+  }
+}
+
+.mint-3d-stage{width:100%;height:100%;min-height:inherit;display:grid;place-items:center;position:relative;}
+.mint-3d-canvas{width:100%!important;height:100%!important;display:block;}
+.mint-3d-fallback{display:none!important;}
+@media(max-width:900px){.mint-result-visual{min-height:250px!important}.mint-3d-stage{min-height:226px!important}}
+
+/* Mint result note typography pass */
+.mint-result-note{
+  font-family:'Black Ops One',sans-serif!important;
+  font-size:13px!important;
+  letter-spacing:.35px!important;
+  line-height:1.45!important;
+  text-transform:none!important;
+}
+.mint-result-note span{
+  display:block!important;
+  margin-top:5px!important;
+  font-family:'Share Tech Mono',monospace!important;
+  font-size:12px!important;
+  letter-spacing:.8px!important;
+  color:#9fb1c7!important;
+}
+.mint-result-note br{display:none!important;}
+@media(max-width:900px){
+  .mint-result-note{font-size:11px!important;line-height:1.35!important;}
+  .mint-result-note span{font-size:10px!important;}
+}
+
+/* Mint result mobile viewport fit */
+@media(max-width:900px){
+  .mint-result-modal.show,
+  .modal.show:has(.mint-result-panel){
+    align-items:center!important;
+    justify-content:center!important;
+    padding:8px!important;
+  }
+  .mint-result-modal .mint-result-panel,
+  .modal.show .mint-result-panel{
+    width:calc(100vw - 16px)!important;
+    max-width:calc(100vw - 16px)!important;
+    max-height:calc(100dvh - 16px)!important;
+    overflow:auto!important;
+    padding:10px!important;
+    border-radius:10px!important;
+  }
+  .mint-result-body{gap:7px!important;}
+  .mint-result-visual{min-height:190px!important;padding:6px!important;}
+  .mint-3d-stage{min-height:176px!important;}
+  .mint-result-title{font-size:17px!important;}
+  .mint-result-sub{font-size:11px!important;line-height:1.18!important;}
+  .mint-result-grid{gap:5px!important;}
+  .mint-result-stat{padding:6px 3px!important;border-radius:7px!important;}
+  .mint-result-stat b{font-size:12px!important;}
+  .mint-result-stat span{font-size:6.5px!important;margin-top:3px!important;}
+  .mint-result-note{font-size:9px!important;line-height:1.22!important;padding:7px!important;}
+  .mint-result-note span{font-size:8px!important;margin-top:3px!important;}
+  .mint-result-primary{min-height:38px!important;font-size:10px!important;border-radius:8px!important;}
+}
+@media(max-width:430px){
+  .mint-result-modal .mint-result-panel,
+  .modal.show .mint-result-panel{max-height:calc(100dvh - 10px)!important;padding:8px!important;}
+  .mint-result-visual{min-height:160px!important;}
+  .mint-3d-stage{min-height:148px!important;}
+  .mint-result-title{font-size:15px!important;}
+  .mint-result-sub{font-size:10px!important;}
+  .mint-result-note{font-size:8px!important;}
+}
 </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
 <body>
 
 <nav class="topnav">
-  <a href="https://block-kickers.vercel.app" class="topnav-logo" style="text-decoration:none;">&#9917; BLOCK <span>KICKERS</span></a>
-  <button class="btn-connect" id="connectBtn" onclick="connectWallet()">CONNECT WALLET</button>
+  <a href="https://block-kickers.vercel.app" class="topnav-logo logo" style="text-decoration:none;">&#9917; BLOCK <span>KICKERS</span></a>
+  <div class="nav-countdown" id="navPriceCountdown"><span>WC END IN</span>--:--:--:--</div>
+  <div class="nav-right wallet-actions">
+    <span id="walletAddress" class="wallet-addr" style="display:none;"></span>
+    <span id="walletBalance" class="wallet-bal" style="display:none;"></span>
+    <button class="btn-connect" id="connectBtn" onclick="openWalletChoice()">CONNECT</button>
+  </div>
 </nav>
+
+<div class="wallet-modal" id="walletChoiceModal" onclick="closeWalletChoice(event)">
+  <div class="wallet-panel" onclick="event.stopPropagation()">
+    <div class="wallet-panel-head">
+      <div class="wallet-panel-title">Choose Wallet</div>
+      <button class="wallet-close" type="button" onclick="closeWalletChoice()">x</button>
+    </div>
+    <button class="wallet-option" type="button" onclick="connectInjectedFromChoice()">
+      <span class="wallet-option-icon">&#128188;</span>
+      <span><span class="wallet-option-name">MetaMask / Trust Browser</span><span class="wallet-option-desc">Use the wallet injected into this browser.</span></span>
+      <span class="wallet-option-tag">APP</span>
+    </button>
+    <button class="wallet-option" type="button" onclick="connectWalletConnect()">
+      <span class="wallet-option-icon">&#128279;</span>
+      <span><span class="wallet-option-name">WalletConnect</span><span class="wallet-option-desc">Use Trust Wallet or MetaMask Mobile. Avoid Socios for mint/buy on mobile.</span></span>
+      <span class="wallet-option-tag">QR</span>
+    </button>
+    <button class="wallet-option" type="button" onclick="connectPrivyFromChoice()">
+      <span class="wallet-option-icon">&#9993;</span>
+      <span><span class="wallet-option-name">Privy Email Wallet</span><span class="wallet-option-desc">Create or restore an embedded wallet by email code.</span></span>
+      <span class="wallet-option-tag">NEW</span>
+    </button>
+    <div class="wallet-note">Recommended on mobile: Privy, Trust Wallet, or MetaMask Mobile.</div>
+  </div>
+</div>
 
 <div class="page">
 
@@ -663,15 +1674,25 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
       <div class="stat-lbl">Global Position</div>
     </div>
     <div class="stat-card" style="background:rgba(0,255,135,0.03); border-color:rgba(0,255,135,0.2);">
-      <div class="stat-val" id="myEstPayout" style="color:#00ff87; font-size:24px; padding-top:6px;">0.00 CHZ</div>
+      <div class="stat-val" id="myEstPayout" style="color:#00ff87; font-size:24px; padding-top:6px;">???,??? CHZ</div>
       <div class="stat-lbl">Est. Quest Reward (TOP 10)</div>
+    </div>
+  </div>
+  <div class="dashboard-prize-strip" id="dashboardPrizeStrip" style="display:none;">
+    <div class="dash-prize-title">&#127942; WC ALBUM PRIZE POOL</div>
+    <div class="dash-prize-value">25,000 CHZ</div>
+    <div class="dash-deadline" aria-label="Quest countdown">
+      <span id="dashCdD">--</span><small>D</small>:
+      <span id="dashCdH">--</span><small>H</small>:
+      <span id="dashCdM">--</span><small>M</small>:
+      <span id="dashCdS">--</span><small>S</small>
     </div>
   </div>
 
   <!-- CONNECT SECTION -->
   <div id="connectSection" class="connect-prompt">
     <p>Connect your Chiliz Wallet to explore the 48 country albums and start dominating lists</p>
-    <button class="btn-connect-big" onclick="connectWallet()">CONNECT WALLET</button>
+    <button class="btn-connect-big" onclick="openWalletChoice()">CHOOSE WALLET</button>
   </div>
 
   <!-- MAIN GAME AREA (AFTER CONNECTION) -->
@@ -697,20 +1718,21 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
       
       <!-- LEFT COLUMN: NATION SELECTOR -->
       <div class="left-col country-section">
-        <div class="pitch-title">
+        <div class="pitch-title nation-selector-title">
           <span>NATION SELECTOR</span>
-          <span style="font-family:'Share Tech Mono',monospace; color:#818cf8;">48 ALBUMS</span>
-        </div>
-
-        <!-- FEDERATION FILTER TABS -->
-        <div class="filter-tabs">
-          <button class="tab-btn active" onclick="filterFederation('ALL', this)">ALL (48)</button>
-          <button class="tab-btn" onclick="filterFederation('UEFA', this)">UEFA</button>
-          <button class="tab-btn" onclick="filterFederation('CONMEBOL', this)">CONMEBOL</button>
-          <button class="tab-btn" onclick="filterFederation('CAF', this)">CAF</button>
-          <button class="tab-btn" onclick="filterFederation('AFC', this)">AFC</button>
-          <button class="tab-btn" onclick="filterFederation('CONCACAF', this)">CONCACAF</button>
-          <button class="tab-btn" onclick="filterFederation('OFC', this)">OFC</button>
+          <div class="filter-tabs">
+            <button class="tab-btn active" onclick="filterFederation('ALL', this)">ALL (48)</button>
+            <button class="tab-btn" onclick="filterFederation('UEFA', this)">UEFA</button>
+            <button class="tab-btn" onclick="filterFederation('CONMEBOL', this)">CONMEBOL</button>
+            <button class="tab-btn" onclick="filterFederation('CAF', this)">CAF</button>
+            <button class="tab-btn" onclick="filterFederation('AFC', this)">AFC</button>
+            <button class="tab-btn" onclick="filterFederation('CONCACAF', this)">CONCACAF</button>
+            <button class="tab-btn" onclick="filterFederation('OFC', this)">OFC</button>
+          </div>
+          <span class="album-title-tools">
+            <span class="album-count-label">48 ALBUMS</span>
+            <button class="dash-icon-btn" type="button" title="Refresh albums" onclick="loadData()">&#8635;</button>
+          </span>
         </div>
 
         <div class="country-grid" id="countryGridContainer">
@@ -724,7 +1746,8 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
           <div class="pitch-title" style="margin-bottom:0;">
             <span id="selectedCountryTitle">TACTICAL PITCH</span>
           </div>
-          <span style="font-family:'Share Tech Mono',monospace; color:#818cf8; font-size:12px;" id="selectedCountryCompletion">0/11 COMPLETED</span>
+          <button class="dash-mint-btn" onclick="directMint()">MINT</button>
+          <span class="completion-label" id="selectedCountryCompletion">0/11 COMPLETED</span>
         </div>
 
         <div class="pitch-wrap">
@@ -787,47 +1810,725 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
 </div>
 
 <!-- SELL MODAL -->
-<div id="sellModal" style="display:none; position:fixed; inset:0; background:rgba(6,8,10,0.85); backdrop-filter:blur(8px); z-index:1000; align-items:center; justify-content:center; padding:16px;">
-  <div style="background:#0f1318; border:1px solid #1c2028; border-radius:12px; max-width:400px; width:100%; padding:24px; position:relative; box-shadow:0 10px 40px rgba(0,0,0,0.6);">
-    <button onclick="toggleSellModal(false)" style="position:absolute; top:16px; right:16px; background:none; border:none; color:#7a8899; font-size:24px; cursor:pointer;">&times;</button>
-    <h2 style="font-family:'Black Ops One',sans-serif; font-size:20px; color:#ef4444; margin-bottom:12px;">Sell Player Card</h2>
-    <div id="sellCardInfo" style="margin-bottom:16px; font-size:14px; color:#dde4f0; line-height:1.5; display: flex; flex-direction: column; align-items: flex-start; gap: 4px;">
+<div id="sellModal" class="sell-modal-shell">
+  <div class="sell-panel">
+    <button class="sell-close" onclick="toggleSellModal(false)">&times;</button>
+    <h2 class="sell-title">LIST CARD</h2>
+    <div class="sell-card-preview">
+      <div id="sellCardInfo" class="sell-card-info">
       <!-- Dynamic card info -->
+      </div>
     </div>
-    <div style="margin-bottom:20px;">
-      <label style="display:block; font-size:11px; letter-spacing:1px; color:#5a6a7a; margin-bottom:6px; text-transform:uppercase;">Set Listing Price (CHZ)</label>
-      <input type="number" id="sellPriceInput" step="0.1" min="0.1" placeholder="10.0" style="width:100%; background:#06080a; border:1px solid #1c2028; padding:10px; border-radius:6px; color:#dde4f0; font-family:'Share Tech Mono',monospace; font-size:16px;">
+    <div class="sell-price-box">
+      <label class="sell-price-label">Set Listing Price (CHZ)</label>
+      <div class="sell-stepper">
+        <button type="button" class="sell-step-btn" data-step="-1">-</button>
+        <input type="number" id="sellPriceInput" class="sell-price-input" step="1" min="1" placeholder="10">
+        <button type="button" class="sell-step-btn" data-step="1">+</button>
+      </div>
     </div>
-    <button class="btn-card-action upgrade" id="btnSubmitSell" onclick="submitSellCard()" style="padding:10px; font-size:11px; text-transform:uppercase;">List Card For Sale</button>
+    <button class="btn-card-action upgrade sell-submit" id="btnSubmitSell" onclick="submitSellCard()">LIST CARD FOR SALE</button>
   </div>
 </div>
 
 <!-- MINT SUCCESS MODAL -->
-<div id="mintSuccessModal" style="display:none; position:fixed; inset:0; background:rgba(6,8,10,0.85); backdrop-filter:blur(8px); z-index:1001; align-items:center; justify-content:center; padding:16px;">
-  <div style="background:#0f1318; border:1px solid #1c2028; border-radius:12px; max-width:450px; width:100%; padding:24px; position:relative; box-shadow:0 10px 40px rgba(0,0,0,0.6); text-align:center;">
-    <button onclick="toggleMintSuccessModal(false)" style="position:absolute; top:16px; right:16px; background:none; border:none; color:#7a8899; font-size:24px; cursor:pointer;">&times;</button>
+<div id="mintSuccessModal" class="card-result-modal">
+  <div class="card-result-panel">
+    <button class="card-result-close" onclick="toggleMintSuccessModal(false)">&times;</button>
     <div style="font-size: 50px; margin-bottom: 12px; animation: pulse 2s infinite;">🎉</div>
-    <h2 style="font-family:'Black Ops One',sans-serif; font-size:24px; color:#00ff87; margin-bottom:16px; letter-spacing:1px;">PLAYER MINTED!</h2>
+    <h2 id="cardResultTitle" class="card-result-title">CARD MINTED!</h2>
     
-    <div id="mintedCardVisual" style="background:#06080a; border:1px solid #1c2028; border-radius:8px; padding:20px; margin-bottom:20px; display:inline-block; width:100%;">
+    <div id="mintedCardVisual" class="card-result-visual">
       <!-- Dynamically populated card view -->
     </div>
 
-    <div id="mintedCardStatus" style="font-family:'Barlow Condensed',sans-serif; font-size:16px; line-height:1.4; margin-bottom:20px;">
+    <div id="mintedCardStatus" class="card-result-status">
       <!-- Dynamically populated status message -->
     </div>
 
-    <button class="btn-card-action upgrade" onclick="toggleMintSuccessModal(false)" style="padding:10px; font-size:11px; text-transform:uppercase; font-family:'Black Ops One', sans-serif;">CONTINUE TO PITCH</button>
+    <button class="btn-card-action upgrade" onclick="continueToSquad()" style="padding:13px; font-size:13px; text-transform:uppercase; font-family:'Black Ops One', sans-serif;">CONTINUE TO SQUAD</button>
   </div>
 </div>
 
 <div id="toast">System Notification</div>
 
+<div class="mint-result-modal" id="mintResultModal">
+  <div class="mint-result-panel">
+    <div class="mint-result-head"><div class="mint-result-head-title">CARD MINTED</div><button class="mint-result-close" onclick="closeMintResultModal()">&times;</button></div>
+    <div class="mint-result-body">
+      <div class="mint-result-visual" id="mintResultVisual"></div>
+      <div id="mintResultMain"></div>
+      <div class="mint-result-grid" id="mintResultStats"></div>
+      <div class="mint-result-note" id="mintResultNote"></div>
+      <button class="mint-result-primary" onclick="continueMintToSquad()">CONTINUE TO SQUAD</button>
+    </div>
+  </div>
+</div>
+
+<div id="networkOverlay" aria-live="polite" aria-busy="true">
+  <div class="network-wait-card">
+    <div class="network-ball">&#9917;</div>
+    <div class="network-wait-title">Waiting for network</div>
+    <div class="network-wait-text" id="networkOverlayText">Please confirm in your wallet and wait for Chiliz Chain.</div>
+    <button id="walletOpenBtn" type="button" onclick="openWalletConnectApp()" style="display:none;margin-top:12px;border:1px solid rgba(0,255,135,.42);background:rgba(0,255,135,.10);color:#00ff87;border-radius:7px;padding:9px 12px;font-family:'Black Ops One',sans-serif;font-size:10px;letter-spacing:1px;">OPEN WALLET APP</button>
+  </div>
+</div>
+
 <script>
+window.BK_MINT_CONTEXT = window.BK_MINT_CONTEXT || {"type":"wc"};
+function closeMintResultModal(){document.getElementById('mintResultModal')?.classList.remove('show');}
+function continueMintToSquad(){
+  closeMintResultModal();
+  const target = document.querySelector('.pitch-container') || document.querySelector('#squadPanel') || document.querySelector('#squadGrid') || document.querySelector('#mySquadGrid') || document.querySelector('.squad-section') || document.querySelector('.side-panel');
+  if (target) target.scrollIntoView({behavior:'smooth', block:'center', inline:'nearest'});
+}
+function bkMintTeamInfo(id){
+  const idx = Number(id) || 0;
+  const teams = (typeof TEAMS !== 'undefined' && Array.isArray(TEAMS)) ? TEAMS : (Array.isArray(window.TEAMS) ? window.TEAMS : []);
+  const flagCodes = (typeof TEAM_FLAG_CODES !== 'undefined' && Array.isArray(TEAM_FLAG_CODES)) ? TEAM_FLAG_CODES : (Array.isArray(window.TEAM_FLAG_CODES) ? window.TEAM_FLAG_CODES : []);
+  let raw = teams[idx % Math.max(teams.length, 1)] || null;
+  let name = 'Team #' + idx;
+  let code = flagCodes[idx % Math.max(flagCodes.length, 1)] || '';
+  let flag = '🏳️';
+  if (typeof raw === 'string') { name = raw; }
+  else if (raw && typeof raw === 'object') { name = raw.name || name; code = raw.code || code; flag = raw.flag || flag; }
+  if (name === 'United States') name = 'USA';
+  return {name, code, flag};
+}
+function bkMintTeamShort(team){
+  const special = {'United States':'USA','USA':'USA','Argentina':'ARG','Czech Republic':'CZE','Czech Rep.':'CZE','DR Congo':'COD','Ivory Coast':'CIV','South Africa':'RSA','New Zealand':'NZL','Saudi Arabia':'KSA','South Korea':'KOR','Cape Verde':'CPV','Curacao':'CUW','England':'ENG','Scotland':'SCO','Turkey':'TUR','Bosnia':'BIH'};
+  return special[team?.name] || String(team?.name || '---').replace(/[^A-Za-z]/g,'').slice(0,3).toUpperCase();
+}
+function bkMintTeamFlagHtml(team, size = 58){
+  if (team?.code) return '<img src="https://flagcdn.com/w80/' + team.code + '.png" alt="' + team.name + '" style="width:' + size + 'px;height:' + Math.round(size * 0.66) + 'px;object-fit:cover;border-radius:4px;box-shadow:0 2px 8px rgba(0,0,0,.45)" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'inline-block\';"><span style="display:none;font-size:' + Math.round(size * .55) + 'px">' + (team.flag || '🏳️') + '</span>';
+  return '<span style="font-size:' + Math.round(size * .55) + 'px">' + (team?.flag || '🏳️') + '</span>';
+}
+function bkMintPositionLabel(id){
+  let label = '';
+  if (typeof posLabel === 'function') label = posLabel(id);
+  else if (typeof POSITION_SHORT !== 'undefined' && POSITION_SHORT && POSITION_SHORT[id]) label = POSITION_SHORT[id];
+  else if (window.POSITION_SHORT && window.POSITION_SHORT[id]) label = window.POSITION_SHORT[id];
+  else if (typeof POSITION_NAMES !== 'undefined' && POSITION_NAMES && POSITION_NAMES[id]) label = POSITION_NAMES[id];
+  else if (window.POSITION_NAMES && window.POSITION_NAMES[id]) label = window.POSITION_NAMES[id];
+  const fallback = {1:'GK',2:'RB',3:'LB',4:'CB A',5:'CB B',6:'DM',7:'RW',8:'MID',9:'ST',10:'#10',11:'LW'};
+  label = label || fallback[Number(id)] || String(id);
+  const clean = String(label).trim().toUpperCase();
+  if (clean === 'CB1' || clean === 'CB 1') return 'CB A';
+  if (clean === 'CB2' || clean === 'CB 2') return 'CB B';
+  return label;
+}
+function bkMintRarityName(r){return ['Common','Rare','Epic','Legendary'][Number(r)] || 'Common';}
+function bkMintRarityShort(r){return ['COM','RAR','EPI','LEG'][Number(r)] || 'COM';}
+function bkMintRarityColor(r){return ['#7a8899','#3b82f6','#c084fc','#ffc940'][Number(r)] || '#7a8899';}
+
+const TEAM_COLORS = [
+  // AFC (0-8)
+  '#FFD700', // 0  Australia      - gold
+  '#239F40', // 1  Iran           - green
+  '#CC0001', // 2  Iraq           - red
+  '#BC002D', // 3  Japan          - red (classic away)
+  '#007A3D', // 4  Jordan         - green
+  '#8D153A', // 5  Qatar          - maroon
+  '#006C35', // 6  Saudi Arabia   - green
+  '#CD2E3A', // 7  South Korea    - red
+  '#1EB53A', // 8  Uzbekistan     - green
+  // CAF (9-18)
+  '#006233', // 9  Algeria        - green (away)
+  '#003893', // 10 Cape Verde     - blue
+  '#007FFF', // 11 DR Congo       - sky blue
+  '#CE1126', // 12 Egypt          - red
+  '#006B3F', // 13 Ghana          - green (away)
+  '#F77F00', // 14 Ivory Coast    - orange
+  '#C1272D', // 15 Morocco        - red
+  '#00853F', // 16 Senegal        - green
+  '#007749', // 17 South Africa   - green
+  '#E70013', // 18 Tunisia        - red
+  // CONCACAF (19-24)
+  '#FF0000', // 19 Canada         - red
+  '#002B7F', // 20 Curacao        - blue
+  '#00209F', // 21 Haiti          - blue
+  '#006847', // 22 Mexico         - green
+  '#DA121A', // 23 Panama         - red
+  '#002868', // 24 United States  - navy blue
+  // CONMEBOL (25-30)
+  '#74ACDF', // 25 Argentina      - sky blue
+  '#009C3B', // 26 Brazil         - green
+  '#FCD116', // 27 Colombia       - yellow
+  '#FFD100', // 28 Ecuador        - yellow
+  '#D52B1E', // 29 Paraguay       - red
+  '#5EB6E4', // 30 Uruguay        - sky blue
+  // OFC (31)
+  '#00247D', // 31 New Zealand    - navy
+  // UEFA (32-47)
+  '#ED2939', // 32 Austria        - red
+  '#000000', // 33 Belgium        - black
+  '#002395', // 34 Bosnia         - blue
+  '#FF0000', // 35 Croatia        - red (classic)
+  '#D7141A', // 36 Czech Republic - red
+  '#FFFFFF', // 37 England        - white
+  '#002395', // 38 France         - blue
+  '#000000', // 39 Germany        - black (away classic)
+  '#FF6600', // 40 Netherlands    - orange
+  '#EF2B2D', // 41 Norway         - red
+  '#006600', // 42 Portugal       - green
+  '#003087', // 43 Scotland       - blue
+  '#AA151B', // 44 Spain          - red
+  '#006AA7', // 45 Sweden         - blue
+  '#FF0000', // 46 Switzerland    - red
+  '#E30A17', // 47 Turkey         - red
+];
+
+const RARITY_NAMES = ['COMMON','RARE','EPIC','LEGENDARY'];
+const RARITY_SHORT = ['COM','RAR','EPI','LEG'];
+const TEAM_FLAG_CODES = ['au','ir','iq','jp','jo','qa','sa','kr','uz','dz','cv','cd','eg','gh','ci','ma','sn','za','tn','ca','cw','ht','mx','pa','us','ar','br','co','ec','py','uy','nz','at','be','ba','hr','cz','gb-eng','fr','de','nl','no','pt','gb-sct','es','se','ch','tr'];
+const HAIR_NAMES   = ['Buzz Cut','Curly','Spiky','Mohawk','Afro','Dreads','Bald','Wavy'];
+const SKIN_NAMES   = ['Fair','Light','Medium','Tan','Brown','Dark'];
+const POSITION_NAMES = {
+  1:'Goalkeeper',2:'Right Back',3:'Left Back',4:'Centre Back',5:'Centre Back',
+  6:'Def. Mid',7:'Right Wing',8:'Mid',9:'Striker',10:'Playmaker',11:'Left Wing'
+};
+
+function skinColor(tone) {
+  return ['#FFDBB4','#EEC59A','#D4956A','#C27A4B','#8D5524','#4A2912'][tone];
+}
+
+class Figure3D {
+  constructor(canvas, dna, spin = true, highQuality = false) {
+    this.canvas = canvas;
+    this.highQuality = highQuality;
+    this.t = parseDNA(dna);
+    this.spin = spin;
+    this.visible = true;
+    this.fid = null;
+    this.init();
+  }
+
+
+  getRenderPixelRatio() {
+    const base = window.devicePixelRatio || 1;
+    if (this.highQuality) return Math.min(Math.max(base, 2.5), 4);
+    return (this.canvas.clientWidth > 200) ? Math.min(base, 2) : 1;
+  }
+
+  init() {
+    const w = this.canvas.clientWidth || 280;
+    const h = this.canvas.clientHeight || 280;
+    this.scene = new THREE.Scene();
+    this.cam = new THREE.PerspectiveCamera(42, w/h, 0.1, 100);
+    this.cam.position.set(0, 1.2, 7.0);
+    this.cam.lookAt(0, 1, 0);
+    // SprawdĹş czy WebGL dostÄ™pny
+    try{
+      const testCtx = this.canvas.getContext('webgl2') || this.canvas.getContext('webgl');
+      if(!testCtx){ this.canvas.style.background='#111'; return; }
+    }catch(e){ return; }
+    this.ren = new THREE.WebGLRenderer({
+      canvas:this.canvas,
+      alpha:true,
+      antialias:this.highQuality,
+      powerPreference:this.highQuality ? 'high-performance' : 'low-power',
+      failIfMajorPerformanceCaveat:false
+    });
+    const dpr = this.getRenderPixelRatio();
+    this.ren.setPixelRatio(dpr);
+    this.ren.setSize(w, h, false);
+
+    // Oversample hero/modal canvases so CSS scaling stays crisp on desktop.
+    this.canvas.style.imageRendering = 'auto';
+
+    // IntersectionObserver - pauzuj gdy poza ekranem
+    if(window.IntersectionObserver){
+      this._io = new IntersectionObserver((entries)=>{
+        this.visible = entries[0].isIntersecting;
+      }, {threshold: 0.1});
+      this._io.observe(this.canvas);
+    }
+
+    // ResizeObserver - re-render przy zmianie rozmiaru
+    if(window.ResizeObserver){
+      this._ro = new ResizeObserver(()=>{
+        const nw = this.canvas.clientWidth;
+        const nh = this.canvas.clientHeight;
+        if(nw>0 && nh>0){
+          this.ren.setPixelRatio(this.getRenderPixelRatio());
+          this.ren.setSize(nw, nh, false);
+          this.cam.aspect = nw/nh;
+          this.cam.updateProjectionMatrix();
+        }
+      });
+      this._ro.observe(this.canvas);
+    }
+    this.ren.shadowMap.enabled = true;
+    this.ren.toneMapping = THREE.ACESFilmicToneMapping;
+
+    // Lights
+    this.scene.add(new THREE.AmbientLight(0xffffff, 0.45));
+    const key = new THREE.DirectionalLight(0xffffff, 1.1);
+    key.position.set(3,5,3); key.castShadow = true;
+    this.scene.add(key);
+    const fill = new THREE.DirectionalLight(0x8899ff, 0.35);
+    fill.position.set(-3,2,-2);
+    this.scene.add(fill);
+
+    // Rarity accent light
+    const rc = [0x6b7280,0x3b82f6,0xa855f7,0xffc940][this.t.rarity];
+    const rl = new THREE.PointLight(rc, this.t.rarity * 0.4 + 0.1, 6);
+    rl.position.set(0,1,2.5);
+    this.scene.add(rl);
+
+    // Ground disc
+    const gm = new THREE.Mesh(
+      new THREE.CircleGeometry(1.4,32),
+      new THREE.MeshStandardMaterial({color:0x141820,roughness:0.9,metalness:0.1,transparent:true,opacity:0.5})
+    );
+    gm.rotation.x = -Math.PI/2; gm.receiveShadow = true;
+    this.scene.add(gm);
+
+    this.build();
+    this.loop();
+  }
+
+  m(col, rarity=0) {
+    const p = {color:col,roughness:0.7,metalness:0.05};
+    if (rarity===1){p.roughness=0.45;p.metalness=0.25;}
+    if (rarity===2){p.roughness=0.2;p.metalness=0.55;p.emissive=new THREE.Color(0xa855f7);p.emissiveIntensity=0.08;}
+    if (rarity===3){p.roughness=0.18;p.metalness=0.38;p.emissive=new THREE.Color(0xffc940);p.emissiveIntensity=0.06;}
+    return new THREE.MeshStandardMaterial(p);
+  }
+
+  bx(w,h,d,mat,x=0,y=0,z=0){const m=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),mat);m.position.set(x,y,z);m.castShadow=true;return m;}
+  sp(r,mat,x=0,y=0,z=0){const m=new THREE.Mesh(new THREE.SphereGeometry(r,14,10),mat);m.position.set(x,y,z);m.castShadow=true;return m;}
+  cy(rt,rb,h,seg,mat,x=0,y=0,z=0){const m=new THREE.Mesh(new THREE.CylinderGeometry(rt,rb,h,seg),mat);m.position.set(x,y,z);m.castShadow=true;return m;}
+
+  build() {
+    const t=this.t, r=t.rarity;
+    const fig = new THREE.Group();
+    const teamCol = new THREE.Color(TEAM_COLORS[t.teamId % TEAM_COLORS.length]);
+    const skinCol = new THREE.Color(skinColor(t.skinTone));
+    const kitMat  = this.m(teamCol, r);
+    const skinMat = this.m(skinCol, 0);
+
+    // Dark material for details
+    const darkMat = new THREE.MeshStandardMaterial({color:0x0a0a0a,roughness:0.8});
+    const whiteMat = new THREE.MeshStandardMaterial({color:0xffffff,roughness:0.7});
+
+    // BOOTS - colorful, distinct from legs
+    const bootColors = [0xff2200,0xffd700,0x00cc44,0x0066ff,0xff00cc,0xffffff,0x222222,0xff6600];
+    const bootCol = t.hasGoldenBoots ? 0xffd700 : bootColors[t.teamId % bootColors.length];
+    const bootMat = new THREE.MeshStandardMaterial({
+      color: bootCol,
+      roughness: t.hasGoldenBoots ? 0.1 : 0.5,
+      metalness: t.hasGoldenBoots ? 0.9 : 0.1,
+      emissive: t.hasGoldenBoots ? new THREE.Color(0xffd700) : new THREE.Color(0x000000),
+      emissiveIntensity: t.hasGoldenBoots ? 0.3 : 0
+    });
+
+    // SHORTS - darker version of kit color
+    const shortsCol = new THREE.Color(teamCol).multiplyScalar(0.4);
+    const shortsMat = new THREE.MeshStandardMaterial({color:shortsCol,roughness:0.8});
+
+    // SOCKS - white or team color
+    const socksMat = whiteMat;
+
+    // === BODY PROPORTIONS (more athletic) ===
+    const Y_BOOT   = 0.10;
+    const Y_SOCK   = 0.28;
+    const Y_LEG    = 0.60;
+    const Y_SHORTS = 0.85;
+    const Y_TORSO  = 1.20;
+    const Y_NECK   = 1.62;
+    const Y_HEAD   = 1.88;
+
+    // BOOTS (wider front, pointed)
+    fig.add(this.bx(0.24,0.15,0.40,bootMat,-0.16,Y_BOOT,0.04));
+    fig.add(this.bx(0.24,0.15,0.40,bootMat, 0.16,Y_BOOT,0.04));
+
+    // SOCKS
+    fig.add(this.bx(0.22,0.20,0.22,socksMat,-0.16,Y_SOCK,0));
+    fig.add(this.bx(0.22,0.20,0.22,socksMat, 0.16,Y_SOCK,0));
+
+    // LEGS (slimmer)
+    fig.add(this.bx(0.22,0.38,0.22,kitMat,-0.16,Y_LEG,0));
+    fig.add(this.bx(0.22,0.38,0.22,kitMat, 0.16,Y_LEG,0));
+
+    // SHORTS
+    fig.add(this.bx(0.56,0.22,0.30,shortsMat,0,Y_SHORTS,0));
+
+    // TORSO (slightly tapered - wider shoulders)
+    fig.add(this.bx(0.62,0.65,0.34,kitMat,0,Y_TORSO,0));
+
+    // Shirt number
+    const nc=document.createElement('canvas');nc.width=64;nc.height=64;
+    const cx=nc.getContext('2d');
+    cx.clearRect(0,0,64,64);
+    cx.fillStyle='rgba(255,255,255,0.9)';
+    cx.font='bold 36px Arial Black';cx.textAlign='center';cx.textBaseline='middle';
+    cx.fillText(String(t.position),32,32);
+    const np=new THREE.Mesh(
+      new THREE.PlaneGeometry(0.28,0.28),
+      new THREE.MeshBasicMaterial({map:new THREE.CanvasTexture(nc),transparent:true,depthWrite:false})
+    );
+    np.position.set(0,Y_TORSO,0.18);fig.add(np);
+
+    // ARMS (angled slightly outward)
+    const armL=this.bx(0.19,0.52,0.19,kitMat,-0.42,Y_TORSO-0.02,0);
+    armL.rotation.z=0.15;
+    const armR=this.bx(0.19,0.52,0.19,kitMat, 0.42,Y_TORSO-0.02,0);
+    armR.rotation.z=-0.15;
+    fig.add(armL,armR);
+
+    // HANDS
+    const handMat = (t.hasGloves && t.position===1)
+      ? new THREE.MeshStandardMaterial({color:0xffee00,roughness:0.5,metalness:0.1})
+      : skinMat;
+    fig.add(this.sp(0.105,handMat,-0.44,Y_TORSO-0.30,0));
+    fig.add(this.sp(0.105,handMat, 0.44,Y_TORSO-0.30,0));
+
+    // NECK (slimmer)
+    fig.add(this.cy(0.085,0.085,0.16,8,skinMat,0,Y_NECK,0));
+
+    // HEAD (slightly taller than wide - more human)
+    fig.add(this.bx(0.48,0.52,0.44,skinMat,0,Y_HEAD,0));
+
+    // EYES - larger, more expressive
+    const eyeMat=new THREE.MeshStandardMaterial({color:0x0a0a14,roughness:0.5});
+    const eyeWhiteMat=new THREE.MeshStandardMaterial({color:0xffffff,roughness:0.8});
+    // Eye whites
+    fig.add(this.bx(0.13,0.10,0.02,eyeWhiteMat,-0.12,Y_HEAD+0.07,0.23));
+    fig.add(this.bx(0.13,0.10,0.02,eyeWhiteMat, 0.12,Y_HEAD+0.07,0.23));
+    // Pupils
+    fig.add(this.bx(0.07,0.07,0.025,eyeMat,-0.11,Y_HEAD+0.07,0.235));
+    fig.add(this.bx(0.07,0.07,0.025,eyeMat, 0.11,Y_HEAD+0.07,0.235));
+    // Eyebrows
+    const browMat=new THREE.MeshStandardMaterial({color:0x1a0a00,roughness:0.9});
+    fig.add(this.bx(0.13,0.03,0.02,browMat,-0.12,Y_HEAD+0.14,0.23));
+    fig.add(this.bx(0.13,0.03,0.02,browMat, 0.12,Y_HEAD+0.14,0.23));
+    // Nose
+    fig.add(this.bx(0.04,0.06,0.03,new THREE.MeshStandardMaterial({color:skinCol,roughness:0.8}),0,Y_HEAD+0.01,0.235));
+    // Mouth / smile
+    fig.add(this.bx(0.14,0.035,0.02,new THREE.MeshStandardMaterial({color:0x8b1a00,roughness:0.9}),0,Y_HEAD-0.10,0.23));
+
+    // EARS
+    fig.add(this.bx(0.04,0.10,0.04,skinMat,-0.25,Y_HEAD+0.01,0));
+    fig.add(this.bx(0.04,0.10,0.04,skinMat, 0.25,Y_HEAD+0.01,0));
+
+    // TATTOO - left arm band
+    if(t.hasTattoo){
+      const tatColors=[0x1a1aff,0xff1a1a,0x1aff1a,0xffff1a,0xff1aff];
+      const tatMat=new THREE.MeshStandardMaterial({color:tatColors[t.teamId%tatColors.length],roughness:0.9,emissive:new THREE.Color(tatColors[t.teamId%tatColors.length]),emissiveIntensity:0.15});
+      fig.add(this.bx(0.21,0.09,0.21,tatMat,-0.42,Y_TORSO+0.08,0));
+    }
+
+    // HAIR
+    const hairColors=[0x1a0800,0xff6600,0xffd700,0xcc0000,0x2a1a00,0x111111,0x8b4513,0x333333];
+    const hc=hairColors[t.hairStyle%hairColors.length];
+    const hm=new THREE.MeshStandardMaterial({color:hc,roughness:0.8});
+    const hy=Y_HEAD+0.14; // hair base y
+
+    if(t.hairStyle===0){ // Buzz cut
+      fig.add(this.bx(0.50,0.10,0.46,hm,0,hy,0));
+    }else if(t.hairStyle===1){ // Curly
+      fig.add(this.bx(0.48,0.07,0.44,hm,0,hy-0.04,0));
+      for(let i=0;i<8;i++){const a=i/8*Math.PI*2;fig.add(this.sp(0.085,hm,Math.cos(a)*0.17,hy+0.05,Math.sin(a)*0.13));}
+    }else if(t.hairStyle===2){ // Spiky
+      fig.add(this.bx(0.48,0.07,0.44,hm,0,hy-0.02,0));
+      for(let i=0;i<5;i++){
+        const s=new THREE.Mesh(new THREE.ConeGeometry(0.055,0.22,4),hm);
+        s.position.set((i-2)*0.10,hy+0.14,0.05);
+        fig.add(s);
+      }
+    }else if(t.hairStyle===3){ // Mohawk
+      fig.add(this.bx(0.50,0.07,0.46,hm,0,hy-0.02,0)); // base
+      fig.add(this.bx(0.11,0.30,0.46,hm,0,hy+0.13,0)); // strip
+    }else if(t.hairStyle===4){ // Afro
+      fig.add(this.sp(0.28,hm,0,hy+0.10,0));
+    }else if(t.hairStyle===5){ // Dreads
+      fig.add(this.bx(0.48,0.07,0.44,hm,0,hy-0.02,0));
+      for(let i=-2;i<=2;i++) fig.add(this.bx(0.06,0.28,0.06,hm,i*0.10,hy-0.12,-0.18));
+    }else if(t.hairStyle===6){ // Bald
+      // No hair - shiny head
+      // already rendered by skin head
+    }else if(t.hairStyle===7){ // Wavy
+      fig.add(this.bx(0.50,0.08,0.46,hm,0,hy-0.01,0));
+      fig.add(this.bx(0.50,0.06,0.46,hm,0,hy+0.07,-0.01));
+    }
+
+    // EARRING - gold sphere on left ear
+    if(t.hasEarring){
+      const em=new THREE.MeshStandardMaterial({color:0xffd700,metalness:1,roughness:0.05,emissive:new THREE.Color(0xffd700),emissiveIntensity:0.3});
+      fig.add(this.sp(0.04,em,-0.27,Y_HEAD-0.04,0));
+    }
+
+    // HEADBAND - contrasting color strip around head
+    if(t.hasBand){
+      const bandColors=[0xffffff,0x000000,0xff0000,0x00ff00,0x0000ff,0xffff00];
+      const bm=new THREE.MeshStandardMaterial({color:bandColors[t.position%bandColors.length],roughness:0.6});
+      fig.add(this.bx(0.50,0.07,0.46,bm,0,Y_HEAD+0.04,0));
+    }
+
+    // LEGENDARY particles
+    if(r===3){
+      const pg=new THREE.BufferGeometry();
+      const pos=[];
+      for(let i=0;i<32;i++) pos.push((Math.random()-0.5)*2.5,Math.random()*3.2,(Math.random()-0.5)*2.5);
+      pg.setAttribute('position',new THREE.Float32BufferAttribute(pos,3));
+      this.particles=new THREE.Points(pg,new THREE.PointsMaterial({color:0xffd700,size:0.055,transparent:true,opacity:0.8}));
+      fig.add(this.particles);
+    }
+
+    // EPIC glow ring
+    if(r===2){
+      const ring=new THREE.Mesh(
+        new THREE.TorusGeometry(0.6,0.02,8,32),
+        new THREE.MeshStandardMaterial({color:0xa855f7,emissive:new THREE.Color(0xa855f7),emissiveIntensity:0.8,transparent:true,opacity:0.6})
+      );
+      ring.rotation.x=Math.PI/2;ring.position.y=0.05;
+      fig.add(ring);
+    }
+
+    // RARE shine ring
+    if(r===1){
+      const ring=new THREE.Mesh(
+        new THREE.TorusGeometry(0.5,0.015,8,32),
+        new THREE.MeshStandardMaterial({color:0x3b82f6,emissive:new THREE.Color(0x3b82f6),emissiveIntensity:0.6,transparent:true,opacity:0.5})
+      );
+      ring.rotation.x=Math.PI/2;ring.position.y=0.05;
+      fig.add(ring);
+    }
+
+    this.fig=fig;
+    this.scene.add(fig);
+  }
+
+  loop(){
+    this.fid=requestAnimationFrame(()=>this.loop());
+    if(!this.visible) return; // nie renderuj gdy poza ekranem
+    if(this.fig&&this.spin)this.fig.rotation.y+=0.007;
+    if(this.particles)this.particles.rotation.y+=0.012;
+    if(this.ren)this.ren.render(this.scene,this.cam);
+  }
+  setVisible(v){ this.visible = v; }
+
+  destroy(){if(this.fid)cancelAnimationFrame(this.fid);if(this.ren)this.ren.dispose();}
+}
+
+function bkUnifiedMintFigureSVG(dna, size = 92) {
+  const t = parseDNA(dna || 0n);
+  const teams = (typeof TEAMS !== 'undefined' && Array.isArray(TEAMS)) ? TEAMS : [];
+  const teamRaw = teams[t.teamId % Math.max(teams.length, 1)] || {};
+  const teamName = typeof teamRaw === 'string' ? teamRaw : (teamRaw.name || (Number(t.teamId) === 24 ? 'USA' : ''));
+  const SHIRT = {'Australia':'#FFD700','Iran':'#239F40','Iraq':'#CC0001','Japan':'#BC002D','Jordan':'#007A3D','Qatar':'#8D153A','Saudi Arabia':'#006C35','South Korea':'#CD2E3A','Uzbekistan':'#1EB53A','Algeria':'#006233','Cape Verde':'#003893','DR Congo':'#007FFF','Egypt':'#CE1126','Ghana':'#006B3F','Ivory Coast':'#F77F00','Morocco':'#C1272D','Senegal':'#00853F','South Africa':'#007749','Tunisia':'#E70013','Canada':'#FF0000','Curacao':'#002B7F','Haiti':'#00209F','Mexico':'#006847','Panama':'#DA121A','United States':'#002868','USA':'#002868','Argentina':'#74ACDF','Brazil':'#009C3B','Colombia':'#FCD116','Ecuador':'#FFD100','Paraguay':'#D52B1E','Uruguay':'#5EB6E4','New Zealand':'#00247D','Austria':'#ED2939','Belgium':'#111111','Bosnia':'#002395','Croatia':'#FF0000','Czech Rep.':'#D7141A','England':'#EEEEEE','France':'#002395','Germany':'#111111','Netherlands':'#FF6600','Norway':'#EF2B2D','Portugal':'#006600','Scotland':'#003087','Spain':'#AA151B','Sweden':'#006AA7','Switzerland':'#FF0000','Turkey':'#E30A17'};
+  const SKIN = ['#FDBCB4','#F1C27D','#E0AC69','#C68642','#8D5524','#4A2912'];
+  const RARC = ['#6b7280','#3b82f6','#a855f7','#f59e0b'];
+  const shirt = SHIRT[teamName] || '#1d4ed8';
+  const skin = SKIN[Math.min(Number(t.skinTone || 2), 5)] || SKIN[2];
+  const rar = RARC[Number(t.rarity || 0)] || RARC[0];
+  const pos = Number(t.position || 10);
+  const isLight = ['#FFD700','#FCD116','#FFD100','#EEEEEE'].includes(shirt);
+  const numC = isLight ? '#06100b' : '#fff';
+  const bootC = t.hasGoldenBoots ? '#FFD700' : '#111';
+  const hair = ['#3b1f12','#6b3a16','#f5d08a','#111827'][Number((BigInt(String(dna || 0)) >> 20n) % 4n)] || '#3b1f12';
+  const s = size, cx = s / 2;
+  const headY = s * .13, headW = s * .30, headH = s * .27;
+  const bodyY = headY + headH * .86, bodyW = s * .40, bodyH = s * .29;
+  const legW = s * .10, legH = s * .22, legGap = s * .04, legY = bodyY + bodyH * .83;
+  const armW = s * .09, armH = s * .20, armY = bodyY + s * .02, handR = s * .06;
+  const p = [];
+  p.push('<ellipse cx="'+cx+'" cy="'+(legY+legH+s*.12)+'" rx="'+(bodyW*.62)+'" ry="'+(s*.045)+'" fill="'+rar+'" opacity=".22"/>');
+  p.push('<rect x="'+(cx-legW-legGap)+'" y="'+legY+'" width="'+legW+'" height="'+legH+'" rx="3" fill="'+shirt+'"/>');
+  p.push('<rect x="'+(cx+legGap)+'" y="'+legY+'" width="'+legW+'" height="'+legH+'" rx="3" fill="'+shirt+'"/>');
+  p.push('<rect x="'+(cx-legW-legGap)+'" y="'+(legY+legH*.64)+'" width="'+legW+'" height="'+(legH*.38)+'" rx="2" fill="#fff"/>');
+  p.push('<rect x="'+(cx+legGap)+'" y="'+(legY+legH*.64)+'" width="'+legW+'" height="'+(legH*.38)+'" rx="2" fill="#fff"/>');
+  p.push('<rect x="'+(cx-legW-legGap-2)+'" y="'+(legY+legH)+'" width="'+(legW+4)+'" height="'+(s*.085)+'" rx="3" fill="'+bootC+'"/>');
+  p.push('<rect x="'+(cx+legGap-2)+'" y="'+(legY+legH)+'" width="'+(legW+4)+'" height="'+(s*.085)+'" rx="3" fill="'+bootC+'"/>');
+  p.push('<rect x="'+(cx-bodyW/2-armW+2)+'" y="'+armY+'" width="'+armW+'" height="'+armH+'" rx="3" fill="'+shirt+'" transform="rotate(7 '+(cx-bodyW/2)+' '+armY+')"/>');
+  p.push('<rect x="'+(cx+bodyW/2-2)+'" y="'+armY+'" width="'+armW+'" height="'+armH+'" rx="3" fill="'+shirt+'" transform="rotate(-7 '+(cx+bodyW/2)+' '+armY+')"/>');
+  p.push('<circle cx="'+(cx-bodyW/2-s*.04)+'" cy="'+(armY+armH)+'" r="'+handR+'" fill="'+skin+'"/>');
+  p.push('<circle cx="'+(cx+bodyW/2+s*.04)+'" cy="'+(armY+armH)+'" r="'+handR+'" fill="'+skin+'"/>');
+  if (t.hasGloves) { p.push('<circle cx="'+(cx-bodyW/2-s*.04)+'" cy="'+(armY+armH)+'" r="'+(handR+2)+'" fill="none" stroke="#FFD700" stroke-width="2"/>'); p.push('<circle cx="'+(cx+bodyW/2+s*.04)+'" cy="'+(armY+armH)+'" r="'+(handR+2)+'" fill="none" stroke="#FFD700" stroke-width="2"/>'); }
+  p.push('<rect x="'+(cx-bodyW/2)+'" y="'+bodyY+'" width="'+bodyW+'" height="'+bodyH+'" rx="6" fill="'+shirt+'"/>');
+  p.push('<text x="'+cx+'" y="'+(bodyY+bodyH*.58)+'" text-anchor="middle" font-family="Arial Black,Arial,sans-serif" font-size="'+(s*.14)+'" font-weight="900" fill="'+numC+'">'+pos+'</text>');
+  p.push('<rect x="'+(cx-s*.04)+'" y="'+(bodyY-s*.05)+'" width="'+(s*.08)+'" height="'+(s*.07)+'" rx="2" fill="'+skin+'"/>');
+  p.push('<rect x="'+(cx-headW/2-s*.02)+'" y="'+(headY-s*.015)+'" width="'+(headW+s*.04)+'" height="'+(headH*.32)+'" rx="6" fill="'+hair+'"/>');
+  p.push('<rect x="'+(cx-headW/2)+'" y="'+headY+'" width="'+headW+'" height="'+headH+'" rx="7" fill="'+skin+'"/>');
+  p.push('<rect x="'+(cx-headW/2-s*.03)+'" y="'+(headY+headH*.25)+'" width="'+(s*.04)+'" height="'+(s*.08)+'" rx="2" fill="'+skin+'"/>');
+  p.push('<rect x="'+(cx+headW/2-s*.01)+'" y="'+(headY+headH*.25)+'" width="'+(s*.04)+'" height="'+(s*.08)+'" rx="2" fill="'+skin+'"/>');
+  if (t.hasEarring) p.push('<circle cx="'+(cx-headW/2-1)+'" cy="'+(headY+headH*.40)+'" r="'+(s*.025)+'" fill="#FFD700"/>');
+  p.push('<rect x="'+(cx-headW*.36)+'" y="'+(headY+headH*.34)+'" width="'+(s*.07)+'" height="'+(s*.05)+'" rx="2" fill="#fff"/>');
+  p.push('<rect x="'+(cx+headW*.08)+'" y="'+(headY+headH*.34)+'" width="'+(s*.07)+'" height="'+(s*.05)+'" rx="2" fill="#fff"/>');
+  p.push('<rect x="'+(cx-headW*.33)+'" y="'+(headY+headH*.35)+'" width="'+(s*.045)+'" height="'+(s*.035)+'" rx="1" fill="#0a0a14"/>');
+  p.push('<rect x="'+(cx+headW*.11)+'" y="'+(headY+headH*.35)+'" width="'+(s*.045)+'" height="'+(s*.035)+'" rx="1" fill="#0a0a14"/>');
+  p.push('<rect x="'+(cx-s*.07)+'" y="'+(headY+headH*.72)+'" width="'+(s*.14)+'" height="'+(s*.03)+'" rx="2" fill="#7c2d12" opacity=".85"/>');
+  if (t.hasBand) p.push('<rect x="'+(cx-headW/2-2)+'" y="'+(headY+headH*.18)+'" width="'+(headW+4)+'" height="'+(s*.055)+'" rx="3" fill="#fff" opacity=".9"/>');
+  if (t.hasTattoo) p.push('<path d="M'+(cx-bodyW/2-armW/2)+' '+(armY+armH*.35)+' l'+(s*.04)+' '+(s*.04)+' m0 -'+(s*.04)+' l-'+(s*.04)+' '+(s*.04)+'" stroke="#111" stroke-width="1.5" opacity=".55"/>');
+  return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 '+s+' '+s+'" width="'+s+'" height="'+s+'">'+p.join('')+'</svg>';
+}
+function bkMintFigureHtml(card){
+  const dna = card?.dna || 0n;
+  return '<div class="mint-3d-stage"><canvas class="mint-3d-canvas" aria-label="3D minted figure"></canvas></div>';
+}
+function bkRenderMintFigure3D(visual, card){
+  if (!visual || !card) return;
+  const canvas = visual.querySelector('.mint-3d-canvas');
+  const fallback = visual.querySelector('.mint-3d-fallback');
+  if (!canvas) return;
+  if (typeof THREE === 'undefined') {
+    if (fallback) fallback.style.display = 'flex';
+    canvas.style.display = 'none';
+    return;
+  }
+  try {
+    if (typeof Figure3D === 'function') {
+      if (fallback) fallback.style.display = 'none';
+      canvas.style.display = 'block';
+      requestAnimationFrame(() => { const r = new Figure3D(canvas, card.dna || 0n, true, window.matchMedia('(min-width: 769px)').matches); if (r && r.cam) { r.cam.position.set(0, 1.05, 4.2); r.cam.lookAt(0, 1.05, 0); r.cam.updateProjectionMatrix(); } });
+      return;
+    }
+    const dna = card.dna || 0n;
+    const t = parseDNA(dna);
+    const teams = (typeof TEAMS !== 'undefined' && Array.isArray(TEAMS)) ? TEAMS : [];
+    const teamRaw = teams[t.teamId % Math.max(teams.length, 1)] || {};
+    const teamName = typeof teamRaw === 'string' ? teamRaw : (teamRaw.name || (Number(t.teamId) === 24 ? 'USA' : ''));
+    const shirtMap = {'Australia':0xFFD700,'Iran':0x239F40,'Iraq':0xCC0001,'Japan':0xBC002D,'Jordan':0x007A3D,'Qatar':0x8D153A,'Saudi Arabia':0x006C35,'South Korea':0xCD2E3A,'Uzbekistan':0x1EB53A,'Algeria':0x006233,'Cape Verde':0x003893,'DR Congo':0x007FFF,'Egypt':0xCE1126,'Ghana':0x006B3F,'Ivory Coast':0xF77F00,'Morocco':0xC1272D,'Senegal':0x00853F,'South Africa':0x007749,'Tunisia':0xE70013,'Canada':0xFF0000,'Curacao':0x002B7F,'Haiti':0x00209F,'Mexico':0x006847,'Panama':0xDA121A,'United States':0x002868,'USA':0x002868,'Argentina':0x74ACDF,'Brazil':0x009C3B,'Colombia':0xFCD116,'Ecuador':0xFFD100,'Paraguay':0xD52B1E,'Uruguay':0x5EB6E4,'New Zealand':0x00247D,'Austria':0xED2939,'Belgium':0x111111,'Bosnia':0x002395,'Croatia':0xFF0000,'Czech Rep.':0xD7141A,'England':0xEEEEEE,'France':0x002395,'Germany':0x111111,'Netherlands':0xFF6600,'Norway':0xEF2B2D,'Portugal':0x006600,'Scotland':0x003087,'Spain':0xAA151B,'Sweden':0x006AA7,'Switzerland':0xFF0000,'Turkey':0xE30A17};
+    const skinMap = [0xFDBCB4,0xF1C27D,0xE0AC69,0xC68642,0x8D5524,0x4A2912];
+    const rarityMap = [0x6b7280,0x3b82f6,0xa855f7,0xffc940];
+    const shirt = shirtMap[teamName] || 0x1d4ed8;
+    const skin = skinMap[Math.min(Number(t.skinTone || 2), 5)] || skinMap[2];
+    const rarity = rarityMap[Number(t.rarity || 0)] || rarityMap[0];
+    const hairColors = [0x3b1f12,0x6b3a16,0xf5d08a,0x111827];
+    const hair = hairColors[Number((BigInt(String(dna || 0)) >> 20n) % 4n)] || hairColors[0];
+    const scene = new THREE.Scene();
+    const width = canvas.clientWidth || 280;
+    const height = canvas.clientHeight || 280;
+    const cam = new THREE.PerspectiveCamera(35, width / height, 0.1, 100);
+    cam.position.set(0, 1.15, 6.4);
+    cam.lookAt(0, 1.05, 0);
+    const renderer = new THREE.WebGLRenderer({canvas, alpha:true, antialias:true, powerPreference:'high-performance'});
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    renderer.setPixelRatio(dpr);
+    renderer.setSize(width, height, false);
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    scene.add(new THREE.AmbientLight(0xffffff, .55));
+    const key = new THREE.DirectionalLight(0xffffff, 1.15); key.position.set(3,5,4); key.castShadow = true; scene.add(key);
+    const rim = new THREE.PointLight(rarity, .95, 7); rim.position.set(-2,1.8,2.8); scene.add(rim);
+    const mat = (color, opts={}) => new THREE.MeshStandardMaterial({color, roughness:opts.roughness ?? .62, metalness:opts.metalness ?? .08, emissive:opts.emissive || 0x000000, emissiveIntensity:opts.emissiveIntensity || 0});
+    const kitMat = mat(shirt, Number(t.rarity) >= 2 ? {roughness:.34,metalness:.24,emissive:shirt,emissiveIntensity:.035} : {});
+    const skinMat = mat(skin, {roughness:.72});
+    const darkMat = mat(0x090909, {roughness:.72});
+    const whiteMat = mat(0xffffff, {roughness:.64});
+    const hairMat = mat(hair, {roughness:.8});
+    const goldMat = mat(0xffc940, {roughness:.18,metalness:.72,emissive:0xffc940,emissiveIntensity:.15});
+    const group = new THREE.Group();
+    const box = (w,h,d,m,x,y,z,rx=0) => { const mesh = new THREE.Mesh(new THREE.BoxGeometry(w,h,d), m); mesh.position.set(x,y,z); mesh.castShadow=true; group.add(mesh); return mesh; };
+    const sph = (r,m,x,y,z, sx=1, sy=1, sz=1) => { const mesh = new THREE.Mesh(new THREE.SphereGeometry(r,18,14), m); mesh.scale.set(sx,sy,sz); mesh.position.set(x,y,z); mesh.castShadow=true; group.add(mesh); return mesh; };
+    box(.58,.78,.34,kitMat,0,1.18,0);
+    box(.62,.22,.36,kitMat,0,.75,0);
+    box(.15,.58,.16,kitMat,-.18,.37,0); box(.15,.58,.16,kitMat,.18,.37,0);
+    box(.16,.20,.17,whiteMat,-.18,.05,.01); box(.16,.20,.17,whiteMat,.18,.05,.01);
+    box(.22,.12,.34,t.hasGoldenBoots ? goldMat : darkMat,-.18,-.10,.06); box(.22,.12,.34,t.hasGoldenBoots ? goldMat : darkMat,.18,-.10,.06);
+    box(.16,.55,.16,kitMat,-.43,1.08,0); box(.16,.55,.16,kitMat,.43,1.08,0);
+    sph(.13,skinMat,-.45,.73,.02,1,1,1); sph(.13,skinMat,.45,.73,.02,1,1,1);
+    if (t.hasGloves) { sph(.16,goldMat,-.45,.73,.02,1,1,1); sph(.16,goldMat,.45,.73,.02,1,1,1); }
+    box(.16,.18,.16,skinMat,0,1.62,0);
+    sph(.36,skinMat,0,1.98,0,1,.98,.92);
+    box(.56,.16,.42,hairMat,0,2.23,.02);
+    box(.13,.08,.04,whiteMat,-.13,2.03,.32); box(.13,.08,.04,whiteMat,.13,2.03,.32);
+    box(.06,.045,.045,darkMat,-.13,2.03,.35); box(.06,.045,.045,darkMat,.13,2.03,.35);
+    box(.17,.04,.035,mat(0x7c2d12),0,1.83,.34);
+    if (t.hasEarring) sph(.045,goldMat,-.34,1.96,.01);
+    if (t.hasBand) box(.68,.09,.45,whiteMat,0,2.13,.02);
+    if (t.hasTattoo) { box(.10,.05,.18,darkMat,-.50,1.10,.09); }
+    const numberCanvas = document.createElement('canvas'); numberCanvas.width = 128; numberCanvas.height = 128;
+    const ctx = numberCanvas.getContext('2d'); ctx.clearRect(0,0,128,128); ctx.fillStyle = [0xFFD700,0xFCD116,0xFFD100,0xEEEEEE].includes(shirt) ? '#06100b' : '#ffffff'; ctx.font = '900 62px Arial Black, Arial'; ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.fillText(String(t.position || 10), 64, 64);
+    const tex = new THREE.CanvasTexture(numberCanvas);
+    const numPlane = new THREE.Mesh(new THREE.PlaneGeometry(.46,.46), new THREE.MeshBasicMaterial({map:tex, transparent:true, depthWrite:false}));
+    numPlane.position.set(0,1.22,.185); group.add(numPlane);
+    const ground = new THREE.Mesh(new THREE.CircleGeometry(1.1,40), new THREE.MeshStandardMaterial({color:0x10242a, transparent:true, opacity:.62, roughness:.9}));
+    ground.rotation.x = -Math.PI/2; ground.position.y = -.18; ground.receiveShadow = true; scene.add(ground);
+    group.position.y = -.05; group.rotation.y = -.18; scene.add(group);
+    if (fallback) fallback.style.display = 'none'; canvas.style.display = 'block';
+    let frame = 0;
+    const animate = () => {
+      if (!canvas.isConnected) { renderer.dispose(); return; }
+      frame += .012;
+      group.rotation.y = Math.sin(frame) * .18;
+      group.position.y = -.05 + Math.sin(frame * 1.6) * .025;
+      renderer.render(scene, cam);
+      requestAnimationFrame(animate);
+    };
+    animate();
+  } catch(e) {
+    console.warn('Mint 3D render fallback:', e);
+    if (canvas) canvas.style.display = 'none';
+    if (fallback) fallback.style.display = 'flex';
+  }
+}
+function bkMintQuestCopy(card, team, isUpgrade){
+  const ctx = window.BK_MINT_CONTEXT || {};
+  const teamId = Number(card?.teamId);
+  if (ctx.type === 'argentina') {
+    if (teamId === Number(ctx.teamId)) return {title:'<span class="arg-blue">ARGENTINA</span> CARD SCORED', sub:'This card counts for Argentina Dream XI. Your tactics/rank refresh after confirmation.', note: isUpgrade ? 'This card improves your Argentina squad score. Best scored cards stay saved, then you can keep or sell depending on strategy.' : 'This Argentina card entered your wallet, but it may be reserve if you already scored a stronger card in this position.'};
+    if (teamId === 24) return {title:'<span class="usa-blue">USA</span> QUEST CARD', sub:'This USA card can help in the active USA Nation Quest.', note:'USA Quest is a completion race. If this is a missing USA position, it moves you closer to 11/11 and the 1500 CHZ prize. If it is a duplicate, it may be valuable to another player.'};
+    return {title:'WC CARD MINTED', sub:'This is a ' + team.name + ' card. It does not score in Argentina Dream XI.', note:'It can still matter for marketplace profit, future national quests, and the World Cup Album.'};
+  }
+  if (ctx.type === 'wc') {
+    if (teamId === 24) return {title:'<span class="usa-blue">USA</span> QUEST + WC CARD', sub:'This USA card counts for the World Cup Album and can help in the active USA Nation Quest.', note:'If this USA position is missing for you or another player, it can be strategically important. Complete 11/11 USA for the Nation Quest race, or list duplicates higher.'};
+    return {title:'WC ALBUM CARD SCORED', sub:'This ' + team.name + ' card counts for the World Cup Album race.', note:'Every nation card can matter here. If it improves a slot, your album progress and leaderboard refresh after confirmation.'};
+  }
+  if (teamId === 24) return {title:'<span class="usa-blue">USA</span> QUEST CARD', sub:'This USA card can help in the active USA Nation Quest.', note:'USA Quest reward: first wallet to complete all 11 USA positions wins 1500 CHZ. If this card is a missing position, it matters immediately. If it is duplicate or scarce, consider market strategy.'};
+  if (teamId === 25) return {title:'<span class="arg-blue">ARGENTINA</span> DREAM XI CARD', sub:'This Argentina card can score in the active Dream XI Argentina quest.', note:'Argentina cards can improve Dream XI rank. Best scored position is saved, then you can decide to hold, sell, or block a scarce position.'};
+  return {title:'CARD MINTED', sub:'This ' + team.name + ' card entered your Block Kickers collection.', note:'One card can matter for Global Leaderboard, Country Champion, Dream XI/Nation quests, marketplace profit, and the future World Cup Album.'};
+}
+function bkMintSupplyHint(card) {
+  try {
+    const same = Object.values(window.ownerMap || {}).filter(c => Number(c.teamId) === Number(card.teamId) && Number(c.position) === Number(card.position));
+    if (same.length === 1) return '<br><span style="font-family:&quot;Share Tech Mono&quot;,monospace;color:#ffc940">Only 1 detected in this nation/position on this page.</span>';
+    if (same.length > 1 && same.length <= 3) return '<br><span style="font-family:&quot;Share Tech Mono&quot;,monospace;color:#ffc940">Low supply detected: ' + same.length + ' in this nation/position.</span>';
+  } catch(e) {}
+  return '<br><span style="font-family:&quot;Share Tech Mono&quot;,monospace;color:#ffc940">Check supply before listing. Scarce positions can sell higher.</span>';
+}
+function showMintResultModal(card, options = {}) {
+  const modal = document.getElementById('mintResultModal');
+  if (!modal) return;
+  const visual = document.getElementById('mintResultVisual');
+  const main = document.getElementById('mintResultMain');
+  const stats = document.getElementById('mintResultStats');
+  const note = document.getElementById('mintResultNote');
+  if (!card && options.dna) card = Object.assign({dna: options.dna, tokenId: options.tokenId}, parseDNA(options.dna));
+  if (!card) {
+    visual.innerHTML = '<div style="font-size:38px;color:#00ff87;font-family:&quot;Black Ops One&quot;,sans-serif">OK</div>';
+    main.innerHTML = '<div class="mint-result-title">CARD CONFIRMED</div><div class="mint-result-sub">Transaction confirmed. Dashboard data was refreshed from Chiliz Chain.</div>';
+    stats.innerHTML = '';
+    note.textContent = 'Your card is confirmed on-chain and will appear after indexing if it is not visible instantly.';
+    modal.classList.add('show');
+    return;
+  }
+  const team = bkMintTeamInfo(card.teamId);
+  const position = bkMintPositionLabel(card.position);
+  const rarity = bkMintRarityName(card.rarity);
+  const rarityShort = bkMintRarityShort(card.rarity);
+  const scoreColor = bkMintRarityColor(card.rarity);
+  const copy = bkMintQuestCopy(card, team, Boolean(options.isUpgrade));
+  const countryHtml = '<div style="display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:8px">' + bkMintTeamFlagHtml(team, 38) + '<span style="font-family:&quot;Black Ops One&quot;,sans-serif;color:#fff;font-size:18px;letter-spacing:.8px">' + team.name.toUpperCase() + '</span></div>';
+  visual.innerHTML = bkMintFigureHtml(card);
+  bkRenderMintFigure3D(visual, card);
+  main.innerHTML = countryHtml + '<div class="mint-result-title">' + copy.title + '</div><div class="mint-result-sub">' + copy.sub + '</div>';
+  stats.innerHTML = '<div class="mint-result-stat"><b>' + bkMintTeamShort(team) + '</b><span>Country</span></div>'
+    + '<div class="mint-result-stat"><b>' + position + '</b><span>Position</span></div>'
+    + '<div class="mint-result-stat"><b style="color:' + scoreColor + '">' + rarity.toUpperCase() + '</b><span>Rarity</span></div>'
+    + '<div class="mint-result-stat"><b style="color:' + scoreColor + '">' + card.weight + '</b><span>PTS</span></div>';
+  note.innerHTML = copy.note + '<br><span style="font-family:&quot;Share Tech Mono&quot;,monospace;color:#9fb1c7">' + (card.tokenId !== undefined ? 'Token #' + card.tokenId + ' · ' : '') + rarity + ' · ' + card.weight + ' PTS</span>' + bkMintSupplyHint(card);
+  modal.classList.add('show');
+}
+
 const CONTRACT_ADDRESS = "0xAAdc8D56e25a223B6cf4b88ba0889975560f21aB";
 const MARKET_ADDRESS   = "0xA18f7Bade67Eda41FD7D2B3A204d39b543977DaE";
 const CHAIN_ID = 88888;
 const SPONSORED_POOL = 25000; // Sponsored prize pool of exactly 25,000 CHZ
+const PRIVY_APP_ID = "cmpil29vr000r0cl27mvi078e";
+const PRIVY_CLIENT_ID = "client-WY6ZYpnr2u5M5Jusp4enZTZBmqhrikkMGUCjvgwWymidE";
+const WALLETCONNECT_PROJECT_ID = "15671485110825e18107d31b379d9df6";
 
 const ABI = [
   "event FigureMinted(address indexed owner,uint256 indexed tokenId,uint256 dna,uint256 teamId,uint256 position,uint8 rarity,uint256 weight)",
@@ -922,6 +2623,18 @@ const TEAMS = [
   {id:47, name:"Turkey",        flag:"🇹🇷", code:"tr", fed:"UEFA"}
 ];
 
+const TEAM_ABBR = {
+  'Australia':'AUS','Iran':'IRN','Iraq':'IRQ','Japan':'JPN','Jordan':'JOR','Qatar':'QAT','Saudi Arabia':'KSA','South Korea':'KOR','Uzbekistan':'UZB',
+  'Algeria':'ALG','Cape Verde':'CPV','DR Congo':'DRC','Egypt':'EGY','Ghana':'GHA','Ivory Coast':'CIV','Morocco':'MAR','Senegal':'SEN','South Africa':'RSA','Tunisia':'TUN',
+  'Canada':'CAN','Curacao':'CUR','Haiti':'HAI','Mexico':'MEX','Panama':'PAN','USA':'USA',
+  'Argentina':'ARG','Brazil':'BRA','Colombia':'COL','Ecuador':'ECU','Paraguay':'PAR','Uruguay':'URU',
+  'New Zealand':'NZL','Austria':'AUT','Belgium':'BEL','Bosnia':'BIH','Croatia':'CRO','Czech Rep.':'CZE','England':'ENG','France':'FRA','Germany':'GER','Netherlands':'NED','Norway':'NOR','Portugal':'POR','Scotland':'SCO','Spain':'ESP','Sweden':'SWE','Switzerland':'SUI','Turkey':'TUR'
+};
+
+function teamAbbr(team) {
+  return TEAM_ABBR[team?.name] || String(team?.name || '').slice(0, 3).toUpperCase();
+}
+
 // Multilanguage Rules Data (Polski oraz kluczowa reguła transferowa zaimplementowane)
 const RULES_TRANSLATIONS = {
   en: {
@@ -1014,14 +2727,23 @@ const PUBLIC_RPCS = ['https://chiliz-rpc.publicnode.com','https://rpc.chiliz.com
 
 let provider, signer, address;
 let contract, marketContract;
+let activeWalletProvider = null;
+let activeWalletType = '';
+let privyClient = null;
+let privyIframe = null;
+let privySdk = null;
+let walletConnectProvider = null;
 let activeFederation = 'ALL';
 let selectedTeamId = 25; // Default: Argentina
 let currentLeaderboardTab = 'global'; // global (TOP 10 + Connected wallet) or local
 let activeSellTokenId = null;
+let lastSquadHighlight = null;
 
 window.dreamScores = {}; // wallet -> { teamId -> { position -> {weight, tid, rarity, dna} } }
 let marketByTeamPosition = {}; // teamId -> { position -> {listingId, price, weight, rarity} }
 let marketFloorByTeamPosition = {}; // teamId -> { position -> {listingId, price} }
+let activeListingsByToken = {}; // tokenId -> { listingId, seller, price, priceWei }
+let activeListingsById = {}; // listingId -> { tokenId, seller, price, priceWei, teamId, position, weight, rarity, dna }
 let currentMintPrice = ethers.parseEther("10"); 
 let dynamicVaultBalance = 0;
 
@@ -1034,6 +2756,45 @@ function showToast(message, isError = false) {
   setTimeout(() => {
     toast.style.display = 'none';
   }, 6000);
+}
+
+function readableError(error) {
+  if (!error) return 'Unknown error';
+  if (typeof error === 'string') return error;
+  const parts = [error.shortMessage,error.reason,error.message,error.code ? `code ${error.code}` : '',error.data?.message].filter(Boolean);
+  return parts.join(' | ') || 'Unknown error';
+}
+
+function isMissingPrivySession(error) {
+  const msg = readableError(error).toLowerCase();
+  return msg.includes('missing_or_invalid_token') || msg.includes('no tokens found') || msg.includes('not authenticated') || msg.includes('unauthorized');
+}
+
+let networkOverlayDepth = 0;
+function showNetworkOverlay(message = 'Please confirm in your wallet and wait for Chiliz Chain.') {
+  networkOverlayDepth += 1;
+  const overlay = document.getElementById('networkOverlay');
+  const text = document.getElementById('networkOverlayText');
+  if (text) text.textContent = message;
+  if (overlay) overlay.classList.add('show');
+}
+function updateNetworkOverlay(message) {
+  const text = document.getElementById('networkOverlayText');
+  if (text && message) text.textContent = message;
+}
+function setWalletOpenButton(show) {
+  const btn = document.getElementById('walletOpenBtn');
+  if (btn) btn.style.display = show ? 'inline-flex' : 'none';
+}
+function hideNetworkOverlay() {
+  networkOverlayDepth = Math.max(0, networkOverlayDepth - 1);
+  if (networkOverlayDepth > 0) return;
+  const overlay = document.getElementById('networkOverlay');
+  if (overlay) overlay.classList.remove('show');
+  setWalletOpenButton(false);
+}
+function isNetworkOverlayVisible() {
+  return networkOverlayDepth > 0;
 }
 
 // Rules Modal visibility control
@@ -1068,6 +2829,7 @@ function setRulesLanguage(lang) {
 function toggleSellModal(show) {
   const modal = document.getElementById('sellModal');
   modal.style.display = show ? 'flex' : 'none';
+  if (show) initSellStepper();
 }
 
 // Mint Success Modal visibility control
@@ -1076,22 +2838,221 @@ function toggleMintSuccessModal(show) {
   modal.style.display = show ? 'flex' : 'none';
 }
 
+function renderCardResult(title, card, statusHtml) {
+  if (!card) {
+    const titleEl = document.getElementById('cardResultTitle');
+    if (titleEl) titleEl.textContent = title;
+    document.getElementById('mintedCardVisual').innerHTML = `
+      <div style="font-size:38px; margin-bottom:8px;">&#9917;</div>
+      <div style="font-family:'Black Ops One',sans-serif; font-size:20px; color:#dde4f0; margin-bottom:6px;">CARD CONFIRMED</div>
+      <div style="font-family:'Share Tech Mono',monospace; font-size:14px; color:#7a8899;">Waiting for marketplace index</div>
+    `;
+    document.getElementById('mintedCardStatus').innerHTML = statusHtml;
+    toggleMintSuccessModal(true);
+    return;
+  }
+  const teamInfo = TEAMS.find(t => t.id === card.teamId) || {name: 'Unknown', code: 'us'};
+  const posName = POSITION_SHORT[card.position] || card.position;
+  const rarityName = ['Common','Rare','Epic','Legendary'][card.rarity] || 'Common';
+  const rarColor = ['#7a8899','#3b82f6','#c084fc','#ffc940'][card.rarity] || '#7a8899';
+  const titleEl = document.getElementById('cardResultTitle');
+  if (titleEl) titleEl.textContent = title;
+  document.getElementById('mintedCardVisual').innerHTML = `
+    <div style="font-size:32px; margin-bottom:8px;">${getFlagHtml(teamInfo, true)}</div>
+    <div style="font-family:'Black Ops One',sans-serif; font-size:18px; color:#dde4f0; margin-bottom:4px;">${teamInfo.name.toUpperCase()}</div>
+    <div style="font-family:'Share Tech Mono',monospace; font-size:14px; color:#5a6a7a; margin-bottom:8px;">Position: ${posName}</div>
+    <div style="font-family:'Black Ops One',sans-serif; font-size:36px; color:${rarColor}; line-height:1;">${card.weight} <span style="font-size:16px;">PTS</span></div>
+    <div style="font-size:11px; font-family:'Share Tech Mono',monospace; color:${rarColor}; margin-top:4px; text-transform:uppercase;">${rarityName}</div>
+  `;
+  document.getElementById('mintedCardStatus').innerHTML = statusHtml;
+  toggleMintSuccessModal(true);
+}
+
+function applyScoredCardLocally(wallet, card) {
+  if (!wallet || !card) return null;
+  const w = wallet.toLowerCase();
+  if (!window.dreamScores[w]) window.dreamScores[w] = {};
+  if (!window.dreamScores[w][card.teamId]) window.dreamScores[w][card.teamId] = {};
+  const cur = window.dreamScores[w][card.teamId][card.position];
+  const isUpgrade = !cur || card.weight > cur.weight;
+  if (isUpgrade) {
+    window.dreamScores[w][card.teamId][card.position] = {
+      weight: card.weight,
+      tid: card.tokenId,
+      rarity: card.rarity,
+      dna: card.dna
+    };
+  }
+  if (ownerMap[card.tokenId]) ownerMap[card.tokenId].owner = w;
+  return { oldCard: cur, isUpgrade, diff: cur ? card.weight - cur.weight : card.weight };
+}
+
+function rememberSquadHighlight(card) {
+  if (!card) return;
+  lastSquadHighlight = {
+    teamId: Number(card.teamId),
+    position: Number(card.position),
+    tokenId: Number(card.tokenId),
+    ts: Date.now()
+  };
+}
+
+function continueToSquad() {
+  toggleMintSuccessModal(false);
+  if (lastSquadHighlight) {
+    selectedTeamId = lastSquadHighlight.teamId;
+    lastSquadHighlight.ts = Date.now();
+    renderCountryHub();
+    renderPitch();
+    renderLeaderboard();
+  }
+  const pitch = document.querySelector('.pitch-container');
+  if (pitch) pitch.scrollIntoView({behavior:'smooth', block:'center', inline:'nearest'});
+  setTimeout(() => renderPitch(), 4200);
+}
+
+async function getListingCardSnapshot(listingId) {
+  const id = Number(listingId);
+  if (activeListingsById[id]) return activeListingsById[id];
+  try {
+    const reader = marketContract || new ethers.Contract(MARKET_ADDRESS, MARKET_ABI, await getReadProvider());
+    const l = await reader.getListing(id);
+    const tokenId = Number(l[1]);
+    const priceWei = l[2];
+    const fig = ownerMap[tokenId];
+    if (!fig) return null;
+    return {
+      listingId: id,
+      tokenId,
+      seller: String(l[0]).toLowerCase(),
+      price: parseFloat(ethers.formatEther(priceWei)),
+      priceWei,
+      teamId: fig.teamId,
+      position: fig.position,
+      weight: fig.weight,
+      rarity: fig.rarity,
+      dna: fig.dna
+    };
+  } catch(e) {
+    console.warn('Could not snapshot listing before buy:', e);
+    return null;
+  }
+}
+
+function refreshAfterChainUpdate(localCard = null) {
+  const delays = [2500, 9000, 25000, 65000];
+  delays.forEach(delay => {
+    setTimeout(async () => {
+      try {
+        await loadData({silent:true});
+        if (localCard && address) {
+          applyScoredCardLocally(address, localCard);
+          renderStats();
+          renderCountryHub();
+          renderPitch();
+          renderLeaderboard();
+        }
+      } catch(e) {
+        console.warn('Delayed sync failed:', e);
+      }
+    }, delay);
+  });
+}
+
 // Open Sell Modal with selected card data and fully rendering vectors
 function openSellModal(tokenId, pos, weight, rarity) {
+  closeSlotActionSheet();
   activeSellTokenId = tokenId;
   const posName = POSITION_SHORT[pos] || pos;
   const rarityName = ['Common','Rare','Epic','Legendary'][rarity];
   const selectedTeam = TEAMS.find(t => t.id === selectedTeamId);
   
   document.getElementById('sellCardInfo').innerHTML = `
-    <strong>Country:</strong> ${getFlagHtml(selectedTeam)} ${selectedTeam.name}<br>
-    <strong>Position:</strong> ${posName}<br>
-    <strong>Rarity:</strong> ${rarityName}<br>
-    <strong>Weight:</strong> ${weight} pts<br>
-    <strong>Token ID:</strong> #${tokenId}
+    <span><strong>Country:</strong> ${getFlagHtml(selectedTeam)} ${selectedTeam.name}</span>
+    <span><strong>Position:</strong> ${posName}</span>
+    <span><strong>Rarity:</strong> ${rarityName}</span>
+    <span><strong>Weight:</strong> ${weight} PTS</span>
+    <span><strong>Token ID:</strong> #${tokenId}</span>
   `;
   document.getElementById('sellPriceInput').value = "10";
   toggleSellModal(true);
+}
+
+function isMobileActionSheetMode() {
+  return window.matchMedia && window.matchMedia('(max-width: 700px)').matches;
+}
+
+function ensureSlotActionSheet() {
+  let modal = document.getElementById('slotActionSheet');
+  if (modal) return modal;
+  modal = document.createElement('div');
+  modal.id = 'slotActionSheet';
+  modal.className = 'slot-action-modal';
+  modal.onclick = (event) => {
+    if (event.target === modal) closeSlotActionSheet();
+  };
+  modal.innerHTML = `
+    <div class="slot-action-panel">
+      <div class="slot-action-head">
+        <div class="slot-action-title" id="slotActionTitle">CARD ACTIONS</div>
+        <button type="button" class="slot-action-close" onclick="closeSlotActionSheet()">&times;</button>
+      </div>
+      <div class="slot-action-body" id="slotActionBody"></div>
+    </div>
+  `;
+  document.body.appendChild(modal);
+  return modal;
+}
+
+function openSlotActionSheet(title, actionHtml) {
+  if (!actionHtml) return;
+  const modal = ensureSlotActionSheet();
+  document.getElementById('slotActionTitle').textContent = title;
+  document.getElementById('slotActionBody').innerHTML = actionHtml;
+  modal.classList.add('active');
+}
+
+function closeSlotActionSheet() {
+  const modal = document.getElementById('slotActionSheet');
+  if (modal) modal.classList.remove('active');
+}
+
+let sellStepperReady = false;
+let sellStepTimer = null;
+let sellStepDelayTimer = null;
+
+function changeSellPrice(delta) {
+  const input = document.getElementById('sellPriceInput');
+  if (!input) return;
+  const current = Math.max(1, Math.round(parseFloat(input.value || '1') || 1));
+  input.value = Math.max(1, current + delta);
+}
+
+function stopSellStepHold() {
+  clearTimeout(sellStepDelayTimer);
+  clearInterval(sellStepTimer);
+  sellStepDelayTimer = null;
+  sellStepTimer = null;
+}
+
+function initSellStepper() {
+  if (sellStepperReady) return;
+  sellStepperReady = true;
+  document.querySelectorAll('.sell-step-btn').forEach(btn => {
+    const delta = Number(btn.dataset.step || 0);
+    const start = (event) => {
+      event.preventDefault();
+      changeSellPrice(delta);
+      stopSellStepHold();
+      sellStepDelayTimer = setTimeout(() => {
+        sellStepTimer = setInterval(() => changeSellPrice(delta), 85);
+      }, 380);
+    };
+    btn.addEventListener('pointerdown', start);
+    btn.addEventListener('pointerup', stopSellStepHold);
+    btn.addEventListener('pointerleave', stopSellStepHold);
+    btn.addEventListener('pointercancel', stopSellStepHold);
+  });
 }
 
 // Handle Submit Card Listing
@@ -1107,12 +3068,84 @@ async function submitSellCard() {
 // Renders flag using flagcdn.com with fallback to native emoji
 function getFlagHtml(team, isLarge = false) {
   const cls = isLarge ? 'flag-img-lg' : 'flag-img';
+  const width = isLarge ? 160 : 80;
   return `
     <span class="flag-container" style="display: inline-flex; align-items: center; justify-content: center; margin-right: 6px; vertical-align: middle;">
-      <img src="https://flagcdn.com/w40/${team.code}.png" class="${cls}" alt="${team.name}" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';" />
+      <img src="https://flagcdn.com/w${width}/${team.code}.png" class="${cls}" alt="${team.name}" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';" />
       <span style="display: none; font-size: ${isLarge ? '28px' : '18px'};">${team.flag}</span>
     </span>
   `;
+}
+
+function makeFigureSVG(dna, size = 80) {
+  const t = parseDNA(dna);
+  const team = TEAMS[t.teamId % TEAMS.length] || {};
+  const SHIRT = {
+    'Australia':'#FFD700','Iran':'#239F40','Iraq':'#CC0001','Japan':'#BC002D','Jordan':'#007A3D','Qatar':'#8D153A',
+    'Saudi Arabia':'#006C35','South Korea':'#CD2E3A','Uzbekistan':'#1EB53A','Algeria':'#006233','Cape Verde':'#003893',
+    'DR Congo':'#007FFF','Egypt':'#CE1126','Ghana':'#006B3F','Ivory Coast':'#F77F00','Morocco':'#C1272D','Senegal':'#00853F',
+    'South Africa':'#007749','Tunisia':'#E70013','Canada':'#FF0000','Curacao':'#002B7F','Haiti':'#00209F','Mexico':'#006847',
+    'Panama':'#DA121A','USA':'#002868','Argentina':'#74ACDF','Brazil':'#009C3B','Colombia':'#FCD116','Ecuador':'#FFD100',
+    'Paraguay':'#D52B1E','Uruguay':'#5EB6E4','New Zealand':'#00247D','Austria':'#ED2939','Belgium':'#111111','Bosnia':'#002395',
+    'Croatia':'#FF0000','Czech Rep.':'#D7141A','England':'#EEEEEE','France':'#002395','Germany':'#111111','Netherlands':'#FF6600',
+    'Norway':'#EF2B2D','Portugal':'#006600','Scotland':'#003087','Spain':'#AA151B','Sweden':'#006AA7','Switzerland':'#FF0000','Turkey':'#E30A17'
+  };
+  const SKIN = ['#FDBCB4','#F1C27D','#E0AC69','#C68642','#8D5524','#4A2912'];
+  const RARC = ['#6b7280','#3b82f6','#a855f7','#f59e0b'];
+  const shirt = SHIRT[team.name] || '#0066cc';
+  const skin = SKIN[Number((BigInt(String(dna)) >> 18n) % 6n)];
+  const rar = RARC[t.rarity] || '#6b7280';
+  const isLight = ['#FFD700','#FCD116','#FFD100','#EEEEEE'].includes(shirt);
+  const numC = isLight ? '#000' : '#fff';
+  const bootC = t.hasGoldenBoots ? '#FFD700' : '#111';
+  const s = size, cx = s / 2;
+  const headY = s * 0.12, headW = s * 0.30, headH = s * 0.28;
+  const bodyY = headY + headH * 0.85, bodyW = s * 0.40, bodyH = s * 0.28;
+  const legW = s * 0.10, legH = s * 0.22, legGap = s * 0.04;
+  const legY = bodyY + bodyH * 0.85;
+  const armW = s * 0.09, armH = s * 0.20, armY = bodyY + s * 0.02;
+  const bootH = s * 0.09, handR = s * 0.06;
+  const p = [];
+  p.push(`<ellipse cx="${cx}" cy="${legY+legH+bootH+s*0.03}" rx="${bodyW*0.55}" ry="${s*0.04}" fill="${rar}" opacity="0.24"/>`);
+  p.push(`<rect x="${cx-legW-legGap}" y="${legY}" width="${legW}" height="${legH}" rx="3" fill="${shirt}"/>`);
+  p.push(`<rect x="${cx+legGap}" y="${legY}" width="${legW}" height="${legH}" rx="3" fill="${shirt}"/>`);
+  const sockY = legY + legH * 0.65;
+  p.push(`<rect x="${cx-legW-legGap}" y="${sockY}" width="${legW}" height="${legH*0.38}" rx="2" fill="white"/>`);
+  p.push(`<rect x="${cx+legGap}" y="${sockY}" width="${legW}" height="${legH*0.38}" rx="2" fill="white"/>`);
+  const bootY = legY + legH;
+  p.push(`<rect x="${cx-legW-legGap-2}" y="${bootY}" width="${legW+4}" height="${bootH}" rx="3" fill="${bootC}"/>`);
+  p.push(`<rect x="${cx+legGap-2}" y="${bootY}" width="${legW+4}" height="${bootH}" rx="3" fill="${bootC}"/>`);
+  p.push(`<rect x="${cx-bodyW/2}" y="${bodyY+bodyH*0.78}" width="${bodyW}" height="${s*0.09}" rx="3" fill="${shirt}cc"/>`);
+  p.push(`<rect x="${cx-bodyW/2}" y="${bodyY}" width="${bodyW}" height="${bodyH*0.85}" rx="5" fill="${shirt}"/>`);
+  p.push(`<text x="${cx}" y="${bodyY+bodyH*0.55}" text-anchor="middle" font-family="Arial Black" font-size="${s*0.13}" font-weight="900" fill="${numC}" opacity="0.9">${t.position}</text>`);
+  p.push(`<rect x="${cx-bodyW/2-armW+2}" y="${armY}" width="${armW}" height="${armH}" rx="3" fill="${shirt}" transform="rotate(7,${cx-bodyW/2},${armY})"/>`);
+  p.push(`<rect x="${cx+bodyW/2-2}" y="${armY}" width="${armW}" height="${armH}" rx="3" fill="${shirt}" transform="rotate(-7,${cx+bodyW/2},${armY})"/>`);
+  p.push(`<circle cx="${cx-bodyW/2-s*0.04}" cy="${armY+armH}" r="${handR}" fill="${skin}"/>`);
+  p.push(`<circle cx="${cx+bodyW/2+s*0.04}" cy="${armY+armH}" r="${handR}" fill="${skin}"/>`);
+  if (t.hasGloves) {
+    p.push(`<circle cx="${cx-bodyW/2-s*0.04}" cy="${armY+armH}" r="${handR+2}" fill="none" stroke="#FFD700" stroke-width="2"/>`);
+    p.push(`<circle cx="${cx+bodyW/2+s*0.04}" cy="${armY+armH}" r="${handR+2}" fill="none" stroke="#FFD700" stroke-width="2"/>`);
+  }
+  p.push(`<rect x="${cx-s*0.04}" y="${bodyY-s*0.05}" width="${s*0.08}" height="${s*0.07}" rx="2" fill="${skin}"/>`);
+  p.push(`<rect x="${cx-headW/2}" y="${headY}" width="${headW}" height="${headH}" rx="6" fill="${skin}"/>`);
+  p.push(`<rect x="${cx-headW/2-s*0.03}" y="${headY+headH*0.25}" width="${s*0.04}" height="${s*0.08}" rx="2" fill="${skin}"/>`);
+  p.push(`<rect x="${cx+headW/2-s*0.01}" y="${headY+headH*0.25}" width="${s*0.04}" height="${s*0.08}" rx="2" fill="${skin}"/>`);
+  if (t.hasEarring) p.push(`<circle cx="${cx-headW/2-1}" cy="${headY+headH*0.38}" r="${s*0.025}" fill="#FFD700"/>`);
+  const eyeY = headY + headH * 0.32, eyeW = s * 0.07, eyeH = s * 0.05;
+  p.push(`<rect x="${cx-headW*0.36}" y="${eyeY}" width="${eyeW}" height="${eyeH}" rx="2" fill="white"/>`);
+  p.push(`<rect x="${cx+headW*0.08}" y="${eyeY}" width="${eyeW}" height="${eyeH}" rx="2" fill="white"/>`);
+  p.push(`<rect x="${cx-headW*0.33}" y="${eyeY+1}" width="${eyeW*0.6}" height="${eyeH*0.7}" rx="1" fill="#0a0a14"/>`);
+  p.push(`<rect x="${cx+headW*0.11}" y="${eyeY+1}" width="${eyeW*0.6}" height="${eyeH*0.7}" rx="1" fill="#0a0a14"/>`);
+  p.push(`<rect x="${cx-headW*0.38}" y="${eyeY-s*0.04}" width="${eyeW+2}" height="${s*0.025}" rx="1" fill="#1a0800" opacity="0.8"/>`);
+  p.push(`<rect x="${cx+headW*0.06}" y="${eyeY-s*0.04}" width="${eyeW+2}" height="${s*0.025}" rx="1" fill="#1a0800" opacity="0.8"/>`);
+  p.push(`<rect x="${cx-s*0.02}" y="${eyeY+eyeH+s*0.02}" width="${s*0.04}" height="${s*0.05}" rx="2" fill="${skin}" opacity="0.7"/>`);
+  p.push(`<rect x="${cx-s*0.07}" y="${headY+headH*0.72}" width="${s*0.14}" height="${s*0.03}" rx="2" fill="#8b1a00" opacity="0.8"/>`);
+  if (t.hasBand) p.push(`<rect x="${cx-headW/2-2}" y="${headY+headH*0.18}" width="${headW+4}" height="${s*0.06}" rx="3" fill="white" opacity="0.85"/>`);
+  if (t.hasTattoo) {
+    p.push(`<line x1="${cx-bodyW/2-armW/2}" y1="${armY+armH*0.3}" x2="${cx-bodyW/2-armW/2+s*0.04}" y2="${armY+armH*0.5}" stroke="#000" stroke-width="1.5" opacity="0.5"/>`);
+    p.push(`<line x1="${cx-bodyW/2-armW/2+s*0.04}" y1="${armY+armH*0.3}" x2="${cx-bodyW/2-armW/2}" y2="${armY+armH*0.5}" stroke="#000" stroke-width="1.5" opacity="0.5"/>`);
+  }
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${s} ${s}" width="${s}" height="${s}" aria-hidden="true">${p.join('')}</svg>`;
 }
 
 // Sponsored Prize Pool split layout for Top 10
@@ -1142,38 +3175,204 @@ async function getReadProvider(){
   }
 }
 
-async function connectWallet(){
-  if(!window.ethereum){
-    showToast('MetaMask is not installed. Install wallet extension to proceed.', true);
-    return;
+function getInjectedWalletProvider() {
+  const eth = window.ethereum;
+  if (!eth) return null;
+  if (Array.isArray(eth.providers) && eth.providers.length) {
+    return eth.providers.find(p => p.isTrust) || eth.providers.find(p => p.isMetaMask) || eth.providers[0];
   }
-  try{
-    await window.ethereum.request({method:'eth_requestAccounts'});
-    const cid = await window.ethereum.request({method:'eth_chainId'});
-    if(parseInt(cid,16) !== CHAIN_ID){
-      showToast('Wrong Network. Switch your wallet to Chiliz Chain (ID: 88888).', true);
-      return;
+  return eth;
+}
+function getWalletProvider() { return activeWalletProvider || getInjectedWalletProvider(); }
+function parseWalletChainId(chainId) {
+  const text = String(chainId || '').trim();
+  if (!text) return NaN;
+  return text.toLowerCase().startsWith('0x') ? parseInt(text,16) : parseInt(text,10);
+}
+async function ensureChilizChain(walletProvider) {
+  const wantedChainId = '0x' + CHAIN_ID.toString(16);
+  let cid = await walletProvider.request({method:'eth_chainId'});
+  if (parseWalletChainId(cid) === CHAIN_ID) return true;
+  try {
+    await walletProvider.request({method:'wallet_switchEthereumChain', params:[{chainId:wantedChainId}]});
+    cid = await walletProvider.request({method:'eth_chainId'});
+    return parseWalletChainId(cid) === CHAIN_ID;
+  } catch(e) {
+    const code = e && (e.code || e.data?.originalError?.code);
+    if (code === 4902 || String(e.message || '').toLowerCase().includes('unrecognized')) {
+      await walletProvider.request({
+        method:'wallet_addEthereumChain',
+        params:[{chainId:wantedChainId, chainName:'Chiliz Chain', nativeCurrency:{name:'CHZ',symbol:'CHZ',decimals:18}, rpcUrls:PUBLIC_RPCS, blockExplorerUrls:['https://scan.chiliz.com']}]
+      });
+      cid = await walletProvider.request({method:'eth_chainId'});
+      return parseWalletChainId(cid) === CHAIN_ID;
     }
-    
-    provider = new ethers.BrowserProvider(window.ethereum);
-    signer = await provider.getSigner();
-    address = await signer.getAddress();
-    
-    contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
-    marketContract = new ethers.Contract(MARKET_ADDRESS, MARKET_ABI, signer);
-    
-    document.getElementById('connectBtn').textContent = address.slice(0,6)+'...'+address.slice(-4);
-    document.getElementById('connectBtn').classList.add('connected');
+  }
+  throw new Error(`Wallet stayed on chain ${cid}; expected Chiliz Chain ${wantedChainId}`);
+}
+async function updateWalletBalance() {
+  const walletProvider = getWalletProvider();
+  if (walletProvider && address) {
+    try {
+      const p = new ethers.BrowserProvider(walletProvider);
+      const bal = await p.getBalance(address);
+      const el = document.getElementById('walletBalance');
+      if (el) { el.textContent = parseFloat(ethers.formatEther(bal)).toFixed(3)+' CHZ'; el.style.display='inline-block'; }
+    } catch(e) {}
+  }
+}
+function openWalletChoice() { const modal = document.getElementById('walletChoiceModal'); if (modal) modal.classList.add('active'); }
+function closeWalletChoice(event) {
+  if (event && event.target && event.currentTarget && event.target !== event.currentTarget) return;
+  const modal = document.getElementById('walletChoiceModal'); if (modal) modal.classList.remove('active');
+}
+async function connectInjectedFromChoice(){ closeWalletChoice(); await connectWallet(); }
+async function connectPrivyFromChoice(){ closeWalletChoice(); await connectPrivyWallet(); }
+function getChilizPrivyChain(){return {id:CHAIN_ID,name:'Chiliz Chain',network:'chiliz',nativeCurrency:{name:'CHZ',symbol:'CHZ',decimals:18},rpcUrls:{default:{http:PUBLIC_RPCS},public:{http:PUBLIC_RPCS}},blockExplorers:{default:{name:'ChilizScan',url:'https://scan.chiliz.com'}}};}
+async function getPrivyClient() {
+  if (privyClient) return privyClient;
+  if (location.protocol === 'file:') throw new Error('Privy requires a hosted HTTPS origin.');
+  const sdk = await import('https://esm.sh/@privy-io/js-sdk-core@latest');
+  privySdk = sdk;
+  const Privy = sdk.default;
+  const storage = sdk.LocalStorage ? new sdk.LocalStorage() : {
+    get:key=>Promise.resolve(localStorage.getItem(key)),
+    put:(key,value)=>Promise.resolve(localStorage.setItem(key,value)),
+    del:key=>Promise.resolve(localStorage.removeItem(key)),
+    getKeys:()=>Promise.resolve(Object.keys(localStorage))
+  };
+  const chilizChain = getChilizPrivyChain();
+  privyClient = new Privy({appId:PRIVY_APP_ID, clientId:PRIVY_CLIENT_ID, defaultChain:chilizChain, supportedChains:[chilizChain], storage});
+  await privyClient.initialize();
+  if (privyClient.embeddedWallet && !privyIframe) {
+    privyIframe = document.createElement('iframe');
+    privyIframe.src = privyClient.embeddedWallet.getURL();
+    privyIframe.style.display = 'none';
+    privyIframe.setAttribute('aria-hidden','true');
+    document.body.appendChild(privyIframe);
+    privyClient.setMessagePoster(privyIframe.contentWindow);
+    window.addEventListener('message', event => {
+      if (event.source !== privyIframe.contentWindow) return;
+      const data = typeof event.data === 'string' ? JSON.parse(event.data) : event.data;
+      privyClient.embeddedWallet.onMessage(data);
+    });
+  }
+  return privyClient;
+}
+async function connectWalletConnect() {
+  closeWalletChoice();
+  showToast('WalletConnect tip: use Trust Wallet or MetaMask Mobile. Socios may revert mint/buy transactions.', true);
+  showNetworkOverlay('Opening WalletConnect...');
+  try {
+    const mod = await import('https://esm.sh/@walletconnect/ethereum-provider@2');
+    const EthereumProvider = mod.default || mod.EthereumProvider;
+    walletConnectProvider = await EthereumProvider.init({
+      projectId:WALLETCONNECT_PROJECT_ID,
+      chains:[CHAIN_ID],
+      optionalChains:[CHAIN_ID],
+      chainId:CHAIN_ID,
+      rpcMap:{[CHAIN_ID]:PUBLIC_RPCS[0]},
+      showQrModal:true,
+      methods:['eth_sendTransaction','personal_sign','eth_signTypedData','wallet_switchEthereumChain','wallet_addEthereumChain'],
+      events:['chainChanged','accountsChanged','disconnect'],
+      metadata:{name:'Block Kickers World Cup Album',description:'Block Kickers World Cup album on Chiliz Chain',url:location.origin,icons:[location.origin + '/favicon.ico']}
+    });
+    await walletConnectProvider.connect({chains:[CHAIN_ID]});
+    await finalizeWalletConnection(walletConnectProvider,'WalletConnect');
+    showToast('WalletConnect wallet connected.');
+  } catch(e) {
+    console.error('WalletConnect failed:', e);
+    showToast('WalletConnect failed: '+readableError(e).slice(0,160), true);
+  } finally { hideNetworkOverlay(); }
+}
+function getWalletConnectRedirectUrl() {
+  const meta = walletConnectProvider?.session?.peer?.metadata || {};
+  const redirect = meta.redirect || {};
+  let url = redirect.native || redirect.universal || '';
+  const name = String(meta.name || '').toLowerCase();
+  if (!url && name.includes('trust')) url = 'trust://';
+  if (!url && name.includes('metamask')) url = 'metamask://';
+  if (!url && name.includes('socios')) url = 'socios-mob://';
+  return url;
+}
+function openWalletConnectApp() {
+  const url = getWalletConnectRedirectUrl();
+  if (!url) { showToast('Open your connected wallet app to confirm this request.', true); return; }
+  window.location.href = url;
+}
+function promptWalletConnectConfirmation(message = 'Confirm this request in your connected wallet app.') {
+  if (activeWalletType !== 'WalletConnect') return;
+  updateNetworkOverlay(message + ' If the app does not open, tap OPEN WALLET APP.');
+  setWalletOpenButton(true);
+  setTimeout(openWalletConnectApp, 350);
+}
+async function finalizeWalletConnection(walletProvider, walletType='wallet') {
+  if (!walletProvider || typeof walletProvider.request !== 'function') throw new Error('Selected wallet did not return a compatible provider.');
+  activeWalletProvider = walletProvider;
+  activeWalletType = walletType;
+  let accounts = [];
+  try { accounts = await walletProvider.request({method:'eth_requestAccounts'}); }
+  catch(e) { accounts = await walletProvider.request({method:'eth_accounts'}); }
+  if (!accounts || !accounts.length) throw new Error('No wallet account selected.');
+  await ensureChilizChain(walletProvider);
+  provider = new ethers.BrowserProvider(walletProvider);
+  signer = await provider.getSigner();
+  address = await signer.getAddress();
+  contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
+  marketContract = new ethers.Contract(MARKET_ADDRESS, MARKET_ABI, signer);
+  const connectBtn = document.getElementById('connectBtn');
+  if (connectBtn) { connectBtn.textContent = 'CONNECTED'; connectBtn.classList.add('connected'); }
+  const walletAddressEl = document.getElementById('walletAddress');
+  if (walletAddressEl) { walletAddressEl.textContent = address.slice(0,6)+'...'+address.slice(-4); walletAddressEl.style.display = 'inline-block'; }
+  await updateWalletBalance();
     document.getElementById('connectSection').style.display = 'none';
     document.getElementById('gameSection').style.display = 'block';
     document.getElementById('statsRow').style.display = 'grid';
-    
-    updatePriceUI();
-    await loadData();
-  }catch(e){
-    console.error(e);
-    showToast('Error connecting wallet.', true);
-  }
+  const prizeStrip = document.getElementById('dashboardPrizeStrip');
+  if (prizeStrip) prizeStrip.style.display = 'grid';
+  document.body.classList.add('game-mode');
+  updatePriceUI();
+  await loadData();
+}
+async function connectWallet(){
+  const walletProvider = getInjectedWalletProvider();
+  if(!walletProvider){ showToast('No compatible Web3 wallet detected. Use Privy or WalletConnect.', true); return; }
+  try{ await finalizeWalletConnection(walletProvider, 'Injected'); }
+  catch(e){ console.error(e); showToast('Error connecting wallet: '+readableError(e).slice(0,140), true); }
+}
+async function connectPrivyWallet(){
+  showNetworkOverlay('Opening Privy wallet...');
+  try{
+    const client = await getPrivyClient();
+    let user = null;
+    try { const current = await client.user.get(); user = current?.user || null; }
+    catch(sessionError) { if (!isMissingPrivySession(sessionError)) throw sessionError; }
+    if (!user) {
+      hideNetworkOverlay();
+      const email = window.prompt('Enter email for Privy wallet login:');
+      if (!email) return;
+      showNetworkOverlay('Sending Privy login code...');
+      await client.auth.email.sendCode(email.trim());
+      hideNetworkOverlay();
+      const code = window.prompt('Enter the Privy code from your email:');
+      if (!code) return;
+      showNetworkOverlay('Confirming Privy login...');
+      const session = await client.auth.email.loginWithCode(email.trim(), code.trim());
+      user = session.user;
+    }
+    let wallet = privySdk.getUserEmbeddedEthereumWallet(user);
+    if (!wallet) {
+      updateNetworkOverlay('Creating Privy embedded wallet...');
+      const created = await client.embeddedWallet.create({});
+      user = created.user;
+      wallet = privySdk.getUserEmbeddedEthereumWallet(user);
+    }
+    const entropy = privySdk.getEntropyDetailsFromUser(user);
+    const walletProvider = await client.embeddedWallet.getEthereumProvider({wallet, entropyId:entropy.entropyId, entropyIdVerifier:entropy.entropyIdVerifier});
+    await finalizeWalletConnection(walletProvider, 'Privy');
+    showToast('Privy wallet connected.');
+  }catch(e){ console.error('Privy connect failed:', e); showToast('Privy failed: '+readableError(e).slice(0,160), true); }
+  finally{ hideNetworkOverlay(); }
 }
 
 function updatePriceUI() {
@@ -1245,24 +3444,33 @@ async function fetchEvents(){
 
 let ownerMap = {};
 
-async function loadData(){
-  document.getElementById('countryGridContainer').innerHTML = '<div style="text-align:center;color:#3d4a5a;padding:40px;grid-column:1/-1;"><span class="spin"></span> Querying Chiliz Blockchain...</div>';
-
-  let mints=[], sales=[], listed=[];
-  try {
-    const res = await fetch('/api/events');
-    if(res.ok){
-      const api = await res.json();
-      mints = api.mints.map(m => ({owner: m.owner, tokenId: m.tokenId, dna: BigInt(m.dna)}));
-      sales = api.sales;
-      listed = api.listings || [];
-    }
-  } catch(e) {
-    const ev = await fetchEvents();
-    mints = ev.mints.map(m => ({owner: m.args.owner.toLowerCase(), tokenId: Number(m.args.tokenId), dna: m.args.dna}));
-    sales = ev.sales;
-    listed = ev.listed;
+async function loadData(options = {}){
+  const silent = Boolean(options.silent);
+  const startedOverlay = !silent && !isNetworkOverlayVisible();
+  if (!silent) {
+    if (startedOverlay) showNetworkOverlay('Refreshing blockchain data...');
+    else updateNetworkOverlay('Refreshing blockchain data...');
   }
+  if (!silent) {
+    document.getElementById('countryGridContainer').innerHTML = '<div style="text-align:center;color:#3d4a5a;padding:40px;grid-column:1/-1;"><span class="spin"></span> Querying Chiliz Blockchain...</div>';
+  }
+
+  try {
+    let mints=[], sales=[], listed=[];
+    try {
+      const res = await fetch('/api/events');
+      if(res.ok){
+        const api = await res.json();
+        mints = api.mints.map(m => ({owner: m.owner, tokenId: m.tokenId, dna: BigInt(m.dna)}));
+        sales = api.sales;
+        listed = api.listings || [];
+      }
+    } catch(e) {
+      const ev = await fetchEvents();
+      mints = ev.mints.map(m => ({owner: m.args.owner.toLowerCase(), tokenId: Number(m.args.tokenId), dna: m.args.dna}));
+      sales = ev.sales;
+      listed = ev.listed;
+    }
 
   if (contract) {
     try {
@@ -1315,22 +3523,46 @@ async function loadData(){
 
   marketByTeamPosition = {};
   marketFloorByTeamPosition = {};
+  activeListingsByToken = {};
+  activeListingsById = {};
   try{
     const rp = await getReadProvider();
     const rmk = new ethers.Contract(MARKET_ADDRESS, MARKET_ABI, rp);
     const nextId = Number(await rmk.nextListingId());
     const from = Math.max(0, nextId - 150);
-    for(let i = from; i < nextId; i++){
+    const ids = Array.from({length: nextId - from}, (_, idx) => from + idx);
+    const listingResults = [];
+    for(let start = 0; start < ids.length; start += 25){
+      const batch = ids.slice(start, start + 25);
+      const settled = await Promise.allSettled(batch.map(i => rmk.getListing(i).then(l => ({i, l}))));
+      settled.forEach(result => {
+        if(result.status === 'fulfilled') listingResults.push(result.value);
+      });
+    }
+    for(const {i, l} of listingResults){
       try{
-        const l = await rmk.getListing(i);
         if(!Boolean(l[3])) continue; 
+        const seller = String(l[0]).toLowerCase();
         const tokenId = Number(l[1]);
         const priceWei = l[2];
         const fig = ownerMap[tokenId];
         if(!fig) continue;
         const price = parseFloat(ethers.formatEther(priceWei));
+        activeListingsByToken[tokenId] = {listingId: i, seller, price, priceWei};
         const tid = fig.teamId;
         const pos = fig.position;
+        activeListingsById[i] = {
+          listingId: i,
+          tokenId,
+          seller,
+          price,
+          priceWei,
+          teamId: fig.teamId,
+          position: fig.position,
+          weight: fig.weight,
+          rarity: fig.rarity,
+          dna: fig.dna
+        };
         
         // Find best upgrade card
         if(!marketByTeamPosition[tid]) marketByTeamPosition[tid] = {};
@@ -1352,10 +3584,13 @@ async function loadData(){
   // Independent sponsored pool presentation (English local)
   document.getElementById('poolInfo').textContent = `Quest Prize Pool: ${SPONSORED_POOL.toLocaleString()} CHZ (Sponsor Funded) · Global TOP 10 Share Rewards`;
 
-  renderStats();
-  renderCountryHub();
-  renderPitch();
-  renderLeaderboard();
+    renderStats();
+    renderCountryHub();
+    renderPitch();
+    renderLeaderboard();
+  } finally {
+    if (startedOverlay) hideNetworkOverlay();
+  }
 }
 
 function getTeamDetails(wallet, teamId) {
@@ -1391,12 +3626,16 @@ function getGlobalLeaderboardData() {
   return Object.entries(window.dreamScores).map(([wallet, countryData]) => {
     let totalScore = 0;
     let activeCountriesCount = 0;
+    let cardsOwned = 0;
     Object.values(countryData).forEach(positionsObj => {
       const nationScore = Object.values(positionsObj).reduce((sum, item) => sum + item.weight, 0);
       if (nationScore > 0) activeCountriesCount++;
       totalScore += nationScore;
     });
-    return { wallet, score: totalScore, filled: activeCountriesCount };
+    try {
+      cardsOwned = Object.values(ownerMap || {}).filter(fig => fig.owner === wallet.toLowerCase()).length;
+    } catch(e) {}
+    return { wallet, score: totalScore, filled: activeCountriesCount, cards: cardsOwned };
   }).sort((a,b) => b.score - a.score);
 }
 
@@ -1430,7 +3669,9 @@ function renderStats() {
   }
   
   document.getElementById('myGlobalRank').textContent = myGlobalRankVal;
-  document.getElementById('myEstPayout').textContent = `${myEstPrizeVal.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})} CHZ`;
+  document.getElementById('myEstPayout').textContent = myEstPrizeVal > 0
+    ? `${myEstPrizeVal.toLocaleString()} CHZ`
+    : '???,??? CHZ';
 }
 
 function filterFederation(fed, btnEl) {
@@ -1471,24 +3712,31 @@ function renderCountryHub() {
     const leader = getCountryLeader(team.id);
     const isMeLeader = leader.wallet && leader.wallet.toLowerCase() === myAddr;
     
+    let scoreDisplay = userStats.score > 0 ? `${userStats.score} PTS` : '0 PTS';
+    let compDisplay = `${userStats.completed}/11`;
+    const compRatio = userStats.completed / 11;
+    const compColor = compRatio >= 1 ? '#00ff87' : compRatio >= .55 ? '#ffc940' : compRatio > 0 ? '#f97316' : '#ef4444';
+    const progressClass = userStats.completed >= 11 ? 'album-complete'
+      : userStats.completed >= 8 ? 'album-hot'
+      : userStats.completed >= 5 ? 'album-mid'
+      : userStats.completed > 0 ? 'album-low'
+      : 'album-empty';
+    
     const card = document.createElement('div');
-    card.className = `country-card ${selectedTeamId === team.id ? 'selected' : ''}`;
+    card.className = `country-card ${progressClass} ${selectedTeamId === team.id ? 'selected' : ''}`;
     card.onclick = () => selectCountry(team.id);
     
-    let scoreDisplay = userStats.score > 0 ? `${userStats.score} pts` : 'not started';
-    let compDisplay = `${userStats.completed}/11`;
-    let crownDisplay = isMeLeader ? '<span class="country-card-crown">👑</span>' : '';
+    let crownDisplay = '';
 
     card.innerHTML = `
-      <div>
+      <div class="country-card-main">
         ${crownDisplay}
         <div class="country-card-flag">${getFlagHtml(team)}</div>
-        <div class="country-card-name" style="margin-top:6px;">${team.name}</div>
-        <div class="country-card-fed">${team.fed}</div>
+        <div class="country-card-name" style="margin-top:6px;">${teamAbbr(team)}</div>
       </div>
-      <div>
+      <div class="country-card-stats">
         <div class="country-card-score">${scoreDisplay}</div>
-        <div class="country-card-completion">${compDisplay}</div>
+        <div class="country-card-completion" style="color:${compColor};">${compDisplay}</div>
       </div>
     `;
     grid.appendChild(card);
@@ -1498,18 +3746,24 @@ function renderCountryHub() {
 function renderPitch() {
   const grid = document.getElementById('pitchFormationGrid');
   grid.innerHTML = '';
+  grid.classList.add('album-horizontal');
   const myAddr = address?.toLowerCase();
   
   const selectedTeam = TEAMS.find(t => t.id === selectedTeamId);
-  document.getElementById('selectedCountryTitle').innerHTML = `${getFlagHtml(selectedTeam, true)} &nbsp; ${selectedTeam.name.toUpperCase()} SQUAD`;
   
   const myTeamPositions = (window.dreamScores[myAddr] || {})[selectedTeamId] || {};
   const currentCompCount = Object.keys(myTeamPositions).length;
+  const selectedScore = Object.values(myTeamPositions).reduce((sum, item) => sum + item.weight, 0);
+  document.getElementById('selectedCountryTitle').innerHTML = `${getFlagHtml(selectedTeam, true)} &nbsp; ${selectedTeam.name.toUpperCase()} SQUAD <span class="squad-score">${selectedScore} PTS</span>`;
   document.getElementById('selectedCountryCompletion').textContent = `${currentCompCount}/11 POSITIONS COMPLETED`;
 
-  FORMATION.forEach(row => {
+  const horizontalFormation = [
+    { cls: 'row-single', positions: [1,2,3,4,5,6,7,8,9,10,11] }
+  ];
+  horizontalFormation.forEach(group => {
+    const row = group.positions;
     const rowEl = document.createElement('div');
-    rowEl.className = 'form-row';
+    rowEl.className = `form-row ${group.cls}`;
 
     row.forEach(pos => {
       const card = document.createElement('div');
@@ -1519,44 +3773,48 @@ function renderPitch() {
       
       const floorTeam = marketFloorByTeamPosition[selectedTeamId] || {};
       const floor = floorTeam[pos];
-
-      // Format lowest price info (Shown only for owned slots)
-      let floorHtml = '';
-      if (scored && floor) {
-        floorHtml = `<div style="font-size:9px; color:#ffc940; font-family:'Share Tech Mono',monospace; margin-top:2px;">Floor: ${floor.price} CHZ</div>`;
-      }
+      let sheetTitle = `${selectedTeam.name} ${POSITION_SHORT[pos]}`;
+      let sheetActionsHtml = '';
 
       if (scored) {
         const rarColor = ['#7a8899','#3b82f6','#c084fc','#ffc940'][scored.rarity];
-        card.className = 'pos-card owned';
+        card.className = `pos-card owned rarity-${scored.rarity}`;
+        const isHighlighted = lastSquadHighlight
+          && lastSquadHighlight.teamId === selectedTeamId
+          && lastSquadHighlight.position === pos
+          && Date.now() - lastSquadHighlight.ts < 12000;
+        if (isHighlighted) card.classList.add('just-scored');
         
         let actionHtml = '';
         if (mkt && mkt.weight > scored.weight) {
           actionHtml = `<button onclick="buyFromMarket(${mkt.listingId}, '${mkt.price}')" class="btn-card-action upgrade">UPGRADE +${mkt.weight - scored.weight}<br>${mkt.price} CHZ</button>`;
-        } else {
-          actionHtml = `<div style="margin-top:4px;font-size:8px;color:#5a6a7a;font-family:Share Tech Mono,monospace;letter-spacing:0.3px;">BEST WEIGHT</div>`;
         }
 
         // Sell Button if user currently owns the scored card
         let sellBtnHtml = '';
         const currentOwnerInfo = ownerMap[scored.tid];
         const currentlyOwnsScored = myAddr && currentOwnerInfo && currentOwnerInfo.owner === myAddr;
+        const activeListing = activeListingsByToken[scored.tid];
+        const listedByMe = myAddr && activeListing && activeListing.seller === myAddr;
         if (currentlyOwnsScored) {
-          sellBtnHtml = `<button onclick="openSellModal(${scored.tid}, ${pos}, ${scored.weight}, ${scored.rarity})" class="btn-card-action" style="background:rgba(239,68,68,0.1); border-color:rgba(239,68,68,0.3); color:#ef4444; margin-top:4px;">SELL CARD</button>`;
+          sellBtnHtml = listedByMe
+            ? `<button onclick="cancelMarketListing(${activeListing.listingId})" class="btn-card-action" style="background:rgba(239,68,68,0.16); border-color:rgba(239,68,68,0.46); color:#ef4444;">CANCEL<br>${activeListing.price} CHZ</button>`
+            : `<button onclick="openSellModal(${scored.tid}, ${pos}, ${scored.weight}, ${scored.rarity})" class="btn-card-action" style="background:rgba(239,68,68,0.1); border-color:rgba(239,68,68,0.3); color:#ef4444;">SELL CARD</button>`;
         }
+        const floorNote = floor ? `<div class="card-hover-note">FLOOR ${floor.price} CHZ</div>` : '';
+        sheetActionsHtml = `${floorNote}${actionHtml}${sellBtnHtml}`;
+        const hoverHtml = sheetActionsHtml ? `<div class="card-hover-actions">${sheetActionsHtml}</div>` : '';
 
         card.innerHTML = `
-          <div>
+          <div class="pos-card-top">
             <div class="pos-name">${POSITION_SHORT[pos]}</div>
-            <span class="pos-ball">⚽</span>
+            <span class="figure-mini">${makeFigureSVG(scored.dna, 80)}</span>
           </div>
           <div>
             <div class="pos-weight ${scored.rarity === 3 ? 'gold' : ''}">${scored.weight}</div>
             <div class="pos-rarity" style="color:${rarColor}">${['Common','Rare','Epic','Legendary'][scored.rarity]}</div>
-            ${floorHtml}
-            ${actionHtml}
-            ${sellBtnHtml}
           </div>
+          ${hoverHtml}
         `;
       } else {
         card.className = 'pos-card empty';
@@ -1565,20 +3823,30 @@ function renderPitch() {
         if (floor) {
           actionHtml = `<button onclick="buyFromMarket(${floor.listingId}, '${floor.price}')" class="btn-card-action">BUY<br>${floor.price} CHZ</button>`;
         } else {
-          actionHtml = `<div style="margin-top:4px;font-size:8px;color:#5a6a7a;font-family:Share Tech Mono,monospace;">NO LISTINGS</div>`;
+          actionHtml = `<div class="card-hover-note" style="color:#5a6a7a;">NO LISTINGS</div>`;
         }
+        sheetActionsHtml = actionHtml;
 
         card.innerHTML = `
-          <div>
+          <div class="pos-card-top">
             <div class="pos-name" style="color:#5a6a7a;">${POSITION_SHORT[pos]}</div>
-            <span class="pos-ball" style="opacity: 0.15">⚽</span>
+            <span class="pos-ball" style="opacity: 0.15">&#9917;</span>
           </div>
           <div>
-            <div class="pos-weight empty">—</div>
+            <div class="pos-weight empty">&mdash;</div>
             <div class="pos-rarity" style="color:#5a6a7a;">EMPTY</div>
-            ${actionHtml}
           </div>
+          <div class="card-hover-actions">${actionHtml}</div>
         `;
+      }
+      if (sheetActionsHtml) {
+        card.classList.add('has-actions');
+        card.addEventListener('click', (event) => {
+          if (!isMobileActionSheetMode()) return;
+          event.preventDefault();
+          event.stopPropagation();
+          openSlotActionSheet(sheetTitle, sheetActionsHtml);
+        });
       }
       rowEl.appendChild(card);
     });
@@ -1618,15 +3886,15 @@ function renderLeaderboard(){
       const posClass = isWinner ? 'winner' : '';
       const medal = rank === 1 ? '🥇' : rank === 2 ? '🥈' : rank === 3 ? '🥉' : '';
       const prizeAmount = getPrizeForRank(rank);
-      const prizeDisplay = prizeAmount > 0 ? `<span style="color:#00ff87;">Prize: ${prizeAmount.toLocaleString()} CHZ</span>` : '<span style="color:#5a6a7a;">No Prize</span>';
+      const prizeDisplay = prizeAmount > 0 ? `<span class="lb-prize">${prizeAmount.toLocaleString()} CHZ</span>` : '<span class="lb-prize none">NO PRIZE</span>';
 
       return `
-        <div class="lb-row ${isMe ? 'me' : ''}">
+        <div class="lb-row ${isMe ? 'me' : ''} ${prizeAmount > 0 ? 'prize-row' : ''}">
           <div class="lb-pos ${posClass}">${medal || '#' + rank}</div>
           <div class="lb-addr">${player.wallet.slice(0,6)}…${player.wallet.slice(-4)} ${isMe ? '<span class="lb-you">YOU</span>' : ''}</div>
-          <div class="lb-completion">Active Albums: ${player.filled}/48</div>
-          <div class="lb-completion" style="margin-left: 12px; font-weight: 700;">${prizeDisplay}</div>
-          <div class="lb-score">${player.score} pts</div>
+          <div class="lb-completion">${player.cards || 0} CARDS</div>
+          <div class="lb-completion prize-cell">${prizeDisplay}</div>
+          <div class="lb-score">${player.score} PTS</div>
         </div>
       `;
     };
@@ -1688,7 +3956,7 @@ function renderLeaderboard(){
           <div class="lb-pos ${posClass}">${medal || '#' + rank}</div>
           <div class="lb-addr">${player.wallet.slice(0,6)}…${player.wallet.slice(-4)} ${isMe ? '<span class="lb-you">YOU</span>' : ''}</div>
           <div class="lb-completion">Completed: ${player.completed}/11</div>
-          <div class="lb-score" style="${isWinner ? 'color: #00ff87;' : ''}">${player.score} pts</div>
+          <div class="lb-score" style="${isWinner ? 'color: #00ff87;' : ''}">${player.score} PTS</div>
         </div>
       `;
     };
@@ -1711,32 +3979,67 @@ function renderLeaderboard(){
 }
 
 async function buyFromMarket(listingId, priceChz){
+  closeSlotActionSheet();
   if (!signer || !marketContract) {
     showToast('Connect your wallet to purchase on the marketplace.', true);
     return;
   }
+  showNetworkOverlay(`Buying card for ${priceChz} CHZ...`);
   try {
+    updateNetworkOverlay('Checking marketplace listing...');
+    const purchasedCard = await getListingCardSnapshot(listingId);
     showToast(`Initializing marketplace buy: Listing #${listingId} for ${priceChz} CHZ...`);
     // Optimizing Buy speed - converting passed CHZ string back to Wei without extra slow contract lookup calls
     const priceWei = ethers.parseEther(String(priceChz));
 
+    updateNetworkOverlay('Waiting for wallet confirmation...');
+    promptWalletConnectConfirmation('Open your wallet app and confirm marketplace buy.');
     const tx = await marketContract.buyFigure(listingId, { value: priceWei });
     showToast('Transaction sent to Chiliz Chain. Awaiting confirmation...');
+    updateNetworkOverlay('Buy sent. Waiting for block confirmation...');
     
-    await tx.wait();
-    showToast('Success! Card purchased. Lineup updated!');
-    await loadData();
+    const receipt = await tx.wait();
+    if (receipt && Number(receipt.status) === 0) throw new Error('Buy reverted on-chain.');
+    showToast('Success! Card purchased. Syncing squad...');
+    let localResult = null;
+    if (purchasedCard && address) {
+      localResult = applyScoredCardLocally(address, purchasedCard);
+      rememberSquadHighlight(purchasedCard);
+      const upgradeText = localResult?.isUpgrade
+        ? `<span class="card-result-badge">SQUAD UPGRADED +${localResult.diff} PTS</span><p>Your album score was updated instantly. Blockchain events can still take a short moment to appear in every panel.</p>`
+        : `<span class="card-result-badge reserve">CARD SCORED BEFORE</span><p>This card entered your wallet, but your squad already had an equal or stronger card in that position.</p>`;
+      renderCardResult('CARD PURCHASED!', purchasedCard, upgradeText);
+      renderStats();
+      renderCountryHub();
+      renderPitch();
+      renderLeaderboard();
+    } else {
+      renderCardResult('CARD PURCHASED!', null, `<span class="card-result-badge">PURCHASE CONFIRMED</span><p>Your transaction is confirmed. The card is being indexed from Chiliz Chain and should appear in your squad shortly.</p>`);
+    }
+    await loadData({silent:true});
+    if (purchasedCard && address) {
+      applyScoredCardLocally(address, purchasedCard);
+      renderStats();
+      renderCountryHub();
+      renderPitch();
+      renderLeaderboard();
+    }
+    refreshAfterChainUpdate(purchasedCard);
   } catch (error) {
     console.error(error);
     showToast('Transaction failed. Make sure you have enough CHZ.', true);
+  } finally {
+    hideNetworkOverlay();
   }
 }
 
 async function sellFigure(tokenId, priceChz) {
+  closeSlotActionSheet();
   if (!signer || !marketContract || !address) {
     showToast('Please connect your wallet first.', true);
     return;
   }
+  showNetworkOverlay('Preparing marketplace listing...');
   try {
     const figContract = new ethers.Contract(CONTRACT_ADDRESS, [
       "function isApprovedForAll(address account, address operator) external view returns (bool)",
@@ -1744,47 +4047,123 @@ async function sellFigure(tokenId, priceChz) {
     ], signer);
 
     showToast('Checking marketplace approval...');
+    updateNetworkOverlay('Checking marketplace approval...');
     const isApproved = await figContract.isApprovedForAll(address, MARKET_ADDRESS);
     if (!isApproved) {
       showToast('Please approve the marketplace to handle your figures...');
+      updateNetworkOverlay('Waiting for marketplace approval in your wallet...');
+      promptWalletConnectConfirmation('Open your wallet app and approve marketplace access.');
       const txApprove = await figContract.setApprovalForAll(MARKET_ADDRESS, true);
+      updateNetworkOverlay('Approval sent. Waiting for block confirmation...');
       await txApprove.wait();
       showToast('Marketplace approved! Now listing your figure...');
     }
 
     const priceWei = ethers.parseEther(priceChz);
     showToast(`Listing card #${tokenId} for ${priceChz} CHZ...`);
+    updateNetworkOverlay(`Listing card for ${priceChz} CHZ...`);
+    promptWalletConnectConfirmation('Open your wallet app and confirm listing.');
     const txList = await marketContract.listFigure(tokenId, priceWei);
-    await txList.wait();
+    updateNetworkOverlay('Listing sent. Waiting for block confirmation...');
+    const receipt = await txList.wait();
+    if (receipt && Number(receipt.status) === 0) throw new Error('Listing reverted on-chain.');
     showToast('Card successfully listed on the marketplace!');
     toggleSellModal(false);
-    await loadData();
+    await loadData({silent:true});
   } catch(e) {
     console.error(e);
     showToast('Listing failed. Make sure you own this card and have sufficient gas.', true);
+  } finally {
+    hideNetworkOverlay();
+  }
+}
+
+async function cancelMarketListing(listingId) {
+  closeSlotActionSheet();
+  if (!signer || !marketContract) {
+    showToast('Connect your wallet to cancel listing.', true);
+    return;
+  }
+  showNetworkOverlay('Cancelling listing on Chiliz Chain...');
+  try {
+    showToast(`Cancelling listing #${listingId}...`);
+    updateNetworkOverlay('Waiting for wallet confirmation...');
+    promptWalletConnectConfirmation('Open your wallet app and confirm listing cancel.');
+    const tx = await marketContract.cancelListing(listingId);
+    updateNetworkOverlay('Cancel sent. Waiting for block confirmation...');
+    const receipt = await tx.wait();
+    if (receipt && Number(receipt.status) === 0) throw new Error('Cancel reverted on-chain.');
+    showToast('Listing cancelled.');
+    await loadData({silent:true});
+  } catch(e) {
+    console.error(e);
+    showToast('Cancel failed. Make sure this is your active listing.', true);
+  } finally {
+    hideNetworkOverlay();
   }
 }
 
 async function directMint() {
   if (!signer || !contract) {
-    showToast('Connect your wallet to mint players.', true);
+    showToast('Connect your wallet to mint cards.', true);
     return;
   }
+  showNetworkOverlay('Preparing card mint...');
   try {
     const referrer = getReferrer();
-    showToast(`Initializing player mint for ${ethers.formatEther(currentMintPrice)} CHZ...`);
+    showToast(`Initializing card mint for ${ethers.formatEther(currentMintPrice)} CHZ...`);
+    updateNetworkOverlay(`Minting random WC card for ${ethers.formatEther(currentMintPrice)} CHZ...`);
     
-    const tx = await contract.mint(referrer, { value: currentMintPrice });
+    let tx;
+    if (activeWalletType === 'Privy') {
+      const iface = new ethers.Interface(ABI);
+      const feeData = await provider.getFeeData().catch(() => null);
+      const gasPrice = feeData?.gasPrice || 2500000000000n;
+      const gasHex = ethers.toQuantity(650000n);
+      const walletProvider = getWalletProvider();
+      updateNetworkOverlay('Waiting for Privy confirmation...');
+      const txHash = await walletProvider.request({
+        method: 'eth_sendTransaction',
+        params: [{
+          from: address,
+          to: CONTRACT_ADDRESS,
+          data: iface.encodeFunctionData('mint', [referrer]),
+          value: ethers.toQuantity(currentMintPrice),
+          gas: gasHex,
+          gasLimit: gasHex,
+          gasPrice: ethers.toQuantity(gasPrice),
+          chainId: '0x' + CHAIN_ID.toString(16),
+          type: '0x0'
+        }]
+      });
+      tx = { hash: txHash, wait: () => provider.waitForTransaction(txHash) };
+    } else {
+      const txOptions = { value: currentMintPrice };
+      if (activeWalletType !== 'WalletConnect') {
+        try {
+          updateNetworkOverlay('Checking mint gas on Chiliz Chain...');
+          const gasEstimate = await contract.mint.estimateGas(referrer, { value: currentMintPrice });
+          txOptions.gasLimit = gasEstimate + (gasEstimate / 5n);
+        } catch(err) {
+          console.warn('Mint gas estimate skipped:', err);
+        }
+      }
+      updateNetworkOverlay('Waiting for wallet confirmation...');
+      promptWalletConnectConfirmation('Open your wallet app and confirm mint.');
+      tx = await contract.mint(referrer, txOptions);
+    }
     showToast('Mint transaction submitted. Awaiting confirmation...');
+    updateNetworkOverlay('Mint sent. Waiting for block confirmation...');
     
     const receipt = await tx.wait();
+    if (receipt && Number(receipt.status) === 0) throw new Error('Mint reverted on-chain.');
     showToast('Generative card successfully minted!');
 
     // Parsing FigureMinted event directly from the receipt log
     let mintedCard = null;
-    try {
-      const iface = new ethers.Interface(ABI);
-      for (const log of receipt.logs) {
+    const iface = new ethers.Interface(ABI);
+    for (const log of receipt.logs || []) {
+      try {
         const parsed = iface.parseLog(log);
         if (parsed && parsed.name === 'FigureMinted') {
           mintedCard = {
@@ -1798,9 +4177,7 @@ async function directMint() {
           };
           break;
         }
-      }
-    } catch(err) {
-      console.warn("Error parsing receipt logs:", err);
+      } catch(err) {}
     }
 
     if (mintedCard) {
@@ -1808,12 +4185,20 @@ async function directMint() {
       const myAddr = address.toLowerCase();
       const oldCard = window.dreamScores[myAddr]?.[mintedCard.teamId]?.[mintedCard.position];
       const isUpgrade = !oldCard || mintedCard.weight > oldCard.weight;
+      applyScoredCardLocally(address, mintedCard);
+      rememberSquadHighlight(mintedCard);
+      renderStats();
+      renderCountryHub();
+      renderPitch();
+      renderLeaderboard();
 
       // Populating the successful mint popup content
       const teamInfo = TEAMS.find(t => t.id === mintedCard.teamId) || {flag: "🏳️", name: "Unknown", code: "us"};
       const posName = POSITION_SHORT[mintedCard.position] || mintedCard.position;
       const rarityName = ['Common','Rare','Epic','Legendary'][mintedCard.rarity];
       const rarColor = ['#7a8899','#3b82f6','#c084fc','#ffc940'][mintedCard.rarity];
+      const resultTitle = document.getElementById('cardResultTitle');
+      if (resultTitle) resultTitle.textContent = 'CARD MINTED!';
 
       document.getElementById('mintedCardVisual').innerHTML = `
         <div style="font-size:32px; margin-bottom:8px;">${getFlagHtml(teamInfo, true)}</div>
@@ -1830,24 +4215,37 @@ async function directMint() {
           <span style="display:inline-block; background:rgba(0,255,135,0.15); color:#00ff87; border:1px solid #00ff87; padding:6px 12px; border-radius:4px; font-weight:700; margin-bottom:12px; font-size:13px; text-transform:uppercase; letter-spacing:1px; animation: pulse 1.5s infinite;">
             🔥 SQUAD UPGRADED! (+${upgradeDiff} PTS)
           </span>
-          <p style="color:#7a8899;">Great pull! This player is heavier than your previous one! Your active National Squad weight and leaderboard score have increased.</p>
+          <p style="color:#7a8899;">Great pull! This card is heavier than your previous one. Your active National Squad weight and leaderboard score have increased.</p>
         `;
       } else {
         statusText = `
           <span style="display:inline-block; background:rgba(122,136,153,0.15); color:#7a8899; border:1px solid #1c2028; padding:6px 12px; border-radius:4px; font-weight:700; margin-bottom:12px; font-size:13px; text-transform:uppercase; letter-spacing:1px;">
-            RESERVE PLAYER ACQUIRED
+            RESERVE CARD ACQUIRED
           </span>
-          <p style="color:#7a8899;">You already have a heavier card in this slot (owned: ${oldCard.weight} pts). This card is sent to your reserves. You can list & sell it on the marketplace!</p>
+          <p style="color:#7a8899;">You already have a heavier card in this slot (owned: ${oldCard.weight} PTS). This card is sent to your reserves. You can list & sell it on the marketplace!</p>
         `;
       }
+      statusText = statusText
+        .replace(/<span[\s\S]*?SQUAD UPGRADED![\s\S]*?<\/span>/, `<span class="card-result-badge">SQUAD UPGRADED! +${isUpgrade ? (oldCard ? mintedCard.weight - oldCard.weight : mintedCard.weight) : 0} PTS</span>`)
+        .replace(/<span[\s\S]*?RESERVE CARD ACQUIRED[\s\S]*?<\/span>/, '<span class="card-result-badge reserve">RESERVE CARD ACQUIRED</span>');
       document.getElementById('mintedCardStatus').innerHTML = statusText;
-      toggleMintSuccessModal(true);
+      showMintResultModal(mintedCard, {isUpgrade});
     }
     
-    await loadData();
+    await loadData({silent:true});
+    if (mintedCard) {
+      applyScoredCardLocally(address, mintedCard);
+      renderStats();
+      renderCountryHub();
+      renderPitch();
+      renderLeaderboard();
+      refreshAfterChainUpdate(mintedCard);
+    }
   } catch (error) {
     console.error(error);
     showToast('Mint failed. Check your CHZ balance and connection.', true);
+  } finally {
+    hideNetworkOverlay();
   }
 }
 
@@ -1855,7 +4253,7 @@ function shareOnX(){
   const selectedTeam = TEAMS.find(t => t.id === selectedTeamId);
   const myAddr = address?.toLowerCase();
   const stats = getTeamDetails(myAddr, selectedTeamId);
-  const text = `🏆 Competing for the sponsored 25,000 CHZ prize pool in WORLD CUP DREAM XI on @fan_tokens Block Kickers!\n\nMy ${selectedTeam.flag} ${selectedTeam.name} lineup has scored ${stats.score} pts (${stats.completed}/11 positions finalized).\n\nBuild your squad and challenge me! ⚽🔥\n\nblock-kickers.vercel.app/dream-xi`;
+  const text = `🏆 Competing for the sponsored 25,000 CHZ prize pool in WORLD CUP DREAM XI on @fan_tokens Block Kickers!\n\nMy ${selectedTeam.flag} ${selectedTeam.name} lineup has scored ${stats.score} PTS (${stats.completed}/11 positions finalized).\n\nBuild your squad and challenge me! ⚽🔥\n\nblock-kickers.vercel.app/dream-xi`;
   window.open('https://twitter.com/intent/tweet?text='+encodeURIComponent(text),'_blank');
 }
 
@@ -1901,6 +4299,10 @@ function updateCountdown(){
     document.getElementById('cdH').textContent = '00';
     document.getElementById('cdM').textContent = '00';
     document.getElementById('cdS').textContent = '00';
+    ['dashCdD','dashCdH','dashCdM','dashCdS'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = '00';
+    });
     document.getElementById('cdBlock').textContent = 'QUEST CONCLUDED AT BLOCK #'+DEADLINE_BLOCK.toLocaleString();
     return;
   }
@@ -1914,6 +4316,13 @@ function updateCountdown(){
   document.getElementById('cdH').textContent = String(h).padStart(2,'0');
   document.getElementById('cdM').textContent = String(m).padStart(2,'0');
   document.getElementById('cdS').textContent = String(s).padStart(2,'0');
+  const setDashCd = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = String(val).padStart(2,'0'); };
+  setDashCd('dashCdD', d);
+  setDashCd('dashCdH', h);
+  setDashCd('dashCdM', m);
+  setDashCd('dashCdS', s);
+  const navPriceCountdown = document.getElementById('navPriceCountdown');
+  if (navPriceCountdown) navPriceCountdown.innerHTML = `<span>WC END IN</span><b>${String(d).padStart(2,'0')}:${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}</b>`;
   document.getElementById('cdBlock').innerHTML = 'Deadline block: <a href="https://scan.chiliz.com/block/'+DEADLINE_BLOCK+'" target="_blank" style="color:#00ff87;text-decoration:none;">#'+DEADLINE_BLOCK.toLocaleString()+'</a> · Estimated Current: ~#'+estimated.toLocaleString()+' · '+blocksLeft.toLocaleString()+' blocks remaining';
 }
 
@@ -1923,12 +4332,13 @@ setInterval(fetchCurrentBlock, 30000);
 
 // Auto-reconnect
 window.addEventListener('load', async () => {
-  if(window.ethereum){
+  const walletProvider = getInjectedWalletProvider();
+  if(walletProvider){
     try{
-      const accounts = await window.ethereum.request({method:'eth_accounts'});
+      const accounts = await walletProvider.request({method:'eth_accounts'});
       if(accounts.length > 0){
-        const cid = await window.ethereum.request({method:'eth_chainId'});
-        if(parseInt(cid,16) === CHAIN_ID){
+        const cid = await walletProvider.request({method:'eth_chainId'});
+        if(parseWalletChainId(cid) === CHAIN_ID){
           await connectWallet();
         }
       }
