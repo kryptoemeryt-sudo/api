@@ -6137,13 +6137,18 @@ function bkMintTeamFlagHtml(team, size = 58){
   return '<span style="font-size:' + Math.round(size * .55) + 'px">' + (team?.flag || '🏳️') + '</span>';
 }
 function bkMintPositionLabel(id){
-  if (typeof posLabel === 'function') return posLabel(id);
-  if (typeof POSITION_SHORT !== 'undefined' && POSITION_SHORT && POSITION_SHORT[id]) return POSITION_SHORT[id];
-  if (window.POSITION_SHORT && window.POSITION_SHORT[id]) return window.POSITION_SHORT[id];
-  if (typeof POSITION_NAMES !== 'undefined' && POSITION_NAMES && POSITION_NAMES[id]) return POSITION_NAMES[id];
-  if (window.POSITION_NAMES && window.POSITION_NAMES[id]) return window.POSITION_NAMES[id];
+  let label = '';
+  if (typeof posLabel === 'function') label = posLabel(id);
+  else if (typeof POSITION_SHORT !== 'undefined' && POSITION_SHORT && POSITION_SHORT[id]) label = POSITION_SHORT[id];
+  else if (window.POSITION_SHORT && window.POSITION_SHORT[id]) label = window.POSITION_SHORT[id];
+  else if (typeof POSITION_NAMES !== 'undefined' && POSITION_NAMES && POSITION_NAMES[id]) label = POSITION_NAMES[id];
+  else if (window.POSITION_NAMES && window.POSITION_NAMES[id]) label = window.POSITION_NAMES[id];
   const fallback = {1:'GK',2:'RB',3:'LB',4:'CB A',5:'CB B',6:'DM',7:'RW',8:'MID',9:'ST',10:'#10',11:'LW'};
-  return fallback[Number(id)] || String(id);
+  label = label || fallback[Number(id)] || String(id);
+  const clean = String(label).trim().toUpperCase();
+  if (clean === 'CB1' || clean === 'CB 1') return 'CB A';
+  if (clean === 'CB2' || clean === 'CB 2') return 'CB B';
+  return label;
 }
 function bkMintRarityName(r){return ['Common','Rare','Epic','Legendary'][Number(r)] || 'Common';}
 function bkMintRarityShort(r){return ['COM','RAR','EPI','LEG'][Number(r)] || 'COM';}
@@ -6159,12 +6164,24 @@ function bkMintQuestCopy(card, team, isUpgrade){
   const teamId = Number(card?.teamId);
   if (ctx.type === 'argentina') {
     if (teamId === Number(ctx.teamId)) return {title:'<span class="arg-blue">ARGENTINA</span> CARD SCORED', sub:'This card counts for Argentina Dream XI. Your tactics/rank refresh after confirmation.', note: isUpgrade ? 'This card improves your Argentina squad score. Best scored cards stay saved, then you can keep or sell depending on strategy.' : 'This Argentina card entered your wallet, but it may be reserve if you already scored a stronger card in this position.'};
+    if (teamId === 24) return {title:'<span class="usa-blue">USA</span> QUEST CARD', sub:'This USA card can help in the active USA Nation Quest.', note:'USA Quest is a completion race. If this is a missing USA position, it moves you closer to 11/11 and the 1500 CHZ prize. If it is a duplicate, it may be valuable to another player.'};
     return {title:'WC CARD MINTED', sub:'This is a ' + team.name + ' card. It does not score in Argentina Dream XI.', note:'It can still matter for marketplace profit, future national quests, and the World Cup Album.'};
   }
   if (ctx.type === 'wc') {
+    if (teamId === 24) return {title:'<span class="usa-blue">USA</span> QUEST + WC CARD', sub:'This USA card counts for the World Cup Album and can help in the active USA Nation Quest.', note:'If this USA position is missing for you or another player, it can be strategically important. Complete 11/11 USA for the Nation Quest race, or list duplicates higher.'};
     return {title:'WC ALBUM CARD SCORED', sub:'This ' + team.name + ' card counts for the World Cup Album race.', note:'Every nation card can matter here. If it improves a slot, your album progress and leaderboard refresh after confirmation.'};
   }
+  if (teamId === 24) return {title:'<span class="usa-blue">USA</span> QUEST CARD', sub:'This USA card can help in the active USA Nation Quest.', note:'USA Quest reward: first wallet to complete all 11 USA positions wins 1500 CHZ. If this card is a missing position, it matters immediately. If it is duplicate or scarce, consider market strategy.'};
+  if (teamId === 25) return {title:'<span class="arg-blue">ARGENTINA</span> DREAM XI CARD', sub:'This Argentina card can score in the active Dream XI Argentina quest.', note:'Argentina cards can improve Dream XI rank. Best scored position is saved, then you can decide to hold, sell, or block a scarce position.'};
   return {title:'CARD MINTED', sub:'This ' + team.name + ' card entered your Block Kickers collection.', note:'One card can matter for Global Leaderboard, Country Champion, Dream XI/Nation quests, marketplace profit, and the future World Cup Album.'};
+}
+function bkMintSupplyHint(card) {
+  try {
+    const same = Object.values(window.ownerMap || {}).filter(c => Number(c.teamId) === Number(card.teamId) && Number(c.position) === Number(card.position));
+    if (same.length === 1) return '<br><span style="font-family:&quot;Share Tech Mono&quot;,monospace;color:#ffc940">Only 1 detected in this nation/position on this page.</span>';
+    if (same.length > 1 && same.length <= 3) return '<br><span style="font-family:&quot;Share Tech Mono&quot;,monospace;color:#ffc940">Low supply detected: ' + same.length + ' in this nation/position.</span>';
+  } catch(e) {}
+  return '<br><span style="font-family:&quot;Share Tech Mono&quot;,monospace;color:#ffc940">Check supply before listing. Scarce positions can sell higher.</span>';
 }
 function showMintResultModal(card, options = {}) {
   const modal = document.getElementById('mintResultModal');
@@ -6193,8 +6210,8 @@ function showMintResultModal(card, options = {}) {
   main.innerHTML = countryHtml + '<div class="mint-result-title">' + copy.title + '</div><div class="mint-result-sub">' + copy.sub + '</div>';
   stats.innerHTML = '<div class="mint-result-stat"><b>' + bkMintTeamShort(team) + '</b><span>Country</span></div>'
     + '<div class="mint-result-stat"><b>' + position + '</b><span>Position</span></div>'
-    + '<div class="mint-result-stat"><b style="color:' + scoreColor + '">' + card.weight + '</b><span>' + rarityShort + '</span></div>';
-  note.innerHTML = copy.note + (card.tokenId !== undefined ? '<br><span style="font-family:&quot;Share Tech Mono&quot;,monospace;color:#9fb1c7">Token #' + card.tokenId + ' · ' + rarity + '</span>' : '');
+    + '<div class="mint-result-stat"><b style="color:' + scoreColor + '">' + card.weight + '</b><span>PTS</span></div>';
+  note.innerHTML = copy.note + '<br><span style="font-family:&quot;Share Tech Mono&quot;,monospace;color:#9fb1c7">' + (card.tokenId !== undefined ? 'Token #' + card.tokenId + ' · ' : '') + rarity + ' · ' + card.weight + ' PTS</span>' + bkMintSupplyHint(card);
   modal.classList.add('show');
 }
 
