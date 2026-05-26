@@ -1721,7 +1721,7 @@ body.game-mode .stat-info-card:nth-child(3) .stat-mini-grid b{color:#fff!importa
   body.game-mode #selectedCountryTitle,
   body.game-mode #selectedCountryCompletion{font-size:12px!important;color:#fff!important;}
   body.game-mode .pitch-wrap{padding:34px 18px!important;}
-  body.game-mode .formation{gap:24px!important;min-height:620px!important;}
+  body.game-mode .formation{gap:24px!important;min-height:360px!important;}
   body.game-mode .form-row{gap:18px!important;}
   body.game-mode .pos-card{width:112px!important;min-height:162px!important;border-radius:10px!important;}
   body.game-mode .pos-fig-canvas{height:108px!important;}
@@ -2972,7 +2972,115 @@ body.game-mode .snipe-weight .pts-label{color:var(--rar,#fff)!important;}
     filter:drop-shadow(0 0 5px rgba(0,255,135,.38))!important;
   }
 }
+
+/* Shared mint result popup - synced with Nation Quest */
+.mint-result-modal{position:fixed;inset:0;z-index:6100;display:none;align-items:center;justify-content:center;background:rgba(2,6,8,.78);backdrop-filter:blur(7px);padding:16px}
+.mint-result-modal.show{display:flex}
+.mint-result-modal .mint-result-panel{width:min(92vw,470px)!important;text-align:center;border:1px solid rgba(0,255,135,.46)!important;border-radius:12px!important;padding:16px!important;background:linear-gradient(180deg,rgba(8,18,35,.98),rgba(6,8,10,.97))!important;box-shadow:0 24px 80px rgba(0,0,0,.68),0 0 34px rgba(0,255,135,.12)!important;color:#dde4f0!important}
+.mint-result-modal .mint-result-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px}.mint-result-modal .mint-result-head-title{font-family:'Black Ops One',sans-serif;color:#00ff87;font-size:16px;letter-spacing:1px}.mint-result-modal .mint-result-close{border:1px solid #1c2028;background:#0f1318;color:#dde4f0;border-radius:7px;width:32px;height:32px;cursor:pointer;font-size:20px;line-height:1}
+.mint-result-body{display:grid;gap:12px}.mint-result-visual{display:grid;place-items:center;min-height:110px;border:1px solid rgba(0,255,135,.22);border-radius:10px;background:radial-gradient(circle at 50% 30%,rgba(0,255,135,.12),transparent 64%),rgba(15,19,24,.72);padding:10px}.mint-result-visual .card-fig-canvas{height:92px!important;margin:0 auto;display:grid;place-items:center}.mint-result-visual svg{width:86px!important;height:86px!important}.mint-result-title{font-family:'Black Ops One',sans-serif;font-size:22px;line-height:1;color:#fff;letter-spacing:1px}.mint-result-title .usa-blue{color:#3b82f6}.mint-result-title .usa-red{color:#ef4444}.mint-result-title .arg-blue{color:#74ACDF}.mint-result-sub{font-size:15px;line-height:1.3;color:#dde4f0}.mint-result-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}.mint-result-stat{border:1px solid #1c2028;background:#0f1318;border-radius:8px;padding:9px 6px}.mint-result-stat b{display:block;font-family:'Black Ops One',sans-serif;font-size:17px;line-height:1;color:#00ff87}.mint-result-stat span{display:block;margin-top:4px;font-family:'Share Tech Mono',monospace;font-size:10px;color:#fff;text-transform:uppercase}.mint-result-note{border:1px solid rgba(255,201,64,.28);background:rgba(255,201,64,.07);border-radius:9px;padding:10px;font-size:14px;line-height:1.28;color:#fff}.mint-result-primary{width:100%;border:1px solid rgba(0,255,135,.52);background:#00ff87;color:#06100b;border-radius:9px;min-height:44px;font-family:'Black Ops One',sans-serif;font-size:13px;letter-spacing:1px;cursor:pointer}.mint-result-primary:hover{filter:brightness(1.08)}
+@media(max-width:900px){.mint-result-modal .mint-result-panel{max-width:calc(100vw - 24px)!important}.mint-result-title{font-size:19px}.mint-result-sub,.mint-result-note{font-size:13px}.mint-result-grid{gap:6px}.mint-result-stat b{font-size:14px}.mint-result-stat span{font-size:8px}.mint-result-primary{font-size:12px}}
+
+
+/* Desktop mint popup: oversized figure preview. Mobile keeps compact sizing. */
+@media(min-width:901px){
+  .mint-result-modal .mint-result-panel,
+  .modal.show .mint-result-panel{
+    width:min(92vw,620px)!important;
+    max-width:420px!important;
+  }
+  .mint-result-visual{
+    min-height:360px!important;
+    padding:18px!important;
+  }
+  .mint-result-visual .card-fig-canvas,
+  .mint-result-visual .slot-fig-canvas{
+    height:340px!important;
+    flex:0 0 340px!important;
+    width:420px!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    margin:0 auto!important;
+  }
+  .mint-result-visual .card-fig-canvas svg,
+  .mint-result-visual .slot-fig-canvas svg,
+  .mint-result-visual svg{
+    width:330px!important;
+    height:330px!important;
+    display:block!important;
+    margin:0 auto!important;
+  }
+}
+
+.mint-3d-stage{width:100%;height:100%;min-height:inherit;display:grid;place-items:center;position:relative;}
+.mint-3d-canvas{width:100%!important;height:100%!important;display:block;}
+.mint-3d-fallback{display:none!important;}
+@media(max-width:900px){.mint-result-visual{min-height:250px!important}.mint-3d-stage{min-height:226px!important}}
+
+/* Mint result note typography pass */
+.mint-result-note{
+  font-family:'Black Ops One',sans-serif!important;
+  font-size:13px!important;
+  letter-spacing:.35px!important;
+  line-height:1.45!important;
+  text-transform:none!important;
+}
+.mint-result-note span{
+  display:block!important;
+  margin-top:5px!important;
+  font-family:'Share Tech Mono',monospace!important;
+  font-size:12px!important;
+  letter-spacing:.8px!important;
+  color:#9fb1c7!important;
+}
+.mint-result-note br{display:none!important;}
+@media(max-width:900px){
+  .mint-result-note{font-size:11px!important;line-height:1.35!important;}
+  .mint-result-note span{font-size:10px!important;}
+}
+
+/* Mint result mobile viewport fit */
+@media(max-width:900px){
+  .mint-result-modal.show,
+  .modal.show:has(.mint-result-panel){
+    align-items:center!important;
+    justify-content:center!important;
+    padding:8px!important;
+  }
+  .mint-result-modal .mint-result-panel,
+  .modal.show .mint-result-panel{
+    width:calc(100vw - 16px)!important;
+    max-width:calc(100vw - 16px)!important;
+    max-height:calc(100dvh - 16px)!important;
+    overflow:auto!important;
+    padding:10px!important;
+    border-radius:10px!important;
+  }
+  .mint-result-body{gap:7px!important;}
+  .mint-result-visual{min-height:190px!important;padding:6px!important;}
+  .mint-3d-stage{min-height:176px!important;}
+  .mint-result-title{font-size:17px!important;}
+  .mint-result-sub{font-size:11px!important;line-height:1.18!important;}
+  .mint-result-grid{gap:5px!important;}
+  .mint-result-stat{padding:6px 3px!important;border-radius:7px!important;}
+  .mint-result-stat b{font-size:12px!important;}
+  .mint-result-stat span{font-size:6.5px!important;margin-top:3px!important;}
+  .mint-result-note{font-size:9px!important;line-height:1.22!important;padding:7px!important;}
+  .mint-result-note span{font-size:8px!important;margin-top:3px!important;}
+  .mint-result-primary{min-height:38px!important;font-size:10px!important;border-radius:8px!important;}
+}
+@media(max-width:430px){
+  .mint-result-modal .mint-result-panel,
+  .modal.show .mint-result-panel{max-height:calc(100dvh - 10px)!important;padding:8px!important;}
+  .mint-result-visual{min-height:160px!important;}
+  .mint-3d-stage{min-height:148px!important;}
+  .mint-result-title{font-size:15px!important;}
+  .mint-result-sub{font-size:10px!important;}
+  .mint-result-note{font-size:8px!important;}
+}
 </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
 <body>
 
@@ -3412,6 +3520,20 @@ body.game-mode .snipe-weight .pts-label{color:var(--rar,#fff)!important;}
 
 <!-- POWIADOMIENIE TOAST -->
 <div id="toast">System Notification</div>
+
+<div class="mint-result-modal" id="mintResultModal">
+  <div class="mint-result-panel">
+    <div class="mint-result-head"><div class="mint-result-head-title">CARD MINTED</div><button class="mint-result-close" onclick="closeMintResultModal()">&times;</button></div>
+    <div class="mint-result-body">
+      <div class="mint-result-visual" id="mintResultVisual"></div>
+      <div id="mintResultMain"></div>
+      <div class="mint-result-grid" id="mintResultStats"></div>
+      <div class="mint-result-note" id="mintResultNote"></div>
+      <button class="mint-result-primary" onclick="continueMintToSquad()">CONTINUE TO SQUAD</button>
+    </div>
+  </div>
+</div>
+
 <div id="networkOverlay" aria-live="polite" aria-busy="true">
   <div class="network-wait-card">
     <div class="network-ball">&#9917;</div>
@@ -3423,6 +3545,653 @@ body.game-mode .snipe-weight .pts-label{color:var(--rar,#fff)!important;}
 </div>
 
 <script>
+window.BK_MINT_CONTEXT = window.BK_MINT_CONTEXT || {"type":"argentina","teamId":25};
+function closeMintResultModal(){document.getElementById('mintResultModal')?.classList.remove('show');}
+function continueMintToSquad(){
+  closeMintResultModal();
+  const target = document.querySelector('.pitch-container') || document.querySelector('#squadPanel') || document.querySelector('#squadGrid') || document.querySelector('#mySquadGrid') || document.querySelector('.squad-section') || document.querySelector('.side-panel');
+  if (target) target.scrollIntoView({behavior:'smooth', block:'center', inline:'nearest'});
+}
+function bkMintTeamInfo(id){
+  const idx = Number(id) || 0;
+  const teams = (typeof TEAMS !== 'undefined' && Array.isArray(TEAMS)) ? TEAMS : (Array.isArray(window.TEAMS) ? window.TEAMS : []);
+  const flagCodes = (typeof TEAM_FLAG_CODES !== 'undefined' && Array.isArray(TEAM_FLAG_CODES)) ? TEAM_FLAG_CODES : (Array.isArray(window.TEAM_FLAG_CODES) ? window.TEAM_FLAG_CODES : []);
+  let raw = teams[idx % Math.max(teams.length, 1)] || null;
+  let name = 'Team #' + idx;
+  let code = flagCodes[idx % Math.max(flagCodes.length, 1)] || '';
+  let flag = '🏳️';
+  if (typeof raw === 'string') { name = raw; }
+  else if (raw && typeof raw === 'object') { name = raw.name || name; code = raw.code || code; flag = raw.flag || flag; }
+  if (name === 'United States') name = 'USA';
+  return {name, code, flag};
+}
+function bkMintTeamShort(team){
+  const special = {'United States':'USA','USA':'USA','Argentina':'ARG','Czech Republic':'CZE','Czech Rep.':'CZE','DR Congo':'COD','Ivory Coast':'CIV','South Africa':'RSA','New Zealand':'NZL','Saudi Arabia':'KSA','South Korea':'KOR','Cape Verde':'CPV','Curacao':'CUW','England':'ENG','Scotland':'SCO','Turkey':'TUR','Bosnia':'BIH'};
+  return special[team?.name] || String(team?.name || '---').replace(/[^A-Za-z]/g,'').slice(0,3).toUpperCase();
+}
+function bkMintTeamFlagHtml(team, size = 58){
+  if (team?.code) return '<img src="https://flagcdn.com/w80/' + team.code + '.png" alt="' + team.name + '" style="width:' + size + 'px;height:' + Math.round(size * 0.66) + 'px;object-fit:cover;border-radius:4px;box-shadow:0 2px 8px rgba(0,0,0,.45)" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'inline-block\';"><span style="display:none;font-size:' + Math.round(size * .55) + 'px">' + (team.flag || '🏳️') + '</span>';
+  return '<span style="font-size:' + Math.round(size * .55) + 'px">' + (team?.flag || '🏳️') + '</span>';
+}
+function bkMintPositionLabel(id){
+  let label = '';
+  if (typeof posLabel === 'function') label = posLabel(id);
+  else if (typeof POSITION_SHORT !== 'undefined' && POSITION_SHORT && POSITION_SHORT[id]) label = POSITION_SHORT[id];
+  else if (window.POSITION_SHORT && window.POSITION_SHORT[id]) label = window.POSITION_SHORT[id];
+  else if (typeof POSITION_NAMES !== 'undefined' && POSITION_NAMES && POSITION_NAMES[id]) label = POSITION_NAMES[id];
+  else if (window.POSITION_NAMES && window.POSITION_NAMES[id]) label = window.POSITION_NAMES[id];
+  const fallback = {1:'GK',2:'RB',3:'LB',4:'CB A',5:'CB B',6:'DM',7:'RW',8:'MID',9:'ST',10:'#10',11:'LW'};
+  label = label || fallback[Number(id)] || String(id);
+  const clean = String(label).trim().toUpperCase();
+  if (clean === 'CB1' || clean === 'CB 1') return 'CB A';
+  if (clean === 'CB2' || clean === 'CB 2') return 'CB B';
+  return label;
+}
+function bkMintRarityName(r){return ['Common','Rare','Epic','Legendary'][Number(r)] || 'Common';}
+function bkMintRarityShort(r){return ['COM','RAR','EPI','LEG'][Number(r)] || 'COM';}
+function bkMintRarityColor(r){return ['#7a8899','#3b82f6','#c084fc','#ffc940'][Number(r)] || '#7a8899';}
+
+const TEAM_COLORS = [
+  // AFC (0-8)
+  '#FFD700', // 0  Australia      - gold
+  '#239F40', // 1  Iran           - green
+  '#CC0001', // 2  Iraq           - red
+  '#BC002D', // 3  Japan          - red (classic away)
+  '#007A3D', // 4  Jordan         - green
+  '#8D153A', // 5  Qatar          - maroon
+  '#006C35', // 6  Saudi Arabia   - green
+  '#CD2E3A', // 7  South Korea    - red
+  '#1EB53A', // 8  Uzbekistan     - green
+  // CAF (9-18)
+  '#006233', // 9  Algeria        - green (away)
+  '#003893', // 10 Cape Verde     - blue
+  '#007FFF', // 11 DR Congo       - sky blue
+  '#CE1126', // 12 Egypt          - red
+  '#006B3F', // 13 Ghana          - green (away)
+  '#F77F00', // 14 Ivory Coast    - orange
+  '#C1272D', // 15 Morocco        - red
+  '#00853F', // 16 Senegal        - green
+  '#007749', // 17 South Africa   - green
+  '#E70013', // 18 Tunisia        - red
+  // CONCACAF (19-24)
+  '#FF0000', // 19 Canada         - red
+  '#002B7F', // 20 Curacao        - blue
+  '#00209F', // 21 Haiti          - blue
+  '#006847', // 22 Mexico         - green
+  '#DA121A', // 23 Panama         - red
+  '#002868', // 24 United States  - navy blue
+  // CONMEBOL (25-30)
+  '#74ACDF', // 25 Argentina      - sky blue
+  '#009C3B', // 26 Brazil         - green
+  '#FCD116', // 27 Colombia       - yellow
+  '#FFD100', // 28 Ecuador        - yellow
+  '#D52B1E', // 29 Paraguay       - red
+  '#5EB6E4', // 30 Uruguay        - sky blue
+  // OFC (31)
+  '#00247D', // 31 New Zealand    - navy
+  // UEFA (32-47)
+  '#ED2939', // 32 Austria        - red
+  '#000000', // 33 Belgium        - black
+  '#002395', // 34 Bosnia         - blue
+  '#FF0000', // 35 Croatia        - red (classic)
+  '#D7141A', // 36 Czech Republic - red
+  '#FFFFFF', // 37 England        - white
+  '#002395', // 38 France         - blue
+  '#000000', // 39 Germany        - black (away classic)
+  '#FF6600', // 40 Netherlands    - orange
+  '#EF2B2D', // 41 Norway         - red
+  '#006600', // 42 Portugal       - green
+  '#003087', // 43 Scotland       - blue
+  '#AA151B', // 44 Spain          - red
+  '#006AA7', // 45 Sweden         - blue
+  '#FF0000', // 46 Switzerland    - red
+  '#E30A17', // 47 Turkey         - red
+];
+
+const RARITY_NAMES = ['COMMON','RARE','EPIC','LEGENDARY'];
+const RARITY_SHORT = ['COM','RAR','EPI','LEG'];
+const TEAM_FLAG_CODES = ['au','ir','iq','jp','jo','qa','sa','kr','uz','dz','cv','cd','eg','gh','ci','ma','sn','za','tn','ca','cw','ht','mx','pa','us','ar','br','co','ec','py','uy','nz','at','be','ba','hr','cz','gb-eng','fr','de','nl','no','pt','gb-sct','es','se','ch','tr'];
+const HAIR_NAMES   = ['Buzz Cut','Curly','Spiky','Mohawk','Afro','Dreads','Bald','Wavy'];
+const SKIN_NAMES   = ['Fair','Light','Medium','Tan','Brown','Dark'];
+const POSITION_NAMES = {
+  1:'Goalkeeper',2:'Right Back',3:'Left Back',4:'Centre Back',5:'Centre Back',
+  6:'Def. Mid',7:'Right Wing',8:'Mid',9:'Striker',10:'Playmaker',11:'Left Wing'
+};
+
+function skinColor(tone) {
+  return ['#FFDBB4','#EEC59A','#D4956A','#C27A4B','#8D5524','#4A2912'][tone];
+}
+
+class Figure3D {
+  constructor(canvas, dna, spin = true, highQuality = false) {
+    this.canvas = canvas;
+    this.highQuality = highQuality;
+    this.t = parseDNA(dna);
+    this.spin = spin;
+    this.visible = true;
+    this.fid = null;
+    this.init();
+  }
+
+
+  getRenderPixelRatio() {
+    const base = window.devicePixelRatio || 1;
+    if (this.highQuality) return Math.min(Math.max(base, 2.5), 4);
+    return (this.canvas.clientWidth > 200) ? Math.min(base, 2) : 1;
+  }
+
+  init() {
+    const w = this.canvas.clientWidth || 280;
+    const h = this.canvas.clientHeight || 280;
+    this.scene = new THREE.Scene();
+    this.cam = new THREE.PerspectiveCamera(42, w/h, 0.1, 100);
+    this.cam.position.set(0, 1.2, 7.0);
+    this.cam.lookAt(0, 1, 0);
+    // SprawdĹş czy WebGL dostÄ™pny
+    try{
+      const testCtx = this.canvas.getContext('webgl2') || this.canvas.getContext('webgl');
+      if(!testCtx){ this.canvas.style.background='#111'; return; }
+    }catch(e){ return; }
+    this.ren = new THREE.WebGLRenderer({
+      canvas:this.canvas,
+      alpha:true,
+      antialias:this.highQuality,
+      powerPreference:this.highQuality ? 'high-performance' : 'low-power',
+      failIfMajorPerformanceCaveat:false
+    });
+    const dpr = this.getRenderPixelRatio();
+    this.ren.setPixelRatio(dpr);
+    this.ren.setSize(w, h, false);
+
+    // Oversample hero/modal canvases so CSS scaling stays crisp on desktop.
+    this.canvas.style.imageRendering = 'auto';
+
+    // IntersectionObserver - pauzuj gdy poza ekranem
+    if(window.IntersectionObserver){
+      this._io = new IntersectionObserver((entries)=>{
+        this.visible = entries[0].isIntersecting;
+      }, {threshold: 0.1});
+      this._io.observe(this.canvas);
+    }
+
+    // ResizeObserver - re-render przy zmianie rozmiaru
+    if(window.ResizeObserver){
+      this._ro = new ResizeObserver(()=>{
+        const nw = this.canvas.clientWidth;
+        const nh = this.canvas.clientHeight;
+        if(nw>0 && nh>0){
+          this.ren.setPixelRatio(this.getRenderPixelRatio());
+          this.ren.setSize(nw, nh, false);
+          this.cam.aspect = nw/nh;
+          this.cam.updateProjectionMatrix();
+        }
+      });
+      this._ro.observe(this.canvas);
+    }
+    this.ren.shadowMap.enabled = true;
+    this.ren.toneMapping = THREE.ACESFilmicToneMapping;
+
+    // Lights
+    this.scene.add(new THREE.AmbientLight(0xffffff, 0.45));
+    const key = new THREE.DirectionalLight(0xffffff, 1.1);
+    key.position.set(3,5,3); key.castShadow = true;
+    this.scene.add(key);
+    const fill = new THREE.DirectionalLight(0x8899ff, 0.35);
+    fill.position.set(-3,2,-2);
+    this.scene.add(fill);
+
+    // Rarity accent light
+    const rc = [0x6b7280,0x3b82f6,0xa855f7,0xffc940][this.t.rarity];
+    const rl = new THREE.PointLight(rc, this.t.rarity * 0.4 + 0.1, 6);
+    rl.position.set(0,1,2.5);
+    this.scene.add(rl);
+
+    // Ground disc
+    const gm = new THREE.Mesh(
+      new THREE.CircleGeometry(1.4,32),
+      new THREE.MeshStandardMaterial({color:0x141820,roughness:0.9,metalness:0.1,transparent:true,opacity:0.5})
+    );
+    gm.rotation.x = -Math.PI/2; gm.receiveShadow = true;
+    this.scene.add(gm);
+
+    this.build();
+    this.loop();
+  }
+
+  m(col, rarity=0) {
+    const p = {color:col,roughness:0.7,metalness:0.05};
+    if (rarity===1){p.roughness=0.45;p.metalness=0.25;}
+    if (rarity===2){p.roughness=0.2;p.metalness=0.55;p.emissive=new THREE.Color(0xa855f7);p.emissiveIntensity=0.08;}
+    if (rarity===3){p.roughness=0.18;p.metalness=0.38;p.emissive=new THREE.Color(0xffc940);p.emissiveIntensity=0.06;}
+    return new THREE.MeshStandardMaterial(p);
+  }
+
+  bx(w,h,d,mat,x=0,y=0,z=0){const m=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),mat);m.position.set(x,y,z);m.castShadow=true;return m;}
+  sp(r,mat,x=0,y=0,z=0){const m=new THREE.Mesh(new THREE.SphereGeometry(r,14,10),mat);m.position.set(x,y,z);m.castShadow=true;return m;}
+  cy(rt,rb,h,seg,mat,x=0,y=0,z=0){const m=new THREE.Mesh(new THREE.CylinderGeometry(rt,rb,h,seg),mat);m.position.set(x,y,z);m.castShadow=true;return m;}
+
+  build() {
+    const t=this.t, r=t.rarity;
+    const fig = new THREE.Group();
+    const teamCol = new THREE.Color(TEAM_COLORS[t.teamId % TEAM_COLORS.length]);
+    const skinCol = new THREE.Color(skinColor(t.skinTone));
+    const kitMat  = this.m(teamCol, r);
+    const skinMat = this.m(skinCol, 0);
+
+    // Dark material for details
+    const darkMat = new THREE.MeshStandardMaterial({color:0x0a0a0a,roughness:0.8});
+    const whiteMat = new THREE.MeshStandardMaterial({color:0xffffff,roughness:0.7});
+
+    // BOOTS - colorful, distinct from legs
+    const bootColors = [0xff2200,0xffd700,0x00cc44,0x0066ff,0xff00cc,0xffffff,0x222222,0xff6600];
+    const bootCol = t.hasGoldenBoots ? 0xffd700 : bootColors[t.teamId % bootColors.length];
+    const bootMat = new THREE.MeshStandardMaterial({
+      color: bootCol,
+      roughness: t.hasGoldenBoots ? 0.1 : 0.5,
+      metalness: t.hasGoldenBoots ? 0.9 : 0.1,
+      emissive: t.hasGoldenBoots ? new THREE.Color(0xffd700) : new THREE.Color(0x000000),
+      emissiveIntensity: t.hasGoldenBoots ? 0.3 : 0
+    });
+
+    // SHORTS - darker version of kit color
+    const shortsCol = new THREE.Color(teamCol).multiplyScalar(0.4);
+    const shortsMat = new THREE.MeshStandardMaterial({color:shortsCol,roughness:0.8});
+
+    // SOCKS - white or team color
+    const socksMat = whiteMat;
+
+    // === BODY PROPORTIONS (more athletic) ===
+    const Y_BOOT   = 0.10;
+    const Y_SOCK   = 0.28;
+    const Y_LEG    = 0.60;
+    const Y_SHORTS = 0.85;
+    const Y_TORSO  = 1.20;
+    const Y_NECK   = 1.62;
+    const Y_HEAD   = 1.88;
+
+    // BOOTS (wider front, pointed)
+    fig.add(this.bx(0.24,0.15,0.40,bootMat,-0.16,Y_BOOT,0.04));
+    fig.add(this.bx(0.24,0.15,0.40,bootMat, 0.16,Y_BOOT,0.04));
+
+    // SOCKS
+    fig.add(this.bx(0.22,0.20,0.22,socksMat,-0.16,Y_SOCK,0));
+    fig.add(this.bx(0.22,0.20,0.22,socksMat, 0.16,Y_SOCK,0));
+
+    // LEGS (slimmer)
+    fig.add(this.bx(0.22,0.38,0.22,kitMat,-0.16,Y_LEG,0));
+    fig.add(this.bx(0.22,0.38,0.22,kitMat, 0.16,Y_LEG,0));
+
+    // SHORTS
+    fig.add(this.bx(0.56,0.22,0.30,shortsMat,0,Y_SHORTS,0));
+
+    // TORSO (slightly tapered - wider shoulders)
+    fig.add(this.bx(0.62,0.65,0.34,kitMat,0,Y_TORSO,0));
+
+    // Shirt number
+    const nc=document.createElement('canvas');nc.width=64;nc.height=64;
+    const cx=nc.getContext('2d');
+    cx.clearRect(0,0,64,64);
+    cx.fillStyle='rgba(255,255,255,0.9)';
+    cx.font='bold 36px Arial Black';cx.textAlign='center';cx.textBaseline='middle';
+    cx.fillText(String(t.position),32,32);
+    const np=new THREE.Mesh(
+      new THREE.PlaneGeometry(0.28,0.28),
+      new THREE.MeshBasicMaterial({map:new THREE.CanvasTexture(nc),transparent:true,depthWrite:false})
+    );
+    np.position.set(0,Y_TORSO,0.18);fig.add(np);
+
+    // ARMS (angled slightly outward)
+    const armL=this.bx(0.19,0.52,0.19,kitMat,-0.42,Y_TORSO-0.02,0);
+    armL.rotation.z=0.15;
+    const armR=this.bx(0.19,0.52,0.19,kitMat, 0.42,Y_TORSO-0.02,0);
+    armR.rotation.z=-0.15;
+    fig.add(armL,armR);
+
+    // HANDS
+    const handMat = (t.hasGloves && t.position===1)
+      ? new THREE.MeshStandardMaterial({color:0xffee00,roughness:0.5,metalness:0.1})
+      : skinMat;
+    fig.add(this.sp(0.105,handMat,-0.44,Y_TORSO-0.30,0));
+    fig.add(this.sp(0.105,handMat, 0.44,Y_TORSO-0.30,0));
+
+    // NECK (slimmer)
+    fig.add(this.cy(0.085,0.085,0.16,8,skinMat,0,Y_NECK,0));
+
+    // HEAD (slightly taller than wide - more human)
+    fig.add(this.bx(0.48,0.52,0.44,skinMat,0,Y_HEAD,0));
+
+    // EYES - larger, more expressive
+    const eyeMat=new THREE.MeshStandardMaterial({color:0x0a0a14,roughness:0.5});
+    const eyeWhiteMat=new THREE.MeshStandardMaterial({color:0xffffff,roughness:0.8});
+    // Eye whites
+    fig.add(this.bx(0.13,0.10,0.02,eyeWhiteMat,-0.12,Y_HEAD+0.07,0.23));
+    fig.add(this.bx(0.13,0.10,0.02,eyeWhiteMat, 0.12,Y_HEAD+0.07,0.23));
+    // Pupils
+    fig.add(this.bx(0.07,0.07,0.025,eyeMat,-0.11,Y_HEAD+0.07,0.235));
+    fig.add(this.bx(0.07,0.07,0.025,eyeMat, 0.11,Y_HEAD+0.07,0.235));
+    // Eyebrows
+    const browMat=new THREE.MeshStandardMaterial({color:0x1a0a00,roughness:0.9});
+    fig.add(this.bx(0.13,0.03,0.02,browMat,-0.12,Y_HEAD+0.14,0.23));
+    fig.add(this.bx(0.13,0.03,0.02,browMat, 0.12,Y_HEAD+0.14,0.23));
+    // Nose
+    fig.add(this.bx(0.04,0.06,0.03,new THREE.MeshStandardMaterial({color:skinCol,roughness:0.8}),0,Y_HEAD+0.01,0.235));
+    // Mouth / smile
+    fig.add(this.bx(0.14,0.035,0.02,new THREE.MeshStandardMaterial({color:0x8b1a00,roughness:0.9}),0,Y_HEAD-0.10,0.23));
+
+    // EARS
+    fig.add(this.bx(0.04,0.10,0.04,skinMat,-0.25,Y_HEAD+0.01,0));
+    fig.add(this.bx(0.04,0.10,0.04,skinMat, 0.25,Y_HEAD+0.01,0));
+
+    // TATTOO - left arm band
+    if(t.hasTattoo){
+      const tatColors=[0x1a1aff,0xff1a1a,0x1aff1a,0xffff1a,0xff1aff];
+      const tatMat=new THREE.MeshStandardMaterial({color:tatColors[t.teamId%tatColors.length],roughness:0.9,emissive:new THREE.Color(tatColors[t.teamId%tatColors.length]),emissiveIntensity:0.15});
+      fig.add(this.bx(0.21,0.09,0.21,tatMat,-0.42,Y_TORSO+0.08,0));
+    }
+
+    // HAIR
+    const hairColors=[0x1a0800,0xff6600,0xffd700,0xcc0000,0x2a1a00,0x111111,0x8b4513,0x333333];
+    const hc=hairColors[t.hairStyle%hairColors.length];
+    const hm=new THREE.MeshStandardMaterial({color:hc,roughness:0.8});
+    const hy=Y_HEAD+0.14; // hair base y
+
+    if(t.hairStyle===0){ // Buzz cut
+      fig.add(this.bx(0.50,0.10,0.46,hm,0,hy,0));
+    }else if(t.hairStyle===1){ // Curly
+      fig.add(this.bx(0.48,0.07,0.44,hm,0,hy-0.04,0));
+      for(let i=0;i<8;i++){const a=i/8*Math.PI*2;fig.add(this.sp(0.085,hm,Math.cos(a)*0.17,hy+0.05,Math.sin(a)*0.13));}
+    }else if(t.hairStyle===2){ // Spiky
+      fig.add(this.bx(0.48,0.07,0.44,hm,0,hy-0.02,0));
+      for(let i=0;i<5;i++){
+        const s=new THREE.Mesh(new THREE.ConeGeometry(0.055,0.22,4),hm);
+        s.position.set((i-2)*0.10,hy+0.14,0.05);
+        fig.add(s);
+      }
+    }else if(t.hairStyle===3){ // Mohawk
+      fig.add(this.bx(0.50,0.07,0.46,hm,0,hy-0.02,0)); // base
+      fig.add(this.bx(0.11,0.30,0.46,hm,0,hy+0.13,0)); // strip
+    }else if(t.hairStyle===4){ // Afro
+      fig.add(this.sp(0.28,hm,0,hy+0.10,0));
+    }else if(t.hairStyle===5){ // Dreads
+      fig.add(this.bx(0.48,0.07,0.44,hm,0,hy-0.02,0));
+      for(let i=-2;i<=2;i++) fig.add(this.bx(0.06,0.28,0.06,hm,i*0.10,hy-0.12,-0.18));
+    }else if(t.hairStyle===6){ // Bald
+      // No hair - shiny head
+      // already rendered by skin head
+    }else if(t.hairStyle===7){ // Wavy
+      fig.add(this.bx(0.50,0.08,0.46,hm,0,hy-0.01,0));
+      fig.add(this.bx(0.50,0.06,0.46,hm,0,hy+0.07,-0.01));
+    }
+
+    // EARRING - gold sphere on left ear
+    if(t.hasEarring){
+      const em=new THREE.MeshStandardMaterial({color:0xffd700,metalness:1,roughness:0.05,emissive:new THREE.Color(0xffd700),emissiveIntensity:0.3});
+      fig.add(this.sp(0.04,em,-0.27,Y_HEAD-0.04,0));
+    }
+
+    // HEADBAND - contrasting color strip around head
+    if(t.hasBand){
+      const bandColors=[0xffffff,0x000000,0xff0000,0x00ff00,0x0000ff,0xffff00];
+      const bm=new THREE.MeshStandardMaterial({color:bandColors[t.position%bandColors.length],roughness:0.6});
+      fig.add(this.bx(0.50,0.07,0.46,bm,0,Y_HEAD+0.04,0));
+    }
+
+    // LEGENDARY particles
+    if(r===3){
+      const pg=new THREE.BufferGeometry();
+      const pos=[];
+      for(let i=0;i<32;i++) pos.push((Math.random()-0.5)*2.5,Math.random()*3.2,(Math.random()-0.5)*2.5);
+      pg.setAttribute('position',new THREE.Float32BufferAttribute(pos,3));
+      this.particles=new THREE.Points(pg,new THREE.PointsMaterial({color:0xffd700,size:0.055,transparent:true,opacity:0.8}));
+      fig.add(this.particles);
+    }
+
+    // EPIC glow ring
+    if(r===2){
+      const ring=new THREE.Mesh(
+        new THREE.TorusGeometry(0.6,0.02,8,32),
+        new THREE.MeshStandardMaterial({color:0xa855f7,emissive:new THREE.Color(0xa855f7),emissiveIntensity:0.8,transparent:true,opacity:0.6})
+      );
+      ring.rotation.x=Math.PI/2;ring.position.y=0.05;
+      fig.add(ring);
+    }
+
+    // RARE shine ring
+    if(r===1){
+      const ring=new THREE.Mesh(
+        new THREE.TorusGeometry(0.5,0.015,8,32),
+        new THREE.MeshStandardMaterial({color:0x3b82f6,emissive:new THREE.Color(0x3b82f6),emissiveIntensity:0.6,transparent:true,opacity:0.5})
+      );
+      ring.rotation.x=Math.PI/2;ring.position.y=0.05;
+      fig.add(ring);
+    }
+
+    this.fig=fig;
+    this.scene.add(fig);
+  }
+
+  loop(){
+    this.fid=requestAnimationFrame(()=>this.loop());
+    if(!this.visible) return; // nie renderuj gdy poza ekranem
+    if(this.fig&&this.spin)this.fig.rotation.y+=0.007;
+    if(this.particles)this.particles.rotation.y+=0.012;
+    if(this.ren)this.ren.render(this.scene,this.cam);
+  }
+  setVisible(v){ this.visible = v; }
+
+  destroy(){if(this.fid)cancelAnimationFrame(this.fid);if(this.ren)this.ren.dispose();}
+}
+
+function bkUnifiedMintFigureSVG(dna, size = 92) {
+  const t = parseDNA(dna || 0n);
+  const teams = (typeof TEAMS !== 'undefined' && Array.isArray(TEAMS)) ? TEAMS : [];
+  const teamRaw = teams[t.teamId % Math.max(teams.length, 1)] || {};
+  const teamName = typeof teamRaw === 'string' ? teamRaw : (teamRaw.name || (Number(t.teamId) === 24 ? 'USA' : ''));
+  const SHIRT = {'Australia':'#FFD700','Iran':'#239F40','Iraq':'#CC0001','Japan':'#BC002D','Jordan':'#007A3D','Qatar':'#8D153A','Saudi Arabia':'#006C35','South Korea':'#CD2E3A','Uzbekistan':'#1EB53A','Algeria':'#006233','Cape Verde':'#003893','DR Congo':'#007FFF','Egypt':'#CE1126','Ghana':'#006B3F','Ivory Coast':'#F77F00','Morocco':'#C1272D','Senegal':'#00853F','South Africa':'#007749','Tunisia':'#E70013','Canada':'#FF0000','Curacao':'#002B7F','Haiti':'#00209F','Mexico':'#006847','Panama':'#DA121A','United States':'#002868','USA':'#002868','Argentina':'#74ACDF','Brazil':'#009C3B','Colombia':'#FCD116','Ecuador':'#FFD100','Paraguay':'#D52B1E','Uruguay':'#5EB6E4','New Zealand':'#00247D','Austria':'#ED2939','Belgium':'#111111','Bosnia':'#002395','Croatia':'#FF0000','Czech Rep.':'#D7141A','England':'#EEEEEE','France':'#002395','Germany':'#111111','Netherlands':'#FF6600','Norway':'#EF2B2D','Portugal':'#006600','Scotland':'#003087','Spain':'#AA151B','Sweden':'#006AA7','Switzerland':'#FF0000','Turkey':'#E30A17'};
+  const SKIN = ['#FDBCB4','#F1C27D','#E0AC69','#C68642','#8D5524','#4A2912'];
+  const RARC = ['#6b7280','#3b82f6','#a855f7','#f59e0b'];
+  const shirt = SHIRT[teamName] || '#1d4ed8';
+  const skin = SKIN[Math.min(Number(t.skinTone || 2), 5)] || SKIN[2];
+  const rar = RARC[Number(t.rarity || 0)] || RARC[0];
+  const pos = Number(t.position || 10);
+  const isLight = ['#FFD700','#FCD116','#FFD100','#EEEEEE'].includes(shirt);
+  const numC = isLight ? '#06100b' : '#fff';
+  const bootC = t.hasGoldenBoots ? '#FFD700' : '#111';
+  const hair = ['#3b1f12','#6b3a16','#f5d08a','#111827'][Number((BigInt(String(dna || 0)) >> 20n) % 4n)] || '#3b1f12';
+  const s = size, cx = s / 2;
+  const headY = s * .13, headW = s * .30, headH = s * .27;
+  const bodyY = headY + headH * .86, bodyW = s * .40, bodyH = s * .29;
+  const legW = s * .10, legH = s * .22, legGap = s * .04, legY = bodyY + bodyH * .83;
+  const armW = s * .09, armH = s * .20, armY = bodyY + s * .02, handR = s * .06;
+  const p = [];
+  p.push('<ellipse cx="'+cx+'" cy="'+(legY+legH+s*.12)+'" rx="'+(bodyW*.62)+'" ry="'+(s*.045)+'" fill="'+rar+'" opacity=".22"/>');
+  p.push('<rect x="'+(cx-legW-legGap)+'" y="'+legY+'" width="'+legW+'" height="'+legH+'" rx="3" fill="'+shirt+'"/>');
+  p.push('<rect x="'+(cx+legGap)+'" y="'+legY+'" width="'+legW+'" height="'+legH+'" rx="3" fill="'+shirt+'"/>');
+  p.push('<rect x="'+(cx-legW-legGap)+'" y="'+(legY+legH*.64)+'" width="'+legW+'" height="'+(legH*.38)+'" rx="2" fill="#fff"/>');
+  p.push('<rect x="'+(cx+legGap)+'" y="'+(legY+legH*.64)+'" width="'+legW+'" height="'+(legH*.38)+'" rx="2" fill="#fff"/>');
+  p.push('<rect x="'+(cx-legW-legGap-2)+'" y="'+(legY+legH)+'" width="'+(legW+4)+'" height="'+(s*.085)+'" rx="3" fill="'+bootC+'"/>');
+  p.push('<rect x="'+(cx+legGap-2)+'" y="'+(legY+legH)+'" width="'+(legW+4)+'" height="'+(s*.085)+'" rx="3" fill="'+bootC+'"/>');
+  p.push('<rect x="'+(cx-bodyW/2-armW+2)+'" y="'+armY+'" width="'+armW+'" height="'+armH+'" rx="3" fill="'+shirt+'" transform="rotate(7 '+(cx-bodyW/2)+' '+armY+')"/>');
+  p.push('<rect x="'+(cx+bodyW/2-2)+'" y="'+armY+'" width="'+armW+'" height="'+armH+'" rx="3" fill="'+shirt+'" transform="rotate(-7 '+(cx+bodyW/2)+' '+armY+')"/>');
+  p.push('<circle cx="'+(cx-bodyW/2-s*.04)+'" cy="'+(armY+armH)+'" r="'+handR+'" fill="'+skin+'"/>');
+  p.push('<circle cx="'+(cx+bodyW/2+s*.04)+'" cy="'+(armY+armH)+'" r="'+handR+'" fill="'+skin+'"/>');
+  if (t.hasGloves) { p.push('<circle cx="'+(cx-bodyW/2-s*.04)+'" cy="'+(armY+armH)+'" r="'+(handR+2)+'" fill="none" stroke="#FFD700" stroke-width="2"/>'); p.push('<circle cx="'+(cx+bodyW/2+s*.04)+'" cy="'+(armY+armH)+'" r="'+(handR+2)+'" fill="none" stroke="#FFD700" stroke-width="2"/>'); }
+  p.push('<rect x="'+(cx-bodyW/2)+'" y="'+bodyY+'" width="'+bodyW+'" height="'+bodyH+'" rx="6" fill="'+shirt+'"/>');
+  p.push('<text x="'+cx+'" y="'+(bodyY+bodyH*.58)+'" text-anchor="middle" font-family="Arial Black,Arial,sans-serif" font-size="'+(s*.14)+'" font-weight="900" fill="'+numC+'">'+pos+'</text>');
+  p.push('<rect x="'+(cx-s*.04)+'" y="'+(bodyY-s*.05)+'" width="'+(s*.08)+'" height="'+(s*.07)+'" rx="2" fill="'+skin+'"/>');
+  p.push('<rect x="'+(cx-headW/2-s*.02)+'" y="'+(headY-s*.015)+'" width="'+(headW+s*.04)+'" height="'+(headH*.32)+'" rx="6" fill="'+hair+'"/>');
+  p.push('<rect x="'+(cx-headW/2)+'" y="'+headY+'" width="'+headW+'" height="'+headH+'" rx="7" fill="'+skin+'"/>');
+  p.push('<rect x="'+(cx-headW/2-s*.03)+'" y="'+(headY+headH*.25)+'" width="'+(s*.04)+'" height="'+(s*.08)+'" rx="2" fill="'+skin+'"/>');
+  p.push('<rect x="'+(cx+headW/2-s*.01)+'" y="'+(headY+headH*.25)+'" width="'+(s*.04)+'" height="'+(s*.08)+'" rx="2" fill="'+skin+'"/>');
+  if (t.hasEarring) p.push('<circle cx="'+(cx-headW/2-1)+'" cy="'+(headY+headH*.40)+'" r="'+(s*.025)+'" fill="#FFD700"/>');
+  p.push('<rect x="'+(cx-headW*.36)+'" y="'+(headY+headH*.34)+'" width="'+(s*.07)+'" height="'+(s*.05)+'" rx="2" fill="#fff"/>');
+  p.push('<rect x="'+(cx+headW*.08)+'" y="'+(headY+headH*.34)+'" width="'+(s*.07)+'" height="'+(s*.05)+'" rx="2" fill="#fff"/>');
+  p.push('<rect x="'+(cx-headW*.33)+'" y="'+(headY+headH*.35)+'" width="'+(s*.045)+'" height="'+(s*.035)+'" rx="1" fill="#0a0a14"/>');
+  p.push('<rect x="'+(cx+headW*.11)+'" y="'+(headY+headH*.35)+'" width="'+(s*.045)+'" height="'+(s*.035)+'" rx="1" fill="#0a0a14"/>');
+  p.push('<rect x="'+(cx-s*.07)+'" y="'+(headY+headH*.72)+'" width="'+(s*.14)+'" height="'+(s*.03)+'" rx="2" fill="#7c2d12" opacity=".85"/>');
+  if (t.hasBand) p.push('<rect x="'+(cx-headW/2-2)+'" y="'+(headY+headH*.18)+'" width="'+(headW+4)+'" height="'+(s*.055)+'" rx="3" fill="#fff" opacity=".9"/>');
+  if (t.hasTattoo) p.push('<path d="M'+(cx-bodyW/2-armW/2)+' '+(armY+armH*.35)+' l'+(s*.04)+' '+(s*.04)+' m0 -'+(s*.04)+' l-'+(s*.04)+' '+(s*.04)+'" stroke="#111" stroke-width="1.5" opacity=".55"/>');
+  return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 '+s+' '+s+'" width="'+s+'" height="'+s+'">'+p.join('')+'</svg>';
+}
+function bkMintFigureHtml(card){
+  const dna = card?.dna || 0n;
+  return '<div class="mint-3d-stage"><canvas class="mint-3d-canvas" aria-label="3D minted figure"></canvas></div>';
+}
+function bkRenderMintFigure3D(visual, card){
+  if (!visual || !card) return;
+  const canvas = visual.querySelector('.mint-3d-canvas');
+  const fallback = visual.querySelector('.mint-3d-fallback');
+  if (!canvas) return;
+  if (typeof THREE === 'undefined') {
+    if (fallback) fallback.style.display = 'flex';
+    canvas.style.display = 'none';
+    return;
+  }
+  try {
+    if (typeof Figure3D === 'function') {
+      if (fallback) fallback.style.display = 'none';
+      canvas.style.display = 'block';
+      requestAnimationFrame(() => { const r = new Figure3D(canvas, card.dna || 0n, true, window.matchMedia('(min-width: 769px)').matches); if (r && r.cam) { r.cam.position.set(0, 1.05, 4.2); r.cam.lookAt(0, 1.05, 0); r.cam.updateProjectionMatrix(); } });
+      return;
+    }
+    const dna = card.dna || 0n;
+    const t = parseDNA(dna);
+    const teams = (typeof TEAMS !== 'undefined' && Array.isArray(TEAMS)) ? TEAMS : [];
+    const teamRaw = teams[t.teamId % Math.max(teams.length, 1)] || {};
+    const teamName = typeof teamRaw === 'string' ? teamRaw : (teamRaw.name || (Number(t.teamId) === 24 ? 'USA' : ''));
+    const shirtMap = {'Australia':0xFFD700,'Iran':0x239F40,'Iraq':0xCC0001,'Japan':0xBC002D,'Jordan':0x007A3D,'Qatar':0x8D153A,'Saudi Arabia':0x006C35,'South Korea':0xCD2E3A,'Uzbekistan':0x1EB53A,'Algeria':0x006233,'Cape Verde':0x003893,'DR Congo':0x007FFF,'Egypt':0xCE1126,'Ghana':0x006B3F,'Ivory Coast':0xF77F00,'Morocco':0xC1272D,'Senegal':0x00853F,'South Africa':0x007749,'Tunisia':0xE70013,'Canada':0xFF0000,'Curacao':0x002B7F,'Haiti':0x00209F,'Mexico':0x006847,'Panama':0xDA121A,'United States':0x002868,'USA':0x002868,'Argentina':0x74ACDF,'Brazil':0x009C3B,'Colombia':0xFCD116,'Ecuador':0xFFD100,'Paraguay':0xD52B1E,'Uruguay':0x5EB6E4,'New Zealand':0x00247D,'Austria':0xED2939,'Belgium':0x111111,'Bosnia':0x002395,'Croatia':0xFF0000,'Czech Rep.':0xD7141A,'England':0xEEEEEE,'France':0x002395,'Germany':0x111111,'Netherlands':0xFF6600,'Norway':0xEF2B2D,'Portugal':0x006600,'Scotland':0x003087,'Spain':0xAA151B,'Sweden':0x006AA7,'Switzerland':0xFF0000,'Turkey':0xE30A17};
+    const skinMap = [0xFDBCB4,0xF1C27D,0xE0AC69,0xC68642,0x8D5524,0x4A2912];
+    const rarityMap = [0x6b7280,0x3b82f6,0xa855f7,0xffc940];
+    const shirt = shirtMap[teamName] || 0x1d4ed8;
+    const skin = skinMap[Math.min(Number(t.skinTone || 2), 5)] || skinMap[2];
+    const rarity = rarityMap[Number(t.rarity || 0)] || rarityMap[0];
+    const hairColors = [0x3b1f12,0x6b3a16,0xf5d08a,0x111827];
+    const hair = hairColors[Number((BigInt(String(dna || 0)) >> 20n) % 4n)] || hairColors[0];
+    const scene = new THREE.Scene();
+    const width = canvas.clientWidth || 280;
+    const height = canvas.clientHeight || 280;
+    const cam = new THREE.PerspectiveCamera(35, width / height, 0.1, 100);
+    cam.position.set(0, 1.15, 6.4);
+    cam.lookAt(0, 1.05, 0);
+    const renderer = new THREE.WebGLRenderer({canvas, alpha:true, antialias:true, powerPreference:'high-performance'});
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    renderer.setPixelRatio(dpr);
+    renderer.setSize(width, height, false);
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    scene.add(new THREE.AmbientLight(0xffffff, .55));
+    const key = new THREE.DirectionalLight(0xffffff, 1.15); key.position.set(3,5,4); key.castShadow = true; scene.add(key);
+    const rim = new THREE.PointLight(rarity, .95, 7); rim.position.set(-2,1.8,2.8); scene.add(rim);
+    const mat = (color, opts={}) => new THREE.MeshStandardMaterial({color, roughness:opts.roughness ?? .62, metalness:opts.metalness ?? .08, emissive:opts.emissive || 0x000000, emissiveIntensity:opts.emissiveIntensity || 0});
+    const kitMat = mat(shirt, Number(t.rarity) >= 2 ? {roughness:.34,metalness:.24,emissive:shirt,emissiveIntensity:.035} : {});
+    const skinMat = mat(skin, {roughness:.72});
+    const darkMat = mat(0x090909, {roughness:.72});
+    const whiteMat = mat(0xffffff, {roughness:.64});
+    const hairMat = mat(hair, {roughness:.8});
+    const goldMat = mat(0xffc940, {roughness:.18,metalness:.72,emissive:0xffc940,emissiveIntensity:.15});
+    const group = new THREE.Group();
+    const box = (w,h,d,m,x,y,z,rx=0) => { const mesh = new THREE.Mesh(new THREE.BoxGeometry(w,h,d), m); mesh.position.set(x,y,z); mesh.castShadow=true; group.add(mesh); return mesh; };
+    const sph = (r,m,x,y,z, sx=1, sy=1, sz=1) => { const mesh = new THREE.Mesh(new THREE.SphereGeometry(r,18,14), m); mesh.scale.set(sx,sy,sz); mesh.position.set(x,y,z); mesh.castShadow=true; group.add(mesh); return mesh; };
+    box(.58,.78,.34,kitMat,0,1.18,0);
+    box(.62,.22,.36,kitMat,0,.75,0);
+    box(.15,.58,.16,kitMat,-.18,.37,0); box(.15,.58,.16,kitMat,.18,.37,0);
+    box(.16,.20,.17,whiteMat,-.18,.05,.01); box(.16,.20,.17,whiteMat,.18,.05,.01);
+    box(.22,.12,.34,t.hasGoldenBoots ? goldMat : darkMat,-.18,-.10,.06); box(.22,.12,.34,t.hasGoldenBoots ? goldMat : darkMat,.18,-.10,.06);
+    box(.16,.55,.16,kitMat,-.43,1.08,0); box(.16,.55,.16,kitMat,.43,1.08,0);
+    sph(.13,skinMat,-.45,.73,.02,1,1,1); sph(.13,skinMat,.45,.73,.02,1,1,1);
+    if (t.hasGloves) { sph(.16,goldMat,-.45,.73,.02,1,1,1); sph(.16,goldMat,.45,.73,.02,1,1,1); }
+    box(.16,.18,.16,skinMat,0,1.62,0);
+    sph(.36,skinMat,0,1.98,0,1,.98,.92);
+    box(.56,.16,.42,hairMat,0,2.23,.02);
+    box(.13,.08,.04,whiteMat,-.13,2.03,.32); box(.13,.08,.04,whiteMat,.13,2.03,.32);
+    box(.06,.045,.045,darkMat,-.13,2.03,.35); box(.06,.045,.045,darkMat,.13,2.03,.35);
+    box(.17,.04,.035,mat(0x7c2d12),0,1.83,.34);
+    if (t.hasEarring) sph(.045,goldMat,-.34,1.96,.01);
+    if (t.hasBand) box(.68,.09,.45,whiteMat,0,2.13,.02);
+    if (t.hasTattoo) { box(.10,.05,.18,darkMat,-.50,1.10,.09); }
+    const numberCanvas = document.createElement('canvas'); numberCanvas.width = 128; numberCanvas.height = 128;
+    const ctx = numberCanvas.getContext('2d'); ctx.clearRect(0,0,128,128); ctx.fillStyle = [0xFFD700,0xFCD116,0xFFD100,0xEEEEEE].includes(shirt) ? '#06100b' : '#ffffff'; ctx.font = '900 62px Arial Black, Arial'; ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.fillText(String(t.position || 10), 64, 64);
+    const tex = new THREE.CanvasTexture(numberCanvas);
+    const numPlane = new THREE.Mesh(new THREE.PlaneGeometry(.46,.46), new THREE.MeshBasicMaterial({map:tex, transparent:true, depthWrite:false}));
+    numPlane.position.set(0,1.22,.185); group.add(numPlane);
+    const ground = new THREE.Mesh(new THREE.CircleGeometry(1.1,40), new THREE.MeshStandardMaterial({color:0x10242a, transparent:true, opacity:.62, roughness:.9}));
+    ground.rotation.x = -Math.PI/2; ground.position.y = -.18; ground.receiveShadow = true; scene.add(ground);
+    group.position.y = -.05; group.rotation.y = -.18; scene.add(group);
+    if (fallback) fallback.style.display = 'none'; canvas.style.display = 'block';
+    let frame = 0;
+    const animate = () => {
+      if (!canvas.isConnected) { renderer.dispose(); return; }
+      frame += .012;
+      group.rotation.y = Math.sin(frame) * .18;
+      group.position.y = -.05 + Math.sin(frame * 1.6) * .025;
+      renderer.render(scene, cam);
+      requestAnimationFrame(animate);
+    };
+    animate();
+  } catch(e) {
+    console.warn('Mint 3D render fallback:', e);
+    if (canvas) canvas.style.display = 'none';
+    if (fallback) fallback.style.display = 'flex';
+  }
+}
+function bkMintQuestCopy(card, team, isUpgrade){
+  const ctx = window.BK_MINT_CONTEXT || {};
+  const teamId = Number(card?.teamId);
+  if (ctx.type === 'argentina') {
+    if (teamId === Number(ctx.teamId)) return {title:'<span class="arg-blue">ARGENTINA</span> CARD SCORED', sub:'This card counts for Argentina Dream XI. Your tactics/rank refresh after confirmation.', note: isUpgrade ? 'This card improves your Argentina squad score. Best scored cards stay saved, then you can keep or sell depending on strategy.' : 'This Argentina card entered your wallet, but it may be reserve if you already scored a stronger card in this position.'};
+    if (teamId === 24) return {title:'<span class="usa-blue">USA</span> QUEST CARD', sub:'This USA card can help in the active USA Nation Quest.', note:'USA Quest is a completion race. If this is a missing USA position, it moves you closer to 11/11 and the 1500 CHZ prize. If it is a duplicate, it may be valuable to another player.'};
+    return {title:'WC CARD MINTED', sub:'This is a ' + team.name + ' card. It does not score in Argentina Dream XI.', note:'It can still matter for marketplace profit, future national quests, and the World Cup Album.'};
+  }
+  if (ctx.type === 'wc') {
+    if (teamId === 24) return {title:'<span class="usa-blue">USA</span> QUEST + WC CARD', sub:'This USA card counts for the World Cup Album and can help in the active USA Nation Quest.', note:'If this USA position is missing for you or another player, it can be strategically important. Complete 11/11 USA for the Nation Quest race, or list duplicates higher.'};
+    return {title:'WC ALBUM CARD SCORED', sub:'This ' + team.name + ' card counts for the World Cup Album race.', note:'Every nation card can matter here. If it improves a slot, your album progress and leaderboard refresh after confirmation.'};
+  }
+  if (teamId === 24) return {title:'<span class="usa-blue">USA</span> QUEST CARD', sub:'This USA card can help in the active USA Nation Quest.', note:'USA Quest reward: first wallet to complete all 11 USA positions wins 1500 CHZ. If this card is a missing position, it matters immediately. If it is duplicate or scarce, consider market strategy.'};
+  if (teamId === 25) return {title:'<span class="arg-blue">ARGENTINA</span> DREAM XI CARD', sub:'This Argentina card can score in the active Dream XI Argentina quest.', note:'Argentina cards can improve Dream XI rank. Best scored position is saved, then you can decide to hold, sell, or block a scarce position.'};
+  return {title:'CARD MINTED', sub:'This ' + team.name + ' card entered your Block Kickers collection.', note:'One card can matter for Global Leaderboard, Country Champion, Dream XI/Nation quests, marketplace profit, and the future World Cup Album.'};
+}
+function bkMintSupplyHint(card) {
+  try {
+    const same = Object.values(window.ownerMap || {}).filter(c => Number(c.teamId) === Number(card.teamId) && Number(c.position) === Number(card.position));
+    if (same.length === 1) return '<br><span style="font-family:&quot;Share Tech Mono&quot;,monospace;color:#ffc940">Only 1 detected in this nation/position on this page.</span>';
+    if (same.length > 1 && same.length <= 3) return '<br><span style="font-family:&quot;Share Tech Mono&quot;,monospace;color:#ffc940">Low supply detected: ' + same.length + ' in this nation/position.</span>';
+  } catch(e) {}
+  return '<br><span style="font-family:&quot;Share Tech Mono&quot;,monospace;color:#ffc940">Check supply before listing. Scarce positions can sell higher.</span>';
+}
+function showMintResultModal(card, options = {}) {
+  const modal = document.getElementById('mintResultModal');
+  if (!modal) return;
+  const visual = document.getElementById('mintResultVisual');
+  const main = document.getElementById('mintResultMain');
+  const stats = document.getElementById('mintResultStats');
+  const note = document.getElementById('mintResultNote');
+  if (!card && options.dna) card = Object.assign({dna: options.dna, tokenId: options.tokenId}, parseDNA(options.dna));
+  if (!card) {
+    visual.innerHTML = '<div style="font-size:38px;color:#00ff87;font-family:&quot;Black Ops One&quot;,sans-serif">OK</div>';
+    main.innerHTML = '<div class="mint-result-title">CARD CONFIRMED</div><div class="mint-result-sub">Transaction confirmed. Dashboard data was refreshed from Chiliz Chain.</div>';
+    stats.innerHTML = '';
+    note.textContent = 'Your card is confirmed on-chain and will appear after indexing if it is not visible instantly.';
+    modal.classList.add('show');
+    return;
+  }
+  const team = bkMintTeamInfo(card.teamId);
+  const position = bkMintPositionLabel(card.position);
+  const rarity = bkMintRarityName(card.rarity);
+  const rarityShort = bkMintRarityShort(card.rarity);
+  const scoreColor = bkMintRarityColor(card.rarity);
+  const copy = bkMintQuestCopy(card, team, Boolean(options.isUpgrade));
+  const countryHtml = '<div style="display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:8px">' + bkMintTeamFlagHtml(team, 38) + '<span style="font-family:&quot;Black Ops One&quot;,sans-serif;color:#fff;font-size:18px;letter-spacing:.8px">' + team.name.toUpperCase() + '</span></div>';
+  visual.innerHTML = bkMintFigureHtml(card);
+  bkRenderMintFigure3D(visual, card);
+  main.innerHTML = countryHtml + '<div class="mint-result-title">' + copy.title + '</div><div class="mint-result-sub">' + copy.sub + '</div>';
+  stats.innerHTML = '<div class="mint-result-stat"><b>' + bkMintTeamShort(team) + '</b><span>Country</span></div>'
+    + '<div class="mint-result-stat"><b>' + position + '</b><span>Position</span></div>'
+    + '<div class="mint-result-stat"><b style="color:' + scoreColor + '">' + rarity.toUpperCase() + '</b><span>Rarity</span></div>'
+    + '<div class="mint-result-stat"><b style="color:' + scoreColor + '">' + card.weight + '</b><span>PTS</span></div>';
+  note.innerHTML = copy.note + '<br><span style="font-family:&quot;Share Tech Mono&quot;,monospace;color:#9fb1c7">' + (card.tokenId !== undefined ? 'Token #' + card.tokenId + ' · ' : '') + rarity + ' · ' + card.weight + ' PTS</span>' + bkMintSupplyHint(card);
+  modal.classList.add('show');
+}
+
 // Konfiguracja kontraktÄ‚Ĺ‚w on-chain dla sieci Chiliz Chain (Mainnet)
 const CONTRACT_ADDRESS = "0xAAdc8D56e25a223B6cf4b88ba0889975560f21aB";
 const MARKET_ADDRESS   = "0xA18f7Bade67Eda41FD7D2B3A204d39b543977DaE";
@@ -6052,7 +6821,7 @@ async function directMint() {
       statusText += getMintTip(mintedCard, circulationAfterMint, oldCard, isUpgrade);
       document.getElementById('mintedCardStatus').innerHTML = statusText;
       renderMintSmartActions(mintedCard, oldCard, isUpgrade);
-      toggleMintSuccessModal(true);
+      showMintResultModal(mintedCard, {isUpgrade});
     }
     
     await loadData();
