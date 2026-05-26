@@ -1879,10 +1879,19 @@ window.BK_MINT_CONTEXT = window.BK_MINT_CONTEXT || {"type":"wc"};
 function closeMintResultModal(){document.getElementById('mintResultModal')?.classList.remove('show');}
 function continueMintToSquad(){
   closeMintResultModal();
+  const oldModal = document.getElementById('mintSuccessModal');
+  if (oldModal) oldModal.style.display = 'none';
+  if (lastSquadHighlight) {
+    selectedTeamId = Number(lastSquadHighlight.teamId);
+    lastSquadHighlight.ts = Date.now();
+    if (typeof renderCountryHub === 'function') renderCountryHub();
+    if (typeof renderPitch === 'function') renderPitch();
+    if (typeof renderLeaderboard === 'function') renderLeaderboard();
+  }
   const target = document.querySelector('.pitch-container') || document.querySelector('#squadPanel') || document.querySelector('#squadGrid') || document.querySelector('#mySquadGrid') || document.querySelector('.squad-section') || document.querySelector('.side-panel');
   if (target) target.scrollIntoView({behavior:'smooth', block:'center', inline:'nearest'});
-}
-function bkMintTeamInfo(id){
+  setTimeout(() => { if (typeof renderPitch === 'function') renderPitch(); }, 900);
+}function bkMintTeamInfo(id){
   const idx = Number(id) || 0;
   const teams = (typeof TEAMS !== 'undefined' && Array.isArray(TEAMS)) ? TEAMS : (Array.isArray(window.TEAMS) ? window.TEAMS : []);
   const flagCodes = (typeof TEAM_FLAG_CODES !== 'undefined' && Array.isArray(TEAM_FLAG_CODES)) ? TEAM_FLAG_CODES : (Array.isArray(window.TEAM_FLAG_CODES) ? window.TEAM_FLAG_CODES : []);
