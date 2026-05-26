@@ -35,7 +35,7 @@ body{background:#06080a;color:#dde4f0;font-family:'Barlow Condensed',sans-serif;
 .wallet-option-desc{font-size:11px;color:#8da0b7;margin-top:4px;line-height:1.25;}
 .wallet-option-tag{font-family:'Share Tech Mono',monospace;font-size:10px;color:#00ff87;border:1px solid rgba(0,255,135,0.24);border-radius:999px;padding:3px 7px;white-space:nowrap;}
 .wallet-note{font-size:11px;color:#6f7f92;line-height:1.35;margin-top:12px;}
-body.game-mode .wallet-actions #connectBtn.connected{display:none;}
+body.game-mode .wallet-actions #connectBtn.connected{display:inline-flex!important;}
 
 /* HERO & HEADER */
 .hero{padding:22px 24px 20px;text-align:left;border-bottom:1px solid #1c2028;position:relative;overflow:hidden;display:grid;grid-template-columns:minmax(280px,0.95fr) minmax(300px,1.2fr) minmax(280px,0.85fr);gap:16px;align-items:stretch;}
@@ -1236,6 +1236,187 @@ body.game-mode .pos-card.owned::after{top:-5px!important;right:-3px!important;z-
   body.game-mode .lb-score,
   body.game-mode .lb-prize{font-size:9px!important;color:#dde4f0!important;}
 }
+
+
+
+
+
+
+/* Exact home-style top navigation */
+body{padding-top:55px!important;}
+.topnav{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  padding:12px 28px!important;
+  border-bottom:1px solid rgba(0,255,135,0.14)!important;
+  background:rgba(5,7,10,0.96)!important;
+  backdrop-filter:blur(14px)!important;
+  position:fixed!important;
+  top:0!important;
+  left:0!important;
+  right:0!important;
+  z-index:100!important;
+  height:55px!important;
+  overflow:visible!important;
+}
+.topnav-logo.logo,
+.logo{
+  font-family:'Black Ops One',sans-serif!important;
+  font-size:18px!important;
+  letter-spacing:2px!important;
+  color:#dde4f0!important;
+  text-shadow:0 0 18px rgba(0,255,135,0.16)!important;
+  white-space:nowrap!important;
+  line-height:1!important;
+}
+.topnav-logo.logo span,
+.logo span{color:#00ff87!important;}
+.nav-right,
+.wallet-actions{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:flex-end!important;
+  gap:12px!important;
+  flex-shrink:0!important;
+  min-width:0!important;
+}
+.wallet-addr{
+  font-family:'Share Tech Mono',monospace!important;
+  font-size:11px!important;
+  color:#7a8899!important;
+  white-space:nowrap!important;
+  background:none!important;
+  border:0!important;
+  padding:0!important;
+}
+.wallet-bal{
+  font-family:'Black Ops One',sans-serif!important;
+  font-size:13px!important;
+  color:#ffc940!important;
+  white-space:nowrap!important;
+  background:none!important;
+  border:0!important;
+  padding:0!important;
+}
+.nav-countdown,
+.nav-price-countdown{
+  position:absolute!important;
+  left:50%!important;
+  top:50%!important;
+  transform:translate(-50%,-50%)!important;
+  font-family:'Black Ops One',sans-serif!important;
+  font-size:13px!important;
+  letter-spacing:2px!important;
+  color:#ffc940!important;
+  padding:6px 12px!important;
+  border:1px solid rgba(255,201,64,.24)!important;
+  border-radius:7px!important;
+  background:rgba(255,201,64,.045)!important;
+  white-space:nowrap!important;
+  display:block!important;
+  line-height:1!important;
+}
+.nav-countdown span,
+.nav-price-countdown span{color:#dde4f0!important;font-size:10px!important;margin-right:8px!important;letter-spacing:1px!important;}
+.nav-countdown b,
+.nav-price-countdown b{font-size:13px!important;color:#ffc940!important;font-weight:400!important;}
+.btn-connect.connected{background:rgba(0,255,135,0.15)!important;border-color:#00ff87!important;color:#00ff87!important;}
+@media(max-width:768px){
+  body{padding-top:72px!important;}
+  .topnav{height:48px!important;padding:10px 12px!important;}
+  .topnav-logo.logo,.logo{font-size:13px!important;letter-spacing:1.4px!important;}
+  .wallet-actions,.nav-right{gap:6px!important;}
+  .wallet-addr{font-size:8px!important;max-width:86px!important;overflow:hidden!important;text-overflow:ellipsis!important;}
+  .wallet-bal{font-size:9px!important;}
+  .btn-connect{font-size:9px!important;padding:7px 9px!important;}
+  .nav-countdown,.nav-price-countdown{top:48px!important;left:50%!important;transform:translateX(-50%)!important;font-size:9px!important;letter-spacing:1px!important;padding:4px 7px!important;background:rgba(5,7,10,.96)!important;}
+  .nav-countdown span,.nav-price-countdown span{display:none!important;}
+}
+
+/* Final mobile header/quest/info alignment */
+@media(max-width:700px){
+  body{padding-top:70px!important;}
+  .topnav{
+    height:70px!important;
+    min-height:70px!important;
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr) auto!important;
+    grid-template-rows:34px 24px!important;
+    align-items:center!important;
+    gap:0 8px!important;
+    padding:7px 10px 6px!important;
+    overflow:hidden!important;
+  }
+  .topnav-logo.logo,
+  .topnav .logo{
+    grid-column:1!important;
+    grid-row:1!important;
+    align-self:center!important;
+    justify-self:start!important;
+    font-size:13px!important;
+    line-height:1!important;
+  }
+  .topnav .wallet-actions,
+  .topnav .nav-right{
+    grid-column:2!important;
+    grid-row:1!important;
+    align-self:center!important;
+    justify-self:end!important;
+    min-width:0!important;
+  }
+  .nav-countdown,
+  .nav-price-countdown{
+    grid-column:1 / -1!important;
+    grid-row:2!important;
+    position:static!important;
+    inset:auto!important;
+    transform:none!important;
+    justify-self:center!important;
+    align-self:center!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    gap:6px!important;
+    width:auto!important;
+    max-width:calc(100vw - 24px)!important;
+    margin:0 auto!important;
+    padding:4px 9px!important;
+    background:rgba(255,201,64,.08)!important;
+    border:1px solid rgba(255,201,64,.42)!important;
+    border-radius:7px!important;
+    color:#ffc940!important;
+    font-family:'Black Ops One',sans-serif!important;
+    font-size:10px!important;
+    line-height:1!important;
+    letter-spacing:1px!important;
+    white-space:nowrap!important;
+  }
+  .nav-countdown span,
+  .nav-price-countdown span,
+  .nav-countdown b,
+  .nav-price-countdown b{
+    display:inline!important;
+    margin:0!important;
+    color:#ffc940!important;
+    font-family:'Black Ops One',sans-serif!important;
+    font-size:10px!important;
+    line-height:1!important;
+    letter-spacing:1px!important;
+    font-weight:400!important;
+  }
+}
+
+/* Keep connected wallet button visible like Dream XI */
+body.game-mode .wallet-actions #connectBtn.connected,
+body.game-mode .nav-right #connectBtn.connected{
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  background:rgba(0,255,135,0.15)!important;
+  border-color:#00ff87!important;
+  color:#00ff87!important;
+}
 /* Shared mint result popup - synced with Nation Quest */
 .mint-result-modal{position:fixed;inset:0;z-index:6100;display:none;align-items:center;justify-content:center;background:rgba(2,6,8,.78);backdrop-filter:blur(7px);padding:16px}
 .mint-result-modal.show{display:flex}
@@ -1342,20 +1523,18 @@ body.game-mode .pos-card.owned::after{top:-5px!important;right:-3px!important;z-
   .mint-result-sub{font-size:10px!important;}
   .mint-result-note{font-size:8px!important;}
 }
-
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
 <body>
 
 <nav class="topnav">
-  <div class="topnav-left">
-    <a href="https://block-kickers.vercel.app" class="topnav-logo" style="text-decoration:none;">&#9917; BLOCK <span>KICKERS</span></a>
-    <span id="walletAddress" class="wallet-pill" style="color:#dde4f0;">0x0000...0000</span>
-    <span id="walletBalance" class="wallet-pill" style="color:#00ff87;">0.0 CHZ</span>
-  </div>
-  <div class="wallet-actions">
-    <button class="btn-connect" id="connectBtn" onclick="openWalletChoice()">CONNECT WALLET</button>
+  <a href="https://block-kickers.vercel.app" class="topnav-logo logo" style="text-decoration:none;">&#9917; BLOCK <span>KICKERS</span></a>
+  <div class="nav-countdown" id="navPriceCountdown"><span>WC END IN</span>--:--:--:--</div>
+  <div class="nav-right wallet-actions">
+    <span id="walletAddress" class="wallet-addr" style="display:none;"></span>
+    <span id="walletBalance" class="wallet-bal" style="display:none;"></span>
+    <button class="btn-connect" id="connectBtn" onclick="openWalletChoice()">CONNECT</button>
   </div>
 </nav>
 
@@ -1671,6 +1850,8 @@ body.game-mode .pos-card.owned::after{top:-5px!important;right:-3px!important;z-
   </div>
 </div>
 
+<div id="toast">System Notification</div>
+
 <div class="mint-result-modal" id="mintResultModal">
   <div class="mint-result-panel">
     <div class="mint-result-head"><div class="mint-result-head-title">CARD MINTED</div><button class="mint-result-close" onclick="closeMintResultModal()">&times;</button></div>
@@ -1693,26 +1874,24 @@ body.game-mode .pos-card.owned::after{top:-5px!important;right:-3px!important;z-
   </div>
 </div>
 
-
-<div id="toast">System Notification</div>
-<div id="networkOverlay" aria-live="polite" aria-busy="true">
-  <div class="network-wait-card">
-    <div class="network-ball">&#9917;</div>
-    <div class="network-wait-title">Waiting for network</div>
-    <div class="network-wait-text" id="networkOverlayText">Please confirm in your wallet and wait for Chiliz Chain.</div>
-    <button id="walletOpenBtn" type="button" onclick="openWalletConnectApp()" style="display:none;margin-top:12px;border:1px solid rgba(0,255,135,.42);background:rgba(0,255,135,.10);color:#00ff87;border-radius:7px;padding:9px 12px;font-family:'Black Ops One',sans-serif;font-size:10px;letter-spacing:1px;">OPEN WALLET APP</button>
-  </div>
-</div>
-
 <script>
 window.BK_MINT_CONTEXT = window.BK_MINT_CONTEXT || {"type":"wc"};
 function closeMintResultModal(){document.getElementById('mintResultModal')?.classList.remove('show');}
 function continueMintToSquad(){
   closeMintResultModal();
+  const oldModal = document.getElementById('mintSuccessModal');
+  if (oldModal) oldModal.style.display = 'none';
+  if (lastSquadHighlight) {
+    selectedTeamId = Number(lastSquadHighlight.teamId);
+    lastSquadHighlight.ts = Date.now();
+    if (typeof renderCountryHub === 'function') renderCountryHub();
+    if (typeof renderPitch === 'function') renderPitch();
+    if (typeof renderLeaderboard === 'function') renderLeaderboard();
+  }
   const target = document.querySelector('.pitch-container') || document.querySelector('#squadPanel') || document.querySelector('#squadGrid') || document.querySelector('#mySquadGrid') || document.querySelector('.squad-section') || document.querySelector('.side-panel');
   if (target) target.scrollIntoView({behavior:'smooth', block:'center', inline:'nearest'});
-}
-function bkMintTeamInfo(id){
+  setTimeout(() => { if (typeof renderPitch === 'function') renderPitch(); }, 900);
+}function bkMintTeamInfo(id){
   const idx = Number(id) || 0;
   const teams = (typeof TEAMS !== 'undefined' && Array.isArray(TEAMS)) ? TEAMS : (Array.isArray(window.TEAMS) ? window.TEAMS : []);
   const flagCodes = (typeof TEAM_FLAG_CODES !== 'undefined' && Array.isArray(TEAM_FLAG_CODES)) ? TEAM_FLAG_CODES : (Array.isArray(window.TEAM_FLAG_CODES) ? window.TEAM_FLAG_CODES : []);
@@ -2352,7 +2531,6 @@ function showMintResultModal(card, options = {}) {
   modal.classList.add('show');
 }
 
-
 const CONTRACT_ADDRESS = "0xAAdc8D56e25a223B6cf4b88ba0889975560f21aB";
 const MARKET_ADDRESS   = "0xA18f7Bade67Eda41FD7D2B3A204d39b543977DaE";
 const CHAIN_ID = 88888;
@@ -2672,12 +2850,12 @@ function toggleMintSuccessModal(show) {
 function renderCardResult(title, card, statusHtml) {
   const oldModal = document.getElementById('mintSuccessModal');
   if (oldModal) oldModal.style.display = 'none';
-  if (card && typeof showMintResultModal === 'function') {
+  if (card) {
     const upgraded = String(statusHtml || '').toUpperCase().includes('UPGRADED') || String(title || '').toUpperCase().includes('PURCHASED');
     showMintResultModal(card, { isUpgrade: upgraded });
     return;
   }
-  if (typeof showMintResultModal === 'function') showMintResultModal(null, {});
+  showMintResultModal(null, {});
 }
 function applyScoredCardLocally(wallet, card) {
   if (!wallet || !card) return null;
@@ -3028,7 +3206,7 @@ async function updateWalletBalance() {
       const p = new ethers.BrowserProvider(walletProvider);
       const bal = await p.getBalance(address);
       const el = document.getElementById('walletBalance');
-      if (el) { el.textContent = parseFloat(ethers.formatEther(bal)).toFixed(1)+' CHZ'; el.style.display='inline-block'; }
+      if (el) { el.textContent = parseFloat(ethers.formatEther(bal)).toFixed(3)+' CHZ'; el.style.display='inline-block'; }
     } catch(e) {}
   }
 }
@@ -3132,7 +3310,7 @@ async function finalizeWalletConnection(walletProvider, walletType='wallet') {
   contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
   marketContract = new ethers.Contract(MARKET_ADDRESS, MARKET_ABI, signer);
   const connectBtn = document.getElementById('connectBtn');
-  if (connectBtn) { connectBtn.textContent = address.slice(0,6)+'...'+address.slice(-4); connectBtn.classList.add('connected'); }
+  if (connectBtn) { connectBtn.textContent = 'CONNECTED'; connectBtn.classList.add('connected'); }
   const walletAddressEl = document.getElementById('walletAddress');
   if (walletAddressEl) { walletAddressEl.textContent = address.slice(0,6)+'...'+address.slice(-4); walletAddressEl.style.display = 'inline-block'; }
   await updateWalletBalance();
@@ -4040,7 +4218,7 @@ async function directMint() {
         .replace(/<span[\s\S]*?SQUAD UPGRADED![\s\S]*?<\/span>/, `<span class="card-result-badge">SQUAD UPGRADED! +${isUpgrade ? (oldCard ? mintedCard.weight - oldCard.weight : mintedCard.weight) : 0} PTS</span>`)
         .replace(/<span[\s\S]*?RESERVE CARD ACQUIRED[\s\S]*?<\/span>/, '<span class="card-result-badge reserve">RESERVE CARD ACQUIRED</span>');
       document.getElementById('mintedCardStatus').innerHTML = statusText;
-      if (typeof showMintResultModal === 'function' && mintedCard) { showMintResultModal(mintedCard, {isUpgrade}); } else { toggleMintSuccessModal(true); }
+      showMintResultModal(mintedCard, {isUpgrade});
     }
     
     await loadData({silent:true});
@@ -4132,6 +4310,8 @@ function updateCountdown(){
   setDashCd('dashCdH', h);
   setDashCd('dashCdM', m);
   setDashCd('dashCdS', s);
+  const navPriceCountdown = document.getElementById('navPriceCountdown');
+  if (navPriceCountdown) navPriceCountdown.innerHTML = `<span>WC END IN</span><b>${String(d).padStart(2,'0')}:${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}</b>`;
   document.getElementById('cdBlock').innerHTML = 'Deadline block: <a href="https://scan.chiliz.com/block/'+DEADLINE_BLOCK+'" target="_blank" style="color:#00ff87;text-decoration:none;">#'+DEADLINE_BLOCK.toLocaleString()+'</a> · Estimated Current: ~#'+estimated.toLocaleString()+' · '+blocksLeft.toLocaleString()+' blocks remaining';
 }
 
