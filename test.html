@@ -6117,17 +6117,19 @@ function continueMintToSquad(){
 }
 function bkMintTeamInfo(id){
   const idx = Number(id) || 0;
-  let raw = Array.isArray(window.TEAMS) ? window.TEAMS[idx % window.TEAMS.length] : null;
+  const teams = (typeof TEAMS !== 'undefined' && Array.isArray(TEAMS)) ? TEAMS : (Array.isArray(window.TEAMS) ? window.TEAMS : []);
+  const flagCodes = (typeof TEAM_FLAG_CODES !== 'undefined' && Array.isArray(TEAM_FLAG_CODES)) ? TEAM_FLAG_CODES : (Array.isArray(window.TEAM_FLAG_CODES) ? window.TEAM_FLAG_CODES : []);
+  let raw = teams[idx % Math.max(teams.length, 1)] || null;
   let name = 'Team #' + idx;
-  let code = '';
+  let code = flagCodes[idx % Math.max(flagCodes.length, 1)] || '';
   let flag = '🏳️';
-  if (typeof raw === 'string') { name = raw; code = (window.TEAM_FLAG_CODES && window.TEAM_FLAG_CODES[idx % window.TEAM_FLAG_CODES.length]) || ''; }
-  else if (raw && typeof raw === 'object') { name = raw.name || name; code = raw.code || ''; flag = raw.flag || flag; }
+  if (typeof raw === 'string') { name = raw; }
+  else if (raw && typeof raw === 'object') { name = raw.name || name; code = raw.code || code; flag = raw.flag || flag; }
   if (name === 'United States') name = 'USA';
   return {name, code, flag};
 }
 function bkMintTeamShort(team){
-  const special = {'United States':'USA','USA':'USA','Argentina':'ARG','Czech Republic':'CZE','Czech Rep.':'CZE','DR Congo':'COD','Ivory Coast':'CIV','South Africa':'RSA','New Zealand':'NZL','Saudi Arabia':'KSA','South Korea':'KOR','Cape Verde':'CPV','Curacao':'CUW','England':'ENG','Scotland':'SCO','Turkey':'TUR'};
+  const special = {'United States':'USA','USA':'USA','Argentina':'ARG','Czech Republic':'CZE','Czech Rep.':'CZE','DR Congo':'COD','Ivory Coast':'CIV','South Africa':'RSA','New Zealand':'NZL','Saudi Arabia':'KSA','South Korea':'KOR','Cape Verde':'CPV','Curacao':'CUW','England':'ENG','Scotland':'SCO','Turkey':'TUR','Bosnia':'BIH'};
   return special[team?.name] || String(team?.name || '---').replace(/[^A-Za-z]/g,'').slice(0,3).toUpperCase();
 }
 function bkMintTeamFlagHtml(team, size = 58){
@@ -6136,9 +6138,12 @@ function bkMintTeamFlagHtml(team, size = 58){
 }
 function bkMintPositionLabel(id){
   if (typeof posLabel === 'function') return posLabel(id);
+  if (typeof POSITION_SHORT !== 'undefined' && POSITION_SHORT && POSITION_SHORT[id]) return POSITION_SHORT[id];
   if (window.POSITION_SHORT && window.POSITION_SHORT[id]) return window.POSITION_SHORT[id];
+  if (typeof POSITION_NAMES !== 'undefined' && POSITION_NAMES && POSITION_NAMES[id]) return POSITION_NAMES[id];
   if (window.POSITION_NAMES && window.POSITION_NAMES[id]) return window.POSITION_NAMES[id];
-  return String(id);
+  const fallback = {1:'GK',2:'RB',3:'LB',4:'CB A',5:'CB B',6:'DM',7:'RW',8:'MID',9:'ST',10:'#10',11:'LW'};
+  return fallback[Number(id)] || String(id);
 }
 function bkMintRarityName(r){return ['Common','Rare','Epic','Legendary'][Number(r)] || 'Common';}
 function bkMintRarityShort(r){return ['COM','RAR','EPI','LEG'][Number(r)] || 'COM';}
