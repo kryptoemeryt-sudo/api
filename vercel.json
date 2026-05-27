@@ -9,7 +9,7 @@
     { "source": "/nation-quest", "destination": "/nation-quest.html" },
     { "source": "/nqb", "destination": "/nation-quest-badges.html" },
     { "source": "/gk-quest", "destination": "/goalkeeper-quest.html" },
-    { "source": "/hnp-quest", "destination": "/host-nations-podium.html" },
+    { "source": "/host-nations-podium", "destination": "/host-nations-podium.html" },
     
 
     { "source": "/info", "destination": "/how-to-play-dream-ii.html" },
