@@ -353,6 +353,12 @@ h1 .accent{color:var(--green);text-shadow:0 0 30px var(--green-glow);}
 .reward-title{font-family:'Black Ops One',sans-serif;font-size:9px;color:var(--text);letter-spacing:1px;margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .reward-copy{font-size:9px;color:var(--text3);line-height:1.2;}
 .reward-value{font-family:'Black Ops One',sans-serif;font-size:13px;margin-top:5px;white-space:nowrap;}
+.reward-alpha-grid{display:grid;grid-template-columns:1fr;gap:7px;margin-top:8px;}
+.reward-alpha-card{border:1px solid rgba(255,255,255,.08);background:linear-gradient(135deg,rgba(255,255,255,.035),rgba(0,255,135,.035));border-radius:8px;padding:8px 9px;}
+.reward-alpha-title{font-family:'Black Ops One',sans-serif;font-size:10px;letter-spacing:1px;color:#fff;line-height:1.05;}
+.reward-alpha-value{font-family:'Black Ops One',sans-serif;font-size:16px;line-height:1;color:var(--gold);margin-top:5px;}
+.reward-alpha-card.legend .reward-alpha-value{color:var(--purple);}
+.reward-alpha-note{font-family:'Share Tech Mono',monospace;font-size:9px;line-height:1.25;color:var(--text2);margin-top:4px;}
 
 @media (max-width: 768px) {
   /* GLOBAL */
@@ -2549,7 +2555,7 @@ document.addEventListener('DOMContentLoaded', setupDesktopDashboardLayout);
     <p class="hero-desc">Three quests are live. Mint cards, hunt missing pieces, and use the market to fight for paid leaderboard spots.</p>
     <div class="reward-total-banner">
       <div class="reward-total-value">28,000 CHZ</div>
-      <div class="reward-total-copy"><b>Total rewards live</b><br>Global race + quest pools + paid podium battles</div>
+      <div class="reward-total-copy"><b>Total rewards live</b><br><span id="countryRoiInline">Country lead ~78 CHZ (~8x)</span><br><span id="legendaryInline">Legendary split loading</span></div>
     </div>
     <div class="stats-row">
       <div class="stat" style="text-align:center;"><div class="stat-n" id="sMinted">0</div><div class="stat-l">MINTED</div></div>
@@ -2665,6 +2671,18 @@ document.addEventListener('DOMContentLoaded', setupDesktopDashboardLayout);
           <div class="reward-value" id="rewardLegendary">- CHZ</div>
         </div>
       </div>
+      <div class="reward-alpha-grid">
+        <div class="reward-alpha-card">
+          <div class="reward-alpha-title">BEST CARD IN A COUNTRY</div>
+          <div class="reward-alpha-value" id="countryRoiValue">~78 CHZ</div>
+          <div class="reward-alpha-note" id="countryRoiNote">Almost 8x from a 10 CHZ mint if your card leads a nation.</div>
+        </div>
+        <div class="reward-alpha-card legend">
+          <div class="reward-alpha-title">LEGENDARY LANE</div>
+          <div class="reward-alpha-value" id="legendaryEachValue">counting...</div>
+          <div class="reward-alpha-note" id="legendaryEachNote">Legendary also can become country champion.</div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -2728,8 +2746,8 @@ document.addEventListener('DOMContentLoaded', setupDesktopDashboardLayout);
     <div class="strategy-stats">
       <div class="strategy-stat"><b>3</b><span>Live Quests</span></div>
       <div class="strategy-stat"><b>28k</b><span>CHZ Rewards</span></div>
-      <div class="strategy-stat"><b>TOP 5</b><span>Host Paid</span></div>
-      <div class="strategy-stat"><b>10 CHZ</b><span>Early Mint</span></div>
+      <div class="strategy-stat"><b id="strategyCountryReward">~78</b><span>CHZ Country</span></div>
+      <div class="strategy-stat"><b id="strategyLegendaryReward">LEG</b><span>Each Legendary</span></div>
     </div>
     <div class="strategy-flow">
       <div class="strategy-line"><i>01</i><div>Connect wallet and check your quest scores.</div></div>
@@ -2737,8 +2755,8 @@ document.addEventListener('DOMContentLoaded', setupDesktopDashboardLayout);
       <div class="strategy-line"><i>03</i><div>List scarce cards other players need and price them like missing pieces.</div></div>
     </div>
     <div class="strategy-example">
-      <div class="strategy-example-title">Market example</div>
-      <p>You hold a USA / Mexico / Canada card that gives another wallet the lead. List it above floor. They buy the missing piece, you take profit, and the leaderboard moves. <strong>That is the game loop.</strong></p>
+      <div class="strategy-example-title">Reward stack</div>
+      <p>The current best card in a country is already near <strong>8x</strong> from a 10 CHZ mint. Legendary cards split their own pool and can still become country champion. <strong>One card can hit multiple lanes.</strong></p>
     </div>
     <div class="strategy-actions">
       <button class="strategy-btn" onclick="closeStrategyIntro(); scrollToSection('mint')">CHECK QUESTS</button>
@@ -3776,6 +3794,7 @@ let heroRen=null, modalRen=null;
 const miniRens={};
 let myFigures=[];
 let currentPrice='0.1';
+let lastLegendaryCount=null;
 
 // ============================================================
 //  WALLET
@@ -4200,19 +4219,49 @@ function updateRewardPreview(vaultWeiOrChz, legendaryCount = null){
       ? parseFloat(ethers.formatEther(vaultWeiOrChz))
       : Number(vaultWeiOrChz || 0);
   }catch(e){ vaultChz = 0; }
+  if(legendaryCount !== null && legendaryCount !== undefined) lastLegendaryCount = Number(legendaryCount) || 0;
+  const knownLegendaryCount = lastLegendaryCount && lastLegendaryCount > 0 ? lastLegendaryCount : 0;
   const globalPool = vaultChz * 0.65;
   const countryEach = vaultChz * 0.25 / 48;
   const legendaryPool = vaultChz * 0.10;
-  const legendaryEach = legendaryCount && legendaryCount > 0 ? legendaryPool / legendaryCount : legendaryPool;
+  const legendaryEach = knownLegendaryCount > 0 ? legendaryPool / knownLegendaryCount : legendaryPool;
+  const mintAnchor = 10;
+  const countryRoi = mintAnchor > 0 ? countryEach / mintAnchor : 0;
 
   const g = document.getElementById('rewardGlobal');
   const c = document.getElementById('rewardCountry');
   const l = document.getElementById('rewardLegendary');
+  const countryRoiValue = document.getElementById('countryRoiValue');
+  const countryRoiNote = document.getElementById('countryRoiNote');
+  const legendaryEachValue = document.getElementById('legendaryEachValue');
+  const legendaryEachNote = document.getElementById('legendaryEachNote');
+  const strategyCountryReward = document.getElementById('strategyCountryReward');
+  const strategyLegendaryReward = document.getElementById('strategyLegendaryReward');
+  const countryRoiInline = document.getElementById('countryRoiInline');
+  const legendaryInline = document.getElementById('legendaryInline');
   if(g) g.textContent = formatGameChz(globalPool, { compact: true });
   if(c) c.textContent = formatGameChz(countryEach);
-  if(l) l.textContent = legendaryCount && legendaryCount > 0
+  if(l) l.textContent = knownLegendaryCount > 0
     ? formatGameChz(legendaryEach) + ' / LEG'
     : formatGameChz(legendaryPool, { compact: true });
+  if(countryRoiValue) countryRoiValue.textContent = '~' + formatGameChz(countryEach);
+  if(strategyCountryReward) strategyCountryReward.textContent = countryEach > 0 ? '~' + countryEach.toFixed(0) : '~78';
+  if(countryRoiInline) countryRoiInline.textContent = countryEach > 0
+    ? 'Country lead ~' + countryEach.toFixed(0) + ' CHZ (~' + countryRoi.toFixed(1).replace('.0','') + 'x)'
+    : 'Country lead ~78 CHZ (~8x)';
+  if(countryRoiNote) countryRoiNote.textContent = countryEach > 0
+    ? 'Almost ' + countryRoi.toFixed(1).replace('.0','') + 'x from a 10 CHZ mint if your card leads a nation.'
+    : 'Best card in any country earns the country lane at snapshot.';
+  if(legendaryEachValue) legendaryEachValue.textContent = knownLegendaryCount > 0
+    ? '~' + formatGameChz(legendaryEach) + ' EACH'
+    : '~' + formatGameChz(legendaryPool, { compact: true }) + ' POOL';
+  if(strategyLegendaryReward) strategyLegendaryReward.textContent = knownLegendaryCount > 0 ? '~' + legendaryEach.toFixed(0) : 'LEG';
+  if(legendaryInline) legendaryInline.textContent = knownLegendaryCount > 0
+    ? knownLegendaryCount + ' Legendary = ~' + legendaryEach.toFixed(0) + ' CHZ each'
+    : 'Legendary split loads from chain';
+  if(legendaryEachNote) legendaryEachNote.textContent = knownLegendaryCount > 0
+    ? legendaryPool.toFixed(0) + ' CHZ pool / ' + knownLegendaryCount + ' Legendary cards. A Legendary can also be country champion.'
+    : 'Legendary cards split the 10% lane and can also win country champion.';
 }
 
 async function loadTicker(){
