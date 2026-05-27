@@ -53,6 +53,7 @@ button{font-family:'Black Ops One',sans-serif}
 .rules{display:grid;gap:7px;margin-top:12px}.rule{display:grid;grid-template-columns:28px minmax(0,1fr);gap:8px;align-items:center;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.035);border-radius:7px;padding:8px}.rule i{font-family:'Black Ops One',sans-serif;color:var(--gold);font-style:normal}.rule span{color:#dbe6f4;font-size:15px;line-height:1.15;min-width:0;overflow-wrap:anywhere}
 .stage-panel{position:relative;padding:0;min-height:360px;background:linear-gradient(180deg,rgba(11,18,26,.96),rgba(5,7,10,.98));border-color:rgba(88,166,255,.26)}
 #podiumStage{display:block;width:100%;height:100%;min-height:360px;position:relative;z-index:2}
+#podiumStage{image-rendering:auto}
 .stage-fallback{position:absolute;inset:0;display:none;place-items:center;text-align:center;color:var(--muted);font-family:'Share Tech Mono',monospace}
 .stage-header{position:absolute;left:12px;right:12px;top:10px;z-index:4;display:flex;justify-content:space-between;align-items:flex-start;gap:10px;pointer-events:none}
 .stage-title{font-family:'Black Ops One',sans-serif;font-size:14px;letter-spacing:1px;color:#fff}.stage-sub{font-family:'Share Tech Mono',monospace;color:var(--muted);font-size:10px;margin-top:3px;text-transform:uppercase}.stage-score{font-family:'Black Ops One',sans-serif;color:var(--green);font-size:30px;line-height:1;text-align:right}.stage-score span{display:block;font-family:'Share Tech Mono',monospace;color:var(--muted);font-size:10px;margin-top:4px}
@@ -70,6 +71,48 @@ button{font-family:'Black Ops One',sans-serif}
 .wallet-choice-modal{position:fixed;inset:0;z-index:90;display:none;align-items:center;justify-content:center;background:rgba(3,5,8,.78);backdrop-filter:blur(8px);padding:14px}.wallet-choice-modal.show{display:flex}.wallet-choice-panel{width:min(94vw,520px);border:1px solid rgba(0,255,135,.36);background:linear-gradient(180deg,#111923,#06080b);border-radius:8px;padding:14px;box-shadow:0 24px 80px rgba(0,0,0,.66)}.wallet-choice-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}.wallet-choice-title{font-family:'Black Ops One',sans-serif;color:var(--green);letter-spacing:1px}.wallet-choice-close{width:32px;height:32px;border:1px solid var(--line);background:#0b1016;color:#fff;border-radius:6px;font-size:20px;cursor:pointer}.wallet-choice-option{width:100%;display:grid;grid-template-columns:34px 1fr auto;gap:10px;align-items:center;text-align:left;border:1px solid var(--line);background:rgba(255,255,255,.04);color:#fff;border-radius:7px;padding:10px;margin-top:8px;cursor:pointer}.wallet-choice-option:hover{border-color:rgba(0,255,135,.46);background:rgba(0,255,135,.08)}.wallet-choice-icon{font-family:'Black Ops One',sans-serif;color:var(--gold);font-size:20px;text-align:center}.wallet-choice-name{display:block;font-family:'Black Ops One',sans-serif;font-size:12px;letter-spacing:.7px}.wallet-choice-desc{display:block;font-family:'Share Tech Mono',monospace;color:var(--muted);font-size:10px;margin-top:3px;line-height:1.25}.wallet-choice-tag{font-family:'Black Ops One',sans-serif;color:var(--green);font-size:10px;border:1px solid rgba(0,255,135,.35);border-radius:5px;padding:4px 6px}.wallet-choice-note{margin-top:10px;font-family:'Share Tech Mono',monospace;color:var(--muted);font-size:10px;line-height:1.35}
 .mint-reveal{position:fixed;inset:0;z-index:92;display:none;align-items:center;justify-content:center;background:rgba(3,5,8,.78);backdrop-filter:blur(8px);padding:14px}.mint-reveal.show{display:flex}.mint-reveal-panel{width:min(94vw,560px);border:1px solid rgba(255,201,64,.42);background:linear-gradient(180deg,#111923,#06080b);border-radius:8px;padding:14px;box-shadow:0 24px 80px rgba(0,0,0,.66)}.mint-reveal-body{display:grid;grid-template-columns:130px 1fr;gap:14px;align-items:center}.mint-reveal-fig{height:130px;border:1px solid rgba(255,255,255,.1);border-radius:7px;background:radial-gradient(circle at 50% 90%,rgba(0,255,135,.14),transparent 58%);display:grid;place-items:center}.mint-reveal-name{font-family:'Black Ops One',sans-serif;font-size:24px;color:#fff;line-height:1}.mint-reveal-sub{font-family:'Share Tech Mono',monospace;color:var(--muted);font-size:11px;margin-top:6px}.mint-reveal-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:12px}.mint-reveal-stat{border:1px solid var(--line);border-radius:7px;padding:8px;background:rgba(255,255,255,.035)}.mint-reveal-stat b{display:block;font-family:'Black Ops One',sans-serif;color:var(--gold);font-size:16px}.mint-reveal-stat span{display:block;font-family:'Share Tech Mono',monospace;color:var(--muted);font-size:9px;margin-top:3px;text-transform:uppercase}.mint-reveal-note{margin-top:10px;border:1px solid rgba(0,255,135,.32);background:rgba(0,255,135,.07);border-radius:7px;padding:9px;font-family:'Share Tech Mono',monospace;color:#cceee0;font-size:11px;line-height:1.35}
 .loading{grid-column:1/-1;text-align:center;color:var(--muted);font-family:'Share Tech Mono',monospace;padding:18px}.toast{position:fixed;left:50%;bottom:16px;z-index:100;transform:translateX(-50%);display:none;border:1px solid var(--green);background:rgba(5,7,10,.96);color:var(--green);border-radius:7px;padding:10px 14px;font-family:'Share Tech Mono',monospace;font-size:12px;max-width:min(680px,calc(100vw - 24px));text-align:center}
+#networkOverlay{position:fixed!important;inset:0!important;z-index:120!important;display:none!important;align-items:center!important;justify-content:center!important;background:rgba(2,6,8,.82)!important;backdrop-filter:blur(8px)!important;padding:max(14px,env(safe-area-inset-top)) max(14px,env(safe-area-inset-right)) max(14px,env(safe-area-inset-bottom)) max(14px,env(safe-area-inset-left))!important;box-sizing:border-box!important;overflow:hidden!important}
+#networkOverlay.show{display:flex!important}
+#networkOverlay .network-wait-card{width:min(360px,calc(100dvw - 28px))!important;max-width:calc(100dvw - 28px)!important;margin:0!important;position:relative!important;display:grid!important;justify-items:center!important;gap:10px!important;text-align:center!important;box-sizing:border-box!important;overflow:hidden!important;background:linear-gradient(180deg,rgba(11,19,30,.98),rgba(6,8,10,.97))!important;border:1px solid rgba(0,255,135,.46)!important;border-radius:14px!important;padding:22px 18px 18px!important;box-shadow:0 24px 80px rgba(0,0,0,.68),0 0 34px rgba(0,255,135,.12)!important;color:#dde4f0!important}
+#networkOverlay .network-ball{width:58px!important;height:58px!important;border-radius:50%!important;margin:0 0 2px!important;position:relative!important;display:grid!important;place-items:center!important;font-size:0!important;background:radial-gradient(circle at 50% 50%,#fff 0 30%,#0b0f16 31% 43%,#fff 44% 100%)!important;border:5px solid #00ff87!important;box-shadow:0 0 22px rgba(0,255,135,.38),inset 0 0 0 2px rgba(0,0,0,.65)!important;animation:bkOverlaySpin 1.05s linear infinite!important}
+#networkOverlay .network-ball::before{content:""!important;position:absolute;width:16px;height:16px;background:#0b0f16;clip-path:polygon(50% 0,100% 38%,82% 100%,18% 100%,0 38%)}
+#networkOverlay .network-ball::after{content:""!important;position:absolute;inset:9px;border-radius:50%;background:conic-gradient(from 18deg,#0b0f16 0 10deg,transparent 10deg 72deg,#0b0f16 72deg 84deg,transparent 84deg 144deg,#0b0f16 144deg 156deg,transparent 156deg 216deg,#0b0f16 216deg 228deg,transparent 228deg 288deg,#0b0f16 288deg 300deg,transparent 300deg 360deg);opacity:.9}
+@keyframes bkOverlaySpin{to{transform:rotate(360deg)}}
+#networkOverlay .network-wait-title{font-family:'Black Ops One',sans-serif!important;color:#00ff87!important;font-size:17px!important;line-height:1.05!important;letter-spacing:1px!important;text-transform:uppercase!important;margin:0!important}
+#networkOverlay .network-wait-text{font-family:'Share Tech Mono',monospace!important;color:#dde4f0!important;font-size:12px!important;line-height:1.35!important;max-width:300px!important;margin:0 auto!important}
+#networkOverlay #walletOpenBtn{display:none;margin-top:4px;border:1px solid rgba(0,255,135,.46)!important;background:rgba(0,255,135,.12)!important;color:#00ff87!important;border-radius:8px!important;padding:10px 12px!important;font-family:'Black Ops One',sans-serif!important;font-size:10px!important;letter-spacing:1px!important;cursor:pointer!important}
+@media(max-width:700px){#networkOverlay{padding:12px!important}#networkOverlay .network-wait-card{width:min(330px,calc(100dvw - 24px))!important;max-width:calc(100dvw - 24px)!important;padding:18px 14px 16px!important;border-radius:12px!important}#networkOverlay .network-ball{width:50px!important;height:50px!important;border-width:4px!important}#networkOverlay .network-wait-title{font-size:14px!important}#networkOverlay .network-wait-text{font-size:10px!important}}
+/* Final unified network loader: clean spinner, no fake ball/emoji */
+#networkOverlay .network-ball{
+  width:48px!important;
+  height:48px!important;
+  margin:0 0 4px!important;
+  border-radius:50%!important;
+  position:relative!important;
+  display:block!important;
+  font-size:0!important;
+  line-height:0!important;
+  color:transparent!important;
+  background:transparent!important;
+  border:3px solid rgba(221,228,240,.18)!important;
+  border-top-color:#00ff87!important;
+  border-right-color:#ffc940!important;
+  box-shadow:0 0 18px rgba(0,255,135,.18)!important;
+  text-shadow:none!important;
+  animation:bkOverlaySpin .85s linear infinite!important;
+}
+#networkOverlay .network-ball::before,
+#networkOverlay .network-ball::after{
+  content:none!important;
+  display:none!important;
+}
+@media(max-width:700px){
+  #networkOverlay .network-ball{
+    width:42px!important;
+    height:42px!important;
+    border-width:3px!important;
+  }
+}
 @media(max-width:1180px){.hero{grid-template-columns:1fr 1.15fr}.hero .panel.side{grid-column:1/-1}.section-grid{grid-template-columns:1fr}.desk{grid-template-columns:1fr 1fr}}
 @media(max-width:1000px){html,body,.page,.topnav,.hero,.panel{width:100%;max-width:100%;overflow-x:hidden}.topnav{height:48px;display:grid;grid-template-columns:minmax(130px,1fr) 68px 74px;align-items:center;gap:5px;padding:7px 8px}.brand{grid-column:1;grid-row:1;font-size:13px;gap:5px;min-width:0;overflow:hidden;text-overflow:ellipsis}.nav-mid{display:none!important}.topnav .btn{width:100%;min-width:0;padding:7px 4px;font-size:9px;overflow:hidden;text-overflow:ellipsis;min-height:32px}.topnav #connectBtn{grid-column:3;grid-row:1;position:static!important;display:block!important;visibility:visible!important;opacity:1!important}.topnav #refreshBtn{display:none!important}.wallet-pill{grid-column:2;grid-row:1;position:static!important;width:100%;max-width:none;text-align:center;padding:7px 3px;font-size:10px}.page{padding:7px}.hero{grid-template-columns:minmax(0,1fr);min-height:0}.stage-panel{min-height:330px}#podiumStage{min-height:330px}.podium-cards{grid-template-columns:1fr 1fr 1fr;gap:4px;bottom:6px;left:6px;right:6px}.mini-card{padding:6px}.mini-country{font-size:9px;gap:4px}.mini-country img{width:22px;height:15px}.mini-meta{grid-template-columns:1fr;font-size:8px;gap:2px}.mini-meta b{font-size:12px}.stats-grid{grid-template-columns:repeat(2,1fr)}.host-strip{grid-template-columns:1fr}.action-grid{grid-template-columns:1fr}.market-tools{grid-template-columns:repeat(2,1fr)}.leaderboard{max-height:260px}.lb-row{grid-template-columns:30px 1fr 48px 42px;gap:5px}.market{grid-template-columns:repeat(2,minmax(0,1fr));max-height:none}.market-card{min-height:184px;grid-template-rows:72px auto auto}.desk{grid-template-columns:1fr}.section-title{font-size:12px}.title{font-size:38px}.copy{font-size:16px;overflow-wrap:anywhere}}
 @media(max-width:410px){.market{grid-template-columns:1fr}.podium-cards{position:static;margin:6px;grid-template-columns:1fr}.stage-score{font-size:22px}.prize-split{grid-template-columns:repeat(2,1fr)}.prize-place:first-child{grid-column:1/-1}}
@@ -102,16 +145,92 @@ html.mobile-hard .host-strip{grid-template-columns:1fr}
 html.mobile-hard .action-grid,html.mobile-hard .desk,html.mobile-hard .section-grid{grid-template-columns:1fr}
 html.mobile-hard .market-tools{grid-template-columns:repeat(2,minmax(0,1fr))}
 html.mobile-hard .market{grid-template-columns:repeat(2,minmax(0,1fr));max-height:none}
+/* Final nav alignment: top bar content follows the same width as the page */
+.topnav{
+  padding:0!important;
+  display:block!important;
+}
+.topnav-inner{
+  width:min(1560px,100%);
+  height:58px;
+  margin:0 auto;
+  padding:9px 12px;
+  display:grid;
+  grid-template-columns:auto minmax(0,1fr) auto auto auto;
+  align-items:center;
+  gap:14px;
+}
+.topnav-inner .nav-mid{
+  justify-self:center;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.topnav-inner .wallet-pill{
+  justify-self:end;
+}
+@media(min-width:1001px){
+  .topnav .brand{max-width:none!important}
+  .topnav #connectBtn{display:block!important;position:static!important;visibility:visible!important;opacity:1!important}
+  .topnav .mobile-connect-btn{display:none!important}
+  .topnav .wallet-pill{
+    position:static!important;
+    width:auto!important;
+    max-width:170px!important;
+    display:block!important;
+    padding:8px 10px!important;
+    text-align:center!important;
+  }
+  .topnav .wallet-pill .mobile-wallet-action{display:none!important}
+}
+@media(max-width:1000px){
+  .topnav{height:48px!important;overflow:hidden}
+  .topnav-inner{
+    width:100%;
+    max-width:100%;
+    height:48px;
+    grid-template-columns:minmax(130px,1fr) 68px 74px;
+    gap:5px;
+    padding:7px 8px;
+  }
+  .topnav-inner .brand{grid-column:1;grid-row:1;font-size:13px;gap:5px;min-width:0;overflow:hidden;text-overflow:ellipsis;max-width:calc(100vw - 172px)}
+  .topnav-inner .nav-mid{display:none!important}
+  .topnav-inner .wallet-pill{
+    grid-column:2;
+    grid-row:1;
+    position:static!important;
+    width:100%!important;
+    max-width:none!important;
+    padding:7px 3px!important;
+    text-align:center!important;
+  }
+  .topnav-inner #connectBtn{
+    grid-column:3;
+    grid-row:1;
+    display:block!important;
+    position:static!important;
+    width:100%;
+    min-width:0;
+    padding:7px 4px;
+    font-size:9px;
+    min-height:32px;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+  .topnav-inner #refreshBtn{display:none!important}
+}
 </style>
 </head>
 <body>
 <nav class="topnav">
-  <a class="brand" href="./home.html"><span style="color:#fff">&#9917;</span> BLOCK <span>KICKERS</span></a>
-  <div class="nav-mid"><b>HOST NATIONS PODIUM</b> USA + Mexico + Canada trading arena</div>
-  <div class="wallet-pill" id="walletPill" onclick="openWalletChoice()"><span class="balance-text" id="balanceText">BAL --</span><span class="mobile-wallet-action" id="mobileWalletAction">CONNECT</span></div>
-  <div class="btn mobile-connect-btn" id="mobileConnectBtn" onclick="openWalletChoice()">CONNECT</div>
-  <button class="btn" id="connectBtn" onclick="openWalletChoice()">CONNECT</button>
-  <button class="btn gold" id="refreshBtn" onclick="loadQuest()">REFRESH</button>
+  <div class="topnav-inner">
+    <a class="brand" href="./home.html"><span style="color:#fff">&#9917;</span> BLOCK <span>KICKERS</span></a>
+    <div class="nav-mid"><b>HOST NATIONS PODIUM</b> USA + Mexico + Canada trading arena</div>
+    <div class="wallet-pill" id="walletPill" onclick="openWalletChoice()"><span class="balance-text" id="balanceText">BAL --</span><span class="mobile-wallet-action" id="mobileWalletAction">CONNECT</span></div>
+    <div class="btn mobile-connect-btn" id="mobileConnectBtn" onclick="openWalletChoice()">CONNECT</div>
+    <button class="btn" id="connectBtn" onclick="openWalletChoice()">CONNECT</button>
+    <button class="btn gold" id="refreshBtn" onclick="loadQuest()">REFRESH</button>
+  </div>
 </nav>
 
 <main class="page">
@@ -257,6 +376,14 @@ html.mobile-hard .market{grid-template-columns:repeat(2,minmax(0,1fr));max-heigh
   </div>
 </div>
 <div class="toast" id="toast"></div>
+<div id="networkOverlay" aria-live="polite" aria-busy="true">
+  <div class="network-wait-card">
+    <div class="network-ball" aria-hidden="true"></div>
+    <div class="network-wait-title">Waiting for network</div>
+    <div class="network-wait-text" id="networkOverlayText">Please confirm in your wallet and wait for Chiliz Chain.</div>
+    <button id="walletOpenBtn" type="button">OPEN WALLET APP</button>
+  </div>
+</div>
 
 <script>
 const CONTRACT_ADDRESS = "0xAAdc8D56e25a223B6cf4b88ba0889975560f21aB";
@@ -325,6 +452,40 @@ let privyClient = null;
 let privyIframe = null;
 let advisorOpenedFor = "";
 
+function isMobileViewport(){
+  const width = Number(window.visualViewport?.width || window.innerWidth || document.documentElement.clientWidth || 0);
+  return width > 0 && width < 1000;
+}
+function applyResponsiveMode(){
+  const mobile = isMobileViewport();
+  document.documentElement.classList.toggle("mobile-hard", mobile);
+  const mobileWidth = Number(window.visualViewport?.width || window.innerWidth || document.documentElement.clientWidth || 390);
+  if(mobile){
+    document.documentElement.style.setProperty("--mobile-vw", Math.max(320, Math.min(760, mobileWidth || 390)) + "px");
+  }else{
+    document.documentElement.style.removeProperty("--mobile-vw");
+  }
+  const walletPill = document.getElementById("walletPill");
+  const mobileWalletAction = document.getElementById("mobileWalletAction");
+  const mobileConnect = document.getElementById("mobileConnectBtn");
+  const desktopConnect = document.getElementById("connectBtn");
+  if(walletPill){
+    if(mobile){
+      Object.assign(walletPill.style,{
+        position:"fixed", top:"7px", right:"8px", zIndex:"60",
+        width:"154px", maxWidth:"154px", display:"flex",
+        alignItems:"center", justifyContent:"space-between", gap:"7px",
+        padding:"7px", textAlign:"left"
+      });
+    }else{
+      walletPill.removeAttribute("style");
+    }
+  }
+  if(mobileWalletAction) mobileWalletAction.style.display = mobile ? "block" : "";
+  if(mobileConnect) mobileConnect.style.display = mobile ? "none" : "";
+  if(desktopConnect) desktopConnect.style.display = mobile ? "none" : "";
+}
+
 function makeEmptyState(){
   return {mints:[],sales:[],cards:new Map(),ownerByToken:new Map(),hostCards:[],hostEvents:[],scores:[],listings:[],myBest:{},activeByToken:new Map(),demo:true};
 }
@@ -345,6 +506,53 @@ function hostById(id){return HOST_ORDER.find(h => h.id === Number(id)) || HOST_O
 function posLabel(p){return POSITIONS[Number(p)] || String(p);}
 function toast(msg, err=false){const t=document.getElementById("toast");t.textContent=msg;t.style.borderColor=err?"#ef4444":"#00ff87";t.style.color=err?"#ef4444":"#00ff87";t.style.display="block";clearTimeout(toast._t);toast._t=setTimeout(()=>t.style.display="none",5200);}
 function readableError(e){return (e?.shortMessage||e?.reason||e?.message||String(e||"Unknown error")).replace(/\s+/g," ").trim();}
+let networkOverlayDepth = 0;
+function showNetworkOverlay(message = "Please confirm in your wallet and wait for Chiliz Chain."){
+  networkOverlayDepth += 1;
+  const overlay = document.getElementById("networkOverlay");
+  const text = document.getElementById("networkOverlayText");
+  if(text) text.textContent = message;
+  if(overlay) overlay.classList.add("show");
+}
+function updateNetworkOverlay(message){
+  const text = document.getElementById("networkOverlayText");
+  if(text && message) text.textContent = message;
+}
+function hideNetworkOverlay(){
+  networkOverlayDepth = Math.max(0, networkOverlayDepth - 1);
+  if(networkOverlayDepth > 0) return;
+  document.getElementById("networkOverlay")?.classList.remove("show");
+  const btn = document.getElementById("walletOpenBtn");
+  if(btn) btn.style.display = "none";
+}
+function resetNetworkOverlay(){
+  networkOverlayDepth = 0;
+  document.getElementById("networkOverlay")?.classList.remove("show");
+}
+function isUserRejected(e){
+  const msg = readableError(e).toLowerCase();
+  return e?.code === 4001 || msg.includes("user rejected") || msg.includes("user denied") || msg.includes("rejected the request");
+}
+function isInsufficientFunds(e){
+  const msg = readableError(e).toLowerCase();
+  return e?.code === "BK_INSUFFICIENT_FUNDS" || msg.includes("insufficient funds") || msg.includes("not enough") || msg.includes("exceeds the balance");
+}
+function friendlyWalletError(e, action="Transaction"){
+  if(isUserRejected(e)) return action+" cancelled in wallet.";
+  if(isInsufficientFunds(e)) return "Not enough CHZ for this action. Add CHZ or choose a cheaper card.";
+  return action+" failed: "+readableError(e);
+}
+async function requireEnoughChz(valueWei, label="this action"){
+  if(!address || !provider || !valueWei) return;
+  const bal = await provider.getBalance(address);
+  const need = BigInt(valueWei);
+  if(bal < need){
+    const missing = Number(ethers.formatEther(need - bal));
+    const err = new Error("Not enough CHZ for "+label+". Missing about "+(Number.isFinite(missing) ? missing.toFixed(3) : "?")+" CHZ.");
+    err.code = "BK_INSUFFICIENT_FUNDS";
+    throw err;
+  }
+}
 function scoreFromBest(best){
   const cards = HOST_ORDER.map(h=>best?.[h.id] || null);
   const base = cards.reduce((s,c)=>s+(c?Number(c.weight || 0):0),0);
@@ -488,32 +696,55 @@ async function ensureChilizProvider(walletProvider){
   }
 }
 async function finishWalletConnection(walletProvider, label){
+  showNetworkOverlay("Connecting wallet...");
   activeWalletProvider = walletProvider;
   activeWalletType = label;
-  await ensureChilizProvider(walletProvider);
-  browserProvider = new ethers.BrowserProvider(walletProvider);
-  signer = await browserProvider.getSigner();
-  address = String(await signer.getAddress()).toLowerCase();
-  provider = browserProvider;
-  contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
-  marketContract = new ethers.Contract(MARKET_ADDRESS, MARKET_ABI, signer);
-  setBalanceLabel("bal --");
+  try{
+    updateNetworkOverlay("Switching wallet to Chiliz Chain...");
+    await ensureChilizProvider(walletProvider);
+    updateNetworkOverlay("Reading wallet address...");
+    browserProvider = new ethers.BrowserProvider(walletProvider);
+    signer = await browserProvider.getSigner();
+    address = String(await signer.getAddress()).toLowerCase();
+    provider = browserProvider;
+    contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
+    marketContract = new ethers.Contract(MARKET_ADDRESS, MARKET_ABI, signer);
+    setBalanceLabel("bal --");
+    updateNetworkOverlay("Loading CHZ balance...");
+    const bal = await provider.getBalance(address).catch(()=>null);
+    if(bal === null) setBalanceLabel("bal --");
+    else{
+      const v = Number(ethers.formatEther(bal));
+      setBalanceLabel((Number.isFinite(v) ? v.toFixed(v >= 10 ? 1 : 2) : "--")+" CHZ");
+    }
+    setConnectLabel(last4(address));
+    closeWalletChoice();
+    updateNetworkOverlay("Loading Host Podium cards...");
+    await loadQuest();
+    toast(label+" wallet connected.");
+  }finally{
+    hideNetworkOverlay();
+  }
+}
+async function refreshWalletBalance(){
+  if(!address || !provider) return;
   provider.getBalance(address).then(bal=>{
     const v = Number(ethers.formatEther(bal));
     setBalanceLabel((Number.isFinite(v) ? v.toFixed(v >= 10 ? 1 : 2) : "--")+" CHZ");
   }).catch(()=>{});
-  setConnectLabel(last4(address));
-  closeWalletChoice();
-  await loadQuest();
-  toast(label+" wallet connected.");
 }
 async function connectInjectedWallet(){
   if (!window.ethereum){toast("No injected wallet detected. Use WalletConnect or Privy.",true);return;}
   try{
+    showNetworkOverlay("Waiting for wallet permission...");
     const accounts = await window.ethereum.request({method:"eth_requestAccounts"});
+    hideNetworkOverlay();
     if(!accounts?.[0]) throw new Error("No account selected");
     await finishWalletConnection(window.ethereum, "Injected");
-  }catch(e){toast("Wallet connect failed: "+readableError(e),true);}
+  }catch(e){
+    resetNetworkOverlay();
+    toast(friendlyWalletError(e, "Wallet connect"), true);
+  }
 }
 function getChilizPrivyChain(){
   const rpc = PUBLIC_RPCS[0] || PUBLIC_RPC;
@@ -1007,35 +1238,69 @@ function openSellModal(highlightToken=null){
 function closeSellModal(){document.getElementById("sellModal").classList.remove("show");}
 async function buyListing(listingId, price){
   if(!signer || !marketContract){toast("Connect wallet first.",true);return;}
+  showNetworkOverlay("Preparing Host Market buy...");
   try{
+    updateNetworkOverlay("Checking listing status...");
     const live = await marketContract.getListing(Number(listingId));
-    if(!Boolean(live[3])){toast("Listing is no longer active.",true);await loadQuest();return;}
+    if(!Boolean(live[3])){toast("Listing is no longer active.",true);updateNetworkOverlay("Listing inactive. Refreshing market...");await loadQuest();return;}
+    updateNetworkOverlay("Checking CHZ balance...");
+    await requireEnoughChz(live[2], "this card");
+    updateNetworkOverlay("Waiting for wallet confirmation...");
     const tx = await marketContract.buyFigure(Number(listingId),{value:live[2]});
     toast("Buy sent. Waiting for confirmation...");
+    updateNetworkOverlay("Buy sent. Waiting for block confirmation...");
     await tx.wait();
     toast("Host card bought. Podium recalculating.");
+    updateNetworkOverlay("Purchase confirmed. Updating Host Podium...");
+    await refreshWalletBalance();
     await loadQuest();
-  }catch(e){toast("Buy failed: "+readableError(e),true);}
+  }catch(e){
+    toast(friendlyWalletError(e, "Buy"), true);
+  }finally{
+    hideNetworkOverlay();
+  }
 }
 async function cancelListing(listingId){
   if(!signer || !marketContract){toast("Connect wallet first.",true);return;}
-  try{const tx=await marketContract.cancelListing(Number(listingId));toast("Cancel sent.");await tx.wait();await loadQuest();}
-  catch(e){toast("Cancel failed: "+readableError(e),true);}
+  showNetworkOverlay("Cancelling host listing...");
+  try{
+    updateNetworkOverlay("Waiting for wallet confirmation...");
+    const tx=await marketContract.cancelListing(Number(listingId));
+    toast("Cancel sent.");
+    updateNetworkOverlay("Cancel sent. Waiting for block confirmation...");
+    await tx.wait();
+    updateNetworkOverlay("Listing cancelled. Refreshing Host Market...");
+    await loadQuest();
+  }
+  catch(e){toast(friendlyWalletError(e, "Cancel"),true);}
+  finally{hideNetworkOverlay();}
 }
 async function listCard(tokenId){
   if(!signer || !marketContract || !address){toast("Connect wallet first.",true);return;}
   const input = document.getElementById("sell_"+tokenId);
   const price = String(input?.value || "0");
   if(Number(price)<=0){toast("Price must be positive.",true);return;}
+  showNetworkOverlay("Preparing host card listing...");
   try{
+    updateNetworkOverlay("Checking marketplace approval...");
     const approved = await contract.isApprovedForAll(address, MARKET_ADDRESS);
-    if(!approved){toast("Approving marketplace..."); const txA=await contract.setApprovalForAll(MARKET_ADDRESS,true); await txA.wait();}
+    if(!approved){
+      toast("Approving marketplace...");
+      updateNetworkOverlay("Waiting for approval confirmation...");
+      const txA=await contract.setApprovalForAll(MARKET_ADDRESS,true);
+      updateNetworkOverlay("Approval sent. Waiting for block confirmation...");
+      await txA.wait();
+    }
+    updateNetworkOverlay("Waiting for listing confirmation...");
     const tx=await marketContract.listFigure(Number(tokenId),ethers.parseEther(price));
     toast("Listing sent.");
+    updateNetworkOverlay("Listing sent. Waiting for block confirmation...");
     await tx.wait();
     closeSellModal();
+    updateNetworkOverlay("Listing confirmed. Refreshing Host Market...");
     await loadQuest();
-  }catch(e){toast("List failed: "+readableError(e),true);}
+  }catch(e){toast(friendlyWalletError(e, "List"),true);}
+  finally{hideNetworkOverlay();}
 }
 function closeMintReveal(){document.getElementById("mintReveal")?.classList.remove("show");}
 function extractMintedCard(receipt){
@@ -1083,16 +1348,25 @@ function showMintReveal(card){
 }
 async function mintCard(){
   if(!signer || !contract){toast("Connect wallet first.",true);return;}
+  showNetworkOverlay("Preparing random WC card mint...");
   try{
+    updateNetworkOverlay("Checking mint price...");
     currentMintPrice = await contract.mintPrice().catch(()=>currentMintPrice);
+    updateNetworkOverlay("Checking CHZ balance...");
+    await requireEnoughChz(currentMintPrice, "mint");
+    updateNetworkOverlay("Waiting for wallet confirmation...");
     const tx = await contract.mint(ZERO_REF,{value:currentMintPrice});
     toast("Mint sent. Waiting for card reveal...");
+    updateNetworkOverlay("Mint sent. Waiting for block confirmation...");
     const receipt = await tx.wait();
     const minted = extractMintedCard(receipt);
     if(minted) showMintReveal(minted);
     else toast("Mint confirmed, but card details were not found in receipt. Refreshing data.", true);
+    updateNetworkOverlay("Mint confirmed. Updating Host Podium...");
+    await refreshWalletBalance();
     await loadQuest();
-  }catch(e){toast("Mint failed: "+readableError(e),true);}
+  }catch(e){toast(friendlyWalletError(e, "Mint"),true);}
+  finally{hideNetworkOverlay();}
 }
 
 class HostPodium3D{
@@ -1103,20 +1377,32 @@ class HostPodium3D{
     this.figures = [];
     if(typeof THREE === "undefined"){document.getElementById("stageFallback").style.display="grid";return;}
     this.scene = new THREE.Scene();
-    this.camera = new THREE.PerspectiveCamera(38,1,.1,100);
-    this.camera.position.set(0,2.4,8.4);
+    this.camera = new THREE.PerspectiveCamera(36,1,.1,100);
+    this.camera.position.set(0,2.0,9.6);
+    this.camera.lookAt(0,.72,0);
     this.renderer = new THREE.WebGLRenderer({canvas,alpha:true,antialias:true,powerPreference:"high-performance"});
-    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
+    this.renderer.setPixelRatio(this.getRenderPixelRatio());
+    this.canvas.style.imageRendering = "auto";
     this.renderer.shadowMap.enabled = true;
+    this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    if(THREE.sRGBEncoding) this.renderer.outputEncoding = THREE.sRGBEncoding;
     this.scene.add(new THREE.AmbientLight(0xffffff,.54));
     const key = new THREE.DirectionalLight(0xffffff,1.16); key.position.set(4,5,4); key.castShadow=true; this.scene.add(key);
     const rim = new THREE.PointLight(0x58a6ff,1.15,10); rim.position.set(-3,1.9,3); this.scene.add(rim);
     this.root = new THREE.Group(); this.scene.add(this.root);
     this.makeStage();
     window.addEventListener("resize",()=>this.resize());
+    if(window.ResizeObserver){
+      this._resizeObserver = new ResizeObserver(()=>this.resize());
+      this._resizeObserver.observe(this.canvas);
+    }
     this.resize();
     this.animate();
+  }
+  getRenderPixelRatio(){
+    const base = window.devicePixelRatio || 1;
+    return Math.min(Math.max(base, 2.5), 4);
   }
   mat(color, opts={}){return new THREE.MeshStandardMaterial({color,roughness:opts.roughness??.62,metalness:opts.metalness??.08,emissive:opts.emissive||0x000000,emissiveIntensity:opts.emissiveIntensity||0});}
   figureMaterial(color, rarity=0){
@@ -1136,30 +1422,82 @@ class HostPodium3D{
     return new THREE.Mesh(new THREE.PlaneGeometry(1.25,.45),new THREE.MeshBasicMaterial({map:tex,transparent:true,depthWrite:false}));
   }
   makeStage(){
-    const floor = new THREE.Mesh(new THREE.CircleGeometry(5.7,64),this.mat(0x0a1118,{roughness:.86}));
-    floor.rotation.x = -Math.PI/2; floor.position.y=-.08; floor.receiveShadow=true; this.root.add(floor);
-    const lineMat = new THREE.MeshBasicMaterial({color:0x00ff87,transparent:true,opacity:.28});
-    for(let i=0;i<3;i++){const ring=new THREE.Mesh(new THREE.TorusGeometry(2.35+i*.86,.012,8,96),lineMat);ring.rotation.x=Math.PI/2;ring.position.y=.02;this.root.add(ring);}
+    const stageSide = this.mat(0x030507,{roughness:.82,metalness:.12});
+    const stageTop = this.mat(0x06090d,{roughness:.88,metalness:.10});
+    const glassTop = new THREE.MeshStandardMaterial({
+      color:0x080d12,
+      roughness:.28,
+      metalness:.25,
+      transparent:true,
+      opacity:.50,
+      emissive:new THREE.Color(0x000000),
+      emissiveIntensity:0
+    });
+    const mainBase = this.cyl(3.30,3.52,.14,stageSide,0,-.13,0,96);
+    mainBase.scale.z = .48;
+    mainBase.receiveShadow = true;
+    this.root.add(mainBase);
+    const topPlate = this.cyl(3.12,3.22,.04,stageTop,0,-.03,0,96);
+    topPlate.scale.z = .48;
+    topPlate.receiveShadow = true;
+    this.root.add(topPlate);
+    const glass = this.cyl(2.90,2.96,.018,glassTop,0,.008,0,96);
+    glass.scale.z = .46;
+    this.root.add(glass);
+    const rimMat = new THREE.MeshBasicMaterial({color:0x00ff87,transparent:true,opacity:.24});
+    const goldRimMat = new THREE.MeshBasicMaterial({color:0xffc940,transparent:true,opacity:.22});
+    const outerRim = new THREE.Mesh(new THREE.TorusGeometry(3.30,.018,8,128),rimMat);
+    outerRim.rotation.x = Math.PI/2;
+    outerRim.scale.z = .48;
+    outerRim.position.y = -.032;
+    this.root.add(outerRim);
+    const innerRim = new THREE.Mesh(new THREE.TorusGeometry(2.05,.010,8,128),goldRimMat);
+    innerRim.rotation.x = Math.PI/2;
+    innerRim.scale.z = .44;
+    innerRim.position.y = .025;
+    this.root.add(innerRim);
+    const centerGlow = new THREE.Mesh(
+      new THREE.CircleGeometry(1.18,72),
+      new THREE.MeshBasicMaterial({color:0x00ff87,transparent:true,opacity:.045})
+    );
+    centerGlow.rotation.x = -Math.PI/2;
+    centerGlow.position.y = .031;
+    centerGlow.scale.z = .42;
+    this.root.add(centerGlow);
     const hosts = [
-      {x:-2.05,h:.92,r:.82,label:"#2",color:0x58a6ff},
-      {x:0,h:1.30,r:.95,label:"#1",color:0xffc940},
-      {x:2.05,h:.74,r:.78,label:"#3",color:0x00ff87}
+      {x:-2.05,h:.70,r:.74,label:"#2",color:0x58a6ff},
+      {x:0,h:.96,r:.86,label:"#1",color:0xffc940},
+      {x:2.05,h:.56,r:.70,label:"#3",color:0x00ff87}
     ];
     hosts.forEach(p=>{
-      const base=this.cyl(p.r,p.r*1.05,p.h,this.mat(0x121c26,{roughness:.45,metalness:.18}),p.x,p.h/2-.05,0);
+      const baseMat = this.mat(0x070b10,{roughness:.62,metalness:.20});
+      const base=this.cyl(p.r,p.r*1.06,p.h,baseMat,p.x,p.h/2-.04,0,72);
+      base.scale.z = .78;
       this.root.add(base);
-      const trim=this.cyl(p.r*1.02,p.r*1.02,.06,this.mat(p.color,{roughness:.25,metalness:.28,emissive:p.color,emissiveIntensity:.08}),p.x,p.h+.01,0);
+      const shadow=this.cyl(p.r*1.08,p.r*1.12,.045,this.mat(0x05070a,{roughness:.8,metalness:.12}),p.x,.005,0,72);
+      shadow.scale.z = .82;
+      this.root.add(shadow);
+      const cap=this.cyl(p.r*.96,p.r*.98,.055,this.mat(0x0a1017,{roughness:.40,metalness:.26}),p.x,p.h+.005,0,72);
+      cap.scale.z = .76;
+      this.root.add(cap);
+      const trim=this.cyl(p.r*1.01,p.r*1.01,.035,this.mat(p.color,{roughness:.22,metalness:.35,emissive:p.color,emissiveIntensity:.12}),p.x,p.h+.045,0,72);
+      trim.scale.z = .78;
       this.root.add(trim);
+      const halo = new THREE.Mesh(new THREE.TorusGeometry(p.r*1.02,.014,8,96),new THREE.MeshBasicMaterial({color:p.color,transparent:true,opacity:.36}));
+      halo.rotation.x = Math.PI/2;
+      halo.scale.z = .78;
+      halo.position.set(p.x,p.h+.075,0);
+      this.root.add(halo);
       const txt=this.makeText(p.label,p.label==="#1"?"#ffc940":p.label==="#2"?"#58a6ff":"#00ff87");
-      txt.position.set(p.x,p.h*.54, p.r+.08);
-      txt.scale.setScalar(1.08);
+      txt.position.set(p.x,p.h*.50, p.r*.80);
+      txt.scale.setScalar(.92);
       this.root.add(txt);
     });
   }
   setCards(items){
     this.figures.forEach(f=>this.root.remove(f));
     this.figures = [];
-    const slots=[{x:-2.05,y:.96,z:0,s:.88},{x:0,y:1.34,z:0,s:1.05},{x:2.05,y:.78,z:0,s:.82}];
+    const slots=[{x:-2.05,y:.74,z:0,s:.80},{x:0,y:1.00,z:0,s:.92},{x:2.05,y:.60,z:0,s:.76}];
     items.forEach((item,i)=>{
       const h = item.host || HOST_ORDER[i];
       const card = item.card || null;
@@ -1295,11 +1633,17 @@ class HostPodium3D{
     return fig;
   }
   resize(){
+    const mobile = isMobileViewport();
     const rect=this.canvas.getBoundingClientRect();
     const w=Math.max(320,Math.floor(rect.width));
     const h=Math.max(300,Math.floor(rect.height));
+    this.renderer.setPixelRatio(this.getRenderPixelRatio());
     this.renderer.setSize(w,h,false);
-    this.camera.aspect=w/h; this.camera.updateProjectionMatrix();
+    this.camera.aspect=w/h;
+    this.camera.position.set(0, mobile ? 2.25 : 2.0, mobile ? 10.4 : 9.6);
+    this.camera.fov = mobile ? 39 : 36;
+    this.camera.lookAt(0, mobile ? .66 : .72, 0);
+    this.camera.updateProjectionMatrix();
   }
   animate(){
     requestAnimationFrame(()=>this.animate());
@@ -1315,26 +1659,17 @@ class HostPodium3D{
 }
 
 window.addEventListener("load", async ()=>{
-  const mobileWidth = Number(window.visualViewport?.width || window.innerWidth || document.documentElement.clientWidth || 0);
-  if (mobileWidth > 0 && mobileWidth < 1000) {
-    document.documentElement.classList.add("mobile-hard");
-    document.documentElement.style.setProperty("--mobile-vw", Math.max(320, Math.min(760, mobileWidth || 390)) + "px");
-    const walletPill = document.getElementById("walletPill");
-    const mobileWalletAction = document.getElementById("mobileWalletAction");
-    const mobileConnect = document.getElementById("mobileConnectBtn");
-    const desktopConnect = document.getElementById("connectBtn");
-    if(walletPill){
-      Object.assign(walletPill.style,{
-        position:"fixed", top:"7px", right:"8px", zIndex:"60",
-        width:"154px", maxWidth:"154px", display:"flex",
-        alignItems:"center", justifyContent:"space-between", gap:"7px",
-        padding:"7px", textAlign:"left"
-      });
-    }
-    if(mobileWalletAction) mobileWalletAction.style.display = "block";
-    if(mobileConnect) mobileConnect.style.display = "none";
-    if(desktopConnect) desktopConnect.style.display = "none";
-  }
+  applyResponsiveMode();
+  let resizeTimer = null;
+  const onResponsiveResize = ()=>{
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(()=>{
+      applyResponsiveMode();
+      podium3d?.resize();
+    }, 80);
+  };
+  window.addEventListener("resize", onResponsiveResize);
+  window.visualViewport?.addEventListener("resize", onResponsiveResize);
   podium3d = new HostPodium3D(document.getElementById("podiumStage"));
   state = makeDemoState();
   renderAll();
