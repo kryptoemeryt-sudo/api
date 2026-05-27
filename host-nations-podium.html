@@ -1,0 +1,1363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Block Kickers - Host Nations Podium</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Barlow+Condensed:wght@400;600;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.7.0/ethers.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<style>
+:root{
+  --bg:#05070a;
+  --panel:#0d1218;
+  --panel2:#111923;
+  --line:#243141;
+  --text:#edf4ff;
+  --muted:#8ea1b5;
+  --dim:#526273;
+  --gold:#ffc940;
+  --green:#00ff87;
+  --red:#ef4444;
+  --blue:#58a6ff;
+  --mx:#0f8f4d;
+  --usa:#3b82f6;
+  --can:#ef4444;
+}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:'Barlow Condensed',Arial,sans-serif;overflow-x:hidden}
+body{
+  background:
+    linear-gradient(180deg,rgba(6,8,10,.88),rgba(5,7,10,.97)),
+    repeating-linear-gradient(90deg,rgba(255,255,255,.035) 0 1px,transparent 1px 80px),
+    radial-gradient(ellipse at 50% 0%,rgba(0,255,135,.16),transparent 42%);
+}
+button{font-family:'Black Ops One',sans-serif}
+.topnav{position:sticky;top:0;z-index:30;height:58px;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:9px 18px;background:rgba(5,7,10,.94);border-bottom:1px solid var(--line);backdrop-filter:blur(12px)}
+.brand{font-family:'Black Ops One',sans-serif;font-size:17px;letter-spacing:1px;color:#fff;text-decoration:none;white-space:nowrap;display:flex;align-items:center;gap:7px}.brand span{color:var(--green)}
+.nav-mid{display:flex;align-items:center;gap:9px;font-family:'Share Tech Mono',monospace;color:var(--muted);font-size:11px;letter-spacing:1px;text-transform:uppercase;min-width:0}
+.nav-mid b{color:var(--gold);font-family:'Black Ops One',sans-serif;font-weight:400}
+.nav-actions{display:flex;align-items:center;gap:8px;min-width:0}.wallet-pill{font-family:'Share Tech Mono',monospace;color:var(--muted);border:1px solid var(--line);background:rgba(255,255,255,.04);border-radius:6px;padding:8px 10px;max-width:170px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:11px}.mobile-wallet-action{display:none;color:var(--green);font-family:'Black Ops One',sans-serif;font-size:9px;letter-spacing:.5px}
+.btn{border:1px solid rgba(0,255,135,.45);background:rgba(0,255,135,.11);color:var(--green);border-radius:7px;padding:9px 13px;letter-spacing:1px;font-size:11px;cursor:pointer;min-height:36px}
+.mobile-connect-btn{display:none}
+.btn:hover:not(:disabled){filter:brightness(1.12)}.btn:disabled{opacity:.48;cursor:not-allowed}.btn.gold{border-color:rgba(255,201,64,.46);background:rgba(255,201,64,.12);color:var(--gold)}.btn.red{border-color:rgba(239,68,68,.48);background:rgba(239,68,68,.12);color:var(--red)}
+.page{width:min(1560px,100%);margin:0 auto;padding:12px;display:grid;gap:10px}
+.hero{display:grid;grid-template-columns:minmax(360px,.9fr) minmax(460px,1.35fr) minmax(320px,.78fr);gap:10px;min-height:360px}
+.panel{background:linear-gradient(180deg,rgba(17,25,35,.92),rgba(8,12,17,.95));border:1px solid var(--line);border-radius:8px;padding:13px;min-width:0;overflow:hidden}
+.panel.hot{border-color:rgba(255,201,64,.38);box-shadow:0 0 26px rgba(255,201,64,.08)}
+.kicker{display:inline-flex;align-items:center;gap:8px;font-family:'Share Tech Mono',monospace;color:var(--green);font-size:11px;letter-spacing:2px;text-transform:uppercase;border:1px solid rgba(0,255,135,.35);background:rgba(0,255,135,.08);border-radius:5px;padding:6px 9px}.dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 12px rgba(0,255,135,.8)}
+.title{font-family:'Black Ops One',sans-serif;font-size:clamp(38px,5.6vw,76px);line-height:.9;letter-spacing:1px;margin:14px 0 8px}.title .gold{color:var(--gold)}.title .line{display:block}
+.copy{font-size:20px;line-height:1.18;color:#c8d5e6;max-width:520px}.copy strong{color:#fff}
+.host-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:14px}.host-chip{border:1px solid var(--line);background:rgba(255,255,255,.04);border-radius:7px;padding:8px;display:grid;grid-template-columns:auto 1fr;gap:8px;align-items:center;min-width:0}.host-chip img{width:34px;height:23px;object-fit:cover;border-radius:3px}.host-chip b{font-family:Arial,sans-serif;font-weight:900;font-size:13px;line-height:1;color:#fff;text-shadow:none;letter-spacing:.2px}.host-chip span{display:block;color:#aab8c8;font-family:Arial,sans-serif;font-size:10px;margin-top:2px;text-shadow:none}
+.rules{display:grid;gap:7px;margin-top:12px}.rule{display:grid;grid-template-columns:28px minmax(0,1fr);gap:8px;align-items:center;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.035);border-radius:7px;padding:8px}.rule i{font-family:'Black Ops One',sans-serif;color:var(--gold);font-style:normal}.rule span{color:#dbe6f4;font-size:15px;line-height:1.15;min-width:0;overflow-wrap:anywhere}
+.stage-panel{position:relative;padding:0;min-height:360px;background:linear-gradient(180deg,rgba(11,18,26,.96),rgba(5,7,10,.98));border-color:rgba(88,166,255,.26)}
+#podiumStage{display:block;width:100%;height:100%;min-height:360px;position:relative;z-index:2}
+.stage-fallback{position:absolute;inset:0;display:none;place-items:center;text-align:center;color:var(--muted);font-family:'Share Tech Mono',monospace}
+.stage-header{position:absolute;left:12px;right:12px;top:10px;z-index:4;display:flex;justify-content:space-between;align-items:flex-start;gap:10px;pointer-events:none}
+.stage-title{font-family:'Black Ops One',sans-serif;font-size:14px;letter-spacing:1px;color:#fff}.stage-sub{font-family:'Share Tech Mono',monospace;color:var(--muted);font-size:10px;margin-top:3px;text-transform:uppercase}.stage-score{font-family:'Black Ops One',sans-serif;color:var(--green);font-size:30px;line-height:1;text-align:right}.stage-score span{display:block;font-family:'Share Tech Mono',monospace;color:var(--muted);font-size:10px;margin-top:4px}
+.podium-cards{position:absolute;left:12px;right:12px;bottom:10px;z-index:5;display:grid;grid-template-columns:repeat(3,1fr);gap:8px;pointer-events:none}.mini-card{border:1px solid rgba(255,255,255,.12);background:rgba(6,9,13,.72);backdrop-filter:blur(8px);border-radius:7px;padding:8px;min-width:0}.mini-country{display:flex;align-items:center;gap:7px;font-family:'Black Ops One',sans-serif;font-size:12px}.mini-country img{width:28px;height:18px;object-fit:cover;border-radius:2px}.mini-meta{display:grid;grid-template-columns:1fr auto;gap:6px;margin-top:6px;font-family:'Share Tech Mono',monospace;color:var(--muted);font-size:10px}.mini-meta b{font-family:'Black Ops One',sans-serif;color:var(--gold);font-size:15px;line-height:1}
+.stats-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.stat{border:1px solid var(--line);background:rgba(255,255,255,.035);border-radius:7px;padding:11px;min-height:74px}.stat-val{font-family:'Black Ops One',sans-serif;color:var(--green);font-size:25px;line-height:1}.stat-lbl{font-family:'Share Tech Mono',monospace;color:var(--muted);font-size:10px;letter-spacing:1px;margin-top:7px;text-transform:uppercase}.status-box{margin-top:8px;border:1px solid rgba(255,201,64,.32);background:rgba(255,201,64,.08);border-radius:7px;padding:10px;font-family:'Black Ops One',sans-serif;color:var(--gold);font-size:12px;letter-spacing:1px;line-height:1.25;text-transform:uppercase}.countdown-time{color:var(--green);font-size:14px;text-shadow:0 0 10px rgba(0,255,135,.28)}
+.action-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}.action-grid .btn{width:100%;min-height:44px}.prize-box{margin-top:10px;border:1px solid rgba(255,201,64,.34);background:linear-gradient(180deg,rgba(255,201,64,.09),rgba(255,255,255,.025));border-radius:8px;padding:10px}.prize-head{display:flex;align-items:center;justify-content:space-between;gap:10px;font-family:'Black Ops One',sans-serif;color:#fff;font-size:13px;letter-spacing:.6px}.prize-head b{color:var(--green);font-weight:400}.prize-split{display:grid;grid-template-columns:repeat(5,1fr);gap:5px;margin-top:8px}.prize-place{border:1px solid rgba(255,255,255,.08);background:rgba(5,7,10,.45);border-radius:6px;padding:7px 4px;text-align:center}.prize-place i{display:block;font-family:'Black Ops One',sans-serif;color:var(--gold);font-style:normal;font-size:11px}.prize-place b{display:block;font-family:'Black Ops One',sans-serif;color:#fff;font-size:15px;line-height:1.05;margin-top:2px}.prize-place span{display:block;font-family:'Share Tech Mono',monospace;color:var(--muted);font-size:8px;margin-top:2px}.prize-note{margin-top:8px;font-family:'Share Tech Mono',monospace;color:#b8c5d5;font-size:10px;line-height:1.35}.section-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(360px,.95fr);gap:10px}.section-title{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:9px;font-family:'Black Ops One',sans-serif;font-size:14px;letter-spacing:1px}.section-title small{font-family:'Share Tech Mono',monospace;color:var(--muted);font-size:10px;font-weight:400}
+.section-grid>.panel{display:flex;flex-direction:column;min-height:382px}
+.leaderboard{display:grid;gap:6px;flex:1;min-height:0;overflow:auto;padding-right:3px}.lb-row{display:grid;grid-template-columns:40px 1fr 70px 64px;gap:8px;align-items:center;border:1px solid var(--line);background:#0e141c;border-radius:7px;padding:8px}.lb-row.me{border-color:rgba(0,255,135,.45);background:rgba(0,255,135,.06)}.lb-row.complete{border-color:rgba(255,201,64,.34)}.lb-pos{font-family:'Black Ops One',sans-serif;color:var(--gold);font-size:14px}.lb-wallet{font-family:'Share Tech Mono',monospace;color:#dce8f6;font-size:12px;min-width:0;overflow:hidden;text-overflow:ellipsis}.lb-you{display:inline-block;margin-left:5px;color:var(--green);font-size:9px}.lb-score{font-family:'Black Ops One',sans-serif;color:var(--green);text-align:right}.lb-comp{font-family:'Share Tech Mono',monospace;color:var(--muted);font-size:10px;text-align:right}
+.market-tools{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;margin-bottom:8px}.filter{border:1px solid var(--line);background:rgba(255,255,255,.04);color:#cbd9e8;border-radius:6px;padding:8px 4px;font-family:'Black Ops One',sans-serif;font-size:9px;letter-spacing:.5px;cursor:pointer}.filter.active{border-color:var(--green);background:rgba(0,255,135,.12);color:var(--green)}
+.market{display:grid;grid-template-columns:repeat(auto-fill,minmax(138px,1fr));gap:8px;max-height:382px;overflow:auto;padding-right:5px;scrollbar-width:thin;scrollbar-color:rgba(0,255,135,.45) rgba(255,255,255,.045)}.market::-webkit-scrollbar,.leaderboard::-webkit-scrollbar,.demand-list::-webkit-scrollbar,.feed::-webkit-scrollbar{width:8px;height:8px}.market::-webkit-scrollbar-track,.leaderboard::-webkit-scrollbar-track,.demand-list::-webkit-scrollbar-track,.feed::-webkit-scrollbar-track{background:rgba(255,255,255,.045);border-radius:8px}.market::-webkit-scrollbar-thumb,.leaderboard::-webkit-scrollbar-thumb,.demand-list::-webkit-scrollbar-thumb,.feed::-webkit-scrollbar-thumb{background:rgba(0,255,135,.38);border-radius:8px;border:2px solid rgba(5,7,10,.92)}.market::-webkit-scrollbar-thumb:hover,.leaderboard::-webkit-scrollbar-thumb:hover,.demand-list::-webkit-scrollbar-thumb:hover,.feed::-webkit-scrollbar-thumb:hover{background:rgba(0,255,135,.62)}.market-card{position:relative;border:1px solid var(--line);background:linear-gradient(180deg,#111923,#080c11);border-radius:8px;min-height:198px;overflow:hidden;padding:8px;display:grid;grid-template-rows:82px auto auto;gap:6px}.market-card.r1{border-color:rgba(59,130,246,.48)}.market-card.r2{border-color:rgba(192,132,252,.52)}.market-card.r3{border-color:rgba(255,201,64,.62);box-shadow:0 0 18px rgba(255,201,64,.09)}.market-card.mine{border-color:rgba(0,255,135,.55)}
+.fig-svg{display:grid;place-items:center;position:relative;background:radial-gradient(circle at 50% 85%,rgba(0,255,135,.13),transparent 56%);border:1px solid rgba(255,255,255,.08);border-radius:6px}.fig-svg img{position:absolute;left:5px;top:5px;width:25px;height:17px;object-fit:cover;border-radius:2px}.pos-tag{position:absolute;right:5px;top:5px;font-family:'Black Ops One',sans-serif;font-size:9px;color:#fff;background:rgba(5,7,10,.72);border:1px solid rgba(255,255,255,.12);border-radius:4px;padding:3px 5px}.card-name{font-family:'Black Ops One',sans-serif;font-size:12px;color:#fff;line-height:1.05}.card-sub{font-family:'Share Tech Mono',monospace;color:var(--muted);font-size:10px;margin-top:3px}.card-price{font-family:'Black Ops One',sans-serif;color:var(--gold);font-size:16px}.card-actions{display:grid;grid-template-columns:1fr;gap:5px}.card-actions .btn{min-height:30px;padding:6px;font-size:9px}
+.desk{display:grid;grid-template-columns:.92fr 1.08fr;gap:8px;flex:1;min-height:0}.desk>div{display:flex;flex-direction:column;min-height:0}.demand-list,.feed{display:grid;gap:6px;flex:1;min-height:0;overflow:auto}.sell-list{display:grid;gap:6px;max-height:330px;overflow:auto}.signal{display:grid;grid-template-columns:44px minmax(0,1fr) auto;gap:9px;align-items:center;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.025);border-radius:6px;padding:9px}.signal.hot{border-color:rgba(255,201,64,.22);background:rgba(255,201,64,.035)}.sig-team{font-family:'Black Ops One',sans-serif;color:#dce8f6;font-size:13px}.sig-main b{font-family:Arial,sans-serif;color:#ffffff;font-weight:800;font-size:15px;line-height:1.12;letter-spacing:0;text-shadow:none;-webkit-font-smoothing:antialiased}.sig-main span{display:block;font-family:Arial,sans-serif;color:#b9c5d3;font-size:12px;line-height:1.2;margin-top:3px;text-shadow:none}.sig-price{font-family:'Black Ops One',sans-serif;color:var(--gold);font-size:13px;text-align:right}.feed-row{display:grid;grid-template-columns:44px 1fr 64px;gap:9px;border:1px solid var(--line);background:rgba(255,255,255,.04);border-radius:7px;padding:9px;align-items:center}.feed-team{font-family:'Black Ops One',sans-serif;color:var(--gold);font-size:13px}.feed-main{font-family:Arial,sans-serif;color:#f0f6ff;font-size:13px;line-height:1.2;min-width:0;overflow:hidden;text-overflow:ellipsis}.feed-price{text-align:right;font-family:'Black Ops One',sans-serif;color:var(--green);font-size:13px}
+.modal{position:fixed;inset:0;z-index:80;display:none;align-items:center;justify-content:center;background:rgba(3,5,8,.78);backdrop-filter:blur(8px);padding:14px}.modal.show{display:flex}.modal-panel{width:min(94vw,520px);border:1px solid rgba(0,255,135,.36);background:linear-gradient(180deg,#111923,#06080b);border-radius:8px;padding:14px;box-shadow:0 24px 80px rgba(0,0,0,.66)}.modal-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}.modal-title{font-family:'Black Ops One',sans-serif;color:var(--green);font-size:16px;letter-spacing:1px}.close{width:32px;height:32px;border:1px solid var(--line);background:#0b1016;color:#fff;border-radius:6px;font-size:20px;cursor:pointer}.sell-row{display:grid;grid-template-columns:54px 1fr 86px;gap:8px;align-items:center;border:1px solid var(--line);background:#0e141c;border-radius:7px;padding:8px}.sell-input{width:100%;background:#05070a;border:1px solid var(--line);border-radius:6px;color:#fff;text-align:center;font-family:'Black Ops One',sans-serif;padding:7px}
+.trade-advisor-panel{width:min(94vw,680px);border-color:rgba(255,201,64,.48)}.trade-advisor-body{display:grid;gap:10px}.trade-alert{border:1px solid rgba(255,201,64,.28);background:linear-gradient(180deg,rgba(255,201,64,.10),rgba(255,255,255,.035));border-radius:8px;padding:12px}.trade-alert.buy{border-color:rgba(0,255,135,.36);background:linear-gradient(180deg,rgba(0,255,135,.10),rgba(255,255,255,.035))}.trade-alert.sell{border-color:rgba(255,201,64,.42)}.trade-alert h3{font-family:'Black Ops One',sans-serif;font-size:18px;line-height:1.05;margin:0 0 7px;color:#fff;letter-spacing:.5px}.trade-alert p{margin:0;color:#dbe6f4;font-size:16px;line-height:1.2}.trade-alert b{color:var(--gold)}.trade-alert.buy b{color:var(--green)}.trade-advisor-grid{display:grid;grid-template-columns:92px 1fr;gap:10px;align-items:center}.trade-advisor-fig{height:92px;border:1px solid rgba(255,255,255,.1);border-radius:7px;background:radial-gradient(circle at 50% 86%,rgba(0,255,135,.12),transparent 58%);display:grid;place-items:center}.trade-advisor-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}.trade-note{font-family:'Share Tech Mono',monospace;color:var(--muted);font-size:11px;line-height:1.35;border:1px solid rgba(255,255,255,.08);border-radius:7px;padding:9px;background:rgba(255,255,255,.03)}
+.wallet-choice-modal{position:fixed;inset:0;z-index:90;display:none;align-items:center;justify-content:center;background:rgba(3,5,8,.78);backdrop-filter:blur(8px);padding:14px}.wallet-choice-modal.show{display:flex}.wallet-choice-panel{width:min(94vw,520px);border:1px solid rgba(0,255,135,.36);background:linear-gradient(180deg,#111923,#06080b);border-radius:8px;padding:14px;box-shadow:0 24px 80px rgba(0,0,0,.66)}.wallet-choice-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}.wallet-choice-title{font-family:'Black Ops One',sans-serif;color:var(--green);letter-spacing:1px}.wallet-choice-close{width:32px;height:32px;border:1px solid var(--line);background:#0b1016;color:#fff;border-radius:6px;font-size:20px;cursor:pointer}.wallet-choice-option{width:100%;display:grid;grid-template-columns:34px 1fr auto;gap:10px;align-items:center;text-align:left;border:1px solid var(--line);background:rgba(255,255,255,.04);color:#fff;border-radius:7px;padding:10px;margin-top:8px;cursor:pointer}.wallet-choice-option:hover{border-color:rgba(0,255,135,.46);background:rgba(0,255,135,.08)}.wallet-choice-icon{font-family:'Black Ops One',sans-serif;color:var(--gold);font-size:20px;text-align:center}.wallet-choice-name{display:block;font-family:'Black Ops One',sans-serif;font-size:12px;letter-spacing:.7px}.wallet-choice-desc{display:block;font-family:'Share Tech Mono',monospace;color:var(--muted);font-size:10px;margin-top:3px;line-height:1.25}.wallet-choice-tag{font-family:'Black Ops One',sans-serif;color:var(--green);font-size:10px;border:1px solid rgba(0,255,135,.35);border-radius:5px;padding:4px 6px}.wallet-choice-note{margin-top:10px;font-family:'Share Tech Mono',monospace;color:var(--muted);font-size:10px;line-height:1.35}
+.mint-reveal{position:fixed;inset:0;z-index:92;display:none;align-items:center;justify-content:center;background:rgba(3,5,8,.78);backdrop-filter:blur(8px);padding:14px}.mint-reveal.show{display:flex}.mint-reveal-panel{width:min(94vw,560px);border:1px solid rgba(255,201,64,.42);background:linear-gradient(180deg,#111923,#06080b);border-radius:8px;padding:14px;box-shadow:0 24px 80px rgba(0,0,0,.66)}.mint-reveal-body{display:grid;grid-template-columns:130px 1fr;gap:14px;align-items:center}.mint-reveal-fig{height:130px;border:1px solid rgba(255,255,255,.1);border-radius:7px;background:radial-gradient(circle at 50% 90%,rgba(0,255,135,.14),transparent 58%);display:grid;place-items:center}.mint-reveal-name{font-family:'Black Ops One',sans-serif;font-size:24px;color:#fff;line-height:1}.mint-reveal-sub{font-family:'Share Tech Mono',monospace;color:var(--muted);font-size:11px;margin-top:6px}.mint-reveal-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:12px}.mint-reveal-stat{border:1px solid var(--line);border-radius:7px;padding:8px;background:rgba(255,255,255,.035)}.mint-reveal-stat b{display:block;font-family:'Black Ops One',sans-serif;color:var(--gold);font-size:16px}.mint-reveal-stat span{display:block;font-family:'Share Tech Mono',monospace;color:var(--muted);font-size:9px;margin-top:3px;text-transform:uppercase}.mint-reveal-note{margin-top:10px;border:1px solid rgba(0,255,135,.32);background:rgba(0,255,135,.07);border-radius:7px;padding:9px;font-family:'Share Tech Mono',monospace;color:#cceee0;font-size:11px;line-height:1.35}
+.loading{grid-column:1/-1;text-align:center;color:var(--muted);font-family:'Share Tech Mono',monospace;padding:18px}.toast{position:fixed;left:50%;bottom:16px;z-index:100;transform:translateX(-50%);display:none;border:1px solid var(--green);background:rgba(5,7,10,.96);color:var(--green);border-radius:7px;padding:10px 14px;font-family:'Share Tech Mono',monospace;font-size:12px;max-width:min(680px,calc(100vw - 24px));text-align:center}
+@media(max-width:1180px){.hero{grid-template-columns:1fr 1.15fr}.hero .panel.side{grid-column:1/-1}.section-grid{grid-template-columns:1fr}.desk{grid-template-columns:1fr 1fr}}
+@media(max-width:1000px){html,body,.page,.topnav,.hero,.panel{width:100%;max-width:100%;overflow-x:hidden}.topnav{height:48px;display:grid;grid-template-columns:minmax(130px,1fr) 68px 74px;align-items:center;gap:5px;padding:7px 8px}.brand{grid-column:1;grid-row:1;font-size:13px;gap:5px;min-width:0;overflow:hidden;text-overflow:ellipsis}.nav-mid{display:none!important}.topnav .btn{width:100%;min-width:0;padding:7px 4px;font-size:9px;overflow:hidden;text-overflow:ellipsis;min-height:32px}.topnav #connectBtn{grid-column:3;grid-row:1;position:static!important;display:block!important;visibility:visible!important;opacity:1!important}.topnav #refreshBtn{display:none!important}.wallet-pill{grid-column:2;grid-row:1;position:static!important;width:100%;max-width:none;text-align:center;padding:7px 3px;font-size:10px}.page{padding:7px}.hero{grid-template-columns:minmax(0,1fr);min-height:0}.stage-panel{min-height:330px}#podiumStage{min-height:330px}.podium-cards{grid-template-columns:1fr 1fr 1fr;gap:4px;bottom:6px;left:6px;right:6px}.mini-card{padding:6px}.mini-country{font-size:9px;gap:4px}.mini-country img{width:22px;height:15px}.mini-meta{grid-template-columns:1fr;font-size:8px;gap:2px}.mini-meta b{font-size:12px}.stats-grid{grid-template-columns:repeat(2,1fr)}.host-strip{grid-template-columns:1fr}.action-grid{grid-template-columns:1fr}.market-tools{grid-template-columns:repeat(2,1fr)}.leaderboard{max-height:260px}.lb-row{grid-template-columns:30px 1fr 48px 42px;gap:5px}.market{grid-template-columns:repeat(2,minmax(0,1fr));max-height:none}.market-card{min-height:184px;grid-template-rows:72px auto auto}.desk{grid-template-columns:1fr}.section-title{font-size:12px}.title{font-size:38px}.copy{font-size:16px;overflow-wrap:anywhere}}
+@media(max-width:410px){.market{grid-template-columns:1fr}.podium-cards{position:static;margin:6px;grid-template-columns:1fr}.stage-score{font-size:22px}.prize-split{grid-template-columns:repeat(2,1fr)}.prize-place:first-child{grid-column:1/-1}}
+@media(max-width:560px){.mint-reveal-body,.trade-advisor-grid{grid-template-columns:1fr}.mint-reveal-fig{height:120px}.mint-reveal-grid,.trade-advisor-actions{grid-template-columns:1fr}.wallet-choice-option{grid-template-columns:28px 1fr auto}.trade-alert h3{font-size:16px}.trade-alert p{font-size:15px}}
+@media(max-width:1180px){.topnav #connectBtn,.topnav .mobile-connect-btn{display:none!important}.topnav .wallet-pill{position:fixed!important;top:7px;right:8px;z-index:60;width:154px!important;max-width:154px!important;display:flex;align-items:center;justify-content:space-between;gap:7px;padding:7px 7px!important;text-align:left}.topnav .wallet-pill .balance-text{min-width:0;overflow:hidden;text-overflow:ellipsis}.topnav .wallet-pill .mobile-wallet-action{display:block;flex:0 0 auto}.topnav .brand{max-width:calc(100vw - 172px)}}
+html.mobile-hard,html.mobile-hard body{width:100vw;max-width:100vw;overflow-x:hidden}
+html.mobile-hard .page,html.mobile-hard .topnav{width:100vw;max-width:100vw;overflow-x:hidden}
+html.mobile-hard .hero,html.mobile-hard .panel{width:calc(100vw - 14px);max-width:calc(100vw - 14px);overflow-x:hidden}
+html.mobile-hard .topnav{height:48px;display:grid;grid-template-columns:minmax(130px,1fr) 68px 74px;align-items:center;gap:5px;padding:7px 8px}
+html.mobile-hard .nav-mid{display:none!important}
+html.mobile-hard .brand{grid-column:1;grid-row:1;font-size:13px;gap:5px;min-width:0;overflow:hidden;text-overflow:ellipsis}
+html.mobile-hard .topnav .btn{width:100%;min-width:0;padding:7px 4px;font-size:9px;min-height:32px;overflow:hidden;text-overflow:ellipsis}
+html.mobile-hard .topnav #connectBtn{display:none!important}
+html.mobile-hard .topnav #refreshBtn{display:none!important}
+html.mobile-hard .wallet-pill{grid-column:2;grid-row:1;position:static!important;width:100%;max-width:none;text-align:center;padding:7px 3px;font-size:10px}
+html.mobile-hard .topnav .mobile-connect-btn{display:grid!important;place-items:center;position:fixed!important;top:7px;right:8px;z-index:60;width:74px!important;min-width:74px!important;padding:7px 4px;font-size:9px;min-height:32px;overflow:hidden;text-overflow:ellipsis}
+html.mobile-hard .topnav .mobile-connect-btn{display:none!important}
+html.mobile-hard .topnav .wallet-pill{position:fixed!important;top:7px;right:8px;z-index:60;width:154px!important;max-width:154px!important;display:flex;align-items:center;justify-content:space-between;gap:7px;padding:7px 7px!important;text-align:left}
+html.mobile-hard .topnav .wallet-pill .balance-text{min-width:0;overflow:hidden;text-overflow:ellipsis}
+html.mobile-hard .topnav .wallet-pill .mobile-wallet-action{display:block;flex:0 0 auto}
+html.mobile-hard .topnav .brand{max-width:calc(100vw - 168px)}
+html.mobile-hard .page{padding:7px}
+html.mobile-hard .page>*{max-width:calc(100vw - 14px)}
+html.mobile-hard .hero{grid-template-columns:minmax(0,1fr);min-height:0}
+html.mobile-hard .stage-panel{min-height:0;aspect-ratio:4/3}
+html.mobile-hard #podiumStage{min-height:0;height:100%}
+html.mobile-hard .title{font-size:38px}
+html.mobile-hard .copy{font-size:16px;max-width:100%;white-space:normal;overflow-wrap:anywhere;word-break:normal}
+html.mobile-hard .host-strip{grid-template-columns:1fr}
+html.mobile-hard .action-grid,html.mobile-hard .desk,html.mobile-hard .section-grid{grid-template-columns:1fr}
+html.mobile-hard .market-tools{grid-template-columns:repeat(2,minmax(0,1fr))}
+html.mobile-hard .market{grid-template-columns:repeat(2,minmax(0,1fr));max-height:none}
+</style>
+</head>
+<body>
+<nav class="topnav">
+  <a class="brand" href="./home.html"><span style="color:#fff">&#9917;</span> BLOCK <span>KICKERS</span></a>
+  <div class="nav-mid"><b>HOST NATIONS PODIUM</b> USA + Mexico + Canada trading arena</div>
+  <div class="wallet-pill" id="walletPill" onclick="openWalletChoice()"><span class="balance-text" id="balanceText">BAL --</span><span class="mobile-wallet-action" id="mobileWalletAction">CONNECT</span></div>
+  <div class="btn mobile-connect-btn" id="mobileConnectBtn" onclick="openWalletChoice()">CONNECT</div>
+  <button class="btn" id="connectBtn" onclick="openWalletChoice()">CONNECT</button>
+  <button class="btn gold" id="refreshBtn" onclick="loadQuest()">REFRESH</button>
+</nav>
+
+<main class="page">
+  <section class="hero">
+    <div class="panel hot">
+      <div class="kicker"><span class="dot"></span> World Cup Host Quest</div>
+      <h1 class="title"><span class="line">HOST</span><span class="line gold">NATIONS</span><span class="line">PODIUM</span></h1>
+      <div class="copy"><strong>One best card from each host country.</strong> USA, Mexico and Canada form your 3-card podium. Missing one country means the whole podium is exposed.</div>
+      <div class="host-strip">
+        <div class="host-chip"><img src="https://flagcdn.com/w80/us.png" alt=""><div><b>USA</b><span>best weight</span></div></div>
+        <div class="host-chip"><img src="https://flagcdn.com/w80/mx.png" alt=""><div><b>MEXICO</b><span>best weight</span></div></div>
+        <div class="host-chip"><img src="https://flagcdn.com/w80/ca.png" alt=""><div><b>CANADA</b><span>best weight</span></div></div>
+      </div>
+      <div class="rules">
+        <div class="rule"><i>01</i><span>Score = best USA + Mexico + Canada weights.</span></div>
+        <div class="rule"><i>02</i><span>Complete 3/3 podium adds +30 host bonus.</span></div>
+        <div class="rule"><i>03</i><span>Only cards currently in your wallet score. Sold cards leave your podium.</span></div>
+      </div>
+    </div>
+
+    <div class="panel stage-panel">
+      <div class="stage-header">
+        <div><div class="stage-title" id="stageTitle">YOUR HOST PODIUM</div><div class="stage-sub" id="stageSub">Preview mode until wallet connects</div></div>
+        <div class="stage-score" id="stageScore">0<span>PODIUM SCORE</span></div>
+      </div>
+      <canvas id="podiumStage"></canvas>
+      <div class="stage-fallback" id="stageFallback">3D renderer loading...</div>
+      <div class="podium-cards" id="podiumCards"></div>
+    </div>
+
+    <div class="panel side">
+      <div class="stats-grid">
+        <div class="stat"><div class="stat-val" id="myCompletion">0/3</div><div class="stat-lbl">My podium</div></div>
+        <div class="stat"><div class="stat-val" id="hostSupply">0</div><div class="stat-lbl">Host cards minted</div></div>
+        <div class="stat"><div class="stat-val" id="marketListings">0</div><div class="stat-lbl">Host listings</div></div>
+        <div class="stat"><div class="stat-val" id="leaderCount">0</div><div class="stat-lbl">Active podiums</div></div>
+      </div>
+      <div class="status-box" id="questStatus">Loading Host Nations data...</div>
+      <div class="action-grid">
+        <button class="btn gold" onclick="mintCard()">MINT RANDOM WC CARD</button>
+        <button class="btn" onclick="huntMissing()">HUNT MISSING</button>
+        <button class="btn gold" onclick="openTradeAdvisor(false)">TRADE ALERT</button>
+        <button class="btn red" onclick="openSellModal()">SELL HOST CARD</button>
+      </div>
+      <div style="margin-top:10px;font-family:'Share Tech Mono',monospace;color:var(--muted);font-size:11px;line-height:1.45">
+        Trading logic: if a wallet owns 2/3 host nations, the missing country becomes pressure. Listed cards still score until bought; sold cards leave your podium.
+      </div>
+      <div class="prize-box">
+        <div class="prize-head"><span>1500 CHZ PRIZE POOL</span><b>TOP 5 PAID</b></div>
+        <div class="prize-split">
+          <div class="prize-place"><i>#1</i><b>675</b><span>CHZ</span></div>
+          <div class="prize-place"><i>#2</i><b>375</b><span>CHZ</span></div>
+          <div class="prize-place"><i>#3</i><b>225</b><span>CHZ</span></div>
+          <div class="prize-place"><i>#4</i><b>135</b><span>CHZ</span></div>
+          <div class="prize-place"><i>#5</i><b>90</b><span>CHZ</span></div>
+        </div>
+        <div class="prize-note">Final snapshot: 07.06.2026 12:00 Warsaw. Paid bubble makes every +score market buy matter.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-grid">
+    <div class="panel">
+      <div class="section-title">HOST LEADERBOARD <small id="lbInfo">0 players</small></div>
+      <div class="leaderboard" id="leaderboard"><div class="loading">Loading leaderboard...</div></div>
+    </div>
+    <div class="panel">
+      <div class="section-title">TRADING DESK <small id="deskInfo">signals</small></div>
+      <div class="desk">
+        <div>
+          <div class="section-title" style="font-size:11px;margin-bottom:6px">HOST PRESSURE <small id="demandInfo">2/3 wallets</small></div>
+          <div class="demand-list" id="demandList"><div class="loading">Waiting for data...</div></div>
+        </div>
+        <div>
+          <div class="section-title" style="font-size:11px;margin-bottom:6px">LIVE HOST FEED <small id="feedInfo">0 events</small></div>
+          <div class="feed" id="feed"><div class="loading">No feed yet.</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel" id="hostMarket">
+    <div class="section-title">HOST MARKET <small id="marketInfo">USA / MEX / CAN only</small></div>
+    <div class="market-tools">
+      <button class="filter active" data-filter="all" onclick="setFilter('all')">ALL HOST</button>
+      <button class="filter" data-filter="usa" onclick="setFilter('usa')">USA</button>
+      <button class="filter" data-filter="mexico" onclick="setFilter('mexico')">MEXICO</button>
+      <button class="filter" data-filter="canada" onclick="setFilter('canada')">CANADA</button>
+      <button class="filter" data-filter="missing" onclick="setFilter('missing')">SCORE IMPACT</button>
+    </div>
+    <div class="market" id="marketGrid"><div class="loading">Loading host market...</div></div>
+  </section>
+</main>
+
+<div class="modal" id="sellModal" onclick="if(event.target===this)closeSellModal()">
+  <div class="modal-panel">
+    <div class="modal-head"><div class="modal-title" id="sellTitle">SELL HOST CARD</div><button class="close" onclick="closeSellModal()">&times;</button></div>
+    <div class="sell-list" id="sellList"></div>
+  </div>
+</div>
+<div class="modal" id="tradeAdvisorModal" onclick="if(event.target===this)closeTradeAdvisor()">
+  <div class="modal-panel trade-advisor-panel">
+    <div class="modal-head"><div class="modal-title" id="tradeAdvisorTitle">HOST TRADE ALERT</div><button class="close" onclick="closeTradeAdvisor()">&times;</button></div>
+    <div class="trade-advisor-body" id="tradeAdvisorBody"></div>
+  </div>
+</div>
+<div class="wallet-choice-modal" id="walletChoiceModal" onclick="if(event.target===this)closeWalletChoice()">
+  <div class="wallet-choice-panel">
+    <div class="wallet-choice-head">
+      <div class="wallet-choice-title">CONNECT WALLET</div>
+      <button class="wallet-choice-close" type="button" onclick="closeWalletChoice()">&times;</button>
+    </div>
+    <button class="wallet-choice-option" type="button" onclick="connectInjectedWallet()">
+      <span class="wallet-choice-icon">APP</span>
+      <span><span class="wallet-choice-name">MetaMask / Trust Browser</span><span class="wallet-choice-desc">Use the wallet already injected into this browser.</span></span>
+      <span class="wallet-choice-tag">FAST</span>
+    </button>
+    <button class="wallet-choice-option" type="button" onclick="connectWalletConnect()">
+      <span class="wallet-choice-icon">QR</span>
+      <span><span class="wallet-choice-name">WalletConnect</span><span class="wallet-choice-desc">Use Trust Wallet or MetaMask Mobile. Avoid Socios if it reverts transactions.</span></span>
+      <span class="wallet-choice-tag">MOBILE</span>
+    </button>
+    <button class="wallet-choice-option" type="button" onclick="connectPrivyWallet()">
+      <span class="wallet-choice-icon">@</span>
+      <span><span class="wallet-choice-name">Privy Email Wallet</span><span class="wallet-choice-desc">Create or restore an embedded wallet by email code.</span></span>
+      <span class="wallet-choice-tag">EMAIL</span>
+    </button>
+    <div class="wallet-choice-note">Recommended on mobile: Privy, Trust Wallet, or MetaMask Mobile.</div>
+  </div>
+</div>
+<div class="mint-reveal" id="mintReveal" onclick="if(event.target===this)closeMintReveal()">
+  <div class="mint-reveal-panel">
+    <div class="modal-head"><div class="modal-title">CARD MINTED</div><button class="close" onclick="closeMintReveal()">&times;</button></div>
+    <div class="mint-reveal-body">
+      <div class="mint-reveal-fig" id="mintRevealFig"></div>
+      <div>
+        <div class="mint-reveal-name" id="mintRevealName">New card</div>
+        <div class="mint-reveal-sub" id="mintRevealSub">Waiting for mint result...</div>
+        <div class="mint-reveal-grid" id="mintRevealStats"></div>
+        <div class="mint-reveal-note" id="mintRevealNote"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const CONTRACT_ADDRESS = "0xAAdc8D56e25a223B6cf4b88ba0889975560f21aB";
+const MARKET_ADDRESS = "0xA18f7Bade67Eda41FD7D2B3A204d39b543977DaE";
+const CHAIN_ID = 88888;
+const DEPLOY_BLOCK = 34086621;
+const PUBLIC_RPC = "https://chiliz-rpc.publicnode.com";
+const PUBLIC_RPCS = ["https://chiliz-rpc.publicnode.com","https://rpc.chiliz.com","https://chiliz.drpc.org"];
+const WALLETCONNECT_PROJECT_ID = "15671485110825e18107d31b379d9df6";
+const PRIVY_APP_ID = "cmpil29vr000r0cl27mvi078e";
+const PRIVY_CLIENT_ID = "client-WY6ZYpnr2u5M5Jusp4enZTZBmqhrikkMGUCjvgwWymidE";
+const ZERO_REF = "0x0000000000000000000000000000000000000000";
+const QUEST_END_AT = new Date("2026-06-07T12:00:00+02:00");
+const HOST_IDS = [24,22,19];
+const HOST_KEY = {24:"usa",22:"mexico",19:"canada"};
+const HOST_ORDER = [
+  {id:24,key:"usa",name:"USA",code:"us",color:0x3b82f6},
+  {id:22,key:"mexico",name:"Mexico",code:"mx",color:0x0f8f4d},
+  {id:19,key:"canada",name:"Canada",code:"ca",color:0xef4444}
+];
+const POSITIONS = {1:"GK",2:"RB",3:"LB",4:"CB",5:"CB2",6:"DM",7:"RW",8:"MID",9:"ST",10:"#10",11:"LW"};
+const RARITY = ["Common","Rare","Epic","Legendary"];
+const RARITY_SHORT = ["COM","RAR","EPI","LEG"];
+const RARITY_COLOR = ["#7a8899","#3b82f6","#c084fc","#ffc940"];
+const TEAM_NAMES = ["Australia","Iran","Iraq","Japan","Jordan","Qatar","Saudi Arabia","South Korea","Uzbekistan","Algeria","Cape Verde","DR Congo","Egypt","Ghana","Ivory Coast","Morocco","Senegal","South Africa","Tunisia","Canada","Curacao","Haiti","Mexico","Panama","United States","Argentina","Brazil","Colombia","Ecuador","Paraguay","Uruguay","New Zealand","Austria","Belgium","Bosnia","Croatia","Czech Rep.","England","France","Germany","Netherlands","Norway","Portugal","Scotland","Spain","Sweden","Switzerland","Turkey"];
+const TEAM_COLORS = [
+  '#FFD700','#239F40','#CC0001','#BC002D','#007A3D','#8D153A','#006C35','#CD2E3A','#1EB53A',
+  '#006233','#003893','#007FFF','#CE1126','#006B3F','#F77F00','#C1272D','#00853F','#007749','#E70013',
+  '#FF0000','#002B7F','#00209F','#006847','#DA121A','#002868',
+  '#74ACDF','#009C3B','#FCD116','#FFD100','#D52B1E','#5EB6E4',
+  '#00247D','#ED2939','#000000','#002395','#FF0000','#D7141A','#FFFFFF','#002395','#000000',
+  '#FF6600','#EF2B2D','#006600','#003087','#AA151B','#006AA7','#FF0000','#E30A17'
+];
+const ABI = [
+  "event FigureMinted(address indexed owner,uint256 indexed tokenId,uint256 dna,uint256 teamId,uint256 position,uint8 rarity,uint256 weight)",
+  "function mintPrice() external view returns (uint256)",
+  "function mint(address referrer) external payable",
+  "function isApprovedForAll(address account,address operator) external view returns (bool)",
+  "function setApprovalForAll(address operator,bool approved) external"
+];
+const MARKET_ABI = [
+  "event Listed(uint256 indexed listingId,address indexed seller,uint256 tokenId,uint256 price)",
+  "event Sold(uint256 indexed listingId,address indexed buyer,uint256 price)",
+  "function nextListingId() external view returns (uint256)",
+  "function getListing(uint256) external view returns (address,uint256,uint256,bool)",
+  "function buyFigure(uint256 listingId) external payable",
+  "function listFigure(uint256 tokenId,uint256 price) external returns (uint256)",
+  "function cancelListing(uint256 listingId) external"
+];
+
+let provider = new ethers.JsonRpcProvider(PUBLIC_RPC);
+let browserProvider = null;
+let signer = null;
+let contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, provider);
+let marketContract = new ethers.Contract(MARKET_ADDRESS, MARKET_ABI, provider);
+let address = null;
+let currentMintPrice = ethers.parseEther("10");
+let currentFilter = "all";
+let state = makeEmptyState();
+let podium3d = null;
+let walletConnectProvider = null;
+let activeWalletProvider = null;
+let activeWalletType = "";
+let privySdk = null;
+let privyClient = null;
+let privyIframe = null;
+let advisorOpenedFor = "";
+
+function makeEmptyState(){
+  return {mints:[],sales:[],cards:new Map(),ownerByToken:new Map(),hostCards:[],hostEvents:[],scores:[],listings:[],myBest:{},activeByToken:new Map(),demo:true};
+}
+function shortAddr(a){return a ? a.slice(0,6)+"..."+a.slice(-4) : "0x...";}
+function last4(a){return a ? a.slice(-4) : "----";}
+function setBalanceLabel(label){
+  const balanceText = document.getElementById("balanceText");
+  if(balanceText) balanceText.textContent = label;
+  else document.getElementById("walletPill").textContent = label;
+}
+function setConnectLabel(label){
+  document.querySelectorAll("#connectBtn,#mobileConnectBtn").forEach(btn=>{btn.textContent = label;});
+  const mobileWalletAction = document.getElementById("mobileWalletAction");
+  if(mobileWalletAction) mobileWalletAction.textContent = label;
+}
+function flagUrl(code){return "https://flagcdn.com/w80/"+code+".png";}
+function hostById(id){return HOST_ORDER.find(h => h.id === Number(id)) || HOST_ORDER[0];}
+function posLabel(p){return POSITIONS[Number(p)] || String(p);}
+function toast(msg, err=false){const t=document.getElementById("toast");t.textContent=msg;t.style.borderColor=err?"#ef4444":"#00ff87";t.style.color=err?"#ef4444":"#00ff87";t.style.display="block";clearTimeout(toast._t);toast._t=setTimeout(()=>t.style.display="none",5200);}
+function readableError(e){return (e?.shortMessage||e?.reason||e?.message||String(e||"Unknown error")).replace(/\s+/g," ").trim();}
+function scoreFromBest(best){
+  const cards = HOST_ORDER.map(h=>best?.[h.id] || null);
+  const base = cards.reduce((s,c)=>s+(c?Number(c.weight || 0):0),0);
+  const completion = cards.filter(Boolean).length;
+  const bonus = completion === 3 ? 30 : 0;
+  return {cards,base,completion,bonus,score:base+bonus};
+}
+function simulateDeckWithCard(deck, card){
+  const best = {...(deck?.best || {})};
+  const current = best[card.teamId];
+  if(!current || Number(card.weight || 0) > Number(current.weight || 0)) best[card.teamId] = card;
+  return {...scoreFromBest(best),best};
+}
+function parseDNA(dna){
+  const n = typeof dna === "bigint" ? dna : BigInt(String(dna || 0));
+  const teamId = Number(n % 48n);
+  const position = Number((n >> 6n) % 11n) + 1;
+  const rarRand = Number((n >> 10n) % 10000n);
+  const rarity = rarRand < 100 ? 3 : rarRand < 1000 ? 2 : rarRand < 3000 ? 1 : 0;
+  const hairStyle = Number((n >> 18n) % 8n);
+  const skinTone = Number((n >> 21n) % 6n);
+  const hasGoldenBoots = Number((n >> 24n) % 100n) < 5;
+  const hasEarring = Number((n >> 27n) % 100n) < 25;
+  const hasBand = Number((n >> 28n) % 100n) < 25;
+  const hasGloves = Number((n >> 29n) % 100n) < 20;
+  const hasTattoo = Number((n >> 30n) % 100n) < 15;
+  let weight = [10,18,36,82][rarity];
+  if (hasGoldenBoots) weight += 8;
+  if (hasTattoo) weight += 5;
+  if (hasEarring) weight += 3;
+  if (hasBand) weight += 2;
+  if (hasGloves && position === 1) weight += 2;
+  return {teamId,position,rarity,hairStyle,skinTone,hasGoldenBoots,hasEarring,hasBand,hasGloves,hasTattoo,weight};
+}
+function normalizePrice(v){
+  if (v === undefined || v === null) return 0;
+  try {
+    if (typeof v === "bigint") return Number(ethers.formatEther(v));
+    const s = String(v);
+    if (/^\d+$/.test(s) && s.length > 10) return Number(ethers.formatEther(BigInt(s)));
+    const n = Number(s);
+    return Number.isFinite(n) ? n : 0;
+  } catch(e){return 0;}
+}
+function fmtPrice(n){const p=normalizePrice(n);return p>=1000?(p/1000).toFixed(1).replace(".0","")+"K":p.toFixed(p<10?2:0);}
+function teamMeta(id){
+  if (id === 24) return {id,name:"USA",code:"us"};
+  if (id === 22) return {id,name:"Mexico",code:"mx"};
+  if (id === 19) return {id,name:"Canada",code:"ca"};
+  return {id,name:TEAM_NAMES[Number(id)] || "Team "+id,code:""};
+}
+function skinColor(tone){
+  return ["#FFDBB4","#EEC59A","#D4956A","#C27A4B","#8D5524","#4A2912"][Math.min(Number(tone || 2),5)];
+}
+
+function makeFigureSVG(card, size=76){
+  const t = card || parseDNA(1n);
+  const shirt = TEAM_COLORS[t.teamId % TEAM_COLORS.length] || "#002868";
+  const skin = skinColor(t.skinTone);
+  const rar = RARITY_COLOR[t.rarity] || "#7a8899";
+  const isLight = ["#FFD700","#FCD116","#FFD100","#FFFFFF"].includes(String(shirt).toUpperCase());
+  const numC = isLight ? "#05070a" : "#ffffff";
+  const bootC = t.hasGoldenBoots ? "#FFD700" : "#111111";
+  const s = size, cx=s/2;
+  const headY=s*0.12, headW=s*0.30, headH=s*0.28;
+  const bodyY=headY+headH*0.85, bodyW=s*0.40, bodyH=s*0.28;
+  const legW=s*0.10, legH=s*0.22, legGap=s*0.04;
+  const legY=bodyY+bodyH*0.85, armW=s*0.09, armH=s*0.20, armY=bodyY+s*0.02;
+  const bootH=s*0.09, handR=s*0.06;
+  const p=[];
+  p.push('<ellipse cx="'+cx+'" cy="'+(legY+legH+bootH+s*0.03)+'" rx="'+(bodyW*0.55)+'" ry="'+(s*0.04)+'" fill="'+rar+'" opacity="0.22"/>');
+  p.push('<rect x="'+(cx-legW-legGap)+'" y="'+legY+'" width="'+legW+'" height="'+legH+'" rx="3" fill="'+shirt+'"/>');
+  p.push('<rect x="'+(cx+legGap)+'" y="'+legY+'" width="'+legW+'" height="'+legH+'" rx="3" fill="'+shirt+'"/>');
+  const sockY=legY+legH*0.65;
+  p.push('<rect x="'+(cx-legW-legGap)+'" y="'+sockY+'" width="'+legW+'" height="'+(legH*0.38)+'" rx="2" fill="white"/>');
+  p.push('<rect x="'+(cx+legGap)+'" y="'+sockY+'" width="'+legW+'" height="'+(legH*0.38)+'" rx="2" fill="white"/>');
+  const bootY=legY+legH;
+  p.push('<rect x="'+(cx-legW-legGap-2)+'" y="'+bootY+'" width="'+(legW+4)+'" height="'+bootH+'" rx="3" fill="'+bootC+'"/>');
+  p.push('<rect x="'+(cx+legGap-2)+'" y="'+bootY+'" width="'+(legW+4)+'" height="'+bootH+'" rx="3" fill="'+bootC+'"/>');
+  p.push('<rect x="'+(cx-bodyW/2)+'" y="'+(bodyY+bodyH*0.78)+'" width="'+bodyW+'" height="'+(s*0.09)+'" rx="3" fill="'+shirt+'cc"/>');
+  p.push('<rect x="'+(cx-bodyW/2)+'" y="'+bodyY+'" width="'+bodyW+'" height="'+(bodyH*0.85)+'" rx="5" fill="'+shirt+'"/>');
+  p.push('<text x="'+cx+'" y="'+(bodyY+bodyH*0.55)+'" text-anchor="middle" font-family="Arial Black" font-size="'+(s*0.13)+'" font-weight="900" fill="'+numC+'" opacity="0.9">'+(t.position || "?")+'</text>');
+  p.push('<rect x="'+(cx-bodyW/2-armW+2)+'" y="'+armY+'" width="'+armW+'" height="'+armH+'" rx="3" fill="'+shirt+'" transform="rotate(7,'+(cx-bodyW/2)+','+armY+')"/>');
+  p.push('<rect x="'+(cx+bodyW/2-2)+'" y="'+armY+'" width="'+armW+'" height="'+armH+'" rx="3" fill="'+shirt+'" transform="rotate(-7,'+(cx+bodyW/2)+','+armY+')"/>');
+  p.push('<circle cx="'+(cx-bodyW/2-s*0.04)+'" cy="'+(armY+armH)+'" r="'+handR+'" fill="'+skin+'"/>');
+  p.push('<circle cx="'+(cx+bodyW/2+s*0.04)+'" cy="'+(armY+armH)+'" r="'+handR+'" fill="'+skin+'"/>');
+  if(t.hasGloves){
+    p.push('<circle cx="'+(cx-bodyW/2-s*0.04)+'" cy="'+(armY+armH)+'" r="'+(handR+2)+'" fill="none" stroke="#FFD700" stroke-width="2"/>');
+    p.push('<circle cx="'+(cx+bodyW/2+s*0.04)+'" cy="'+(armY+armH)+'" r="'+(handR+2)+'" fill="none" stroke="#FFD700" stroke-width="2"/>');
+  }
+  p.push('<rect x="'+(cx-s*0.04)+'" y="'+(bodyY-s*0.05)+'" width="'+(s*0.08)+'" height="'+(s*0.07)+'" rx="2" fill="'+skin+'"/>');
+  p.push('<rect x="'+(cx-headW/2)+'" y="'+headY+'" width="'+headW+'" height="'+headH+'" rx="6" fill="'+skin+'"/>');
+  p.push('<rect x="'+(cx-headW/2-s*0.03)+'" y="'+(headY+headH*0.25)+'" width="'+(s*0.04)+'" height="'+(s*0.08)+'" rx="2" fill="'+skin+'"/>');
+  p.push('<rect x="'+(cx+headW/2-s*0.01)+'" y="'+(headY+headH*0.25)+'" width="'+(s*0.04)+'" height="'+(s*0.08)+'" rx="2" fill="'+skin+'"/>');
+  if(t.hasEarring) p.push('<circle cx="'+(cx-headW/2-1)+'" cy="'+(headY+headH*0.38)+'" r="'+(s*0.025)+'" fill="#FFD700"/>');
+  const eyeY=headY+headH*0.32, eyeW=s*0.07, eyeH=s*0.05;
+  p.push('<rect x="'+(cx-headW*0.36)+'" y="'+eyeY+'" width="'+eyeW+'" height="'+eyeH+'" rx="2" fill="white"/>');
+  p.push('<rect x="'+(cx+headW*0.08)+'" y="'+eyeY+'" width="'+eyeW+'" height="'+eyeH+'" rx="2" fill="white"/>');
+  p.push('<rect x="'+(cx-headW*0.33)+'" y="'+(eyeY+1)+'" width="'+(eyeW*0.6)+'" height="'+(eyeH*0.7)+'" rx="1" fill="#0a0a14"/>');
+  p.push('<rect x="'+(cx+headW*0.11)+'" y="'+(eyeY+1)+'" width="'+(eyeW*0.6)+'" height="'+(eyeH*0.7)+'" rx="1" fill="#0a0a14"/>');
+  p.push('<rect x="'+(cx-headW*0.38)+'" y="'+(eyeY-s*0.04)+'" width="'+(eyeW+2)+'" height="'+(s*0.025)+'" rx="1" fill="#1a0800" opacity="0.8"/>');
+  p.push('<rect x="'+(cx+headW*0.06)+'" y="'+(eyeY-s*0.04)+'" width="'+(eyeW+2)+'" height="'+(s*0.025)+'" rx="1" fill="#1a0800" opacity="0.8"/>');
+  p.push('<rect x="'+(cx-s*0.02)+'" y="'+(eyeY+eyeH+s*0.02)+'" width="'+(s*0.04)+'" height="'+(s*0.05)+'" rx="2" fill="'+skin+'" opacity="0.7"/>');
+  p.push('<rect x="'+(cx-s*0.07)+'" y="'+(headY+headH*0.72)+'" width="'+(s*0.14)+'" height="'+(s*0.03)+'" rx="2" fill="#8b1a00" opacity="0.8"/>');
+  const hair = ["#1a0800","#ff6600","#ffd700","#cc0000","#2a1a00","#111111","#8b4513","#333333"][t.hairStyle % 8] || "#1a0800";
+  if(t.hairStyle === 1 || t.hairStyle === 4){
+    for(let i=-2;i<=2;i++) p.push('<circle cx="'+(cx+i*s*0.055)+'" cy="'+(headY+s*0.02)+'" r="'+(s*0.055)+'" fill="'+hair+'"/>');
+  }else if(t.hairStyle === 2 || t.hairStyle === 3){
+    p.push('<rect x="'+(cx-headW/2-2)+'" y="'+(headY-2)+'" width="'+(headW+4)+'" height="'+(s*0.06)+'" rx="3" fill="'+hair+'"/>');
+    for(let i=-1;i<=1;i++) p.push('<polygon points="'+(cx+i*s*0.06)+','+(headY-s*0.09)+' '+(cx+i*s*0.06-s*0.04)+','+(headY+s*0.02)+' '+(cx+i*s*0.06+s*0.04)+','+(headY+s*0.02)+'" fill="'+hair+'"/>');
+  }else if(t.hairStyle !== 6){
+    p.push('<rect x="'+(cx-headW/2-2)+'" y="'+(headY-2)+'" width="'+(headW+4)+'" height="'+(s*0.07)+'" rx="4" fill="'+hair+'"/>');
+  }
+  if(t.hasBand) p.push('<rect x="'+(cx-headW/2-2)+'" y="'+(headY+headH*0.18)+'" width="'+(headW+4)+'" height="'+(s*0.06)+'" rx="3" fill="white" opacity="0.88"/>');
+  if(t.hasTattoo){
+    p.push('<line x1="'+(cx-bodyW/2-armW/2)+'" y1="'+(armY+armH*0.3)+'" x2="'+(cx-bodyW/2-armW/2+s*0.04)+'" y2="'+(armY+armH*0.5)+'" stroke="#000" stroke-width="1.5" opacity="0.5"/>');
+    p.push('<line x1="'+(cx-bodyW/2-armW/2+s*0.04)+'" y1="'+(armY+armH*0.3)+'" x2="'+(cx-bodyW/2-armW/2)+'" y2="'+(armY+armH*0.5)+'" stroke="#000" stroke-width="1.5" opacity="0.5"/>');
+  }
+  return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 '+s+' '+s+'" width="'+s+'" height="'+s+'">'+p.join("")+'</svg>';
+}
+function marketFigure(card){
+  const team = teamMeta(card.teamId);
+  return '<div class="fig-svg"><img src="'+flagUrl(team.code)+'" alt="'+team.name+'"><span class="pos-tag">'+posLabel(card.position)+'</span>'+makeFigureSVG(card,72)+'</div>';
+}
+
+function openWalletChoice(){document.getElementById("walletChoiceModal")?.classList.add("show");}
+function closeWalletChoice(){document.getElementById("walletChoiceModal")?.classList.remove("show");}
+function connectWallet(){openWalletChoice();}
+function readableWalletError(e){return readableError(e);}
+function isMissingPrivySession(error){
+  const text = readableWalletError(error).toLowerCase();
+  return text.includes("missing_or_invalid_token") || text.includes("no tokens found") || text.includes("invalid token");
+}
+async function ensureChilizProvider(walletProvider){
+  const chainHex = "0x"+CHAIN_ID.toString(16);
+  const current = await walletProvider.request({method:"eth_chainId"}).catch(()=>null);
+  if (String(current).toLowerCase() === chainHex) return;
+  try { await walletProvider.request({method:"wallet_switchEthereumChain",params:[{chainId:chainHex}]}); }
+  catch(e){
+    await walletProvider.request({method:"wallet_addEthereumChain",params:[{chainId:chainHex,chainName:"Chiliz Chain",nativeCurrency:{name:"CHZ",symbol:"CHZ",decimals:18},rpcUrls:PUBLIC_RPCS,blockExplorerUrls:["https://scan.chiliz.com"]}]});
+  }
+}
+async function finishWalletConnection(walletProvider, label){
+  activeWalletProvider = walletProvider;
+  activeWalletType = label;
+  await ensureChilizProvider(walletProvider);
+  browserProvider = new ethers.BrowserProvider(walletProvider);
+  signer = await browserProvider.getSigner();
+  address = String(await signer.getAddress()).toLowerCase();
+  provider = browserProvider;
+  contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
+  marketContract = new ethers.Contract(MARKET_ADDRESS, MARKET_ABI, signer);
+  setBalanceLabel("bal --");
+  provider.getBalance(address).then(bal=>{
+    const v = Number(ethers.formatEther(bal));
+    setBalanceLabel((Number.isFinite(v) ? v.toFixed(v >= 10 ? 1 : 2) : "--")+" CHZ");
+  }).catch(()=>{});
+  setConnectLabel(last4(address));
+  closeWalletChoice();
+  await loadQuest();
+  toast(label+" wallet connected.");
+}
+async function connectInjectedWallet(){
+  if (!window.ethereum){toast("No injected wallet detected. Use WalletConnect or Privy.",true);return;}
+  try{
+    const accounts = await window.ethereum.request({method:"eth_requestAccounts"});
+    if(!accounts?.[0]) throw new Error("No account selected");
+    await finishWalletConnection(window.ethereum, "Injected");
+  }catch(e){toast("Wallet connect failed: "+readableError(e),true);}
+}
+function getChilizPrivyChain(){
+  const rpc = PUBLIC_RPCS[0] || PUBLIC_RPC;
+  return {id:CHAIN_ID,name:"Chiliz Chain",network:"chiliz",nativeCurrency:{name:"CHZ",symbol:"CHZ",decimals:18},rpcUrls:{default:{http:[rpc]},public:{http:[rpc]}},blockExplorers:{default:{name:"ChilizScan",url:"https://scan.chiliz.com"}}};
+}
+async function getPrivyClient(){
+  if(privyClient) return privyClient;
+  if(location.protocol === "file:") throw new Error("Privy requires a hosted HTTPS origin.");
+  const sdk = await import("https://esm.sh/@privy-io/js-sdk-core@latest");
+  privySdk = sdk;
+  const Privy = sdk.default;
+  const storage = sdk.LocalStorage ? new sdk.LocalStorage() : {
+    get:key => Promise.resolve(localStorage.getItem(key)),
+    put:(key,value) => Promise.resolve(localStorage.setItem(key,value)),
+    del:key => Promise.resolve(localStorage.removeItem(key)),
+    getKeys:() => Promise.resolve(Object.keys(localStorage))
+  };
+  const chilizChain = getChilizPrivyChain();
+  privyClient = new Privy({appId:PRIVY_APP_ID,clientId:PRIVY_CLIENT_ID,defaultChain:chilizChain,supportedChains:[chilizChain],storage});
+  await privyClient.initialize();
+  if(privyClient.embeddedWallet && !privyIframe){
+    privyIframe = document.createElement("iframe");
+    privyIframe.src = privyClient.embeddedWallet.getURL();
+    privyIframe.style.display = "none";
+    privyIframe.setAttribute("aria-hidden","true");
+    document.body.appendChild(privyIframe);
+    privyClient.setMessagePoster(privyIframe.contentWindow);
+    window.addEventListener("message", event=>{
+      if(event.source !== privyIframe.contentWindow) return;
+      const data = typeof event.data === "string" ? JSON.parse(event.data) : event.data;
+      privyClient.embeddedWallet.onMessage(data);
+    });
+  }
+  return privyClient;
+}
+async function connectPrivyWallet(){
+  closeWalletChoice();
+  toast("Opening Privy wallet...");
+  try{
+    const client = await getPrivyClient();
+    let user = null;
+    try{ const current = await client.user.get(); user = current?.user || null; }
+    catch(sessionError){ if(!isMissingPrivySession(sessionError)) throw sessionError; }
+    if(!user){
+      const email = window.prompt("Enter email for Privy wallet login:");
+      if(!email) return;
+      toast("Sending Privy login code...");
+      await client.auth.email.sendCode(email.trim());
+      const code = window.prompt("Enter the Privy code from your email:");
+      if(!code) return;
+      toast("Confirming Privy login...");
+      const session = await client.auth.email.loginWithCode(email.trim(), code.trim());
+      user = session.user;
+    }
+    let wallet = privySdk.getUserEmbeddedEthereumWallet(user);
+    if(!wallet){
+      toast("Creating Privy wallet...");
+      const created = await client.embeddedWallet.create({});
+      user = created.user;
+      wallet = privySdk.getUserEmbeddedEthereumWallet(user);
+    }
+    const entropy = privySdk.getEntropyDetailsFromUser(user);
+    const walletProvider = await client.embeddedWallet.getEthereumProvider({wallet,entropyId:entropy.entropyId,entropyIdVerifier:entropy.entropyIdVerifier});
+    await finishWalletConnection(walletProvider, "Privy");
+  }catch(e){console.error("Privy connect failed", e); toast("Privy failed: "+readableError(e).slice(0,170),true);}
+}
+async function connectWalletConnect(){
+  closeWalletChoice();
+  toast("Opening WalletConnect...");
+  try{
+    const mod = await import("https://esm.sh/@walletconnect/ethereum-provider@2");
+    const EthereumProvider = mod.default || mod.EthereumProvider;
+    walletConnectProvider = await EthereumProvider.init({
+      projectId:WALLETCONNECT_PROJECT_ID,
+      chains:[CHAIN_ID],
+      optionalChains:[CHAIN_ID],
+      chainId:CHAIN_ID,
+      rpcMap:{[CHAIN_ID]:PUBLIC_RPCS[0] || PUBLIC_RPC},
+      showQrModal:true,
+      methods:["eth_sendTransaction","personal_sign","wallet_switchEthereumChain","wallet_addEthereumChain"],
+      events:["chainChanged","accountsChanged","disconnect"],
+      metadata:{name:"Block Kickers",description:"Block Kickers on Chiliz Chain",url:location.origin,icons:[location.origin+"/favicon.ico"]}
+    });
+    await walletConnectProvider.connect({chains:[CHAIN_ID]});
+    await finishWalletConnection(walletConnectProvider, "WC");
+  }catch(e){console.error("WalletConnect failed", e); toast("WalletConnect failed: "+readableError(e).slice(0,150),true);}
+}
+
+async function fetchEvents(){
+  try{
+    const res = await fetch("/api/events");
+    if (res.ok){
+      const json = await res.json();
+      if (Array.isArray(json.mints)){
+        return {
+          mints: json.mints.map(m=>({owner:String(m.owner||"").toLowerCase(),tokenId:Number(m.tokenId),dna:BigInt(String(m.dna)),block:Number(m.block||0)})),
+          sales: (json.sales||[]).map(s=>({buyer:String(s.buyer||"").toLowerCase(),tokenId:Number(s.tokenId),price:normalizePrice(s.price),block:Number(s.block||0)})).filter(s=>s.tokenId)
+        };
+      }
+    }
+  }catch(e){}
+  const rp = provider || new ethers.JsonRpcProvider(PUBLIC_RPC);
+  const rc = new ethers.Contract(CONTRACT_ADDRESS, ABI, rp);
+  const mk = new ethers.Contract(MARKET_ADDRESS, MARKET_ABI, rp);
+  const current = await rp.getBlockNumber();
+  const mints = [], listed = [], sold = [];
+  for (let from=DEPLOY_BLOCK; from<=current; from+=25000){
+    const to = Math.min(from+24999,current);
+    try{(await rc.queryFilter(rc.filters.FigureMinted(),from,to)).forEach(ev=>mints.push({owner:String(ev.args.owner).toLowerCase(),tokenId:Number(ev.args.tokenId),dna:ev.args.dna,block:Number(ev.blockNumber||0)}));}catch(e){}
+    try{(await mk.queryFilter(mk.filters.Listed(),from,to)).forEach(ev=>listed.push({listingId:Number(ev.args.listingId),tokenId:Number(ev.args.tokenId),seller:String(ev.args.seller).toLowerCase(),price:normalizePrice(ev.args.price),block:Number(ev.blockNumber||0)}));}catch(e){}
+    try{(await mk.queryFilter(mk.filters.Sold(),from,to)).forEach(ev=>sold.push({listingId:Number(ev.args.listingId),buyer:String(ev.args.buyer).toLowerCase(),price:normalizePrice(ev.args.price),block:Number(ev.blockNumber||0)}));}catch(e){}
+  }
+  const lMap = new Map(listed.map(l=>[l.listingId,l]));
+  const sales = sold.map(s=>({buyer:s.buyer,tokenId:lMap.get(s.listingId)?.tokenId,price:s.price,block:s.block})).filter(s=>s.tokenId);
+  return {mints,sales};
+}
+async function fetchListings(cards){
+  const mk = marketContract || new ethers.Contract(MARKET_ADDRESS, MARKET_ABI, provider);
+  const listings = [];
+  try{
+    const nextId = Number(await mk.nextListingId());
+    const from = Math.max(0,nextId-650);
+    const ids = [];
+    for(let i=from;i<nextId;i++) ids.push(i);
+    for(let i=0;i<ids.length;i+=40){
+      const batch = await Promise.allSettled(ids.slice(i,i+40).map(id=>mk.getListing(id).then(l=>({id,l}))));
+      batch.forEach(r=>{
+        if(r.status!=="fulfilled") return;
+        const {id,l} = r.value;
+        if(!Boolean(l[3])) return;
+        const tokenId = Number(l[1]);
+        const card = cards.get(tokenId);
+        if(!card || !HOST_IDS.includes(card.teamId)) return;
+        listings.push({...card,listingId:id,seller:String(l[0]).toLowerCase(),priceWei:l[2],price:normalizePrice(l[2])});
+      });
+    }
+  }catch(e){console.warn("market unavailable",e);}
+  return listings.sort((a,b)=>a.price-b.price || b.weight-a.weight);
+}
+function buildScoresFromOwned(hostCards, ownerByToken){
+  const wallets = {};
+  hostCards.forEach(card=>{
+    const w = ownerByToken.get(Number(card.tokenId));
+    if (!w) return;
+    if(!wallets[w]) wallets[w] = {};
+    const cur = wallets[w][card.teamId];
+    if(!cur || card.weight > cur.weight) wallets[w][card.teamId] = {...card, wallet:w};
+  });
+  return Object.entries(wallets).map(([wallet,best])=>{
+    const totals = scoreFromBest(best);
+    return {wallet,best,...totals};
+  }).sort((a,b)=>b.score-a.score || b.completion-a.completion || b.base-a.base);
+}
+function makeDemoState(){
+  const owners = ["0x8f3a000000000000000000000000000000000abc","0x51cd000000000000000000000000000000000def","0x12a9000000000000000000000000000000000777","0xbeef000000000000000000000000000000000010"];
+  const cards = new Map();
+  let id = 9000;
+  const sample = [
+    [owners[0],24,10,44,2],[owners[0],22,9,39,2],[owners[0],19,1,24,1],
+    [owners[1],24,9,85,3],[owners[1],22,8,21,1],
+    [owners[2],22,10,92,3],[owners[2],19,9,38,2],[owners[2],24,1,20,1],
+    [owners[3],19,10,48,2]
+  ];
+  const hostEvents = sample.map(([wallet,teamId,position,weight,rarity])=>{
+    const c = {wallet,owner:wallet,tokenId:id++,teamId,position,weight,rarity,dna:BigInt(id*987654321),eventType:"mint",price:10,block:id};
+    cards.set(c.tokenId,c);
+    return c;
+  });
+  const listings = hostEvents.slice(2,8).map((c,i)=>({...c,listingId:i+1,seller:c.wallet,price:[35,120,75,210,48,90][i],priceWei:ethers.parseEther(String([35,120,75,210,48,90][i]))}));
+  const ownerByToken = new Map(hostEvents.map(c=>[c.tokenId,c.wallet]));
+  return {mints:[],sales:[],cards,ownerByToken,hostCards:hostEvents,hostEvents,scores:buildScoresFromOwned(hostEvents, ownerByToken),listings,myBest:{},activeByToken:new Map(),demo:true};
+}
+async function buildState(){
+  try{
+    const {mints,sales} = await fetchEvents();
+    const cards = new Map();
+    const ownerByToken = new Map();
+    mints.forEach(m=>{const parsed = parseDNA(m.dna); const card = {...m,...parsed}; cards.set(card.tokenId,card); ownerByToken.set(card.tokenId,card.owner);});
+    sales.forEach(s=>{if(cards.has(s.tokenId)) ownerByToken.set(s.tokenId,s.buyer);});
+    const hostEvents = [];
+    mints.forEach(m=>{const c=cards.get(m.tokenId); if(c && HOST_IDS.includes(c.teamId)) hostEvents.push({...c,wallet:m.owner,eventType:"mint",price:normalizePrice(currentMintPrice)||10});});
+    sales.forEach(s=>{const c=cards.get(s.tokenId); if(c && HOST_IDS.includes(c.teamId)) hostEvents.push({...c,wallet:s.buyer,eventType:"buy",price:s.price||0,block:s.block});});
+    const hostCards = [...cards.values()].filter(c=>HOST_IDS.includes(c.teamId));
+    const listings = await fetchListings(cards);
+    const activeByToken = new Map(listings.map(l=>[Number(l.tokenId),l]));
+    const scores = buildScoresFromOwned(hostCards, ownerByToken);
+    const myBest = address ? (scores.find(s=>s.wallet===address)?.best || {}) : {};
+    return {mints,sales,cards,ownerByToken,hostCards,hostEvents,scores,listings,myBest,activeByToken,demo:false};
+  }catch(e){
+    console.warn("Using demo state",e);
+    return makeDemoState();
+  }
+}
+async function loadQuest(){
+  document.getElementById("questStatus").textContent = "Reading Host Nations market pressure...";
+  try{ currentMintPrice = await contract.mintPrice().catch(()=>currentMintPrice); }catch(e){}
+  state = await buildState();
+  renderAll();
+}
+function formatCountdown(ms){
+  if(ms <= 0) return "ENDED";
+  const total = Math.floor(ms/1000);
+  const d = Math.floor(total/86400);
+  const h = Math.floor((total%86400)/3600);
+  const m = Math.floor((total%3600)/60);
+  const s = total%60;
+  return d+"D "+String(h).padStart(2,"0")+"H "+String(m).padStart(2,"0")+"M "+String(s).padStart(2,"0")+"S";
+}
+function updateCountdown(){
+  const box = document.getElementById("questStatus");
+  if(!box) return;
+  const left = QUEST_END_AT.getTime() - Date.now();
+  box.innerHTML = left > 0
+    ? 'Quest ends 07.06.2026 at 12:00 Warsaw time - <span class="countdown-time">'+formatCountdown(left)+'</span> left. Full host podium required.'
+    : 'Quest window ended <span class="countdown-time">07.06.2026 12:00</span> Warsaw time. Final host podium snapshot should be used for rewards.';
+}
+
+function stageDeck(){
+  if(address){
+    const mine = state.scores.find(s=>s.wallet===address);
+    if(mine) return mine;
+  }
+  return state.scores[0] || makeDemoState().scores[0];
+}
+function podiumLayoutItems(deck){
+  const ranked = HOST_ORDER.map(h=>({
+    host:h,
+    card:deck?.best?.[h.id] || null
+  })).sort((a,b)=>(b.card?.weight || 0)-(a.card?.weight || 0) || a.host.id-b.host.id);
+  return [
+    {...ranked[1],rank:2},
+    {...ranked[0],rank:1},
+    {...ranked[2],rank:3}
+  ];
+}
+function renderAll(){
+  renderStats();
+  renderLeaderboard();
+  renderMarket();
+  renderSignals();
+  renderFeed();
+  renderPodium();
+  autoOpenTradeAdvisor();
+}
+function renderStats(){
+  const deck = address ? state.scores.find(s=>s.wallet===address) : null;
+  const comp = deck ? deck.completion : 0;
+  document.getElementById("myCompletion").textContent = comp+"/3";
+  document.getElementById("hostSupply").textContent = String(state.hostCards.length);
+  document.getElementById("marketListings").textContent = String(state.listings.length);
+  document.getElementById("leaderCount").textContent = String(state.scores.length);
+  document.getElementById("lbInfo").textContent = state.scores.length+" players";
+  document.getElementById("marketInfo").textContent = state.listings.length+" active host listings";
+  updateCountdown();
+}
+function renderLeaderboard(){
+  const lb = document.getElementById("leaderboard");
+  if(!state.scores.length){lb.innerHTML='<div class="loading">No host podiums yet.</div>';return;}
+  lb.innerHTML = state.scores.slice(0,24).map((row,i)=>`
+    <div class="lb-row ${address===row.wallet?'me':''} ${row.completion===3?'complete':''}">
+      <div class="lb-pos">#${i+1}</div>
+      <div class="lb-wallet">${shortAddr(row.wallet)}${address===row.wallet?'<span class="lb-you">YOU</span>':''}</div>
+      <div class="lb-comp">${row.completion}/3</div>
+      <div class="lb-score">${row.score}</div>
+    </div>
+  `).join("");
+}
+function renderPodium(){
+  const deck = stageDeck();
+  document.getElementById("stageTitle").textContent = address && deck.wallet===address ? "YOUR HOST PODIUM" : "TOP HOST PODIUM";
+  document.getElementById("stageSub").textContent = deck.wallet ? shortAddr(deck.wallet)+" - weights + 3/3 bonus" : "preview";
+  document.getElementById("stageScore").innerHTML = (deck.score || 0)+'<span>HOST SCORE</span>';
+  const layout = podiumLayoutItems(deck);
+  document.getElementById("podiumCards").innerHTML = layout.map(item=>{
+    const h = item.host;
+    const c = item.card;
+    return `<div class="mini-card">
+      <div class="mini-country"><img src="${flagUrl(h.code)}" alt="${h.name}"><span>#${item.rank} ${h.name.toUpperCase()}</span></div>
+      <div class="mini-meta"><span>${c ? posLabel(c.position)+" / "+RARITY_SHORT[c.rarity]+" / #"+c.tokenId : "missing card"}</span><b>${c ? c.weight : 0}</b></div>
+    </div>`;
+  }).join("");
+  if(podium3d) podium3d.setCards(layout);
+}
+function filteredListings(){
+  const my = address ? state.scores.find(s=>s.wallet===address) : null;
+  return state.listings.filter(l=>{
+    if(currentFilter==="usa" && l.teamId!==24) return false;
+    if(currentFilter==="mexico" && l.teamId!==22) return false;
+    if(currentFilter==="canada" && l.teamId!==19) return false;
+    return true;
+  }).map(l=>({...l,scoreImpact:listingScoreImpact(l,my)}))
+    .sort((a,b)=>b.scoreImpact-a.scoreImpact || b.weight-a.weight || a.price-b.price);
+}
+function listingScoreImpact(listing, deck){
+  if(!deck) return Number(listing.weight || 0);
+  return simulateDeckWithCard(deck, listing).score - Number(deck.score || 0);
+}
+function setFilter(filter){
+  currentFilter = filter;
+  document.querySelectorAll(".filter").forEach(b=>b.classList.toggle("active",b.dataset.filter===filter));
+  renderMarket();
+}
+function huntMissing(){
+  setFilter("missing");
+  document.getElementById("hostMarket")?.scrollIntoView({behavior:"smooth",block:"start"});
+}
+function renderMarket(){
+  const grid = document.getElementById("marketGrid");
+  const list = filteredListings();
+  document.getElementById("marketInfo").textContent = address ? list.length+" sorted by score impact" : list.length+" sorted by card weight";
+  if(!list.length){grid.innerHTML='<div class="loading">No matching host listings. The floor is dry.</div>';return;}
+  grid.innerHTML = list.slice(0,80).map(l=>{
+    const h = hostById(l.teamId);
+    const mine = address && l.seller===address;
+    const impact = Number(l.scoreImpact ?? l.weight ?? 0);
+    const impactLabel = (impact > 0 ? "+" : "") + impact;
+    const impactColor = impact > 0 ? "var(--green)" : impact < 0 ? "var(--red)" : "var(--muted)";
+    const impactText = address ? "score impact " + impactLabel : "weight rank +" + l.weight;
+    return `<div class="market-card r${l.rarity} ${mine?'mine':''}">
+      ${marketFigure(l)}
+      <div>
+        <div class="card-name">${h.name} ${posLabel(l.position)} <span style="color:${RARITY_COLOR[l.rarity]}">${RARITY_SHORT[l.rarity]}</span></div>
+        <div class="card-sub">#${l.tokenId} - ${l.weight} pts - <span style="color:${impactColor};font-weight:900">${impactText}</span></div>
+      </div>
+      <div class="card-actions">
+        <div class="card-price">${fmtPrice(l.price)} CHZ</div>
+        <button class="btn ${mine?'red':'gold'}" onclick="${mine?`cancelListing(${l.listingId})`:`buyListing(${l.listingId}, '${l.price}')`}">${mine?'CANCEL':'BUY NOW'}</button>
+      </div>
+    </div>`;
+  }).join("");
+}
+function renderSignals(){
+  const demand = HOST_ORDER.map(h=>{
+    const missing = state.scores.filter(s=>s.completion>0 && s.completion<3 && !s.best[h.id]);
+    const supply = state.hostCards.filter(c=>c.teamId===h.id).length;
+    const floor = state.listings.filter(l=>l.teamId===h.id).sort((a,b)=>a.price-b.price)[0];
+    return {h,missing:missing.length,near:missing.filter(s=>s.completion===2).length,supply,floor};
+  }).sort((a,b)=>b.near-a.near || b.missing-a.missing || a.supply-b.supply);
+  document.getElementById("demandInfo").textContent = demand.reduce((s,d)=>s+d.near,0)+" near-complete";
+  document.getElementById("demandList").innerHTML = demand.map(d=>`
+    <div class="signal ${d.near?'hot':''}">
+      <div class="sig-team">${d.h.name.slice(0,3).toUpperCase()}</div>
+      <div class="sig-main"><b>${d.near} can complete 3/3</b><span>${d.missing} missing this host - minted ${d.supply}</span></div>
+      <div class="sig-price">${d.floor?fmtPrice(d.floor.price):"NO"}<br>FLOOR</div>
+    </div>
+  `).join("");
+  document.getElementById("deskInfo").textContent = state.demo ? "demo signals" : "live signals";
+}
+function renderFeed(){
+  const feed = state.hostEvents.slice().sort((a,b)=>(b.block||0)-(a.block||0) || b.tokenId-a.tokenId).slice(0,14);
+  document.getElementById("feedInfo").textContent = feed.length+" events";
+  document.getElementById("feed").innerHTML = feed.length ? feed.map(e=>{
+    const h = hostById(e.teamId);
+    return `<div class="feed-row"><div class="feed-team">${h.name.slice(0,3).toUpperCase()}</div><div class="feed-main">${e.eventType.toUpperCase()} ${shortAddr(e.wallet)} - ${posLabel(e.position)} #${e.tokenId}</div><div class="feed-price">${e.weight}</div></div>`;
+  }).join("") : '<div class="loading">No host events yet.</div>';
+}
+
+function suggestedAsk(card){
+  const floor = state.listings.filter(l=>l.teamId===card.teamId && Number(l.tokenId)!==Number(card.tokenId)).sort((a,b)=>a.price-b.price)[0];
+  const scarcityPremium = Number(card.weight || 0) >= 80 ? 3 : Number(card.weight || 0) >= 36 ? 2.2 : 1.6;
+  const floorAnchor = floor ? Number(floor.price || 0) * scarcityPremium : 0;
+  return Math.ceil(Math.max(35, floorAnchor, Number(card.weight || 0) * 1.6));
+}
+function advisorBuySignal(deck){
+  if(!deck) return null;
+  const top = state.scores[0] || null;
+  const targetScore = top && top.wallet !== address ? Number(top.score || 0) : Number(deck.score || 0);
+  return state.listings
+    .filter(l=>!address || l.seller !== address)
+    .map(l=>{
+      const sim = simulateDeckWithCard(deck,l);
+      return {...l,simScore:sim.score,simCompletion:sim.completion,simBonus:sim.bonus,impact:sim.score-Number(deck.score || 0),leaderFlip:sim.score>targetScore};
+    })
+    .filter(x=>x.impact>0)
+    .sort((a,b)=>Number(b.leaderFlip)-Number(a.leaderFlip) || b.impact-a.impact || b.weight-a.weight || a.price-b.price)[0] || null;
+}
+function advisorSellSignal(){
+  if(!address) return null;
+  const topScore = Number(state.scores[0]?.score || 0);
+  const owned = state.hostCards.filter(c=>state.ownerByToken.get(Number(c.tokenId))===address);
+  const signals = [];
+  owned.forEach(card=>{
+    state.scores.filter(row=>row.wallet!==address).forEach(row=>{
+      const sim = simulateDeckWithCard(row,card);
+      const impact = sim.score - Number(row.score || 0);
+      if(impact <= 0) return;
+      const makesLeader = sim.score > topScore;
+      if(!makesLeader && sim.completion < 3) return;
+      signals.push({card,target:row,impact,simScore:sim.score,simCompletion:sim.completion,makesLeader,listed:state.activeByToken.get(Number(card.tokenId)),ask:suggestedAsk(card)});
+    });
+  });
+  return signals.sort((a,b)=>Number(b.makesLeader)-Number(a.makesLeader) || b.impact-a.impact || b.card.weight-a.card.weight)[0] || null;
+}
+function openTradeAdvisor(auto=true){
+  const modal = document.getElementById("tradeAdvisorModal");
+  const body = document.getElementById("tradeAdvisorBody");
+  if(!modal || !body) return;
+  const deck = address ? state.scores.find(s=>s.wallet===address) : null;
+  const buy = advisorBuySignal(deck);
+  const sell = advisorSellSignal();
+  const leader = state.scores[0];
+  if(!address){
+    body.innerHTML = `
+      <div class="trade-alert buy">
+        <h3>HOST MARKET IS THE GAME</h3>
+        <p>Connect wallet and this panel will show if a listed card gives you the leader spot, or if your wallet holds a card someone else needs to become #1.</p>
+      </div>
+      <div class="trade-note">Mints create supply. Trades create the real economy. Only cards currently in the wallet score; once a card sells, it leaves that seller's podium.</div>
+      <div class="trade-advisor-actions"><button class="btn gold" onclick="openWalletChoice();closeTradeAdvisor()">CONNECT</button><button class="btn" onclick="huntMissing();closeTradeAdvisor()">VIEW HOST MARKET</button></div>
+    `;
+  }else if(sell && sell.makesLeader){
+    const h = hostById(sell.card.teamId);
+    const cardLabel = h.name+" "+posLabel(sell.card.position)+" - "+RARITY[sell.card.rarity]+" - "+sell.card.weight+" pts - #"+sell.card.tokenId;
+    body.innerHTML = `
+      <div class="trade-alert sell">
+        <div class="trade-advisor-grid">
+          <div class="trade-advisor-fig">${makeFigureSVG(sell.card,86)}</div>
+          <div>
+            <h3>YOU HOLD A LEADER CARD</h3>
+            <p>Your <b>${cardLabel}</b> can push ${shortAddr(sell.target.wallet)} to <b>${sell.simScore} pts</b> and flip the leaderboard.</p>
+          </div>
+        </div>
+      </div>
+      <div class="trade-note">${sell.listed ? "This card is already listed and still scores until someone buys it. If demand rises, cancel and relist higher." : "Suggested ask anchor: "+sell.ask+" CHZ. This is not floor trash; it is a missing-piece card."} If it sells, it leaves your podium. Current leader: ${leader?shortAddr(leader.wallet)+" at "+leader.score+" pts":"none"}.</div>
+      <div class="trade-advisor-actions"><button class="btn red" onclick="openSellModal(${sell.card.tokenId});closeTradeAdvisor()">${sell.listed?"MANAGE LISTING":"LIST THIS CARD"}</button><button class="btn" onclick="huntMissing();closeTradeAdvisor()">VIEW MARKET</button></div>
+    `;
+  }else if(buy && buy.leaderFlip){
+    const h = hostById(buy.teamId);
+    const cardLabel = h.name+" "+posLabel(buy.position)+" - "+RARITY[buy.rarity]+" - "+buy.weight+" pts - #"+buy.tokenId;
+    body.innerHTML = `
+      <div class="trade-alert buy">
+        <div class="trade-advisor-grid">
+          <div class="trade-advisor-fig">${makeFigureSVG(buy,86)}</div>
+          <div>
+            <h3>THIS CARD GIVES YOU LEADER</h3>
+            <p><b>${cardLabel}</b> is listed for <b>${fmtPrice(buy.price)} CHZ</b>. Buying it adds <b>+${buy.impact}</b> and moves you to <b>${buy.simScore} pts</b>.</p>
+          </div>
+        </div>
+      </div>
+      <div class="trade-note">This is the missing-piece moment: after purchase, the card enters your wallet and starts scoring for you. If someone else buys it first, the leaderboard path changes.</div>
+      <div class="trade-advisor-actions"><button class="btn gold" onclick="buyListing(${buy.listingId}, '${buy.price}');closeTradeAdvisor()">BUY LEADER CARD</button><button class="btn" onclick="huntMissing();closeTradeAdvisor()">VIEW MARKET</button></div>
+    `;
+  }else if(buy){
+    const h = hostById(buy.teamId);
+    const cardLabel = h.name+" "+posLabel(buy.position)+" - "+RARITY[buy.rarity]+" - "+buy.weight+" pts - #"+buy.tokenId;
+    body.innerHTML = `
+      <div class="trade-alert buy">
+        <h3>BEST MARKET UPGRADE FOUND</h3>
+        <p><b>${cardLabel}</b> gives your podium <b>+${buy.impact}</b> score impact for ${fmtPrice(buy.price)} CHZ.</p>
+      </div>
+      <div class="trade-note">Not every buy should be cheap. Prioritize cards that complete 3/3 or replace your weakest host card.</div>
+      <div class="trade-advisor-actions"><button class="btn gold" onclick="buyListing(${buy.listingId}, '${buy.price}');closeTradeAdvisor()">BUY UPGRADE</button><button class="btn" onclick="huntMissing();closeTradeAdvisor()">VIEW MARKET</button></div>
+    `;
+  }else{
+    body.innerHTML = `
+      <div class="trade-alert">
+        <h3>NO LEADER FLIP RIGHT NOW</h3>
+        <p>Your wallet has no obvious leader-flip trade at current listings. Minting can create new host supply; selling strong host cards can create the next market squeeze.</p>
+      </div>
+      <div class="trade-note">Leaderboard pressure changes whenever someone mints, lists, buys, or completes 3/3 for the +30 bonus.</div>
+      <div class="trade-advisor-actions"><button class="btn gold" onclick="mintCard();closeTradeAdvisor()">MINT RANDOM WC CARD</button><button class="btn red" onclick="openSellModal();closeTradeAdvisor()">SELL HOST CARD</button></div>
+    `;
+  }
+  modal.classList.add("show");
+}
+function closeTradeAdvisor(){document.getElementById("tradeAdvisorModal")?.classList.remove("show");}
+function autoOpenTradeAdvisor(){
+  const key = address || "guest";
+  if(advisorOpenedFor === key) return;
+  advisorOpenedFor = key;
+  setTimeout(()=>openTradeAdvisor(true), 650);
+}
+
+function openSellModal(highlightToken=null){
+  if(!address){toast("Connect wallet first.",true);return;}
+  const owned = state.hostCards.filter(c=>state.ownerByToken.get(c.tokenId)===address);
+  document.getElementById("sellTitle").textContent = "SELL HOST CARD";
+  document.getElementById("sellList").innerHTML = owned.length ? owned.sort((a,b)=>(Number(b.tokenId)===Number(highlightToken))- (Number(a.tokenId)===Number(highlightToken)) || b.weight-a.weight).map(c=>{
+    const h = hostById(c.teamId);
+    const listed = state.activeByToken.get(c.tokenId);
+    const suggested = suggestedAsk(c);
+    const hot = Number(c.tokenId)===Number(highlightToken);
+    return `<div class="sell-row">
+      <div class="market-pos">${h.name.slice(0,3).toUpperCase()}</div>
+      <div><div class="market-name">${hot?'HOT ':''}${posLabel(c.position)} ${c.weight} PTS</div><div class="market-sub">#${c.tokenId} ${listed?'- already listed':'- ask anchor '+suggested+' CHZ'}</div></div>
+      ${listed ? `<button class="btn red" onclick="cancelListing(${listed.listingId})">CANCEL</button>` : `<div><input class="sell-input" id="sell_${c.tokenId}" value="${suggested}" min="1" step="1" type="number"><button class="btn red" style="width:100%;margin-top:5px" onclick="listCard(${c.tokenId})">SELL</button></div>`}
+    </div>`;
+  }).join("") : '<div class="loading">No host cards currently owned by this wallet.</div>';
+  document.getElementById("sellModal").classList.add("show");
+}
+function closeSellModal(){document.getElementById("sellModal").classList.remove("show");}
+async function buyListing(listingId, price){
+  if(!signer || !marketContract){toast("Connect wallet first.",true);return;}
+  try{
+    const live = await marketContract.getListing(Number(listingId));
+    if(!Boolean(live[3])){toast("Listing is no longer active.",true);await loadQuest();return;}
+    const tx = await marketContract.buyFigure(Number(listingId),{value:live[2]});
+    toast("Buy sent. Waiting for confirmation...");
+    await tx.wait();
+    toast("Host card bought. Podium recalculating.");
+    await loadQuest();
+  }catch(e){toast("Buy failed: "+readableError(e),true);}
+}
+async function cancelListing(listingId){
+  if(!signer || !marketContract){toast("Connect wallet first.",true);return;}
+  try{const tx=await marketContract.cancelListing(Number(listingId));toast("Cancel sent.");await tx.wait();await loadQuest();}
+  catch(e){toast("Cancel failed: "+readableError(e),true);}
+}
+async function listCard(tokenId){
+  if(!signer || !marketContract || !address){toast("Connect wallet first.",true);return;}
+  const input = document.getElementById("sell_"+tokenId);
+  const price = String(input?.value || "0");
+  if(Number(price)<=0){toast("Price must be positive.",true);return;}
+  try{
+    const approved = await contract.isApprovedForAll(address, MARKET_ADDRESS);
+    if(!approved){toast("Approving marketplace..."); const txA=await contract.setApprovalForAll(MARKET_ADDRESS,true); await txA.wait();}
+    const tx=await marketContract.listFigure(Number(tokenId),ethers.parseEther(price));
+    toast("Listing sent.");
+    await tx.wait();
+    closeSellModal();
+    await loadQuest();
+  }catch(e){toast("List failed: "+readableError(e),true);}
+}
+function closeMintReveal(){document.getElementById("mintReveal")?.classList.remove("show");}
+function extractMintedCard(receipt){
+  const iface = new ethers.Interface(ABI);
+  for(const log of receipt?.logs || []){
+    if(String(log.address).toLowerCase() !== CONTRACT_ADDRESS.toLowerCase()) continue;
+    try{
+      const parsed = iface.parseLog(log);
+      if(parsed?.name !== "FigureMinted") continue;
+      const a = parsed.args;
+      if(address && String(a.owner).toLowerCase() !== address) continue;
+      const dna = BigInt(String(a.dna));
+      const parsedDna = parseDNA(dna);
+      return {
+        owner:String(a.owner).toLowerCase(),
+        tokenId:Number(a.tokenId),
+        dna,
+        ...parsedDna,
+        teamId:Number(a.teamId),
+        position:Number(a.position),
+        rarity:Number(a.rarity),
+        weight:Number(a.weight)
+      };
+    }catch(e){}
+  }
+  return null;
+}
+function showMintReveal(card){
+  const modal = document.getElementById("mintReveal");
+  if(!modal || !card) return;
+  const team = teamMeta(card.teamId);
+  const isHost = HOST_IDS.includes(card.teamId);
+  document.getElementById("mintRevealFig").innerHTML = makeFigureSVG(card,118);
+  document.getElementById("mintRevealName").textContent = team.name+" "+posLabel(card.position);
+  document.getElementById("mintRevealSub").textContent = "#"+card.tokenId+" - "+RARITY[card.rarity]+" - "+(isHost ? "HOST QUEST CARD" : "WORLD CUP CARD");
+  document.getElementById("mintRevealStats").innerHTML = `
+    <div class="mint-reveal-stat"><b>${card.weight}</b><span>weight</span></div>
+    <div class="mint-reveal-stat"><b>${RARITY_SHORT[card.rarity]}</b><span>rarity</span></div>
+    <div class="mint-reveal-stat"><b>${isHost ? "YES" : "NO"}</b><span>host quest</span></div>
+  `;
+  document.getElementById("mintRevealNote").textContent = isHost
+    ? "This card can count in Host Nations Podium if it is your best card for "+team.name+". Completing all 3 hosts adds +30."
+    : "This mint is not USA, Mexico or Canada, so it does not score in this quest. It still belongs to your main World Cup collection.";
+  modal.classList.add("show");
+}
+async function mintCard(){
+  if(!signer || !contract){toast("Connect wallet first.",true);return;}
+  try{
+    currentMintPrice = await contract.mintPrice().catch(()=>currentMintPrice);
+    const tx = await contract.mint(ZERO_REF,{value:currentMintPrice});
+    toast("Mint sent. Waiting for card reveal...");
+    const receipt = await tx.wait();
+    const minted = extractMintedCard(receipt);
+    if(minted) showMintReveal(minted);
+    else toast("Mint confirmed, but card details were not found in receipt. Refreshing data.", true);
+    await loadQuest();
+  }catch(e){toast("Mint failed: "+readableError(e),true);}
+}
+
+class HostPodium3D{
+  constructor(canvas){
+    this.canvas = canvas;
+    this.cards = [];
+    this.clock = 0;
+    this.figures = [];
+    if(typeof THREE === "undefined"){document.getElementById("stageFallback").style.display="grid";return;}
+    this.scene = new THREE.Scene();
+    this.camera = new THREE.PerspectiveCamera(38,1,.1,100);
+    this.camera.position.set(0,2.4,8.4);
+    this.renderer = new THREE.WebGLRenderer({canvas,alpha:true,antialias:true,powerPreference:"high-performance"});
+    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
+    this.renderer.shadowMap.enabled = true;
+    this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    this.scene.add(new THREE.AmbientLight(0xffffff,.54));
+    const key = new THREE.DirectionalLight(0xffffff,1.16); key.position.set(4,5,4); key.castShadow=true; this.scene.add(key);
+    const rim = new THREE.PointLight(0x58a6ff,1.15,10); rim.position.set(-3,1.9,3); this.scene.add(rim);
+    this.root = new THREE.Group(); this.scene.add(this.root);
+    this.makeStage();
+    window.addEventListener("resize",()=>this.resize());
+    this.resize();
+    this.animate();
+  }
+  mat(color, opts={}){return new THREE.MeshStandardMaterial({color,roughness:opts.roughness??.62,metalness:opts.metalness??.08,emissive:opts.emissive||0x000000,emissiveIntensity:opts.emissiveIntensity||0});}
+  figureMaterial(color, rarity=0){
+    const p = {color,roughness:.7,metalness:.05};
+    if(rarity===1){p.roughness=.45;p.metalness=.25;}
+    if(rarity===2){p.roughness=.2;p.metalness=.55;p.emissive=new THREE.Color(0xa855f7);p.emissiveIntensity=.08;}
+    if(rarity===3){p.roughness=.18;p.metalness=.38;p.emissive=new THREE.Color(0xffc940);p.emissiveIntensity=.06;}
+    return new THREE.MeshStandardMaterial(p);
+  }
+  box(w,h,d,m,x,y,z){const mesh=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),m);mesh.position.set(x,y,z);mesh.castShadow=true;mesh.receiveShadow=true;return mesh;}
+  sphere(r,m,x,y,z){const mesh=new THREE.Mesh(new THREE.SphereGeometry(r,14,10),m);mesh.position.set(x,y,z);mesh.castShadow=true;mesh.receiveShadow=true;return mesh;}
+  cyl(rt,rb,h,m,x,y,z,seg=36){const mesh=new THREE.Mesh(new THREE.CylinderGeometry(rt,rb,h,seg),m);mesh.position.set(x,y,z);mesh.castShadow=true;mesh.receiveShadow=true;return mesh;}
+  makeText(text,color="#ffffff"){
+    const c=document.createElement("canvas"); c.width=256; c.height=96; const g=c.getContext("2d");
+    g.clearRect(0,0,256,96); g.fillStyle=color; g.font="900 42px Arial"; g.textAlign="center"; g.fillText(text,128,58);
+    const tex=new THREE.CanvasTexture(c);
+    return new THREE.Mesh(new THREE.PlaneGeometry(1.25,.45),new THREE.MeshBasicMaterial({map:tex,transparent:true,depthWrite:false}));
+  }
+  makeStage(){
+    const floor = new THREE.Mesh(new THREE.CircleGeometry(5.7,64),this.mat(0x0a1118,{roughness:.86}));
+    floor.rotation.x = -Math.PI/2; floor.position.y=-.08; floor.receiveShadow=true; this.root.add(floor);
+    const lineMat = new THREE.MeshBasicMaterial({color:0x00ff87,transparent:true,opacity:.28});
+    for(let i=0;i<3;i++){const ring=new THREE.Mesh(new THREE.TorusGeometry(2.35+i*.86,.012,8,96),lineMat);ring.rotation.x=Math.PI/2;ring.position.y=.02;this.root.add(ring);}
+    const hosts = [
+      {x:-2.05,h:.92,r:.82,label:"#2",color:0x58a6ff},
+      {x:0,h:1.30,r:.95,label:"#1",color:0xffc940},
+      {x:2.05,h:.74,r:.78,label:"#3",color:0x00ff87}
+    ];
+    hosts.forEach(p=>{
+      const base=this.cyl(p.r,p.r*1.05,p.h,this.mat(0x121c26,{roughness:.45,metalness:.18}),p.x,p.h/2-.05,0);
+      this.root.add(base);
+      const trim=this.cyl(p.r*1.02,p.r*1.02,.06,this.mat(p.color,{roughness:.25,metalness:.28,emissive:p.color,emissiveIntensity:.08}),p.x,p.h+.01,0);
+      this.root.add(trim);
+      const txt=this.makeText(p.label,p.label==="#1"?"#ffc940":p.label==="#2"?"#58a6ff":"#00ff87");
+      txt.position.set(p.x,p.h*.54, p.r+.08);
+      txt.scale.setScalar(1.08);
+      this.root.add(txt);
+    });
+  }
+  setCards(items){
+    this.figures.forEach(f=>this.root.remove(f));
+    this.figures = [];
+    const slots=[{x:-2.05,y:.96,z:0,s:.88},{x:0,y:1.34,z:0,s:1.05},{x:2.05,y:.78,z:0,s:.82}];
+    items.forEach((item,i)=>{
+      const h = item.host || HOST_ORDER[i];
+      const card = item.card || null;
+      const fig = this.makeFigure(card || {teamId:h.id,position:0,rarity:0,weight:0,skinTone:2,hairStyle:6}, h.color, Boolean(card));
+      fig.position.set(slots[i].x,slots[i].y,slots[i].z);
+      fig.scale.setScalar(slots[i].s);
+      fig.userData.baseY = slots[i].y;
+      this.root.add(fig); this.figures.push(fig);
+    });
+  }
+  makeFigure(card, fallbackColor, active){
+    const t = card;
+    const r = active ? Number(t.rarity || 0) : 0;
+    const fig = new THREE.Group();
+    const teamCol = active ? new THREE.Color(TEAM_COLORS[t.teamId % TEAM_COLORS.length]) : new THREE.Color(0x263241);
+    const skinCol = new THREE.Color(skinColor(t.skinTone));
+    const kitMat = this.figureMaterial(teamCol, r);
+    const skinMat = this.figureMaterial(skinCol, 0);
+    const darkMat = new THREE.MeshStandardMaterial({color:0x0a0a0a,roughness:.8});
+    const whiteMat = new THREE.MeshStandardMaterial({color:0xffffff,roughness:.7});
+    const bootColors = [0xff2200,0xffd700,0x00cc44,0x0066ff,0xff00cc,0xffffff,0x222222,0xff6600];
+    const bootCol = active && t.hasGoldenBoots ? 0xffd700 : bootColors[t.teamId % bootColors.length];
+    const bootMat = new THREE.MeshStandardMaterial({
+      color: active ? bootCol : 0x182231,
+      roughness: t.hasGoldenBoots ? .1 : .5,
+      metalness: t.hasGoldenBoots ? .9 : .1,
+      emissive: t.hasGoldenBoots ? new THREE.Color(0xffd700) : new THREE.Color(0x000000),
+      emissiveIntensity: active && t.hasGoldenBoots ? .3 : 0
+    });
+    const shortsMat = new THREE.MeshStandardMaterial({color:new THREE.Color(teamCol).multiplyScalar(.4),roughness:.8});
+    const Y_BOOT=.10, Y_SOCK=.28, Y_LEG=.60, Y_SHORTS=.85, Y_TORSO=1.20, Y_NECK=1.62, Y_HEAD=1.88;
+
+    fig.add(this.box(.24,.15,.40,bootMat,-.16,Y_BOOT,.04));
+    fig.add(this.box(.24,.15,.40,bootMat,.16,Y_BOOT,.04));
+    fig.add(this.box(.22,.20,.22,whiteMat,-.16,Y_SOCK,0));
+    fig.add(this.box(.22,.20,.22,whiteMat,.16,Y_SOCK,0));
+    fig.add(this.box(.22,.38,.22,kitMat,-.16,Y_LEG,0));
+    fig.add(this.box(.22,.38,.22,kitMat,.16,Y_LEG,0));
+    fig.add(this.box(.56,.22,.30,shortsMat,0,Y_SHORTS,0));
+    fig.add(this.box(.62,.65,.34,kitMat,0,Y_TORSO,0));
+
+    const nc=document.createElement("canvas"); nc.width=64; nc.height=64;
+    const cx=nc.getContext("2d");
+    cx.clearRect(0,0,64,64);
+    cx.fillStyle="rgba(255,255,255,0.9)";
+    cx.font="bold 36px Arial Black"; cx.textAlign="center"; cx.textBaseline="middle";
+    cx.fillText(active ? String(t.position) : "?",32,32);
+    const numPlane=new THREE.Mesh(
+      new THREE.PlaneGeometry(.28,.28),
+      new THREE.MeshBasicMaterial({map:new THREE.CanvasTexture(nc),transparent:true,depthWrite:false})
+    );
+    numPlane.position.set(0,Y_TORSO,.18); fig.add(numPlane);
+
+    const armL=this.box(.19,.52,.19,kitMat,-.42,Y_TORSO-.02,0); armL.rotation.z=.15;
+    const armR=this.box(.19,.52,.19,kitMat,.42,Y_TORSO-.02,0); armR.rotation.z=-.15;
+    fig.add(armL,armR);
+    const handMat = active && t.hasGloves && t.position===1
+      ? new THREE.MeshStandardMaterial({color:0xffee00,roughness:.5,metalness:.1})
+      : skinMat;
+    fig.add(this.sphere(.105,handMat,-.44,Y_TORSO-.30,0));
+    fig.add(this.sphere(.105,handMat,.44,Y_TORSO-.30,0));
+    fig.add(this.cyl(.085,.085,.16,skinMat,0,Y_NECK,0,8));
+    fig.add(this.box(.48,.52,.44,skinMat,0,Y_HEAD,0));
+
+    const eyeMat=new THREE.MeshStandardMaterial({color:0x0a0a14,roughness:.5});
+    fig.add(this.box(.13,.10,.02,whiteMat,-.12,Y_HEAD+.07,.23));
+    fig.add(this.box(.13,.10,.02,whiteMat,.12,Y_HEAD+.07,.23));
+    fig.add(this.box(.07,.07,.025,eyeMat,-.11,Y_HEAD+.07,.235));
+    fig.add(this.box(.07,.07,.025,eyeMat,.11,Y_HEAD+.07,.235));
+    const browMat=new THREE.MeshStandardMaterial({color:0x1a0a00,roughness:.9});
+    fig.add(this.box(.13,.03,.02,browMat,-.12,Y_HEAD+.14,.23));
+    fig.add(this.box(.13,.03,.02,browMat,.12,Y_HEAD+.14,.23));
+    fig.add(this.box(.04,.06,.03,new THREE.MeshStandardMaterial({color:skinCol,roughness:.8}),0,Y_HEAD+.01,.235));
+    fig.add(this.box(.14,.035,.02,new THREE.MeshStandardMaterial({color:0x8b1a00,roughness:.9}),0,Y_HEAD-.10,.23));
+    fig.add(this.box(.04,.10,.04,skinMat,-.25,Y_HEAD+.01,0));
+    fig.add(this.box(.04,.10,.04,skinMat,.25,Y_HEAD+.01,0));
+
+    if(active && t.hasTattoo){
+      const tattooColors=[0x1a1aff,0xff1a1a,0x1aff1a,0xffff1a,0xff1aff];
+      const tattooCol=tattooColors[t.teamId%tattooColors.length];
+      fig.add(this.box(.21,.09,.21,new THREE.MeshStandardMaterial({color:tattooCol,roughness:.9,emissive:new THREE.Color(tattooCol),emissiveIntensity:.15}),-.42,Y_TORSO+.08,0));
+    }
+
+    const hairColors=[0x1a0800,0xff6600,0xffd700,0xcc0000,0x2a1a00,0x111111,0x8b4513,0x333333];
+    const hm=new THREE.MeshStandardMaterial({color:hairColors[(t.hairStyle || 0)%hairColors.length],roughness:.8});
+    const hy=Y_HEAD+.14;
+    if(t.hairStyle===0){
+      fig.add(this.box(.50,.10,.46,hm,0,hy,0));
+    }else if(t.hairStyle===1){
+      fig.add(this.box(.48,.07,.44,hm,0,hy-.04,0));
+      for(let i=0;i<8;i++){const a=i/8*Math.PI*2;fig.add(this.sphere(.085,hm,Math.cos(a)*.17,hy+.05,Math.sin(a)*.13));}
+    }else if(t.hairStyle===2){
+      fig.add(this.box(.48,.07,.44,hm,0,hy-.02,0));
+      for(let i=0;i<5;i++){const spike=new THREE.Mesh(new THREE.ConeGeometry(.055,.22,4),hm);spike.position.set((i-2)*.10,hy+.14,.05);spike.castShadow=true;fig.add(spike);}
+    }else if(t.hairStyle===3){
+      fig.add(this.box(.50,.07,.46,hm,0,hy-.02,0));
+      fig.add(this.box(.11,.30,.46,hm,0,hy+.13,0));
+    }else if(t.hairStyle===4){
+      fig.add(this.sphere(.28,hm,0,hy+.10,0));
+    }else if(t.hairStyle===5){
+      fig.add(this.box(.48,.07,.44,hm,0,hy-.02,0));
+      for(let i=-2;i<=2;i++) fig.add(this.box(.06,.28,.06,hm,i*.10,hy-.12,-.18));
+    }else if(t.hairStyle===7){
+      fig.add(this.box(.50,.08,.46,hm,0,hy-.01,0));
+      fig.add(this.box(.50,.06,.46,hm,0,hy+.07,-.01));
+    }
+
+    if(active && t.hasEarring){
+      fig.add(this.sphere(.04,new THREE.MeshStandardMaterial({color:0xffd700,metalness:1,roughness:.05,emissive:new THREE.Color(0xffd700),emissiveIntensity:.3}),-.27,Y_HEAD-.04,0));
+    }
+    if(active && t.hasBand){
+      const bandColors=[0xffffff,0x000000,0xff0000,0x00ff00,0x0000ff,0xffff00];
+      fig.add(this.box(.50,.07,.46,new THREE.MeshStandardMaterial({color:bandColors[t.position%bandColors.length],roughness:.6}),0,Y_HEAD+.04,0));
+    }
+    if(active && r===3){
+      const pg=new THREE.BufferGeometry();
+      const pos=[];
+      for(let i=0;i<32;i++) pos.push((Math.random()-.5)*2.5,Math.random()*3.2,(Math.random()-.5)*2.5);
+      pg.setAttribute("position",new THREE.Float32BufferAttribute(pos,3));
+      const particles=new THREE.Points(pg,new THREE.PointsMaterial({color:0xffd700,size:.055,transparent:true,opacity:.8}));
+      fig.add(particles);
+      fig.userData.particles = particles;
+    }
+    if(active && r===2){
+      const ring=new THREE.Mesh(new THREE.TorusGeometry(.6,.02,8,32),new THREE.MeshStandardMaterial({color:0xa855f7,emissive:new THREE.Color(0xa855f7),emissiveIntensity:.8,transparent:true,opacity:.6}));
+      ring.rotation.x=Math.PI/2; ring.position.y=.05; fig.add(ring);
+    }
+    if(active && r===1){
+      const ring=new THREE.Mesh(new THREE.TorusGeometry(.5,.015,8,32),new THREE.MeshStandardMaterial({color:0x3b82f6,emissive:new THREE.Color(0x3b82f6),emissiveIntensity:.6,transparent:true,opacity:.5}));
+      ring.rotation.x=Math.PI/2; ring.position.y=.05; fig.add(ring);
+    }
+    fig.userData.spinOffset = Math.random()*Math.PI*2;
+    return fig;
+  }
+  resize(){
+    const rect=this.canvas.getBoundingClientRect();
+    const w=Math.max(320,Math.floor(rect.width));
+    const h=Math.max(300,Math.floor(rect.height));
+    this.renderer.setSize(w,h,false);
+    this.camera.aspect=w/h; this.camera.updateProjectionMatrix();
+  }
+  animate(){
+    requestAnimationFrame(()=>this.animate());
+    this.clock += .012;
+    this.root.rotation.y = Math.sin(this.clock*.35)*.08;
+    this.figures.forEach((f,i)=>{
+      f.rotation.y = this.clock*(.75+i*.08)+f.userData.spinOffset;
+      f.position.y = (f.userData.baseY || 0) + Math.sin(this.clock*2+i)*.018;
+      if(f.userData.particles) f.userData.particles.rotation.y += .012;
+    });
+    this.renderer.render(this.scene,this.camera);
+  }
+}
+
+window.addEventListener("load", async ()=>{
+  const mobileWidth = Number(window.visualViewport?.width || window.innerWidth || document.documentElement.clientWidth || 0);
+  if (mobileWidth > 0 && mobileWidth < 1000) {
+    document.documentElement.classList.add("mobile-hard");
+    document.documentElement.style.setProperty("--mobile-vw", Math.max(320, Math.min(760, mobileWidth || 390)) + "px");
+    const walletPill = document.getElementById("walletPill");
+    const mobileWalletAction = document.getElementById("mobileWalletAction");
+    const mobileConnect = document.getElementById("mobileConnectBtn");
+    const desktopConnect = document.getElementById("connectBtn");
+    if(walletPill){
+      Object.assign(walletPill.style,{
+        position:"fixed", top:"7px", right:"8px", zIndex:"60",
+        width:"154px", maxWidth:"154px", display:"flex",
+        alignItems:"center", justifyContent:"space-between", gap:"7px",
+        padding:"7px", textAlign:"left"
+      });
+    }
+    if(mobileWalletAction) mobileWalletAction.style.display = "block";
+    if(mobileConnect) mobileConnect.style.display = "none";
+    if(desktopConnect) desktopConnect.style.display = "none";
+  }
+  podium3d = new HostPodium3D(document.getElementById("podiumStage"));
+  state = makeDemoState();
+  renderAll();
+  updateCountdown();
+  setInterval(updateCountdown,1000);
+  await loadQuest();
+  if(window.ethereum){
+    window.ethereum.request({method:"eth_accounts"}).then(async acc=>{
+      if(acc && acc[0]){
+        address=String(acc[0]).toLowerCase();
+        browserProvider=new ethers.BrowserProvider(window.ethereum);
+        signer=await browserProvider.getSigner();
+        provider=browserProvider;
+        contract=new ethers.Contract(CONTRACT_ADDRESS,ABI,signer);
+        marketContract=new ethers.Contract(MARKET_ADDRESS,MARKET_ABI,signer);
+        const bal = await provider.getBalance(address).catch(()=>null);
+        setBalanceLabel(bal === null ? "bal --" : Number(ethers.formatEther(bal)).toFixed(2)+" CHZ");
+        setConnectLabel(last4(address));
+        await loadQuest();
+      }
+    }).catch(()=>{});
+  }
+});
+</script>
+</body>
+</html>
