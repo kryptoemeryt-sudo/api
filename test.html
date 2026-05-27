@@ -1422,44 +1422,82 @@ class HostPodium3D{
     return new THREE.Mesh(new THREE.PlaneGeometry(1.25,.45),new THREE.MeshBasicMaterial({map:tex,transparent:true,depthWrite:false}));
   }
   makeStage(){
-    const floor = new THREE.Mesh(new THREE.PlaneGeometry(10.8,6.2), this.mat(0x05070a,{roughness:.92}));
-    floor.rotation.x = -Math.PI/2; floor.position.y=-.08; floor.receiveShadow=true; this.root.add(floor);
-    const gridMat = new THREE.MeshBasicMaterial({color:0x00ff87,transparent:true,opacity:.13});
-    for(let x=-5;x<=5;x+=1){
-      const line = new THREE.Mesh(new THREE.BoxGeometry(.01,.01,5.8),gridMat);
-      line.position.set(x,.005,0);
-      this.root.add(line);
-    }
-    for(let z=-3;z<=3;z+=1){
-      const line = new THREE.Mesh(new THREE.BoxGeometry(10,.01,.01),gridMat);
-      line.position.set(0,.006,z);
-      this.root.add(line);
-    }
-    const glowMat = new THREE.MeshBasicMaterial({color:0x00ff87,transparent:true,opacity:.16});
-    const glow = new THREE.Mesh(new THREE.CircleGeometry(3.05,72), glowMat);
-    glow.rotation.x = -Math.PI/2;
-    glow.position.y = .008;
-    this.root.add(glow);
+    const stageSide = this.mat(0x030507,{roughness:.82,metalness:.12});
+    const stageTop = this.mat(0x06090d,{roughness:.88,metalness:.10});
+    const glassTop = new THREE.MeshStandardMaterial({
+      color:0x080d12,
+      roughness:.28,
+      metalness:.25,
+      transparent:true,
+      opacity:.50,
+      emissive:new THREE.Color(0x000000),
+      emissiveIntensity:0
+    });
+    const mainBase = this.cyl(3.30,3.52,.14,stageSide,0,-.13,0,96);
+    mainBase.scale.z = .48;
+    mainBase.receiveShadow = true;
+    this.root.add(mainBase);
+    const topPlate = this.cyl(3.12,3.22,.04,stageTop,0,-.03,0,96);
+    topPlate.scale.z = .48;
+    topPlate.receiveShadow = true;
+    this.root.add(topPlate);
+    const glass = this.cyl(2.90,2.96,.018,glassTop,0,.008,0,96);
+    glass.scale.z = .46;
+    this.root.add(glass);
+    const rimMat = new THREE.MeshBasicMaterial({color:0x00ff87,transparent:true,opacity:.24});
+    const goldRimMat = new THREE.MeshBasicMaterial({color:0xffc940,transparent:true,opacity:.22});
+    const outerRim = new THREE.Mesh(new THREE.TorusGeometry(3.30,.018,8,128),rimMat);
+    outerRim.rotation.x = Math.PI/2;
+    outerRim.scale.z = .48;
+    outerRim.position.y = -.032;
+    this.root.add(outerRim);
+    const innerRim = new THREE.Mesh(new THREE.TorusGeometry(2.05,.010,8,128),goldRimMat);
+    innerRim.rotation.x = Math.PI/2;
+    innerRim.scale.z = .44;
+    innerRim.position.y = .025;
+    this.root.add(innerRim);
+    const centerGlow = new THREE.Mesh(
+      new THREE.CircleGeometry(1.18,72),
+      new THREE.MeshBasicMaterial({color:0x00ff87,transparent:true,opacity:.045})
+    );
+    centerGlow.rotation.x = -Math.PI/2;
+    centerGlow.position.y = .031;
+    centerGlow.scale.z = .42;
+    this.root.add(centerGlow);
     const hosts = [
-      {x:-2.05,h:.72,r:.82,label:"#2",color:0x58a6ff},
-      {x:0,h:1.02,r:.95,label:"#1",color:0xffc940},
-      {x:2.05,h:.58,r:.78,label:"#3",color:0x00ff87}
+      {x:-2.05,h:.70,r:.74,label:"#2",color:0x58a6ff},
+      {x:0,h:.96,r:.86,label:"#1",color:0xffc940},
+      {x:2.05,h:.56,r:.70,label:"#3",color:0x00ff87}
     ];
     hosts.forEach(p=>{
-      const base=this.cyl(p.r,p.r*1.05,p.h,this.mat(0x121c26,{roughness:.45,metalness:.18}),p.x,p.h/2-.05,0);
+      const baseMat = this.mat(0x070b10,{roughness:.62,metalness:.20});
+      const base=this.cyl(p.r,p.r*1.06,p.h,baseMat,p.x,p.h/2-.04,0,72);
+      base.scale.z = .78;
       this.root.add(base);
-      const trim=this.cyl(p.r*1.02,p.r*1.02,.06,this.mat(p.color,{roughness:.25,metalness:.28,emissive:p.color,emissiveIntensity:.08}),p.x,p.h+.01,0);
+      const shadow=this.cyl(p.r*1.08,p.r*1.12,.045,this.mat(0x05070a,{roughness:.8,metalness:.12}),p.x,.005,0,72);
+      shadow.scale.z = .82;
+      this.root.add(shadow);
+      const cap=this.cyl(p.r*.96,p.r*.98,.055,this.mat(0x0a1017,{roughness:.40,metalness:.26}),p.x,p.h+.005,0,72);
+      cap.scale.z = .76;
+      this.root.add(cap);
+      const trim=this.cyl(p.r*1.01,p.r*1.01,.035,this.mat(p.color,{roughness:.22,metalness:.35,emissive:p.color,emissiveIntensity:.12}),p.x,p.h+.045,0,72);
+      trim.scale.z = .78;
       this.root.add(trim);
+      const halo = new THREE.Mesh(new THREE.TorusGeometry(p.r*1.02,.014,8,96),new THREE.MeshBasicMaterial({color:p.color,transparent:true,opacity:.36}));
+      halo.rotation.x = Math.PI/2;
+      halo.scale.z = .78;
+      halo.position.set(p.x,p.h+.075,0);
+      this.root.add(halo);
       const txt=this.makeText(p.label,p.label==="#1"?"#ffc940":p.label==="#2"?"#58a6ff":"#00ff87");
-      txt.position.set(p.x,p.h*.54, p.r+.08);
-      txt.scale.setScalar(1.08);
+      txt.position.set(p.x,p.h*.50, p.r*.80);
+      txt.scale.setScalar(.92);
       this.root.add(txt);
     });
   }
   setCards(items){
     this.figures.forEach(f=>this.root.remove(f));
     this.figures = [];
-    const slots=[{x:-2.05,y:.76,z:0,s:.82},{x:0,y:1.06,z:0,s:.96},{x:2.05,y:.60,z:0,s:.78}];
+    const slots=[{x:-2.05,y:.74,z:0,s:.80},{x:0,y:1.00,z:0,s:.92},{x:2.05,y:.60,z:0,s:.76}];
     items.forEach((item,i)=>{
       const h = item.host || HOST_ORDER[i];
       const card = item.card || null;
