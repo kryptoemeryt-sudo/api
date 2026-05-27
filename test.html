@@ -128,7 +128,7 @@ html.mobile-hard .market{grid-template-columns:repeat(2,minmax(0,1fr));max-heigh
       <div class="rules">
         <div class="rule"><i>01</i><span>Score = best USA + Mexico + Canada weights.</span></div>
         <div class="rule"><i>02</i><span>Complete 3/3 podium adds +30 host bonus.</span></div>
-        <div class="rule"><i>03</i><span>Mints + market buys count. Transfers ignored.</span></div>
+        <div class="rule"><i>03</i><span>Only cards currently in your wallet score. Sold cards leave your podium.</span></div>
       </div>
     </div>
 
@@ -157,7 +157,7 @@ html.mobile-hard .market{grid-template-columns:repeat(2,minmax(0,1fr));max-heigh
         <button class="btn red" onclick="openSellModal()">SELL HOST CARD</button>
       </div>
       <div style="margin-top:10px;font-family:'Share Tech Mono',monospace;color:var(--muted);font-size:11px;line-height:1.45">
-        Trading logic: if a wallet owns 2/3 host nations, the missing country becomes pressure. Sellers can price into that pressure instead of dumping at floor.
+        Trading logic: if a wallet owns 2/3 host nations, the missing country becomes pressure. Listed cards still score until bought; sold cards leave your podium.
       </div>
       <div class="prize-box">
         <div class="prize-head"><span>1500 CHZ PRIZE POOL</span><b>TOP 5 PAID</b></div>
@@ -921,7 +921,7 @@ function openTradeAdvisor(auto=true){
         <h3>HOST MARKET IS THE GAME</h3>
         <p>Connect wallet and this panel will show if a listed card gives you the leader spot, or if your wallet holds a card someone else needs to become #1.</p>
       </div>
-      <div class="trade-note">Mints create supply. Trades create the real economy. Market buys count for this quest; direct wallet transfers stay ignored.</div>
+      <div class="trade-note">Mints create supply. Trades create the real economy. Only cards currently in the wallet score; once a card sells, it leaves that seller's podium.</div>
       <div class="trade-advisor-actions"><button class="btn gold" onclick="openWalletChoice();closeTradeAdvisor()">CONNECT</button><button class="btn" onclick="huntMissing();closeTradeAdvisor()">VIEW HOST MARKET</button></div>
     `;
   }else if(sell && sell.makesLeader){
@@ -937,7 +937,7 @@ function openTradeAdvisor(auto=true){
           </div>
         </div>
       </div>
-      <div class="trade-note">${sell.listed ? "This card is already listed. If demand rises, cancel and relist higher." : "Suggested ask anchor: "+sell.ask+" CHZ. This is not floor trash; it is a missing-piece card."} Current leader: ${leader?shortAddr(leader.wallet)+" at "+leader.score+" pts":"none"}.</div>
+      <div class="trade-note">${sell.listed ? "This card is already listed and still scores until someone buys it. If demand rises, cancel and relist higher." : "Suggested ask anchor: "+sell.ask+" CHZ. This is not floor trash; it is a missing-piece card."} If it sells, it leaves your podium. Current leader: ${leader?shortAddr(leader.wallet)+" at "+leader.score+" pts":"none"}.</div>
       <div class="trade-advisor-actions"><button class="btn red" onclick="openSellModal(${sell.card.tokenId});closeTradeAdvisor()">${sell.listed?"MANAGE LISTING":"LIST THIS CARD"}</button><button class="btn" onclick="huntMissing();closeTradeAdvisor()">VIEW MARKET</button></div>
     `;
   }else if(buy && buy.leaderFlip){
@@ -953,7 +953,7 @@ function openTradeAdvisor(auto=true){
           </div>
         </div>
       </div>
-      <div class="trade-note">This is the missing-piece moment: market buys count, direct transfers do not. If someone else buys it first, the leaderboard path changes.</div>
+      <div class="trade-note">This is the missing-piece moment: after purchase, the card enters your wallet and starts scoring for you. If someone else buys it first, the leaderboard path changes.</div>
       <div class="trade-advisor-actions"><button class="btn gold" onclick="buyListing(${buy.listingId}, '${buy.price}');closeTradeAdvisor()">BUY LEADER CARD</button><button class="btn" onclick="huntMissing();closeTradeAdvisor()">VIEW MARKET</button></div>
     `;
   }else if(buy){
