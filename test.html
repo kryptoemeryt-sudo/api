@@ -926,13 +926,14 @@ function openTradeAdvisor(auto=true){
     `;
   }else if(sell && sell.makesLeader){
     const h = hostById(sell.card.teamId);
+    const cardLabel = h.name+" "+posLabel(sell.card.position)+" - "+RARITY[sell.card.rarity]+" - "+sell.card.weight+" pts - #"+sell.card.tokenId;
     body.innerHTML = `
       <div class="trade-alert sell">
         <div class="trade-advisor-grid">
           <div class="trade-advisor-fig">${makeFigureSVG(sell.card,86)}</div>
           <div>
             <h3>YOU HOLD A LEADER CARD</h3>
-            <p>Your <b>${h.name} ${posLabel(sell.card.position)} #${sell.card.tokenId}</b> can push ${shortAddr(sell.target.wallet)} to <b>${sell.simScore} pts</b> and flip the leaderboard.</p>
+            <p>Your <b>${cardLabel}</b> can push ${shortAddr(sell.target.wallet)} to <b>${sell.simScore} pts</b> and flip the leaderboard.</p>
           </div>
         </div>
       </div>
@@ -941,13 +942,14 @@ function openTradeAdvisor(auto=true){
     `;
   }else if(buy && buy.leaderFlip){
     const h = hostById(buy.teamId);
+    const cardLabel = h.name+" "+posLabel(buy.position)+" - "+RARITY[buy.rarity]+" - "+buy.weight+" pts - #"+buy.tokenId;
     body.innerHTML = `
       <div class="trade-alert buy">
         <div class="trade-advisor-grid">
           <div class="trade-advisor-fig">${makeFigureSVG(buy,86)}</div>
           <div>
             <h3>THIS CARD GIVES YOU LEADER</h3>
-            <p><b>${h.name} ${posLabel(buy.position)} #${buy.tokenId}</b> is listed for <b>${fmtPrice(buy.price)} CHZ</b>. Buying it adds <b>+${buy.impact}</b> and moves you to <b>${buy.simScore} pts</b>.</p>
+            <p><b>${cardLabel}</b> is listed for <b>${fmtPrice(buy.price)} CHZ</b>. Buying it adds <b>+${buy.impact}</b> and moves you to <b>${buy.simScore} pts</b>.</p>
           </div>
         </div>
       </div>
@@ -956,10 +958,11 @@ function openTradeAdvisor(auto=true){
     `;
   }else if(buy){
     const h = hostById(buy.teamId);
+    const cardLabel = h.name+" "+posLabel(buy.position)+" - "+RARITY[buy.rarity]+" - "+buy.weight+" pts - #"+buy.tokenId;
     body.innerHTML = `
       <div class="trade-alert buy">
         <h3>BEST MARKET UPGRADE FOUND</h3>
-        <p><b>${h.name} ${posLabel(buy.position)} #${buy.tokenId}</b> gives your podium <b>+${buy.impact}</b> score impact for ${fmtPrice(buy.price)} CHZ.</p>
+        <p><b>${cardLabel}</b> gives your podium <b>+${buy.impact}</b> score impact for ${fmtPrice(buy.price)} CHZ.</p>
       </div>
       <div class="trade-note">Not every buy should be cheap. Prioritize cards that complete 3/3 or replace your weakest host card.</div>
       <div class="trade-advisor-actions"><button class="btn gold" onclick="buyListing(${buy.listingId}, '${buy.price}');closeTradeAdvisor()">BUY UPGRADE</button><button class="btn" onclick="huntMissing();closeTradeAdvisor()">VIEW MARKET</button></div>
