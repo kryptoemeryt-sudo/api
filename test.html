@@ -1301,9 +1301,9 @@ class HostPodium3D{
     this.figures = [];
     if(typeof THREE === "undefined"){document.getElementById("stageFallback").style.display="grid";return;}
     this.scene = new THREE.Scene();
-    this.camera = new THREE.PerspectiveCamera(38,1,.1,100);
-    this.camera.position.set(0,2.4,8.4);
-    this.camera.lookAt(0,1.05,0);
+    this.camera = new THREE.PerspectiveCamera(36,1,.1,100);
+    this.camera.position.set(0,2.0,9.6);
+    this.camera.lookAt(0,.72,0);
     this.renderer = new THREE.WebGLRenderer({canvas,alpha:true,antialias:true,powerPreference:"high-performance"});
     this.renderer.setPixelRatio(this.getRenderPixelRatio());
     this.canvas.style.imageRendering = "auto";
@@ -1346,14 +1346,35 @@ class HostPodium3D{
     return new THREE.Mesh(new THREE.PlaneGeometry(1.25,.45),new THREE.MeshBasicMaterial({map:tex,transparent:true,depthWrite:false}));
   }
   makeStage(){
-    const floor = new THREE.Mesh(new THREE.CircleGeometry(5.7,64),this.mat(0x0a1118,{roughness:.86}));
+    const pitchMat = this.mat(0x123c2a,{roughness:.88});
+    const floor = new THREE.Mesh(new THREE.PlaneGeometry(10.8,6.2), pitchMat);
     floor.rotation.x = -Math.PI/2; floor.position.y=-.08; floor.receiveShadow=true; this.root.add(floor);
-    const lineMat = new THREE.MeshBasicMaterial({color:0x00ff87,transparent:true,opacity:.28});
-    for(let i=0;i<3;i++){const ring=new THREE.Mesh(new THREE.TorusGeometry(2.35+i*.86,.012,8,96),lineMat);ring.rotation.x=Math.PI/2;ring.position.y=.02;this.root.add(ring);}
+    const stripeMat = new THREE.MeshBasicMaterial({color:0x1f563a,transparent:true,opacity:.42,side:THREE.DoubleSide});
+    for(let i=-2;i<=2;i++){
+      const stripe = new THREE.Mesh(new THREE.PlaneGeometry(1.05,6.2), stripeMat);
+      stripe.rotation.x = -Math.PI/2;
+      stripe.position.set(i*2.1,-.075,0);
+      this.root.add(stripe);
+    }
+    const lineMat = new THREE.MeshBasicMaterial({color:0xd7ffe7,transparent:true,opacity:.38});
+    const centerLine = new THREE.Mesh(new THREE.BoxGeometry(.018,.01,5.7),lineMat);
+    centerLine.position.set(0,.005,0); this.root.add(centerLine);
+    const midCircle = new THREE.Mesh(new THREE.TorusGeometry(1.0,.014,8,96),lineMat);
+    midCircle.rotation.x=Math.PI/2; midCircle.position.y=.01; this.root.add(midCircle);
+    const boxLine = (x,z,w,d)=>{
+      const group = new THREE.Group();
+      const a = new THREE.Mesh(new THREE.BoxGeometry(w,.01,.018),lineMat); a.position.set(x,.01,z-d/2);
+      const b = new THREE.Mesh(new THREE.BoxGeometry(w,.01,.018),lineMat); b.position.set(x,.01,z+d/2);
+      const c = new THREE.Mesh(new THREE.BoxGeometry(.018,.01,d),lineMat); c.position.set(x-w/2,.01,z);
+      const e = new THREE.Mesh(new THREE.BoxGeometry(.018,.01,d),lineMat); e.position.set(x+w/2,.01,z);
+      group.add(a,b,c,e); this.root.add(group);
+    };
+    boxLine(0,-2.35,3.2,1.25);
+    boxLine(0,2.35,3.2,1.25);
     const hosts = [
-      {x:-2.05,h:.92,r:.82,label:"#2",color:0x58a6ff},
-      {x:0,h:1.30,r:.95,label:"#1",color:0xffc940},
-      {x:2.05,h:.74,r:.78,label:"#3",color:0x00ff87}
+      {x:-2.05,h:.72,r:.82,label:"#2",color:0x58a6ff},
+      {x:0,h:1.02,r:.95,label:"#1",color:0xffc940},
+      {x:2.05,h:.58,r:.78,label:"#3",color:0x00ff87}
     ];
     hosts.forEach(p=>{
       const base=this.cyl(p.r,p.r*1.05,p.h,this.mat(0x121c26,{roughness:.45,metalness:.18}),p.x,p.h/2-.05,0);
@@ -1369,7 +1390,7 @@ class HostPodium3D{
   setCards(items){
     this.figures.forEach(f=>this.root.remove(f));
     this.figures = [];
-    const slots=[{x:-2.05,y:.96,z:0,s:.88},{x:0,y:1.34,z:0,s:1.05},{x:2.05,y:.78,z:0,s:.82}];
+    const slots=[{x:-2.05,y:.76,z:0,s:.82},{x:0,y:1.06,z:0,s:.96},{x:2.05,y:.60,z:0,s:.78}];
     items.forEach((item,i)=>{
       const h = item.host || HOST_ORDER[i];
       const card = item.card || null;
@@ -1512,9 +1533,9 @@ class HostPodium3D{
     this.renderer.setPixelRatio(this.getRenderPixelRatio());
     this.renderer.setSize(w,h,false);
     this.camera.aspect=w/h;
-    this.camera.position.set(0, mobile ? 2.6 : 2.4, mobile ? 9.4 : 8.4);
-    this.camera.fov = mobile ? 42 : 38;
-    this.camera.lookAt(0, mobile ? 1.02 : 1.05, 0);
+    this.camera.position.set(0, mobile ? 2.25 : 2.0, mobile ? 10.4 : 9.6);
+    this.camera.fov = mobile ? 39 : 36;
+    this.camera.lookAt(0, mobile ? .66 : .72, 0);
     this.camera.updateProjectionMatrix();
   }
   animate(){
