@@ -76,6 +76,10 @@ h1 .accent{color:var(--green);text-shadow:0 0 30px var(--green-glow);}
 .stat{display:flex;flex-direction:column;gap:3px;}
 .stat-n{font-family:'Black Ops One',sans-serif;font-size:28px;color:var(--green);}
 .stat-l{font-family:'Black Ops One',sans-serif;font-size:14px;color:var(--text);letter-spacing:2px;text-transform:uppercase;}
+.reward-total-banner{display:grid;grid-template-columns:auto 1fr;align-items:center;gap:12px;margin:0 0 14px;padding:12px 14px;border:1px solid rgba(255,201,64,.36);border-radius:9px;background:linear-gradient(135deg,rgba(255,201,64,.12),rgba(0,255,135,.055));box-shadow:0 0 24px rgba(255,201,64,.08),inset 0 0 20px rgba(0,255,135,.025);}
+.reward-total-value{font-family:'Black Ops One',sans-serif;font-size:30px;line-height:.95;color:var(--gold);text-shadow:0 0 18px rgba(255,201,64,.32);white-space:nowrap;}
+.reward-total-copy{font-family:'Share Tech Mono',monospace;font-size:11px;line-height:1.25;color:#c4d0df;text-transform:uppercase;letter-spacing:.8px;}
+.reward-total-copy b{font-family:'Black Ops One',sans-serif;color:var(--green);font-weight:400;letter-spacing:1px;}
 
 /* MINT BOX */
 .mint-box{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:22px;max-width:360px;}
@@ -2063,6 +2067,16 @@ body.dash-active #mint .quest-host-flags{
   width:54px !important;
   height:38px !important;
 }
+body.dash-active #mint .quest-title,
+.quest-link .quest-title{
+  white-space:normal !important;
+  overflow:visible !important;
+  text-overflow:clip !important;
+  line-height:1.05 !important;
+}
+body.dash-active #mint .quest-title{
+  font-size:12px !important;
+}
 @media (max-width:768px){
   .quest-launcher{
     grid-template-columns:1fr !important;
@@ -2262,6 +2276,7 @@ body.dash-active #mint .quest-host-flags{
 .strategy-btn.secondary{background:rgba(255,255,255,.04);color:#dde4f0;border-color:#1c2028;}
 .strategy-skip{display:block;margin:10px auto 0;background:none;border:none;color:#7a8899;font-family:'Share Tech Mono',monospace;font-size:10px;cursor:pointer;}
 @media(max-width:600px){.strategy-panel{padding:12px;width:calc(100vw - 16px);max-height:calc(100dvh - 16px)}.strategy-title{font-size:24px}.strategy-sub{font-size:15px}.strategy-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.strategy-line{font-size:13px}.strategy-example p{font-size:11px}.strategy-actions{grid-template-columns:1fr}.strategy-btn{min-height:38px;font-size:10px}}
+@media(max-width:600px){.reward-total-banner{grid-template-columns:1fr;gap:6px;padding:10px}.reward-total-value{font-size:26px}.reward-total-copy{font-size:10px}}
 
 /* Unified Block Kickers loading / blockchain overlay */
 #networkOverlay{position:fixed!important;inset:0!important;z-index:7000!important;display:none!important;align-items:center!important;justify-content:center!important;background:rgba(2,6,8,.82)!important;backdrop-filter:blur(8px)!important;padding:max(14px,env(safe-area-inset-top)) max(14px,env(safe-area-inset-right)) max(14px,env(safe-area-inset-bottom)) max(14px,env(safe-area-inset-left))!important;box-sizing:border-box!important;overflow:hidden!important;}
@@ -2532,6 +2547,10 @@ document.addEventListener('DOMContentLoaded', setupDesktopDashboardLayout);
     <!-- Desktop: tylko tytuĹ‚ (figurka po prawej) -->
     <h1 class="hero-title-desktop">BLOCK<br><span class="accent">KICKERS</span><br>2026</h1>
     <p class="hero-desc">Three quests are live. Mint cards, hunt missing pieces, and use the market to fight for paid leaderboard spots.</p>
+    <div class="reward-total-banner">
+      <div class="reward-total-value">28,000 CHZ</div>
+      <div class="reward-total-copy"><b>Total rewards live</b><br>Global race + quest pools + paid podium battles</div>
+    </div>
     <div class="stats-row">
       <div class="stat" style="text-align:center;"><div class="stat-n" id="sMinted">0</div><div class="stat-l">MINTED</div></div>
       <div class="stat" style="text-align:center;"><div class="stat-n" id="sVault">0</div><div class="stat-l">CHZ IN VAULT</div></div>
@@ -2542,7 +2561,7 @@ document.addEventListener('DOMContentLoaded', setupDesktopDashboardLayout);
       <a class="quest-link quest-dream" href="/dream-xi">
         <span class="quest-icon-cell"><span class="quest-icon">&#127942;</span></span>
         <span style="min-width:0;">
-          <span class="quest-title">DREAM XI</span>
+          <span class="quest-title">DREAM XI QUEST</span>
           <span class="quest-prize" id="questDreamPrize"><span class="quest-amount">10,000+ <span>CHZ</span></span><span class="quest-label">POOL</span></span>
         </span>
       </a>
@@ -2568,7 +2587,7 @@ document.addEventListener('DOMContentLoaded', setupDesktopDashboardLayout);
           </span>
         </span>
         <span style="min-width:0;">
-          <span class="quest-title">HOST PODIUM</span>
+          <span class="quest-title">HOST PODIUM QUEST</span>
           <span class="quest-prize" id="questHostPrize"><span class="quest-amount">1,500 <span>CHZ</span></span><span class="quest-label">TOP 5</span></span>
         </span>
       </a>
@@ -2701,28 +2720,28 @@ document.addEventListener('DOMContentLoaded', setupDesktopDashboardLayout);
 <div class="strategy-modal" id="strategyIntroModal" onclick="if(event.target===this)closeStrategyIntro()">
   <div class="strategy-panel">
     <div class="strategy-head">
-      <div class="strategy-kicker">Block Kickers Strategy</div>
+    <div class="strategy-kicker">Block Kickers Strategy</div>
       <button class="strategy-close" onclick="closeStrategyIntro()">&times;</button>
     </div>
-    <div class="strategy-title">NOT JUST <span>AN NFT</span></div>
-    <div class="strategy-sub">Every figure can matter: quests, leaderboard, country champion races, marketplace profit and the future World Cup Album.</div>
+    <div class="strategy-title">28,000 CHZ <span>IS LIVE</span></div>
+    <div class="strategy-sub">Connect your wallet, check which quests your cards score in, and trade the missing pieces other players need.</div>
     <div class="strategy-stats">
-      <div class="strategy-stat"><b>1,500+</b><span>Mints</span></div>
-      <div class="strategy-stat"><b>14k+</b><span>CHZ Pools</span></div>
-      <div class="strategy-stat"><b>30</b><span>Players</span></div>
+      <div class="strategy-stat"><b>3</b><span>Live Quests</span></div>
+      <div class="strategy-stat"><b>28k</b><span>CHZ Rewards</span></div>
+      <div class="strategy-stat"><b>TOP 5</b><span>Host Paid</span></div>
       <div class="strategy-stat"><b>10 CHZ</b><span>Early Mint</span></div>
     </div>
     <div class="strategy-flow">
-      <div class="strategy-line"><i>🎴</i><div>Mint cards for active and upcoming quests.</div></div>
-      <div class="strategy-line"><i>📈</i><div>Trade positions other players need.</div></div>
-      <div class="strategy-line"><i>🔒</i><div>Hold rare or scarce positions to block competitors.</div></div>
+      <div class="strategy-line"><i>01</i><div>Connect wallet and check your quest scores.</div></div>
+      <div class="strategy-line"><i>02</i><div>Buy cards that complete your lineup or push you into paid ranks.</div></div>
+      <div class="strategy-line"><i>03</i><div>List scarce cards other players need and price them like missing pieces.</div></div>
     </div>
     <div class="strategy-example">
-      <div class="strategy-example-title">Example: USA Quest</div>
-      <p>You mint a USA card for <strong>10 CHZ</strong>. Another player has <strong>10/11</strong> and needs exactly that position. You list it for <strong>500 CHZ</strong>. You get <strong>50x ROI</strong>, they complete the quest and claim the prize. <strong>Win-win.</strong></p>
+      <div class="strategy-example-title">Market example</div>
+      <p>You hold a USA / Mexico / Canada card that gives another wallet the lead. List it above floor. They buy the missing piece, you take profit, and the leaderboard moves. <strong>That is the game loop.</strong></p>
     </div>
     <div class="strategy-actions">
-      <button class="strategy-btn" onclick="closeStrategyIntro(); window.location.href='/nation-quest'">CHECK QUESTS</button>
+      <button class="strategy-btn" onclick="closeStrategyIntro(); scrollToSection('mint')">CHECK QUESTS</button>
       <button class="strategy-btn secondary" onclick="closeStrategyIntro(); openQuickHowModal()">HOW IT WORKS</button>
     </div>
     <button class="strategy-skip" onclick="closeStrategyIntro(true)">DON'T SHOW AGAIN</button>
@@ -2788,8 +2807,8 @@ document.addEventListener('DOMContentLoaded', setupDesktopDashboardLayout);
       <button onclick="closeQuickHowModal()" style="background:none;border:none;color:var(--text3);font-size:22px;cursor:pointer;line-height:1;padding:0 4px;">&times;</button>
     </div>
     <div style="background:rgba(0,255,135,.07);border:1px solid rgba(0,255,135,.24);border-radius:10px;padding:12px 14px;margin-bottom:12px;">
-      <div style="font-family:'Black Ops One',sans-serif;color:var(--green);font-size:14px;letter-spacing:1px;margin-bottom:5px;">FLOW TO EARN: SCORE THEN SELL</div>
-      <div style="font-size:14px;color:var(--text2);line-height:1.45;"><strong style="color:var(--gold);">No need to HODL every card during the hunt.</strong> When a card enters your wallet, it scores for quests. Then you can sell it, trade up, or hold/block it if it is rare.</div>
+      <div style="font-family:'Black Ops One',sans-serif;color:var(--green);font-size:14px;letter-spacing:1px;margin-bottom:5px;">FLOW TO EARN: MINT, CHECK, TRADE</div>
+      <div style="font-size:14px;color:var(--text2);line-height:1.45;"><strong style="color:var(--gold);">Every quest has its own scoring rule.</strong> Connect wallet, check which cards currently score, then buy missing pieces, list duplicates, or hold cards needed for snapshot rewards.</div>
     </div>
     <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-bottom:12px;">
       <div style="background:rgba(255,255,255,.025);border:1px solid rgba(0,255,135,.2);border-radius:9px;padding:12px;">
@@ -3444,14 +3463,14 @@ function switchHowTab(tab, btn){
 
 
 function openStrategyIntro(force=false){
-  try { if(!force && localStorage.getItem('bkStrategyIntroSeenV3')) return; } catch(e) {}
+  try { if(!force && localStorage.getItem('bkStrategyIntroSeenV4')) return; } catch(e) {}
   const modal = document.getElementById('strategyIntroModal');
   if(modal) setTimeout(() => modal.classList.add('show'), 250);
 }
 function closeStrategyIntro(dontShow=false){
   const modal = document.getElementById('strategyIntroModal');
   if(modal) modal.classList.remove('show');
-  if(dontShow){ try { localStorage.setItem('bkStrategyIntroSeenV3','1'); } catch(e) {} }
+  if(dontShow){ try { localStorage.setItem('bkStrategyIntroSeenV4','1'); } catch(e) {} }
 }
 document.addEventListener('DOMContentLoaded', () => setTimeout(() => openStrategyIntro(), 450));
 window.addEventListener('pageshow', () => setTimeout(() => openStrategyIntro(), 450));
