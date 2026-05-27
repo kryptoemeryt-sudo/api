@@ -53,6 +53,7 @@ button{font-family:'Black Ops One',sans-serif}
 .rules{display:grid;gap:7px;margin-top:12px}.rule{display:grid;grid-template-columns:28px minmax(0,1fr);gap:8px;align-items:center;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.035);border-radius:7px;padding:8px}.rule i{font-family:'Black Ops One',sans-serif;color:var(--gold);font-style:normal}.rule span{color:#dbe6f4;font-size:15px;line-height:1.15;min-width:0;overflow-wrap:anywhere}
 .stage-panel{position:relative;padding:0;min-height:360px;background:linear-gradient(180deg,rgba(11,18,26,.96),rgba(5,7,10,.98));border-color:rgba(88,166,255,.26)}
 #podiumStage{display:block;width:100%;height:100%;min-height:360px;position:relative;z-index:2}
+#podiumStage{image-rendering:auto}
 .stage-fallback{position:absolute;inset:0;display:none;place-items:center;text-align:center;color:var(--muted);font-family:'Share Tech Mono',monospace}
 .stage-header{position:absolute;left:12px;right:12px;top:10px;z-index:4;display:flex;justify-content:space-between;align-items:flex-start;gap:10px;pointer-events:none}
 .stage-title{font-family:'Black Ops One',sans-serif;font-size:14px;letter-spacing:1px;color:#fff}.stage-sub{font-family:'Share Tech Mono',monospace;color:var(--muted);font-size:10px;margin-top:3px;text-transform:uppercase}.stage-score{font-family:'Black Ops One',sans-serif;color:var(--green);font-size:30px;line-height:1;text-align:right}.stage-score span{display:block;font-family:'Share Tech Mono',monospace;color:var(--muted);font-size:10px;margin-top:4px}
@@ -1302,18 +1303,30 @@ class HostPodium3D{
     this.scene = new THREE.Scene();
     this.camera = new THREE.PerspectiveCamera(38,1,.1,100);
     this.camera.position.set(0,2.4,8.4);
+    this.camera.lookAt(0,1.05,0);
     this.renderer = new THREE.WebGLRenderer({canvas,alpha:true,antialias:true,powerPreference:"high-performance"});
-    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
+    this.renderer.setPixelRatio(this.getRenderPixelRatio());
+    this.canvas.style.imageRendering = "auto";
     this.renderer.shadowMap.enabled = true;
+    this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    if(THREE.sRGBEncoding) this.renderer.outputEncoding = THREE.sRGBEncoding;
     this.scene.add(new THREE.AmbientLight(0xffffff,.54));
     const key = new THREE.DirectionalLight(0xffffff,1.16); key.position.set(4,5,4); key.castShadow=true; this.scene.add(key);
     const rim = new THREE.PointLight(0x58a6ff,1.15,10); rim.position.set(-3,1.9,3); this.scene.add(rim);
     this.root = new THREE.Group(); this.scene.add(this.root);
     this.makeStage();
     window.addEventListener("resize",()=>this.resize());
+    if(window.ResizeObserver){
+      this._resizeObserver = new ResizeObserver(()=>this.resize());
+      this._resizeObserver.observe(this.canvas);
+    }
     this.resize();
     this.animate();
+  }
+  getRenderPixelRatio(){
+    const base = window.devicePixelRatio || 1;
+    return Math.min(Math.max(base, 2.5), 4);
   }
   mat(color, opts={}){return new THREE.MeshStandardMaterial({color,roughness:opts.roughness??.62,metalness:opts.metalness??.08,emissive:opts.emissive||0x000000,emissiveIntensity:opts.emissiveIntensity||0});}
   figureMaterial(color, rarity=0){
@@ -1496,10 +1509,12 @@ class HostPodium3D{
     const rect=this.canvas.getBoundingClientRect();
     const w=Math.max(320,Math.floor(rect.width));
     const h=Math.max(300,Math.floor(rect.height));
+    this.renderer.setPixelRatio(this.getRenderPixelRatio());
     this.renderer.setSize(w,h,false);
     this.camera.aspect=w/h;
     this.camera.position.set(0, mobile ? 2.6 : 2.4, mobile ? 9.4 : 8.4);
     this.camera.fov = mobile ? 42 : 38;
+    this.camera.lookAt(0, mobile ? 1.02 : 1.05, 0);
     this.camera.updateProjectionMatrix();
   }
   animate(){
