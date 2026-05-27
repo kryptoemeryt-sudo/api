@@ -375,6 +375,40 @@ let privyClient = null;
 let privyIframe = null;
 let advisorOpenedFor = "";
 
+function isMobileViewport(){
+  const width = Number(window.visualViewport?.width || window.innerWidth || document.documentElement.clientWidth || 0);
+  return width > 0 && width < 1000;
+}
+function applyResponsiveMode(){
+  const mobile = isMobileViewport();
+  document.documentElement.classList.toggle("mobile-hard", mobile);
+  const mobileWidth = Number(window.visualViewport?.width || window.innerWidth || document.documentElement.clientWidth || 390);
+  if(mobile){
+    document.documentElement.style.setProperty("--mobile-vw", Math.max(320, Math.min(760, mobileWidth || 390)) + "px");
+  }else{
+    document.documentElement.style.removeProperty("--mobile-vw");
+  }
+  const walletPill = document.getElementById("walletPill");
+  const mobileWalletAction = document.getElementById("mobileWalletAction");
+  const mobileConnect = document.getElementById("mobileConnectBtn");
+  const desktopConnect = document.getElementById("connectBtn");
+  if(walletPill){
+    if(mobile){
+      Object.assign(walletPill.style,{
+        position:"fixed", top:"7px", right:"8px", zIndex:"60",
+        width:"154px", maxWidth:"154px", display:"flex",
+        alignItems:"center", justifyContent:"space-between", gap:"7px",
+        padding:"7px", textAlign:"left"
+      });
+    }else{
+      walletPill.removeAttribute("style");
+    }
+  }
+  if(mobileWalletAction) mobileWalletAction.style.display = mobile ? "block" : "";
+  if(mobileConnect) mobileConnect.style.display = mobile ? "none" : "";
+  if(desktopConnect) desktopConnect.style.display = mobile ? "none" : "";
+}
+
 function makeEmptyState(){
   return {mints:[],sales:[],cards:new Map(),ownerByToken:new Map(),hostCards:[],hostEvents:[],scores:[],listings:[],myBest:{},activeByToken:new Map(),demo:true};
 }
@@ -1458,11 +1492,15 @@ class HostPodium3D{
     return fig;
   }
   resize(){
+    const mobile = isMobileViewport();
     const rect=this.canvas.getBoundingClientRect();
     const w=Math.max(320,Math.floor(rect.width));
     const h=Math.max(300,Math.floor(rect.height));
     this.renderer.setSize(w,h,false);
-    this.camera.aspect=w/h; this.camera.updateProjectionMatrix();
+    this.camera.aspect=w/h;
+    this.camera.position.set(0, mobile ? 2.6 : 2.4, mobile ? 9.4 : 8.4);
+    this.camera.fov = mobile ? 42 : 38;
+    this.camera.updateProjectionMatrix();
   }
   animate(){
     requestAnimationFrame(()=>this.animate());
@@ -1478,26 +1516,17 @@ class HostPodium3D{
 }
 
 window.addEventListener("load", async ()=>{
-  const mobileWidth = Number(window.visualViewport?.width || window.innerWidth || document.documentElement.clientWidth || 0);
-  if (mobileWidth > 0 && mobileWidth < 1000) {
-    document.documentElement.classList.add("mobile-hard");
-    document.documentElement.style.setProperty("--mobile-vw", Math.max(320, Math.min(760, mobileWidth || 390)) + "px");
-    const walletPill = document.getElementById("walletPill");
-    const mobileWalletAction = document.getElementById("mobileWalletAction");
-    const mobileConnect = document.getElementById("mobileConnectBtn");
-    const desktopConnect = document.getElementById("connectBtn");
-    if(walletPill){
-      Object.assign(walletPill.style,{
-        position:"fixed", top:"7px", right:"8px", zIndex:"60",
-        width:"154px", maxWidth:"154px", display:"flex",
-        alignItems:"center", justifyContent:"space-between", gap:"7px",
-        padding:"7px", textAlign:"left"
-      });
-    }
-    if(mobileWalletAction) mobileWalletAction.style.display = "block";
-    if(mobileConnect) mobileConnect.style.display = "none";
-    if(desktopConnect) desktopConnect.style.display = "none";
-  }
+  applyResponsiveMode();
+  let resizeTimer = null;
+  const onResponsiveResize = ()=>{
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(()=>{
+      applyResponsiveMode();
+      podium3d?.resize();
+    }, 80);
+  };
+  window.addEventListener("resize", onResponsiveResize);
+  window.visualViewport?.addEventListener("resize", onResponsiveResize);
   podium3d = new HostPodium3D(document.getElementById("podiumStage"));
   state = makeDemoState();
   renderAll();
