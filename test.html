@@ -58,18 +58,19 @@ button{font-family:'Black Ops One',sans-serif}
 .podium-cards{position:absolute;left:12px;right:12px;bottom:10px;z-index:5;display:grid;grid-template-columns:repeat(3,1fr);gap:8px;pointer-events:none}.mini-card{border:1px solid rgba(255,255,255,.12);background:rgba(6,9,13,.72);backdrop-filter:blur(8px);border-radius:7px;padding:8px;min-width:0}.mini-country{display:flex;align-items:center;gap:7px;font-family:'Black Ops One',sans-serif;font-size:12px}.mini-country img{width:28px;height:18px;object-fit:cover;border-radius:2px}.mini-meta{display:grid;grid-template-columns:1fr auto;gap:6px;margin-top:6px;font-family:'Share Tech Mono',monospace;color:var(--muted);font-size:10px}.mini-meta b{font-family:'Black Ops One',sans-serif;color:var(--gold);font-size:15px;line-height:1}
 .stats-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.stat{border:1px solid var(--line);background:rgba(255,255,255,.035);border-radius:7px;padding:11px;min-height:74px}.stat-val{font-family:'Black Ops One',sans-serif;color:var(--green);font-size:25px;line-height:1}.stat-lbl{font-family:'Share Tech Mono',monospace;color:var(--muted);font-size:10px;letter-spacing:1px;margin-top:7px;text-transform:uppercase}.status-box{margin-top:8px;border:1px solid rgba(255,201,64,.32);background:rgba(255,201,64,.08);border-radius:7px;padding:10px;font-family:'Black Ops One',sans-serif;color:var(--gold);font-size:12px;letter-spacing:1px;line-height:1.25;text-transform:uppercase}
 .action-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}.action-grid .btn{width:100%;min-height:44px}.section-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(360px,.95fr);gap:10px}.section-title{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:9px;font-family:'Black Ops One',sans-serif;font-size:14px;letter-spacing:1px}.section-title small{font-family:'Share Tech Mono',monospace;color:var(--muted);font-size:10px;font-weight:400}
-.leaderboard{display:grid;gap:6px;max-height:324px;overflow:auto;padding-right:3px}.lb-row{display:grid;grid-template-columns:40px 1fr 70px 76px 64px;gap:8px;align-items:center;border:1px solid var(--line);background:#0e141c;border-radius:7px;padding:8px}.lb-row.me{border-color:rgba(0,255,135,.45);background:rgba(0,255,135,.06)}.lb-row.complete{border-color:rgba(255,201,64,.34)}.lb-pos{font-family:'Black Ops One',sans-serif;color:var(--gold);font-size:14px}.lb-wallet{font-family:'Share Tech Mono',monospace;color:#dce8f6;font-size:12px;min-width:0;overflow:hidden;text-overflow:ellipsis}.lb-you{display:inline-block;margin-left:5px;color:var(--green);font-size:9px}.lb-score{font-family:'Black Ops One',sans-serif;color:var(--green);text-align:right}.lb-comp,.lb-bonus{font-family:'Share Tech Mono',monospace;color:var(--muted);font-size:10px;text-align:right}
+.section-grid>.panel{display:flex;flex-direction:column;min-height:382px}
+.leaderboard{display:grid;gap:6px;flex:1;min-height:0;overflow:auto;padding-right:3px}.lb-row{display:grid;grid-template-columns:40px 1fr 70px 76px 64px;gap:8px;align-items:center;border:1px solid var(--line);background:#0e141c;border-radius:7px;padding:8px}.lb-row.me{border-color:rgba(0,255,135,.45);background:rgba(0,255,135,.06)}.lb-row.complete{border-color:rgba(255,201,64,.34)}.lb-pos{font-family:'Black Ops One',sans-serif;color:var(--gold);font-size:14px}.lb-wallet{font-family:'Share Tech Mono',monospace;color:#dce8f6;font-size:12px;min-width:0;overflow:hidden;text-overflow:ellipsis}.lb-you{display:inline-block;margin-left:5px;color:var(--green);font-size:9px}.lb-score{font-family:'Black Ops One',sans-serif;color:var(--green);text-align:right}.lb-comp,.lb-bonus{font-family:'Share Tech Mono',monospace;color:var(--muted);font-size:10px;text-align:right}
 .market-tools{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;margin-bottom:8px}.filter{border:1px solid var(--line);background:rgba(255,255,255,.04);color:#cbd9e8;border-radius:6px;padding:8px 4px;font-family:'Black Ops One',sans-serif;font-size:9px;letter-spacing:.5px;cursor:pointer}.filter.active{border-color:var(--green);background:rgba(0,255,135,.12);color:var(--green)}
 .market{display:grid;grid-template-columns:repeat(auto-fill,minmax(138px,1fr));gap:8px;max-height:382px;overflow:auto;padding-right:3px}.market-card{position:relative;border:1px solid var(--line);background:linear-gradient(180deg,#111923,#080c11);border-radius:8px;min-height:198px;overflow:hidden;padding:8px;display:grid;grid-template-rows:82px auto auto;gap:6px}.market-card.r1{border-color:rgba(59,130,246,.48)}.market-card.r2{border-color:rgba(192,132,252,.52)}.market-card.r3{border-color:rgba(255,201,64,.62);box-shadow:0 0 18px rgba(255,201,64,.09)}.market-card.mine{border-color:rgba(0,255,135,.55)}
 .fig-svg{display:grid;place-items:center;position:relative;background:radial-gradient(circle at 50% 85%,rgba(0,255,135,.13),transparent 56%);border:1px solid rgba(255,255,255,.08);border-radius:6px}.fig-svg img{position:absolute;left:5px;top:5px;width:25px;height:17px;object-fit:cover;border-radius:2px}.pos-tag{position:absolute;right:5px;top:5px;font-family:'Black Ops One',sans-serif;font-size:9px;color:#fff;background:rgba(5,7,10,.72);border:1px solid rgba(255,255,255,.12);border-radius:4px;padding:3px 5px}.card-name{font-family:'Black Ops One',sans-serif;font-size:12px;color:#fff;line-height:1.05}.card-sub{font-family:'Share Tech Mono',monospace;color:var(--muted);font-size:10px;margin-top:3px}.card-price{font-family:'Black Ops One',sans-serif;color:var(--gold);font-size:16px}.card-actions{display:grid;grid-template-columns:1fr;gap:5px}.card-actions .btn{min-height:30px;padding:6px;font-size:9px}
-.desk{display:grid;grid-template-columns:1fr 1fr;gap:8px}.demand-list,.sell-list,.feed{display:grid;gap:6px;max-height:170px;overflow:auto}.signal{display:grid;grid-template-columns:40px 1fr auto;gap:8px;align-items:center;border:1px solid var(--line);background:rgba(255,255,255,.035);border-radius:7px;padding:8px}.signal.hot{border-color:rgba(255,201,64,.4);background:rgba(255,201,64,.07)}.sig-team{font-family:'Black Ops One',sans-serif;color:#fff}.sig-main b{font-family:'Black Ops One',sans-serif;color:#fff;font-size:12px}.sig-main span{display:block;font-family:'Share Tech Mono',monospace;color:var(--muted);font-size:10px;margin-top:2px}.sig-price{font-family:'Black Ops One',sans-serif;color:var(--gold);font-size:14px;text-align:right}.feed-row{display:grid;grid-template-columns:42px 1fr 62px;gap:8px;border:1px solid var(--line);background:rgba(255,255,255,.035);border-radius:7px;padding:7px;align-items:center}.feed-team{font-family:'Black Ops One',sans-serif;color:var(--gold)}.feed-main{font-family:'Share Tech Mono',monospace;color:#dbe6f4;font-size:10px;min-width:0;overflow:hidden;text-overflow:ellipsis}.feed-price{text-align:right;font-family:'Black Ops One',sans-serif;color:var(--green);font-size:11px}
+.desk{display:grid;grid-template-columns:1fr 1fr;gap:8px;flex:1;min-height:0}.desk>div{display:flex;flex-direction:column;min-height:0}.demand-list,.feed{display:grid;gap:6px;flex:1;min-height:0;overflow:auto}.sell-list{display:grid;gap:6px;max-height:330px;overflow:auto}.signal{display:grid;grid-template-columns:40px 1fr auto;gap:8px;align-items:center;border:1px solid var(--line);background:rgba(255,255,255,.035);border-radius:7px;padding:8px}.signal.hot{border-color:rgba(255,201,64,.4);background:rgba(255,201,64,.07)}.sig-team{font-family:'Black Ops One',sans-serif;color:#fff}.sig-main b{font-family:'Black Ops One',sans-serif;color:#fff;font-size:12px}.sig-main span{display:block;font-family:'Share Tech Mono',monospace;color:var(--muted);font-size:10px;margin-top:2px}.sig-price{font-family:'Black Ops One',sans-serif;color:var(--gold);font-size:14px;text-align:right}.feed-row{display:grid;grid-template-columns:42px 1fr 62px;gap:8px;border:1px solid var(--line);background:rgba(255,255,255,.035);border-radius:7px;padding:7px;align-items:center}.feed-team{font-family:'Black Ops One',sans-serif;color:var(--gold)}.feed-main{font-family:'Share Tech Mono',monospace;color:#dbe6f4;font-size:10px;min-width:0;overflow:hidden;text-overflow:ellipsis}.feed-price{text-align:right;font-family:'Black Ops One',sans-serif;color:var(--green);font-size:11px}
 .modal{position:fixed;inset:0;z-index:80;display:none;align-items:center;justify-content:center;background:rgba(3,5,8,.78);backdrop-filter:blur(8px);padding:14px}.modal.show{display:flex}.modal-panel{width:min(94vw,520px);border:1px solid rgba(0,255,135,.36);background:linear-gradient(180deg,#111923,#06080b);border-radius:8px;padding:14px;box-shadow:0 24px 80px rgba(0,0,0,.66)}.modal-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}.modal-title{font-family:'Black Ops One',sans-serif;color:var(--green);font-size:16px;letter-spacing:1px}.close{width:32px;height:32px;border:1px solid var(--line);background:#0b1016;color:#fff;border-radius:6px;font-size:20px;cursor:pointer}.sell-row{display:grid;grid-template-columns:54px 1fr 86px;gap:8px;align-items:center;border:1px solid var(--line);background:#0e141c;border-radius:7px;padding:8px}.sell-input{width:100%;background:#05070a;border:1px solid var(--line);border-radius:6px;color:#fff;text-align:center;font-family:'Black Ops One',sans-serif;padding:7px}
 .loading{grid-column:1/-1;text-align:center;color:var(--muted);font-family:'Share Tech Mono',monospace;padding:18px}.toast{position:fixed;left:50%;bottom:16px;z-index:100;transform:translateX(-50%);display:none;border:1px solid var(--green);background:rgba(5,7,10,.96);color:var(--green);border-radius:7px;padding:10px 14px;font-family:'Share Tech Mono',monospace;font-size:12px;max-width:min(680px,calc(100vw - 24px));text-align:center}
 @media(max-width:1180px){.hero{grid-template-columns:1fr 1.15fr}.hero .panel.side{grid-column:1/-1}.section-grid{grid-template-columns:1fr}.desk{grid-template-columns:1fr 1fr}}
 @media(max-width:1000px){html,body,.page,.topnav,.hero,.panel{width:100%;max-width:100%;overflow-x:hidden}.topnav{height:auto;display:grid;grid-template-columns:minmax(0,1fr);align-items:start;padding:8px}.nav-mid{display:none}.nav-actions{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);width:100%;min-width:0;gap:7px}.nav-actions .btn{width:100%;min-width:0;padding:8px 5px;font-size:9px;overflow:hidden;text-overflow:ellipsis}.wallet-pill{grid-column:1/-1;max-width:none;text-align:center}.page{padding:7px}.hero{grid-template-columns:minmax(0,1fr);min-height:0}.stage-panel{min-height:330px}#podiumStage{min-height:330px}.podium-cards{grid-template-columns:1fr 1fr 1fr;gap:4px;bottom:6px;left:6px;right:6px}.mini-card{padding:6px}.mini-country{font-size:9px;gap:4px}.mini-country img{width:22px;height:15px}.mini-meta{grid-template-columns:1fr;font-size:8px;gap:2px}.mini-meta b{font-size:12px}.stats-grid{grid-template-columns:repeat(2,1fr)}.host-strip{grid-template-columns:1fr}.action-grid{grid-template-columns:1fr}.market-tools{grid-template-columns:repeat(2,1fr)}.leaderboard{max-height:260px}.lb-row{grid-template-columns:30px 1fr 48px 42px;gap:5px}.lb-bonus{display:none}.market{grid-template-columns:repeat(2,minmax(0,1fr));max-height:none}.market-card{min-height:184px;grid-template-rows:72px auto auto}.desk{grid-template-columns:1fr}.section-title{font-size:12px}.title{font-size:38px}.copy{font-size:16px;overflow-wrap:anywhere}}
 @media(max-width:410px){.market{grid-template-columns:1fr}.podium-cards{position:static;margin:6px;grid-template-columns:1fr}.stage-score{font-size:22px}}
-html.mobile-hard,html.mobile-hard body{width:var(--mobile-vw,390px);max-width:var(--mobile-vw,390px);overflow-x:hidden}
-html.mobile-hard .page,html.mobile-hard .topnav,html.mobile-hard .hero,html.mobile-hard .panel{width:var(--mobile-vw,390px);max-width:var(--mobile-vw,390px);overflow-x:hidden}
+html.mobile-hard,html.mobile-hard body{width:100vw;max-width:100vw;overflow-x:hidden}
+html.mobile-hard .page,html.mobile-hard .topnav,html.mobile-hard .hero,html.mobile-hard .panel{width:100%;max-width:100%;overflow-x:hidden}
 html.mobile-hard .topnav{height:auto;display:grid;grid-template-columns:minmax(0,1fr);align-items:start;padding:8px}
 html.mobile-hard .nav-mid{display:none}
 html.mobile-hard .nav-actions{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);width:100%;min-width:0;gap:7px}
@@ -78,7 +79,7 @@ html.mobile-hard .wallet-pill{grid-column:1/-1;max-width:none;text-align:center}
 html.mobile-hard .page{padding:7px}
 html.mobile-hard .hero{grid-template-columns:minmax(0,1fr);min-height:0}
 html.mobile-hard .title{font-size:38px}
-html.mobile-hard .copy{font-size:16px;max-width:calc(var(--mobile-vw,390px) - 44px);overflow-wrap:anywhere}
+html.mobile-hard .copy{font-size:16px;max-width:100%;overflow-wrap:anywhere}
 html.mobile-hard .host-strip{grid-template-columns:1fr}
 html.mobile-hard .action-grid,html.mobile-hard .desk,html.mobile-hard .section-grid{grid-template-columns:1fr}
 html.mobile-hard .market-tools{grid-template-columns:repeat(2,minmax(0,1fr))}
@@ -190,6 +191,7 @@ const CHAIN_ID = 88888;
 const DEPLOY_BLOCK = 34086621;
 const PUBLIC_RPC = "https://chiliz-rpc.publicnode.com";
 const ZERO_REF = "0x0000000000000000000000000000000000000000";
+const QUEST_END_AT = new Date("2026-06-07T12:00:00+02:00");
 const HOST_IDS = [24,22,19];
 const HOST_KEY = {24:"usa",22:"mexico",19:"canada"};
 const HOST_ORDER = [
@@ -284,35 +286,78 @@ function teamMeta(id){
   if (id === 19) return {id,name:"Canada",code:"ca"};
   return {id,name:"Team "+id,code:""};
 }
+function skinColor(tone){
+  return ["#FFDBB4","#EEC59A","#D4956A","#C27A4B","#8D5524","#4A2912"][Math.min(Number(tone || 2),5)];
+}
 
-function cardSvg(card, size=76){
+function makeFigureSVG(card, size=76){
   const t = card || parseDNA(1n);
-  const team = teamMeta(t.teamId);
   const shirt = TEAM_COLORS[t.teamId % TEAM_COLORS.length] || "#002868";
-  const skin = ["#FFDBB4","#EEC59A","#D4956A","#C27A4B","#8D5524","#4A2912"][t.skinTone || 2];
+  const skin = skinColor(t.skinTone);
   const rar = RARITY_COLOR[t.rarity] || "#7a8899";
-  const boot = t.hasGoldenBoots ? "#FFD700" : "#101010";
+  const isLight = ["#FFD700","#FCD116","#FFD100","#FFFFFF"].includes(String(shirt).toUpperCase());
+  const numC = isLight ? "#05070a" : "#ffffff";
+  const bootC = t.hasGoldenBoots ? "#FFD700" : "#111111";
   const s = size, cx=s/2;
-  return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 '+s+' '+s+'" width="'+s+'" height="'+s+'">'+
-    '<ellipse cx="'+cx+'" cy="'+(s-5)+'" rx="'+(s*.26)+'" ry="'+(s*.05)+'" fill="'+rar+'" opacity=".22"/>'+
-    '<rect x="'+(cx-17)+'" y="39" width="10" height="20" rx="2" fill="'+shirt+'"/><rect x="'+(cx+7)+'" y="39" width="10" height="20" rx="2" fill="'+shirt+'"/>'+
-    '<rect x="'+(cx-19)+'" y="59" width="14" height="7" rx="2" fill="'+boot+'"/><rect x="'+(cx+5)+'" y="59" width="14" height="7" rx="2" fill="'+boot+'"/>'+
-    '<rect x="'+(cx-22)+'" y="26" width="44" height="29" rx="5" fill="'+shirt+'"/>'+
-    '<text x="'+cx+'" y="45" text-anchor="middle" font-family="Arial Black" font-size="14" fill="#fff">'+t.position+'</text>'+
-    '<rect x="'+(cx-35)+'" y="29" width="13" height="25" rx="4" fill="'+shirt+'" transform="rotate(9 '+(cx-28)+' 38)"/><rect x="'+(cx+22)+'" y="29" width="13" height="25" rx="4" fill="'+shirt+'" transform="rotate(-9 '+(cx+28)+' 38)"/>'+
-    '<circle cx="'+(cx-34)+'" cy="53" r="6" fill="'+skin+'"/><circle cx="'+(cx+34)+'" cy="53" r="6" fill="'+skin+'"/>'+
-    '<rect x="'+(cx-5)+'" y="21" width="10" height="8" rx="2" fill="'+skin+'"/>'+
-    '<rect x="'+(cx-17)+'" y="4" width="34" height="26" rx="7" fill="'+skin+'"/>'+
-    '<rect x="'+(cx-19)+'" y="3" width="38" height="7" rx="4" fill="#1a0800"/>'+
-    (t.hasBand?'<rect x="'+(cx-18)+'" y="13" width="36" height="5" rx="2" fill="#fff" opacity=".9"/>':'')+
-    '<rect x="'+(cx-10)+'" y="14" width="7" height="5" rx="2" fill="#fff"/><rect x="'+(cx+3)+'" y="14" width="7" height="5" rx="2" fill="#fff"/>'+
-    '<rect x="'+(cx-8)+'" y="15" width="4" height="4" rx="1" fill="#05070a"/><rect x="'+(cx+4)+'" y="15" width="4" height="4" rx="1" fill="#05070a"/>'+
-    '<rect x="'+(cx-7)+'" y="23" width="14" height="3" rx="2" fill="#8b1a00"/>'+
-    '</svg>';
+  const headY=s*0.12, headW=s*0.30, headH=s*0.28;
+  const bodyY=headY+headH*0.85, bodyW=s*0.40, bodyH=s*0.28;
+  const legW=s*0.10, legH=s*0.22, legGap=s*0.04;
+  const legY=bodyY+bodyH*0.85, armW=s*0.09, armH=s*0.20, armY=bodyY+s*0.02;
+  const bootH=s*0.09, handR=s*0.06;
+  const p=[];
+  p.push('<ellipse cx="'+cx+'" cy="'+(legY+legH+bootH+s*0.03)+'" rx="'+(bodyW*0.55)+'" ry="'+(s*0.04)+'" fill="'+rar+'" opacity="0.22"/>');
+  p.push('<rect x="'+(cx-legW-legGap)+'" y="'+legY+'" width="'+legW+'" height="'+legH+'" rx="3" fill="'+shirt+'"/>');
+  p.push('<rect x="'+(cx+legGap)+'" y="'+legY+'" width="'+legW+'" height="'+legH+'" rx="3" fill="'+shirt+'"/>');
+  const sockY=legY+legH*0.65;
+  p.push('<rect x="'+(cx-legW-legGap)+'" y="'+sockY+'" width="'+legW+'" height="'+(legH*0.38)+'" rx="2" fill="white"/>');
+  p.push('<rect x="'+(cx+legGap)+'" y="'+sockY+'" width="'+legW+'" height="'+(legH*0.38)+'" rx="2" fill="white"/>');
+  const bootY=legY+legH;
+  p.push('<rect x="'+(cx-legW-legGap-2)+'" y="'+bootY+'" width="'+(legW+4)+'" height="'+bootH+'" rx="3" fill="'+bootC+'"/>');
+  p.push('<rect x="'+(cx+legGap-2)+'" y="'+bootY+'" width="'+(legW+4)+'" height="'+bootH+'" rx="3" fill="'+bootC+'"/>');
+  p.push('<rect x="'+(cx-bodyW/2)+'" y="'+(bodyY+bodyH*0.78)+'" width="'+bodyW+'" height="'+(s*0.09)+'" rx="3" fill="'+shirt+'cc"/>');
+  p.push('<rect x="'+(cx-bodyW/2)+'" y="'+bodyY+'" width="'+bodyW+'" height="'+(bodyH*0.85)+'" rx="5" fill="'+shirt+'"/>');
+  p.push('<text x="'+cx+'" y="'+(bodyY+bodyH*0.55)+'" text-anchor="middle" font-family="Arial Black" font-size="'+(s*0.13)+'" font-weight="900" fill="'+numC+'" opacity="0.9">'+(t.position || "?")+'</text>');
+  p.push('<rect x="'+(cx-bodyW/2-armW+2)+'" y="'+armY+'" width="'+armW+'" height="'+armH+'" rx="3" fill="'+shirt+'" transform="rotate(7,'+(cx-bodyW/2)+','+armY+')"/>');
+  p.push('<rect x="'+(cx+bodyW/2-2)+'" y="'+armY+'" width="'+armW+'" height="'+armH+'" rx="3" fill="'+shirt+'" transform="rotate(-7,'+(cx+bodyW/2)+','+armY+')"/>');
+  p.push('<circle cx="'+(cx-bodyW/2-s*0.04)+'" cy="'+(armY+armH)+'" r="'+handR+'" fill="'+skin+'"/>');
+  p.push('<circle cx="'+(cx+bodyW/2+s*0.04)+'" cy="'+(armY+armH)+'" r="'+handR+'" fill="'+skin+'"/>');
+  if(t.hasGloves){
+    p.push('<circle cx="'+(cx-bodyW/2-s*0.04)+'" cy="'+(armY+armH)+'" r="'+(handR+2)+'" fill="none" stroke="#FFD700" stroke-width="2"/>');
+    p.push('<circle cx="'+(cx+bodyW/2+s*0.04)+'" cy="'+(armY+armH)+'" r="'+(handR+2)+'" fill="none" stroke="#FFD700" stroke-width="2"/>');
+  }
+  p.push('<rect x="'+(cx-s*0.04)+'" y="'+(bodyY-s*0.05)+'" width="'+(s*0.08)+'" height="'+(s*0.07)+'" rx="2" fill="'+skin+'"/>');
+  p.push('<rect x="'+(cx-headW/2)+'" y="'+headY+'" width="'+headW+'" height="'+headH+'" rx="6" fill="'+skin+'"/>');
+  p.push('<rect x="'+(cx-headW/2-s*0.03)+'" y="'+(headY+headH*0.25)+'" width="'+(s*0.04)+'" height="'+(s*0.08)+'" rx="2" fill="'+skin+'"/>');
+  p.push('<rect x="'+(cx+headW/2-s*0.01)+'" y="'+(headY+headH*0.25)+'" width="'+(s*0.04)+'" height="'+(s*0.08)+'" rx="2" fill="'+skin+'"/>');
+  if(t.hasEarring) p.push('<circle cx="'+(cx-headW/2-1)+'" cy="'+(headY+headH*0.38)+'" r="'+(s*0.025)+'" fill="#FFD700"/>');
+  const eyeY=headY+headH*0.32, eyeW=s*0.07, eyeH=s*0.05;
+  p.push('<rect x="'+(cx-headW*0.36)+'" y="'+eyeY+'" width="'+eyeW+'" height="'+eyeH+'" rx="2" fill="white"/>');
+  p.push('<rect x="'+(cx+headW*0.08)+'" y="'+eyeY+'" width="'+eyeW+'" height="'+eyeH+'" rx="2" fill="white"/>');
+  p.push('<rect x="'+(cx-headW*0.33)+'" y="'+(eyeY+1)+'" width="'+(eyeW*0.6)+'" height="'+(eyeH*0.7)+'" rx="1" fill="#0a0a14"/>');
+  p.push('<rect x="'+(cx+headW*0.11)+'" y="'+(eyeY+1)+'" width="'+(eyeW*0.6)+'" height="'+(eyeH*0.7)+'" rx="1" fill="#0a0a14"/>');
+  p.push('<rect x="'+(cx-headW*0.38)+'" y="'+(eyeY-s*0.04)+'" width="'+(eyeW+2)+'" height="'+(s*0.025)+'" rx="1" fill="#1a0800" opacity="0.8"/>');
+  p.push('<rect x="'+(cx+headW*0.06)+'" y="'+(eyeY-s*0.04)+'" width="'+(eyeW+2)+'" height="'+(s*0.025)+'" rx="1" fill="#1a0800" opacity="0.8"/>');
+  p.push('<rect x="'+(cx-s*0.02)+'" y="'+(eyeY+eyeH+s*0.02)+'" width="'+(s*0.04)+'" height="'+(s*0.05)+'" rx="2" fill="'+skin+'" opacity="0.7"/>');
+  p.push('<rect x="'+(cx-s*0.07)+'" y="'+(headY+headH*0.72)+'" width="'+(s*0.14)+'" height="'+(s*0.03)+'" rx="2" fill="#8b1a00" opacity="0.8"/>');
+  const hair = ["#1a0800","#ff6600","#ffd700","#cc0000","#2a1a00","#111111","#8b4513","#333333"][t.hairStyle % 8] || "#1a0800";
+  if(t.hairStyle === 1 || t.hairStyle === 4){
+    for(let i=-2;i<=2;i++) p.push('<circle cx="'+(cx+i*s*0.055)+'" cy="'+(headY+s*0.02)+'" r="'+(s*0.055)+'" fill="'+hair+'"/>');
+  }else if(t.hairStyle === 2 || t.hairStyle === 3){
+    p.push('<rect x="'+(cx-headW/2-2)+'" y="'+(headY-2)+'" width="'+(headW+4)+'" height="'+(s*0.06)+'" rx="3" fill="'+hair+'"/>');
+    for(let i=-1;i<=1;i++) p.push('<polygon points="'+(cx+i*s*0.06)+','+(headY-s*0.09)+' '+(cx+i*s*0.06-s*0.04)+','+(headY+s*0.02)+' '+(cx+i*s*0.06+s*0.04)+','+(headY+s*0.02)+'" fill="'+hair+'"/>');
+  }else if(t.hairStyle !== 6){
+    p.push('<rect x="'+(cx-headW/2-2)+'" y="'+(headY-2)+'" width="'+(headW+4)+'" height="'+(s*0.07)+'" rx="4" fill="'+hair+'"/>');
+  }
+  if(t.hasBand) p.push('<rect x="'+(cx-headW/2-2)+'" y="'+(headY+headH*0.18)+'" width="'+(headW+4)+'" height="'+(s*0.06)+'" rx="3" fill="white" opacity="0.88"/>');
+  if(t.hasTattoo){
+    p.push('<line x1="'+(cx-bodyW/2-armW/2)+'" y1="'+(armY+armH*0.3)+'" x2="'+(cx-bodyW/2-armW/2+s*0.04)+'" y2="'+(armY+armH*0.5)+'" stroke="#000" stroke-width="1.5" opacity="0.5"/>');
+    p.push('<line x1="'+(cx-bodyW/2-armW/2+s*0.04)+'" y1="'+(armY+armH*0.3)+'" x2="'+(cx-bodyW/2-armW/2)+'" y2="'+(armY+armH*0.5)+'" stroke="#000" stroke-width="1.5" opacity="0.5"/>');
+  }
+  return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 '+s+' '+s+'" width="'+s+'" height="'+s+'">'+p.join("")+'</svg>';
 }
 function marketFigure(card){
   const team = teamMeta(card.teamId);
-  return '<div class="fig-svg"><img src="'+flagUrl(team.code)+'" alt="'+team.name+'"><span class="pos-tag">'+posLabel(card.position)+'</span>'+cardSvg(card,72)+'</div>';
+  return '<div class="fig-svg"><img src="'+flagUrl(team.code)+'" alt="'+team.name+'"><span class="pos-tag">'+posLabel(card.position)+'</span>'+makeFigureSVG(card,72)+'</div>';
 }
 
 async function ensureChiliz(){
@@ -407,14 +452,8 @@ function buildScoresFromOwned(hostCards, ownerByToken){
     const fullBonus = completion === 3 ? 30 : 0;
     const distinctPositions = new Set(cards.filter(Boolean).map(c=>c.position)).size;
     const diversityBonus = completion === 3 && distinctPositions === 3 ? 15 : 0;
-    const meta = dailyMeta();
-    const metaBonus = cards.reduce((s,c)=>s+(c && meta[c.teamId] === c.position ? Math.ceil(c.weight*.25):0),0);
-    return {wallet,best,cards,base,completion,fullBonus,diversityBonus,metaBonus,score:base+fullBonus+diversityBonus+metaBonus};
+    return {wallet,best,cards,base,completion,fullBonus,diversityBonus,score:base+fullBonus+diversityBonus};
   }).sort((a,b)=>b.score-a.score || b.completion-a.completion || b.base-a.base);
-}
-function dailyMeta(){
-  const day = Math.floor(Date.now()/86400000);
-  return {24: [10,9,1,7][day%4],22:[8,9,6,11][day%4],19:[1,4,9,10][day%4]};
 }
 function makeDemoState(){
   const owners = ["0x8f3a000000000000000000000000000000000abc","0x51cd000000000000000000000000000000000def","0x12a9000000000000000000000000000000000777","0xbeef000000000000000000000000000000000010"];
@@ -462,6 +501,23 @@ async function loadQuest(){
   state = await buildState();
   renderAll();
 }
+function formatCountdown(ms){
+  if(ms <= 0) return "ENDED";
+  const total = Math.floor(ms/1000);
+  const d = Math.floor(total/86400);
+  const h = Math.floor((total%86400)/3600);
+  const m = Math.floor((total%3600)/60);
+  const s = total%60;
+  return d+"D "+String(h).padStart(2,"0")+"H "+String(m).padStart(2,"0")+"M "+String(s).padStart(2,"0")+"S";
+}
+function updateCountdown(){
+  const box = document.getElementById("questStatus");
+  if(!box) return;
+  const left = QUEST_END_AT.getTime() - Date.now();
+  box.textContent = left > 0
+    ? "Quest ends 07.06.2026 at 12:00 Warsaw time - "+formatCountdown(left)+" left. Full host podium required."
+    : "Quest window ended 07.06.2026 at 12:00 Warsaw time. Final host podium snapshot should be used for rewards.";
+}
 
 function stageDeck(){
   if(address){
@@ -469,6 +525,17 @@ function stageDeck(){
     if(mine) return mine;
   }
   return state.scores[0] || makeDemoState().scores[0];
+}
+function podiumLayoutItems(deck){
+  const ranked = HOST_ORDER.map(h=>({
+    host:h,
+    card:deck?.best?.[h.id] || null
+  })).sort((a,b)=>(b.card?.weight || 0)-(a.card?.weight || 0) || a.host.id-b.host.id);
+  return [
+    {...ranked[1],rank:2},
+    {...ranked[0],rank:1},
+    {...ranked[2],rank:3}
+  ];
 }
 function renderAll(){
   renderStats();
@@ -487,8 +554,7 @@ function renderStats(){
   document.getElementById("leaderCount").textContent = String(state.scores.length);
   document.getElementById("lbInfo").textContent = state.scores.length+" players";
   document.getElementById("marketInfo").textContent = state.listings.length+" active host listings";
-  const meta = dailyMeta();
-  document.getElementById("questStatus").textContent = "Daily meta: USA "+posLabel(meta[24])+" / Mexico "+posLabel(meta[22])+" / Canada "+posLabel(meta[19])+" get +25% weight bonus.";
+  updateCountdown();
 }
 function renderLeaderboard(){
   const lb = document.getElementById("leaderboard");
@@ -498,7 +564,7 @@ function renderLeaderboard(){
       <div class="lb-pos">#${i+1}</div>
       <div class="lb-wallet">${shortAddr(row.wallet)}${address===row.wallet?'<span class="lb-you">YOU</span>':''}</div>
       <div class="lb-comp">${row.completion}/3</div>
-      <div class="lb-bonus">+${row.fullBonus+row.diversityBonus+row.metaBonus}</div>
+      <div class="lb-bonus">+${row.fullBonus+row.diversityBonus}</div>
       <div class="lb-score">${row.score}</div>
     </div>
   `).join("");
@@ -508,14 +574,16 @@ function renderPodium(){
   document.getElementById("stageTitle").textContent = address && deck.wallet===address ? "YOUR HOST PODIUM" : "TOP HOST PODIUM";
   document.getElementById("stageSub").textContent = deck.wallet ? shortAddr(deck.wallet)+" - best cards by host country" : "preview";
   document.getElementById("stageScore").innerHTML = (deck.score || 0)+'<span>PODIUM SCORE</span>';
-  document.getElementById("podiumCards").innerHTML = HOST_ORDER.map(h=>{
-    const c = deck.best?.[h.id];
+  const layout = podiumLayoutItems(deck);
+  document.getElementById("podiumCards").innerHTML = layout.map(item=>{
+    const h = item.host;
+    const c = item.card;
     return `<div class="mini-card">
-      <div class="mini-country"><img src="${flagUrl(h.code)}" alt="${h.name}"><span>${h.name.toUpperCase()}</span></div>
+      <div class="mini-country"><img src="${flagUrl(h.code)}" alt="${h.name}"><span>#${item.rank} ${h.name.toUpperCase()}</span></div>
       <div class="mini-meta"><span>${c ? posLabel(c.position)+" / "+RARITY_SHORT[c.rarity]+" / #"+c.tokenId : "missing card"}</span><b>${c ? c.weight : 0}</b></div>
     </div>`;
   }).join("");
-  if(podium3d) podium3d.setCards(HOST_ORDER.map(h=>deck.best?.[h.id] || null));
+  if(podium3d) podium3d.setCards(layout);
 }
 function filteredListings(){
   const my = address ? state.scores.find(s=>s.wallet===address) : null;
@@ -667,7 +735,15 @@ class HostPodium3D{
     this.animate();
   }
   mat(color, opts={}){return new THREE.MeshStandardMaterial({color,roughness:opts.roughness??.62,metalness:opts.metalness??.08,emissive:opts.emissive||0x000000,emissiveIntensity:opts.emissiveIntensity||0});}
+  figureMaterial(color, rarity=0){
+    const p = {color,roughness:.7,metalness:.05};
+    if(rarity===1){p.roughness=.45;p.metalness=.25;}
+    if(rarity===2){p.roughness=.2;p.metalness=.55;p.emissive=new THREE.Color(0xa855f7);p.emissiveIntensity=.08;}
+    if(rarity===3){p.roughness=.18;p.metalness=.38;p.emissive=new THREE.Color(0xffc940);p.emissiveIntensity=.06;}
+    return new THREE.MeshStandardMaterial(p);
+  }
   box(w,h,d,m,x,y,z){const mesh=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),m);mesh.position.set(x,y,z);mesh.castShadow=true;mesh.receiveShadow=true;return mesh;}
+  sphere(r,m,x,y,z){const mesh=new THREE.Mesh(new THREE.SphereGeometry(r,14,10),m);mesh.position.set(x,y,z);mesh.castShadow=true;mesh.receiveShadow=true;return mesh;}
   cyl(rt,rb,h,m,x,y,z,seg=36){const mesh=new THREE.Mesh(new THREE.CylinderGeometry(rt,rb,h,seg),m);mesh.position.set(x,y,z);mesh.castShadow=true;mesh.receiveShadow=true;return mesh;}
   makeText(text,color="#ffffff"){
     const c=document.createElement("canvas"); c.width=256; c.height=96; const g=c.getContext("2d");
@@ -681,86 +757,155 @@ class HostPodium3D{
     const lineMat = new THREE.MeshBasicMaterial({color:0x00ff87,transparent:true,opacity:.28});
     for(let i=0;i<3;i++){const ring=new THREE.Mesh(new THREE.TorusGeometry(2.35+i*.86,.012,8,96),lineMat);ring.rotation.x=Math.PI/2;ring.position.y=.02;this.root.add(ring);}
     const hosts = [
-      {x:0,h:1.05,r:.95,label:"USA",color:0x3b82f6},
-      {x:-2.05,h:.72,r:.82,label:"MEX",color:0x0f8f4d},
-      {x:2.05,h:.54,r:.78,label:"CAN",color:0xef4444}
+      {x:-2.05,h:.72,r:.82,label:"#2",color:0x58a6ff},
+      {x:0,h:1.05,r:.95,label:"#1",color:0xffc940},
+      {x:2.05,h:.54,r:.78,label:"#3",color:0x00ff87}
     ];
     hosts.forEach(p=>{
       const base=this.cyl(p.r,p.r*1.05,p.h,this.mat(0x121c26,{roughness:.45,metalness:.18}),p.x,p.h/2-.05,0);
       this.root.add(base);
       const trim=this.cyl(p.r*1.02,p.r*1.02,.06,this.mat(p.color,{roughness:.25,metalness:.28,emissive:p.color,emissiveIntensity:.08}),p.x,p.h+.01,0);
       this.root.add(trim);
-      const txt=this.makeText(p.label,p.label==="USA"?"#58a6ff":p.label==="MEX"?"#00ff87":"#ff6b6b");
+      const txt=this.makeText(p.label,p.label==="#1"?"#ffc940":p.label==="#2"?"#58a6ff":"#00ff87");
       txt.position.set(p.x,p.h*.45, p.r+.04); this.root.add(txt);
     });
   }
-  setCards(cards){
+  setCards(items){
     this.figures.forEach(f=>this.root.remove(f));
     this.figures = [];
-    const slots=[{x:0,y:1.38,z:0,s:1.05},{x:-2.05,y:.99,z:0,s:.88},{x:2.05,y:.8,z:0,s:.82}];
-    cards.forEach((card,i)=>{
-      const h = HOST_ORDER[i];
-      const fig = this.makeFigure(card || {teamId:h.id,position:0,rarity:0,weight:0,skinTone:2}, h.color, Boolean(card));
+    const slots=[{x:-2.05,y:.99,z:0,s:.88},{x:0,y:1.38,z:0,s:1.05},{x:2.05,y:.8,z:0,s:.82}];
+    items.forEach((item,i)=>{
+      const h = item.host || HOST_ORDER[i];
+      const card = item.card || null;
+      const fig = this.makeFigure(card || {teamId:h.id,position:0,rarity:0,weight:0,skinTone:2,hairStyle:6}, h.color, Boolean(card));
       fig.position.set(slots[i].x,slots[i].y,slots[i].z);
       fig.scale.setScalar(slots[i].s);
       this.root.add(fig); this.figures.push(fig);
     });
   }
   makeFigure(card, fallbackColor, active){
-    const g = new THREE.Group();
-    const color = active ? new THREE.Color(TEAM_COLORS[card.teamId % TEAM_COLORS.length]) : new THREE.Color(0x263241);
-    const dark = new THREE.Color(color).multiplyScalar(.45);
-    const skin = [0xffdbb4,0xeec59a,0xd4956a,0xc27a4b,0x8d5524,0x4a2912][card.skinTone||2];
-    const rar = [0x6b7280,0x3b82f6,0xa855f7,0xffc940][card.rarity||0];
-    const hairColors = [0x1a0800,0xff6600,0xffd700,0xcc0000,0x444444,0x111111,0x8b4513,0x333333];
-    const hairMat = this.mat(hairColors[card.hairStyle || 0] || 0x1a0800,{roughness:.72});
-    const kit=this.mat(color,{roughness:.5,metalness:card.rarity >= 2 ? .18 : .08,emissive:card.rarity >= 2 ? rar : 0x000000,emissiveIntensity:active ? .08 : 0});
-    const shorts=this.mat(dark,{roughness:.7});
-    const skinMat=this.mat(skin,{roughness:.74});
-    const white=this.mat(0xffffff,{roughness:.65});
-    const gloveMat=this.mat(0xffee00,{roughness:.45,metalness:.1,emissive:0xffee00,emissiveIntensity:.08});
-    const boot=this.mat(card.hasGoldenBoots?0xffd700:0x080808,{roughness:.38,metalness:card.hasGoldenBoots ? .55 : .1,emissive:card.hasGoldenBoots?0xffd700:0,emissiveIntensity:.18});
-    const y=0;
-    g.add(this.box(.28,.6,.28,kit,-.18,y+.05,0)); g.add(this.box(.28,.6,.28,kit,.18,y+.05,0));
-    g.add(this.box(.3,.18,.42,white,-.18,y-.28,0)); g.add(this.box(.3,.18,.42,white,.18,y-.28,0));
-    g.add(this.box(.38,.16,.52,boot,-.2,y-.48,.06)); g.add(this.box(.38,.16,.52,boot,.2,y-.48,.06));
-    g.add(this.box(.92,.24,.42,shorts,0,y+.42,0));
-    g.add(this.box(.88,.9,.42,kit,0,y+1.02,0));
-    const n=this.makeText(card.position?String(card.position):"?", "#ffffff"); n.scale.set(.55,.55,.55); n.position.set(0,y+1.06,.225); g.add(n);
-    const armL=this.box(.24,.75,.24,kit,-.58,y+1.05,0); armL.rotation.z=.18; g.add(armL);
-    const armR=this.box(.24,.75,.24,kit,.58,y+1.05,0); armR.rotation.z=-.18; g.add(armR);
-    if (card.hasTattoo) {
-      const tattooMat=this.mat(0x1111ff,{roughness:.6,emissive:0x1111ff,emissiveIntensity:.12});
-      const tattoo=this.box(.255,.08,.255,tattooMat,-.62,y+1.16,.012);
-      tattoo.rotation.z=.18;
-      g.add(tattoo);
+    const t = card;
+    const r = active ? Number(t.rarity || 0) : 0;
+    const fig = new THREE.Group();
+    const teamCol = active ? new THREE.Color(TEAM_COLORS[t.teamId % TEAM_COLORS.length]) : new THREE.Color(0x263241);
+    const skinCol = new THREE.Color(skinColor(t.skinTone));
+    const kitMat = this.figureMaterial(teamCol, r);
+    const skinMat = this.figureMaterial(skinCol, 0);
+    const darkMat = new THREE.MeshStandardMaterial({color:0x0a0a0a,roughness:.8});
+    const whiteMat = new THREE.MeshStandardMaterial({color:0xffffff,roughness:.7});
+    const bootColors = [0xff2200,0xffd700,0x00cc44,0x0066ff,0xff00cc,0xffffff,0x222222,0xff6600];
+    const bootCol = active && t.hasGoldenBoots ? 0xffd700 : bootColors[t.teamId % bootColors.length];
+    const bootMat = new THREE.MeshStandardMaterial({
+      color: active ? bootCol : 0x182231,
+      roughness: t.hasGoldenBoots ? .1 : .5,
+      metalness: t.hasGoldenBoots ? .9 : .1,
+      emissive: t.hasGoldenBoots ? new THREE.Color(0xffd700) : new THREE.Color(0x000000),
+      emissiveIntensity: active && t.hasGoldenBoots ? .3 : 0
+    });
+    const shortsMat = new THREE.MeshStandardMaterial({color:new THREE.Color(teamCol).multiplyScalar(.4),roughness:.8});
+    const Y_BOOT=.10, Y_SOCK=.28, Y_LEG=.60, Y_SHORTS=.85, Y_TORSO=1.20, Y_NECK=1.62, Y_HEAD=1.88;
+
+    fig.add(this.box(.24,.15,.40,bootMat,-.16,Y_BOOT,.04));
+    fig.add(this.box(.24,.15,.40,bootMat,.16,Y_BOOT,.04));
+    fig.add(this.box(.22,.20,.22,whiteMat,-.16,Y_SOCK,0));
+    fig.add(this.box(.22,.20,.22,whiteMat,.16,Y_SOCK,0));
+    fig.add(this.box(.22,.38,.22,kitMat,-.16,Y_LEG,0));
+    fig.add(this.box(.22,.38,.22,kitMat,.16,Y_LEG,0));
+    fig.add(this.box(.56,.22,.30,shortsMat,0,Y_SHORTS,0));
+    fig.add(this.box(.62,.65,.34,kitMat,0,Y_TORSO,0));
+
+    const nc=document.createElement("canvas"); nc.width=64; nc.height=64;
+    const cx=nc.getContext("2d");
+    cx.clearRect(0,0,64,64);
+    cx.fillStyle="rgba(255,255,255,0.9)";
+    cx.font="bold 36px Arial Black"; cx.textAlign="center"; cx.textBaseline="middle";
+    cx.fillText(active ? String(t.position) : "?",32,32);
+    const numPlane=new THREE.Mesh(
+      new THREE.PlaneGeometry(.28,.28),
+      new THREE.MeshBasicMaterial({map:new THREE.CanvasTexture(nc),transparent:true,depthWrite:false})
+    );
+    numPlane.position.set(0,Y_TORSO,.18); fig.add(numPlane);
+
+    const armL=this.box(.19,.52,.19,kitMat,-.42,Y_TORSO-.02,0); armL.rotation.z=.15;
+    const armR=this.box(.19,.52,.19,kitMat,.42,Y_TORSO-.02,0); armR.rotation.z=-.15;
+    fig.add(armL,armR);
+    const handMat = active && t.hasGloves && t.position===1
+      ? new THREE.MeshStandardMaterial({color:0xffee00,roughness:.5,metalness:.1})
+      : skinMat;
+    fig.add(this.sphere(.105,handMat,-.44,Y_TORSO-.30,0));
+    fig.add(this.sphere(.105,handMat,.44,Y_TORSO-.30,0));
+    fig.add(this.cyl(.085,.085,.16,skinMat,0,Y_NECK,0,8));
+    fig.add(this.box(.48,.52,.44,skinMat,0,Y_HEAD,0));
+
+    const eyeMat=new THREE.MeshStandardMaterial({color:0x0a0a14,roughness:.5});
+    fig.add(this.box(.13,.10,.02,whiteMat,-.12,Y_HEAD+.07,.23));
+    fig.add(this.box(.13,.10,.02,whiteMat,.12,Y_HEAD+.07,.23));
+    fig.add(this.box(.07,.07,.025,eyeMat,-.11,Y_HEAD+.07,.235));
+    fig.add(this.box(.07,.07,.025,eyeMat,.11,Y_HEAD+.07,.235));
+    const browMat=new THREE.MeshStandardMaterial({color:0x1a0a00,roughness:.9});
+    fig.add(this.box(.13,.03,.02,browMat,-.12,Y_HEAD+.14,.23));
+    fig.add(this.box(.13,.03,.02,browMat,.12,Y_HEAD+.14,.23));
+    fig.add(this.box(.04,.06,.03,new THREE.MeshStandardMaterial({color:skinCol,roughness:.8}),0,Y_HEAD+.01,.235));
+    fig.add(this.box(.14,.035,.02,new THREE.MeshStandardMaterial({color:0x8b1a00,roughness:.9}),0,Y_HEAD-.10,.23));
+    fig.add(this.box(.04,.10,.04,skinMat,-.25,Y_HEAD+.01,0));
+    fig.add(this.box(.04,.10,.04,skinMat,.25,Y_HEAD+.01,0));
+
+    if(active && t.hasTattoo){
+      const tattooColors=[0x1a1aff,0xff1a1a,0x1aff1a,0xffff1a,0xff1aff];
+      const tattooCol=tattooColors[t.teamId%tattooColors.length];
+      fig.add(this.box(.21,.09,.21,new THREE.MeshStandardMaterial({color:tattooCol,roughness:.9,emissive:new THREE.Color(tattooCol),emissiveIntensity:.15}),-.42,Y_TORSO+.08,0));
     }
-    g.add(this.cyl(.13,.13,.13,card.hasGloves && card.position === 1 ? gloveMat : skinMat,-.68,y+.64,0,16));
-    g.add(this.cyl(.13,.13,.13,card.hasGloves && card.position === 1 ? gloveMat : skinMat,.68,y+.64,0,16));
-    g.add(this.box(.24,.22,.24,skinMat,0,y+1.55,0));
-    g.add(this.box(.66,.62,.52,skinMat,0,y+1.94,0));
-    const style = Number(card.hairStyle || 0);
-    if (style === 1 || style === 4) {
-      for (let i=-2;i<=2;i++) g.add(this.cyl(.105,.12,.1,hairMat,i*.15,y+2.28,.02,16));
-    } else if (style === 2 || style === 3) {
-      for (let i=-1;i<=1;i++) {
-        const spike = new THREE.Mesh(new THREE.ConeGeometry(.07,.26,5),hairMat);
-        spike.position.set(i*.15,y+2.34,.02);
-        spike.castShadow=true;
-        g.add(spike);
-      }
-      g.add(this.box(.72,.1,.55,hairMat,0,y+2.22,0));
-    } else if (style !== 6) {
-      g.add(this.box(.72,.16,.55,hairMat,0,y+2.28,0));
+
+    const hairColors=[0x1a0800,0xff6600,0xffd700,0xcc0000,0x2a1a00,0x111111,0x8b4513,0x333333];
+    const hm=new THREE.MeshStandardMaterial({color:hairColors[(t.hairStyle || 0)%hairColors.length],roughness:.8});
+    const hy=Y_HEAD+.14;
+    if(t.hairStyle===0){
+      fig.add(this.box(.50,.10,.46,hm,0,hy,0));
+    }else if(t.hairStyle===1){
+      fig.add(this.box(.48,.07,.44,hm,0,hy-.04,0));
+      for(let i=0;i<8;i++){const a=i/8*Math.PI*2;fig.add(this.sphere(.085,hm,Math.cos(a)*.17,hy+.05,Math.sin(a)*.13));}
+    }else if(t.hairStyle===2){
+      fig.add(this.box(.48,.07,.44,hm,0,hy-.02,0));
+      for(let i=0;i<5;i++){const spike=new THREE.Mesh(new THREE.ConeGeometry(.055,.22,4),hm);spike.position.set((i-2)*.10,hy+.14,.05);spike.castShadow=true;fig.add(spike);}
+    }else if(t.hairStyle===3){
+      fig.add(this.box(.50,.07,.46,hm,0,hy-.02,0));
+      fig.add(this.box(.11,.30,.46,hm,0,hy+.13,0));
+    }else if(t.hairStyle===4){
+      fig.add(this.sphere(.28,hm,0,hy+.10,0));
+    }else if(t.hairStyle===5){
+      fig.add(this.box(.48,.07,.44,hm,0,hy-.02,0));
+      for(let i=-2;i<=2;i++) fig.add(this.box(.06,.28,.06,hm,i*.10,hy-.12,-.18));
+    }else if(t.hairStyle===7){
+      fig.add(this.box(.50,.08,.46,hm,0,hy-.01,0));
+      fig.add(this.box(.50,.06,.46,hm,0,hy+.07,-.01));
     }
-    if(card.hasBand) g.add(this.box(.76,.08,.57,white,0,y+2.06,.02));
-    if(card.hasEarring) g.add(this.cyl(.045,.045,.025,this.mat(0xffd700,{metalness:1,roughness:.05,emissive:0xffd700,emissiveIntensity:.25}),-.37,y+1.95,.27,16));
-    g.add(this.box(.12,.08,.035,this.mat(0x05070a),-.15,y+1.98,.275));
-    g.add(this.box(.12,.08,.035,this.mat(0x05070a),.15,y+1.98,.275));
-    g.add(this.box(.22,.04,.04,this.mat(0x8b1a00),0,y+1.8,.275));
-    const glow=new THREE.PointLight(rar,active ? .45 : .1,3); glow.position.set(0,1.4,1); g.add(glow);
-    g.userData.spinOffset = Math.random()*Math.PI*2;
-    return g;
+
+    if(active && t.hasEarring){
+      fig.add(this.sphere(.04,new THREE.MeshStandardMaterial({color:0xffd700,metalness:1,roughness:.05,emissive:new THREE.Color(0xffd700),emissiveIntensity:.3}),-.27,Y_HEAD-.04,0));
+    }
+    if(active && t.hasBand){
+      const bandColors=[0xffffff,0x000000,0xff0000,0x00ff00,0x0000ff,0xffff00];
+      fig.add(this.box(.50,.07,.46,new THREE.MeshStandardMaterial({color:bandColors[t.position%bandColors.length],roughness:.6}),0,Y_HEAD+.04,0));
+    }
+    if(active && r===3){
+      const pg=new THREE.BufferGeometry();
+      const pos=[];
+      for(let i=0;i<32;i++) pos.push((Math.random()-.5)*2.5,Math.random()*3.2,(Math.random()-.5)*2.5);
+      pg.setAttribute("position",new THREE.Float32BufferAttribute(pos,3));
+      const particles=new THREE.Points(pg,new THREE.PointsMaterial({color:0xffd700,size:.055,transparent:true,opacity:.8}));
+      fig.add(particles);
+      fig.userData.particles = particles;
+    }
+    if(active && r===2){
+      const ring=new THREE.Mesh(new THREE.TorusGeometry(.6,.02,8,32),new THREE.MeshStandardMaterial({color:0xa855f7,emissive:new THREE.Color(0xa855f7),emissiveIntensity:.8,transparent:true,opacity:.6}));
+      ring.rotation.x=Math.PI/2; ring.position.y=.05; fig.add(ring);
+    }
+    if(active && r===1){
+      const ring=new THREE.Mesh(new THREE.TorusGeometry(.5,.015,8,32),new THREE.MeshStandardMaterial({color:0x3b82f6,emissive:new THREE.Color(0x3b82f6),emissiveIntensity:.6,transparent:true,opacity:.5}));
+      ring.rotation.x=Math.PI/2; ring.position.y=.05; fig.add(ring);
+    }
+    fig.userData.spinOffset = Math.random()*Math.PI*2;
+    return fig;
   }
   resize(){
     const rect=this.canvas.getBoundingClientRect();
@@ -773,7 +918,11 @@ class HostPodium3D{
     requestAnimationFrame(()=>this.animate());
     this.clock += .012;
     this.root.rotation.y = Math.sin(this.clock*.35)*.08;
-    this.figures.forEach((f,i)=>{f.rotation.y = this.clock*(.75+i*.08)+f.userData.spinOffset; f.position.y += Math.sin(this.clock*2+i)*.0008;});
+    this.figures.forEach((f,i)=>{
+      f.rotation.y = this.clock*(.75+i*.08)+f.userData.spinOffset;
+      f.position.y += Math.sin(this.clock*2+i)*.0008;
+      if(f.userData.particles) f.userData.particles.rotation.y += .012;
+    });
     this.renderer.render(this.scene,this.camera);
   }
 }
@@ -788,6 +937,8 @@ window.addEventListener("load", async ()=>{
   podium3d = new HostPodium3D(document.getElementById("podiumStage"));
   state = makeDemoState();
   renderAll();
+  updateCountdown();
+  setInterval(updateCountdown,1000);
   await loadQuest();
   if(window.ethereum){
     window.ethereum.request({method:"eth_accounts"}).then(async acc=>{
