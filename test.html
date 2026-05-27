@@ -35,7 +35,7 @@ body{
 }
 button{font-family:'Black Ops One',sans-serif}
 .topnav{position:sticky;top:0;z-index:30;height:58px;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:9px 18px;background:rgba(5,7,10,.94);border-bottom:1px solid var(--line);backdrop-filter:blur(12px)}
-.brand{font-family:'Black Ops One',sans-serif;font-size:17px;letter-spacing:1px;color:#fff;text-decoration:none;white-space:nowrap}.brand span{color:var(--green)}
+.brand{font-family:'Black Ops One',sans-serif;font-size:17px;letter-spacing:1px;color:#fff;text-decoration:none;white-space:nowrap;display:flex;align-items:center;gap:7px}.brand span{color:var(--green)}
 .nav-mid{display:flex;align-items:center;gap:9px;font-family:'Share Tech Mono',monospace;color:var(--muted);font-size:11px;letter-spacing:1px;text-transform:uppercase;min-width:0}
 .nav-mid b{color:var(--gold);font-family:'Black Ops One',sans-serif;font-weight:400}
 .nav-actions{display:flex;align-items:center;gap:8px;min-width:0}.wallet-pill{font-family:'Share Tech Mono',monospace;color:var(--muted);border:1px solid var(--line);background:rgba(255,255,255,.04);border-radius:6px;padding:8px 10px;max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:11px}
@@ -63,12 +63,15 @@ button{font-family:'Black Ops One',sans-serif}
 .market-tools{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;margin-bottom:8px}.filter{border:1px solid var(--line);background:rgba(255,255,255,.04);color:#cbd9e8;border-radius:6px;padding:8px 4px;font-family:'Black Ops One',sans-serif;font-size:9px;letter-spacing:.5px;cursor:pointer}.filter.active{border-color:var(--green);background:rgba(0,255,135,.12);color:var(--green)}
 .market{display:grid;grid-template-columns:repeat(auto-fill,minmax(138px,1fr));gap:8px;max-height:382px;overflow:auto;padding-right:3px}.market-card{position:relative;border:1px solid var(--line);background:linear-gradient(180deg,#111923,#080c11);border-radius:8px;min-height:198px;overflow:hidden;padding:8px;display:grid;grid-template-rows:82px auto auto;gap:6px}.market-card.r1{border-color:rgba(59,130,246,.48)}.market-card.r2{border-color:rgba(192,132,252,.52)}.market-card.r3{border-color:rgba(255,201,64,.62);box-shadow:0 0 18px rgba(255,201,64,.09)}.market-card.mine{border-color:rgba(0,255,135,.55)}
 .fig-svg{display:grid;place-items:center;position:relative;background:radial-gradient(circle at 50% 85%,rgba(0,255,135,.13),transparent 56%);border:1px solid rgba(255,255,255,.08);border-radius:6px}.fig-svg img{position:absolute;left:5px;top:5px;width:25px;height:17px;object-fit:cover;border-radius:2px}.pos-tag{position:absolute;right:5px;top:5px;font-family:'Black Ops One',sans-serif;font-size:9px;color:#fff;background:rgba(5,7,10,.72);border:1px solid rgba(255,255,255,.12);border-radius:4px;padding:3px 5px}.card-name{font-family:'Black Ops One',sans-serif;font-size:12px;color:#fff;line-height:1.05}.card-sub{font-family:'Share Tech Mono',monospace;color:var(--muted);font-size:10px;margin-top:3px}.card-price{font-family:'Black Ops One',sans-serif;color:var(--gold);font-size:16px}.card-actions{display:grid;grid-template-columns:1fr;gap:5px}.card-actions .btn{min-height:30px;padding:6px;font-size:9px}
-.desk{display:grid;grid-template-columns:1fr 1fr;gap:8px;flex:1;min-height:0}.desk>div{display:flex;flex-direction:column;min-height:0}.demand-list,.feed{display:grid;gap:6px;flex:1;min-height:0;overflow:auto}.sell-list{display:grid;gap:6px;max-height:330px;overflow:auto}.signal{display:grid;grid-template-columns:40px 1fr auto;gap:8px;align-items:center;border:1px solid var(--line);background:rgba(255,255,255,.035);border-radius:7px;padding:8px}.signal.hot{border-color:rgba(255,201,64,.4);background:rgba(255,201,64,.07)}.sig-team{font-family:'Black Ops One',sans-serif;color:#fff}.sig-main b{font-family:'Black Ops One',sans-serif;color:#fff;font-size:12px}.sig-main span{display:block;font-family:'Share Tech Mono',monospace;color:var(--muted);font-size:10px;margin-top:2px}.sig-price{font-family:'Black Ops One',sans-serif;color:var(--gold);font-size:14px;text-align:right}.feed-row{display:grid;grid-template-columns:42px 1fr 62px;gap:8px;border:1px solid var(--line);background:rgba(255,255,255,.035);border-radius:7px;padding:7px;align-items:center}.feed-team{font-family:'Black Ops One',sans-serif;color:var(--gold)}.feed-main{font-family:'Share Tech Mono',monospace;color:#dbe6f4;font-size:10px;min-width:0;overflow:hidden;text-overflow:ellipsis}.feed-price{text-align:right;font-family:'Black Ops One',sans-serif;color:var(--green);font-size:11px}
+.desk{display:grid;grid-template-columns:1fr 1fr;gap:8px;flex:1;min-height:0}.desk>div{display:flex;flex-direction:column;min-height:0}.demand-list,.feed{display:grid;gap:6px;flex:1;min-height:0;overflow:auto}.sell-list{display:grid;gap:6px;max-height:330px;overflow:auto}.signal{display:grid;grid-template-columns:40px 1fr auto;gap:8px;align-items:center;border:1px solid var(--line);background:rgba(255,255,255,.035);border-radius:7px;padding:8px}.signal.hot{border-color:rgba(255,201,64,.4);background:rgba(255,201,64,.07)}.sig-team{font-family:'Black Ops One',sans-serif;color:#fff}.sig-main b{font-family:'Barlow Condensed',Arial,sans-serif;color:#f4f8ff;font-weight:900;font-size:15px;letter-spacing:.2px;text-shadow:none}.sig-main span{display:block;font-family:'Share Tech Mono',monospace;color:var(--muted);font-size:10px;margin-top:2px;text-shadow:none}.sig-price{font-family:'Black Ops One',sans-serif;color:var(--gold);font-size:14px;text-align:right}.feed-row{display:grid;grid-template-columns:42px 1fr 62px;gap:8px;border:1px solid var(--line);background:rgba(255,255,255,.035);border-radius:7px;padding:7px;align-items:center}.feed-team{font-family:'Black Ops One',sans-serif;color:var(--gold)}.feed-main{font-family:'Share Tech Mono',monospace;color:#dbe6f4;font-size:10px;min-width:0;overflow:hidden;text-overflow:ellipsis}.feed-price{text-align:right;font-family:'Black Ops One',sans-serif;color:var(--green);font-size:11px}
 .modal{position:fixed;inset:0;z-index:80;display:none;align-items:center;justify-content:center;background:rgba(3,5,8,.78);backdrop-filter:blur(8px);padding:14px}.modal.show{display:flex}.modal-panel{width:min(94vw,520px);border:1px solid rgba(0,255,135,.36);background:linear-gradient(180deg,#111923,#06080b);border-radius:8px;padding:14px;box-shadow:0 24px 80px rgba(0,0,0,.66)}.modal-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}.modal-title{font-family:'Black Ops One',sans-serif;color:var(--green);font-size:16px;letter-spacing:1px}.close{width:32px;height:32px;border:1px solid var(--line);background:#0b1016;color:#fff;border-radius:6px;font-size:20px;cursor:pointer}.sell-row{display:grid;grid-template-columns:54px 1fr 86px;gap:8px;align-items:center;border:1px solid var(--line);background:#0e141c;border-radius:7px;padding:8px}.sell-input{width:100%;background:#05070a;border:1px solid var(--line);border-radius:6px;color:#fff;text-align:center;font-family:'Black Ops One',sans-serif;padding:7px}
+.wallet-choice-modal{position:fixed;inset:0;z-index:90;display:none;align-items:center;justify-content:center;background:rgba(3,5,8,.78);backdrop-filter:blur(8px);padding:14px}.wallet-choice-modal.show{display:flex}.wallet-choice-panel{width:min(94vw,520px);border:1px solid rgba(0,255,135,.36);background:linear-gradient(180deg,#111923,#06080b);border-radius:8px;padding:14px;box-shadow:0 24px 80px rgba(0,0,0,.66)}.wallet-choice-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}.wallet-choice-title{font-family:'Black Ops One',sans-serif;color:var(--green);letter-spacing:1px}.wallet-choice-close{width:32px;height:32px;border:1px solid var(--line);background:#0b1016;color:#fff;border-radius:6px;font-size:20px;cursor:pointer}.wallet-choice-option{width:100%;display:grid;grid-template-columns:34px 1fr auto;gap:10px;align-items:center;text-align:left;border:1px solid var(--line);background:rgba(255,255,255,.04);color:#fff;border-radius:7px;padding:10px;margin-top:8px;cursor:pointer}.wallet-choice-option:hover{border-color:rgba(0,255,135,.46);background:rgba(0,255,135,.08)}.wallet-choice-icon{font-family:'Black Ops One',sans-serif;color:var(--gold);font-size:20px;text-align:center}.wallet-choice-name{display:block;font-family:'Black Ops One',sans-serif;font-size:12px;letter-spacing:.7px}.wallet-choice-desc{display:block;font-family:'Share Tech Mono',monospace;color:var(--muted);font-size:10px;margin-top:3px;line-height:1.25}.wallet-choice-tag{font-family:'Black Ops One',sans-serif;color:var(--green);font-size:10px;border:1px solid rgba(0,255,135,.35);border-radius:5px;padding:4px 6px}.wallet-choice-note{margin-top:10px;font-family:'Share Tech Mono',monospace;color:var(--muted);font-size:10px;line-height:1.35}
+.mint-reveal{position:fixed;inset:0;z-index:92;display:none;align-items:center;justify-content:center;background:rgba(3,5,8,.78);backdrop-filter:blur(8px);padding:14px}.mint-reveal.show{display:flex}.mint-reveal-panel{width:min(94vw,560px);border:1px solid rgba(255,201,64,.42);background:linear-gradient(180deg,#111923,#06080b);border-radius:8px;padding:14px;box-shadow:0 24px 80px rgba(0,0,0,.66)}.mint-reveal-body{display:grid;grid-template-columns:130px 1fr;gap:14px;align-items:center}.mint-reveal-fig{height:130px;border:1px solid rgba(255,255,255,.1);border-radius:7px;background:radial-gradient(circle at 50% 90%,rgba(0,255,135,.14),transparent 58%);display:grid;place-items:center}.mint-reveal-name{font-family:'Black Ops One',sans-serif;font-size:24px;color:#fff;line-height:1}.mint-reveal-sub{font-family:'Share Tech Mono',monospace;color:var(--muted);font-size:11px;margin-top:6px}.mint-reveal-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:12px}.mint-reveal-stat{border:1px solid var(--line);border-radius:7px;padding:8px;background:rgba(255,255,255,.035)}.mint-reveal-stat b{display:block;font-family:'Black Ops One',sans-serif;color:var(--gold);font-size:16px}.mint-reveal-stat span{display:block;font-family:'Share Tech Mono',monospace;color:var(--muted);font-size:9px;margin-top:3px;text-transform:uppercase}.mint-reveal-note{margin-top:10px;border:1px solid rgba(0,255,135,.32);background:rgba(0,255,135,.07);border-radius:7px;padding:9px;font-family:'Share Tech Mono',monospace;color:#cceee0;font-size:11px;line-height:1.35}
 .loading{grid-column:1/-1;text-align:center;color:var(--muted);font-family:'Share Tech Mono',monospace;padding:18px}.toast{position:fixed;left:50%;bottom:16px;z-index:100;transform:translateX(-50%);display:none;border:1px solid var(--green);background:rgba(5,7,10,.96);color:var(--green);border-radius:7px;padding:10px 14px;font-family:'Share Tech Mono',monospace;font-size:12px;max-width:min(680px,calc(100vw - 24px));text-align:center}
 @media(max-width:1180px){.hero{grid-template-columns:1fr 1.15fr}.hero .panel.side{grid-column:1/-1}.section-grid{grid-template-columns:1fr}.desk{grid-template-columns:1fr 1fr}}
 @media(max-width:1000px){html,body,.page,.topnav,.hero,.panel{width:100%;max-width:100%;overflow-x:hidden}.topnav{height:auto;display:grid;grid-template-columns:minmax(0,1fr);align-items:start;padding:8px}.nav-mid{display:none}.nav-actions{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);width:100%;min-width:0;gap:7px}.nav-actions .btn{width:100%;min-width:0;padding:8px 5px;font-size:9px;overflow:hidden;text-overflow:ellipsis}.wallet-pill{grid-column:1/-1;max-width:none;text-align:center}.page{padding:7px}.hero{grid-template-columns:minmax(0,1fr);min-height:0}.stage-panel{min-height:330px}#podiumStage{min-height:330px}.podium-cards{grid-template-columns:1fr 1fr 1fr;gap:4px;bottom:6px;left:6px;right:6px}.mini-card{padding:6px}.mini-country{font-size:9px;gap:4px}.mini-country img{width:22px;height:15px}.mini-meta{grid-template-columns:1fr;font-size:8px;gap:2px}.mini-meta b{font-size:12px}.stats-grid{grid-template-columns:repeat(2,1fr)}.host-strip{grid-template-columns:1fr}.action-grid{grid-template-columns:1fr}.market-tools{grid-template-columns:repeat(2,1fr)}.leaderboard{max-height:260px}.lb-row{grid-template-columns:30px 1fr 48px 42px;gap:5px}.lb-bonus{display:none}.market{grid-template-columns:repeat(2,minmax(0,1fr));max-height:none}.market-card{min-height:184px;grid-template-rows:72px auto auto}.desk{grid-template-columns:1fr}.section-title{font-size:12px}.title{font-size:38px}.copy{font-size:16px;overflow-wrap:anywhere}}
 @media(max-width:410px){.market{grid-template-columns:1fr}.podium-cards{position:static;margin:6px;grid-template-columns:1fr}.stage-score{font-size:22px}}
+@media(max-width:560px){.mint-reveal-body{grid-template-columns:1fr}.mint-reveal-fig{height:120px}.mint-reveal-grid{grid-template-columns:1fr 1fr}.wallet-choice-option{grid-template-columns:28px 1fr auto}}
 html.mobile-hard,html.mobile-hard body{width:100vw;max-width:100vw;overflow-x:hidden}
 html.mobile-hard .page,html.mobile-hard .topnav,html.mobile-hard .hero,html.mobile-hard .panel{width:100%;max-width:100%;overflow-x:hidden}
 html.mobile-hard .topnav{height:auto;display:grid;grid-template-columns:minmax(0,1fr);align-items:start;padding:8px}
@@ -77,9 +80,10 @@ html.mobile-hard .nav-actions{display:grid;grid-template-columns:minmax(0,1fr) m
 html.mobile-hard .nav-actions .btn{width:100%;min-width:0;padding:8px 5px;font-size:9px;overflow:hidden;text-overflow:ellipsis}
 html.mobile-hard .wallet-pill{grid-column:1/-1;max-width:none;text-align:center}
 html.mobile-hard .page{padding:7px}
+html.mobile-hard .page>*{max-width:calc(100vw - 14px)}
 html.mobile-hard .hero{grid-template-columns:minmax(0,1fr);min-height:0}
 html.mobile-hard .title{font-size:38px}
-html.mobile-hard .copy{font-size:16px;max-width:100%;overflow-wrap:anywhere}
+html.mobile-hard .copy{font-size:16px;max-width:100%;white-space:normal;overflow-wrap:anywhere;word-break:normal}
 html.mobile-hard .host-strip{grid-template-columns:1fr}
 html.mobile-hard .action-grid,html.mobile-hard .desk,html.mobile-hard .section-grid{grid-template-columns:1fr}
 html.mobile-hard .market-tools{grid-template-columns:repeat(2,minmax(0,1fr))}
@@ -88,11 +92,11 @@ html.mobile-hard .market{grid-template-columns:repeat(2,minmax(0,1fr));max-heigh
 </head>
 <body>
 <nav class="topnav">
-  <a class="brand" href="./home.html">BLOCK <span>KICKERS</span></a>
+  <a class="brand" href="./home.html"><span style="color:#fff">&#9917;</span> BLOCK <span>KICKERS</span></a>
   <div class="nav-mid"><b>HOST NATIONS PODIUM</b> USA + Mexico + Canada trading arena</div>
   <div class="nav-actions">
     <span class="wallet-pill" id="walletPill">not connected</span>
-    <button class="btn" onclick="connectWallet()">CONNECT</button>
+    <button class="btn" onclick="openWalletChoice()">CONNECT</button>
     <button class="btn gold" id="refreshBtn" onclick="loadQuest()">REFRESH</button>
   </div>
 </nav>
@@ -109,7 +113,7 @@ html.mobile-hard .market{grid-template-columns:repeat(2,minmax(0,1fr));max-heigh
         <div class="host-chip"><img src="https://flagcdn.com/w80/ca.png" alt="Canada"><div><b>CANADA</b><span>best weight</span></div></div>
       </div>
       <div class="rules">
-        <div class="rule"><i>01</i><span>Score = best USA + best Mexico + best Canada.</span></div>
+        <div class="rule"><i>01</i><span>Score = card weights + full podium and diversity bonuses.</span></div>
         <div class="rule"><i>02</i><span>Full podium bonus unlocks only at 3/3 host countries.</span></div>
         <div class="rule"><i>03</i><span>Market buys count. Direct wallet transfers stay ignored.</span></div>
       </div>
@@ -135,7 +139,7 @@ html.mobile-hard .market{grid-template-columns:repeat(2,minmax(0,1fr));max-heigh
       <div class="status-box" id="questStatus">Loading Host Nations data...</div>
       <div class="action-grid">
         <button class="btn gold" onclick="mintCard()">MINT RANDOM WC CARD</button>
-        <button class="btn" onclick="setFilter('missing')">HUNT MISSING</button>
+        <button class="btn" onclick="huntMissing()">HUNT MISSING</button>
       </div>
       <div style="margin-top:10px;font-family:'Share Tech Mono',monospace;color:var(--muted);font-size:11px;line-height:1.45">
         Trading logic: if a wallet owns 2/3 host nations, the missing country becomes pressure. Sellers can price into that pressure instead of dumping at floor.
@@ -163,7 +167,7 @@ html.mobile-hard .market{grid-template-columns:repeat(2,minmax(0,1fr));max-heigh
     </div>
   </section>
 
-  <section class="panel">
+  <section class="panel" id="hostMarket">
     <div class="section-title">HOST MARKET <small id="marketInfo">USA / MEX / CAN only</small></div>
     <div class="market-tools">
       <button class="filter active" data-filter="all" onclick="setFilter('all')">ALL HOST</button>
@@ -182,6 +186,44 @@ html.mobile-hard .market{grid-template-columns:repeat(2,minmax(0,1fr));max-heigh
     <div class="sell-list" id="sellList"></div>
   </div>
 </div>
+<div class="wallet-choice-modal" id="walletChoiceModal" onclick="if(event.target===this)closeWalletChoice()">
+  <div class="wallet-choice-panel">
+    <div class="wallet-choice-head">
+      <div class="wallet-choice-title">CONNECT WALLET</div>
+      <button class="wallet-choice-close" type="button" onclick="closeWalletChoice()">&times;</button>
+    </div>
+    <button class="wallet-choice-option" type="button" onclick="connectInjectedWallet()">
+      <span class="wallet-choice-icon">APP</span>
+      <span><span class="wallet-choice-name">MetaMask / Trust Browser</span><span class="wallet-choice-desc">Use the wallet already injected into this browser.</span></span>
+      <span class="wallet-choice-tag">FAST</span>
+    </button>
+    <button class="wallet-choice-option" type="button" onclick="connectWalletConnect()">
+      <span class="wallet-choice-icon">QR</span>
+      <span><span class="wallet-choice-name">WalletConnect</span><span class="wallet-choice-desc">Use Trust Wallet or MetaMask Mobile. Avoid Socios if it reverts transactions.</span></span>
+      <span class="wallet-choice-tag">MOBILE</span>
+    </button>
+    <button class="wallet-choice-option" type="button" onclick="connectPrivyWallet()">
+      <span class="wallet-choice-icon">@</span>
+      <span><span class="wallet-choice-name">Privy Email Wallet</span><span class="wallet-choice-desc">Create or restore an embedded wallet by email code.</span></span>
+      <span class="wallet-choice-tag">EMAIL</span>
+    </button>
+    <div class="wallet-choice-note">Recommended on mobile: Privy, Trust Wallet, or MetaMask Mobile.</div>
+  </div>
+</div>
+<div class="mint-reveal" id="mintReveal" onclick="if(event.target===this)closeMintReveal()">
+  <div class="mint-reveal-panel">
+    <div class="modal-head"><div class="modal-title">CARD MINTED</div><button class="close" onclick="closeMintReveal()">&times;</button></div>
+    <div class="mint-reveal-body">
+      <div class="mint-reveal-fig" id="mintRevealFig"></div>
+      <div>
+        <div class="mint-reveal-name" id="mintRevealName">New card</div>
+        <div class="mint-reveal-sub" id="mintRevealSub">Waiting for mint result...</div>
+        <div class="mint-reveal-grid" id="mintRevealStats"></div>
+        <div class="mint-reveal-note" id="mintRevealNote"></div>
+      </div>
+    </div>
+  </div>
+</div>
 <div class="toast" id="toast"></div>
 
 <script>
@@ -190,6 +232,10 @@ const MARKET_ADDRESS = "0xA18f7Bade67Eda41FD7D2B3A204d39b543977DaE";
 const CHAIN_ID = 88888;
 const DEPLOY_BLOCK = 34086621;
 const PUBLIC_RPC = "https://chiliz-rpc.publicnode.com";
+const PUBLIC_RPCS = ["https://chiliz-rpc.publicnode.com","https://rpc.chiliz.com","https://chiliz.drpc.org"];
+const WALLETCONNECT_PROJECT_ID = "15671485110825e18107d31b379d9df6";
+const PRIVY_APP_ID = "cmpil29vr000r0cl27mvi078e";
+const PRIVY_CLIENT_ID = "client-WY6ZYpnr2u5M5Jusp4enZTZBmqhrikkMGUCjvgwWymidE";
 const ZERO_REF = "0x0000000000000000000000000000000000000000";
 const QUEST_END_AT = new Date("2026-06-07T12:00:00+02:00");
 const HOST_IDS = [24,22,19];
@@ -203,6 +249,7 @@ const POSITIONS = {1:"GK",2:"RB",3:"LB",4:"CB",5:"CB2",6:"DM",7:"RW",8:"MID",9:"
 const RARITY = ["Common","Rare","Epic","Legendary"];
 const RARITY_SHORT = ["COM","RAR","EPI","LEG"];
 const RARITY_COLOR = ["#7a8899","#3b82f6","#c084fc","#ffc940"];
+const TEAM_NAMES = ["Australia","Iran","Iraq","Japan","Jordan","Qatar","Saudi Arabia","South Korea","Uzbekistan","Algeria","Cape Verde","DR Congo","Egypt","Ghana","Ivory Coast","Morocco","Senegal","South Africa","Tunisia","Canada","Curacao","Haiti","Mexico","Panama","United States","Argentina","Brazil","Colombia","Ecuador","Paraguay","Uruguay","New Zealand","Austria","Belgium","Bosnia","Croatia","Czech Rep.","England","France","Germany","Netherlands","Norway","Portugal","Scotland","Spain","Sweden","Switzerland","Turkey"];
 const TEAM_COLORS = [
   '#FFD700','#239F40','#CC0001','#BC002D','#007A3D','#8D153A','#006C35','#CD2E3A','#1EB53A',
   '#006233','#003893','#007FFF','#CE1126','#006B3F','#F77F00','#C1272D','#00853F','#007749','#E70013',
@@ -238,6 +285,12 @@ let currentMintPrice = ethers.parseEther("10");
 let currentFilter = "all";
 let state = makeEmptyState();
 let podium3d = null;
+let walletConnectProvider = null;
+let activeWalletProvider = null;
+let activeWalletType = "";
+let privySdk = null;
+let privyClient = null;
+let privyIframe = null;
 
 function makeEmptyState(){
   return {mints:[],sales:[],cards:new Map(),ownerByToken:new Map(),hostCards:[],hostEvents:[],scores:[],listings:[],myBest:{},activeByToken:new Map(),demo:true};
@@ -284,7 +337,7 @@ function teamMeta(id){
   if (id === 24) return {id,name:"USA",code:"us"};
   if (id === 22) return {id,name:"Mexico",code:"mx"};
   if (id === 19) return {id,name:"Canada",code:"ca"};
-  return {id,name:"Team "+id,code:""};
+  return {id,name:TEAM_NAMES[Number(id)] || "Team "+id,code:""};
 }
 function skinColor(tone){
   return ["#FFDBB4","#EEC59A","#D4956A","#C27A4B","#8D5524","#4A2912"][Math.min(Number(tone || 2),5)];
@@ -360,29 +413,131 @@ function marketFigure(card){
   return '<div class="fig-svg"><img src="'+flagUrl(team.code)+'" alt="'+team.name+'"><span class="pos-tag">'+posLabel(card.position)+'</span>'+makeFigureSVG(card,72)+'</div>';
 }
 
-async function ensureChiliz(){
+function openWalletChoice(){document.getElementById("walletChoiceModal")?.classList.add("show");}
+function closeWalletChoice(){document.getElementById("walletChoiceModal")?.classList.remove("show");}
+function connectWallet(){openWalletChoice();}
+function readableWalletError(e){return readableError(e);}
+function isMissingPrivySession(error){
+  const text = readableWalletError(error).toLowerCase();
+  return text.includes("missing_or_invalid_token") || text.includes("no tokens found") || text.includes("invalid token");
+}
+async function ensureChilizProvider(walletProvider){
   const chainHex = "0x"+CHAIN_ID.toString(16);
-  const current = await window.ethereum.request({method:"eth_chainId"}).catch(()=>null);
+  const current = await walletProvider.request({method:"eth_chainId"}).catch(()=>null);
   if (String(current).toLowerCase() === chainHex) return;
-  try { await window.ethereum.request({method:"wallet_switchEthereumChain",params:[{chainId:chainHex}]}); }
+  try { await walletProvider.request({method:"wallet_switchEthereumChain",params:[{chainId:chainHex}]}); }
   catch(e){
-    await window.ethereum.request({method:"wallet_addEthereumChain",params:[{chainId:chainHex,chainName:"Chiliz Chain",nativeCurrency:{name:"CHZ",symbol:"CHZ",decimals:18},rpcUrls:[PUBLIC_RPC],blockExplorerUrls:["https://scan.chiliz.com"]}]});
+    await walletProvider.request({method:"wallet_addEthereumChain",params:[{chainId:chainHex,chainName:"Chiliz Chain",nativeCurrency:{name:"CHZ",symbol:"CHZ",decimals:18},rpcUrls:PUBLIC_RPCS,blockExplorerUrls:["https://scan.chiliz.com"]}]});
   }
 }
-async function connectWallet(){
-  if (!window.ethereum){toast("No injected wallet detected.",true);return;}
+async function finishWalletConnection(walletProvider, label){
+  activeWalletProvider = walletProvider;
+  activeWalletType = label;
+  await ensureChilizProvider(walletProvider);
+  browserProvider = new ethers.BrowserProvider(walletProvider);
+  signer = await browserProvider.getSigner();
+  address = String(await signer.getAddress()).toLowerCase();
+  provider = browserProvider;
+  contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
+  marketContract = new ethers.Contract(MARKET_ADDRESS, MARKET_ABI, signer);
+  document.getElementById("walletPill").textContent = label.toUpperCase()+" "+shortAddr(address);
+  closeWalletChoice();
+  await loadQuest();
+  toast(label+" wallet connected.");
+}
+async function connectInjectedWallet(){
+  if (!window.ethereum){toast("No injected wallet detected. Use WalletConnect or Privy.",true);return;}
   try{
-    await ensureChiliz();
     const accounts = await window.ethereum.request({method:"eth_requestAccounts"});
-    address = String(accounts[0]||"").toLowerCase();
-    browserProvider = new ethers.BrowserProvider(window.ethereum);
-    signer = await browserProvider.getSigner();
-    provider = browserProvider;
-    contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
-    marketContract = new ethers.Contract(MARKET_ADDRESS, MARKET_ABI, signer);
-    document.getElementById("walletPill").textContent = shortAddr(address);
-    await loadQuest();
+    if(!accounts?.[0]) throw new Error("No account selected");
+    await finishWalletConnection(window.ethereum, "Injected");
   }catch(e){toast("Wallet connect failed: "+readableError(e),true);}
+}
+function getChilizPrivyChain(){
+  const rpc = PUBLIC_RPCS[0] || PUBLIC_RPC;
+  return {id:CHAIN_ID,name:"Chiliz Chain",network:"chiliz",nativeCurrency:{name:"CHZ",symbol:"CHZ",decimals:18},rpcUrls:{default:{http:[rpc]},public:{http:[rpc]}},blockExplorers:{default:{name:"ChilizScan",url:"https://scan.chiliz.com"}}};
+}
+async function getPrivyClient(){
+  if(privyClient) return privyClient;
+  if(location.protocol === "file:") throw new Error("Privy requires a hosted HTTPS origin.");
+  const sdk = await import("https://esm.sh/@privy-io/js-sdk-core@latest");
+  privySdk = sdk;
+  const Privy = sdk.default;
+  const storage = sdk.LocalStorage ? new sdk.LocalStorage() : {
+    get:key => Promise.resolve(localStorage.getItem(key)),
+    put:(key,value) => Promise.resolve(localStorage.setItem(key,value)),
+    del:key => Promise.resolve(localStorage.removeItem(key)),
+    getKeys:() => Promise.resolve(Object.keys(localStorage))
+  };
+  const chilizChain = getChilizPrivyChain();
+  privyClient = new Privy({appId:PRIVY_APP_ID,clientId:PRIVY_CLIENT_ID,defaultChain:chilizChain,supportedChains:[chilizChain],storage});
+  await privyClient.initialize();
+  if(privyClient.embeddedWallet && !privyIframe){
+    privyIframe = document.createElement("iframe");
+    privyIframe.src = privyClient.embeddedWallet.getURL();
+    privyIframe.style.display = "none";
+    privyIframe.setAttribute("aria-hidden","true");
+    document.body.appendChild(privyIframe);
+    privyClient.setMessagePoster(privyIframe.contentWindow);
+    window.addEventListener("message", event=>{
+      if(event.source !== privyIframe.contentWindow) return;
+      const data = typeof event.data === "string" ? JSON.parse(event.data) : event.data;
+      privyClient.embeddedWallet.onMessage(data);
+    });
+  }
+  return privyClient;
+}
+async function connectPrivyWallet(){
+  closeWalletChoice();
+  toast("Opening Privy wallet...");
+  try{
+    const client = await getPrivyClient();
+    let user = null;
+    try{ const current = await client.user.get(); user = current?.user || null; }
+    catch(sessionError){ if(!isMissingPrivySession(sessionError)) throw sessionError; }
+    if(!user){
+      const email = window.prompt("Enter email for Privy wallet login:");
+      if(!email) return;
+      toast("Sending Privy login code...");
+      await client.auth.email.sendCode(email.trim());
+      const code = window.prompt("Enter the Privy code from your email:");
+      if(!code) return;
+      toast("Confirming Privy login...");
+      const session = await client.auth.email.loginWithCode(email.trim(), code.trim());
+      user = session.user;
+    }
+    let wallet = privySdk.getUserEmbeddedEthereumWallet(user);
+    if(!wallet){
+      toast("Creating Privy wallet...");
+      const created = await client.embeddedWallet.create({});
+      user = created.user;
+      wallet = privySdk.getUserEmbeddedEthereumWallet(user);
+    }
+    const entropy = privySdk.getEntropyDetailsFromUser(user);
+    const walletProvider = await client.embeddedWallet.getEthereumProvider({wallet,entropyId:entropy.entropyId,entropyIdVerifier:entropy.entropyIdVerifier});
+    await finishWalletConnection(walletProvider, "Privy");
+  }catch(e){console.error("Privy connect failed", e); toast("Privy failed: "+readableError(e).slice(0,170),true);}
+}
+async function connectWalletConnect(){
+  closeWalletChoice();
+  toast("Opening WalletConnect...");
+  try{
+    const mod = await import("https://esm.sh/@walletconnect/ethereum-provider@2");
+    const EthereumProvider = mod.default || mod.EthereumProvider;
+    walletConnectProvider = await EthereumProvider.init({
+      projectId:WALLETCONNECT_PROJECT_ID,
+      chains:[CHAIN_ID],
+      optionalChains:[CHAIN_ID],
+      chainId:CHAIN_ID,
+      rpcMap:{[CHAIN_ID]:PUBLIC_RPCS[0] || PUBLIC_RPC},
+      showQrModal:true,
+      methods:["eth_sendTransaction","personal_sign","wallet_switchEthereumChain","wallet_addEthereumChain"],
+      events:["chainChanged","accountsChanged","disconnect"],
+      metadata:{name:"Block Kickers",description:"Block Kickers on Chiliz Chain",url:location.origin,icons:[location.origin+"/favicon.ico"]}
+    });
+    await walletConnectProvider.connect({chains:[CHAIN_ID]});
+    await finishWalletConnection(walletConnectProvider, "WC");
+  }catch(e){console.error("WalletConnect failed", e); toast("WalletConnect failed: "+readableError(e).slice(0,150),true);}
 }
 
 async function fetchEvents(){
@@ -571,9 +726,10 @@ function renderLeaderboard(){
 }
 function renderPodium(){
   const deck = stageDeck();
+  const bonus = (deck.fullBonus || 0) + (deck.diversityBonus || 0);
   document.getElementById("stageTitle").textContent = address && deck.wallet===address ? "YOUR HOST PODIUM" : "TOP HOST PODIUM";
-  document.getElementById("stageSub").textContent = deck.wallet ? shortAddr(deck.wallet)+" - best cards by host country" : "preview";
-  document.getElementById("stageScore").innerHTML = (deck.score || 0)+'<span>PODIUM SCORE</span>';
+  document.getElementById("stageSub").textContent = deck.wallet ? shortAddr(deck.wallet)+" - base "+(deck.base || 0)+" + bonus "+bonus+" = "+(deck.score || 0) : "preview";
+  document.getElementById("stageScore").innerHTML = (deck.score || 0)+'<span>BASE '+(deck.base || 0)+' + BONUS '+bonus+'</span>';
   const layout = podiumLayoutItems(deck);
   document.getElementById("podiumCards").innerHTML = layout.map(item=>{
     const h = item.host;
@@ -603,6 +759,10 @@ function setFilter(filter){
   currentFilter = filter;
   document.querySelectorAll(".filter").forEach(b=>b.classList.toggle("active",b.dataset.filter===filter));
   renderMarket();
+}
+function huntMissing(){
+  setFilter("missing");
+  document.getElementById("hostMarket")?.scrollIntoView({behavior:"smooth",block:"start"});
 }
 function renderMarket(){
   const grid = document.getElementById("marketGrid");
@@ -700,13 +860,60 @@ async function listCard(tokenId){
     await loadQuest();
   }catch(e){toast("List failed: "+readableError(e),true);}
 }
+function closeMintReveal(){document.getElementById("mintReveal")?.classList.remove("show");}
+function extractMintedCard(receipt){
+  const iface = new ethers.Interface(ABI);
+  for(const log of receipt?.logs || []){
+    if(String(log.address).toLowerCase() !== CONTRACT_ADDRESS.toLowerCase()) continue;
+    try{
+      const parsed = iface.parseLog(log);
+      if(parsed?.name !== "FigureMinted") continue;
+      const a = parsed.args;
+      if(address && String(a.owner).toLowerCase() !== address) continue;
+      const dna = BigInt(String(a.dna));
+      const parsedDna = parseDNA(dna);
+      return {
+        owner:String(a.owner).toLowerCase(),
+        tokenId:Number(a.tokenId),
+        dna,
+        ...parsedDna,
+        teamId:Number(a.teamId),
+        position:Number(a.position),
+        rarity:Number(a.rarity),
+        weight:Number(a.weight)
+      };
+    }catch(e){}
+  }
+  return null;
+}
+function showMintReveal(card){
+  const modal = document.getElementById("mintReveal");
+  if(!modal || !card) return;
+  const team = teamMeta(card.teamId);
+  const isHost = HOST_IDS.includes(card.teamId);
+  document.getElementById("mintRevealFig").innerHTML = makeFigureSVG(card,118);
+  document.getElementById("mintRevealName").textContent = team.name+" "+posLabel(card.position);
+  document.getElementById("mintRevealSub").textContent = "#"+card.tokenId+" - "+RARITY[card.rarity]+" - "+(isHost ? "HOST QUEST CARD" : "WORLD CUP CARD");
+  document.getElementById("mintRevealStats").innerHTML = `
+    <div class="mint-reveal-stat"><b>${card.weight}</b><span>weight</span></div>
+    <div class="mint-reveal-stat"><b>${RARITY_SHORT[card.rarity]}</b><span>rarity</span></div>
+    <div class="mint-reveal-stat"><b>${isHost ? "YES" : "NO"}</b><span>host quest</span></div>
+  `;
+  document.getElementById("mintRevealNote").textContent = isHost
+    ? "This card can count in Host Nations Podium if it is your best card for "+team.name+". Check the podium and market after refresh."
+    : "This mint is not USA, Mexico or Canada, so it does not score in this quest. It still belongs to your main World Cup collection.";
+  modal.classList.add("show");
+}
 async function mintCard(){
   if(!signer || !contract){toast("Connect wallet first.",true);return;}
   try{
     currentMintPrice = await contract.mintPrice().catch(()=>currentMintPrice);
     const tx = await contract.mint(ZERO_REF,{value:currentMintPrice});
-    toast("Mint sent. Waiting for new card...");
-    await tx.wait();
+    toast("Mint sent. Waiting for card reveal...");
+    const receipt = await tx.wait();
+    const minted = extractMintedCard(receipt);
+    if(minted) showMintReveal(minted);
+    else toast("Mint confirmed, but card details were not found in receipt. Refreshing data.", true);
     await loadQuest();
   }catch(e){toast("Mint failed: "+readableError(e),true);}
 }
