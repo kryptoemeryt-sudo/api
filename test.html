@@ -48,7 +48,7 @@ button{font-family:'Black Ops One',sans-serif}
 .kicker{display:inline-flex;align-items:center;gap:8px;font-family:'Share Tech Mono',monospace;color:var(--green);font-size:11px;letter-spacing:2px;text-transform:uppercase;border:1px solid rgba(0,255,135,.35);background:rgba(0,255,135,.08);border-radius:5px;padding:6px 9px}.dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 12px rgba(0,255,135,.8)}
 .title{font-family:'Black Ops One',sans-serif;font-size:clamp(38px,5.6vw,76px);line-height:.9;letter-spacing:1px;margin:14px 0 8px}.title .gold{color:var(--gold)}.title .line{display:block}
 .copy{font-size:20px;line-height:1.18;color:#c8d5e6;max-width:520px}.copy strong{color:#fff}
-.host-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:14px}.host-chip{border:1px solid var(--line);background:rgba(255,255,255,.04);border-radius:7px;padding:8px;display:grid;grid-template-columns:auto 1fr;gap:8px;align-items:center;min-width:0}.host-chip img{width:34px;height:23px;object-fit:cover;border-radius:3px}.host-chip b{font-family:'Black Ops One',sans-serif;font-size:13px;line-height:1}.host-chip span{display:block;color:var(--muted);font-family:'Share Tech Mono',monospace;font-size:9px;margin-top:2px}
+.host-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:14px}.host-chip{border:1px solid var(--line);background:rgba(255,255,255,.04);border-radius:7px;padding:8px;display:grid;grid-template-columns:auto 1fr;gap:8px;align-items:center;min-width:0}.host-chip img{width:34px;height:23px;object-fit:cover;border-radius:3px}.host-chip b{font-family:Arial,sans-serif;font-weight:900;font-size:13px;line-height:1;color:#fff;text-shadow:none;letter-spacing:.2px}.host-chip span{display:block;color:#aab8c8;font-family:Arial,sans-serif;font-size:10px;margin-top:2px;text-shadow:none}
 .rules{display:grid;gap:7px;margin-top:12px}.rule{display:grid;grid-template-columns:28px minmax(0,1fr);gap:8px;align-items:center;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.035);border-radius:7px;padding:8px}.rule i{font-family:'Black Ops One',sans-serif;color:var(--gold);font-style:normal}.rule span{color:#dbe6f4;font-size:15px;line-height:1.15;min-width:0;overflow-wrap:anywhere}
 .stage-panel{position:relative;padding:0;min-height:360px;background:linear-gradient(180deg,rgba(11,18,26,.96),rgba(5,7,10,.98));border-color:rgba(88,166,255,.26)}
 #podiumStage{display:block;width:100%;height:100%;min-height:360px;position:relative;z-index:2}
@@ -61,7 +61,7 @@ button{font-family:'Black Ops One',sans-serif}
 .section-grid>.panel{display:flex;flex-direction:column;min-height:382px}
 .leaderboard{display:grid;gap:6px;flex:1;min-height:0;overflow:auto;padding-right:3px}.lb-row{display:grid;grid-template-columns:40px 1fr 70px 64px;gap:8px;align-items:center;border:1px solid var(--line);background:#0e141c;border-radius:7px;padding:8px}.lb-row.me{border-color:rgba(0,255,135,.45);background:rgba(0,255,135,.06)}.lb-row.complete{border-color:rgba(255,201,64,.34)}.lb-pos{font-family:'Black Ops One',sans-serif;color:var(--gold);font-size:14px}.lb-wallet{font-family:'Share Tech Mono',monospace;color:#dce8f6;font-size:12px;min-width:0;overflow:hidden;text-overflow:ellipsis}.lb-you{display:inline-block;margin-left:5px;color:var(--green);font-size:9px}.lb-score{font-family:'Black Ops One',sans-serif;color:var(--green);text-align:right}.lb-comp{font-family:'Share Tech Mono',monospace;color:var(--muted);font-size:10px;text-align:right}
 .market-tools{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;margin-bottom:8px}.filter{border:1px solid var(--line);background:rgba(255,255,255,.04);color:#cbd9e8;border-radius:6px;padding:8px 4px;font-family:'Black Ops One',sans-serif;font-size:9px;letter-spacing:.5px;cursor:pointer}.filter.active{border-color:var(--green);background:rgba(0,255,135,.12);color:var(--green)}
-.market{display:grid;grid-template-columns:repeat(auto-fill,minmax(138px,1fr));gap:8px;max-height:382px;overflow:auto;padding-right:3px}.market-card{position:relative;border:1px solid var(--line);background:linear-gradient(180deg,#111923,#080c11);border-radius:8px;min-height:198px;overflow:hidden;padding:8px;display:grid;grid-template-rows:82px auto auto;gap:6px}.market-card.r1{border-color:rgba(59,130,246,.48)}.market-card.r2{border-color:rgba(192,132,252,.52)}.market-card.r3{border-color:rgba(255,201,64,.62);box-shadow:0 0 18px rgba(255,201,64,.09)}.market-card.mine{border-color:rgba(0,255,135,.55)}
+.market{display:grid;grid-template-columns:repeat(auto-fill,minmax(138px,1fr));gap:8px;max-height:382px;overflow:auto;padding-right:5px;scrollbar-width:thin;scrollbar-color:rgba(0,255,135,.45) rgba(255,255,255,.045)}.market::-webkit-scrollbar,.leaderboard::-webkit-scrollbar,.demand-list::-webkit-scrollbar,.feed::-webkit-scrollbar{width:8px;height:8px}.market::-webkit-scrollbar-track,.leaderboard::-webkit-scrollbar-track,.demand-list::-webkit-scrollbar-track,.feed::-webkit-scrollbar-track{background:rgba(255,255,255,.045);border-radius:8px}.market::-webkit-scrollbar-thumb,.leaderboard::-webkit-scrollbar-thumb,.demand-list::-webkit-scrollbar-thumb,.feed::-webkit-scrollbar-thumb{background:rgba(0,255,135,.38);border-radius:8px;border:2px solid rgba(5,7,10,.92)}.market::-webkit-scrollbar-thumb:hover,.leaderboard::-webkit-scrollbar-thumb:hover,.demand-list::-webkit-scrollbar-thumb:hover,.feed::-webkit-scrollbar-thumb:hover{background:rgba(0,255,135,.62)}.market-card{position:relative;border:1px solid var(--line);background:linear-gradient(180deg,#111923,#080c11);border-radius:8px;min-height:198px;overflow:hidden;padding:8px;display:grid;grid-template-rows:82px auto auto;gap:6px}.market-card.r1{border-color:rgba(59,130,246,.48)}.market-card.r2{border-color:rgba(192,132,252,.52)}.market-card.r3{border-color:rgba(255,201,64,.62);box-shadow:0 0 18px rgba(255,201,64,.09)}.market-card.mine{border-color:rgba(0,255,135,.55)}
 .fig-svg{display:grid;place-items:center;position:relative;background:radial-gradient(circle at 50% 85%,rgba(0,255,135,.13),transparent 56%);border:1px solid rgba(255,255,255,.08);border-radius:6px}.fig-svg img{position:absolute;left:5px;top:5px;width:25px;height:17px;object-fit:cover;border-radius:2px}.pos-tag{position:absolute;right:5px;top:5px;font-family:'Black Ops One',sans-serif;font-size:9px;color:#fff;background:rgba(5,7,10,.72);border:1px solid rgba(255,255,255,.12);border-radius:4px;padding:3px 5px}.card-name{font-family:'Black Ops One',sans-serif;font-size:12px;color:#fff;line-height:1.05}.card-sub{font-family:'Share Tech Mono',monospace;color:var(--muted);font-size:10px;margin-top:3px}.card-price{font-family:'Black Ops One',sans-serif;color:var(--gold);font-size:16px}.card-actions{display:grid;grid-template-columns:1fr;gap:5px}.card-actions .btn{min-height:30px;padding:6px;font-size:9px}
 .desk{display:grid;grid-template-columns:.92fr 1.08fr;gap:8px;flex:1;min-height:0}.desk>div{display:flex;flex-direction:column;min-height:0}.demand-list,.feed{display:grid;gap:6px;flex:1;min-height:0;overflow:auto}.sell-list{display:grid;gap:6px;max-height:330px;overflow:auto}.signal{display:grid;grid-template-columns:44px minmax(0,1fr) auto;gap:9px;align-items:center;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.025);border-radius:6px;padding:9px}.signal.hot{border-color:rgba(255,201,64,.22);background:rgba(255,201,64,.035)}.sig-team{font-family:'Black Ops One',sans-serif;color:#dce8f6;font-size:13px}.sig-main b{font-family:Arial,sans-serif;color:#ffffff;font-weight:800;font-size:15px;line-height:1.12;letter-spacing:0;text-shadow:none;-webkit-font-smoothing:antialiased}.sig-main span{display:block;font-family:Arial,sans-serif;color:#b9c5d3;font-size:12px;line-height:1.2;margin-top:3px;text-shadow:none}.sig-price{font-family:'Black Ops One',sans-serif;color:var(--gold);font-size:13px;text-align:right}.feed-row{display:grid;grid-template-columns:44px 1fr 64px;gap:9px;border:1px solid var(--line);background:rgba(255,255,255,.04);border-radius:7px;padding:9px;align-items:center}.feed-team{font-family:'Black Ops One',sans-serif;color:var(--gold);font-size:13px}.feed-main{font-family:Arial,sans-serif;color:#f0f6ff;font-size:13px;line-height:1.2;min-width:0;overflow:hidden;text-overflow:ellipsis}.feed-price{text-align:right;font-family:'Black Ops One',sans-serif;color:var(--green);font-size:13px}
 .modal{position:fixed;inset:0;z-index:80;display:none;align-items:center;justify-content:center;background:rgba(3,5,8,.78);backdrop-filter:blur(8px);padding:14px}.modal.show{display:flex}.modal-panel{width:min(94vw,520px);border:1px solid rgba(0,255,135,.36);background:linear-gradient(180deg,#111923,#06080b);border-radius:8px;padding:14px;box-shadow:0 24px 80px rgba(0,0,0,.66)}.modal-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}.modal-title{font-family:'Black Ops One',sans-serif;color:var(--green);font-size:16px;letter-spacing:1px}.close{width:32px;height:32px;border:1px solid var(--line);background:#0b1016;color:#fff;border-radius:6px;font-size:20px;cursor:pointer}.sell-row{display:grid;grid-template-columns:54px 1fr 86px;gap:8px;align-items:center;border:1px solid var(--line);background:#0e141c;border-radius:7px;padding:8px}.sell-input{width:100%;background:#05070a;border:1px solid var(--line);border-radius:6px;color:#fff;text-align:center;font-family:'Black Ops One',sans-serif;padding:7px}
@@ -109,14 +109,14 @@ html.mobile-hard .market{grid-template-columns:repeat(2,minmax(0,1fr));max-heigh
       <h1 class="title"><span class="line">HOST</span><span class="line gold">NATIONS</span><span class="line">PODIUM</span></h1>
       <div class="copy"><strong>One best card from each host country.</strong> USA, Mexico and Canada form your 3-card podium. Missing one country means the whole podium is exposed.</div>
       <div class="host-strip">
-        <div class="host-chip"><img src="https://flagcdn.com/w80/us.png" alt="USA"><div><b>USA</b><span>best weight</span></div></div>
-        <div class="host-chip"><img src="https://flagcdn.com/w80/mx.png" alt="Mexico"><div><b>MEXICO</b><span>best weight</span></div></div>
-        <div class="host-chip"><img src="https://flagcdn.com/w80/ca.png" alt="Canada"><div><b>CANADA</b><span>best weight</span></div></div>
+        <div class="host-chip"><img src="https://flagcdn.com/w80/us.png" alt=""><div><b>USA</b><span>best weight</span></div></div>
+        <div class="host-chip"><img src="https://flagcdn.com/w80/mx.png" alt=""><div><b>MEXICO</b><span>best weight</span></div></div>
+        <div class="host-chip"><img src="https://flagcdn.com/w80/ca.png" alt=""><div><b>CANADA</b><span>best weight</span></div></div>
       </div>
       <div class="rules">
         <div class="rule"><i>01</i><span>Score = best USA weight + best Mexico weight + best Canada weight.</span></div>
         <div class="rule"><i>02</i><span>No free bonuses. Extra boosts will be paid, limited and separate.</span></div>
-        <div class="rule"><i>03</i><span>Market buys count. Direct wallet transfers stay ignored.</span></div>
+        <div class="rule"><i>03</i><span>Mints and market buys count. Direct wallet transfers stay ignored.</span></div>
       </div>
     </div>
 
@@ -964,9 +964,9 @@ class HostPodium3D{
     const lineMat = new THREE.MeshBasicMaterial({color:0x00ff87,transparent:true,opacity:.28});
     for(let i=0;i<3;i++){const ring=new THREE.Mesh(new THREE.TorusGeometry(2.35+i*.86,.012,8,96),lineMat);ring.rotation.x=Math.PI/2;ring.position.y=.02;this.root.add(ring);}
     const hosts = [
-      {x:-2.05,h:.72,r:.82,label:"#2",color:0x58a6ff},
-      {x:0,h:1.05,r:.95,label:"#1",color:0xffc940},
-      {x:2.05,h:.54,r:.78,label:"#3",color:0x00ff87}
+      {x:-2.05,h:.92,r:.82,label:"#2",color:0x58a6ff},
+      {x:0,h:1.30,r:.95,label:"#1",color:0xffc940},
+      {x:2.05,h:.74,r:.78,label:"#3",color:0x00ff87}
     ];
     hosts.forEach(p=>{
       const base=this.cyl(p.r,p.r*1.05,p.h,this.mat(0x121c26,{roughness:.45,metalness:.18}),p.x,p.h/2-.05,0);
@@ -974,13 +974,15 @@ class HostPodium3D{
       const trim=this.cyl(p.r*1.02,p.r*1.02,.06,this.mat(p.color,{roughness:.25,metalness:.28,emissive:p.color,emissiveIntensity:.08}),p.x,p.h+.01,0);
       this.root.add(trim);
       const txt=this.makeText(p.label,p.label==="#1"?"#ffc940":p.label==="#2"?"#58a6ff":"#00ff87");
-      txt.position.set(p.x,p.h*.45, p.r+.04); this.root.add(txt);
+      txt.position.set(p.x,p.h+.18, p.r+.06);
+      txt.scale.setScalar(1.08);
+      this.root.add(txt);
     });
   }
   setCards(items){
     this.figures.forEach(f=>this.root.remove(f));
     this.figures = [];
-    const slots=[{x:-2.05,y:1.16,z:0,s:.88},{x:0,y:1.57,z:0,s:1.05},{x:2.05,y:.98,z:0,s:.82}];
+    const slots=[{x:-2.05,y:.96,z:0,s:.88},{x:0,y:1.34,z:0,s:1.05},{x:2.05,y:.78,z:0,s:.82}];
     items.forEach((item,i)=>{
       const h = item.host || HOST_ORDER[i];
       const card = item.card || null;
