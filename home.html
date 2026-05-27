@@ -80,7 +80,10 @@ h1 .accent{color:var(--green);text-shadow:0 0 30px var(--green-glow);}
 .reward-total-value{font-family:'Black Ops One',sans-serif;font-size:30px;line-height:.95;color:var(--gold);text-shadow:0 0 18px rgba(255,201,64,.32);white-space:nowrap;}
 .reward-total-copy{font-family:'Share Tech Mono',monospace;font-size:11px;line-height:1.25;color:#c4d0df;text-transform:uppercase;letter-spacing:.8px;}
 .reward-total-copy b{font-family:'Black Ops One',sans-serif;color:var(--green);font-weight:400;letter-spacing:1px;}
+.market-sec-header{display:grid;grid-template-columns:minmax(220px,auto) minmax(0,1fr) auto;align-items:center;gap:12px;}
+.market-title-wrap{min-width:0;}
 .home-host-alert{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:12px;margin:0 0 12px;padding:12px 14px;border:1px solid rgba(0,255,135,.28);border-radius:10px;background:linear-gradient(135deg,rgba(0,255,135,.08),rgba(255,201,64,.045));box-shadow:inset 0 0 22px rgba(0,255,135,.025);}
+.market-sec-header .home-host-alert{margin:0;min-width:0;padding:8px 10px;gap:9px;border-radius:8px;}
 .home-host-alert.hot{border-color:rgba(255,201,64,.58);background:linear-gradient(135deg,rgba(255,201,64,.14),rgba(0,255,135,.07));box-shadow:0 0 28px rgba(255,201,64,.08),inset 0 0 22px rgba(0,255,135,.03);}
 .home-host-badge{font-family:'Black Ops One',sans-serif;font-size:10px;letter-spacing:1.6px;color:var(--green);text-transform:uppercase;white-space:nowrap;}
 .home-host-alert.hot .home-host-badge{color:var(--gold);}
@@ -2367,6 +2370,44 @@ body.dash-active #mint .quest-title{
   body.dash-active #market .home-host-copy{font-size:9px;}
 }
 
+/* Market header + squad filter density */
+#squadFilters{flex-wrap:nowrap!important;overflow-x:auto!important;scrollbar-width:thin;padding-bottom:5px;min-height:28px;}
+#squadFilters button{flex:0 0 auto;}
+body.dash-active #squadFilters{flex-wrap:nowrap!important;overflow-x:auto!important;overflow-y:hidden!important;min-height:30px!important;max-height:34px!important;align-content:center!important;}
+@media(min-width:900px){
+  #market .market-sec-header{
+    display:grid!important;
+    grid-template-columns:minmax(190px,auto) minmax(0,1fr) auto!important;
+    align-items:center!important;
+    gap:10px!important;
+    margin-bottom:10px!important;
+  }
+  #market .market-sec-header .home-host-alert{
+    display:grid!important;
+    grid-template-columns:auto minmax(0,1fr) auto!important;
+    align-items:center!important;
+    margin:0!important;
+    padding:7px 9px!important;
+    min-width:0!important;
+  }
+  #market .market-sec-header .home-host-main{
+    display:flex!important;
+    align-items:center!important;
+    gap:8px!important;
+    min-width:0!important;
+  }
+  #market .market-sec-header .home-host-badge{font-size:8px!important;letter-spacing:1px!important;}
+  #market .market-sec-header .home-host-title{font-size:10px!important;line-height:1!important;min-width:0!important;max-width:280px!important;}
+  #market .market-sec-header .home-host-copy{font-size:8px!important;line-height:1!important;margin:0!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;min-width:0!important;}
+  #market .market-sec-header .home-host-link{padding:6px 8px!important;font-size:8px!important;border-radius:6px!important;}
+  #squad .col-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;}
+  body.dash-active #squad .col-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;}
+}
+@media(max-width:899px){
+  #market .market-sec-header{display:grid!important;grid-template-columns:1fr auto!important;align-items:end!important;gap:10px!important;}
+  #market .market-sec-header .home-host-alert{grid-column:1/-1;margin:0!important;}
+}
+
 /* Unified Block Kickers loading / blockchain overlay */
 #networkOverlay{position:fixed!important;inset:0!important;z-index:7000!important;display:none!important;align-items:center!important;justify-content:center!important;background:rgba(2,6,8,.82)!important;backdrop-filter:blur(8px)!important;padding:max(14px,env(safe-area-inset-top)) max(14px,env(safe-area-inset-right)) max(14px,env(safe-area-inset-bottom)) max(14px,env(safe-area-inset-left))!important;box-sizing:border-box!important;overflow:hidden!important;}
 #networkOverlay.show{display:flex!important;}
@@ -2800,20 +2841,20 @@ document.addEventListener('DOMContentLoaded', setupDesktopDashboardLayout);
 
 <!-- MARKET -->
 <div class="section" id="market">
-  <div class="sec-header">
-    <div>
+  <div class="sec-header market-sec-header">
+    <div class="market-title-wrap">
       <div class="sec-title">MARKET<span class="acc">PLACE</span></div>
       <div class="sec-sub">Trade figures P2P &middot; 5% creator royalty &middot; 5% goes to prize pool &#127942;</div>
     </div>
-    <button onclick="loadMarket()" style="background:var(--green-dim);border:1px solid rgba(0,255,135,0.3);color:var(--green);padding:8px 18px;border-radius:6px;font-family:'Black Ops One',sans-serif;font-size:11px;letter-spacing:1px;cursor:pointer;">REFRESH</button>
-  </div>
-  <div class="home-host-alert" id="homeHostAlert">
-    <div class="home-host-badge">HOST PODIUM</div>
-    <div class="home-host-main">
-      <div class="home-host-title">Connect wallet to scan leader cards</div>
-      <div class="home-host-copy">If your USA / Mexico / Canada card can give another wallet #1, list it above floor.</div>
+    <div class="home-host-alert" id="homeHostAlert">
+      <div class="home-host-badge">HOST PODIUM</div>
+      <div class="home-host-main">
+        <div class="home-host-title">Connect wallet to scan leader cards</div>
+        <div class="home-host-copy">If your USA / Mexico / Canada card can give another wallet #1, list it above floor.</div>
+      </div>
+      <a class="home-host-link" href="/host-nations-podium">OPEN QUEST</a>
     </div>
-    <a class="home-host-link" href="/host-nations-podium">OPEN QUEST</a>
+    <button onclick="loadMarket()" style="background:var(--green-dim);border:1px solid rgba(0,255,135,0.3);color:var(--green);padding:8px 18px;border-radius:6px;font-family:'Black Ops One',sans-serif;font-size:11px;letter-spacing:1px;cursor:pointer;">REFRESH</button>
   </div>
   <div class="market-tabs">
     <button class="mtab active" onclick="switchMarketTab('all',this)">ALL LISTINGS</button>
@@ -4719,6 +4760,7 @@ async function loadCollection(){
 
     if(myFigures.length === 0){
       myFigures=[];
+      buildSquadFilters();
       renderCollection();
       document.getElementById('colCount').textContent='0 FIGURES OWNED';
       return;
@@ -4769,6 +4811,10 @@ function renderCollection(){
     ? myFigures.filter(f=>{ try{ return TEAMS[parseDNA(f.dna).teamId%TEAMS.length]===_squadTeamFilter; }catch(e){ return true; } })
     : myFigures;
   const squadPageSize = twoRowGridLimit(grid, SQUAD_PER_PAGE);
+  if(filtered.length === 0){
+    grid.innerHTML='<div class="empty">NO '+teamCode(_squadTeamFilter)+' CARDS IN THIS WALLET<br><span style="font-size:12px;margin-top:8px;display:block;">Mint or buy this country on the market.</span></div>';
+    return;
+  }
   const squadStart=squadPage*squadPageSize;
   const squadEnd=squadStart+squadPageSize;
   const squadTotal=Math.ceil(filtered.length/squadPageSize);
@@ -5251,18 +5297,30 @@ let _squadTeamFilter = null;
 function buildSquadFilters(){
   const div = document.getElementById('squadFilters');
   if(!div) return;
-  const teams = [...new Set(myFigures.map(f=>{
-    try{ return TEAMS[parseDNA(f.dna).teamId % TEAMS.length]; }catch(e){ return null; }
-  }).filter(Boolean))].sort();
-  if(teams.length <= 1){ div.innerHTML=''; return; }
-  const s1='padding:3px 8px;border-radius:12px;border:1px solid var(--border);background:rgba(255,255,255,0.03);color:var(--text3);font-size:10px;cursor:pointer;white-space:nowrap;flex-shrink:0;';
-  const s2='padding:3px 8px;border-radius:12px;border:1px solid rgba(0,255,135,0.3);background:var(--green-dim);color:var(--green);font-size:10px;cursor:pointer;white-space:nowrap;flex-shrink:0;';
+  const ownedCounts = new Map();
+  myFigures.forEach(f => {
+    try{
+      const team = TEAMS[parseDNA(f.dna).teamId % TEAMS.length];
+      ownedCounts.set(team, (ownedCounts.get(team) || 0) + 1);
+    }catch(e){}
+  });
+  const teams = TEAMS.slice().sort((a,b)=>teamCode(a).localeCompare(teamCode(b)));
+  const squadFilterStyle = (active, owned) =>
+    'padding:3px 8px;border-radius:12px;border:1px solid ' + (active ? 'rgba(0,255,135,0.3)' : 'var(--border)') + ';' +
+    'background:' + (active ? 'var(--green-dim)' : 'rgba(255,255,255,0.03)') + ';' +
+    'color:' + (active ? 'var(--green)' : (owned ? 'var(--text3)' : 'rgba(136,146,164,.42)')) + ';' +
+    'font-size:10px;cursor:pointer;white-space:nowrap;flex-shrink:0;opacity:' + (owned || active ? '1' : '.62') + ';';
+  const s1 = squadFilterStyle(false, true);
+  const s2 = squadFilterStyle(true, true);
   div.innerHTML='<button onclick="setSquadFilter(null,this)" style="'+(!_squadTeamFilter?s2:s1)+'">ALL</button>';
   teams.forEach(team=>{
+    const owned = ownedCounts.get(team) || 0;
+    const active = _squadTeamFilter === team;
     const b=document.createElement('button');
-    b.style.cssText=_squadTeamFilter===team?s2:s1;
-    b.textContent=teamCode(team);
-    b.title=team;
+    b.style.cssText=squadFilterStyle(active, owned > 0);
+    b.textContent=teamCode(team) + (owned ? ' ' + owned : '');
+    b.title=owned ? `${team} - ${owned} card${owned!==1?'s':''}` : `${team} - no cards owned`;
+    b.dataset.team = team;
     b.onclick=()=>setSquadFilter(team,b);
     div.appendChild(b);
   });
@@ -5271,11 +5329,7 @@ function buildSquadFilters(){
 function setSquadFilter(team,btn){
   _squadTeamFilter=team;
   squadPage=0;
-  const s1='padding:3px 8px;border-radius:12px;border:1px solid var(--border);background:rgba(255,255,255,0.03);color:var(--text3);font-size:9px;cursor:pointer;white-space:nowrap;flex-shrink:0;';
-  const s2='padding:3px 8px;border-radius:12px;border:1px solid rgba(0,255,135,0.3);background:var(--green-dim);color:var(--green);font-size:9px;cursor:pointer;white-space:nowrap;flex-shrink:0;';
-  document.querySelectorAll('#squadFilters button').forEach(b=>b.style.cssText=s1);
-  if(!btn && team) btn=[...document.querySelectorAll('#squadFilters button')].find(b=>b.title===team);
-  if(btn) btn.style.cssText=s2;
+  buildSquadFilters();
   renderCollection();
 }
 
@@ -5303,6 +5357,7 @@ const localListedFigures = new Set();
 function twoRowGridLimit(gridEl, fallback) {
   if (!gridEl) return fallback;
   if (document.body.classList.contains('dash-active') && gridEl.id === 'marketList') return 18;
+  if (gridEl.id === 'colGrid' && window.matchMedia && window.matchMedia('(min-width: 900px)').matches) return 9;
   const styles = getComputedStyle(gridEl);
   const gap = parseFloat(styles.columnGap) || 8;
   const minCard = gridEl.id === 'marketList' ? 112 : 104;
