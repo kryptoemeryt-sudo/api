@@ -76,6 +76,19 @@ h1 .accent{color:var(--green);text-shadow:0 0 30px var(--green-glow);}
 .stat{display:flex;flex-direction:column;gap:3px;}
 .stat-n{font-family:'Black Ops One',sans-serif;font-size:28px;color:var(--green);}
 .stat-l{font-family:'Black Ops One',sans-serif;font-size:14px;color:var(--text);letter-spacing:2px;text-transform:uppercase;}
+.reward-total-banner{display:grid;grid-template-columns:auto 1fr;align-items:center;gap:12px;margin:0 0 14px;padding:12px 14px;border:1px solid rgba(255,201,64,.36);border-radius:9px;background:linear-gradient(135deg,rgba(255,201,64,.12),rgba(0,255,135,.055));box-shadow:0 0 24px rgba(255,201,64,.08),inset 0 0 20px rgba(0,255,135,.025);}
+.reward-total-value{font-family:'Black Ops One',sans-serif;font-size:30px;line-height:.95;color:var(--gold);text-shadow:0 0 18px rgba(255,201,64,.32);white-space:nowrap;}
+.reward-total-copy{font-family:'Share Tech Mono',monospace;font-size:11px;line-height:1.25;color:#c4d0df;text-transform:uppercase;letter-spacing:.8px;}
+.reward-total-copy b{font-family:'Black Ops One',sans-serif;color:var(--green);font-weight:400;letter-spacing:1px;}
+.home-host-alert{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:12px;margin:0 0 12px;padding:12px 14px;border:1px solid rgba(0,255,135,.28);border-radius:10px;background:linear-gradient(135deg,rgba(0,255,135,.08),rgba(255,201,64,.045));box-shadow:inset 0 0 22px rgba(0,255,135,.025);}
+.home-host-alert.hot{border-color:rgba(255,201,64,.58);background:linear-gradient(135deg,rgba(255,201,64,.14),rgba(0,255,135,.07));box-shadow:0 0 28px rgba(255,201,64,.08),inset 0 0 22px rgba(0,255,135,.03);}
+.home-host-badge{font-family:'Black Ops One',sans-serif;font-size:10px;letter-spacing:1.6px;color:var(--green);text-transform:uppercase;white-space:nowrap;}
+.home-host-alert.hot .home-host-badge{color:var(--gold);}
+.home-host-main{min-width:0;}
+.home-host-title{font-family:'Black Ops One',sans-serif;font-size:13px;letter-spacing:.8px;color:#fff;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.home-host-copy{font-family:'Share Tech Mono',monospace;font-size:10px;line-height:1.25;color:#9dafc2;text-transform:uppercase;margin-top:3px;}
+.home-host-link{border:1px solid rgba(0,255,135,.42);background:rgba(0,255,135,.10);color:var(--green);border-radius:8px;padding:8px 10px;font-family:'Black Ops One',sans-serif;font-size:10px;letter-spacing:1px;text-decoration:none;white-space:nowrap;}
+.home-host-alert.hot .home-host-link{border-color:rgba(255,201,64,.48);background:rgba(255,201,64,.10);color:var(--gold);}
 
 /* MINT BOX */
 .mint-box{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:22px;max-width:360px;}
@@ -349,6 +362,12 @@ h1 .accent{color:var(--green);text-shadow:0 0 30px var(--green-glow);}
 .reward-title{font-family:'Black Ops One',sans-serif;font-size:9px;color:var(--text);letter-spacing:1px;margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .reward-copy{font-size:9px;color:var(--text3);line-height:1.2;}
 .reward-value{font-family:'Black Ops One',sans-serif;font-size:13px;margin-top:5px;white-space:nowrap;}
+.reward-alpha-grid{display:grid;grid-template-columns:1fr;gap:7px;margin-top:8px;}
+.reward-alpha-card{border:1px solid rgba(255,255,255,.08);background:linear-gradient(135deg,rgba(255,255,255,.035),rgba(0,255,135,.035));border-radius:8px;padding:8px 9px;}
+.reward-alpha-title{font-family:'Black Ops One',sans-serif;font-size:10px;letter-spacing:1px;color:#fff;line-height:1.05;}
+.reward-alpha-value{font-family:'Black Ops One',sans-serif;font-size:16px;line-height:1;color:var(--gold);margin-top:5px;}
+.reward-alpha-card.legend .reward-alpha-value{color:var(--purple);}
+.reward-alpha-note{font-family:'Share Tech Mono',monospace;font-size:9px;line-height:1.25;color:var(--text2);margin-top:4px;}
 
 @media (max-width: 768px) {
   /* GLOBAL */
@@ -2024,6 +2043,68 @@ body.dash-active .quest-label{font-size:8px !important;margin-top:3px !important
 #mobileDrawer button[onclick*="album"]{
   display:none !important;
 }
+.quest-launcher{
+  grid-template-columns:repeat(3,minmax(0,1fr)) !important;
+}
+.quest-link.quest-host{
+  border-color:rgba(0,255,135,0.38) !important;
+  box-shadow:0 0 24px rgba(0,255,135,0.10), inset 0 0 18px rgba(255,201,64,0.045) !important;
+}
+.quest-link.quest-host::before{
+  background:radial-gradient(circle at 20% 20%,rgba(0,255,135,0.30),transparent 48%),radial-gradient(circle at 82% 80%,rgba(255,201,64,0.20),transparent 42%) !important;
+}
+.quest-host-flags{
+  position:relative;
+  display:block;
+  width:54px;
+  height:38px;
+}
+.quest-host-flags img{
+  position:absolute;
+  width:30px;
+  height:21px;
+  object-fit:cover;
+  border-radius:3px;
+  box-shadow:0 0 0 1px rgba(255,255,255,0.18),0 8px 16px rgba(0,0,0,.36);
+}
+.quest-host-flags img:nth-child(1){left:0;top:2px;z-index:1;}
+.quest-host-flags img:nth-child(2){left:12px;top:14px;z-index:3;}
+.quest-host-flags img:nth-child(3){right:0;top:2px;z-index:2;}
+.quest-host .quest-amount,
+.quest-host .quest-label{
+  color:var(--green) !important;
+  text-shadow:0 0 14px rgba(0,255,135,.38) !important;
+}
+body.dash-active #mint .quest-launcher{
+  grid-template-columns:repeat(3,minmax(0,1fr)) !important;
+}
+body.dash-active #mint .quest-host-flags{
+  width:54px !important;
+  height:38px !important;
+}
+body.dash-active #mint .quest-title,
+.quest-link .quest-title{
+  white-space:normal !important;
+  overflow:visible !important;
+  text-overflow:clip !important;
+  line-height:1.05 !important;
+}
+body.dash-active #mint .quest-title{
+  font-size:12px !important;
+}
+@media (max-width:768px){
+  .quest-launcher{
+    grid-template-columns:1fr !important;
+  }
+  .quest-host-flags{
+    width:48px;
+    height:34px;
+  }
+  .quest-host-flags img{
+    width:27px;
+    height:19px;
+  }
+}
 @media (max-width:768px){
   #countryLb{
     display:none !important;
@@ -2205,11 +2286,86 @@ body.dash-active .quest-label{font-size:8px !important;margin-top:3px !important
 .strategy-example-title{font-family:'Black Ops One',sans-serif;font-size:13px;color:#ffc940;letter-spacing:1px;margin-bottom:7px;text-transform:uppercase;}
 .strategy-example p{font-family:'Black Ops One',sans-serif;font-size:13px;line-height:1.35;color:#fff;margin:0;letter-spacing:.2px;}
 .strategy-example strong{color:#00ff87;}
+.strategy-quest-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:12px 0;}
+.strategy-quest-card{display:flex;flex-direction:column;gap:7px;min-height:136px;text-decoration:none;color:#dde4f0;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.09);border-radius:10px;padding:10px;transition:all .16s;}
+.strategy-quest-card:hover{border-color:rgba(0,255,135,.42);background:rgba(0,255,135,.055);transform:translateY(-1px);}
+.strategy-quest-card.host{border-color:rgba(255,201,64,.25);background:linear-gradient(145deg,rgba(255,201,64,.10),rgba(0,255,135,.045));}
+.strategy-quest-icon{font-size:24px;line-height:1;}
+.strategy-flag-row{display:flex;align-items:center;gap:4px;height:24px;}
+.strategy-flag-row img{width:30px;height:20px;object-fit:cover;border-radius:3px;box-shadow:0 0 0 1px rgba(255,255,255,.18),0 5px 12px rgba(0,0,0,.34);}
+.strategy-flag-row.host img{width:25px;height:18px;}
+.strategy-quest-name{font-family:'Black Ops One',sans-serif;font-size:12px;line-height:1.04;letter-spacing:.7px;color:#fff;text-transform:uppercase;}
+.strategy-quest-prize{font-family:'Black Ops One',sans-serif;font-size:12px;color:#ffc940;letter-spacing:.7px;}
+.strategy-quest-desc{font-family:'Share Tech Mono',monospace;font-size:9px;line-height:1.25;color:#9dafc2;text-transform:uppercase;}
 .strategy-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px;}
 .strategy-btn{border:1px solid rgba(0,255,135,.45);background:#00ff87;color:#06100b;border-radius:9px;min-height:42px;font-family:'Black Ops One',sans-serif;font-size:12px;letter-spacing:1px;cursor:pointer;}
 .strategy-btn.secondary{background:rgba(255,255,255,.04);color:#dde4f0;border-color:#1c2028;}
 .strategy-skip{display:block;margin:10px auto 0;background:none;border:none;color:#7a8899;font-family:'Share Tech Mono',monospace;font-size:10px;cursor:pointer;}
-@media(max-width:600px){.strategy-panel{padding:12px;width:calc(100vw - 16px);max-height:calc(100dvh - 16px)}.strategy-title{font-size:24px}.strategy-sub{font-size:15px}.strategy-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.strategy-line{font-size:13px}.strategy-example p{font-size:11px}.strategy-actions{grid-template-columns:1fr}.strategy-btn{min-height:38px;font-size:10px}}
+@media(max-width:600px){.strategy-panel{padding:12px;width:calc(100vw - 16px);max-height:calc(100dvh - 16px)}.strategy-title{font-size:24px}.strategy-sub{font-size:15px}.strategy-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.strategy-line{font-size:13px}.strategy-quest-grid{grid-template-columns:1fr}.strategy-quest-card{min-height:0}.strategy-example p{font-size:11px}.strategy-actions{grid-template-columns:1fr}.strategy-btn{min-height:38px;font-size:10px}}
+@media(max-width:600px){.reward-total-banner{grid-template-columns:1fr;gap:6px;padding:10px}.reward-total-value{font-size:26px}.reward-total-copy{font-size:10px}}
+@media (min-width:1200px) and (min-height:720px){
+  body.dash-active #mint .hero-desc{display:none!important;}
+  body.dash-active #mint .hero-left{width:335px!important;}
+  body.dash-active #mint .reward-total-banner{
+    width:335px!important;
+    max-width:335px!important;
+    grid-template-columns:1fr!important;
+    gap:3px!important;
+    margin:0 0 8px!important;
+    padding:9px 10px!important;
+  }
+  body.dash-active #mint .reward-total-value{font-size:24px!important;line-height:1!important;}
+  body.dash-active #mint .reward-total-copy{font-size:9px!important;line-height:1.18!important;letter-spacing:.35px!important;}
+  body.dash-active #mint .stats-row{
+    display:grid!important;
+    grid-template-columns:repeat(4,minmax(0,1fr))!important;
+    width:335px!important;
+    gap:6px!important;
+    margin:0!important;
+  }
+  body.dash-active #mint .stat{min-width:0!important;padding:7px 4px!important;}
+  body.dash-active #mint .stat-n{font-size:18px!important;line-height:1!important;white-space:nowrap!important;}
+  body.dash-active #mint .stat-l{font-size:7px!important;line-height:1.12!important;letter-spacing:.7px!important;}
+  body.dash-active #mint .quest-launcher{left:385px!important;}
+}
+@media(max-width:768px){
+  .home-host-alert{grid-template-columns:1fr;gap:7px;}
+  .home-host-title{white-space:normal;line-height:1.08;}
+  .home-host-link{text-align:center;}
+}
+@media (min-width:1200px){
+  body.dash-active #mint .hero-desc{display:none!important;}
+  body.dash-active #mint .hero-left{width:335px!important;}
+  body.dash-active #mint .hero-title-desktop{
+    font-size:34px!important;
+    line-height:.86!important;
+    margin:0 0 8px!important;
+    letter-spacing:0!important;
+  }
+  body.dash-active #mint .reward-total-banner{
+    width:335px!important;
+    max-width:335px!important;
+    grid-template-columns:1fr!important;
+    gap:3px!important;
+    margin:0 0 8px!important;
+    padding:9px 10px!important;
+  }
+  body.dash-active #mint .reward-total-value{font-size:24px!important;line-height:1!important;}
+  body.dash-active #mint .reward-total-copy{font-size:9px!important;line-height:1.18!important;letter-spacing:.35px!important;}
+  body.dash-active #mint .stats-row{
+    display:grid!important;
+    grid-template-columns:repeat(4,minmax(0,1fr))!important;
+    width:335px!important;
+    gap:6px!important;
+    margin:0!important;
+  }
+  body.dash-active #mint .stat{min-width:0!important;min-height:48px!important;padding:7px 4px!important;}
+  body.dash-active #mint .stat-n{font-size:18px!important;line-height:1!important;white-space:nowrap!important;}
+  body.dash-active #mint .stat-l{font-size:7px!important;line-height:1.12!important;letter-spacing:.7px!important;margin-top:4px!important;}
+  body.dash-active #market .home-host-alert{margin-bottom:8px;padding:9px 10px;gap:9px;}
+  body.dash-active #market .home-host-title{font-size:12px;}
+  body.dash-active #market .home-host-copy{font-size:9px;}
+}
 
 /* Unified Block Kickers loading / blockchain overlay */
 #networkOverlay{position:fixed!important;inset:0!important;z-index:7000!important;display:none!important;align-items:center!important;justify-content:center!important;background:rgba(2,6,8,.82)!important;backdrop-filter:blur(8px)!important;padding:max(14px,env(safe-area-inset-top)) max(14px,env(safe-area-inset-right)) max(14px,env(safe-area-inset-bottom)) max(14px,env(safe-area-inset-left))!important;box-sizing:border-box!important;overflow:hidden!important;}
@@ -2259,6 +2415,18 @@ body.dash-active .quest-label{font-size:8px !important;margin-top:3px !important
     height:42px!important;
     border-width:3px!important;
   }
+}
+
+/* Align desktop nav countdown typography with Dream XI */
+@media(min-width:701px){
+  .nav-countdown,
+  .nav-countdown span,
+  .nav-countdown b{
+    font-size:13px!important;
+    line-height:1!important;
+    letter-spacing:2px!important;
+  }
+  .nav-countdown span{margin-right:8px!important;}
 }
 </style>
 </head>
@@ -2467,7 +2635,11 @@ document.addEventListener('DOMContentLoaded', setupDesktopDashboardLayout);
     </div>
     <!-- Desktop: tylko tytuĹ‚ (figurka po prawej) -->
     <h1 class="hero-title-desktop">BLOCK<br><span class="accent">KICKERS</span><br>2026</h1>
-    <p class="hero-desc">Two quests are live. Mint a card, score it in your squad, then sell it on the market. The score stays stamped while the card keeps flowing.</p>
+    <p class="hero-desc">Three quests are live. Mint cards, hunt missing pieces, and use the market to fight for paid leaderboard spots.</p>
+    <div class="reward-total-banner">
+      <div class="reward-total-value">28,000 CHZ</div>
+      <div class="reward-total-copy"><b>Total rewards live</b><br><span id="countryRoiInline">Country lead ~78 CHZ (~8x)</span><br><span id="legendaryInline">Legendary split loading</span></div>
+    </div>
     <div class="stats-row">
       <div class="stat" style="text-align:center;"><div class="stat-n" id="sMinted">0</div><div class="stat-l">MINTED</div></div>
       <div class="stat" style="text-align:center;"><div class="stat-n" id="sVault">0</div><div class="stat-l">CHZ IN VAULT</div></div>
@@ -2478,7 +2650,7 @@ document.addEventListener('DOMContentLoaded', setupDesktopDashboardLayout);
       <a class="quest-link quest-dream" href="/dream-xi">
         <span class="quest-icon-cell"><span class="quest-icon">&#127942;</span></span>
         <span style="min-width:0;">
-          <span class="quest-title">DREAM XI</span>
+          <span class="quest-title">DREAM XI QUEST</span>
           <span class="quest-prize" id="questDreamPrize"><span class="quest-amount">10,000+ <span>CHZ</span></span><span class="quest-label">POOL</span></span>
         </span>
       </a>
@@ -2493,6 +2665,19 @@ document.addEventListener('DOMContentLoaded', setupDesktopDashboardLayout);
         <span style="min-width:0;">
           <span class="quest-title">NATION QUEST</span>
           <span class="quest-prize" id="questNationPrize"><span class="quest-amount">1,500 <span>CHZ</span></span><span class="quest-label">PRIZE</span></span>
+        </span>
+      </a>
+      <a class="quest-link quest-host" href="/host-nations-podium">
+        <span class="quest-icon-cell">
+          <span class="quest-host-flags" aria-hidden="true">
+            <img src="https://flagcdn.com/w40/us.png" alt="">
+            <img src="https://flagcdn.com/w40/mx.png" alt="">
+            <img src="https://flagcdn.com/w40/ca.png" alt="">
+          </span>
+        </span>
+        <span style="min-width:0;">
+          <span class="quest-title">HOST PODIUM QUEST</span>
+          <span class="quest-prize" id="questHostPrize"><span class="quest-amount">1,500 <span>CHZ</span></span><span class="quest-label">TOP 5</span></span>
         </span>
       </a>
     </div>
@@ -2569,6 +2754,18 @@ document.addEventListener('DOMContentLoaded', setupDesktopDashboardLayout);
           <div class="reward-value" id="rewardLegendary">- CHZ</div>
         </div>
       </div>
+      <div class="reward-alpha-grid">
+        <div class="reward-alpha-card">
+          <div class="reward-alpha-title">BEST CARD IN A COUNTRY</div>
+          <div class="reward-alpha-value" id="countryRoiValue">~78 CHZ</div>
+          <div class="reward-alpha-note" id="countryRoiNote">Almost 8x from a 10 CHZ mint if your card leads a nation.</div>
+        </div>
+        <div class="reward-alpha-card legend">
+          <div class="reward-alpha-title">LEGENDARY LANE</div>
+          <div class="reward-alpha-value" id="legendaryEachValue">counting...</div>
+          <div class="reward-alpha-note" id="legendaryEachNote">Legendary also can become country champion.</div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -2610,6 +2807,14 @@ document.addEventListener('DOMContentLoaded', setupDesktopDashboardLayout);
     </div>
     <button onclick="loadMarket()" style="background:var(--green-dim);border:1px solid rgba(0,255,135,0.3);color:var(--green);padding:8px 18px;border-radius:6px;font-family:'Black Ops One',sans-serif;font-size:11px;letter-spacing:1px;cursor:pointer;">REFRESH</button>
   </div>
+  <div class="home-host-alert" id="homeHostAlert">
+    <div class="home-host-badge">HOST PODIUM</div>
+    <div class="home-host-main">
+      <div class="home-host-title">Connect wallet to scan leader cards</div>
+      <div class="home-host-copy">If your USA / Mexico / Canada card can give another wallet #1, list it above floor.</div>
+    </div>
+    <a class="home-host-link" href="/host-nations-podium">OPEN QUEST</a>
+  </div>
   <div class="market-tabs">
     <button class="mtab active" onclick="switchMarketTab('all',this)">ALL LISTINGS</button>
     <button class="mtab" onclick="switchMarketTab('mine',this)">MY LISTINGS</button>
@@ -2624,28 +2829,48 @@ document.addEventListener('DOMContentLoaded', setupDesktopDashboardLayout);
 <div class="strategy-modal" id="strategyIntroModal" onclick="if(event.target===this)closeStrategyIntro()">
   <div class="strategy-panel">
     <div class="strategy-head">
-      <div class="strategy-kicker">Block Kickers Strategy</div>
+    <div class="strategy-kicker">Block Kickers Strategy</div>
       <button class="strategy-close" onclick="closeStrategyIntro()">&times;</button>
     </div>
-    <div class="strategy-title">NOT JUST <span>AN NFT</span></div>
-    <div class="strategy-sub">Every figure can matter: quests, leaderboard, country champion races, marketplace profit and the future World Cup Album.</div>
+    <div class="strategy-title">28,000 CHZ <span>IS LIVE</span></div>
+    <div class="strategy-sub">Connect your wallet, check which quests your cards score in, and trade the missing pieces other players need.</div>
     <div class="strategy-stats">
-      <div class="strategy-stat"><b>1,500+</b><span>Mints</span></div>
-      <div class="strategy-stat"><b>14k+</b><span>CHZ Pools</span></div>
-      <div class="strategy-stat"><b>30</b><span>Players</span></div>
-      <div class="strategy-stat"><b>10 CHZ</b><span>Early Mint</span></div>
+      <div class="strategy-stat"><b>3</b><span>Live Quests</span></div>
+      <div class="strategy-stat"><b>28k</b><span>CHZ Rewards</span></div>
+      <div class="strategy-stat"><b id="strategyCountryReward">~78</b><span>CHZ Country</span></div>
+      <div class="strategy-stat"><b id="strategyLegendaryReward">LEG</b><span>Each Legendary</span></div>
     </div>
     <div class="strategy-flow">
-      <div class="strategy-line"><i>🎴</i><div>Mint cards for active and upcoming quests.</div></div>
-      <div class="strategy-line"><i>📈</i><div>Trade positions other players need.</div></div>
-      <div class="strategy-line"><i>🔒</i><div>Hold rare or scarce positions to block competitors.</div></div>
+      <div class="strategy-line"><i>01</i><div>Connect wallet and check your quest scores.</div></div>
+      <div class="strategy-line"><i>02</i><div>Buy cards that complete your lineup or push you into paid ranks.</div></div>
+      <div class="strategy-line"><i>03</i><div>List scarce cards other players need and price them like missing pieces.</div></div>
+    </div>
+    <div class="strategy-quest-grid">
+      <a class="strategy-quest-card" href="/dream-xi" onclick="closeStrategyIntro(true)">
+        <span class="strategy-quest-icon">&#127942;</span>
+        <span class="strategy-quest-name">Dream XI Quest</span>
+        <span class="strategy-quest-prize">10,000+ CHZ</span>
+        <span class="strategy-quest-desc">Best lineup race. Strong cards and upgrades fight for global rank.</span>
+      </a>
+      <a class="strategy-quest-card" href="/nation-quest" onclick="closeStrategyIntro(true)">
+        <span class="strategy-flag-row"><img src="https://flagcdn.com/w40/us.png" alt="USA"></span>
+        <span class="strategy-quest-name">Nation Quest</span>
+        <span class="strategy-quest-prize">1,500 CHZ</span>
+        <span class="strategy-quest-desc">USA 11/11 in wallet. Missing positions create direct market pressure.</span>
+      </a>
+      <a class="strategy-quest-card host" href="/host-nations-podium" onclick="closeStrategyIntro(true)">
+        <span class="strategy-flag-row host"><img src="https://flagcdn.com/w40/us.png" alt="USA"><img src="https://flagcdn.com/w40/mx.png" alt="Mexico"><img src="https://flagcdn.com/w40/ca.png" alt="Canada"></span>
+        <span class="strategy-quest-name">Host Podium</span>
+        <span class="strategy-quest-prize">1,500 CHZ TOP 5</span>
+        <span class="strategy-quest-desc">USA + Mexico + Canada. Cards must stay in wallet; sold cards leave the squad.</span>
+      </a>
     </div>
     <div class="strategy-example">
-      <div class="strategy-example-title">Example: USA Quest</div>
-      <p>You mint a USA card for <strong>10 CHZ</strong>. Another player has <strong>10/11</strong> and needs exactly that position. You list it for <strong>500 CHZ</strong>. You get <strong>50x ROI</strong>, they complete the quest and claim the prize. <strong>Win-win.</strong></p>
+      <div class="strategy-example-title">Reward stack</div>
+      <p>The current best card in a country is already near <strong>8x</strong> from a 10 CHZ mint. Legendary cards split their own pool and can still become country champion. <strong>One card can hit multiple lanes.</strong></p>
     </div>
     <div class="strategy-actions">
-      <button class="strategy-btn" onclick="closeStrategyIntro(); window.location.href='/nation-quest'">CHECK QUESTS</button>
+      <button class="strategy-btn" onclick="closeStrategyIntro(); openWalletChoice()">CONNECT WALLET</button>
       <button class="strategy-btn secondary" onclick="closeStrategyIntro(); openQuickHowModal()">HOW IT WORKS</button>
     </div>
     <button class="strategy-skip" onclick="closeStrategyIntro(true)">DON'T SHOW AGAIN</button>
@@ -2711,8 +2936,8 @@ document.addEventListener('DOMContentLoaded', setupDesktopDashboardLayout);
       <button onclick="closeQuickHowModal()" style="background:none;border:none;color:var(--text3);font-size:22px;cursor:pointer;line-height:1;padding:0 4px;">&times;</button>
     </div>
     <div style="background:rgba(0,255,135,.07);border:1px solid rgba(0,255,135,.24);border-radius:10px;padding:12px 14px;margin-bottom:12px;">
-      <div style="font-family:'Black Ops One',sans-serif;color:var(--green);font-size:14px;letter-spacing:1px;margin-bottom:5px;">FLOW TO EARN: SCORE THEN SELL</div>
-      <div style="font-size:14px;color:var(--text2);line-height:1.45;"><strong style="color:var(--gold);">No need to HODL every card during the hunt.</strong> When a card enters your wallet, it scores for quests. Then you can sell it, trade up, or hold/block it if it is rare.</div>
+      <div style="font-family:'Black Ops One',sans-serif;color:var(--green);font-size:14px;letter-spacing:1px;margin-bottom:5px;">FLOW TO EARN: MINT, CHECK, TRADE</div>
+      <div style="font-size:14px;color:var(--text2);line-height:1.45;"><strong style="color:var(--gold);">Every quest has its own scoring rule.</strong> Connect wallet, check which cards currently score, then buy missing pieces, list duplicates, or hold cards needed for snapshot rewards.</div>
     </div>
     <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-bottom:12px;">
       <div style="background:rgba(255,255,255,.025);border:1px solid rgba(0,255,135,.2);border-radius:9px;padding:12px;">
@@ -3355,6 +3580,126 @@ let activeWalletType = '';
 let privySdk = null;
 let privyClient = null;
 let privyIframe = null;
+window.ownerMap = window.ownerMap || {};
+
+const HOME_HOST_TEAM_IDS = [24, 22, 19]; // United States, Mexico, Canada
+const HOME_HOST_TEAM_LABELS = {24:'USA',22:'MEXICO',19:'CANADA'};
+
+function shortWallet(addr){
+  if(!addr) return '-';
+  return String(addr).slice(0,6)+'...'+String(addr).slice(-4);
+}
+
+function hostPodiumScore(bestByTeam){
+  const cards = Object.values(bestByTeam || {});
+  const base = cards.reduce((sum, c) => sum + (Number(c.weight) || 0), 0);
+  const complete = HOME_HOST_TEAM_IDS.every(tid => bestByTeam && bestByTeam[tid]);
+  return base + (complete ? 30 : 0);
+}
+
+function buildHomeHostBoard(ownerMap){
+  const wallets = {};
+  Object.values(ownerMap || {}).forEach(card => {
+    if(!card || !card.owner || card.owner === ethers.ZeroAddress.toLowerCase()) return;
+    let t;
+    try{ t = parseDNA(card.dna); }catch(e){ return; }
+    if(!HOME_HOST_TEAM_IDS.includes(Number(t.teamId))) return;
+    const wallet = String(card.owner).toLowerCase();
+    if(!wallets[wallet]) wallets[wallet] = {};
+    const existing = wallets[wallet][t.teamId];
+    if(!existing || Number(t.weight) > Number(existing.weight)){
+      wallets[wallet][t.teamId] = {
+        tid: Number(card.tid),
+        dna: card.dna,
+        teamId: Number(t.teamId),
+        position: Number(t.position),
+        rarity: Number(t.rarity),
+        weight: Number(t.weight)
+      };
+    }
+  });
+  return Object.entries(wallets).map(([wallet, best]) => ({
+    wallet,
+    best,
+    score: hostPodiumScore(best)
+  })).sort((a,b) => b.score - a.score);
+}
+
+function findHomeHostLeaderCard(ownerMap){
+  if(!address) return null;
+  const myAddr = address.toLowerCase();
+  const board = buildHomeHostBoard(ownerMap);
+  const leader = board[0] || null;
+  const leaderScore = leader ? Number(leader.score) : 0;
+  const myCards = Object.values(ownerMap || {}).filter(card => String(card.owner || '').toLowerCase() === myAddr);
+  let bestFlip = null;
+
+  myCards.forEach(card => {
+    let t;
+    try{ t = parseDNA(card.dna); }catch(e){ return; }
+    if(!HOME_HOST_TEAM_IDS.includes(Number(t.teamId))) return;
+
+    board.forEach(entry => {
+      if(entry.wallet === myAddr) return;
+      const nextBest = Object.assign({}, entry.best);
+      const current = nextBest[t.teamId];
+      if(current && Number(current.weight) >= Number(t.weight)) return;
+      nextBest[t.teamId] = {
+        tid: Number(card.tid),
+        dna: card.dna,
+        teamId: Number(t.teamId),
+        position: Number(t.position),
+        rarity: Number(t.rarity),
+        weight: Number(t.weight)
+      };
+      const nextScore = hostPodiumScore(nextBest);
+      if(nextScore <= leaderScore) return;
+      const flip = {
+        card: {
+          tid: Number(card.tid),
+          teamId: Number(t.teamId),
+          position: Number(t.position),
+          rarity: Number(t.rarity),
+          weight: Number(t.weight)
+        },
+        buyer: entry.wallet,
+        buyerScore: nextScore,
+        leaderScore
+      };
+      if(!bestFlip || flip.buyerScore > bestFlip.buyerScore || flip.card.weight > bestFlip.card.weight) bestFlip = flip;
+    });
+  });
+  return bestFlip;
+}
+
+function renderHomeHostAlert(ownerMap){
+  const box = document.getElementById('homeHostAlert');
+  if(!box) return;
+  const title = box.querySelector('.home-host-title');
+  const copy = box.querySelector('.home-host-copy');
+  const badge = box.querySelector('.home-host-badge');
+  box.classList.remove('hot');
+  if(!address){
+    if(badge) badge.textContent = 'HOST PODIUM';
+    if(title) title.textContent = 'Connect wallet to scan leader cards';
+    if(copy) copy.textContent = 'If your USA / Mexico / Canada card can give another wallet #1, list it above floor.';
+    return;
+  }
+  const flip = findHomeHostLeaderCard(ownerMap || window.ownerMap || {});
+  if(!flip){
+    if(badge) badge.textContent = 'HOST PODIUM';
+    if(title) title.textContent = 'No leader-flip host card detected';
+    if(copy) copy.textContent = 'Keep checking after new mints and buys. Sold Host Podium cards leave your squad immediately.';
+    return;
+  }
+  const pos = POSITION_NAMES[flip.card.position] || ('#'+flip.card.position);
+  const rarity = RARITY_NAMES[flip.card.rarity] || 'CARD';
+  const team = HOME_HOST_TEAM_LABELS[flip.card.teamId] || (TEAMS[flip.card.teamId] || 'HOST');
+  box.classList.add('hot');
+  if(badge) badge.textContent = 'YOU HOLD A LEADER CARD';
+  if(title) title.textContent = `${team} ${pos} #${flip.card.tid} - ${rarity} - ${flip.card.weight} pts`;
+  if(copy) copy.textContent = `Can push ${shortWallet(flip.buyer)} to ${flip.buyerScore} pts and flip Host Podium. List it with leader-card pricing.`;
+}
 
 function switchHowTab(tab, btn){
   ['mechanics','rarity','example'].forEach(t => {
@@ -3367,14 +3712,14 @@ function switchHowTab(tab, btn){
 
 
 function openStrategyIntro(force=false){
-  try { if(!force && localStorage.getItem('bkStrategyIntroSeenV3')) return; } catch(e) {}
+  try { if(!force && localStorage.getItem('bkStrategyIntroSeenV4')) return; } catch(e) {}
   const modal = document.getElementById('strategyIntroModal');
   if(modal) setTimeout(() => modal.classList.add('show'), 250);
 }
 function closeStrategyIntro(dontShow=false){
   const modal = document.getElementById('strategyIntroModal');
   if(modal) modal.classList.remove('show');
-  if(dontShow){ try { localStorage.setItem('bkStrategyIntroSeenV3','1'); } catch(e) {} }
+  if(dontShow){ try { localStorage.setItem('bkStrategyIntroSeenV4','1'); } catch(e) {} }
 }
 document.addEventListener('DOMContentLoaded', () => setTimeout(() => openStrategyIntro(), 450));
 window.addEventListener('pageshow', () => setTimeout(() => openStrategyIntro(), 450));
@@ -3680,6 +4025,7 @@ let heroRen=null, modalRen=null;
 const miniRens={};
 let myFigures=[];
 let currentPrice='0.1';
+let lastLegendaryCount=null;
 
 // ============================================================
 //  WALLET
@@ -4104,19 +4450,49 @@ function updateRewardPreview(vaultWeiOrChz, legendaryCount = null){
       ? parseFloat(ethers.formatEther(vaultWeiOrChz))
       : Number(vaultWeiOrChz || 0);
   }catch(e){ vaultChz = 0; }
+  if(legendaryCount !== null && legendaryCount !== undefined) lastLegendaryCount = Number(legendaryCount) || 0;
+  const knownLegendaryCount = lastLegendaryCount && lastLegendaryCount > 0 ? lastLegendaryCount : 0;
   const globalPool = vaultChz * 0.65;
   const countryEach = vaultChz * 0.25 / 48;
   const legendaryPool = vaultChz * 0.10;
-  const legendaryEach = legendaryCount && legendaryCount > 0 ? legendaryPool / legendaryCount : legendaryPool;
+  const legendaryEach = knownLegendaryCount > 0 ? legendaryPool / knownLegendaryCount : legendaryPool;
+  const mintAnchor = 10;
+  const countryRoi = mintAnchor > 0 ? countryEach / mintAnchor : 0;
 
   const g = document.getElementById('rewardGlobal');
   const c = document.getElementById('rewardCountry');
   const l = document.getElementById('rewardLegendary');
+  const countryRoiValue = document.getElementById('countryRoiValue');
+  const countryRoiNote = document.getElementById('countryRoiNote');
+  const legendaryEachValue = document.getElementById('legendaryEachValue');
+  const legendaryEachNote = document.getElementById('legendaryEachNote');
+  const strategyCountryReward = document.getElementById('strategyCountryReward');
+  const strategyLegendaryReward = document.getElementById('strategyLegendaryReward');
+  const countryRoiInline = document.getElementById('countryRoiInline');
+  const legendaryInline = document.getElementById('legendaryInline');
   if(g) g.textContent = formatGameChz(globalPool, { compact: true });
   if(c) c.textContent = formatGameChz(countryEach);
-  if(l) l.textContent = legendaryCount && legendaryCount > 0
+  if(l) l.textContent = knownLegendaryCount > 0
     ? formatGameChz(legendaryEach) + ' / LEG'
     : formatGameChz(legendaryPool, { compact: true });
+  if(countryRoiValue) countryRoiValue.textContent = '~' + formatGameChz(countryEach);
+  if(strategyCountryReward) strategyCountryReward.textContent = countryEach > 0 ? '~' + countryEach.toFixed(0) : '~78';
+  if(countryRoiInline) countryRoiInline.textContent = countryEach > 0
+    ? 'Country lead ~' + countryEach.toFixed(0) + ' CHZ (~' + countryRoi.toFixed(1).replace('.0','') + 'x)'
+    : 'Country lead ~78 CHZ (~8x)';
+  if(countryRoiNote) countryRoiNote.textContent = countryEach > 0
+    ? 'Almost ' + countryRoi.toFixed(1).replace('.0','') + 'x from a 10 CHZ mint if your card leads a nation.'
+    : 'Best card in any country earns the country lane at snapshot.';
+  if(legendaryEachValue) legendaryEachValue.textContent = knownLegendaryCount > 0
+    ? '~' + formatGameChz(legendaryEach) + ' EACH'
+    : '~' + formatGameChz(legendaryPool, { compact: true }) + ' POOL';
+  if(strategyLegendaryReward) strategyLegendaryReward.textContent = knownLegendaryCount > 0 ? '~' + legendaryEach.toFixed(0) : 'LEG';
+  if(legendaryInline) legendaryInline.textContent = knownLegendaryCount > 0
+    ? knownLegendaryCount + ' Legendary = ~' + legendaryEach.toFixed(0) + ' CHZ each'
+    : 'Legendary split loads from chain';
+  if(legendaryEachNote) legendaryEachNote.textContent = knownLegendaryCount > 0
+    ? legendaryPool.toFixed(0) + ' CHZ pool / ' + knownLegendaryCount + ' Legendary cards. A Legendary can also be country champion.'
+    : 'Legendary cards split the 10% lane and can also win country champion.';
 }
 
 async function loadTicker(){
@@ -4330,6 +4706,9 @@ async function loadCollection(){
         });
       }
     }catch(e){}
+
+    window.ownerMap = ownerMap;
+    renderHomeHostAlert(ownerMap);
 
     const myAddr = address.toLowerCase();
 
