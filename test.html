@@ -38,8 +38,9 @@ button{font-family:'Black Ops One',sans-serif}
 .brand{font-family:'Black Ops One',sans-serif;font-size:17px;letter-spacing:1px;color:#fff;text-decoration:none;white-space:nowrap;display:flex;align-items:center;gap:7px}.brand span{color:var(--green)}
 .nav-mid{display:flex;align-items:center;gap:9px;font-family:'Share Tech Mono',monospace;color:var(--muted);font-size:11px;letter-spacing:1px;text-transform:uppercase;min-width:0}
 .nav-mid b{color:var(--gold);font-family:'Black Ops One',sans-serif;font-weight:400}
-.nav-actions{display:flex;align-items:center;gap:8px;min-width:0}.wallet-pill{font-family:'Share Tech Mono',monospace;color:var(--muted);border:1px solid var(--line);background:rgba(255,255,255,.04);border-radius:6px;padding:8px 10px;max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:11px}
+.nav-actions{display:flex;align-items:center;gap:8px;min-width:0}.wallet-pill{font-family:'Share Tech Mono',monospace;color:var(--muted);border:1px solid var(--line);background:rgba(255,255,255,.04);border-radius:6px;padding:8px 10px;max-width:170px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:11px}.mobile-wallet-action{display:none;color:var(--green);font-family:'Black Ops One',sans-serif;font-size:9px;letter-spacing:.5px}
 .btn{border:1px solid rgba(0,255,135,.45);background:rgba(0,255,135,.11);color:var(--green);border-radius:7px;padding:9px 13px;letter-spacing:1px;font-size:11px;cursor:pointer;min-height:36px}
+.mobile-connect-btn{display:none}
 .btn:hover:not(:disabled){filter:brightness(1.12)}.btn:disabled{opacity:.48;cursor:not-allowed}.btn.gold{border-color:rgba(255,201,64,.46);background:rgba(255,201,64,.12);color:var(--gold)}.btn.red{border-color:rgba(239,68,68,.48);background:rgba(239,68,68,.12);color:var(--red)}
 .page{width:min(1560px,100%);margin:0 auto;padding:12px;display:grid;gap:10px}
 .hero{display:grid;grid-template-columns:minmax(360px,.9fr) minmax(460px,1.35fr) minmax(320px,.78fr);gap:10px;min-height:360px}
@@ -69,20 +70,31 @@ button{font-family:'Black Ops One',sans-serif}
 .mint-reveal{position:fixed;inset:0;z-index:92;display:none;align-items:center;justify-content:center;background:rgba(3,5,8,.78);backdrop-filter:blur(8px);padding:14px}.mint-reveal.show{display:flex}.mint-reveal-panel{width:min(94vw,560px);border:1px solid rgba(255,201,64,.42);background:linear-gradient(180deg,#111923,#06080b);border-radius:8px;padding:14px;box-shadow:0 24px 80px rgba(0,0,0,.66)}.mint-reveal-body{display:grid;grid-template-columns:130px 1fr;gap:14px;align-items:center}.mint-reveal-fig{height:130px;border:1px solid rgba(255,255,255,.1);border-radius:7px;background:radial-gradient(circle at 50% 90%,rgba(0,255,135,.14),transparent 58%);display:grid;place-items:center}.mint-reveal-name{font-family:'Black Ops One',sans-serif;font-size:24px;color:#fff;line-height:1}.mint-reveal-sub{font-family:'Share Tech Mono',monospace;color:var(--muted);font-size:11px;margin-top:6px}.mint-reveal-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:12px}.mint-reveal-stat{border:1px solid var(--line);border-radius:7px;padding:8px;background:rgba(255,255,255,.035)}.mint-reveal-stat b{display:block;font-family:'Black Ops One',sans-serif;color:var(--gold);font-size:16px}.mint-reveal-stat span{display:block;font-family:'Share Tech Mono',monospace;color:var(--muted);font-size:9px;margin-top:3px;text-transform:uppercase}.mint-reveal-note{margin-top:10px;border:1px solid rgba(0,255,135,.32);background:rgba(0,255,135,.07);border-radius:7px;padding:9px;font-family:'Share Tech Mono',monospace;color:#cceee0;font-size:11px;line-height:1.35}
 .loading{grid-column:1/-1;text-align:center;color:var(--muted);font-family:'Share Tech Mono',monospace;padding:18px}.toast{position:fixed;left:50%;bottom:16px;z-index:100;transform:translateX(-50%);display:none;border:1px solid var(--green);background:rgba(5,7,10,.96);color:var(--green);border-radius:7px;padding:10px 14px;font-family:'Share Tech Mono',monospace;font-size:12px;max-width:min(680px,calc(100vw - 24px));text-align:center}
 @media(max-width:1180px){.hero{grid-template-columns:1fr 1.15fr}.hero .panel.side{grid-column:1/-1}.section-grid{grid-template-columns:1fr}.desk{grid-template-columns:1fr 1fr}}
-@media(max-width:1000px){html,body,.page,.topnav,.hero,.panel{width:100%;max-width:100%;overflow-x:hidden}.topnav{height:auto;display:grid;grid-template-columns:minmax(0,1fr);align-items:start;padding:8px}.nav-mid{display:none}.nav-actions{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);width:100%;min-width:0;gap:7px}.nav-actions .btn{width:100%;min-width:0;padding:8px 5px;font-size:9px;overflow:hidden;text-overflow:ellipsis}.wallet-pill{grid-column:1/-1;max-width:none;text-align:center}.page{padding:7px}.hero{grid-template-columns:minmax(0,1fr);min-height:0}.stage-panel{min-height:330px}#podiumStage{min-height:330px}.podium-cards{grid-template-columns:1fr 1fr 1fr;gap:4px;bottom:6px;left:6px;right:6px}.mini-card{padding:6px}.mini-country{font-size:9px;gap:4px}.mini-country img{width:22px;height:15px}.mini-meta{grid-template-columns:1fr;font-size:8px;gap:2px}.mini-meta b{font-size:12px}.stats-grid{grid-template-columns:repeat(2,1fr)}.host-strip{grid-template-columns:1fr}.action-grid{grid-template-columns:1fr}.market-tools{grid-template-columns:repeat(2,1fr)}.leaderboard{max-height:260px}.lb-row{grid-template-columns:30px 1fr 48px 42px;gap:5px}.market{grid-template-columns:repeat(2,minmax(0,1fr));max-height:none}.market-card{min-height:184px;grid-template-rows:72px auto auto}.desk{grid-template-columns:1fr}.section-title{font-size:12px}.title{font-size:38px}.copy{font-size:16px;overflow-wrap:anywhere}}
+@media(max-width:1000px){html,body,.page,.topnav,.hero,.panel{width:100%;max-width:100%;overflow-x:hidden}.topnav{height:48px;display:grid;grid-template-columns:minmax(130px,1fr) 68px 74px;align-items:center;gap:5px;padding:7px 8px}.brand{grid-column:1;grid-row:1;font-size:13px;gap:5px;min-width:0;overflow:hidden;text-overflow:ellipsis}.nav-mid{display:none!important}.topnav .btn{width:100%;min-width:0;padding:7px 4px;font-size:9px;overflow:hidden;text-overflow:ellipsis;min-height:32px}.topnav #connectBtn{grid-column:3;grid-row:1;position:static!important;display:block!important;visibility:visible!important;opacity:1!important}.topnav #refreshBtn{display:none!important}.wallet-pill{grid-column:2;grid-row:1;position:static!important;width:100%;max-width:none;text-align:center;padding:7px 3px;font-size:10px}.page{padding:7px}.hero{grid-template-columns:minmax(0,1fr);min-height:0}.stage-panel{min-height:330px}#podiumStage{min-height:330px}.podium-cards{grid-template-columns:1fr 1fr 1fr;gap:4px;bottom:6px;left:6px;right:6px}.mini-card{padding:6px}.mini-country{font-size:9px;gap:4px}.mini-country img{width:22px;height:15px}.mini-meta{grid-template-columns:1fr;font-size:8px;gap:2px}.mini-meta b{font-size:12px}.stats-grid{grid-template-columns:repeat(2,1fr)}.host-strip{grid-template-columns:1fr}.action-grid{grid-template-columns:1fr}.market-tools{grid-template-columns:repeat(2,1fr)}.leaderboard{max-height:260px}.lb-row{grid-template-columns:30px 1fr 48px 42px;gap:5px}.market{grid-template-columns:repeat(2,minmax(0,1fr));max-height:none}.market-card{min-height:184px;grid-template-rows:72px auto auto}.desk{grid-template-columns:1fr}.section-title{font-size:12px}.title{font-size:38px}.copy{font-size:16px;overflow-wrap:anywhere}}
 @media(max-width:410px){.market{grid-template-columns:1fr}.podium-cards{position:static;margin:6px;grid-template-columns:1fr}.stage-score{font-size:22px}}
 @media(max-width:560px){.mint-reveal-body{grid-template-columns:1fr}.mint-reveal-fig{height:120px}.mint-reveal-grid{grid-template-columns:1fr 1fr}.wallet-choice-option{grid-template-columns:28px 1fr auto}}
+@media(max-width:1180px){.topnav #connectBtn,.topnav .mobile-connect-btn{display:none!important}.topnav .wallet-pill{position:fixed!important;top:7px;right:8px;z-index:60;width:154px!important;max-width:154px!important;display:flex;align-items:center;justify-content:space-between;gap:7px;padding:7px 7px!important;text-align:left}.topnav .wallet-pill .balance-text{min-width:0;overflow:hidden;text-overflow:ellipsis}.topnav .wallet-pill .mobile-wallet-action{display:block;flex:0 0 auto}.topnav .brand{max-width:calc(100vw - 172px)}}
 html.mobile-hard,html.mobile-hard body{width:100vw;max-width:100vw;overflow-x:hidden}
 html.mobile-hard .page,html.mobile-hard .topnav{width:100vw;max-width:100vw;overflow-x:hidden}
 html.mobile-hard .hero,html.mobile-hard .panel{width:calc(100vw - 14px);max-width:calc(100vw - 14px);overflow-x:hidden}
-html.mobile-hard .topnav{height:auto;display:grid;grid-template-columns:minmax(0,1fr);align-items:start;padding:8px}
-html.mobile-hard .nav-mid{display:none}
-html.mobile-hard .nav-actions{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);width:100%;min-width:0;gap:7px}
-html.mobile-hard .nav-actions .btn{width:100%;min-width:0;padding:8px 5px;font-size:9px;overflow:hidden;text-overflow:ellipsis}
-html.mobile-hard .wallet-pill{grid-column:1/-1;max-width:none;text-align:center}
+html.mobile-hard .topnav{height:48px;display:grid;grid-template-columns:minmax(130px,1fr) 68px 74px;align-items:center;gap:5px;padding:7px 8px}
+html.mobile-hard .nav-mid{display:none!important}
+html.mobile-hard .brand{grid-column:1;grid-row:1;font-size:13px;gap:5px;min-width:0;overflow:hidden;text-overflow:ellipsis}
+html.mobile-hard .topnav .btn{width:100%;min-width:0;padding:7px 4px;font-size:9px;min-height:32px;overflow:hidden;text-overflow:ellipsis}
+html.mobile-hard .topnav #connectBtn{display:none!important}
+html.mobile-hard .topnav #refreshBtn{display:none!important}
+html.mobile-hard .wallet-pill{grid-column:2;grid-row:1;position:static!important;width:100%;max-width:none;text-align:center;padding:7px 3px;font-size:10px}
+html.mobile-hard .topnav .mobile-connect-btn{display:grid!important;place-items:center;position:fixed!important;top:7px;right:8px;z-index:60;width:74px!important;min-width:74px!important;padding:7px 4px;font-size:9px;min-height:32px;overflow:hidden;text-overflow:ellipsis}
+html.mobile-hard .topnav .mobile-connect-btn{display:none!important}
+html.mobile-hard .topnav .wallet-pill{position:fixed!important;top:7px;right:8px;z-index:60;width:154px!important;max-width:154px!important;display:flex;align-items:center;justify-content:space-between;gap:7px;padding:7px 7px!important;text-align:left}
+html.mobile-hard .topnav .wallet-pill .balance-text{min-width:0;overflow:hidden;text-overflow:ellipsis}
+html.mobile-hard .topnav .wallet-pill .mobile-wallet-action{display:block;flex:0 0 auto}
+html.mobile-hard .topnav .brand{max-width:calc(100vw - 168px)}
 html.mobile-hard .page{padding:7px}
 html.mobile-hard .page>*{max-width:calc(100vw - 14px)}
 html.mobile-hard .hero{grid-template-columns:minmax(0,1fr);min-height:0}
+html.mobile-hard .stage-panel{min-height:0;aspect-ratio:4/3}
+html.mobile-hard #podiumStage{min-height:0;height:100%}
 html.mobile-hard .title{font-size:38px}
 html.mobile-hard .copy{font-size:16px;max-width:100%;white-space:normal;overflow-wrap:anywhere;word-break:normal}
 html.mobile-hard .host-strip{grid-template-columns:1fr}
@@ -95,11 +107,10 @@ html.mobile-hard .market{grid-template-columns:repeat(2,minmax(0,1fr));max-heigh
 <nav class="topnav">
   <a class="brand" href="./home.html"><span style="color:#fff">&#9917;</span> BLOCK <span>KICKERS</span></a>
   <div class="nav-mid"><b>HOST NATIONS PODIUM</b> USA + Mexico + Canada trading arena</div>
-  <div class="nav-actions">
-    <span class="wallet-pill" id="walletPill">not connected</span>
-    <button class="btn" onclick="openWalletChoice()">CONNECT</button>
-    <button class="btn gold" id="refreshBtn" onclick="loadQuest()">REFRESH</button>
-  </div>
+  <div class="wallet-pill" id="walletPill" onclick="openWalletChoice()"><span class="balance-text" id="balanceText">BAL --</span><span class="mobile-wallet-action" id="mobileWalletAction">CONNECT</span></div>
+  <div class="btn mobile-connect-btn" id="mobileConnectBtn" onclick="openWalletChoice()">CONNECT</div>
+  <button class="btn" id="connectBtn" onclick="openWalletChoice()">CONNECT</button>
+  <button class="btn gold" id="refreshBtn" onclick="loadQuest()">REFRESH</button>
 </nav>
 
 <main class="page">
@@ -114,9 +125,9 @@ html.mobile-hard .market{grid-template-columns:repeat(2,minmax(0,1fr));max-heigh
         <div class="host-chip"><img src="https://flagcdn.com/w80/ca.png" alt=""><div><b>CANADA</b><span>best weight</span></div></div>
       </div>
       <div class="rules">
-        <div class="rule"><i>01</i><span>Score = best USA weight + best Mexico weight + best Canada weight.</span></div>
-        <div class="rule"><i>02</i><span>No free bonuses. Extra boosts will be paid, limited and separate.</span></div>
-        <div class="rule"><i>03</i><span>Mints and market buys count. Direct wallet transfers stay ignored.</span></div>
+        <div class="rule"><i>01</i><span>Score = best USA + Mexico + Canada weights.</span></div>
+        <div class="rule"><i>02</i><span>No free bonuses. Paid boosts only.</span></div>
+        <div class="rule"><i>03</i><span>Mints + market buys count. Transfers ignored.</span></div>
       </div>
     </div>
 
@@ -297,6 +308,17 @@ function makeEmptyState(){
   return {mints:[],sales:[],cards:new Map(),ownerByToken:new Map(),hostCards:[],hostEvents:[],scores:[],listings:[],myBest:{},activeByToken:new Map(),demo:true};
 }
 function shortAddr(a){return a ? a.slice(0,6)+"..."+a.slice(-4) : "0x...";}
+function last4(a){return a ? a.slice(-4) : "----";}
+function setBalanceLabel(label){
+  const balanceText = document.getElementById("balanceText");
+  if(balanceText) balanceText.textContent = label;
+  else document.getElementById("walletPill").textContent = label;
+}
+function setConnectLabel(label){
+  document.querySelectorAll("#connectBtn,#mobileConnectBtn").forEach(btn=>{btn.textContent = label;});
+  const mobileWalletAction = document.getElementById("mobileWalletAction");
+  if(mobileWalletAction) mobileWalletAction.textContent = label;
+}
 function flagUrl(code){return "https://flagcdn.com/w80/"+code+".png";}
 function hostById(id){return HOST_ORDER.find(h => h.id === Number(id)) || HOST_ORDER[0];}
 function posLabel(p){return POSITIONS[Number(p)] || String(p);}
@@ -441,7 +463,12 @@ async function finishWalletConnection(walletProvider, label){
   provider = browserProvider;
   contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
   marketContract = new ethers.Contract(MARKET_ADDRESS, MARKET_ABI, signer);
-  document.getElementById("walletPill").textContent = label.toUpperCase()+" "+shortAddr(address);
+  setBalanceLabel("bal --");
+  provider.getBalance(address).then(bal=>{
+    const v = Number(ethers.formatEther(bal));
+    setBalanceLabel((Number.isFinite(v) ? v.toFixed(v >= 10 ? 1 : 2) : "--")+" CHZ");
+  }).catch(()=>{});
+  setConnectLabel(last4(address));
   closeWalletChoice();
   await loadQuest();
   toast(label+" wallet connected.");
@@ -974,7 +1001,7 @@ class HostPodium3D{
       const trim=this.cyl(p.r*1.02,p.r*1.02,.06,this.mat(p.color,{roughness:.25,metalness:.28,emissive:p.color,emissiveIntensity:.08}),p.x,p.h+.01,0);
       this.root.add(trim);
       const txt=this.makeText(p.label,p.label==="#1"?"#ffc940":p.label==="#2"?"#58a6ff":"#00ff87");
-      txt.position.set(p.x,p.h+.18, p.r+.06);
+      txt.position.set(p.x,p.h*.54, p.r+.08);
       txt.scale.setScalar(1.08);
       this.root.add(txt);
     });
@@ -1138,11 +1165,25 @@ class HostPodium3D{
 }
 
 window.addEventListener("load", async ()=>{
-  const mobileProbe = [window.visualViewport?.width, window.innerWidth, window.outerWidth, screen.width].filter(v => Number(v) > 0);
-  const mobileWidth = Math.min(...mobileProbe);
-  if (mobileWidth < 1000) {
+  const mobileWidth = Number(window.visualViewport?.width || window.innerWidth || document.documentElement.clientWidth || 0);
+  if (mobileWidth > 0 && mobileWidth < 1000) {
     document.documentElement.classList.add("mobile-hard");
     document.documentElement.style.setProperty("--mobile-vw", Math.max(320, Math.min(760, mobileWidth || 390)) + "px");
+    const walletPill = document.getElementById("walletPill");
+    const mobileWalletAction = document.getElementById("mobileWalletAction");
+    const mobileConnect = document.getElementById("mobileConnectBtn");
+    const desktopConnect = document.getElementById("connectBtn");
+    if(walletPill){
+      Object.assign(walletPill.style,{
+        position:"fixed", top:"7px", right:"8px", zIndex:"60",
+        width:"154px", maxWidth:"154px", display:"flex",
+        alignItems:"center", justifyContent:"space-between", gap:"7px",
+        padding:"7px", textAlign:"left"
+      });
+    }
+    if(mobileWalletAction) mobileWalletAction.style.display = "block";
+    if(mobileConnect) mobileConnect.style.display = "none";
+    if(desktopConnect) desktopConnect.style.display = "none";
   }
   podium3d = new HostPodium3D(document.getElementById("podiumStage"));
   state = makeDemoState();
@@ -1159,7 +1200,9 @@ window.addEventListener("load", async ()=>{
         provider=browserProvider;
         contract=new ethers.Contract(CONTRACT_ADDRESS,ABI,signer);
         marketContract=new ethers.Contract(MARKET_ADDRESS,MARKET_ABI,signer);
-        document.getElementById("walletPill").textContent=shortAddr(address);
+        const bal = await provider.getBalance(address).catch(()=>null);
+        setBalanceLabel(bal === null ? "bal --" : Number(ethers.formatEther(bal)).toFixed(2)+" CHZ");
+        setConnectLabel(last4(address));
         await loadQuest();
       }
     }).catch(()=>{});
