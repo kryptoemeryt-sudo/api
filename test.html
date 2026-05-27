@@ -81,6 +81,37 @@ button{font-family:'Black Ops One',sans-serif}
 #networkOverlay .network-wait-text{font-family:'Share Tech Mono',monospace!important;color:#dde4f0!important;font-size:12px!important;line-height:1.35!important;max-width:300px!important;margin:0 auto!important}
 #networkOverlay #walletOpenBtn{display:none;margin-top:4px;border:1px solid rgba(0,255,135,.46)!important;background:rgba(0,255,135,.12)!important;color:#00ff87!important;border-radius:8px!important;padding:10px 12px!important;font-family:'Black Ops One',sans-serif!important;font-size:10px!important;letter-spacing:1px!important;cursor:pointer!important}
 @media(max-width:700px){#networkOverlay{padding:12px!important}#networkOverlay .network-wait-card{width:min(330px,calc(100dvw - 24px))!important;max-width:calc(100dvw - 24px)!important;padding:18px 14px 16px!important;border-radius:12px!important}#networkOverlay .network-ball{width:50px!important;height:50px!important;border-width:4px!important}#networkOverlay .network-wait-title{font-size:14px!important}#networkOverlay .network-wait-text{font-size:10px!important}}
+/* Final unified network loader: clean spinner, no fake ball/emoji */
+#networkOverlay .network-ball{
+  width:48px!important;
+  height:48px!important;
+  margin:0 0 4px!important;
+  border-radius:50%!important;
+  position:relative!important;
+  display:block!important;
+  font-size:0!important;
+  line-height:0!important;
+  color:transparent!important;
+  background:transparent!important;
+  border:3px solid rgba(221,228,240,.18)!important;
+  border-top-color:#00ff87!important;
+  border-right-color:#ffc940!important;
+  box-shadow:0 0 18px rgba(0,255,135,.18)!important;
+  text-shadow:none!important;
+  animation:bkOverlaySpin .85s linear infinite!important;
+}
+#networkOverlay .network-ball::before,
+#networkOverlay .network-ball::after{
+  content:none!important;
+  display:none!important;
+}
+@media(max-width:700px){
+  #networkOverlay .network-ball{
+    width:42px!important;
+    height:42px!important;
+    border-width:3px!important;
+  }
+}
 @media(max-width:1180px){.hero{grid-template-columns:1fr 1.15fr}.hero .panel.side{grid-column:1/-1}.section-grid{grid-template-columns:1fr}.desk{grid-template-columns:1fr 1fr}}
 @media(max-width:1000px){html,body,.page,.topnav,.hero,.panel{width:100%;max-width:100%;overflow-x:hidden}.topnav{height:48px;display:grid;grid-template-columns:minmax(130px,1fr) 68px 74px;align-items:center;gap:5px;padding:7px 8px}.brand{grid-column:1;grid-row:1;font-size:13px;gap:5px;min-width:0;overflow:hidden;text-overflow:ellipsis}.nav-mid{display:none!important}.topnav .btn{width:100%;min-width:0;padding:7px 4px;font-size:9px;overflow:hidden;text-overflow:ellipsis;min-height:32px}.topnav #connectBtn{grid-column:3;grid-row:1;position:static!important;display:block!important;visibility:visible!important;opacity:1!important}.topnav #refreshBtn{display:none!important}.wallet-pill{grid-column:2;grid-row:1;position:static!important;width:100%;max-width:none;text-align:center;padding:7px 3px;font-size:10px}.page{padding:7px}.hero{grid-template-columns:minmax(0,1fr);min-height:0}.stage-panel{min-height:330px}#podiumStage{min-height:330px}.podium-cards{grid-template-columns:1fr 1fr 1fr;gap:4px;bottom:6px;left:6px;right:6px}.mini-card{padding:6px}.mini-country{font-size:9px;gap:4px}.mini-country img{width:22px;height:15px}.mini-meta{grid-template-columns:1fr;font-size:8px;gap:2px}.mini-meta b{font-size:12px}.stats-grid{grid-template-columns:repeat(2,1fr)}.host-strip{grid-template-columns:1fr}.action-grid{grid-template-columns:1fr}.market-tools{grid-template-columns:repeat(2,1fr)}.leaderboard{max-height:260px}.lb-row{grid-template-columns:30px 1fr 48px 42px;gap:5px}.market{grid-template-columns:repeat(2,minmax(0,1fr));max-height:none}.market-card{min-height:184px;grid-template-rows:72px auto auto}.desk{grid-template-columns:1fr}.section-title{font-size:12px}.title{font-size:38px}.copy{font-size:16px;overflow-wrap:anywhere}}
 @media(max-width:410px){.market{grid-template-columns:1fr}.podium-cards{position:static;margin:6px;grid-template-columns:1fr}.stage-score{font-size:22px}.prize-split{grid-template-columns:repeat(2,1fr)}.prize-place:first-child{grid-column:1/-1}}
