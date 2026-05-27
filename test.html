@@ -145,16 +145,92 @@ html.mobile-hard .host-strip{grid-template-columns:1fr}
 html.mobile-hard .action-grid,html.mobile-hard .desk,html.mobile-hard .section-grid{grid-template-columns:1fr}
 html.mobile-hard .market-tools{grid-template-columns:repeat(2,minmax(0,1fr))}
 html.mobile-hard .market{grid-template-columns:repeat(2,minmax(0,1fr));max-height:none}
+/* Final nav alignment: top bar content follows the same width as the page */
+.topnav{
+  padding:0!important;
+  display:block!important;
+}
+.topnav-inner{
+  width:min(1560px,100%);
+  height:58px;
+  margin:0 auto;
+  padding:9px 12px;
+  display:grid;
+  grid-template-columns:auto minmax(0,1fr) auto auto auto;
+  align-items:center;
+  gap:14px;
+}
+.topnav-inner .nav-mid{
+  justify-self:center;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.topnav-inner .wallet-pill{
+  justify-self:end;
+}
+@media(min-width:1001px){
+  .topnav .brand{max-width:none!important}
+  .topnav #connectBtn{display:block!important;position:static!important;visibility:visible!important;opacity:1!important}
+  .topnav .mobile-connect-btn{display:none!important}
+  .topnav .wallet-pill{
+    position:static!important;
+    width:auto!important;
+    max-width:170px!important;
+    display:block!important;
+    padding:8px 10px!important;
+    text-align:center!important;
+  }
+  .topnav .wallet-pill .mobile-wallet-action{display:none!important}
+}
+@media(max-width:1000px){
+  .topnav{height:48px!important;overflow:hidden}
+  .topnav-inner{
+    width:100%;
+    max-width:100%;
+    height:48px;
+    grid-template-columns:minmax(130px,1fr) 68px 74px;
+    gap:5px;
+    padding:7px 8px;
+  }
+  .topnav-inner .brand{grid-column:1;grid-row:1;font-size:13px;gap:5px;min-width:0;overflow:hidden;text-overflow:ellipsis;max-width:calc(100vw - 172px)}
+  .topnav-inner .nav-mid{display:none!important}
+  .topnav-inner .wallet-pill{
+    grid-column:2;
+    grid-row:1;
+    position:static!important;
+    width:100%!important;
+    max-width:none!important;
+    padding:7px 3px!important;
+    text-align:center!important;
+  }
+  .topnav-inner #connectBtn{
+    grid-column:3;
+    grid-row:1;
+    display:block!important;
+    position:static!important;
+    width:100%;
+    min-width:0;
+    padding:7px 4px;
+    font-size:9px;
+    min-height:32px;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+  .topnav-inner #refreshBtn{display:none!important}
+}
 </style>
 </head>
 <body>
 <nav class="topnav">
-  <a class="brand" href="./home.html"><span style="color:#fff">&#9917;</span> BLOCK <span>KICKERS</span></a>
-  <div class="nav-mid"><b>HOST NATIONS PODIUM</b> USA + Mexico + Canada trading arena</div>
-  <div class="wallet-pill" id="walletPill" onclick="openWalletChoice()"><span class="balance-text" id="balanceText">BAL --</span><span class="mobile-wallet-action" id="mobileWalletAction">CONNECT</span></div>
-  <div class="btn mobile-connect-btn" id="mobileConnectBtn" onclick="openWalletChoice()">CONNECT</div>
-  <button class="btn" id="connectBtn" onclick="openWalletChoice()">CONNECT</button>
-  <button class="btn gold" id="refreshBtn" onclick="loadQuest()">REFRESH</button>
+  <div class="topnav-inner">
+    <a class="brand" href="./home.html"><span style="color:#fff">&#9917;</span> BLOCK <span>KICKERS</span></a>
+    <div class="nav-mid"><b>HOST NATIONS PODIUM</b> USA + Mexico + Canada trading arena</div>
+    <div class="wallet-pill" id="walletPill" onclick="openWalletChoice()"><span class="balance-text" id="balanceText">BAL --</span><span class="mobile-wallet-action" id="mobileWalletAction">CONNECT</span></div>
+    <div class="btn mobile-connect-btn" id="mobileConnectBtn" onclick="openWalletChoice()">CONNECT</div>
+    <button class="btn" id="connectBtn" onclick="openWalletChoice()">CONNECT</button>
+    <button class="btn gold" id="refreshBtn" onclick="loadQuest()">REFRESH</button>
+  </div>
 </nav>
 
 <main class="page">
