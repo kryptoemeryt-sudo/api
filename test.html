@@ -3881,6 +3881,227 @@ body.game-mode .sell-offer-btn{
     font-size:18px!important;
   }
 }
+
+/* Squad v2: clean collectible cards, stable desktop/mobile dimensions */
+body.game-mode .pitch-wrap{
+  overflow-x:auto!important;
+  overflow-y:hidden!important;
+  -webkit-overflow-scrolling:touch!important;
+}
+body.game-mode .formation.album-horizontal{
+  min-width:0!important;
+  width:100%!important;
+}
+body.game-mode .formation.album-horizontal .row-single{
+  align-items:stretch!important;
+}
+body.game-mode .pos-card{
+  display:grid!important;
+  grid-template-rows:1fr auto!important;
+  gap:5px!important;
+  justify-content:stretch!important;
+  align-content:stretch!important;
+  overflow:hidden!important;
+  border-radius:8px!important;
+  background:
+    linear-gradient(180deg,rgba(18,25,34,.96),rgba(7,10,15,.98)),
+    radial-gradient(circle at 50% 0%,rgba(0,255,135,.09),transparent 62%)!important;
+}
+body.game-mode .pos-card-top{
+  display:grid!important;
+  grid-template-rows:auto 1fr!important;
+  align-items:center!important;
+  justify-items:center!important;
+  min-height:0!important;
+}
+body.game-mode .pos-card .figure-mini{
+  align-self:center!important;
+}
+body.game-mode .pos-card > div:not(.pos-card-top):not(.card-hover-actions):not(.slot-market-hint){
+  display:grid!important;
+  gap:2px!important;
+  justify-items:center!important;
+  align-self:end!important;
+  padding-bottom:2px!important;
+}
+body.game-mode .slot-market-hint{
+  position:absolute!important;
+  left:7px!important;
+  right:7px!important;
+  bottom:6px!important;
+  z-index:4!important;
+  display:grid!important;
+  grid-template-columns:auto 1fr!important;
+  align-items:center!important;
+  gap:5px!important;
+  min-height:20px!important;
+  padding:4px 6px!important;
+  border:1px solid rgba(0,255,135,.34)!important;
+  border-radius:6px!important;
+  background:rgba(2,8,7,.82)!important;
+  box-shadow:inset 0 0 12px rgba(0,255,135,.08)!important;
+  pointer-events:none!important;
+}
+body.game-mode .slot-market-hint span{
+  color:#00ff87!important;
+  font-family:'Share Tech Mono',monospace!important;
+  font-size:7px!important;
+  line-height:1!important;
+  letter-spacing:.7px!important;
+}
+body.game-mode .slot-market-hint b{
+  justify-self:end!important;
+  color:#ffc940!important;
+  font-family:'Black Ops One',sans-serif!important;
+  font-size:9px!important;
+  line-height:1!important;
+  white-space:nowrap!important;
+}
+body.game-mode .pos-card:has(.slot-market-hint) > div:not(.pos-card-top):not(.card-hover-actions):not(.slot-market-hint){
+  padding-bottom:24px!important;
+}
+body.game-mode .slot-hover-panel{
+  inset:8px!important;
+  display:grid!important;
+  grid-template-rows:1fr auto!important;
+  align-content:stretch!important;
+  gap:7px!important;
+  padding:8px!important;
+  border-radius:8px!important;
+  background:linear-gradient(180deg,rgba(4,8,11,.97),rgba(7,12,17,.985))!important;
+  border:1px solid rgba(0,255,135,.38)!important;
+  box-shadow:0 0 24px rgba(0,255,135,.16), inset 0 0 18px rgba(0,255,135,.06)!important;
+  overflow:hidden!important;
+}
+body.game-mode .slot-hover-buy,
+body.game-mode .slot-hover-sell{
+  border-radius:8px!important;
+  cursor:pointer!important;
+  font-family:'Black Ops One',sans-serif!important;
+  line-height:1!important;
+  text-align:center!important;
+}
+body.game-mode .slot-hover-buy{
+  display:grid!important;
+  grid-template-rows:auto auto auto!important;
+  place-items:center!important;
+  gap:5px!important;
+  width:100%!important;
+  min-height:0!important;
+  padding:8px 6px!important;
+  border:1px solid rgba(0,255,135,.50)!important;
+  background:linear-gradient(180deg,rgba(0,255,135,.16),rgba(0,255,135,.055))!important;
+  color:#00ff87!important;
+}
+body.game-mode .slot-hover-buy span{
+  font-size:9px!important;
+  letter-spacing:.9px!important;
+}
+body.game-mode .slot-hover-buy b{
+  font-size:20px!important;
+  line-height:1!important;
+}
+body.game-mode .slot-hover-buy small{
+  color:#d7e2f0!important;
+  font-family:'Share Tech Mono',monospace!important;
+  font-size:9px!important;
+  line-height:1!important;
+}
+body.game-mode .slot-hover-empty{
+  display:grid!important;
+  place-items:center!important;
+  min-height:100%!important;
+  border:1px dashed rgba(90,106,122,.35)!important;
+  border-radius:8px!important;
+  color:#5a6a7a!important;
+  font-family:'Black Ops One',sans-serif!important;
+  font-size:10px!important;
+  letter-spacing:.8px!important;
+}
+body.game-mode .slot-hover-sell{
+  min-height:30px!important;
+  border:1px solid rgba(239,68,68,.42)!important;
+  background:rgba(239,68,68,.10)!important;
+  color:#ef4444!important;
+  font-size:9px!important;
+  letter-spacing:.7px!important;
+}
+@media(min-width:901px){
+  body.game-mode .formation.album-horizontal .row-single{
+    grid-template-columns:repeat(11,minmax(104px,1fr))!important;
+    width:100%!important;
+    gap:9px!important;
+  }
+  body.game-mode .formation.album-horizontal .row-single .pos-card,
+  body.game-mode .pos-card{
+    min-height:154px!important;
+    padding:8px 7px!important;
+  }
+  body.game-mode .pos-card-top{
+    min-height:78px!important;
+  }
+  body.game-mode .figure-mini{
+    width:56px!important;
+    height:56px!important;
+  }
+}
+@media(max-width:900px){
+  body.game-mode .country-section{
+    min-width:0!important;
+    overflow:hidden!important;
+  }
+  body.game-mode .nation-selector-title .filter-tabs{
+    width:calc(100vw - 34px)!important;
+    max-width:calc(100vw - 34px)!important;
+    overflow-x:auto!important;
+    overflow-y:hidden!important;
+    scroll-snap-type:x proximity!important;
+    touch-action:pan-x!important;
+  }
+  body.game-mode .nation-selector-title .filter-tabs .tab-btn{
+    scroll-snap-align:start!important;
+  }
+  body.game-mode .formation.album-horizontal{
+    width:max-content!important;
+    min-width:max-content!important;
+  }
+  body.game-mode .formation.album-horizontal .row-single{
+    grid-template-columns:repeat(11,88px)!important;
+    width:max-content!important;
+    min-width:max-content!important;
+    gap:8px!important;
+  }
+  body.game-mode .formation.album-horizontal .row-single .pos-card,
+  body.game-mode .pos-card{
+    width:88px!important;
+    min-width:88px!important;
+    min-height:126px!important;
+    padding:7px 6px!important;
+  }
+  body.game-mode .pos-card-top{
+    min-height:62px!important;
+  }
+  body.game-mode .figure-mini{
+    width:46px!important;
+    height:46px!important;
+  }
+  body.game-mode .slot-market-hint{
+    left:5px!important;
+    right:5px!important;
+    bottom:5px!important;
+    min-height:18px!important;
+    padding:3px 5px!important;
+  }
+  body.game-mode .slot-market-hint span{
+    font-size:6px!important;
+  }
+  body.game-mode .slot-market-hint b{
+    font-size:8px!important;
+  }
+  body.game-mode .pos-card:has(.slot-market-hint) > div:not(.pos-card-top):not(.card-hover-actions):not(.slot-market-hint){
+    padding-bottom:22px!important;
+  }
+}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
@@ -6151,6 +6372,34 @@ function renderSellActionButtons(cards, scoredTokenId) {
   return `<div class="slot-action-subtitle">SELL DUPLICATES</div>${buttons}`;
 }
 
+function renderDesktopSlotOverlay(listings, currentWeight = 0, ownedCards = [], scoredTokenId = null) {
+  const rarityNames = ['Common','Rare','Epic','Legendary'];
+  const rarityColors = ['#9aa4b2','#3b82f6','#c084fc','#ffc940'];
+  const best = listings[0];
+  let buyHtml = '<div class="slot-hover-empty">NO LISTINGS</div>';
+  if (best) {
+    const isUpgrade = Number(best.weight || 0) > Number(currentWeight || 0);
+    const rarity = Number.isFinite(Number(best.rarity)) ? Number(best.rarity) : 0;
+    const color = rarityColors[rarity] || '#ffc940';
+    buyHtml = `<button onclick="buyFromMarket(${best.listingId}, '${best.price}')" class="slot-hover-buy ${isUpgrade ? 'upgrade' : ''}">
+      <span>${isUpgrade ? 'UPGRADE' : 'MARKET'}</span>
+      <b style="color:${color}">${best.weight || '?'} PTS</b>
+      <small>${best.price} CHZ · ${rarityNames[rarity] || 'Card'}</small>
+    </button>`;
+  }
+
+  const duplicates = ownedCards.filter(card => Number(card.tokenId) !== Number(scoredTokenId));
+  const sellCard = duplicates[0] || ownedCards.find(card => Number(card.tokenId) === Number(scoredTokenId));
+  let sellHtml = '';
+  if (sellCard) {
+    const activeListing = activeListingsByToken[sellCard.tokenId];
+    sellHtml = activeListing && activeListing.seller === address?.toLowerCase()
+      ? `<button onclick="cancelMarketListing(${activeListing.listingId})" class="slot-hover-sell">CANCEL ${activeListing.price} CHZ</button>`
+      : `<button onclick="openSellModal(${sellCard.tokenId}, ${sellCard.position}, ${sellCard.weight}, ${sellCard.rarity})" class="slot-hover-sell">${duplicates.length ? 'SELL DUP' : 'SELL'}</button>`;
+  }
+  return `<div class="card-hover-actions slot-hover-panel">${buyHtml}${sellHtml}</div>`;
+}
+
 function renderCountryHub() {
   const grid = document.getElementById('countryGridContainer');
   grid.innerHTML = '';
@@ -6227,7 +6476,7 @@ function renderPitch() {
       const floorTeam = marketFloorByTeamPosition[selectedTeamId] || {};
       const floor = floorTeam[pos];
       const listings = getMarketListingsForSlot(selectedTeamId, pos);
-      const marketBadge = listings.length ? '<div class="slot-market-badge">BUY</div>' : '';
+      const marketHint = listings.length ? `<div class="slot-market-hint"><span>MKT</span><b>${listings[0].price} CHZ</b></div>` : '';
       let sheetTitle = `${selectedTeam.name} ${POSITION_SHORT[pos]}`;
       let sheetActionsHtml = '';
 
@@ -6244,10 +6493,10 @@ function renderPitch() {
         const marketActionHtml = renderMarketOfferButtons(listings, scored.weight);
         const sellActionHtml = renderSellActionButtons(ownedSlotCards, scored.tid);
         sheetActionsHtml = `${marketActionHtml}${sellActionHtml}`;
-        const hoverHtml = sheetActionsHtml ? `<div class="card-hover-actions">${sheetActionsHtml}</div>` : '';
+        const hoverHtml = renderDesktopSlotOverlay(listings, scored.weight, ownedSlotCards, scored.tid);
 
         card.innerHTML = `
-          ${marketBadge}
+          ${marketHint}
           <div class="pos-card-top">
             <div class="pos-name">${POSITION_SHORT[pos]}</div>
             <span class="figure-mini">${makeFigureSVG(scored.dna, 80)}</span>
@@ -6264,7 +6513,7 @@ function renderPitch() {
         sheetActionsHtml = actionHtml;
 
         card.innerHTML = `
-          ${marketBadge}
+          ${marketHint}
           <div class="pos-card-top">
             <div class="pos-name" style="color:#5a6a7a;">${POSITION_SHORT[pos]}</div>
             <span class="pos-ball" style="opacity: 0.15">&#9917;</span>
@@ -6273,7 +6522,7 @@ function renderPitch() {
             <div class="pos-weight empty">&mdash;</div>
             <div class="pos-rarity" style="color:#5a6a7a;">EMPTY</div>
           </div>
-          <div class="card-hover-actions">${actionHtml}</div>
+          ${renderDesktopSlotOverlay(listings, 0, [], null)}
         `;
       }
       if (sheetActionsHtml) {
