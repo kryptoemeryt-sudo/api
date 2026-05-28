@@ -2567,6 +2567,105 @@ body.game-mode .country-card .flag-img{
     display:none!important;
   }
 }
+
+/* Rebalance country buttons and top countdown */
+.topnav .nav-countdown{
+  font-size:14px!important;
+  line-height:1!important;
+}
+.topnav .nav-countdown span{
+  display:inline!important;
+  font-size:14px!important;
+  line-height:1!important;
+  color:#ffc940!important;
+  margin-right:8px!important;
+}
+.hero-actions{
+  align-items:center!important;
+}
+.btn-mint-hero{
+  display:grid!important;
+  place-items:center!important;
+  text-align:center!important;
+  font-size:15px!important;
+  white-space:nowrap!important;
+  line-height:1!important;
+}
+.pitch-title-row{
+  grid-template-columns:minmax(0,1fr) auto auto!important;
+  align-items:center!important;
+}
+.dash-mint-btn{
+  display:grid!important;
+  place-items:center!important;
+  text-align:center!important;
+  min-width:112px!important;
+  font-size:16px!important;
+}
+body.game-mode .country-card-name{
+  display:block!important;
+}
+body.game-mode .country-card-main{
+  grid-template-columns:42px minmax(0,1fr)!important;
+  justify-items:stretch!important;
+  text-align:left!important;
+}
+body.game-mode .country-card-flag{
+  width:42px!important;
+  justify-content:flex-start!important;
+}
+body.game-mode .country-card .flag-img{
+  width:38px!important;
+  height:25px!important;
+}
+body.game-mode .country-card-name{
+  font-size:12px!important;
+  line-height:1.05!important;
+  max-width:100%!important;
+  white-space:normal!important;
+  overflow:visible!important;
+  text-overflow:clip!important;
+  text-align:left!important;
+}
+@media(min-width:901px){
+  body.game-mode .country-grid{
+    grid-template-columns:repeat(auto-fill,minmax(132px,1fr))!important;
+    grid-auto-rows:minmax(78px,auto)!important;
+  }
+  body.game-mode .country-card{
+    min-height:78px!important;
+    grid-template-columns:minmax(0,1fr) auto!important;
+    padding:8px!important;
+  }
+  body.game-mode .country-card-main{
+    grid-template-columns:38px minmax(0,1fr)!important;
+    gap:7px!important;
+  }
+  body.game-mode .country-card-flag{width:38px!important}
+  body.game-mode .country-card .flag-img{
+    width:36px!important;
+    height:24px!important;
+  }
+  body.game-mode .country-card-name{
+    font-size:11px!important;
+  }
+  body.game-mode .country-card-score{
+    font-size:14px!important;
+  }
+}
+@media(max-width:900px){
+  body.game-mode .country-card-name{
+    display:block!important;
+    font-size:11px!important;
+    white-space:normal!important;
+    overflow:visible!important;
+  }
+}
+@media(max-width:560px){
+  .topnav .nav-countdown{
+    display:none!important;
+  }
+}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
