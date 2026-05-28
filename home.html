@@ -3313,9 +3313,9 @@ class Figure3D {
     const w = this.canvas.clientWidth || 280;
     const h = this.canvas.clientHeight || 280;
     this.scene = new THREE.Scene();
-    this.cam = new THREE.PerspectiveCamera(this.highQuality ? 34 : 38, w/h, 0.1, 100);
-    this.cam.position.set(0, 1.14, this.highQuality ? 5.15 : 5.85);
-    this.cam.lookAt(0, 1.08, 0);
+    this.cam = new THREE.PerspectiveCamera(42, w/h, 0.1, 100);
+    this.cam.position.set(0, 1.2, 7.0);
+    this.cam.lookAt(0, 1, 0);
     // SprawdĹş czy WebGL dostÄ™pny
     try{
       const testCtx = this.canvas.getContext('webgl2') || this.canvas.getContext('webgl');
@@ -3358,77 +3358,45 @@ class Figure3D {
       this._ro.observe(this.canvas);
     }
     this.ren.shadowMap.enabled = true;
-    this.ren.shadowMap.type = THREE.PCFSoftShadowMap;
     this.ren.toneMapping = THREE.ACESFilmicToneMapping;
-    this.ren.toneMappingExposure = this.highQuality ? 1.18 : 1.05;
-    if (THREE.SRGBColorSpace) this.ren.outputColorSpace = THREE.SRGBColorSpace;
-    else if (THREE.sRGBEncoding) this.ren.outputEncoding = THREE.sRGBEncoding;
 
-    // Premium collectible lighting: softer front, hard gold rim, green arena bounce.
-    this.scene.add(new THREE.AmbientLight(0xffffff, 0.30));
-    const hemi = new THREE.HemisphereLight(0x9bd7ff, 0x06100b, 0.72);
-    this.scene.add(hemi);
-    const key = new THREE.DirectionalLight(0xfff4cf, 1.38);
-    key.position.set(3.8,5.2,4.2); key.castShadow = true;
-    key.shadow.mapSize.width = this.highQuality ? 2048 : 1024;
-    key.shadow.mapSize.height = this.highQuality ? 2048 : 1024;
-    key.shadow.camera.near = .5;
-    key.shadow.camera.far = 12;
-    key.shadow.camera.left = -4;
-    key.shadow.camera.right = 4;
-    key.shadow.camera.top = 4;
-    key.shadow.camera.bottom = -4;
+    // Lights
+    this.scene.add(new THREE.AmbientLight(0xffffff, 0.45));
+    const key = new THREE.DirectionalLight(0xffffff, 1.1);
+    key.position.set(3,5,3); key.castShadow = true;
     this.scene.add(key);
-    const fill = new THREE.DirectionalLight(0x58d2ff, 0.24);
-    fill.position.set(-3.5,2.2,-2.2);
+    const fill = new THREE.DirectionalLight(0x8899ff, 0.35);
+    fill.position.set(-3,2,-2);
     this.scene.add(fill);
-    const greenRim = new THREE.PointLight(0x00ff87, 1.28, 8);
-    greenRim.position.set(-2.5,1.1,2.4);
-    this.scene.add(greenRim);
-    const goldRim = new THREE.PointLight(0xffc940, this.highQuality ? 1.45 : .92, 9);
-    goldRim.position.set(2.3,2.5,2.0);
-    this.scene.add(goldRim);
 
     // Rarity accent light
     const rc = [0x6b7280,0x3b82f6,0xa855f7,0xffc940][this.t.rarity];
-    const rl = new THREE.PointLight(rc, this.t.rarity * 0.72 + 0.18, 7);
-    rl.position.set(0,1.15,2.5);
+    const rl = new THREE.PointLight(rc, this.t.rarity * 0.4 + 0.1, 6);
+    rl.position.set(0,1,2.5);
     this.scene.add(rl);
 
-    // Premium display base, similar to the X poster collectible stage.
-    const baseMat = new THREE.MeshPhysicalMaterial({
-      color:0x0b1118, roughness:.38, metalness:.34, clearcoat:.55, clearcoatRoughness:.28
-    });
-    const topMat = new THREE.MeshPhysicalMaterial({
-      color:0x10242a, roughness:.32, metalness:.18, clearcoat:.5, clearcoatRoughness:.2,
-      transparent:true, opacity:.82
-    });
-    const base = new THREE.Mesh(new THREE.CylinderGeometry(1.18,1.30,.20,64), baseMat);
-    base.position.y = -0.20; base.receiveShadow = true; base.castShadow = true; this.scene.add(base);
-    const top = new THREE.Mesh(new THREE.CylinderGeometry(1.06,1.13,.055,64), topMat);
-    top.position.y = -0.055; top.receiveShadow = true; this.scene.add(top);
-    const ring = new THREE.Mesh(
-      new THREE.TorusGeometry(1.15,.012,8,96),
-      new THREE.MeshBasicMaterial({color: rc, transparent:true, opacity: this.t.rarity ? .42 : .20})
+    // Ground disc
+    const gm = new THREE.Mesh(
+      new THREE.CircleGeometry(1.4,32),
+      new THREE.MeshStandardMaterial({color:0x141820,roughness:0.9,metalness:0.1,transparent:true,opacity:0.5})
     );
-    ring.rotation.x = Math.PI / 2;
-    ring.position.y = .003;
-    this.scene.add(ring);
+    gm.rotation.x = -Math.PI/2; gm.receiveShadow = true;
+    this.scene.add(gm);
 
     this.build();
     this.loop();
   }
 
   m(col, rarity=0) {
-    const p = {color:col,roughness:0.42,metalness:0.08,clearcoat:.38,clearcoatRoughness:.24};
-    if (rarity===1){p.roughness=0.32;p.metalness=0.18;p.clearcoat=.5;}
-    if (rarity===2){p.roughness=0.22;p.metalness=0.38;p.clearcoat=.68;p.emissive=new THREE.Color(0xa855f7);p.emissiveIntensity=0.05;}
-    if (rarity===3){p.roughness=0.18;p.metalness=0.34;p.clearcoat=.75;p.emissive=new THREE.Color(0xffc940);p.emissiveIntensity=0.07;}
-    return new THREE.MeshPhysicalMaterial(p);
+    const p = {color:col,roughness:0.7,metalness:0.05};
+    if (rarity===1){p.roughness=0.45;p.metalness=0.25;}
+    if (rarity===2){p.roughness=0.2;p.metalness=0.55;p.emissive=new THREE.Color(0xa855f7);p.emissiveIntensity=0.08;}
+    if (rarity===3){p.roughness=0.18;p.metalness=0.38;p.emissive=new THREE.Color(0xffc940);p.emissiveIntensity=0.06;}
+    return new THREE.MeshStandardMaterial(p);
   }
 
-  bx(w,h,d,mat,x=0,y=0,z=0){const m=new THREE.Mesh(new THREE.BoxGeometry(w,h,d,2,2,2),mat);m.position.set(x,y,z);m.castShadow=true;m.receiveShadow=true;return m;}
-  sp(r,mat,x=0,y=0,z=0){const m=new THREE.Mesh(new THREE.SphereGeometry(r,22,16),mat);m.position.set(x,y,z);m.castShadow=true;m.receiveShadow=true;return m;}
+  bx(w,h,d,mat,x=0,y=0,z=0){const m=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),mat);m.position.set(x,y,z);m.castShadow=true;return m;}
+  sp(r,mat,x=0,y=0,z=0){const m=new THREE.Mesh(new THREE.SphereGeometry(r,14,10),mat);m.position.set(x,y,z);m.castShadow=true;return m;}
   cy(rt,rb,h,seg,mat,x=0,y=0,z=0){const m=new THREE.Mesh(new THREE.CylinderGeometry(rt,rb,h,seg),mat);m.position.set(x,y,z);m.castShadow=true;return m;}
 
   build() {
@@ -3438,28 +3406,25 @@ class Figure3D {
     const skinCol = new THREE.Color(skinColor(t.skinTone));
     const kitMat  = this.m(teamCol, r);
     const skinMat = this.m(skinCol, 0);
-    skinMat.roughness = .58;
-    skinMat.clearcoat = .32;
-    skinMat.clearcoatRoughness = .34;
 
     // Dark material for details
-    const darkMat = new THREE.MeshPhysicalMaterial({color:0x07090d,roughness:0.48,metalness:.08,clearcoat:.42,clearcoatRoughness:.25});
-    const whiteMat = new THREE.MeshPhysicalMaterial({color:0xffffff,roughness:0.38,metalness:.04,clearcoat:.45,clearcoatRoughness:.2});
+    const darkMat = new THREE.MeshStandardMaterial({color:0x0a0a0a,roughness:0.8});
+    const whiteMat = new THREE.MeshStandardMaterial({color:0xffffff,roughness:0.7});
 
     // BOOTS - colorful, distinct from legs
     const bootColors = [0xff2200,0xffd700,0x00cc44,0x0066ff,0xff00cc,0xffffff,0x222222,0xff6600];
     const bootCol = t.hasGoldenBoots ? 0xffd700 : bootColors[t.teamId % bootColors.length];
     const bootMat = new THREE.MeshStandardMaterial({
       color: bootCol,
-      roughness: t.hasGoldenBoots ? 0.08 : 0.28,
-      metalness: t.hasGoldenBoots ? 0.95 : 0.16,
+      roughness: t.hasGoldenBoots ? 0.1 : 0.5,
+      metalness: t.hasGoldenBoots ? 0.9 : 0.1,
       emissive: t.hasGoldenBoots ? new THREE.Color(0xffd700) : new THREE.Color(0x000000),
-      emissiveIntensity: t.hasGoldenBoots ? 0.32 : 0
+      emissiveIntensity: t.hasGoldenBoots ? 0.3 : 0
     });
 
     // SHORTS - darker version of kit color
     const shortsCol = new THREE.Color(teamCol).multiplyScalar(0.4);
-    const shortsMat = new THREE.MeshPhysicalMaterial({color:shortsCol,roughness:0.46,metalness:.07,clearcoat:.38,clearcoatRoughness:.28});
+    const shortsMat = new THREE.MeshStandardMaterial({color:shortsCol,roughness:0.8});
 
     // SOCKS - white or team color
     const socksMat = whiteMat;
@@ -3474,8 +3439,8 @@ class Figure3D {
     const Y_HEAD   = 1.88;
 
     // BOOTS (wider front, pointed)
-    fig.add(this.bx(0.27,0.15,0.43,bootMat,-0.17,Y_BOOT,0.05));
-    fig.add(this.bx(0.27,0.15,0.43,bootMat, 0.17,Y_BOOT,0.05));
+    fig.add(this.bx(0.24,0.15,0.40,bootMat,-0.16,Y_BOOT,0.04));
+    fig.add(this.bx(0.24,0.15,0.40,bootMat, 0.16,Y_BOOT,0.04));
 
     // SOCKS
     fig.add(this.bx(0.22,0.20,0.22,socksMat,-0.16,Y_SOCK,0));
@@ -3489,14 +3454,7 @@ class Figure3D {
     fig.add(this.bx(0.56,0.22,0.30,shortsMat,0,Y_SHORTS,0));
 
     // TORSO (slightly tapered - wider shoulders)
-    fig.add(this.bx(0.68,0.70,0.38,kitMat,0,Y_TORSO,0));
-    const chestGloss = new THREE.Mesh(
-      new THREE.PlaneGeometry(.44,.48),
-      new THREE.MeshBasicMaterial({color:0xffffff,transparent:true,opacity:.055,depthWrite:false})
-    );
-    chestGloss.position.set(-.08,Y_TORSO+.10,.196);
-    chestGloss.rotation.z = .08;
-    fig.add(chestGloss);
+    fig.add(this.bx(0.62,0.65,0.34,kitMat,0,Y_TORSO,0));
 
     // Shirt number
     const nc=document.createElement('canvas');nc.width=64;nc.height=64;
@@ -3506,15 +3464,15 @@ class Figure3D {
     cx.font='bold 36px Arial Black';cx.textAlign='center';cx.textBaseline='middle';
     cx.fillText(String(t.position),32,32);
     const np=new THREE.Mesh(
-      new THREE.PlaneGeometry(0.34,0.34),
+      new THREE.PlaneGeometry(0.28,0.28),
       new THREE.MeshBasicMaterial({map:new THREE.CanvasTexture(nc),transparent:true,depthWrite:false})
     );
-    np.position.set(0,Y_TORSO,0.205);fig.add(np);
+    np.position.set(0,Y_TORSO,0.18);fig.add(np);
 
     // ARMS (angled slightly outward)
-    const armL=this.bx(0.20,0.56,0.20,kitMat,-0.46,Y_TORSO-0.02,0);
+    const armL=this.bx(0.19,0.52,0.19,kitMat,-0.42,Y_TORSO-0.02,0);
     armL.rotation.z=0.15;
-    const armR=this.bx(0.20,0.56,0.20,kitMat, 0.46,Y_TORSO-0.02,0);
+    const armR=this.bx(0.19,0.52,0.19,kitMat, 0.42,Y_TORSO-0.02,0);
     armR.rotation.z=-0.15;
     fig.add(armL,armR);
 
@@ -3522,32 +3480,32 @@ class Figure3D {
     const handMat = (t.hasGloves && t.position===1)
       ? new THREE.MeshStandardMaterial({color:0xffee00,roughness:0.5,metalness:0.1})
       : skinMat;
-    fig.add(this.sp(0.118,handMat,-0.50,Y_TORSO-0.33,0.02));
-    fig.add(this.sp(0.118,handMat, 0.50,Y_TORSO-0.33,0.02));
+    fig.add(this.sp(0.105,handMat,-0.44,Y_TORSO-0.30,0));
+    fig.add(this.sp(0.105,handMat, 0.44,Y_TORSO-0.30,0));
 
     // NECK (slimmer)
     fig.add(this.cy(0.085,0.085,0.16,8,skinMat,0,Y_NECK,0));
 
     // HEAD (slightly taller than wide - more human)
-    fig.add(this.bx(0.52,0.56,0.48,skinMat,0,Y_HEAD,0));
+    fig.add(this.bx(0.48,0.52,0.44,skinMat,0,Y_HEAD,0));
 
     // EYES - larger, more expressive
     const eyeMat=new THREE.MeshStandardMaterial({color:0x0a0a14,roughness:0.5});
     const eyeWhiteMat=new THREE.MeshStandardMaterial({color:0xffffff,roughness:0.8});
     // Eye whites
-    fig.add(this.bx(0.14,0.10,0.02,eyeWhiteMat,-0.13,Y_HEAD+0.07,0.252));
-    fig.add(this.bx(0.14,0.10,0.02,eyeWhiteMat, 0.13,Y_HEAD+0.07,0.252));
+    fig.add(this.bx(0.13,0.10,0.02,eyeWhiteMat,-0.12,Y_HEAD+0.07,0.23));
+    fig.add(this.bx(0.13,0.10,0.02,eyeWhiteMat, 0.12,Y_HEAD+0.07,0.23));
     // Pupils
-    fig.add(this.bx(0.07,0.07,0.025,eyeMat,-0.12,Y_HEAD+0.07,0.266));
-    fig.add(this.bx(0.07,0.07,0.025,eyeMat, 0.12,Y_HEAD+0.07,0.266));
+    fig.add(this.bx(0.07,0.07,0.025,eyeMat,-0.11,Y_HEAD+0.07,0.235));
+    fig.add(this.bx(0.07,0.07,0.025,eyeMat, 0.11,Y_HEAD+0.07,0.235));
     // Eyebrows
     const browMat=new THREE.MeshStandardMaterial({color:0x1a0a00,roughness:0.9});
     fig.add(this.bx(0.13,0.03,0.02,browMat,-0.12,Y_HEAD+0.14,0.23));
     fig.add(this.bx(0.13,0.03,0.02,browMat, 0.12,Y_HEAD+0.14,0.23));
     // Nose
-    fig.add(this.bx(0.045,0.065,0.035,skinMat,0,Y_HEAD+0.01,0.272));
+    fig.add(this.bx(0.04,0.06,0.03,new THREE.MeshStandardMaterial({color:skinCol,roughness:0.8}),0,Y_HEAD+0.01,0.235));
     // Mouth / smile
-    fig.add(this.bx(0.15,0.036,0.02,new THREE.MeshStandardMaterial({color:0xf97316,roughness:0.72}),0,Y_HEAD-0.105,0.268));
+    fig.add(this.bx(0.14,0.035,0.02,new THREE.MeshStandardMaterial({color:0x8b1a00,roughness:0.9}),0,Y_HEAD-0.10,0.23));
 
     // EARS
     fig.add(this.bx(0.04,0.10,0.04,skinMat,-0.25,Y_HEAD+0.01,0));
@@ -3556,42 +3514,42 @@ class Figure3D {
     // TATTOO - left arm band
     if(t.hasTattoo){
       const tatColors=[0x1a1aff,0xff1a1a,0x1aff1a,0xffff1a,0xff1aff];
-      const tatMat=new THREE.MeshStandardMaterial({color:tatColors[t.teamId%tatColors.length],roughness:0.74,emissive:new THREE.Color(tatColors[t.teamId%tatColors.length]),emissiveIntensity:0.16});
-      fig.add(this.bx(0.22,0.09,0.22,tatMat,-0.46,Y_TORSO+0.09,0.01));
+      const tatMat=new THREE.MeshStandardMaterial({color:tatColors[t.teamId%tatColors.length],roughness:0.9,emissive:new THREE.Color(tatColors[t.teamId%tatColors.length]),emissiveIntensity:0.15});
+      fig.add(this.bx(0.21,0.09,0.21,tatMat,-0.42,Y_TORSO+0.08,0));
     }
 
     // HAIR
     const hairColors=[0x1a0800,0xff6600,0xffd700,0xcc0000,0x2a1a00,0x111111,0x8b4513,0x333333];
     const hc=hairColors[t.hairStyle%hairColors.length];
-    const hm=new THREE.MeshPhysicalMaterial({color:hc,roughness:0.38,metalness:.04,clearcoat:.52,clearcoatRoughness:.26});
+    const hm=new THREE.MeshStandardMaterial({color:hc,roughness:0.8});
     const hy=Y_HEAD+0.14; // hair base y
 
     if(t.hairStyle===0){ // Buzz cut
-      fig.add(this.bx(0.54,0.12,0.50,hm,0,hy,0));
+      fig.add(this.bx(0.50,0.10,0.46,hm,0,hy,0));
     }else if(t.hairStyle===1){ // Curly
-      fig.add(this.bx(0.52,0.08,0.48,hm,0,hy-0.04,0));
+      fig.add(this.bx(0.48,0.07,0.44,hm,0,hy-0.04,0));
       for(let i=0;i<8;i++){const a=i/8*Math.PI*2;fig.add(this.sp(0.085,hm,Math.cos(a)*0.17,hy+0.05,Math.sin(a)*0.13));}
     }else if(t.hairStyle===2){ // Spiky
-      fig.add(this.bx(0.52,0.08,0.48,hm,0,hy-0.02,0));
+      fig.add(this.bx(0.48,0.07,0.44,hm,0,hy-0.02,0));
       for(let i=0;i<5;i++){
         const s=new THREE.Mesh(new THREE.ConeGeometry(0.055,0.22,4),hm);
         s.position.set((i-2)*0.10,hy+0.14,0.05);
         fig.add(s);
       }
     }else if(t.hairStyle===3){ // Mohawk
-      fig.add(this.bx(0.54,0.08,0.50,hm,0,hy-0.02,0)); // base
+      fig.add(this.bx(0.50,0.07,0.46,hm,0,hy-0.02,0)); // base
       fig.add(this.bx(0.11,0.30,0.46,hm,0,hy+0.13,0)); // strip
     }else if(t.hairStyle===4){ // Afro
-      fig.add(this.sp(0.31,hm,0,hy+0.10,0));
+      fig.add(this.sp(0.28,hm,0,hy+0.10,0));
     }else if(t.hairStyle===5){ // Dreads
-      fig.add(this.bx(0.52,0.08,0.48,hm,0,hy-0.02,0));
+      fig.add(this.bx(0.48,0.07,0.44,hm,0,hy-0.02,0));
       for(let i=-2;i<=2;i++) fig.add(this.bx(0.06,0.28,0.06,hm,i*0.10,hy-0.12,-0.18));
     }else if(t.hairStyle===6){ // Bald
       // No hair - shiny head
       // already rendered by skin head
     }else if(t.hairStyle===7){ // Wavy
-      fig.add(this.bx(0.54,0.09,0.50,hm,0,hy-0.01,0));
-      fig.add(this.bx(0.54,0.06,0.50,hm,0,hy+0.07,-0.01));
+      fig.add(this.bx(0.50,0.08,0.46,hm,0,hy-0.01,0));
+      fig.add(this.bx(0.50,0.06,0.46,hm,0,hy+0.07,-0.01));
     }
 
     // EARRING - gold sphere on left ear
@@ -3638,8 +3596,6 @@ class Figure3D {
     }
 
     this.fig=fig;
-    fig.position.y = .03;
-    fig.scale.set(1.08,1.08,1.08);
     this.scene.add(fig);
   }
 
