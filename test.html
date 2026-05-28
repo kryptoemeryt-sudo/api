@@ -3495,6 +3495,241 @@ body.game-mode .country-card-completion{
     z-index:221!important;
   }
 }
+
+/* Final connected-dashboard market UX */
+body.game-mode #statsRow{
+  grid-template-columns:repeat(5,minmax(0,1fr))!important;
+}
+body.game-mode .country-card{
+  grid-template-columns:1fr!important;
+  grid-template-rows:auto auto!important;
+  align-content:center!important;
+  justify-items:stretch!important;
+  gap:8px!important;
+}
+body.game-mode .country-card > div{
+  width:100%!important;
+}
+body.game-mode .country-card-main{
+  display:grid!important;
+  grid-template-columns:auto minmax(0,1fr)!important;
+  align-items:center!important;
+  justify-content:start!important;
+  gap:10px!important;
+}
+body.game-mode .country-card > .country-card-main{
+  display:grid!important;
+  grid-template-columns:auto minmax(0,1fr)!important;
+  align-items:center!important;
+  justify-content:start!important;
+  gap:10px!important;
+}
+body.game-mode .country-card > .country-card-bottom{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) auto!important;
+  align-items:center!important;
+  justify-content:stretch!important;
+  gap:8px!important;
+}
+body.game-mode .country-card-bottom{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) auto!important;
+  align-items:center!important;
+  gap:8px!important;
+  min-width:0!important;
+}
+body.game-mode .country-card-name{
+  text-align:left!important;
+  white-space:nowrap!important;
+}
+body.game-mode .country-card-score{
+  text-align:left!important;
+  white-space:nowrap!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+}
+body.game-mode .country-card-completion{
+  text-align:right!important;
+  white-space:nowrap!important;
+  font-size:12px!important;
+  line-height:1!important;
+}
+body.game-mode .pos-card{
+  gap:6px!important;
+  justify-content:start!important;
+}
+body.game-mode .pos-card-top{
+  min-height:58px!important;
+}
+body.game-mode .slot-market-actions{
+  display:grid!important;
+  gap:5px!important;
+  margin-top:4px!important;
+  width:100%!important;
+}
+body.game-mode .slot-market-actions .card-hover-note{
+  display:block!important;
+  border:1px solid rgba(255,201,64,.28)!important;
+  background:rgba(255,201,64,.07)!important;
+  border-radius:6px!important;
+  padding:5px 4px!important;
+  font-size:8px!important;
+  color:#ffc940!important;
+  text-align:center!important;
+}
+body.game-mode .slot-market-action{
+  display:grid!important;
+  grid-template-rows:auto auto auto!important;
+  gap:3px!important;
+  place-items:center!important;
+  min-height:48px!important;
+  padding:6px 5px!important;
+  margin:0!important;
+  border-radius:7px!important;
+  line-height:1!important;
+  text-align:center!important;
+  box-shadow:inset 0 0 14px rgba(0,255,135,.08)!important;
+}
+body.game-mode .slot-market-action span{
+  font-size:8px!important;
+  letter-spacing:.7px!important;
+}
+body.game-mode .slot-market-action b{
+  font-size:15px!important;
+  line-height:1!important;
+}
+body.game-mode .slot-market-action small{
+  font-family:'Share Tech Mono',monospace!important;
+  font-size:8px!important;
+  color:#d7e2f0!important;
+  line-height:1.05!important;
+}
+body.game-mode .slot-market-action:hover{
+  transform:translateY(-1px)!important;
+  filter:brightness(1.15)!important;
+}
+body.game-mode .sell-visible{
+  box-shadow:inset 0 0 14px rgba(239,68,68,.08)!important;
+}
+body.game-mode .pos-card.rarity-0 .pos-rarity,
+body.game-mode .pos-rarity.rarity-0{color:#9aa4b2!important;}
+body.game-mode .pos-card.rarity-1 .pos-rarity,
+body.game-mode .pos-rarity.rarity-1{color:#3b82f6!important;}
+body.game-mode .pos-card.rarity-2 .pos-rarity,
+body.game-mode .pos-rarity.rarity-2{color:#c084fc!important;}
+body.game-mode .pos-card.rarity-3 .pos-rarity,
+body.game-mode .pos-rarity.rarity-3{color:#ffc940!important;}
+body.game-mode .leaderboard-list{
+  max-height:none!important;
+}
+body.game-mode .lb-row.local-row{
+  display:grid!important;
+  grid-template-columns:42px minmax(130px,1fr) minmax(122px,auto) max-content!important;
+  align-items:center!important;
+  gap:10px!important;
+}
+body.game-mode .lb-row.local-row .lb-completion{
+  justify-self:start!important;
+  text-align:left!important;
+  margin:0!important;
+  white-space:nowrap!important;
+  min-width:122px!important;
+}
+body.game-mode .lb-row.local-row .lb-score{
+  justify-self:end!important;
+}
+@media(min-width:901px){
+  body.game-mode #gameSection{
+    display:block;
+  }
+  body.game-mode .lb-section{
+    padding-bottom:10px!important;
+  }
+  body.game-mode .formation.album-horizontal .row-single{
+    grid-template-columns:repeat(11,minmax(116px,1fr))!important;
+    gap:9px!important;
+  }
+  body.game-mode .formation.album-horizontal .row-single .pos-card,
+  body.game-mode .pos-card{
+    min-height:176px!important;
+    padding:9px 7px!important;
+  }
+  body.game-mode .country-grid{
+    grid-template-columns:repeat(auto-fill,minmax(162px,1fr))!important;
+    gap:8px!important;
+  }
+  body.game-mode .country-card{
+    min-height:82px!important;
+    padding:10px!important;
+  }
+  body.game-mode .country-card-name{
+    font-size:15px!important;
+  }
+  body.game-mode .country-card-score{
+    font-size:18px!important;
+  }
+  body.game-mode .country-card-completion{
+    font-size:12px!important;
+  }
+}
+@media(max-width:900px){
+  body.game-mode #statsRow{
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+    gap:6px!important;
+  }
+  body.game-mode #statsRow .stat-card{
+    min-height:62px!important;
+  }
+  body.game-mode #statsRow .stat-card:nth-child(4){
+    grid-column:1 / 2!important;
+  }
+  body.game-mode #statsRow .stat-card:nth-child(5){
+    grid-column:2 / 4!important;
+  }
+  body.game-mode .country-card{
+    min-height:78px!important;
+    padding:8px!important;
+    gap:7px!important;
+  }
+  body.game-mode .country-card-main{
+    grid-template-columns:38px minmax(0,1fr)!important;
+    gap:7px!important;
+  }
+  body.game-mode .country-card-bottom{
+    grid-template-columns:minmax(0,1fr) auto!important;
+  }
+  body.game-mode .country-card-score{
+    font-size:15px!important;
+  }
+  body.game-mode .country-card-completion{
+    font-size:9px!important;
+  }
+  body.game-mode .formation.album-horizontal .row-single .pos-card,
+  body.game-mode .pos-card{
+    min-height:132px!important;
+  }
+  body.game-mode .slot-market-action{
+    min-height:42px!important;
+    padding:5px 4px!important;
+  }
+  body.game-mode .slot-market-action span{
+    font-size:7px!important;
+  }
+  body.game-mode .slot-market-action b{
+    font-size:13px!important;
+  }
+  body.game-mode .slot-market-action small{
+    font-size:7px!important;
+  }
+  body.game-mode .lb-row.local-row{
+    grid-template-columns:32px minmax(92px,1fr) minmax(96px,auto) max-content!important;
+    gap:7px!important;
+  }
+  body.game-mode .lb-row.local-row .lb-completion{
+    min-width:96px!important;
+    font-size:10px!important;
+  }
+}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
@@ -3642,12 +3877,16 @@ body.game-mode .country-card-completion{
       <div class="stat-lbl">Cards Owned</div>
     </div>
     <div class="stat-card">
+      <div class="stat-val highlight" id="myGlobalScore">0</div>
+      <div class="stat-lbl">Score</div>
+    </div>
+    <div class="stat-card">
       <div class="stat-val text-primary" id="myGlobalRank" style="color:#818cf8;">—</div>
-      <div class="stat-lbl">Global Position</div>
+      <div class="stat-lbl">Rank</div>
     </div>
     <div class="stat-card" style="background:rgba(0,255,135,0.03); border-color:rgba(0,255,135,0.2);">
       <div class="stat-val" id="myEstPayout" style="color:#00ff87; font-size:24px; padding-top:6px;">???,??? CHZ</div>
-      <div class="stat-lbl">Est. Quest Reward (TOP 10)</div>
+      <div class="stat-lbl">Reward</div>
     </div>
   </div>
   <div class="dashboard-prize-strip" id="dashboardPrizeStrip" style="display:none;">
@@ -5554,7 +5793,15 @@ async function loadData(options = {}){
         if(!marketFloorByTeamPosition[tid]) marketFloorByTeamPosition[tid] = {};
         const curFloor = marketFloorByTeamPosition[tid][pos];
         if(!curFloor || price < curFloor.price) {
-          marketFloorByTeamPosition[tid][pos] = {listingId: i, price, priceWei};
+          marketFloorByTeamPosition[tid][pos] = {
+            listingId: i,
+            tokenId,
+            price,
+            priceWei,
+            weight: fig.weight,
+            rarity: fig.rarity,
+            dna: fig.dna
+          };
         }
       }catch(e){}
     }
@@ -5639,14 +5886,18 @@ function renderStats() {
   const players = getGlobalLeaderboardData();
   let myGlobalRankVal = '—';
   let myEstPrizeVal = 0;
+  let myGlobalScoreVal = 0;
   
   const myIndex = players.findIndex(p => p.wallet.toLowerCase() === myAddr);
   if (myIndex !== -1) {
     const rank = myIndex + 1;
     myGlobalRankVal = `#${rank}`;
     myEstPrizeVal = getPrizeForRank(rank);
+    myGlobalScoreVal = players[myIndex].score || 0;
   }
   
+  const scoreEl = document.getElementById('myGlobalScore');
+  if (scoreEl) scoreEl.textContent = myGlobalScoreVal;
   document.getElementById('myGlobalRank').textContent = myGlobalRankVal;
   document.getElementById('myEstPayout').textContent = myEstPrizeVal > 0
     ? `${myEstPrizeVal.toLocaleString()} CHZ`
@@ -5711,12 +5962,12 @@ function renderCountryHub() {
       <div class="country-card-main">
         ${crownDisplay}
         <div class="country-card-flag">${getFlagHtml(team)}</div>
-        <div class="country-card-copy">
-          <div class="country-card-name">${teamAbbr(team)}</div>
-          <div class="country-card-score">${scoreDisplay}</div>
-        </div>
+        <div class="country-card-name">${teamAbbr(team)}</div>
       </div>
-      <div class="country-card-completion" style="color:${compColor};">${compDisplay}</div>
+      <div class="country-card-bottom">
+        <div class="country-card-score">${scoreDisplay}</div>
+        <div class="country-card-completion" style="color:${compColor};">${compDisplay}</div>
+      </div>
     `;
     grid.appendChild(card);
   });
@@ -5743,6 +5994,8 @@ function renderPitch() {
     const row = group.positions;
     const rowEl = document.createElement('div');
     rowEl.className = `form-row ${group.cls}`;
+    const rarityNames = ['Common','Rare','Epic','Legendary'];
+    const rarityColors = ['#9aa4b2','#3b82f6','#c084fc','#ffc940'];
 
     row.forEach(pos => {
       const card = document.createElement('div');
@@ -5756,7 +6009,7 @@ function renderPitch() {
       let sheetActionsHtml = '';
 
       if (scored) {
-        const rarColor = ['#7a8899','#3b82f6','#c084fc','#ffc940'][scored.rarity];
+        const rarColor = rarityColors[scored.rarity] || '#7a8899';
         card.className = `pos-card owned rarity-${scored.rarity}`;
         const isHighlighted = lastSquadHighlight
           && lastSquadHighlight.teamId === selectedTeamId
@@ -5766,7 +6019,7 @@ function renderPitch() {
         
         let actionHtml = '';
         if (mkt && mkt.weight > scored.weight) {
-          actionHtml = `<button onclick="buyFromMarket(${mkt.listingId}, '${mkt.price}')" class="btn-card-action upgrade">UPGRADE +${mkt.weight - scored.weight}<br>${mkt.price} CHZ</button>`;
+          actionHtml = `<button onclick="buyFromMarket(${mkt.listingId}, '${mkt.price}')" class="btn-card-action upgrade slot-market-action"><span>BUY UPGRADE</span><b>${mkt.weight} PTS</b><small>${mkt.price} CHZ · +${mkt.weight - scored.weight}</small></button>`;
         }
 
         // Sell Button if user currently owns the scored card
@@ -5777,12 +6030,12 @@ function renderPitch() {
         const listedByMe = myAddr && activeListing && activeListing.seller === myAddr;
         if (currentlyOwnsScored) {
           sellBtnHtml = listedByMe
-            ? `<button onclick="cancelMarketListing(${activeListing.listingId})" class="btn-card-action" style="background:rgba(239,68,68,0.16); border-color:rgba(239,68,68,0.46); color:#ef4444;">CANCEL<br>${activeListing.price} CHZ</button>`
-            : `<button onclick="openSellModal(${scored.tid}, ${pos}, ${scored.weight}, ${scored.rarity})" class="btn-card-action" style="background:rgba(239,68,68,0.1); border-color:rgba(239,68,68,0.3); color:#ef4444;">SELL CARD</button>`;
+            ? `<button onclick="cancelMarketListing(${activeListing.listingId})" class="btn-card-action slot-market-action sell-visible" style="background:rgba(239,68,68,0.16); border-color:rgba(239,68,68,0.46); color:#ef4444;"><span>CANCEL LISTING</span><b>${activeListing.price} CHZ</b><small>ACTIVE SALE</small></button>`
+            : `<button onclick="openSellModal(${scored.tid}, ${pos}, ${scored.weight}, ${scored.rarity})" class="btn-card-action slot-market-action sell-visible" style="background:rgba(239,68,68,0.1); border-color:rgba(239,68,68,0.3); color:#ef4444;"><span>SELL CARD</span><b>${scored.weight} PTS</b><small>SET PRICE</small></button>`;
         }
-        const floorNote = floor ? `<div class="card-hover-note">FLOOR ${floor.price} CHZ</div>` : '';
+        const floorNote = floor ? `<div class="card-hover-note">LOWEST MARKET: ${floor.weight || '?'} PTS · ${floor.price} CHZ</div>` : '';
         sheetActionsHtml = `${floorNote}${actionHtml}${sellBtnHtml}`;
-        const hoverHtml = sheetActionsHtml ? `<div class="card-hover-actions">${sheetActionsHtml}</div>` : '';
+        const visibleActionsHtml = sheetActionsHtml ? `<div class="slot-market-actions">${sheetActionsHtml}</div>` : '';
 
         card.innerHTML = `
           <div class="pos-card-top">
@@ -5791,16 +6044,19 @@ function renderPitch() {
           </div>
           <div>
             <div class="pos-weight ${scored.rarity === 3 ? 'gold' : ''}">${scored.weight}</div>
-            <div class="pos-rarity" style="color:${rarColor}">${['Common','Rare','Epic','Legendary'][scored.rarity]}</div>
+            <div class="pos-rarity rarity-${scored.rarity}" style="color:${rarColor}">${rarityNames[scored.rarity]}</div>
           </div>
-          ${hoverHtml}
+          ${visibleActionsHtml}
         `;
       } else {
         card.className = 'pos-card empty';
         let actionHtml = '';
         // Używamy najtańszej figurki (floor) do bezpośredniego zakupu dla pustego slotu (bez zbędnego floor textu)
         if (floor) {
-          actionHtml = `<button onclick="buyFromMarket(${floor.listingId}, '${floor.price}')" class="btn-card-action">BUY<br>${floor.price} CHZ</button>`;
+          const floorRarity = Number.isFinite(Number(floor.rarity)) ? Number(floor.rarity) : 0;
+          const floorWeight = floor.weight || '?';
+          const floorColor = rarityColors[floorRarity] || '#ffc940';
+          actionHtml = `<button onclick="buyFromMarket(${floor.listingId}, '${floor.price}')" class="btn-card-action slot-market-action floor-buy"><span>BUY LOWEST</span><b style="color:${floorColor}">${floorWeight} PTS</b><small>${floor.price} CHZ · ${rarityNames[floorRarity] || 'Card'}</small></button>`;
         } else {
           actionHtml = `<div class="card-hover-note" style="color:#5a6a7a;">NO LISTINGS</div>`;
         }
@@ -5815,12 +6071,13 @@ function renderPitch() {
             <div class="pos-weight empty">&mdash;</div>
             <div class="pos-rarity" style="color:#5a6a7a;">EMPTY</div>
           </div>
-          <div class="card-hover-actions">${actionHtml}</div>
+          <div class="slot-market-actions">${actionHtml}</div>
         `;
       }
       if (sheetActionsHtml) {
         card.classList.add('has-actions');
         card.addEventListener('click', (event) => {
+          if (event.target.closest('button,a,input')) return;
           if (!isMobileActionSheetMode()) return;
           event.preventDefault();
           event.stopPropagation();
@@ -5868,7 +6125,7 @@ function renderLeaderboard(){
       const prizeDisplay = prizeAmount > 0 ? `<span class="lb-prize">${prizeAmount.toLocaleString()} CHZ</span>` : '<span class="lb-prize none">NO PRIZE</span>';
 
       return `
-        <div class="lb-row ${isMe ? 'me' : ''} ${prizeAmount > 0 ? 'prize-row' : ''}">
+        <div class="lb-row global-row ${isMe ? 'me' : ''} ${prizeAmount > 0 ? 'prize-row' : ''}">
           <div class="lb-pos ${posClass}">${medal || '#' + rank}</div>
           <div class="lb-addr">${player.wallet.slice(0,6)}…${player.wallet.slice(-4)} ${isMe ? '<span class="lb-you">YOU</span>' : ''}</div>
           <div class="lb-completion">${player.cards || 0} CARDS</div>
@@ -5931,7 +6188,7 @@ function renderLeaderboard(){
       const medal = rank === 1 ? '👑' : '';
 
       return `
-        <div class="lb-row ${isMe ? 'me' : ''}">
+        <div class="lb-row local-row ${isMe ? 'me' : ''}">
           <div class="lb-pos ${posClass}">${medal || '#' + rank}</div>
           <div class="lb-addr">${player.wallet.slice(0,6)}…${player.wallet.slice(-4)} ${isMe ? '<span class="lb-you">YOU</span>' : ''}</div>
           <div class="lb-completion">Completed: ${player.completed}/11</div>
