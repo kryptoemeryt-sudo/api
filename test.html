@@ -1999,6 +1999,166 @@ body.game-mode .lb-section{
     height:48px!important;
   }
 }
+
+/* Host skin polish pass */
+.hero{
+  align-items:start!important;
+  grid-template-columns:minmax(360px,.86fr) minmax(500px,1.36fr) minmax(300px,.72fr)!important;
+}
+.hero-main{
+  min-height:360px!important;
+  display:flex!important;
+  flex-direction:column!important;
+  justify-content:center!important;
+  position:relative!important;
+  background:
+    linear-gradient(180deg,rgba(17,25,35,.86),rgba(8,12,17,.96)),
+    repeating-linear-gradient(90deg,rgba(0,255,135,.045) 0 1px,transparent 1px 46px)!important;
+}
+.hero-main::after{
+  content:""!important;
+  position:absolute!important;
+  left:18px!important;
+  right:18px!important;
+  bottom:18px!important;
+  height:1px!important;
+  background:linear-gradient(90deg,transparent,rgba(0,255,135,.42),rgba(255,201,64,.38),transparent)!important;
+  opacity:.9!important;
+}
+.badge{
+  width:max-content!important;
+  max-width:100%!important;
+}
+.trophy{display:none!important}
+.hero-title{
+  font-size:clamp(42px,5.2vw,74px)!important;
+  max-width:380px!important;
+  text-shadow:0 10px 28px rgba(0,0,0,.42)!important;
+}
+.hero-sub{
+  max-width:400px!important;
+  font-size:20px!important;
+}
+.hero-flow{
+  display:grid!important;
+  grid-template-rows:auto auto auto!important;
+  gap:10px!important;
+}
+.quest-flow{
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  margin:0!important;
+}
+.flow-card{
+  min-height:112px!important;
+  display:flex!important;
+  flex-direction:column!important;
+  justify-content:flex-start!important;
+}
+.flow-title{
+  margin:4px 0 8px!important;
+  font-size:16px!important;
+  line-height:1!important;
+}
+.flow-text{
+  font-size:16px!important;
+  line-height:1.16!important;
+}
+.hero-actions{
+  margin:0!important;
+}
+.pricing-schedule{
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  margin:0!important;
+}
+.schedule-item{
+  min-width:0!important;
+  border:1px solid rgba(255,255,255,.07)!important;
+  background:rgba(255,255,255,.028)!important;
+}
+.schedule-item.active{
+  border-color:rgba(0,255,135,.8)!important;
+  background:linear-gradient(180deg,rgba(0,255,135,.15),rgba(8,12,17,.88))!important;
+}
+.hero-side .stats-container{
+  display:grid!important;
+  grid-template-columns:1fr!important;
+  gap:10px!important;
+}
+.hero-side .stat-card{
+  min-height:106px!important;
+  display:flex!important;
+  flex-direction:column!important;
+  justify-content:center!important;
+}
+.hero-side .stat-val{
+  font-size:29px!important;
+}
+.countdown-wrap{
+  margin-top:0!important;
+  border-color:rgba(0,255,135,.28)!important;
+  background:linear-gradient(180deg,rgba(17,25,35,.86),rgba(8,12,17,.95))!important;
+}
+.countdown-timer{
+  justify-content:center!important;
+}
+.countdown-num{
+  font-size:28px!important;
+  min-width:58px!important;
+}
+.connect-prompt{
+  margin-top:18px!important;
+}
+@media(max-width:1180px){
+  .hero{grid-template-columns:1fr!important}
+  .hero-main{min-height:280px!important}
+  .hero-title{max-width:none!important}
+  .hero-sub{max-width:620px!important}
+  .hero-side .stats-container{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+  .hero-side .stat-card{min-height:92px!important}
+}
+@media(max-width:700px){
+  .hero-main{
+    min-height:220px!important;
+    justify-content:flex-start!important;
+  }
+  .hero-title{
+    font-size:clamp(38px,12vw,54px)!important;
+    max-width:340px!important;
+  }
+  .hero-sub{
+    font-size:16px!important;
+    max-width:none!important;
+  }
+  .quest-flow{
+    grid-template-columns:1fr!important;
+  }
+  .flow-card{
+    min-height:0!important;
+    padding:10px!important;
+  }
+  .flow-text{
+    font-size:14px!important;
+  }
+  .pricing-schedule{
+    display:grid!important;
+    grid-template-columns:repeat(3,minmax(150px,1fr))!important;
+  }
+  .hero-side .stats-container{
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  }
+  .hero-side .stat-card{
+    min-height:88px!important;
+    padding:10px!important;
+  }
+  .hero-side .stat-val{
+    font-size:21px!important;
+  }
+  .countdown-num{
+    min-width:36px!important;
+    font-size:22px!important;
+  }
+}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
