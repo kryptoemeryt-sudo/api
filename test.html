@@ -2666,6 +2666,92 @@ body.game-mode .country-card-name{
     display:none!important;
   }
 }
+
+/* Hard fix: country cards must never overlap */
+body.game-mode .country-grid{
+  grid-template-columns:repeat(auto-fill,minmax(158px,1fr))!important;
+  gap:8px!important;
+}
+body.game-mode .country-card{
+  min-height:92px!important;
+  display:grid!important;
+  grid-template-columns:1fr!important;
+  grid-template-rows:auto auto!important;
+  align-content:space-between!important;
+  gap:8px!important;
+  padding:9px!important;
+  overflow:hidden!important;
+}
+body.game-mode .country-card-main{
+  width:100%!important;
+  min-width:0!important;
+  display:grid!important;
+  grid-template-columns:42px minmax(0,1fr)!important;
+  align-items:center!important;
+  gap:8px!important;
+  text-align:left!important;
+}
+body.game-mode .country-card-flag{
+  width:42px!important;
+  min-width:42px!important;
+  height:28px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:flex-start!important;
+  overflow:hidden!important;
+}
+body.game-mode .country-card .flag-img{
+  width:40px!important;
+  height:27px!important;
+  display:block!important;
+}
+body.game-mode .country-card-name{
+  display:block!important;
+  min-width:0!important;
+  max-width:100%!important;
+  font-size:12px!important;
+  line-height:1.05!important;
+  white-space:nowrap!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+  text-align:left!important;
+}
+body.game-mode .country-card-stats{
+  width:100%!important;
+  min-width:0!important;
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) auto!important;
+  align-items:end!important;
+  justify-items:stretch!important;
+  gap:8px!important;
+}
+body.game-mode .country-card-score{
+  min-width:0!important;
+  font-size:16px!important;
+  line-height:1!important;
+  text-align:left!important;
+  white-space:nowrap!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+}
+body.game-mode .country-card-completion{
+  min-width:28px!important;
+  font-size:9px!important;
+  line-height:1!important;
+  text-align:right!important;
+  white-space:nowrap!important;
+}
+@media(min-width:901px){
+  body.game-mode .country-grid{
+    grid-template-columns:repeat(auto-fill,minmax(158px,1fr))!important;
+    grid-auto-rows:minmax(92px,auto)!important;
+  }
+}
+@media(max-width:900px){
+  body.game-mode .country-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  }
+}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
