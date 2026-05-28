@@ -2752,6 +2752,138 @@ body.game-mode .country-card-completion{
     grid-template-columns:repeat(2,minmax(0,1fr))!important;
   }
 }
+
+/* Desktop game readability scale */
+@media(min-width:901px){
+  body.game-mode #statsRow{
+    gap:10px!important;
+  }
+  body.game-mode #statsRow .stat-card{
+    min-height:82px!important;
+    padding:13px 16px!important;
+  }
+  body.game-mode #statsRow .stat-val,
+  body.game-mode #statsRow #myEstPayout{
+    font-size:31px!important;
+    line-height:1!important;
+  }
+  body.game-mode #statsRow .stat-lbl{
+    font-size:11px!important;
+    letter-spacing:1.1px!important;
+    line-height:1.05!important;
+  }
+  body.game-mode .dashboard-prize-strip{
+    min-height:46px!important;
+    padding:10px 14px!important;
+  }
+  body.game-mode .dash-prize-title{
+    font-size:15px!important;
+    letter-spacing:1.3px!important;
+  }
+  body.game-mode .dash-prize-value{
+    font-size:29px!important;
+  }
+  body.game-mode .dash-deadline{
+    font-size:15px!important;
+  }
+  body.game-mode .pitch-container{
+    padding:16px!important;
+  }
+  body.game-mode .pitch-title-row{
+    margin-bottom:13px!important;
+    min-height:46px!important;
+  }
+  body.game-mode .pitch-title,
+  body.game-mode #selectedCountryTitle{
+    font-size:18px!important;
+    letter-spacing:1.4px!important;
+  }
+  body.game-mode .completion-label{
+    font-size:14px!important;
+    letter-spacing:1.4px!important;
+  }
+  body.game-mode .dash-mint-btn{
+    min-width:138px!important;
+    min-height:46px!important;
+    font-size:18px!important;
+  }
+  body.game-mode .pitch-wrap{
+    padding:14px!important;
+  }
+  body.game-mode .formation.album-horizontal .row-single{
+    gap:9px!important;
+  }
+  body.game-mode .formation.album-horizontal .row-single .pos-card,
+  body.game-mode .pos-card{
+    min-height:128px!important;
+    padding:9px 7px!important;
+  }
+  body.game-mode .pos-card-top{
+    min-height:72px!important;
+  }
+  body.game-mode .figure-mini{
+    width:54px!important;
+    height:54px!important;
+  }
+  body.game-mode .pos-name{
+    font-size:11px!important;
+    letter-spacing:.7px!important;
+  }
+  body.game-mode .pos-weight{
+    font-size:28px!important;
+    line-height:1!important;
+  }
+  body.game-mode .pos-rarity{
+    font-size:9px!important;
+  }
+  body.game-mode .country-section{
+    padding:14px!important;
+  }
+  body.game-mode .nation-selector-title{
+    font-size:15px!important;
+    letter-spacing:1px!important;
+    margin-bottom:11px!important;
+  }
+  body.game-mode .tab-btn{
+    min-height:36px!important;
+    font-size:10px!important;
+  }
+  body.game-mode .album-count-label{
+    font-size:13px!important;
+  }
+  body.game-mode .country-grid{
+    grid-template-columns:repeat(auto-fill,minmax(166px,1fr))!important;
+    grid-auto-rows:minmax(104px,auto)!important;
+    gap:9px!important;
+  }
+  body.game-mode .country-card{
+    min-height:104px!important;
+    padding:11px!important;
+  }
+  body.game-mode .country-card-main{
+    grid-template-columns:48px minmax(0,1fr)!important;
+    gap:10px!important;
+  }
+  body.game-mode .country-card-flag{
+    width:48px!important;
+    min-width:48px!important;
+    height:32px!important;
+  }
+  body.game-mode .country-card .flag-img{
+    width:46px!important;
+    height:31px!important;
+  }
+  body.game-mode .country-card-name{
+    font-size:14px!important;
+    line-height:1.08!important;
+  }
+  body.game-mode .country-card-score{
+    font-size:20px!important;
+  }
+  body.game-mode .country-card-completion{
+    font-size:10px!important;
+  }
+}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
