@@ -3901,7 +3901,7 @@ body.game-mode .pos-card{
   gap:5px!important;
   justify-content:stretch!important;
   align-content:stretch!important;
-  overflow:hidden!important;
+  overflow:visible!important;
   border-radius:8px!important;
   background:
     linear-gradient(180deg,rgba(18,25,34,.96),rgba(7,10,15,.98)),
@@ -3944,8 +3944,8 @@ body.game-mode .slot-market-hint{
 }
 body.game-mode .slot-market-hint span{
   color:#00ff87!important;
-  font-family:'Share Tech Mono',monospace!important;
-  font-size:7px!important;
+  font-family:'Black Ops One',sans-serif!important;
+  font-size:9px!important;
   line-height:1!important;
   letter-spacing:.7px!important;
 }
@@ -3956,6 +3956,46 @@ body.game-mode .slot-market-hint b{
   font-size:9px!important;
   line-height:1!important;
   white-space:nowrap!important;
+}
+body.game-mode .pos-card.owned::after{
+  content:"✓"!important;
+  position:absolute!important;
+  top:5px!important;
+  right:5px!important;
+  z-index:12!important;
+  width:18px!important;
+  height:18px!important;
+  display:grid!important;
+  place-items:center!important;
+  border-radius:50%!important;
+  border:1px solid rgba(0,255,135,.78)!important;
+  background:rgba(5,12,10,.96)!important;
+  color:#00ff87!important;
+  font-family:'Black Ops One',sans-serif!important;
+  font-size:11px!important;
+  line-height:1!important;
+  box-shadow:0 0 12px rgba(0,255,135,.28)!important;
+}
+body.game-mode .pos-card.just-scored{
+  z-index:15!important;
+}
+body.game-mode .pos-card.just-scored::before{
+  content:"NEW"!important;
+  position:absolute!important;
+  top:5px!important;
+  left:5px!important;
+  right:auto!important;
+  z-index:13!important;
+  padding:4px 6px!important;
+  border-radius:5px!important;
+  border:1px solid rgba(0,0,0,.35)!important;
+  background:#00ff87!important;
+  color:#00120a!important;
+  font-family:'Black Ops One',sans-serif!important;
+  font-size:8px!important;
+  line-height:1!important;
+  letter-spacing:.6px!important;
+  box-shadow:0 0 12px rgba(0,255,135,.36)!important;
 }
 body.game-mode .pos-card:has(.slot-market-hint) > div:not(.pos-card-top):not(.card-hover-actions):not(.slot-market-hint){
   padding-bottom:24px!important;
@@ -4093,7 +4133,7 @@ body.game-mode .slot-hover-sell{
     padding:3px 5px!important;
   }
   body.game-mode .slot-market-hint span{
-    font-size:6px!important;
+    font-size:8px!important;
   }
   body.game-mode .slot-market-hint b{
     font-size:8px!important;
@@ -6476,7 +6516,7 @@ function renderPitch() {
       const floorTeam = marketFloorByTeamPosition[selectedTeamId] || {};
       const floor = floorTeam[pos];
       const listings = getMarketListingsForSlot(selectedTeamId, pos);
-      const marketHint = listings.length ? `<div class="slot-market-hint"><span>MKT</span><b>${listings[0].price} CHZ</b></div>` : '';
+      const marketHint = listings.length ? `<div class="slot-market-hint"><span>MARKET</span><b>${listings[0].price} CHZ</b></div>` : '';
       let sheetTitle = `${selectedTeam.name} ${POSITION_SHORT[pos]}`;
       let sheetActionsHtml = '';
 
