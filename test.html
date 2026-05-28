@@ -2159,6 +2159,262 @@ body.game-mode .lb-section{
     font-size:22px!important;
   }
 }
+
+/* Correction pass: focus on playable album view */
+.topnav,
+.page{
+  width:min(1560px,calc(100% - 24px))!important;
+  max-width:1560px!important;
+  margin-left:auto!important;
+  margin-right:auto!important;
+}
+.topnav{
+  display:grid!important;
+  grid-template-columns:auto minmax(220px,1fr) auto!important;
+  align-items:center!important;
+  gap:12px!important;
+}
+.nav-countdown{
+  justify-self:center!important;
+  color:#ffc940!important;
+  font-family:'Black Ops One',sans-serif!important;
+  font-size:13px!important;
+  letter-spacing:1.2px!important;
+}
+.nav-countdown span{
+  display:inline!important;
+  margin-right:8px!important;
+  color:#dde4f0!important;
+  font-size:10px!important;
+}
+.hero{
+  align-items:stretch!important;
+  grid-template-columns:minmax(320px,.82fr) minmax(480px,1.28fr) minmax(280px,.72fr)!important;
+}
+.hero-main{
+  min-height:0!important;
+  justify-content:flex-start!important;
+}
+.hero-title{
+  font-size:clamp(38px,4.7vw,66px)!important;
+  max-width:360px!important;
+}
+.hero-sub{font-size:18px!important}
+.hero-side .stat-card{min-height:92px!important}
+.connect-prompt{margin-top:10px!important}
+.btn-mint-hero,
+.dash-mint-btn{
+  background:linear-gradient(135deg,#00ff87 0%,#12f3a0 45%,#ffc940 100%)!important;
+  color:#03100a!important;
+  border-color:rgba(255,201,64,.72)!important;
+  box-shadow:0 0 22px rgba(0,255,135,.24),0 0 16px rgba(255,201,64,.16)!important;
+  font-size:15px!important;
+  font-weight:900!important;
+}
+.btn-outline-hero{
+  background:rgba(255,255,255,.045)!important;
+  color:#dde4f0!important;
+  border-color:var(--bk-line)!important;
+  box-shadow:none!important;
+}
+.dash-mint-btn{
+  min-height:38px!important;
+  padding:9px 18px!important;
+  letter-spacing:1.4px!important;
+}
+body.game-mode{
+  height:auto!important;
+  min-height:100vh!important;
+  overflow:auto!important;
+  display:block!important;
+}
+body.game-mode .topnav{
+  width:min(1560px,calc(100% - 24px))!important;
+  display:grid!important;
+  grid-template-columns:auto minmax(220px,1fr) auto!important;
+  height:58px!important;
+  margin:0 auto!important;
+}
+body.game-mode .page{
+  width:min(1560px,calc(100% - 24px))!important;
+  max-width:1560px!important;
+  height:auto!important;
+  min-height:0!important;
+  padding:10px 0 18px!important;
+  gap:10px!important;
+  overflow:visible!important;
+  display:grid!important;
+  grid-template-rows:auto auto auto auto!important;
+}
+body.game-mode #gameSection{display:block!important}
+body.game-mode .game-grid{
+  grid-row:auto!important;
+  display:grid!important;
+  grid-template-columns:minmax(500px,.92fr) minmax(0,1.08fr)!important;
+  grid-template-rows:auto!important;
+  gap:10px!important;
+  align-items:start!important;
+  overflow:visible!important;
+}
+body.game-mode .country-section{
+  grid-column:1!important;
+  grid-row:auto!important;
+  order:0!important;
+  overflow:hidden!important;
+}
+body.game-mode .pitch-container{
+  grid-column:2!important;
+  grid-row:auto!important;
+  order:0!important;
+}
+body.game-mode .lb-section{
+  grid-row:auto!important;
+  margin-top:10px!important;
+  max-height:none!important;
+  overflow:visible!important;
+}
+body.game-mode .country-grid{
+  display:grid!important;
+  grid-template-columns:repeat(auto-fill,minmax(150px,1fr))!important;
+  grid-auto-rows:minmax(92px,auto)!important;
+  gap:8px!important;
+  max-height:540px!important;
+  overflow:auto!important;
+  padding-right:5px!important;
+}
+body.game-mode .country-card{
+  min-height:92px!important;
+  height:auto!important;
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) auto!important;
+  gap:8px!important;
+  align-items:center!important;
+  text-align:left!important;
+  justify-content:stretch!important;
+  padding:10px!important;
+  border-radius:8px!important;
+  background:linear-gradient(180deg,rgba(17,25,35,.94),rgba(8,12,17,.97))!important;
+}
+body.game-mode .country-card-main{
+  display:grid!important;
+  grid-template-columns:44px minmax(0,1fr)!important;
+  align-items:center!important;
+  gap:8px!important;
+  min-width:0!important;
+  text-align:left!important;
+}
+body.game-mode .country-card-stats{
+  display:grid!important;
+  justify-items:end!important;
+  align-content:center!important;
+  gap:4px!important;
+  min-width:44px!important;
+}
+body.game-mode .country-card-flag{
+  width:44px!important;
+  margin:0!important;
+  justify-content:flex-start!important;
+}
+body.game-mode .country-card .flag-img{
+  width:40px!important;
+  height:27px!important;
+}
+body.game-mode .country-card-name{
+  font-size:14px!important;
+  text-align:left!important;
+  line-height:1!important;
+  margin:0!important;
+}
+body.game-mode .country-card-score{
+  font-size:18px!important;
+  line-height:1!important;
+  margin:0!important;
+}
+body.game-mode .country-card-completion{
+  font-size:10px!important;
+  line-height:1!important;
+}
+body.game-mode .filter-tabs{
+  display:grid!important;
+  grid-template-columns:repeat(7,minmax(0,1fr))!important;
+  gap:5px!important;
+  margin-bottom:8px!important;
+}
+body.game-mode .tab-btn{
+  min-height:30px!important;
+  font-size:8px!important;
+  padding:6px 4px!important;
+}
+@media(max-width:900px){
+  .topnav,
+  .page,
+  body.game-mode .topnav,
+  body.game-mode .page{
+    width:calc(100% - 14px)!important;
+  }
+  .topnav,
+  body.game-mode .topnav{
+    grid-template-columns:minmax(90px,auto) minmax(90px,1fr) minmax(72px,auto)!important;
+    height:48px!important;
+    padding:7px 8px!important;
+  }
+  .nav-countdown{
+    font-size:9px!important;
+    letter-spacing:.5px!important;
+  }
+  .nav-countdown span{
+    display:inline!important;
+    margin-right:4px!important;
+    font-size:7px!important;
+  }
+  .hero{
+    grid-template-columns:1fr!important;
+  }
+  body.game-mode .game-grid{
+    grid-template-columns:1fr!important;
+  }
+  body.game-mode .country-section,
+  body.game-mode .pitch-container{
+    grid-column:1!important;
+  }
+  body.game-mode .country-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    max-height:none!important;
+  }
+  body.game-mode .country-card{
+    min-height:88px!important;
+    padding:8px!important;
+  }
+  body.game-mode .country-card-main{
+    grid-template-columns:34px minmax(0,1fr)!important;
+    gap:6px!important;
+  }
+  body.game-mode .country-card .flag-img{
+    width:32px!important;
+    height:22px!important;
+  }
+  body.game-mode .country-card-name{font-size:11px!important}
+  body.game-mode .country-card-score{font-size:15px!important}
+  body.game-mode .country-card-completion{font-size:8px!important}
+}
+@media(max-width:560px){
+  .topnav,
+  body.game-mode .topnav{
+    grid-template-columns:minmax(128px,1fr) 96px 64px!important;
+    gap:5px!important;
+  }
+  .topnav .nav-countdown{
+    display:none!important;
+  }
+  .topnav .nav-countdown span{display:none!important}
+  .topnav .btn-connect,
+  .topnav #connectBtn{
+    position:static!important;
+    min-width:62px!important;
+    padding:6px 5px!important;
+    font-size:7px!important;
+  }
+}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
