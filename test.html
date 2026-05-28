@@ -3730,6 +3730,157 @@ body.game-mode .lb-row.local-row .lb-score{
     font-size:10px!important;
   }
 }
+
+/* Restore slot actions: PC hover card, mobile action sheet */
+body.game-mode .slot-market-badge{
+  position:absolute!important;
+  top:6px!important;
+  right:6px!important;
+  z-index:4!important;
+  min-width:30px!important;
+  padding:3px 5px!important;
+  border:1px solid rgba(0,255,135,.55)!important;
+  border-radius:5px!important;
+  background:rgba(0,255,135,.14)!important;
+  color:#00ff87!important;
+  font-family:'Black Ops One',sans-serif!important;
+  font-size:7px!important;
+  line-height:1!important;
+  letter-spacing:.7px!important;
+  text-align:center!important;
+}
+body.game-mode .card-hover-actions{
+  inset:7px!important;
+  z-index:9!important;
+  display:grid!important;
+  align-content:center!important;
+  gap:6px!important;
+  padding:7px!important;
+  border-radius:7px!important;
+  background:linear-gradient(180deg,rgba(6,8,10,.96),rgba(9,14,20,.98))!important;
+  border:1px solid rgba(0,255,135,.34)!important;
+  box-shadow:0 0 18px rgba(0,255,135,.13), inset 0 0 18px rgba(0,255,135,.07)!important;
+  overflow:auto!important;
+}
+body.game-mode .card-hover-actions .btn-card-action,
+body.game-mode .slot-action-body .btn-card-action.market-offer-btn,
+body.game-mode .slot-action-body .btn-card-action.sell-offer-btn{
+  display:grid!important;
+  grid-template-rows:auto auto auto!important;
+  place-items:center!important;
+  gap:3px!important;
+  min-height:44px!important;
+  margin:0!important;
+  padding:6px 5px!important;
+  border-radius:7px!important;
+  font-size:8px!important;
+  line-height:1!important;
+}
+body.game-mode .card-hover-actions .btn-card-action span,
+body.game-mode .slot-action-body .btn-card-action span{
+  font-size:8px!important;
+  letter-spacing:.6px!important;
+}
+body.game-mode .card-hover-actions .btn-card-action b,
+body.game-mode .slot-action-body .btn-card-action b{
+  font-family:'Black Ops One',sans-serif!important;
+  font-size:15px!important;
+  line-height:1!important;
+}
+body.game-mode .card-hover-actions .btn-card-action small,
+body.game-mode .slot-action-body .btn-card-action small{
+  font-family:'Share Tech Mono',monospace!important;
+  font-size:8px!important;
+  color:#d7e2f0!important;
+  line-height:1!important;
+}
+body.game-mode .card-hover-actions .card-hover-note,
+body.game-mode .slot-action-body .card-hover-note{
+  display:grid!important;
+  place-items:center!important;
+  min-height:40px!important;
+  border:1px solid rgba(255,201,64,.28)!important;
+  background:rgba(255,201,64,.07)!important;
+  border-radius:7px!important;
+  padding:6px!important;
+  color:#ffc940!important;
+  font-family:'Black Ops One',sans-serif!important;
+  font-size:9px!important;
+  text-align:center!important;
+}
+body.game-mode .card-hover-actions .no-listing-note,
+body.game-mode .slot-action-body .no-listing-note{
+  color:#5a6a7a!important;
+  border-color:rgba(90,106,122,.28)!important;
+  background:rgba(90,106,122,.07)!important;
+}
+body.game-mode .slot-action-subtitle{
+  margin-top:3px!important;
+  color:#ef4444!important;
+  font-family:'Black Ops One',sans-serif!important;
+  font-size:11px!important;
+  letter-spacing:1px!important;
+  text-align:center!important;
+}
+body.game-mode .sell-offer-btn{
+  border-color:rgba(239,68,68,.42)!important;
+  background:rgba(239,68,68,.11)!important;
+  color:#ef4444!important;
+}
+@media(max-width:900px){
+  body.game-mode .nation-selector-title{
+    display:grid!important;
+    grid-template-columns:1fr auto!important;
+    grid-template-rows:auto auto!important;
+    align-items:center!important;
+    gap:8px!important;
+    overflow:hidden!important;
+  }
+  body.game-mode .nation-selector-title > span:first-child{
+    grid-column:1!important;
+    grid-row:1!important;
+  }
+  body.game-mode .nation-selector-title .album-title-tools{
+    grid-column:2!important;
+    grid-row:1!important;
+  }
+  body.game-mode .nation-selector-title .filter-tabs{
+    grid-column:1 / -1!important;
+    grid-row:2!important;
+    width:100%!important;
+    max-width:100%!important;
+    min-width:0!important;
+    display:flex!important;
+    flex-wrap:nowrap!important;
+    overflow-x:auto!important;
+    overflow-y:hidden!important;
+    justify-content:flex-start!important;
+    gap:6px!important;
+    padding-bottom:6px!important;
+    -webkit-overflow-scrolling:touch!important;
+    scrollbar-width:thin!important;
+  }
+  body.game-mode .nation-selector-title .filter-tabs .tab-btn{
+    flex:0 0 auto!important;
+    min-width:96px!important;
+    white-space:nowrap!important;
+  }
+  body.game-mode .pos-card .card-hover-actions{
+    display:none!important;
+  }
+  body.game-mode .slot-action-body{
+    max-height:62dvh!important;
+    overflow:auto!important;
+  }
+  body.game-mode .slot-action-body .btn-card-action.market-offer-btn,
+  body.game-mode .slot-action-body .btn-card-action.sell-offer-btn{
+    min-height:58px!important;
+    font-size:10px!important;
+  }
+  body.game-mode .slot-action-body .btn-card-action b{
+    font-size:18px!important;
+  }
+}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
@@ -4033,9 +4184,9 @@ body.game-mode .lb-row.local-row .lb-score{
     <div class="sell-price-box">
       <label class="sell-price-label">Set Listing Price (CHZ)</label>
       <div class="sell-stepper">
-        <button type="button" class="sell-step-btn" data-step="-1">-</button>
-        <input type="number" id="sellPriceInput" class="sell-price-input" step="1" min="1" placeholder="10">
-        <button type="button" class="sell-step-btn" data-step="1">+</button>
+        <button type="button" class="sell-step-btn" data-step="-5">-</button>
+        <input type="number" id="sellPriceInput" class="sell-price-input" step="5" min="5" placeholder="10">
+        <button type="button" class="sell-step-btn" data-step="5">+</button>
       </div>
     </div>
     <button class="btn-card-action upgrade sell-submit" id="btnSubmitSell" onclick="submitSellCard()">LIST CARD FOR SALE</button>
@@ -4962,6 +5113,7 @@ let lastSquadHighlight = null;
 window.dreamScores = {}; // wallet -> { teamId -> { position -> {weight, tid, rarity, dna} } }
 let marketByTeamPosition = {}; // teamId -> { position -> {listingId, price, weight, rarity} }
 let marketFloorByTeamPosition = {}; // teamId -> { position -> {listingId, price} }
+let marketListingsByTeamPosition = {}; // teamId -> { position -> [active listings sorted by price] }
 let activeListingsByToken = {}; // tokenId -> { listingId, seller, price, priceWei }
 let activeListingsById = {}; // listingId -> { tokenId, seller, price, priceWei, teamId, position, weight, rarity, dna }
 let currentMintPrice = ethers.parseEther("10"); 
@@ -5243,7 +5395,7 @@ function changeSellPrice(delta) {
   const input = document.getElementById('sellPriceInput');
   if (!input) return;
   const current = Math.max(1, Math.round(parseFloat(input.value || '1') || 1));
-  input.value = Math.max(1, current + delta);
+  input.value = Math.max(5, current + delta);
 }
 
 function stopSellStepHold() {
@@ -5741,6 +5893,7 @@ async function loadData(options = {}){
 
   marketByTeamPosition = {};
   marketFloorByTeamPosition = {};
+  marketListingsByTeamPosition = {};
   activeListingsByToken = {};
   activeListingsById = {};
   try{
@@ -5789,6 +5942,10 @@ async function loadData(options = {}){
           marketByTeamPosition[tid][pos] = {listingId: i, price, priceWei, weight: fig.weight, rarity: fig.rarity};
         }
 
+        if(!marketListingsByTeamPosition[tid]) marketListingsByTeamPosition[tid] = {};
+        if(!marketListingsByTeamPosition[tid][pos]) marketListingsByTeamPosition[tid][pos] = [];
+        marketListingsByTeamPosition[tid][pos].push(activeListingsById[i]);
+
         // Find cheapest marketplace floor card
         if(!marketFloorByTeamPosition[tid]) marketFloorByTeamPosition[tid] = {};
         const curFloor = marketFloorByTeamPosition[tid][pos];
@@ -5805,6 +5962,9 @@ async function loadData(options = {}){
         }
       }catch(e){}
     }
+    Object.values(marketListingsByTeamPosition).forEach(positionMap => {
+      Object.values(positionMap).forEach(listings => listings.sort((a,b) => a.price - b.price || b.weight - a.weight));
+    });
   }catch(e){ console.warn('Market scan error:', e); }
 
   // Independent sponsored pool presentation (English local)
@@ -5930,6 +6090,67 @@ function selectCountry(teamId) {
   renderLeaderboard();
 }
 
+function getMarketListingsForSlot(teamId, pos) {
+  return ((marketListingsByTeamPosition[teamId] || {})[pos] || [])
+    .slice()
+    .sort((a,b) => a.price - b.price || b.weight - a.weight);
+}
+
+function getOwnedCardsForSlot(teamId, pos) {
+  const myAddr = address?.toLowerCase();
+  if (!myAddr) return [];
+  return Object.entries(ownerMap || {})
+    .map(([tokenId, card]) => ({tokenId:Number(tokenId), ...card}))
+    .filter(card => card.owner === myAddr && Number(card.teamId) === Number(teamId) && Number(card.position) === Number(pos))
+    .sort((a,b) => b.weight - a.weight || a.tokenId - b.tokenId);
+}
+
+function renderMarketOfferButtons(listings, currentWeight = 0) {
+  const rarityNames = ['Common','Rare','Epic','Legendary'];
+  const rarityColors = ['#9aa4b2','#3b82f6','#c084fc','#ffc940'];
+  if (!listings.length) return '<div class="card-hover-note no-listing-note">NO LISTINGS</div>';
+  return listings.slice(0, 6).map(item => {
+    const isUpgrade = Number(item.weight || 0) > Number(currentWeight || 0);
+    const label = isUpgrade ? `BUY UPGRADE +${Number(item.weight) - Number(currentWeight || 0)}` : 'BUY CARD';
+    const rarity = Number.isFinite(Number(item.rarity)) ? Number(item.rarity) : 0;
+    const color = rarityColors[rarity] || '#ffc940';
+    return `<button onclick="buyFromMarket(${item.listingId}, '${item.price}')" class="btn-card-action ${isUpgrade ? 'upgrade' : ''} market-offer-btn">
+      <span>${label}</span>
+      <b style="color:${color}">${item.weight || '?'} PTS</b>
+      <small>${item.price} CHZ · ${rarityNames[rarity] || 'Card'}</small>
+    </button>`;
+  }).join('');
+}
+
+function renderSellActionButtons(cards, scoredTokenId) {
+  const rarityNames = ['Common','Rare','Epic','Legendary'];
+  const rarityColors = ['#9aa4b2','#3b82f6','#c084fc','#ffc940'];
+  if (!cards.length) return '';
+  const duplicates = cards.filter(card => Number(card.tokenId) !== Number(scoredTokenId));
+  if (!duplicates.length) {
+    const card = cards[0];
+    const activeListing = activeListingsByToken[card.tokenId];
+    if (activeListing && activeListing.seller === address?.toLowerCase()) {
+      return `<button onclick="cancelMarketListing(${activeListing.listingId})" class="btn-card-action sell-offer-btn">CANCEL LISTING<br>${activeListing.price} CHZ</button>`;
+    }
+    return `<button onclick="openSellModal(${card.tokenId}, ${card.position}, ${card.weight}, ${card.rarity})" class="btn-card-action sell-offer-btn">SELL CARD</button>`;
+  }
+  const buttons = duplicates.slice(0, 5).map(card => {
+    const activeListing = activeListingsByToken[card.tokenId];
+    if (activeListing && activeListing.seller === address?.toLowerCase()) {
+      return `<button onclick="cancelMarketListing(${activeListing.listingId})" class="btn-card-action sell-offer-btn">CANCEL #${card.tokenId}<br>${activeListing.price} CHZ</button>`;
+    }
+    const rarity = Number.isFinite(Number(card.rarity)) ? Number(card.rarity) : 0;
+    const color = rarityColors[rarity] || '#ef4444';
+    return `<button onclick="openSellModal(${card.tokenId}, ${card.position}, ${card.weight}, ${card.rarity})" class="btn-card-action sell-offer-btn">
+      <span>SELL DUPLICATE #${card.tokenId}</span>
+      <b style="color:${color}">${card.weight} PTS</b>
+      <small>${rarityNames[rarity] || 'Card'}</small>
+    </button>`;
+  }).join('');
+  return `<div class="slot-action-subtitle">SELL DUPLICATES</div>${buttons}`;
+}
+
 function renderCountryHub() {
   const grid = document.getElementById('countryGridContainer');
   grid.innerHTML = '';
@@ -6005,6 +6226,8 @@ function renderPitch() {
       
       const floorTeam = marketFloorByTeamPosition[selectedTeamId] || {};
       const floor = floorTeam[pos];
+      const listings = getMarketListingsForSlot(selectedTeamId, pos);
+      const marketBadge = listings.length ? '<div class="slot-market-badge">BUY</div>' : '';
       let sheetTitle = `${selectedTeam.name} ${POSITION_SHORT[pos]}`;
       let sheetActionsHtml = '';
 
@@ -6017,27 +6240,14 @@ function renderPitch() {
           && Date.now() - lastSquadHighlight.ts < 12000;
         if (isHighlighted) card.classList.add('just-scored');
         
-        let actionHtml = '';
-        if (mkt && mkt.weight > scored.weight) {
-          actionHtml = `<button onclick="buyFromMarket(${mkt.listingId}, '${mkt.price}')" class="btn-card-action upgrade slot-market-action"><span>BUY UPGRADE</span><b>${mkt.weight} PTS</b><small>${mkt.price} CHZ · +${mkt.weight - scored.weight}</small></button>`;
-        }
-
-        // Sell Button if user currently owns the scored card
-        let sellBtnHtml = '';
-        const currentOwnerInfo = ownerMap[scored.tid];
-        const currentlyOwnsScored = myAddr && currentOwnerInfo && currentOwnerInfo.owner === myAddr;
-        const activeListing = activeListingsByToken[scored.tid];
-        const listedByMe = myAddr && activeListing && activeListing.seller === myAddr;
-        if (currentlyOwnsScored) {
-          sellBtnHtml = listedByMe
-            ? `<button onclick="cancelMarketListing(${activeListing.listingId})" class="btn-card-action slot-market-action sell-visible" style="background:rgba(239,68,68,0.16); border-color:rgba(239,68,68,0.46); color:#ef4444;"><span>CANCEL LISTING</span><b>${activeListing.price} CHZ</b><small>ACTIVE SALE</small></button>`
-            : `<button onclick="openSellModal(${scored.tid}, ${pos}, ${scored.weight}, ${scored.rarity})" class="btn-card-action slot-market-action sell-visible" style="background:rgba(239,68,68,0.1); border-color:rgba(239,68,68,0.3); color:#ef4444;"><span>SELL CARD</span><b>${scored.weight} PTS</b><small>SET PRICE</small></button>`;
-        }
-        const floorNote = floor ? `<div class="card-hover-note">LOWEST MARKET: ${floor.weight || '?'} PTS · ${floor.price} CHZ</div>` : '';
-        sheetActionsHtml = `${floorNote}${actionHtml}${sellBtnHtml}`;
-        const visibleActionsHtml = sheetActionsHtml ? `<div class="slot-market-actions">${sheetActionsHtml}</div>` : '';
+        const ownedSlotCards = getOwnedCardsForSlot(selectedTeamId, pos);
+        const marketActionHtml = renderMarketOfferButtons(listings, scored.weight);
+        const sellActionHtml = renderSellActionButtons(ownedSlotCards, scored.tid);
+        sheetActionsHtml = `${marketActionHtml}${sellActionHtml}`;
+        const hoverHtml = sheetActionsHtml ? `<div class="card-hover-actions">${sheetActionsHtml}</div>` : '';
 
         card.innerHTML = `
+          ${marketBadge}
           <div class="pos-card-top">
             <div class="pos-name">${POSITION_SHORT[pos]}</div>
             <span class="figure-mini">${makeFigureSVG(scored.dna, 80)}</span>
@@ -6046,23 +6256,15 @@ function renderPitch() {
             <div class="pos-weight ${scored.rarity === 3 ? 'gold' : ''}">${scored.weight}</div>
             <div class="pos-rarity rarity-${scored.rarity}" style="color:${rarColor}">${rarityNames[scored.rarity]}</div>
           </div>
-          ${visibleActionsHtml}
+          ${hoverHtml}
         `;
       } else {
         card.className = 'pos-card empty';
-        let actionHtml = '';
-        // Używamy najtańszej figurki (floor) do bezpośredniego zakupu dla pustego slotu (bez zbędnego floor textu)
-        if (floor) {
-          const floorRarity = Number.isFinite(Number(floor.rarity)) ? Number(floor.rarity) : 0;
-          const floorWeight = floor.weight || '?';
-          const floorColor = rarityColors[floorRarity] || '#ffc940';
-          actionHtml = `<button onclick="buyFromMarket(${floor.listingId}, '${floor.price}')" class="btn-card-action slot-market-action floor-buy"><span>BUY LOWEST</span><b style="color:${floorColor}">${floorWeight} PTS</b><small>${floor.price} CHZ · ${rarityNames[floorRarity] || 'Card'}</small></button>`;
-        } else {
-          actionHtml = `<div class="card-hover-note" style="color:#5a6a7a;">NO LISTINGS</div>`;
-        }
+        const actionHtml = renderMarketOfferButtons(listings, 0);
         sheetActionsHtml = actionHtml;
 
         card.innerHTML = `
+          ${marketBadge}
           <div class="pos-card-top">
             <div class="pos-name" style="color:#5a6a7a;">${POSITION_SHORT[pos]}</div>
             <span class="pos-ball" style="opacity: 0.15">&#9917;</span>
@@ -6071,7 +6273,7 @@ function renderPitch() {
             <div class="pos-weight empty">&mdash;</div>
             <div class="pos-rarity" style="color:#5a6a7a;">EMPTY</div>
           </div>
-          <div class="slot-market-actions">${actionHtml}</div>
+          <div class="card-hover-actions">${actionHtml}</div>
         `;
       }
       if (sheetActionsHtml) {
