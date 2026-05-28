@@ -2501,6 +2501,72 @@ body.game-mode .tab-btn{
     margin-top:10px!important;
   }
 }
+
+/* Final alignment tweaks */
+body{
+  padding-top:0!important;
+  margin-top:0!important;
+}
+.topnav{
+  margin-top:0!important;
+}
+.topnav .nav-countdown{
+  font-size:14px!important;
+  line-height:1!important;
+}
+.topnav .nav-countdown span{
+  display:inline!important;
+  font-size:8px!important;
+  letter-spacing:.8px!important;
+  margin-right:7px!important;
+  color:#a8b6c8!important;
+}
+body.game-mode .country-card-name{
+  display:none!important;
+}
+body.game-mode .country-card-main{
+  grid-template-columns:auto!important;
+  justify-items:center!important;
+  text-align:center!important;
+}
+body.game-mode .country-card-flag{
+  width:auto!important;
+  justify-content:center!important;
+}
+body.game-mode .country-card .flag-img{
+  width:42px!important;
+  height:28px!important;
+}
+@media(min-width:901px){
+  body.game-mode .country-grid{
+    grid-template-columns:repeat(auto-fill,minmax(96px,1fr))!important;
+    grid-auto-rows:minmax(68px,auto)!important;
+    gap:7px!important;
+  }
+  body.game-mode .country-card{
+    min-height:68px!important;
+    grid-template-columns:1fr auto!important;
+    padding:7px 8px!important;
+  }
+  body.game-mode .country-card-main{
+    gap:0!important;
+  }
+  body.game-mode .country-card .flag-img{
+    width:38px!important;
+    height:25px!important;
+  }
+  body.game-mode .country-card-score{
+    font-size:15px!important;
+  }
+  body.game-mode .country-card-completion{
+    font-size:8px!important;
+  }
+}
+@media(max-width:560px){
+  .topnav .nav-countdown{
+    display:none!important;
+  }
+}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
