@@ -5634,12 +5634,15 @@ async function openSellModal(tokenId, pos, weight, rarity) {
   try {
     const rp = await getReadProvider();
     const rc = new ethers.Contract(CONTRACT_ADDRESS, [
-      "function ownerOf(uint256 tokenId) external view returns (address)"
+      "function balanceOf(address account,uint256 id) external view returns (uint256)"
     ], rp);
-    const realOwner = String(await rc.ownerOf(tokenId)).toLowerCase();
-    tokenOwnerVerificationCache[Number(tokenId)] = realOwner;
-    if (ownerMap[Number(tokenId)]) ownerMap[Number(tokenId)].owner = realOwner;
-    if (realOwner !== address.toLowerCase()) {
+    const myAddr = address.toLowerCase();
+    const zeroOwner = '0x0000000000000000000000000000000000000000';
+    const balance = await rc.balanceOf(address, tokenId);
+    const verifiedOwner = balance > 0n ? myAddr : zeroOwner;
+    tokenOwnerVerificationCache[Number(tokenId)] = verifiedOwner;
+    if (ownerMap[Number(tokenId)]) ownerMap[Number(tokenId)].owner = verifiedOwner;
+    if (verifiedOwner !== myAddr) {
       showToast('You no longer own this card. Score stays saved, but SELL is disabled.', true);
       renderPitch();
       return;
@@ -6142,15 +6145,18 @@ async function verifyVisibleSlotOwners(teamId, tokenIds = []) {
   try {
     const rp = await getReadProvider();
     const rc = new ethers.Contract(CONTRACT_ADDRESS, [
-      "function ownerOf(uint256 tokenId) external view returns (address)"
+      "function balanceOf(address account,uint256 id) external view returns (uint256)"
     ], rp);
     let changed = false;
+    const myAddr = address.toLowerCase();
+    const zeroOwner = '0x0000000000000000000000000000000000000000';
     for (const tokenId of missing) {
       try {
-        const owner = String(await rc.ownerOf(tokenId)).toLowerCase();
-        tokenOwnerVerificationCache[tokenId] = owner;
-        if (ownerMap[tokenId] && ownerMap[tokenId].owner !== owner) {
-          ownerMap[tokenId].owner = owner;
+        const balance = await rc.balanceOf(address, tokenId);
+        const verifiedOwner = balance > 0n ? myAddr : zeroOwner;
+        tokenOwnerVerificationCache[tokenId] = verifiedOwner;
+        if (ownerMap[tokenId] && ownerMap[tokenId].owner !== verifiedOwner) {
+          ownerMap[tokenId].owner = verifiedOwner;
           changed = true;
         }
       } catch(e) {}
@@ -6868,16 +6874,19 @@ async function sellFigure(tokenId, priceChz) {
   showNetworkOverlay('Preparing marketplace listing...');
   try {
     const figContract = new ethers.Contract(CONTRACT_ADDRESS, [
-      "function ownerOf(uint256 tokenId) external view returns (address)",
+      "function balanceOf(address account,uint256 id) external view returns (uint256)",
       "function isApprovedForAll(address account, address operator) external view returns (bool)",
       "function setApprovalForAll(address operator, bool approved) external"
     ], signer);
 
     updateNetworkOverlay('Verifying card ownership...');
-    const realOwner = String(await figContract.ownerOf(tokenId)).toLowerCase();
-    tokenOwnerVerificationCache[Number(tokenId)] = realOwner;
-    if (ownerMap[Number(tokenId)]) ownerMap[Number(tokenId)].owner = realOwner;
-    if (realOwner !== address.toLowerCase()) {
+    const myAddr = address.toLowerCase();
+    const zeroOwner = '0x0000000000000000000000000000000000000000';
+    const balance = await figContract.balanceOf(address, tokenId);
+    const verifiedOwner = balance > 0n ? myAddr : zeroOwner;
+    tokenOwnerVerificationCache[Number(tokenId)] = verifiedOwner;
+    if (ownerMap[Number(tokenId)]) ownerMap[Number(tokenId)].owner = verifiedOwner;
+    if (verifiedOwner !== myAddr) {
       showToast('You no longer own this card. Score stays saved, but it cannot be listed.', true);
       toggleSellModal(false);
       renderPitch();
