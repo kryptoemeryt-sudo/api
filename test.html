@@ -2415,6 +2415,92 @@ body.game-mode .tab-btn{
     font-size:7px!important;
   }
 }
+
+/* Desktop game layout: squad full width, countries below */
+@media(min-width:901px){
+  body.game-mode .game-grid{
+    display:grid!important;
+    grid-template-columns:1fr!important;
+    grid-template-rows:auto auto!important;
+    gap:10px!important;
+    align-items:stretch!important;
+  }
+  body.game-mode .pitch-container{
+    grid-column:1!important;
+    grid-row:1!important;
+    width:100%!important;
+  }
+  body.game-mode .country-section{
+    grid-column:1!important;
+    grid-row:2!important;
+    width:100%!important;
+  }
+  body.game-mode .pitch-wrap{
+    padding:10px!important;
+  }
+  body.game-mode .formation.album-horizontal,
+  body.game-mode .formation{
+    width:100%!important;
+    min-width:0!important;
+  }
+  body.game-mode .formation.album-horizontal .row-single{
+    display:grid!important;
+    grid-template-columns:repeat(11,minmax(0,1fr))!important;
+    gap:8px!important;
+    width:100%!important;
+  }
+  body.game-mode .formation.album-horizontal .row-single .pos-card{
+    width:100%!important;
+    min-width:0!important;
+    min-height:104px!important;
+  }
+  body.game-mode .pos-card{
+    min-height:104px!important;
+    padding:7px 5px!important;
+  }
+  body.game-mode .pos-name{font-size:8px!important}
+  body.game-mode .pos-weight{font-size:20px!important}
+  body.game-mode .pos-rarity{font-size:7px!important}
+  body.game-mode .country-grid{
+    grid-template-columns:repeat(auto-fill,minmax(118px,1fr))!important;
+    grid-auto-rows:minmax(76px,auto)!important;
+    gap:7px!important;
+    max-height:none!important;
+    overflow:visible!important;
+    padding-right:0!important;
+  }
+  body.game-mode .country-card{
+    min-height:76px!important;
+    padding:8px!important;
+    grid-template-columns:minmax(0,1fr) auto!important;
+  }
+  body.game-mode .country-card-main{
+    grid-template-columns:32px minmax(0,1fr)!important;
+    gap:6px!important;
+  }
+  body.game-mode .country-card-flag{width:32px!important}
+  body.game-mode .country-card .flag-img{
+    width:30px!important;
+    height:20px!important;
+  }
+  body.game-mode .country-card-name{
+    font-size:11px!important;
+    line-height:1.05!important;
+  }
+  body.game-mode .country-card-score{
+    font-size:15px!important;
+  }
+  body.game-mode .country-card-completion{
+    font-size:8px!important;
+  }
+  body.game-mode .filter-tabs{
+    grid-template-columns:repeat(7,minmax(0,1fr))!important;
+    gap:6px!important;
+  }
+  body.game-mode .lb-section{
+    margin-top:10px!important;
+  }
+}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
