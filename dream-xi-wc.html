@@ -1573,6 +1573,2609 @@ body.game-mode .nav-right #connectBtn.connected{
     border-width:3px!important;
   }
 }
+
+/* Host Nations Podium visual skin - final layer */
+:root{
+  --bk-bg:#05070a;
+  --bk-panel:#111923;
+  --bk-deep:#080c11;
+  --bk-line:#243141;
+  --bk-text:#edf4ff;
+  --bk-muted:#8ea1b5;
+  --bk-green:#00ff87;
+  --bk-gold:#ffc940;
+  --bk-blue:#58a6ff;
+  --bk-red:#ef4444;
+}
+html,body{
+  background:var(--bk-bg)!important;
+  color:var(--bk-text)!important;
+  font-family:'Barlow Condensed',Arial,sans-serif!important;
+}
+body{
+  background:
+    linear-gradient(180deg,rgba(6,8,10,.88),rgba(5,7,10,.97)),
+    repeating-linear-gradient(90deg,rgba(255,255,255,.035) 0 1px,transparent 1px 80px),
+    radial-gradient(ellipse at 50% 0%,rgba(0,255,135,.15),transparent 42%)!important;
+}
+.page{
+  width:min(1560px,100%)!important;
+  max-width:1560px!important;
+  margin:0 auto!important;
+  padding:12px!important;
+  display:grid!important;
+  gap:10px!important;
+  background:transparent!important;
+}
+.topnav{
+  position:sticky!important;
+  top:0!important;
+  left:auto!important;
+  right:auto!important;
+  height:58px!important;
+  padding:9px 18px!important;
+  background:rgba(5,7,10,.94)!important;
+  border-bottom:1px solid var(--bk-line)!important;
+  backdrop-filter:blur(12px)!important;
+  overflow:visible!important;
+}
+.topnav-logo,.logo{
+  font-family:'Black Ops One',sans-serif!important;
+  font-size:17px!important;
+  letter-spacing:1px!important;
+  color:#fff!important;
+  text-decoration:none!important;
+}
+.topnav-logo span,.logo span{color:var(--bk-green)!important}
+.nav-countdown{
+  position:static!important;
+  top:auto!important;
+  left:auto!important;
+  transform:none!important;
+  font-family:'Share Tech Mono',monospace!important;
+  color:var(--bk-muted)!important;
+  border:0!important;
+  background:transparent!important;
+  white-space:nowrap!important;
+}
+.nav-countdown span{
+  color:var(--bk-gold)!important;
+  font-family:'Black Ops One',sans-serif!important;
+}
+.btn-connect,.btn-mint-hero,.btn-share,.btn-card-action,.dash-mint-btn,.tab-btn,.mint-result-primary,.btn-connect-big{
+  border:1px solid rgba(0,255,135,.45)!important;
+  background:rgba(0,255,135,.11)!important;
+  color:var(--bk-green)!important;
+  border-radius:7px!important;
+  box-shadow:none!important;
+  font-family:'Black Ops One',sans-serif!important;
+}
+.btn-outline-hero,.btn-share,.tab-btn{
+  border-color:var(--bk-line)!important;
+  background:rgba(255,255,255,.04)!important;
+  color:#cbd9e8!important;
+}
+.btn-connect:hover,.btn-mint-hero:hover,.btn-share:hover,.btn-card-action:hover,.dash-mint-btn:hover,.btn-connect-big:hover{
+  filter:brightness(1.12)!important;
+}
+.hero{
+  width:100%!important;
+  display:grid!important;
+  grid-template-columns:minmax(360px,.9fr) minmax(460px,1.35fr) minmax(320px,.78fr)!important;
+  gap:10px!important;
+  padding:0!important;
+  border:0!important;
+  background:transparent!important;
+  overflow:visible!important;
+}
+.hero::before{display:none!important}
+.hero-main,.hero-flow,.hero-side{
+  background:linear-gradient(180deg,rgba(17,25,35,.92),rgba(8,12,17,.95))!important;
+  border:1px solid var(--bk-line)!important;
+  border-radius:8px!important;
+  padding:13px!important;
+  min-width:0!important;
+  overflow:hidden!important;
+  box-shadow:none!important;
+}
+.hero-main{
+  border-color:rgba(255,201,64,.38)!important;
+  box-shadow:0 0 26px rgba(255,201,64,.08)!important;
+}
+.badge{
+  border-color:rgba(0,255,135,.35)!important;
+  background:rgba(0,255,135,.08)!important;
+  color:var(--bk-green)!important;
+  border-radius:5px!important;
+  font-family:'Share Tech Mono',monospace!important;
+  font-size:11px!important;
+  letter-spacing:2px!important;
+  margin-bottom:14px!important;
+}
+.trophy{filter:none!important;margin-bottom:8px!important}
+.hero-title{
+  font-size:clamp(38px,5.6vw,76px)!important;
+  line-height:.9!important;
+  letter-spacing:1px!important;
+  margin:10px 0 8px!important;
+  color:#fff!important;
+}
+.hero-title .acc{color:var(--bk-green)!important}
+.hero-title .gold{color:var(--bk-gold)!important}
+.hero-sub{
+  font-size:20px!important;
+  line-height:1.18!important;
+  color:#c8d5e6!important;
+  max-width:520px!important;
+}
+.hero-sub strong{color:#fff!important}
+.quest-flow{
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:8px!important;
+  margin-bottom:8px!important;
+}
+.flow-card{
+  min-height:118px!important;
+  padding:10px!important;
+  border:1px solid rgba(255,255,255,.08)!important;
+  background:rgba(255,255,255,.035)!important;
+  border-radius:7px!important;
+  box-shadow:none!important;
+}
+.flow-kicker{font-family:'Share Tech Mono',monospace!important;color:var(--bk-muted)!important}
+.flow-title{font-size:14px!important}
+.flow-text{
+  display:block!important;
+  font-size:15px!important;
+  color:#dbe6f4!important;
+  line-height:1.15!important;
+}
+.hero-actions{
+  display:grid!important;
+  grid-template-columns:1fr 1fr!important;
+  gap:10px!important;
+  margin-bottom:12px!important;
+}
+.btn-mint-hero,.btn-connect-big{min-height:48px!important;letter-spacing:1.5px!important}
+.pricing-schedule,.countdown-wrap,.dashboard-prize-strip,.country-section,.pitch-container,.lb-section,.leaderboard-list,.stat-card,.country-card,.pos-card,.wallet-panel,.sell-panel,.card-result-panel,.mint-result-panel{
+  background:linear-gradient(180deg,rgba(17,25,35,.92),rgba(8,12,17,.95))!important;
+  border:1px solid var(--bk-line)!important;
+  border-radius:8px!important;
+  box-shadow:none!important;
+}
+.pricing-schedule{padding:10px!important;gap:8px!important}
+.schedule-item{border-radius:7px!important;padding:9px 12px!important}
+.schedule-item.active{
+  border-color:var(--bk-green)!important;
+  background:rgba(0,255,135,.08)!important;
+}
+.schedule-date,.countdown-label,.countdown-sub,.countdown-block,.stat-lbl,.album-count-label,.completion-label,.lb-info{
+  font-family:'Share Tech Mono',monospace!important;
+  color:var(--bk-muted)!important;
+  letter-spacing:1px!important;
+}
+.schedule-price{font-size:16px!important;color:#fff!important}
+.schedule-price span{color:var(--bk-gold)!important}
+.stats-container{gap:8px!important}
+.stat-card{
+  min-height:74px!important;
+  padding:11px!important;
+  text-align:left!important;
+}
+.hero .stat-card{min-height:118px!important}
+.stat-val{
+  font-size:25px!important;
+  line-height:1!important;
+  color:var(--bk-green)!important;
+}
+.stat-val.gold{color:var(--bk-gold)!important}
+.stat-val.highlight{color:var(--bk-green)!important}
+.countdown-wrap{
+  width:min(440px,100%)!important;
+  justify-self:center!important;
+  margin:0!important;
+  padding:12px!important;
+}
+.countdown-label{display:none!important}
+.countdown-num{
+  font-family:'Black Ops One',sans-serif!important;
+  color:var(--bk-green)!important;
+  text-shadow:0 0 10px rgba(0,255,135,.28)!important;
+}
+.countdown-divider{color:var(--bk-gold)!important}
+.connect-prompt{
+  width:min(560px,100%)!important;
+  justify-self:center!important;
+  margin:24px auto 0!important;
+  color:#9fb1c7!important;
+  text-align:center!important;
+}
+.connect-prompt p{margin-bottom:14px!important}
+.game-grid{
+  display:grid!important;
+  grid-template-columns:minmax(0,1.05fr) minmax(420px,.95fr)!important;
+  gap:10px!important;
+  padding:0!important;
+}
+.left-col,.right-col{min-width:0!important}
+.country-section,.pitch-container,.lb-section{padding:13px!important}
+.pitch-title,.pitch-title-row,.lb-title-row{
+  font-family:'Black Ops One',sans-serif!important;
+  color:#fff!important;
+  letter-spacing:1px!important;
+}
+.country-grid{
+  grid-template-columns:repeat(auto-fill,minmax(138px,1fr))!important;
+  gap:8px!important;
+  max-height:382px!important;
+  scrollbar-width:thin;
+  scrollbar-color:rgba(0,255,135,.45) rgba(255,255,255,.045);
+}
+.country-grid::-webkit-scrollbar,.leaderboard-list::-webkit-scrollbar{width:8px;height:8px}
+.country-grid::-webkit-scrollbar-track,.leaderboard-list::-webkit-scrollbar-track{background:rgba(255,255,255,.045);border-radius:8px}
+.country-grid::-webkit-scrollbar-thumb,.leaderboard-list::-webkit-scrollbar-thumb{background:rgba(0,255,135,.38);border-radius:8px;border:2px solid rgba(5,7,10,.92)}
+.country-card{
+  min-height:112px!important;
+  padding:9px!important;
+}
+.country-card:hover,.country-card.selected{
+  border-color:rgba(0,255,135,.55)!important;
+  background:rgba(0,255,135,.06)!important;
+  transform:none!important;
+}
+.country-card-name{font-family:'Black Ops One',sans-serif!important;color:#fff!important}
+.country-card-score{color:var(--bk-green)!important}
+.pitch-wrap{
+  background:linear-gradient(180deg,rgba(7,22,18,.92),rgba(4,9,8,.97))!important;
+  border:1px solid rgba(0,255,135,.18)!important;
+  border-radius:8px!important;
+  box-shadow:inset 0 0 34px rgba(0,255,135,.06)!important;
+}
+.pos-card{
+  border-color:var(--bk-line)!important;
+  background:linear-gradient(180deg,#111923,#080c11)!important;
+  border-radius:8px!important;
+}
+.pos-card.scored,.pos-card.has-card{
+  border-color:rgba(0,255,135,.55)!important;
+  background:linear-gradient(180deg,rgba(0,255,135,.12),rgba(8,12,17,.95))!important;
+}
+.pos-weight{color:var(--bk-green)!important}
+.pos-weight.gold{color:var(--bk-gold)!important}
+.pos-rarity,.card-hover-note{color:var(--bk-muted)!important}
+.lb-toggle-container{gap:6px!important}
+.lb-toggle-btn{
+  border:1px solid var(--bk-line)!important;
+  background:rgba(255,255,255,.04)!important;
+  color:#cbd9e8!important;
+  border-radius:6px!important;
+  font-family:'Black Ops One',sans-serif!important;
+}
+.lb-toggle-btn.active,.tab-btn.active{
+  border-color:var(--bk-green)!important;
+  background:rgba(0,255,135,.12)!important;
+  color:var(--bk-green)!important;
+}
+.leaderboard-list{
+  padding:8px!important;
+  max-height:382px!important;
+  overflow:auto!important;
+}
+.lb-row{
+  border:1px solid var(--bk-line)!important;
+  background:#0e141c!important;
+  border-radius:7px!important;
+  padding:8px!important;
+}
+.lb-row.me{
+  border-color:rgba(0,255,135,.45)!important;
+  background:rgba(0,255,135,.06)!important;
+}
+.lb-pos{color:var(--bk-gold)!important}
+.lb-addr{color:#dce8f6!important}
+.lb-score{color:var(--bk-green)!important}
+.lb-completion{color:var(--bk-muted)!important}
+.wallet-option{
+  background:rgba(255,255,255,.04)!important;
+  border-color:var(--bk-line)!important;
+  border-radius:7px!important;
+}
+.wallet-option:hover{
+  border-color:rgba(0,255,135,.46)!important;
+  background:rgba(0,255,135,.08)!important;
+}
+body.game-mode .topnav{
+  position:sticky!important;
+  display:flex!important;
+  height:58px!important;
+}
+body.game-mode .page{
+  background:transparent!important;
+}
+body.game-mode .dashboard-prize-strip{
+  border-color:rgba(255,201,64,.42)!important;
+  background:linear-gradient(90deg,rgba(255,201,64,.13),rgba(0,255,135,.055),rgba(88,166,255,.06))!important;
+}
+body.game-mode .country-section,
+body.game-mode .pitch-container,
+body.game-mode .lb-section{
+  background:linear-gradient(180deg,rgba(17,25,35,.92),rgba(8,12,17,.95))!important;
+  border-color:var(--bk-line)!important;
+}
+@media(max-width:1180px){
+  .hero{grid-template-columns:1fr 1.15fr!important}
+  .hero-side{grid-column:1/-1!important}
+  .game-grid{grid-template-columns:1fr!important}
+}
+@media(max-width:700px){
+  html,body{
+    width:100%!important;
+    max-width:100%!important;
+    overflow-x:hidden!important;
+    padding-top:0!important;
+  }
+  .page{
+    width:100%!important;
+    max-width:100vw!important;
+    padding:7px!important;
+    overflow-x:hidden!important;
+  }
+  .topnav{
+    position:sticky!important;
+    display:grid!important;
+    grid-template-columns:minmax(92px,auto) minmax(112px,1fr) minmax(78px,auto)!important;
+    gap:6px!important;
+    height:48px!important;
+    padding:7px 8px!important;
+  }
+  .topnav-logo,.logo{
+    font-size:10px!important;
+    letter-spacing:.5px!important;
+    white-space:nowrap!important;
+  }
+  .nav-countdown{
+    grid-column:2!important;
+    grid-row:1!important;
+    align-self:center!important;
+    justify-self:center!important;
+    font-size:9px!important;
+    min-width:0!important;
+  }
+  .nav-countdown span{display:none!important}
+  .nav-right,.wallet-actions{
+    grid-column:3!important;
+    grid-row:1!important;
+    display:flex!important;
+    justify-content:flex-end!important;
+    min-width:0!important;
+  }
+  .wallet-addr,.wallet-bal{display:none!important}
+  .btn-connect{
+    min-height:31px!important;
+    padding:6px 8px!important;
+    font-size:8px!important;
+  }
+  .hero{
+    grid-template-columns:1fr!important;
+    width:100%!important;
+    max-width:100%!important;
+  }
+  .hero-main,.hero-flow,.hero-side,.country-section,.pitch-container,.lb-section{
+    padding:9px!important;
+    width:100%!important;
+    max-width:100%!important;
+  }
+  .hero-title{font-size:38px!important}
+  .hero-sub{font-size:16px!important}
+  .quest-flow{
+    grid-template-columns:1fr!important;
+    gap:7px!important;
+  }
+  .flow-card{
+    min-height:auto!important;
+    padding:10px!important;
+  }
+  .hero-actions{grid-template-columns:1fr!important}
+  .pricing-schedule{
+    width:100%!important;
+    overflow-x:auto!important;
+    justify-content:flex-start!important;
+    flex-wrap:nowrap!important;
+  }
+  .schedule-item{
+    min-width:150px!important;
+    flex:0 0 auto!important;
+  }
+  .countdown-wrap{width:100%!important}
+  .country-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    max-height:300px!important;
+  }
+  .leaderboard-list{max-height:300px!important}
+  .stat-val{font-size:20px!important}
+  body.game-mode .topnav{
+    display:grid!important;
+    height:48px!important;
+  }
+}
+
+/* Host skin polish pass */
+.hero{
+  align-items:start!important;
+  grid-template-columns:minmax(360px,.86fr) minmax(500px,1.36fr) minmax(300px,.72fr)!important;
+}
+.hero-main{
+  min-height:360px!important;
+  display:flex!important;
+  flex-direction:column!important;
+  justify-content:center!important;
+  position:relative!important;
+  background:
+    linear-gradient(180deg,rgba(17,25,35,.86),rgba(8,12,17,.96)),
+    repeating-linear-gradient(90deg,rgba(0,255,135,.045) 0 1px,transparent 1px 46px)!important;
+}
+.hero-main::after{
+  content:""!important;
+  position:absolute!important;
+  left:18px!important;
+  right:18px!important;
+  bottom:18px!important;
+  height:1px!important;
+  background:linear-gradient(90deg,transparent,rgba(0,255,135,.42),rgba(255,201,64,.38),transparent)!important;
+  opacity:.9!important;
+}
+.badge{
+  width:max-content!important;
+  max-width:100%!important;
+}
+.trophy{display:none!important}
+.hero-title{
+  font-size:clamp(42px,5.2vw,74px)!important;
+  max-width:380px!important;
+  text-shadow:0 10px 28px rgba(0,0,0,.42)!important;
+}
+.hero-sub{
+  max-width:400px!important;
+  font-size:20px!important;
+}
+.hero-flow{
+  display:grid!important;
+  grid-template-rows:auto auto auto!important;
+  gap:10px!important;
+}
+.quest-flow{
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  margin:0!important;
+}
+.flow-card{
+  min-height:112px!important;
+  display:flex!important;
+  flex-direction:column!important;
+  justify-content:flex-start!important;
+}
+.flow-title{
+  margin:4px 0 8px!important;
+  font-size:16px!important;
+  line-height:1!important;
+}
+.flow-text{
+  font-size:16px!important;
+  line-height:1.16!important;
+}
+.hero-actions{
+  margin:0!important;
+}
+.pricing-schedule{
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  margin:0!important;
+}
+.schedule-item{
+  min-width:0!important;
+  border:1px solid rgba(255,255,255,.07)!important;
+  background:rgba(255,255,255,.028)!important;
+}
+.schedule-item.active{
+  border-color:rgba(0,255,135,.8)!important;
+  background:linear-gradient(180deg,rgba(0,255,135,.15),rgba(8,12,17,.88))!important;
+}
+.hero-side .stats-container{
+  display:grid!important;
+  grid-template-columns:1fr!important;
+  gap:10px!important;
+}
+.hero-side .stat-card{
+  min-height:106px!important;
+  display:flex!important;
+  flex-direction:column!important;
+  justify-content:center!important;
+}
+.hero-side .stat-val{
+  font-size:29px!important;
+}
+.countdown-wrap{
+  margin-top:0!important;
+  border-color:rgba(0,255,135,.28)!important;
+  background:linear-gradient(180deg,rgba(17,25,35,.86),rgba(8,12,17,.95))!important;
+}
+.countdown-timer{
+  justify-content:center!important;
+}
+.countdown-num{
+  font-size:28px!important;
+  min-width:58px!important;
+}
+.connect-prompt{
+  margin-top:18px!important;
+}
+@media(max-width:1180px){
+  .hero{grid-template-columns:1fr!important}
+  .hero-main{min-height:280px!important}
+  .hero-title{max-width:none!important}
+  .hero-sub{max-width:620px!important}
+  .hero-side .stats-container{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+  .hero-side .stat-card{min-height:92px!important}
+}
+@media(max-width:700px){
+  .hero-main{
+    min-height:220px!important;
+    justify-content:flex-start!important;
+  }
+  .hero-title{
+    font-size:clamp(38px,12vw,54px)!important;
+    max-width:340px!important;
+  }
+  .hero-sub{
+    font-size:16px!important;
+    max-width:none!important;
+  }
+  .quest-flow{
+    grid-template-columns:1fr!important;
+  }
+  .flow-card{
+    min-height:0!important;
+    padding:10px!important;
+  }
+  .flow-text{
+    font-size:14px!important;
+  }
+  .pricing-schedule{
+    display:grid!important;
+    grid-template-columns:repeat(3,minmax(150px,1fr))!important;
+  }
+  .hero-side .stats-container{
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  }
+  .hero-side .stat-card{
+    min-height:88px!important;
+    padding:10px!important;
+  }
+  .hero-side .stat-val{
+    font-size:21px!important;
+  }
+  .countdown-num{
+    min-width:36px!important;
+    font-size:22px!important;
+  }
+}
+
+/* Correction pass: focus on playable album view */
+.topnav,
+.page{
+  width:min(1560px,calc(100% - 24px))!important;
+  max-width:1560px!important;
+  margin-left:auto!important;
+  margin-right:auto!important;
+}
+.topnav{
+  display:grid!important;
+  grid-template-columns:auto minmax(220px,1fr) auto!important;
+  align-items:center!important;
+  gap:12px!important;
+}
+.nav-countdown{
+  justify-self:center!important;
+  color:#ffc940!important;
+  font-family:'Black Ops One',sans-serif!important;
+  font-size:13px!important;
+  letter-spacing:1.2px!important;
+}
+.nav-countdown span{
+  display:inline!important;
+  margin-right:8px!important;
+  color:#dde4f0!important;
+  font-size:10px!important;
+}
+.hero{
+  align-items:stretch!important;
+  grid-template-columns:minmax(320px,.82fr) minmax(480px,1.28fr) minmax(280px,.72fr)!important;
+}
+.hero-main{
+  min-height:0!important;
+  justify-content:flex-start!important;
+}
+.hero-title{
+  font-size:clamp(38px,4.7vw,66px)!important;
+  max-width:360px!important;
+}
+.hero-sub{font-size:18px!important}
+.hero-side .stat-card{min-height:92px!important}
+.connect-prompt{margin-top:10px!important}
+.btn-mint-hero,
+.dash-mint-btn{
+  background:linear-gradient(135deg,#00ff87 0%,#12f3a0 45%,#ffc940 100%)!important;
+  color:#03100a!important;
+  border-color:rgba(255,201,64,.72)!important;
+  box-shadow:0 0 22px rgba(0,255,135,.24),0 0 16px rgba(255,201,64,.16)!important;
+  font-size:15px!important;
+  font-weight:900!important;
+}
+.btn-outline-hero{
+  background:rgba(255,255,255,.045)!important;
+  color:#dde4f0!important;
+  border-color:var(--bk-line)!important;
+  box-shadow:none!important;
+}
+.dash-mint-btn{
+  min-height:38px!important;
+  padding:9px 18px!important;
+  letter-spacing:1.4px!important;
+}
+body.game-mode{
+  height:auto!important;
+  min-height:100vh!important;
+  overflow:auto!important;
+  display:block!important;
+}
+body.game-mode .topnav{
+  width:min(1560px,calc(100% - 24px))!important;
+  display:grid!important;
+  grid-template-columns:auto minmax(220px,1fr) auto!important;
+  height:58px!important;
+  margin:0 auto!important;
+}
+body.game-mode .page{
+  width:min(1560px,calc(100% - 24px))!important;
+  max-width:1560px!important;
+  height:auto!important;
+  min-height:0!important;
+  padding:10px 0 18px!important;
+  gap:10px!important;
+  overflow:visible!important;
+  display:grid!important;
+  grid-template-rows:auto auto auto auto!important;
+}
+body.game-mode #gameSection{display:block!important}
+body.game-mode .game-grid{
+  grid-row:auto!important;
+  display:grid!important;
+  grid-template-columns:minmax(500px,.92fr) minmax(0,1.08fr)!important;
+  grid-template-rows:auto!important;
+  gap:10px!important;
+  align-items:start!important;
+  overflow:visible!important;
+}
+body.game-mode .country-section{
+  grid-column:1!important;
+  grid-row:auto!important;
+  order:0!important;
+  overflow:hidden!important;
+}
+body.game-mode .pitch-container{
+  grid-column:2!important;
+  grid-row:auto!important;
+  order:0!important;
+}
+body.game-mode .lb-section{
+  grid-row:auto!important;
+  margin-top:10px!important;
+  max-height:none!important;
+  overflow:visible!important;
+}
+body.game-mode .country-grid{
+  display:grid!important;
+  grid-template-columns:repeat(auto-fill,minmax(150px,1fr))!important;
+  grid-auto-rows:minmax(92px,auto)!important;
+  gap:8px!important;
+  max-height:540px!important;
+  overflow:auto!important;
+  padding-right:5px!important;
+}
+body.game-mode .country-card{
+  min-height:92px!important;
+  height:auto!important;
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) auto!important;
+  gap:8px!important;
+  align-items:center!important;
+  text-align:left!important;
+  justify-content:stretch!important;
+  padding:10px!important;
+  border-radius:8px!important;
+  background:linear-gradient(180deg,rgba(17,25,35,.94),rgba(8,12,17,.97))!important;
+}
+body.game-mode .country-card-main{
+  display:grid!important;
+  grid-template-columns:44px minmax(0,1fr)!important;
+  align-items:center!important;
+  gap:8px!important;
+  min-width:0!important;
+  text-align:left!important;
+}
+body.game-mode .country-card-stats{
+  display:grid!important;
+  justify-items:end!important;
+  align-content:center!important;
+  gap:4px!important;
+  min-width:44px!important;
+}
+body.game-mode .country-card-flag{
+  width:44px!important;
+  margin:0!important;
+  justify-content:flex-start!important;
+}
+body.game-mode .country-card .flag-img{
+  width:40px!important;
+  height:27px!important;
+}
+body.game-mode .country-card-name{
+  font-size:14px!important;
+  text-align:left!important;
+  line-height:1!important;
+  margin:0!important;
+}
+body.game-mode .country-card-score{
+  font-size:18px!important;
+  line-height:1!important;
+  margin:0!important;
+}
+body.game-mode .country-card-completion{
+  font-size:10px!important;
+  line-height:1!important;
+}
+body.game-mode .filter-tabs{
+  display:grid!important;
+  grid-template-columns:repeat(7,minmax(0,1fr))!important;
+  gap:5px!important;
+  margin-bottom:8px!important;
+}
+body.game-mode .tab-btn{
+  min-height:30px!important;
+  font-size:8px!important;
+  padding:6px 4px!important;
+}
+@media(max-width:900px){
+  .topnav,
+  .page,
+  body.game-mode .topnav,
+  body.game-mode .page{
+    width:calc(100% - 14px)!important;
+  }
+  .topnav,
+  body.game-mode .topnav{
+    grid-template-columns:minmax(90px,auto) minmax(90px,1fr) minmax(72px,auto)!important;
+    height:48px!important;
+    padding:7px 8px!important;
+  }
+  .nav-countdown{
+    font-size:9px!important;
+    letter-spacing:.5px!important;
+  }
+  .nav-countdown span{
+    display:inline!important;
+    margin-right:4px!important;
+    font-size:7px!important;
+  }
+  .hero{
+    grid-template-columns:1fr!important;
+  }
+  body.game-mode .game-grid{
+    grid-template-columns:1fr!important;
+  }
+  body.game-mode .country-section,
+  body.game-mode .pitch-container{
+    grid-column:1!important;
+  }
+  body.game-mode .country-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    max-height:none!important;
+  }
+  body.game-mode .country-card{
+    min-height:88px!important;
+    padding:8px!important;
+  }
+  body.game-mode .country-card-main{
+    grid-template-columns:34px minmax(0,1fr)!important;
+    gap:6px!important;
+  }
+  body.game-mode .country-card .flag-img{
+    width:32px!important;
+    height:22px!important;
+  }
+  body.game-mode .country-card-name{font-size:11px!important}
+  body.game-mode .country-card-score{font-size:15px!important}
+  body.game-mode .country-card-completion{font-size:8px!important}
+}
+@media(max-width:560px){
+  .topnav,
+  body.game-mode .topnav{
+    grid-template-columns:minmax(128px,1fr) 96px 64px!important;
+    gap:5px!important;
+  }
+  .topnav .nav-countdown{
+    display:none!important;
+  }
+  .topnav .nav-countdown span{display:none!important}
+  .topnav .btn-connect,
+  .topnav #connectBtn{
+    position:static!important;
+    min-width:62px!important;
+    padding:6px 5px!important;
+    font-size:7px!important;
+  }
+}
+
+/* Desktop game layout: squad full width, countries below */
+@media(min-width:901px){
+  body.game-mode .game-grid{
+    display:grid!important;
+    grid-template-columns:1fr!important;
+    grid-template-rows:auto auto!important;
+    gap:10px!important;
+    align-items:stretch!important;
+  }
+  body.game-mode .pitch-container{
+    grid-column:1!important;
+    grid-row:1!important;
+    width:100%!important;
+  }
+  body.game-mode .country-section{
+    grid-column:1!important;
+    grid-row:2!important;
+    width:100%!important;
+  }
+  body.game-mode .pitch-wrap{
+    padding:10px!important;
+  }
+  body.game-mode .formation.album-horizontal,
+  body.game-mode .formation{
+    width:100%!important;
+    min-width:0!important;
+  }
+  body.game-mode .formation.album-horizontal .row-single{
+    display:grid!important;
+    grid-template-columns:repeat(11,minmax(0,1fr))!important;
+    gap:8px!important;
+    width:100%!important;
+  }
+  body.game-mode .formation.album-horizontal .row-single .pos-card{
+    width:100%!important;
+    min-width:0!important;
+    min-height:104px!important;
+  }
+  body.game-mode .pos-card{
+    min-height:104px!important;
+    padding:7px 5px!important;
+  }
+  body.game-mode .pos-name{font-size:8px!important}
+  body.game-mode .pos-weight{font-size:20px!important}
+  body.game-mode .pos-rarity{font-size:7px!important}
+  body.game-mode .country-grid{
+    grid-template-columns:repeat(auto-fill,minmax(118px,1fr))!important;
+    grid-auto-rows:minmax(76px,auto)!important;
+    gap:7px!important;
+    max-height:none!important;
+    overflow:visible!important;
+    padding-right:0!important;
+  }
+  body.game-mode .country-card{
+    min-height:76px!important;
+    padding:8px!important;
+    grid-template-columns:minmax(0,1fr) auto!important;
+  }
+  body.game-mode .country-card-main{
+    grid-template-columns:32px minmax(0,1fr)!important;
+    gap:6px!important;
+  }
+  body.game-mode .country-card-flag{width:32px!important}
+  body.game-mode .country-card .flag-img{
+    width:30px!important;
+    height:20px!important;
+  }
+  body.game-mode .country-card-name{
+    font-size:11px!important;
+    line-height:1.05!important;
+  }
+  body.game-mode .country-card-score{
+    font-size:15px!important;
+  }
+  body.game-mode .country-card-completion{
+    font-size:8px!important;
+  }
+  body.game-mode .filter-tabs{
+    grid-template-columns:repeat(7,minmax(0,1fr))!important;
+    gap:6px!important;
+  }
+  body.game-mode .lb-section{
+    margin-top:10px!important;
+  }
+}
+
+/* Final alignment tweaks */
+body{
+  padding-top:0!important;
+  margin-top:0!important;
+}
+.topnav{
+  margin-top:0!important;
+}
+.topnav .nav-countdown{
+  font-size:14px!important;
+  line-height:1!important;
+}
+.topnav .nav-countdown span{
+  display:inline!important;
+  font-size:8px!important;
+  letter-spacing:.8px!important;
+  margin-right:7px!important;
+  color:#a8b6c8!important;
+}
+body.game-mode .country-card-name{
+  display:none!important;
+}
+body.game-mode .country-card-main{
+  grid-template-columns:auto!important;
+  justify-items:center!important;
+  text-align:center!important;
+}
+body.game-mode .country-card-flag{
+  width:auto!important;
+  justify-content:center!important;
+}
+body.game-mode .country-card .flag-img{
+  width:42px!important;
+  height:28px!important;
+}
+@media(min-width:901px){
+  body.game-mode .country-grid{
+    grid-template-columns:repeat(auto-fill,minmax(96px,1fr))!important;
+    grid-auto-rows:minmax(68px,auto)!important;
+    gap:7px!important;
+  }
+  body.game-mode .country-card{
+    min-height:68px!important;
+    grid-template-columns:1fr auto!important;
+    padding:7px 8px!important;
+  }
+  body.game-mode .country-card-main{
+    gap:0!important;
+  }
+  body.game-mode .country-card .flag-img{
+    width:38px!important;
+    height:25px!important;
+  }
+  body.game-mode .country-card-score{
+    font-size:15px!important;
+  }
+  body.game-mode .country-card-completion{
+    font-size:8px!important;
+  }
+}
+@media(max-width:560px){
+  .topnav .nav-countdown{
+    display:none!important;
+  }
+}
+
+/* Rebalance country buttons and top countdown */
+.topnav .nav-countdown{
+  font-size:14px!important;
+  line-height:1!important;
+}
+.topnav .nav-countdown span{
+  display:inline!important;
+  font-size:14px!important;
+  line-height:1!important;
+  color:#ffc940!important;
+  margin-right:8px!important;
+}
+.hero-actions{
+  align-items:center!important;
+}
+.btn-mint-hero{
+  display:grid!important;
+  place-items:center!important;
+  text-align:center!important;
+  font-size:15px!important;
+  white-space:nowrap!important;
+  line-height:1!important;
+}
+.pitch-title-row{
+  grid-template-columns:minmax(0,1fr) auto auto!important;
+  align-items:center!important;
+}
+.dash-mint-btn{
+  display:grid!important;
+  place-items:center!important;
+  text-align:center!important;
+  min-width:112px!important;
+  font-size:16px!important;
+}
+body.game-mode .country-card-name{
+  display:block!important;
+}
+body.game-mode .country-card-main{
+  grid-template-columns:42px minmax(0,1fr)!important;
+  justify-items:stretch!important;
+  text-align:left!important;
+}
+body.game-mode .country-card-flag{
+  width:42px!important;
+  justify-content:flex-start!important;
+}
+body.game-mode .country-card .flag-img{
+  width:38px!important;
+  height:25px!important;
+}
+body.game-mode .country-card-name{
+  font-size:12px!important;
+  line-height:1.05!important;
+  max-width:100%!important;
+  white-space:normal!important;
+  overflow:visible!important;
+  text-overflow:clip!important;
+  text-align:left!important;
+}
+@media(min-width:901px){
+  body.game-mode .country-grid{
+    grid-template-columns:repeat(auto-fill,minmax(132px,1fr))!important;
+    grid-auto-rows:minmax(78px,auto)!important;
+  }
+  body.game-mode .country-card{
+    min-height:78px!important;
+    grid-template-columns:minmax(0,1fr) auto!important;
+    padding:8px!important;
+  }
+  body.game-mode .country-card-main{
+    grid-template-columns:38px minmax(0,1fr)!important;
+    gap:7px!important;
+  }
+  body.game-mode .country-card-flag{width:38px!important}
+  body.game-mode .country-card .flag-img{
+    width:36px!important;
+    height:24px!important;
+  }
+  body.game-mode .country-card-name{
+    font-size:11px!important;
+  }
+  body.game-mode .country-card-score{
+    font-size:14px!important;
+  }
+}
+@media(max-width:900px){
+  body.game-mode .country-card-name{
+    display:block!important;
+    font-size:11px!important;
+    white-space:normal!important;
+    overflow:visible!important;
+  }
+}
+@media(max-width:560px){
+  .topnav .nav-countdown{
+    display:none!important;
+  }
+}
+
+/* Hard fix: country cards must never overlap */
+body.game-mode .country-grid{
+  grid-template-columns:repeat(auto-fill,minmax(158px,1fr))!important;
+  gap:8px!important;
+}
+body.game-mode .country-card{
+  min-height:92px!important;
+  display:grid!important;
+  grid-template-columns:1fr!important;
+  grid-template-rows:auto auto!important;
+  align-content:space-between!important;
+  gap:8px!important;
+  padding:9px!important;
+  overflow:hidden!important;
+}
+body.game-mode .country-card-main{
+  width:100%!important;
+  min-width:0!important;
+  display:grid!important;
+  grid-template-columns:42px minmax(0,1fr)!important;
+  align-items:center!important;
+  gap:8px!important;
+  text-align:left!important;
+}
+body.game-mode .country-card-flag{
+  width:42px!important;
+  min-width:42px!important;
+  height:28px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:flex-start!important;
+  overflow:hidden!important;
+}
+body.game-mode .country-card .flag-img{
+  width:40px!important;
+  height:27px!important;
+  display:block!important;
+}
+body.game-mode .country-card-name{
+  display:block!important;
+  min-width:0!important;
+  max-width:100%!important;
+  font-size:12px!important;
+  line-height:1.05!important;
+  white-space:nowrap!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+  text-align:left!important;
+}
+body.game-mode .country-card-stats{
+  width:100%!important;
+  min-width:0!important;
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) auto!important;
+  align-items:end!important;
+  justify-items:stretch!important;
+  gap:8px!important;
+}
+body.game-mode .country-card-score{
+  min-width:0!important;
+  font-size:16px!important;
+  line-height:1!important;
+  text-align:left!important;
+  white-space:nowrap!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+}
+body.game-mode .country-card-completion{
+  min-width:28px!important;
+  font-size:9px!important;
+  line-height:1!important;
+  text-align:right!important;
+  white-space:nowrap!important;
+}
+@media(min-width:901px){
+  body.game-mode .country-grid{
+    grid-template-columns:repeat(auto-fill,minmax(158px,1fr))!important;
+    grid-auto-rows:minmax(92px,auto)!important;
+  }
+}
+@media(max-width:900px){
+  body.game-mode .country-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  }
+}
+
+/* Desktop game readability scale */
+@media(min-width:901px){
+  body.game-mode #statsRow{
+    gap:10px!important;
+  }
+  body.game-mode #statsRow .stat-card{
+    min-height:82px!important;
+    padding:13px 16px!important;
+  }
+  body.game-mode #statsRow .stat-val,
+  body.game-mode #statsRow #myEstPayout{
+    font-size:31px!important;
+    line-height:1!important;
+  }
+  body.game-mode #statsRow .stat-lbl{
+    font-size:11px!important;
+    letter-spacing:1.1px!important;
+    line-height:1.05!important;
+  }
+  body.game-mode .dashboard-prize-strip{
+    min-height:46px!important;
+    padding:10px 14px!important;
+  }
+  body.game-mode .dash-prize-title{
+    font-size:15px!important;
+    letter-spacing:1.3px!important;
+  }
+  body.game-mode .dash-prize-value{
+    font-size:29px!important;
+  }
+  body.game-mode .dash-deadline{
+    font-size:15px!important;
+  }
+  body.game-mode .pitch-container{
+    padding:16px!important;
+  }
+  body.game-mode .pitch-title-row{
+    margin-bottom:13px!important;
+    min-height:46px!important;
+  }
+  body.game-mode .pitch-title,
+  body.game-mode #selectedCountryTitle{
+    font-size:18px!important;
+    letter-spacing:1.4px!important;
+  }
+  body.game-mode .completion-label{
+    font-size:14px!important;
+    letter-spacing:1.4px!important;
+  }
+  body.game-mode .dash-mint-btn{
+    min-width:138px!important;
+    min-height:46px!important;
+    font-size:18px!important;
+  }
+  body.game-mode .pitch-wrap{
+    padding:14px!important;
+  }
+  body.game-mode .formation.album-horizontal .row-single{
+    gap:9px!important;
+  }
+  body.game-mode .formation.album-horizontal .row-single .pos-card,
+  body.game-mode .pos-card{
+    min-height:128px!important;
+    padding:9px 7px!important;
+  }
+  body.game-mode .pos-card-top{
+    min-height:72px!important;
+  }
+  body.game-mode .figure-mini{
+    width:54px!important;
+    height:54px!important;
+  }
+  body.game-mode .pos-name{
+    font-size:11px!important;
+    letter-spacing:.7px!important;
+  }
+  body.game-mode .pos-weight{
+    font-size:28px!important;
+    line-height:1!important;
+  }
+  body.game-mode .pos-rarity{
+    font-size:9px!important;
+  }
+  body.game-mode .country-section{
+    padding:14px!important;
+  }
+  body.game-mode .nation-selector-title{
+    font-size:15px!important;
+    letter-spacing:1px!important;
+    margin-bottom:11px!important;
+  }
+  body.game-mode .tab-btn{
+    min-height:36px!important;
+    font-size:10px!important;
+  }
+  body.game-mode .album-count-label{
+    font-size:13px!important;
+  }
+  body.game-mode .country-grid{
+    grid-template-columns:repeat(auto-fill,minmax(166px,1fr))!important;
+    grid-auto-rows:minmax(104px,auto)!important;
+    gap:9px!important;
+  }
+  body.game-mode .country-card{
+    min-height:104px!important;
+    padding:11px!important;
+  }
+  body.game-mode .country-card-main{
+    grid-template-columns:48px minmax(0,1fr)!important;
+    gap:10px!important;
+  }
+  body.game-mode .country-card-flag{
+    width:48px!important;
+    min-width:48px!important;
+    height:32px!important;
+  }
+  body.game-mode .country-card .flag-img{
+    width:46px!important;
+    height:31px!important;
+  }
+  body.game-mode .country-card-name{
+    font-size:14px!important;
+    line-height:1.08!important;
+  }
+  body.game-mode .country-card-score{
+    font-size:20px!important;
+  }
+  body.game-mode .country-card-completion{
+    font-size:10px!important;
+  }
+}
+
+/* Final UX corrections: wallet bar, album cards and mobile game flow */
+body.game-mode #statsRow .stat-card{
+  text-align:center!important;
+  align-items:center!important;
+}
+body.game-mode #statsRow .stat-lbl{
+  max-width:100%!important;
+  text-align:center!important;
+  white-space:normal!important;
+}
+body.game-mode .pitch-title-row{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) auto minmax(0,1fr)!important;
+  align-items:center!important;
+  gap:10px!important;
+}
+body.game-mode .dash-mint-btn{
+  justify-self:center!important;
+  align-self:center!important;
+  display:grid!important;
+  place-items:center!important;
+  text-align:center!important;
+  line-height:1!important;
+}
+body.game-mode .completion-label{
+  justify-self:end!important;
+  align-self:center!important;
+  text-align:right!important;
+  white-space:nowrap!important;
+}
+body.game-mode .country-card{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) auto!important;
+  align-items:center!important;
+}
+body.game-mode .country-card-main{
+  display:grid!important;
+  grid-template-columns:46px minmax(0,1fr)!important;
+  align-items:center!important;
+  gap:9px!important;
+  min-width:0!important;
+}
+body.game-mode .country-card-copy{
+  display:grid!important;
+  grid-template-rows:auto auto!important;
+  align-content:center!important;
+  gap:4px!important;
+  min-width:0!important;
+}
+body.game-mode .country-card-name{
+  display:block!important;
+  margin:0!important;
+  font-size:14px!important;
+  line-height:1!important;
+  text-align:left!important;
+  white-space:nowrap!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+}
+body.game-mode .country-card-score{
+  margin:0!important;
+  font-size:20px!important;
+  line-height:1!important;
+  text-align:left!important;
+  white-space:nowrap!important;
+}
+body.game-mode .country-card-completion{
+  align-self:end!important;
+  justify-self:end!important;
+  min-width:34px!important;
+  font-size:10px!important;
+  line-height:1!important;
+  text-align:right!important;
+}
+@media(max-width:900px){
+  .topnav,
+  body.game-mode .topnav{
+    width:calc(100% - 14px)!important;
+    height:48px!important;
+    min-height:48px!important;
+    display:grid!important;
+    grid-template-columns:minmax(116px,1fr) auto auto!important;
+    grid-template-rows:1fr!important;
+    align-items:center!important;
+    gap:6px!important;
+    padding:7px 8px!important;
+    overflow:hidden!important;
+  }
+  .topnav-logo,.logo,
+  body.game-mode .topnav-logo,
+  body.game-mode .logo{
+    grid-column:1!important;
+    grid-row:1!important;
+    min-width:0!important;
+    font-size:10px!important;
+    letter-spacing:.6px!important;
+    white-space:nowrap!important;
+    overflow:hidden!important;
+    text-overflow:ellipsis!important;
+  }
+  .topnav .nav-countdown{
+    display:none!important;
+  }
+  .topnav .wallet-actions,
+  .topnav .nav-right,
+  body.game-mode .wallet-actions,
+  body.game-mode .nav-right{
+    grid-column:2 / 4!important;
+    grid-row:1!important;
+    display:grid!important;
+    grid-template-columns:auto auto!important;
+    align-items:center!important;
+    justify-content:end!important;
+    gap:6px!important;
+    min-width:0!important;
+  }
+  .topnav .wallet-addr,
+  body.game-mode .wallet-addr{
+    display:none!important;
+  }
+  .topnav .wallet-bal,
+  #walletBalance,
+  body.game-mode .wallet-bal,
+  body.game-mode #walletBalance{
+    display:inline-flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    max-width:82px!important;
+    min-height:31px!important;
+    padding:5px 6px!important;
+    border:1px solid rgba(255,255,255,.12)!important;
+    border-radius:6px!important;
+    background:rgba(255,255,255,.035)!important;
+    color:#dde4f0!important;
+    font-family:'Share Tech Mono',monospace!important;
+    font-size:8px!important;
+    white-space:nowrap!important;
+    overflow:hidden!important;
+    text-overflow:ellipsis!important;
+  }
+  .topnav #connectBtn,
+  body.game-mode #connectBtn{
+    position:static!important;
+    display:inline-grid!important;
+    place-items:center!important;
+    min-width:76px!important;
+    max-width:88px!important;
+    min-height:31px!important;
+    padding:5px 6px!important;
+    font-size:8px!important;
+    line-height:1!important;
+    white-space:nowrap!important;
+    overflow:hidden!important;
+    text-overflow:ellipsis!important;
+  }
+  body.game-mode #statsRow{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:6px!important;
+  }
+  body.game-mode #statsRow .stat-card{
+    min-height:64px!important;
+    padding:8px 6px!important;
+    text-align:center!important;
+    align-items:center!important;
+  }
+  body.game-mode #statsRow .stat-card:nth-child(4){
+    grid-column:1 / -1!important;
+  }
+  body.game-mode #statsRow .stat-val,
+  body.game-mode #statsRow #myEstPayout{
+    font-size:18px!important;
+  }
+  body.game-mode #statsRow .stat-lbl{
+    font-size:7px!important;
+    line-height:1.15!important;
+    letter-spacing:.5px!important;
+  }
+  body.game-mode .game-grid{
+    display:grid!important;
+    grid-template-columns:1fr!important;
+    grid-template-rows:auto auto!important;
+  }
+  body.game-mode .pitch-container{
+    grid-column:1!important;
+    grid-row:1!important;
+  }
+  body.game-mode .country-section{
+    grid-column:1!important;
+    grid-row:2!important;
+  }
+  body.game-mode .pitch-title-row{
+    grid-template-columns:minmax(0,1fr) 92px minmax(0,1fr)!important;
+    gap:6px!important;
+  }
+  body.game-mode .dash-mint-btn{
+    min-width:92px!important;
+    min-height:36px!important;
+    font-size:12px!important;
+  }
+  body.game-mode .completion-label{
+    font-size:8px!important;
+    letter-spacing:.8px!important;
+    max-width:100%!important;
+    white-space:normal!important;
+  }
+  body.game-mode .filter-tabs{
+    display:flex!important;
+    flex-wrap:nowrap!important;
+    overflow-x:auto!important;
+    overflow-y:hidden!important;
+    gap:6px!important;
+    padding-bottom:5px!important;
+    scrollbar-width:thin!important;
+  }
+  body.game-mode .filter-tabs .tab-btn{
+    flex:0 0 auto!important;
+    min-width:84px!important;
+    min-height:32px!important;
+    font-size:8px!important;
+    padding:6px 8px!important;
+  }
+  body.game-mode .country-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:7px!important;
+  }
+  body.game-mode .country-card{
+    min-height:82px!important;
+    padding:8px!important;
+  }
+  body.game-mode .country-card-main{
+    grid-template-columns:36px minmax(0,1fr)!important;
+    gap:7px!important;
+  }
+  body.game-mode .country-card-flag{
+    width:36px!important;
+    min-width:36px!important;
+    height:24px!important;
+  }
+  body.game-mode .country-card .flag-img{
+    width:34px!important;
+    height:23px!important;
+  }
+  body.game-mode .country-card-name{
+    font-size:12px!important;
+  }
+  body.game-mode .country-card-score{
+    font-size:16px!important;
+  }
+  body.game-mode .country-card-completion{
+    font-size:8px!important;
+  }
+}
+
+/* Final album/game polish: mobile bar, readable country cards, centered mint row */
+body.game-mode #statsRow .stat-card{
+  justify-content:center!important;
+  text-align:center!important;
+}
+body.game-mode #statsRow .stat-val,
+body.game-mode #statsRow #myEstPayout{
+  text-align:center!important;
+  width:100%!important;
+}
+body.game-mode #statsRow .stat-lbl{
+  display:block!important;
+  text-align:center!important;
+  width:100%!important;
+  margin:0 auto!important;
+}
+body.game-mode .pitch-title-row{
+  grid-template-columns:minmax(0,1fr) auto minmax(0,1fr)!important;
+  align-items:center!important;
+}
+body.game-mode .dash-mint-btn{
+  justify-self:center!important;
+  align-self:center!important;
+  display:inline-grid!important;
+  place-items:center!important;
+}
+body.game-mode .completion-label{
+  justify-self:end!important;
+  align-self:center!important;
+  text-align:right!important;
+}
+body.game-mode .country-card{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) auto!important;
+  align-items:center!important;
+  gap:10px!important;
+}
+body.game-mode .country-card-main{
+  display:grid!important;
+  grid-template-columns:auto minmax(0,1fr)!important;
+  align-items:center!important;
+  gap:10px!important;
+  min-width:0!important;
+}
+body.game-mode .country-card-copy{
+  display:grid!important;
+  grid-template-rows:auto auto!important;
+  align-content:center!important;
+  gap:5px!important;
+  min-width:0!important;
+}
+body.game-mode .country-card-name{
+  margin:0!important;
+  line-height:1!important;
+  text-align:left!important;
+}
+body.game-mode .country-card-score{
+  margin:0!important;
+  line-height:1!important;
+  text-align:left!important;
+}
+body.game-mode .country-card-completion{
+  justify-self:end!important;
+  align-self:end!important;
+  text-align:right!important;
+}
+@media(min-width:901px){
+  body.game-mode .topnav{
+    width:100%!important;
+    max-width:100%!important;
+  }
+  body.game-mode .game-grid{
+    display:grid!important;
+    grid-template-columns:1fr!important;
+    grid-template-rows:auto auto!important;
+    gap:10px!important;
+  }
+  body.game-mode .pitch-container{
+    grid-column:1!important;
+    grid-row:1!important;
+  }
+  body.game-mode .country-section{
+    grid-column:1!important;
+    grid-row:2!important;
+  }
+  body.game-mode .country-grid{
+    grid-template-columns:repeat(auto-fill,minmax(176px,1fr))!important;
+    gap:9px!important;
+    max-height:none!important;
+    overflow:visible!important;
+  }
+  body.game-mode .country-card{
+    min-height:94px!important;
+    padding:11px!important;
+  }
+  body.game-mode .country-card-flag{
+    width:52px!important;
+    min-width:52px!important;
+    height:34px!important;
+  }
+  body.game-mode .country-card .flag-img{
+    width:50px!important;
+    height:33px!important;
+  }
+  body.game-mode .country-card-name{
+    font-size:15px!important;
+  }
+  body.game-mode .country-card-score{
+    font-size:19px!important;
+  }
+  body.game-mode .country-card-completion{
+    min-width:36px!important;
+    font-size:10px!important;
+    white-space:nowrap!important;
+  }
+}
+@media(max-width:900px){
+  html,
+  body{
+    width:100%!important;
+    max-width:100vw!important;
+    overflow-x:hidden!important;
+  }
+  *,
+  *::before,
+  *::after{
+    box-sizing:border-box!important;
+  }
+  .topnav,
+  body.game-mode .topnav{
+    width:100%!important;
+    max-width:100%!important;
+    min-height:48px!important;
+    height:48px!important;
+    grid-template-columns:minmax(98px,1fr) auto auto!important;
+    grid-template-rows:48px!important;
+    margin:0!important;
+    padding:6px 7px!important;
+    gap:5px!important;
+    overflow:hidden!important;
+  }
+  .topnav-logo,.logo,
+  body.game-mode .topnav-logo,
+  body.game-mode .logo{
+    min-width:0!important;
+    font-size:9px!important;
+    letter-spacing:.45px!important;
+    line-height:1!important;
+  }
+  .topnav .nav-countdown,
+  body.game-mode .topnav .nav-countdown{
+    display:none!important;
+  }
+  .topnav .nav-right,
+  .topnav .wallet-actions,
+  body.game-mode .nav-right,
+  body.game-mode .wallet-actions{
+    grid-column:2 / 4!important;
+    grid-row:1!important;
+    display:grid!important;
+    grid-template-columns:auto auto!important;
+    align-items:center!important;
+    justify-content:end!important;
+    gap:5px!important;
+    min-width:0!important;
+  }
+  .topnav .wallet-bal,
+  body.game-mode .wallet-bal,
+  #walletBalance{
+    max-width:78px!important;
+    min-height:30px!important;
+    padding:4px 5px!important;
+    font-size:8px!important;
+  }
+  .topnav #connectBtn,
+  body.game-mode #connectBtn{
+    min-width:76px!important;
+    max-width:86px!important;
+    min-height:30px!important;
+    padding:5px!important;
+    font-size:8px!important;
+  }
+  .hero{
+    width:100%!important;
+    max-width:100%!important;
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr)!important;
+    gap:10px!important;
+    padding:12px 10px!important;
+    overflow:hidden!important;
+  }
+  .hero-main,
+  .hero-flow,
+  .hero-side{
+    min-width:0!important;
+    width:100%!important;
+    max-width:100%!important;
+    overflow:hidden!important;
+  }
+  .hero-title{
+    font-size:34px!important;
+    max-width:100%!important;
+  }
+  .hero-sub{
+    max-width:100%!important;
+    font-size:16px!important;
+    line-height:1.28!important;
+    overflow-wrap:break-word!important;
+  }
+  .hero-actions{
+    display:grid!important;
+    grid-template-columns:1fr!important;
+    width:100%!important;
+  }
+  .pricing-schedule{
+    display:flex!important;
+    flex-wrap:nowrap!important;
+    overflow-x:auto!important;
+    gap:7px!important;
+    -webkit-overflow-scrolling:touch!important;
+  }
+  .pricing-schedule .schedule-item{
+    flex:0 0 150px!important;
+    min-width:150px!important;
+  }
+  .hero-side .stats-container{
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  }
+  body.game-mode #statsRow{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  }
+  body.game-mode #statsRow .stat-card:nth-child(4){
+    grid-column:1 / -1!important;
+  }
+  body.game-mode #statsRow .stat-lbl{
+    max-width:160px!important;
+    line-height:1.15!important;
+  }
+  body.game-mode .game-grid{
+    display:grid!important;
+    grid-template-columns:1fr!important;
+    grid-template-rows:auto auto!important;
+  }
+  body.game-mode .pitch-container{
+    grid-row:1!important;
+  }
+  body.game-mode .country-section{
+    grid-row:2!important;
+  }
+  body.game-mode .pitch-title-row{
+    grid-template-columns:minmax(0,1fr) 96px minmax(0,1fr)!important;
+  }
+  body.game-mode .completion-label{
+    max-width:126px!important;
+    white-space:normal!important;
+    line-height:1.1!important;
+  }
+  body.game-mode .filter-tabs{
+    display:flex!important;
+    flex-wrap:nowrap!important;
+    overflow-x:auto!important;
+    overflow-y:hidden!important;
+    gap:6px!important;
+    -webkit-overflow-scrolling:touch!important;
+    scrollbar-width:thin!important;
+  }
+  body.game-mode .filter-tabs .tab-btn{
+    flex:0 0 auto!important;
+    min-width:88px!important;
+  }
+  body.game-mode .country-card{
+    min-height:84px!important;
+  }
+  body.game-mode .country-card-main{
+    grid-template-columns:38px minmax(0,1fr)!important;
+    gap:7px!important;
+  }
+  body.game-mode .country-card-name{
+    font-size:12px!important;
+  }
+  body.game-mode .country-card-score{
+    font-size:16px!important;
+  }
+}
+@media(max-width:900px){
+  .topnav,
+  body.game-mode .topnav{
+    display:flex!important;
+    align-items:center!important;
+    justify-content:space-between!important;
+    flex-wrap:nowrap!important;
+    position:sticky!important;
+    top:0!important;
+    left:0!important;
+    right:auto!important;
+    width:100vw!important;
+    max-width:100vw!important;
+    min-height:48px!important;
+    height:48px!important;
+    padding:6px 8px!important;
+    gap:6px!important;
+    overflow:hidden!important;
+  }
+  .topnav-logo,
+  .topnav-logo.logo,
+  .logo,
+  body.game-mode .topnav-logo,
+  body.game-mode .logo{
+    flex:1 1 auto!important;
+    min-width:0!important;
+    max-width:none!important;
+    overflow:hidden!important;
+    text-overflow:ellipsis!important;
+    white-space:nowrap!important;
+    padding-right:176px!important;
+  }
+  .topnav .nav-countdown,
+  .topnav .nav-price-countdown,
+  body.game-mode .topnav .nav-countdown,
+  body.game-mode .topnav .nav-price-countdown{
+    display:none!important;
+  }
+  .topnav .nav-right,
+  .topnav .wallet-actions,
+  body.game-mode .nav-right,
+  body.game-mode .wallet-actions{
+    flex:0 0 auto!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:flex-end!important;
+    gap:5px!important;
+    margin-left:auto!important;
+    min-width:0!important;
+    max-width:190px!important;
+  }
+  .topnav .wallet-bal:empty,
+  #walletBalance:empty{
+    display:none!important;
+  }
+  .topnav .wallet-bal,
+  body.game-mode .wallet-bal,
+  #walletBalance{
+    position:fixed!important;
+    right:104px!important;
+    top:8px!important;
+    max-width:82px!important;
+    z-index:220!important;
+  }
+  .topnav #connectBtn,
+  body.game-mode #connectBtn{
+    position:fixed!important;
+    right:8px!important;
+    top:8px!important;
+    max-width:92px!important;
+    z-index:221!important;
+  }
+}
+
+/* Final connected-dashboard market UX */
+body.game-mode #statsRow{
+  grid-template-columns:repeat(5,minmax(0,1fr))!important;
+}
+body.game-mode .country-card{
+  grid-template-columns:1fr!important;
+  grid-template-rows:auto auto!important;
+  align-content:center!important;
+  justify-items:stretch!important;
+  gap:8px!important;
+}
+body.game-mode .country-card > div{
+  width:100%!important;
+}
+body.game-mode .country-card-main{
+  display:grid!important;
+  grid-template-columns:auto minmax(0,1fr)!important;
+  align-items:center!important;
+  justify-content:start!important;
+  gap:10px!important;
+}
+body.game-mode .country-card > .country-card-main{
+  display:grid!important;
+  grid-template-columns:auto minmax(0,1fr)!important;
+  align-items:center!important;
+  justify-content:start!important;
+  gap:10px!important;
+}
+body.game-mode .country-card > .country-card-bottom{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) auto!important;
+  align-items:center!important;
+  justify-content:stretch!important;
+  gap:8px!important;
+}
+body.game-mode .country-card-bottom{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) auto!important;
+  align-items:center!important;
+  gap:8px!important;
+  min-width:0!important;
+}
+body.game-mode .country-card-name{
+  text-align:left!important;
+  white-space:nowrap!important;
+}
+body.game-mode .country-card-score{
+  text-align:left!important;
+  white-space:nowrap!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+}
+body.game-mode .country-card-completion{
+  text-align:right!important;
+  white-space:nowrap!important;
+  font-size:12px!important;
+  line-height:1!important;
+}
+body.game-mode .pos-card{
+  gap:6px!important;
+  justify-content:start!important;
+}
+body.game-mode .pos-card-top{
+  min-height:58px!important;
+}
+body.game-mode .slot-market-actions{
+  display:grid!important;
+  gap:5px!important;
+  margin-top:4px!important;
+  width:100%!important;
+}
+body.game-mode .slot-market-actions .card-hover-note{
+  display:block!important;
+  border:1px solid rgba(255,201,64,.28)!important;
+  background:rgba(255,201,64,.07)!important;
+  border-radius:6px!important;
+  padding:5px 4px!important;
+  font-size:8px!important;
+  color:#ffc940!important;
+  text-align:center!important;
+}
+body.game-mode .slot-market-action{
+  display:grid!important;
+  grid-template-rows:auto auto auto!important;
+  gap:3px!important;
+  place-items:center!important;
+  min-height:48px!important;
+  padding:6px 5px!important;
+  margin:0!important;
+  border-radius:7px!important;
+  line-height:1!important;
+  text-align:center!important;
+  box-shadow:inset 0 0 14px rgba(0,255,135,.08)!important;
+}
+body.game-mode .slot-market-action span{
+  font-size:8px!important;
+  letter-spacing:.7px!important;
+}
+body.game-mode .slot-market-action b{
+  font-size:15px!important;
+  line-height:1!important;
+}
+body.game-mode .slot-market-action small{
+  font-family:'Share Tech Mono',monospace!important;
+  font-size:8px!important;
+  color:#d7e2f0!important;
+  line-height:1.05!important;
+}
+body.game-mode .slot-market-action:hover{
+  transform:translateY(-1px)!important;
+  filter:brightness(1.15)!important;
+}
+body.game-mode .sell-visible{
+  box-shadow:inset 0 0 14px rgba(239,68,68,.08)!important;
+}
+body.game-mode .pos-card.rarity-0 .pos-rarity,
+body.game-mode .pos-rarity.rarity-0{color:#9aa4b2!important;}
+body.game-mode .pos-card.rarity-1 .pos-rarity,
+body.game-mode .pos-rarity.rarity-1{color:#3b82f6!important;}
+body.game-mode .pos-card.rarity-2 .pos-rarity,
+body.game-mode .pos-rarity.rarity-2{color:#c084fc!important;}
+body.game-mode .pos-card.rarity-3 .pos-rarity,
+body.game-mode .pos-rarity.rarity-3{color:#ffc940!important;}
+body.game-mode .leaderboard-list{
+  max-height:none!important;
+}
+body.game-mode .lb-row.local-row{
+  display:grid!important;
+  grid-template-columns:42px minmax(130px,1fr) minmax(122px,auto) max-content!important;
+  align-items:center!important;
+  gap:10px!important;
+}
+body.game-mode .lb-row.local-row .lb-completion{
+  justify-self:start!important;
+  text-align:left!important;
+  margin:0!important;
+  white-space:nowrap!important;
+  min-width:122px!important;
+}
+body.game-mode .lb-row.local-row .lb-score{
+  justify-self:end!important;
+}
+@media(min-width:901px){
+  body.game-mode #gameSection{
+    display:block;
+  }
+  body.game-mode .lb-section{
+    padding-bottom:10px!important;
+  }
+  body.game-mode .formation.album-horizontal .row-single{
+    grid-template-columns:repeat(11,minmax(116px,1fr))!important;
+    gap:9px!important;
+  }
+  body.game-mode .formation.album-horizontal .row-single .pos-card,
+  body.game-mode .pos-card{
+    min-height:176px!important;
+    padding:9px 7px!important;
+  }
+  body.game-mode .country-grid{
+    grid-template-columns:repeat(auto-fill,minmax(162px,1fr))!important;
+    gap:8px!important;
+  }
+  body.game-mode .country-card{
+    min-height:82px!important;
+    padding:10px!important;
+  }
+  body.game-mode .country-card-name{
+    font-size:15px!important;
+  }
+  body.game-mode .country-card-score{
+    font-size:18px!important;
+  }
+  body.game-mode .country-card-completion{
+    font-size:12px!important;
+  }
+}
+@media(max-width:900px){
+  body.game-mode #statsRow{
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+    gap:6px!important;
+  }
+  body.game-mode #statsRow .stat-card{
+    min-height:62px!important;
+  }
+  body.game-mode #statsRow .stat-card:nth-child(4){
+    grid-column:1 / 2!important;
+  }
+  body.game-mode #statsRow .stat-card:nth-child(5){
+    grid-column:2 / 4!important;
+  }
+  body.game-mode .country-card{
+    min-height:78px!important;
+    padding:8px!important;
+    gap:7px!important;
+  }
+  body.game-mode .country-card-main{
+    grid-template-columns:38px minmax(0,1fr)!important;
+    gap:7px!important;
+  }
+  body.game-mode .country-card-bottom{
+    grid-template-columns:minmax(0,1fr) auto!important;
+  }
+  body.game-mode .country-card-score{
+    font-size:15px!important;
+  }
+  body.game-mode .country-card-completion{
+    font-size:9px!important;
+  }
+  body.game-mode .formation.album-horizontal .row-single .pos-card,
+  body.game-mode .pos-card{
+    min-height:132px!important;
+  }
+  body.game-mode .slot-market-action{
+    min-height:42px!important;
+    padding:5px 4px!important;
+  }
+  body.game-mode .slot-market-action span{
+    font-size:7px!important;
+  }
+  body.game-mode .slot-market-action b{
+    font-size:13px!important;
+  }
+  body.game-mode .slot-market-action small{
+    font-size:7px!important;
+  }
+  body.game-mode .lb-row.local-row{
+    grid-template-columns:32px minmax(92px,1fr) minmax(96px,auto) max-content!important;
+    gap:7px!important;
+  }
+  body.game-mode .lb-row.local-row .lb-completion{
+    min-width:96px!important;
+    font-size:10px!important;
+  }
+}
+
+/* Restore slot actions: PC hover card, mobile action sheet */
+body.game-mode .slot-market-badge{
+  position:absolute!important;
+  top:6px!important;
+  right:6px!important;
+  z-index:4!important;
+  min-width:30px!important;
+  padding:3px 5px!important;
+  border:1px solid rgba(0,255,135,.55)!important;
+  border-radius:5px!important;
+  background:rgba(0,255,135,.14)!important;
+  color:#00ff87!important;
+  font-family:'Black Ops One',sans-serif!important;
+  font-size:7px!important;
+  line-height:1!important;
+  letter-spacing:.7px!important;
+  text-align:center!important;
+}
+body.game-mode .card-hover-actions{
+  inset:7px!important;
+  z-index:9!important;
+  display:grid!important;
+  align-content:center!important;
+  gap:6px!important;
+  padding:7px!important;
+  border-radius:7px!important;
+  background:linear-gradient(180deg,rgba(6,8,10,.96),rgba(9,14,20,.98))!important;
+  border:1px solid rgba(0,255,135,.34)!important;
+  box-shadow:0 0 18px rgba(0,255,135,.13), inset 0 0 18px rgba(0,255,135,.07)!important;
+  overflow:auto!important;
+}
+body.game-mode .card-hover-actions .btn-card-action,
+body.game-mode .slot-action-body .btn-card-action.market-offer-btn,
+body.game-mode .slot-action-body .btn-card-action.sell-offer-btn{
+  display:grid!important;
+  grid-template-rows:auto auto auto!important;
+  place-items:center!important;
+  gap:3px!important;
+  min-height:44px!important;
+  margin:0!important;
+  padding:6px 5px!important;
+  border-radius:7px!important;
+  font-size:8px!important;
+  line-height:1!important;
+}
+body.game-mode .card-hover-actions .btn-card-action span,
+body.game-mode .slot-action-body .btn-card-action span{
+  font-size:8px!important;
+  letter-spacing:.6px!important;
+}
+body.game-mode .card-hover-actions .btn-card-action b,
+body.game-mode .slot-action-body .btn-card-action b{
+  font-family:'Black Ops One',sans-serif!important;
+  font-size:15px!important;
+  line-height:1!important;
+}
+body.game-mode .card-hover-actions .btn-card-action small,
+body.game-mode .slot-action-body .btn-card-action small{
+  font-family:'Share Tech Mono',monospace!important;
+  font-size:8px!important;
+  color:#d7e2f0!important;
+  line-height:1!important;
+}
+body.game-mode .card-hover-actions .card-hover-note,
+body.game-mode .slot-action-body .card-hover-note{
+  display:grid!important;
+  place-items:center!important;
+  min-height:40px!important;
+  border:1px solid rgba(255,201,64,.28)!important;
+  background:rgba(255,201,64,.07)!important;
+  border-radius:7px!important;
+  padding:6px!important;
+  color:#ffc940!important;
+  font-family:'Black Ops One',sans-serif!important;
+  font-size:9px!important;
+  text-align:center!important;
+}
+body.game-mode .card-hover-actions .no-listing-note,
+body.game-mode .slot-action-body .no-listing-note{
+  color:#5a6a7a!important;
+  border-color:rgba(90,106,122,.28)!important;
+  background:rgba(90,106,122,.07)!important;
+}
+body.game-mode .slot-action-subtitle{
+  margin-top:3px!important;
+  color:#ef4444!important;
+  font-family:'Black Ops One',sans-serif!important;
+  font-size:11px!important;
+  letter-spacing:1px!important;
+  text-align:center!important;
+}
+body.game-mode .sell-offer-btn{
+  border-color:rgba(239,68,68,.42)!important;
+  background:rgba(239,68,68,.11)!important;
+  color:#ef4444!important;
+}
+@media(max-width:900px){
+  body.game-mode .nation-selector-title{
+    display:grid!important;
+    grid-template-columns:1fr auto!important;
+    grid-template-rows:auto auto!important;
+    align-items:center!important;
+    gap:8px!important;
+    overflow:hidden!important;
+  }
+  body.game-mode .nation-selector-title > span:first-child{
+    grid-column:1!important;
+    grid-row:1!important;
+  }
+  body.game-mode .nation-selector-title .album-title-tools{
+    grid-column:2!important;
+    grid-row:1!important;
+  }
+  body.game-mode .nation-selector-title .filter-tabs{
+    grid-column:1 / -1!important;
+    grid-row:2!important;
+    width:100%!important;
+    max-width:100%!important;
+    min-width:0!important;
+    display:flex!important;
+    flex-wrap:nowrap!important;
+    overflow-x:auto!important;
+    overflow-y:hidden!important;
+    justify-content:flex-start!important;
+    gap:6px!important;
+    padding-bottom:6px!important;
+    -webkit-overflow-scrolling:touch!important;
+    scrollbar-width:thin!important;
+  }
+  body.game-mode .nation-selector-title .filter-tabs .tab-btn{
+    flex:0 0 auto!important;
+    min-width:96px!important;
+    white-space:nowrap!important;
+  }
+  body.game-mode .pos-card .card-hover-actions{
+    display:none!important;
+  }
+  body.game-mode .slot-action-body{
+    max-height:62dvh!important;
+    overflow:auto!important;
+  }
+  body.game-mode .slot-action-body .btn-card-action.market-offer-btn,
+  body.game-mode .slot-action-body .btn-card-action.sell-offer-btn{
+    min-height:58px!important;
+    font-size:10px!important;
+  }
+  body.game-mode .slot-action-body .btn-card-action b{
+    font-size:18px!important;
+  }
+}
+
+/* Squad v2: clean collectible cards, stable desktop/mobile dimensions */
+body.game-mode .pitch-wrap{
+  overflow-x:auto!important;
+  overflow-y:hidden!important;
+  -webkit-overflow-scrolling:touch!important;
+}
+body.game-mode .formation.album-horizontal{
+  min-width:0!important;
+  width:100%!important;
+}
+body.game-mode .formation.album-horizontal .row-single{
+  align-items:stretch!important;
+}
+body.game-mode .pos-card{
+  display:grid!important;
+  grid-template-rows:1fr auto!important;
+  gap:5px!important;
+  justify-content:stretch!important;
+  align-content:stretch!important;
+  overflow:visible!important;
+  border-radius:8px!important;
+  background:
+    linear-gradient(180deg,rgba(18,25,34,.96),rgba(7,10,15,.98)),
+    radial-gradient(circle at 50% 0%,rgba(0,255,135,.09),transparent 62%)!important;
+}
+body.game-mode .pos-card-top{
+  display:grid!important;
+  grid-template-rows:auto 1fr!important;
+  align-items:center!important;
+  justify-items:center!important;
+  min-height:0!important;
+}
+body.game-mode .pos-card .figure-mini{
+  align-self:center!important;
+}
+body.game-mode .pos-card > div:not(.pos-card-top):not(.card-hover-actions):not(.slot-market-hint){
+  display:grid!important;
+  gap:2px!important;
+  justify-items:center!important;
+  align-self:end!important;
+  padding-bottom:2px!important;
+}
+body.game-mode .slot-market-hint{
+  position:absolute!important;
+  left:7px!important;
+  right:7px!important;
+  bottom:6px!important;
+  z-index:4!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  align-items:center!important;
+  gap:4px!important;
+  min-height:20px!important;
+  padding:4px 5px!important;
+  border:1px solid rgba(0,255,135,.34)!important;
+  border-radius:6px!important;
+  background:rgba(2,8,7,.82)!important;
+  box-shadow:inset 0 0 12px rgba(0,255,135,.08)!important;
+  pointer-events:none!important;
+  min-width:0!important;
+  max-width:calc(100% - 14px)!important;
+  white-space:nowrap!important;
+}
+body.game-mode .slot-market-hint span{
+  flex:0 0 auto!important;
+  color:#00ff87!important;
+  font-family:'Black Ops One',sans-serif!important;
+  font-size:8px!important;
+  line-height:1!important;
+  letter-spacing:.4px!important;
+  white-space:nowrap!important;
+}
+body.game-mode .slot-market-hint b{
+  flex:1 1 auto!important;
+  min-width:0!important;
+  max-width:100%!important;
+  text-align:right!important;
+  color:#ffc940!important;
+  font-family:'Black Ops One',sans-serif!important;
+  font-size:clamp(7px,.64vw,9px)!important;
+  line-height:1!important;
+  white-space:nowrap!important;
+  overflow:hidden!important;
+  text-overflow:clip!important;
+}
+body.game-mode .pos-card.owned::after{
+  content:"✓"!important;
+  position:absolute!important;
+  top:5px!important;
+  right:5px!important;
+  z-index:12!important;
+  width:18px!important;
+  height:18px!important;
+  display:grid!important;
+  place-items:center!important;
+  border-radius:50%!important;
+  border:1px solid rgba(0,255,135,.78)!important;
+  background:rgba(5,12,10,.96)!important;
+  color:#00ff87!important;
+  font-family:'Black Ops One',sans-serif!important;
+  font-size:11px!important;
+  line-height:1!important;
+  box-shadow:0 0 12px rgba(0,255,135,.28)!important;
+}
+body.game-mode .pos-card.just-scored{
+  z-index:15!important;
+}
+body.game-mode .pos-card.just-scored::before{
+  content:"NEW"!important;
+  position:absolute!important;
+  top:5px!important;
+  left:5px!important;
+  right:auto!important;
+  z-index:13!important;
+  padding:4px 6px!important;
+  border-radius:5px!important;
+  border:1px solid rgba(0,0,0,.35)!important;
+  background:#00ff87!important;
+  color:#00120a!important;
+  font-family:'Black Ops One',sans-serif!important;
+  font-size:8px!important;
+  line-height:1!important;
+  letter-spacing:.6px!important;
+  box-shadow:0 0 12px rgba(0,255,135,.36)!important;
+}
+body.game-mode .pos-card:has(.slot-market-hint) > div:not(.pos-card-top):not(.card-hover-actions):not(.slot-market-hint){
+  padding-bottom:24px!important;
+}
+body.game-mode .slot-hover-panel{
+  inset:8px!important;
+  display:grid!important;
+  grid-template-rows:1fr auto!important;
+  align-content:stretch!important;
+  gap:7px!important;
+  padding:8px!important;
+  border-radius:8px!important;
+  background:linear-gradient(180deg,rgba(4,8,11,.97),rgba(7,12,17,.985))!important;
+  border:1px solid rgba(0,255,135,.38)!important;
+  box-shadow:0 0 24px rgba(0,255,135,.16), inset 0 0 18px rgba(0,255,135,.06)!important;
+  overflow:hidden!important;
+}
+body.game-mode .slot-hover-buy,
+body.game-mode .slot-hover-sell{
+  border-radius:8px!important;
+  cursor:pointer!important;
+  font-family:'Black Ops One',sans-serif!important;
+  line-height:1!important;
+  text-align:center!important;
+}
+body.game-mode .slot-hover-buy{
+  display:grid!important;
+  grid-template-rows:auto auto auto!important;
+  place-items:center!important;
+  gap:5px!important;
+  width:100%!important;
+  min-height:0!important;
+  padding:8px 6px!important;
+  border:1px solid rgba(0,255,135,.50)!important;
+  background:linear-gradient(180deg,rgba(0,255,135,.16),rgba(0,255,135,.055))!important;
+  color:#00ff87!important;
+}
+body.game-mode .slot-hover-buy span{
+  font-size:9px!important;
+  letter-spacing:.9px!important;
+}
+body.game-mode .slot-hover-buy b{
+  font-size:20px!important;
+  line-height:1!important;
+}
+body.game-mode .slot-hover-buy small{
+  color:#d7e2f0!important;
+  font-family:'Share Tech Mono',monospace!important;
+  font-size:9px!important;
+  line-height:1!important;
+}
+body.game-mode .slot-hover-empty{
+  display:grid!important;
+  place-items:center!important;
+  min-height:100%!important;
+  border:1px dashed rgba(90,106,122,.35)!important;
+  border-radius:8px!important;
+  color:#5a6a7a!important;
+  font-family:'Black Ops One',sans-serif!important;
+  font-size:10px!important;
+  letter-spacing:.8px!important;
+}
+body.game-mode .slot-hover-sell{
+  min-height:30px!important;
+  border:1px solid rgba(239,68,68,.42)!important;
+  background:rgba(239,68,68,.10)!important;
+  color:#ef4444!important;
+  font-size:9px!important;
+  letter-spacing:.7px!important;
+}
+@media(min-width:901px){
+  body.game-mode .formation.album-horizontal .row-single{
+    grid-template-columns:repeat(11,minmax(104px,1fr))!important;
+    width:100%!important;
+    gap:9px!important;
+  }
+  body.game-mode .formation.album-horizontal .row-single .pos-card,
+  body.game-mode .pos-card{
+    min-height:154px!important;
+    padding:8px 7px!important;
+  }
+  body.game-mode .pos-card-top{
+    min-height:78px!important;
+  }
+  body.game-mode .figure-mini{
+    width:56px!important;
+    height:56px!important;
+  }
+}
+@media(max-width:900px){
+  body.game-mode .country-section{
+    min-width:0!important;
+    overflow:hidden!important;
+  }
+  body.game-mode .nation-selector-title .filter-tabs{
+    width:calc(100vw - 34px)!important;
+    max-width:calc(100vw - 34px)!important;
+    overflow-x:auto!important;
+    overflow-y:hidden!important;
+    scroll-snap-type:x proximity!important;
+    touch-action:pan-x!important;
+  }
+  body.game-mode .nation-selector-title .filter-tabs .tab-btn{
+    scroll-snap-align:start!important;
+  }
+  body.game-mode .formation.album-horizontal{
+    width:max-content!important;
+    min-width:max-content!important;
+  }
+  body.game-mode .formation.album-horizontal .row-single{
+    grid-template-columns:repeat(11,88px)!important;
+    width:max-content!important;
+    min-width:max-content!important;
+    gap:8px!important;
+  }
+  body.game-mode .formation.album-horizontal .row-single .pos-card,
+  body.game-mode .pos-card{
+    width:88px!important;
+    min-width:88px!important;
+    min-height:126px!important;
+    padding:7px 6px!important;
+  }
+  body.game-mode .pos-card-top{
+    min-height:62px!important;
+  }
+  body.game-mode .figure-mini{
+    width:46px!important;
+    height:46px!important;
+  }
+  body.game-mode .slot-market-hint{
+    left:5px!important;
+    right:5px!important;
+    bottom:5px!important;
+    min-height:18px!important;
+    padding:3px 4px!important;
+  }
+  body.game-mode .slot-market-hint span{
+    font-size:7px!important;
+    letter-spacing:.2px!important;
+  }
+  body.game-mode .slot-market-hint b{
+    font-size:7px!important;
+  }
+  body.game-mode .pos-card:has(.slot-market-hint) > div:not(.pos-card-top):not(.card-hover-actions):not(.slot-market-hint){
+    padding-bottom:22px!important;
+  }
+}
+
+/* Final requested layout: desktop nation grid 8 x 6 and mobile short completion */
+@media(min-width:901px){
+  body.game-mode .country-grid{
+    grid-template-columns:repeat(8,minmax(0,1fr))!important;
+    grid-auto-rows:minmax(74px,auto)!important;
+    gap:8px!important;
+    max-height:none!important;
+    overflow:visible!important;
+  }
+}
+@media(max-width:900px){
+  body.game-mode #selectedCountryCompletion{
+    font-size:0!important;
+    letter-spacing:0!important;
+  }
+  body.game-mode #selectedCountryCompletion::before{
+    content:attr(data-short)!important;
+    font-size:10px!important;
+    letter-spacing:.8px!important;
+  }
+}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
@@ -1720,12 +4323,16 @@ body.game-mode .nav-right #connectBtn.connected{
       <div class="stat-lbl">Cards Owned</div>
     </div>
     <div class="stat-card">
+      <div class="stat-val highlight" id="myGlobalScore">0</div>
+      <div class="stat-lbl">Score</div>
+    </div>
+    <div class="stat-card">
       <div class="stat-val text-primary" id="myGlobalRank" style="color:#818cf8;">—</div>
-      <div class="stat-lbl">Global Position</div>
+      <div class="stat-lbl">Rank</div>
     </div>
     <div class="stat-card" style="background:rgba(0,255,135,0.03); border-color:rgba(0,255,135,0.2);">
       <div class="stat-val" id="myEstPayout" style="color:#00ff87; font-size:24px; padding-top:6px;">???,??? CHZ</div>
-      <div class="stat-lbl">Est. Quest Reward (TOP 10)</div>
+      <div class="stat-lbl">Reward</div>
     </div>
   </div>
   <div class="dashboard-prize-strip" id="dashboardPrizeStrip" style="display:none;">
@@ -1872,9 +4479,9 @@ body.game-mode .nav-right #connectBtn.connected{
     <div class="sell-price-box">
       <label class="sell-price-label">Set Listing Price (CHZ)</label>
       <div class="sell-stepper">
-        <button type="button" class="sell-step-btn" data-step="-1">-</button>
-        <input type="number" id="sellPriceInput" class="sell-price-input" step="1" min="1" placeholder="10">
-        <button type="button" class="sell-step-btn" data-step="1">+</button>
+        <button type="button" class="sell-step-btn" data-step="-5">-</button>
+        <input type="number" id="sellPriceInput" class="sell-price-input" step="5" min="5" placeholder="10">
+        <button type="button" class="sell-step-btn" data-step="5">+</button>
       </div>
     </div>
     <button class="btn-card-action upgrade sell-submit" id="btnSubmitSell" onclick="submitSellCard()">LIST CARD FOR SALE</button>
@@ -1918,7 +4525,7 @@ body.game-mode .nav-right #connectBtn.connected{
 <div id="networkOverlay" aria-live="polite" aria-busy="true">
   <div class="network-wait-card">
     <div class="network-ball">&#9917;</div>
-    <div class="network-wait-title">Waiting for network</div>
+    <div class="network-wait-title" id="networkOverlayTitle">Processing request</div>
     <div class="network-wait-text" id="networkOverlayText">Please confirm in your wallet and wait for Chiliz Chain.</div>
     <button id="walletOpenBtn" type="button" onclick="openWalletConnectApp()" style="display:none;margin-top:12px;border:1px solid rgba(0,255,135,.42);background:rgba(0,255,135,.10);color:#00ff87;border-radius:7px;padding:9px 12px;font-family:'Black Ops One',sans-serif;font-size:10px;letter-spacing:1px;">OPEN WALLET APP</button>
   </div>
@@ -2801,6 +5408,7 @@ let lastSquadHighlight = null;
 window.dreamScores = {}; // wallet -> { teamId -> { position -> {weight, tid, rarity, dna} } }
 let marketByTeamPosition = {}; // teamId -> { position -> {listingId, price, weight, rarity} }
 let marketFloorByTeamPosition = {}; // teamId -> { position -> {listingId, price} }
+let marketListingsByTeamPosition = {}; // teamId -> { position -> [active listings sorted by price] }
 let activeListingsByToken = {}; // tokenId -> { listingId, seller, price, priceWei }
 let activeListingsById = {}; // listingId -> { tokenId, seller, price, priceWei, teamId, position, weight, rarity, dna }
 let currentMintPrice = ethers.parseEther("10"); 
@@ -2830,15 +5438,33 @@ function isMissingPrivySession(error) {
 }
 
 let networkOverlayDepth = 0;
+function networkOverlayTitleFor(message = '') {
+  const msg = String(message || '').toLowerCase();
+  if (msg.includes('refresh') || msg.includes('load') || msg.includes('blockchain data')) return 'Loading live data';
+  if (msg.includes('walletconnect')) return 'Opening wallet';
+  if (msg.includes('privy')) return 'Opening wallet';
+  if (msg.includes('confirmation') || msg.includes('confirm')) return 'Confirm in wallet';
+  if (msg.includes('approval')) return 'Marketplace approval';
+  if (msg.includes('buy') || msg.includes('buying')) return 'Buying card';
+  if (msg.includes('listing') || msg.includes('list')) return 'Listing card';
+  if (msg.includes('cancel')) return 'Cancelling listing';
+  if (msg.includes('mint')) return 'Minting card';
+  if (msg.includes('sent') || msg.includes('block')) return 'Transaction sent';
+  return 'Processing request';
+}
 function showNetworkOverlay(message = 'Please confirm in your wallet and wait for Chiliz Chain.') {
   networkOverlayDepth += 1;
   const overlay = document.getElementById('networkOverlay');
+  const title = document.getElementById('networkOverlayTitle');
   const text = document.getElementById('networkOverlayText');
+  if (title) title.textContent = networkOverlayTitleFor(message);
   if (text) text.textContent = message;
   if (overlay) overlay.classList.add('show');
 }
 function updateNetworkOverlay(message) {
+  const title = document.getElementById('networkOverlayTitle');
   const text = document.getElementById('networkOverlayText');
+  if (title && message) title.textContent = networkOverlayTitleFor(message);
   if (text && message) text.textContent = message;
 }
 function setWalletOpenButton(show) {
@@ -2999,8 +5625,31 @@ function refreshAfterChainUpdate(localCard = null) {
 }
 
 // Open Sell Modal with selected card data and fully rendering vectors
-function openSellModal(tokenId, pos, weight, rarity) {
+async function openSellModal(tokenId, pos, weight, rarity) {
   closeSlotActionSheet();
+  if (!address) {
+    showToast('Connect your wallet first.', true);
+    return;
+  }
+  try {
+    const rp = await getReadProvider();
+    const rc = new ethers.Contract(CONTRACT_ADDRESS, [
+      "function balanceOf(address account,uint256 id) external view returns (uint256)"
+    ], rp);
+    const myAddr = address.toLowerCase();
+    const zeroOwner = '0x0000000000000000000000000000000000000000';
+    const balance = await rc.balanceOf(address, tokenId);
+    const verifiedOwner = balance > 0n ? myAddr : zeroOwner;
+    tokenOwnerVerificationCache[Number(tokenId)] = verifiedOwner;
+    if (ownerMap[Number(tokenId)]) ownerMap[Number(tokenId)].owner = verifiedOwner;
+    if (verifiedOwner !== myAddr) {
+      showToast('You no longer own this card. Score stays saved, but SELL is disabled.', true);
+      renderPitch();
+      return;
+    }
+  } catch(e) {
+    console.warn('Owner verification skipped before sell modal:', e);
+  }
   activeSellTokenId = tokenId;
   const posName = POSITION_SHORT[pos] || pos;
   const rarityName = ['Common','Rare','Epic','Legendary'][rarity];
@@ -3064,7 +5713,7 @@ function changeSellPrice(delta) {
   const input = document.getElementById('sellPriceInput');
   if (!input) return;
   const current = Math.max(1, Math.round(parseFloat(input.value || '1') || 1));
-  input.value = Math.max(1, current + delta);
+  input.value = Math.max(5, current + delta);
 }
 
 function stopSellStepHold() {
@@ -3360,7 +6009,7 @@ async function finalizeWalletConnection(walletProvider, walletType='wallet') {
   contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
   marketContract = new ethers.Contract(MARKET_ADDRESS, MARKET_ABI, signer);
   const connectBtn = document.getElementById('connectBtn');
-  if (connectBtn) { connectBtn.textContent = 'CONNECTED'; connectBtn.classList.add('connected'); }
+  if (connectBtn) { connectBtn.textContent = address.slice(0,6)+'...'+address.slice(-4); connectBtn.classList.add('connected'); }
   const walletAddressEl = document.getElementById('walletAddress');
   if (walletAddressEl) { walletAddressEl.textContent = address.slice(0,6)+'...'+address.slice(-4); walletAddressEl.style.display = 'inline-block'; }
   await updateWalletBalance();
@@ -3482,6 +6131,43 @@ async function fetchEvents(){
 }
 
 let ownerMap = {};
+let tokenOwnerVerificationCache = {};
+let slotOwnerVerificationKey = '';
+
+async function verifyVisibleSlotOwners(teamId, tokenIds = []) {
+  if (!address || !tokenIds.length) return;
+  const uniqueIds = [...new Set(tokenIds.map(Number).filter(Number.isFinite))];
+  const missing = uniqueIds.filter(id => !tokenOwnerVerificationCache[id]);
+  if (!missing.length) return;
+  const key = `${teamId}:${missing.join(',')}`;
+  if (slotOwnerVerificationKey === key) return;
+  slotOwnerVerificationKey = key;
+  try {
+    const rp = await getReadProvider();
+    const rc = new ethers.Contract(CONTRACT_ADDRESS, [
+      "function balanceOf(address account,uint256 id) external view returns (uint256)"
+    ], rp);
+    let changed = false;
+    const myAddr = address.toLowerCase();
+    const zeroOwner = '0x0000000000000000000000000000000000000000';
+    for (const tokenId of missing) {
+      try {
+        const balance = await rc.balanceOf(address, tokenId);
+        const verifiedOwner = balance > 0n ? myAddr : zeroOwner;
+        tokenOwnerVerificationCache[tokenId] = verifiedOwner;
+        if (ownerMap[tokenId] && ownerMap[tokenId].owner !== verifiedOwner) {
+          ownerMap[tokenId].owner = verifiedOwner;
+          changed = true;
+        }
+      } catch(e) {}
+    }
+    if (changed && Number(teamId) === Number(selectedTeamId)) {
+      renderPitch();
+    }
+  } finally {
+    if (slotOwnerVerificationKey === key) slotOwnerVerificationKey = '';
+  }
+}
 
 async function loadData(options = {}){
   const silent = Boolean(options.silent);
@@ -3523,6 +6209,7 @@ async function loadData(options = {}){
   }
 
   ownerMap = {};
+  tokenOwnerVerificationCache = {};
   mints.forEach(m => {
     try{
       const t = parseDNA(m.dna);
@@ -3562,6 +6249,7 @@ async function loadData(options = {}){
 
   marketByTeamPosition = {};
   marketFloorByTeamPosition = {};
+  marketListingsByTeamPosition = {};
   activeListingsByToken = {};
   activeListingsById = {};
   try{
@@ -3610,14 +6298,29 @@ async function loadData(options = {}){
           marketByTeamPosition[tid][pos] = {listingId: i, price, priceWei, weight: fig.weight, rarity: fig.rarity};
         }
 
+        if(!marketListingsByTeamPosition[tid]) marketListingsByTeamPosition[tid] = {};
+        if(!marketListingsByTeamPosition[tid][pos]) marketListingsByTeamPosition[tid][pos] = [];
+        marketListingsByTeamPosition[tid][pos].push(activeListingsById[i]);
+
         // Find cheapest marketplace floor card
         if(!marketFloorByTeamPosition[tid]) marketFloorByTeamPosition[tid] = {};
         const curFloor = marketFloorByTeamPosition[tid][pos];
         if(!curFloor || price < curFloor.price) {
-          marketFloorByTeamPosition[tid][pos] = {listingId: i, price, priceWei};
+          marketFloorByTeamPosition[tid][pos] = {
+            listingId: i,
+            tokenId,
+            price,
+            priceWei,
+            weight: fig.weight,
+            rarity: fig.rarity,
+            dna: fig.dna
+          };
         }
       }catch(e){}
     }
+    Object.values(marketListingsByTeamPosition).forEach(positionMap => {
+      Object.values(positionMap).forEach(listings => listings.sort((a,b) => a.price - b.price || b.weight - a.weight));
+    });
   }catch(e){ console.warn('Market scan error:', e); }
 
   // Independent sponsored pool presentation (English local)
@@ -3699,14 +6402,18 @@ function renderStats() {
   const players = getGlobalLeaderboardData();
   let myGlobalRankVal = '—';
   let myEstPrizeVal = 0;
+  let myGlobalScoreVal = 0;
   
   const myIndex = players.findIndex(p => p.wallet.toLowerCase() === myAddr);
   if (myIndex !== -1) {
     const rank = myIndex + 1;
     myGlobalRankVal = `#${rank}`;
     myEstPrizeVal = getPrizeForRank(rank);
+    myGlobalScoreVal = players[myIndex].score || 0;
   }
   
+  const scoreEl = document.getElementById('myGlobalScore');
+  if (scoreEl) scoreEl.textContent = myGlobalScoreVal;
   document.getElementById('myGlobalRank').textContent = myGlobalRankVal;
   document.getElementById('myEstPayout').textContent = myEstPrizeVal > 0
     ? `${myEstPrizeVal.toLocaleString()} CHZ`
@@ -3737,6 +6444,99 @@ function selectCountry(teamId) {
   renderCountryHub();
   renderPitch();
   renderLeaderboard();
+}
+
+function getMarketListingsForSlot(teamId, pos) {
+  return ((marketListingsByTeamPosition[teamId] || {})[pos] || [])
+    .slice()
+    .sort((a,b) => a.price - b.price || b.weight - a.weight);
+}
+
+function getOwnedCardsForSlot(teamId, pos) {
+  const myAddr = address?.toLowerCase();
+  if (!myAddr) return [];
+  return Object.entries(ownerMap || {})
+    .map(([tokenId, card]) => ({tokenId:Number(tokenId), ...card}))
+    .filter(card => {
+      const verifiedOwner = tokenOwnerVerificationCache[Number(card.tokenId)];
+      const owner = (verifiedOwner || card.owner || '').toLowerCase();
+      return owner === myAddr && Number(card.teamId) === Number(teamId) && Number(card.position) === Number(pos);
+    })
+    .sort((a,b) => b.weight - a.weight || a.tokenId - b.tokenId);
+}
+
+function renderMarketOfferButtons(listings, currentWeight = 0) {
+  const rarityNames = ['Common','Rare','Epic','Legendary'];
+  const rarityColors = ['#9aa4b2','#3b82f6','#c084fc','#ffc940'];
+  if (!listings.length) return '<div class="card-hover-note no-listing-note">NO LISTINGS</div>';
+  return listings.slice(0, 6).map(item => {
+    const isUpgrade = Number(item.weight || 0) > Number(currentWeight || 0);
+    const label = isUpgrade ? `BUY UPGRADE +${Number(item.weight) - Number(currentWeight || 0)}` : 'BUY CARD';
+    const rarity = Number.isFinite(Number(item.rarity)) ? Number(item.rarity) : 0;
+    const color = rarityColors[rarity] || '#ffc940';
+    return `<button onclick="buyFromMarket(${item.listingId}, '${item.price}')" class="btn-card-action ${isUpgrade ? 'upgrade' : ''} market-offer-btn">
+      <span>${label}</span>
+      <b style="color:${color}">${item.weight || '?'} PTS</b>
+      <small>${item.price} CHZ · ${rarityNames[rarity] || 'Card'}</small>
+    </button>`;
+  }).join('');
+}
+
+function renderSellActionButtons(cards, scoredTokenId) {
+  const rarityNames = ['Common','Rare','Epic','Legendary'];
+  const rarityColors = ['#9aa4b2','#3b82f6','#c084fc','#ffc940'];
+  if (!cards.length) return '';
+  const duplicates = cards.filter(card => Number(card.tokenId) !== Number(scoredTokenId));
+  if (!duplicates.length) {
+    const card = cards[0];
+    const activeListing = activeListingsByToken[card.tokenId];
+    if (activeListing && activeListing.seller === address?.toLowerCase()) {
+      return `<button onclick="cancelMarketListing(${activeListing.listingId})" class="btn-card-action sell-offer-btn">CANCEL LISTING<br>${activeListing.price} CHZ</button>`;
+    }
+    return `<button onclick="openSellModal(${card.tokenId}, ${card.position}, ${card.weight}, ${card.rarity})" class="btn-card-action sell-offer-btn">SELL CARD</button>`;
+  }
+  const buttons = duplicates.slice(0, 5).map(card => {
+    const activeListing = activeListingsByToken[card.tokenId];
+    if (activeListing && activeListing.seller === address?.toLowerCase()) {
+      return `<button onclick="cancelMarketListing(${activeListing.listingId})" class="btn-card-action sell-offer-btn">CANCEL #${card.tokenId}<br>${activeListing.price} CHZ</button>`;
+    }
+    const rarity = Number.isFinite(Number(card.rarity)) ? Number(card.rarity) : 0;
+    const color = rarityColors[rarity] || '#ef4444';
+    return `<button onclick="openSellModal(${card.tokenId}, ${card.position}, ${card.weight}, ${card.rarity})" class="btn-card-action sell-offer-btn">
+      <span>SELL DUPLICATE #${card.tokenId}</span>
+      <b style="color:${color}">${card.weight} PTS</b>
+      <small>${rarityNames[rarity] || 'Card'}</small>
+    </button>`;
+  }).join('');
+  return `<div class="slot-action-subtitle">SELL DUPLICATES</div>${buttons}`;
+}
+
+function renderDesktopSlotOverlay(listings, currentWeight = 0, ownedCards = [], scoredTokenId = null) {
+  const rarityNames = ['Common','Rare','Epic','Legendary'];
+  const rarityColors = ['#9aa4b2','#3b82f6','#c084fc','#ffc940'];
+  const best = listings[0];
+  let buyHtml = '<div class="slot-hover-empty">NO LISTINGS</div>';
+  if (best) {
+    const isUpgrade = Number(best.weight || 0) > Number(currentWeight || 0);
+    const rarity = Number.isFinite(Number(best.rarity)) ? Number(best.rarity) : 0;
+    const color = rarityColors[rarity] || '#ffc940';
+    buyHtml = `<button onclick="buyFromMarket(${best.listingId}, '${best.price}')" class="slot-hover-buy ${isUpgrade ? 'upgrade' : ''}">
+      <span>${isUpgrade ? 'UPGRADE' : 'MARKET'}</span>
+      <b style="color:${color}">${best.weight || '?'} PTS</b>
+      <small>${best.price} CHZ · ${rarityNames[rarity] || 'Card'}</small>
+    </button>`;
+  }
+
+  const duplicates = ownedCards.filter(card => Number(card.tokenId) !== Number(scoredTokenId));
+  const sellCard = duplicates[0] || ownedCards.find(card => Number(card.tokenId) === Number(scoredTokenId));
+  let sellHtml = '';
+  if (sellCard) {
+    const activeListing = activeListingsByToken[sellCard.tokenId];
+    sellHtml = activeListing && activeListing.seller === address?.toLowerCase()
+      ? `<button onclick="cancelMarketListing(${activeListing.listingId})" class="slot-hover-sell">CANCEL ${activeListing.price} CHZ</button>`
+      : `<button onclick="openSellModal(${sellCard.tokenId}, ${sellCard.position}, ${sellCard.weight}, ${sellCard.rarity})" class="slot-hover-sell">${duplicates.length ? 'SELL DUP' : 'SELL'}</button>`;
+  }
+  return `<div class="card-hover-actions slot-hover-panel">${buyHtml}${sellHtml}</div>`;
 }
 
 function renderCountryHub() {
@@ -3771,9 +6571,9 @@ function renderCountryHub() {
       <div class="country-card-main">
         ${crownDisplay}
         <div class="country-card-flag">${getFlagHtml(team)}</div>
-        <div class="country-card-name" style="margin-top:6px;">${teamAbbr(team)}</div>
+        <div class="country-card-name">${teamAbbr(team)}</div>
       </div>
-      <div class="country-card-stats">
+      <div class="country-card-bottom">
         <div class="country-card-score">${scoreDisplay}</div>
         <div class="country-card-completion" style="color:${compColor};">${compDisplay}</div>
       </div>
@@ -3794,15 +6594,23 @@ function renderPitch() {
   const currentCompCount = Object.keys(myTeamPositions).length;
   const selectedScore = Object.values(myTeamPositions).reduce((sum, item) => sum + item.weight, 0);
   document.getElementById('selectedCountryTitle').innerHTML = `${getFlagHtml(selectedTeam, true)} &nbsp; ${selectedTeam.name.toUpperCase()} SQUAD <span class="squad-score">${selectedScore} PTS</span>`;
-  document.getElementById('selectedCountryCompletion').textContent = `${currentCompCount}/11 POSITIONS COMPLETED`;
+  const completionEl = document.getElementById('selectedCountryCompletion');
+  completionEl.textContent = `${currentCompCount}/11 POSITIONS COMPLETED`;
+  completionEl.setAttribute('data-short', `${currentCompCount}/11`);
 
   const horizontalFormation = [
     { cls: 'row-single', positions: [1,2,3,4,5,6,7,8,9,10,11] }
   ];
+  const visibleScoredTokenIds = Object.values(myTeamPositions).map(item => Number(item.tid)).filter(Number.isFinite);
+  if (visibleScoredTokenIds.length) {
+    verifyVisibleSlotOwners(selectedTeamId, visibleScoredTokenIds);
+  }
   horizontalFormation.forEach(group => {
     const row = group.positions;
     const rowEl = document.createElement('div');
     rowEl.className = `form-row ${group.cls}`;
+    const rarityNames = ['Common','Rare','Epic','Legendary'];
+    const rarityColors = ['#9aa4b2','#3b82f6','#c084fc','#ffc940'];
 
     row.forEach(pos => {
       const card = document.createElement('div');
@@ -3812,11 +6620,13 @@ function renderPitch() {
       
       const floorTeam = marketFloorByTeamPosition[selectedTeamId] || {};
       const floor = floorTeam[pos];
+      const listings = getMarketListingsForSlot(selectedTeamId, pos);
+      const marketHint = listings.length ? `<div class="slot-market-hint"><span>BUY</span><b>${listings[0].price} CHZ</b></div>` : '';
       let sheetTitle = `${selectedTeam.name} ${POSITION_SHORT[pos]}`;
       let sheetActionsHtml = '';
 
       if (scored) {
-        const rarColor = ['#7a8899','#3b82f6','#c084fc','#ffc940'][scored.rarity];
+        const rarColor = rarityColors[scored.rarity] || '#7a8899';
         card.className = `pos-card owned rarity-${scored.rarity}`;
         const isHighlighted = lastSquadHighlight
           && lastSquadHighlight.teamId === selectedTeamId
@@ -3824,49 +6634,31 @@ function renderPitch() {
           && Date.now() - lastSquadHighlight.ts < 12000;
         if (isHighlighted) card.classList.add('just-scored');
         
-        let actionHtml = '';
-        if (mkt && mkt.weight > scored.weight) {
-          actionHtml = `<button onclick="buyFromMarket(${mkt.listingId}, '${mkt.price}')" class="btn-card-action upgrade">UPGRADE +${mkt.weight - scored.weight}<br>${mkt.price} CHZ</button>`;
-        }
-
-        // Sell Button if user currently owns the scored card
-        let sellBtnHtml = '';
-        const currentOwnerInfo = ownerMap[scored.tid];
-        const currentlyOwnsScored = myAddr && currentOwnerInfo && currentOwnerInfo.owner === myAddr;
-        const activeListing = activeListingsByToken[scored.tid];
-        const listedByMe = myAddr && activeListing && activeListing.seller === myAddr;
-        if (currentlyOwnsScored) {
-          sellBtnHtml = listedByMe
-            ? `<button onclick="cancelMarketListing(${activeListing.listingId})" class="btn-card-action" style="background:rgba(239,68,68,0.16); border-color:rgba(239,68,68,0.46); color:#ef4444;">CANCEL<br>${activeListing.price} CHZ</button>`
-            : `<button onclick="openSellModal(${scored.tid}, ${pos}, ${scored.weight}, ${scored.rarity})" class="btn-card-action" style="background:rgba(239,68,68,0.1); border-color:rgba(239,68,68,0.3); color:#ef4444;">SELL CARD</button>`;
-        }
-        const floorNote = floor ? `<div class="card-hover-note">FLOOR ${floor.price} CHZ</div>` : '';
-        sheetActionsHtml = `${floorNote}${actionHtml}${sellBtnHtml}`;
-        const hoverHtml = sheetActionsHtml ? `<div class="card-hover-actions">${sheetActionsHtml}</div>` : '';
+        const ownedSlotCards = getOwnedCardsForSlot(selectedTeamId, pos);
+        const marketActionHtml = renderMarketOfferButtons(listings, scored.weight);
+        const sellActionHtml = renderSellActionButtons(ownedSlotCards, scored.tid);
+        sheetActionsHtml = `${marketActionHtml}${sellActionHtml}`;
+        const hoverHtml = renderDesktopSlotOverlay(listings, scored.weight, ownedSlotCards, scored.tid);
 
         card.innerHTML = `
+          ${marketHint}
           <div class="pos-card-top">
             <div class="pos-name">${POSITION_SHORT[pos]}</div>
             <span class="figure-mini">${makeFigureSVG(scored.dna, 80)}</span>
           </div>
           <div>
             <div class="pos-weight ${scored.rarity === 3 ? 'gold' : ''}">${scored.weight}</div>
-            <div class="pos-rarity" style="color:${rarColor}">${['Common','Rare','Epic','Legendary'][scored.rarity]}</div>
+            <div class="pos-rarity rarity-${scored.rarity}" style="color:${rarColor}">${rarityNames[scored.rarity]}</div>
           </div>
           ${hoverHtml}
         `;
       } else {
         card.className = 'pos-card empty';
-        let actionHtml = '';
-        // Używamy najtańszej figurki (floor) do bezpośredniego zakupu dla pustego slotu (bez zbędnego floor textu)
-        if (floor) {
-          actionHtml = `<button onclick="buyFromMarket(${floor.listingId}, '${floor.price}')" class="btn-card-action">BUY<br>${floor.price} CHZ</button>`;
-        } else {
-          actionHtml = `<div class="card-hover-note" style="color:#5a6a7a;">NO LISTINGS</div>`;
-        }
+        const actionHtml = renderMarketOfferButtons(listings, 0);
         sheetActionsHtml = actionHtml;
 
         card.innerHTML = `
+          ${marketHint}
           <div class="pos-card-top">
             <div class="pos-name" style="color:#5a6a7a;">${POSITION_SHORT[pos]}</div>
             <span class="pos-ball" style="opacity: 0.15">&#9917;</span>
@@ -3875,12 +6667,13 @@ function renderPitch() {
             <div class="pos-weight empty">&mdash;</div>
             <div class="pos-rarity" style="color:#5a6a7a;">EMPTY</div>
           </div>
-          <div class="card-hover-actions">${actionHtml}</div>
+          ${renderDesktopSlotOverlay(listings, 0, [], null)}
         `;
       }
       if (sheetActionsHtml) {
         card.classList.add('has-actions');
         card.addEventListener('click', (event) => {
+          if (event.target.closest('button,a,input')) return;
           if (!isMobileActionSheetMode()) return;
           event.preventDefault();
           event.stopPropagation();
@@ -3928,7 +6721,7 @@ function renderLeaderboard(){
       const prizeDisplay = prizeAmount > 0 ? `<span class="lb-prize">${prizeAmount.toLocaleString()} CHZ</span>` : '<span class="lb-prize none">NO PRIZE</span>';
 
       return `
-        <div class="lb-row ${isMe ? 'me' : ''} ${prizeAmount > 0 ? 'prize-row' : ''}">
+        <div class="lb-row global-row ${isMe ? 'me' : ''} ${prizeAmount > 0 ? 'prize-row' : ''}">
           <div class="lb-pos ${posClass}">${medal || '#' + rank}</div>
           <div class="lb-addr">${player.wallet.slice(0,6)}…${player.wallet.slice(-4)} ${isMe ? '<span class="lb-you">YOU</span>' : ''}</div>
           <div class="lb-completion">${player.cards || 0} CARDS</div>
@@ -3991,7 +6784,7 @@ function renderLeaderboard(){
       const medal = rank === 1 ? '👑' : '';
 
       return `
-        <div class="lb-row ${isMe ? 'me' : ''}">
+        <div class="lb-row local-row ${isMe ? 'me' : ''}">
           <div class="lb-pos ${posClass}">${medal || '#' + rank}</div>
           <div class="lb-addr">${player.wallet.slice(0,6)}…${player.wallet.slice(-4)} ${isMe ? '<span class="lb-you">YOU</span>' : ''}</div>
           <div class="lb-completion">Completed: ${player.completed}/11</div>
@@ -4081,9 +6874,24 @@ async function sellFigure(tokenId, priceChz) {
   showNetworkOverlay('Preparing marketplace listing...');
   try {
     const figContract = new ethers.Contract(CONTRACT_ADDRESS, [
+      "function balanceOf(address account,uint256 id) external view returns (uint256)",
       "function isApprovedForAll(address account, address operator) external view returns (bool)",
       "function setApprovalForAll(address operator, bool approved) external"
     ], signer);
+
+    updateNetworkOverlay('Verifying card ownership...');
+    const myAddr = address.toLowerCase();
+    const zeroOwner = '0x0000000000000000000000000000000000000000';
+    const balance = await figContract.balanceOf(address, tokenId);
+    const verifiedOwner = balance > 0n ? myAddr : zeroOwner;
+    tokenOwnerVerificationCache[Number(tokenId)] = verifiedOwner;
+    if (ownerMap[Number(tokenId)]) ownerMap[Number(tokenId)].owner = verifiedOwner;
+    if (verifiedOwner !== myAddr) {
+      showToast('You no longer own this card. Score stays saved, but it cannot be listed.', true);
+      toggleSellModal(false);
+      renderPitch();
+      return;
+    }
 
     showToast('Checking marketplace approval...');
     updateNetworkOverlay('Checking marketplace approval...');
