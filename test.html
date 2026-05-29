@@ -6449,6 +6449,63 @@ body.portal-v3 #walletBalance{
   line-height:1.05!important;
   letter-spacing:.7px!important;
 }
+body:not(.game-mode).bk-v4 .topnav #connectBtn,
+body:not(.game-mode).portal-v3 .topnav #connectBtn{
+  display:none!important;
+}
+body:not(.game-mode).bk-v4 .topnav .wallet-actions,
+body:not(.game-mode).portal-v3 .topnav .wallet-actions{
+  display:none!important;
+}
+body.bk-v4 .hero-actions,
+body.portal-v3 .hero-actions,
+.hero-actions{
+  display:flex!important;
+  justify-content:center!important;
+  align-items:center!important;
+  width:100%!important;
+}
+body.bk-v4 .hero-actions .btn-mint-hero,
+body.portal-v3 .hero-actions .btn-mint-hero,
+.hero-actions .btn-mint-hero{
+  margin-left:auto!important;
+  margin-right:auto!important;
+}
+@media(min-width:761px){
+  body.bk-v4 .portal-tab,
+  body.portal-v3 .portal-tab,
+  body.bk-v4 #connectBtn,
+  body.portal-v3 #connectBtn,
+  body.bk-v4 #walletBalance,
+  body.portal-v3 #walletBalance{
+    height:44px!important;
+    min-height:44px!important;
+    display:inline-flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+  }
+  body.bk-v4.game-mode .wallet-actions,
+  body.bk-v4.game-mode .nav-right.wallet-actions,
+  body.portal-v3.game-mode .wallet-actions,
+  body.portal-v3.game-mode .nav-right.wallet-actions{
+    align-items:center!important;
+    min-height:44px!important;
+    flex:0 0 auto!important;
+    width:auto!important;
+    max-width:none!important;
+    overflow:visible!important;
+  }
+  body.bk-v4.game-mode #walletBalance,
+  body.portal-v3.game-mode #walletBalance{
+    min-width:116px!important;
+    max-width:none!important;
+    padding-left:12px!important;
+    padding-right:12px!important;
+    white-space:nowrap!important;
+    overflow:visible!important;
+    text-overflow:clip!important;
+  }
+}
 .lb-info#poolInfo{
   display:none!important;
 }
@@ -6467,6 +6524,37 @@ body.portal-v3 #walletBalance{
 }
 .slot-market-hint span::after{
   content:':'!important;
+}
+.pos-card:hover .slot-market-hint,
+.pos-card:focus-within .slot-market-hint{
+  border-color:rgba(0,255,135,.72)!important;
+  background:rgba(0,255,135,.16)!important;
+  box-shadow:0 0 18px rgba(0,255,135,.20)!important;
+}
+.slot-market-hint span,
+.slot-market-hint b{
+  color:#ffc940!important;
+  opacity:1!important;
+  text-shadow:0 0 12px rgba(255,201,64,.28)!important;
+  font-family:'Black Ops One',sans-serif!important;
+}
+.pos-card:hover .sell-offer-btn,
+.pos-card:focus-within .sell-offer-btn,
+.card-hover-actions:hover .sell-offer-btn,
+.slot-action-body:hover .sell-offer-btn{
+  background:#ef4444!important;
+  border-color:#ef4444!important;
+  color:#fff!important;
+  box-shadow:0 0 18px rgba(239,68,68,.25)!important;
+}
+.pos-card:hover .btn-card-action.upgrade,
+.pos-card:focus-within .btn-card-action.upgrade,
+.card-hover-actions:hover .btn-card-action.upgrade,
+.slot-action-body:hover .btn-card-action.upgrade{
+  background:#00ff87!important;
+  border-color:#00ff87!important;
+  color:#06100b!important;
+  box-shadow:0 0 18px rgba(0,255,135,.25)!important;
 }
 #myEstPayout{
   color:#ffc940!important;
@@ -6550,7 +6638,16 @@ body.game-mode .country-card .native-flag-img{
   }
   body.bk-v4 .pricing-schedule .schedule-date,
   body.portal-v3 .pricing-schedule .schedule-date,
-  .pricing-schedule .schedule-date,
+  .pricing-schedule .schedule-date{
+    display:block!important;
+    font-size:7px!important;
+    line-height:1!important;
+    margin:0 0 5px!important;
+    color:#7f8fa3!important;
+    letter-spacing:.4px!important;
+    white-space:nowrap!important;
+    text-align:center!important;
+  }
   body.bk-v4 .pricing-schedule .price-label,
   body.portal-v3 .pricing-schedule .price-label,
   .pricing-schedule .price-label{
@@ -6679,12 +6776,12 @@ body.game-mode .country-card .native-flag-img{
         <div class="flow-card">
           <div class="flow-kicker">STEP 02</div>
           <div class="flow-title">SCORE</div>
-          <div class="flow-text">The card scores when it enters your wallet. You do not need to hold it forever.</div>
+          <div class="flow-text">The card scores when it enters your wallet.<br>You do not need to hold it forever.</div>
         </div>
         <div class="flow-card">
           <div class="flow-kicker">STEP 03</div>
           <div class="flow-title">SELL & HUNT</div>
-          <div class="flow-text">Your score stays saved. List, trade and recycle CHZ into the next squad.</div>
+          <div class="flow-text">Your score stays saved.<br>List, trade and recycle CHZ into the next squad.</div>
         </div>
       </div>
 
