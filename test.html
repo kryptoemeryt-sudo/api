@@ -348,7 +348,7 @@ body.game-mode .wallet-actions #connectBtn.connected{display:inline-flex!importa
   background: rgba(0,255,135,0.06);
 }
 .pos-card.owned::after{
-  content: 'âś“';
+  content: '\2713';
   position: absolute;
   top: 2px;
   right: 4px;
@@ -3969,7 +3969,7 @@ body.game-mode .slot-market-hint b{
   text-overflow:clip!important;
 }
 body.game-mode .pos-card.owned::after{
-  content:"âś“"!important;
+  content:"\2713"!important;
   position:absolute!important;
   top:5px!important;
   right:5px!important;
@@ -5946,6 +5946,250 @@ body.bk-v4 .hero-actions .btn-mint-hero{
   body.bk-v4 .hero-actions .btn-mint-hero{
     width:100%!important;
     min-width:0!important;
+  }
+}
+
+/* Final visual pass: clean flags, centered squad title, one-line phone header */
+body.bk-v4 .flag-container,
+body.bk-v4 .portal-flag-container,
+body.bk-v4.game-mode .flag-container,
+body.bk-v4.game-mode .portal-flag-container{
+  background:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+  border-radius:0!important;
+  padding:0!important;
+  overflow:visible!important;
+}
+body.bk-v4 .flag-container img,
+body.bk-v4 .portal-flag-container img,
+body.bk-v4 .flag-img,
+body.bk-v4 .flag-img-lg,
+body.bk-v4 .native-flag-img{
+  border-radius:5px!important;
+  box-shadow:none!important;
+  border:1px solid rgba(255,255,255,.18)!important;
+}
+body.bk-v4 .country-card .flag-container,
+body.bk-v4 .country-card .portal-flag-container,
+body.bk-v4.game-mode .country-card .flag-container,
+body.bk-v4.game-mode .country-card .portal-flag-container,
+body.bk-v4 .pitch-title .flag-container,
+body.bk-v4.game-mode .pitch-title .flag-container{
+  background:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+  border-radius:0!important;
+}
+body.bk-v4 .country-card .flag-container img,
+body.bk-v4 .country-card .portal-flag-container img,
+body.bk-v4.game-mode .country-card .flag-container img,
+body.bk-v4.game-mode .country-card .portal-flag-container img,
+body.bk-v4 .pitch-title .flag-container img,
+body.bk-v4.game-mode .pitch-title .flag-container img{
+  box-shadow:none!important;
+  border:1px solid rgba(255,255,255,.18)!important;
+}
+body.bk-v4 .country-card .flag-container,
+body.bk-v4.game-mode .country-card .flag-container,
+body.bk-v4 .country-card .portal-flag-container,
+body.bk-v4.game-mode .country-card .portal-flag-container{
+  width:46px!important;
+  height:31px!important;
+}
+body.bk-v4 .pitch-title #selectedCountryTitle,
+body.bk-v4.game-mode .pitch-title #selectedCountryTitle{
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:10px!important;
+  line-height:1!important;
+  vertical-align:middle!important;
+}
+body.bk-v4 .pitch-title #selectedCountryTitle .flag-container,
+body.bk-v4.game-mode .pitch-title #selectedCountryTitle .flag-container{
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  width:54px!important;
+  height:36px!important;
+  margin:0!important;
+  transform:none!important;
+  vertical-align:middle!important;
+}
+body.bk-v4 .pitch-title #selectedCountryTitle .flag-container img,
+body.bk-v4.game-mode .pitch-title #selectedCountryTitle .flag-container img{
+  width:54px!important;
+  height:36px!important;
+  border-radius:7px!important;
+}
+body.bk-v4 .pos-card.owned::after,
+body.bk-v4.game-mode .pos-card.owned::after{
+  content:"\2713"!important;
+  font-family:Arial,sans-serif!important;
+  font-weight:900!important;
+  font-size:12px!important;
+}
+@media(max-width:760px){
+  body.bk-v4 .portal-topnav,
+  body.bk-v4.game-mode .portal-topnav,
+  body.bk-v4 .topnav,
+  body.bk-v4.game-mode .topnav{
+    display:flex!important;
+    flex-wrap:nowrap!important;
+    align-items:center!important;
+    justify-content:space-between!important;
+    gap:5px!important;
+    height:52px!important;
+    min-height:52px!important;
+    padding:6px 7px!important;
+    overflow:hidden!important;
+  }
+  body.bk-v4 .portal-brand{
+    flex:0 0 34px!important;
+    width:34px!important;
+    max-width:34px!important;
+    min-width:0!important;
+    overflow:hidden!important;
+    padding-right:0!important;
+  }
+  body.bk-v4 .topnav .portal-brand,
+  body.bk-v4.game-mode .topnav .portal-brand{
+    flex:0 0 34px!important;
+    width:34px!important;
+    max-width:34px!important;
+    padding-right:0!important;
+  }
+  body.bk-v4 .portal-brand-ball{
+    width:30px!important;
+    height:30px!important;
+    flex-basis:30px!important;
+    font-size:17px!important;
+  }
+  body.bk-v4 .portal-brand-copy strong{
+    max-width:50px!important;
+    font-size:8px!important;
+    letter-spacing:.45px!important;
+    line-height:1!important;
+  }
+  body.bk-v4 .portal-brand-copy small{
+    display:none!important;
+  }
+  body.bk-v4 .portal-brand-copy{
+    display:none!important;
+  }
+  body.bk-v4 .portal-tabs{
+    flex:1 1 auto!important;
+    min-width:0!important;
+    max-width:none!important;
+    display:grid!important;
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+    gap:4px!important;
+    padding:0!important;
+    overflow:hidden!important;
+  }
+  body.bk-v4 .topnav .portal-tabs,
+  body.bk-v4.game-mode .topnav .portal-tabs{
+    flex:1 1 auto!important;
+    min-width:0!important;
+    max-width:none!important;
+  }
+  body.bk-v4 .portal-tab{
+    min-width:0!important;
+    max-width:none!important;
+    min-height:32px!important;
+    height:32px!important;
+    padding:4px 3px!important;
+    border-radius:8px!important;
+  }
+  body.bk-v4 .portal-tab span,
+  body.bk-v4 .portal-tab b{
+    font-size:5.8px!important;
+    letter-spacing:.2px!important;
+    line-height:1.02!important;
+  }
+  body.bk-v4 .nav-countdown,
+  body.bk-v4 .topnav .nav-countdown,
+  body.bk-v4 .nav-price-countdown{
+    display:none!important;
+  }
+  body.bk-v4 .nav-right,
+  body.bk-v4 .wallet-actions,
+  body.bk-v4 .nav-right.wallet-actions{
+    flex:0 0 68px!important;
+    width:68px!important;
+    max-width:68px!important;
+    min-width:0!important;
+    margin:0!important;
+    gap:0!important;
+    overflow:hidden!important;
+  }
+  body.bk-v4 .topnav .wallet-actions,
+  body.bk-v4.game-mode .topnav .wallet-actions{
+    flex:0 0 68px!important;
+    width:68px!important;
+    max-width:68px!important;
+  }
+  body.bk-v4 .btn-connect,
+  body.bk-v4 #connectBtn{
+    width:68px!important;
+    max-width:68px!important;
+    min-height:32px!important;
+    height:32px!important;
+    padding:5px 4px!important;
+    border-radius:9px!important;
+    font-size:7px!important;
+    letter-spacing:.35px!important;
+  }
+  body.bk-v4.game-mode .pitch-title-row{
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr) auto!important;
+    grid-template-areas:
+      "title mint"
+      "complete mint"!important;
+    align-items:center!important;
+    gap:1px 8px!important;
+    min-height:48px!important;
+    margin-bottom:5px!important;
+  }
+  body.bk-v4.game-mode .pitch-title{
+    grid-area:title!important;
+    min-width:0!important;
+    margin:0!important;
+    align-self:end!important;
+    text-align:center!important;
+  }
+  body.bk-v4.game-mode .pitch-title #selectedCountryTitle{
+    gap:7px!important;
+    font-size:clamp(14px,4.2vw,18px)!important;
+  }
+  body.bk-v4.game-mode .pitch-title #selectedCountryTitle .flag-container{
+    width:42px!important;
+    height:28px!important;
+  }
+  body.bk-v4.game-mode .pitch-title #selectedCountryTitle .flag-container img{
+    width:42px!important;
+    height:28px!important;
+    border-radius:6px!important;
+  }
+  body.bk-v4.game-mode .pitch-title #selectedCountryTitle .squad-score{
+    font-size:12px!important;
+    white-space:nowrap!important;
+  }
+  body.bk-v4.game-mode .dash-mint-btn{
+    grid-area:mint!important;
+    align-self:center!important;
+  }
+  body.bk-v4.game-mode .completion-label,
+  body.bk-v4.game-mode #selectedCountryCompletion{
+    grid-area:complete!important;
+    justify-self:center!important;
+    align-self:start!important;
+    margin:0!important;
+    padding:0!important;
+    font-size:9px!important;
+    line-height:1!important;
+    text-align:center!important;
   }
 }
 
