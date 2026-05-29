@@ -6361,6 +6361,58 @@ body.game-mode .slot-action-body .card-hover-note{
     position:relative!important;
     z-index:2!important;
   }
+  body.bk-v4.game-mode .filter-tabs,
+  body.portal-v3.game-mode .filter-tabs,
+  body.game-mode .filter-tabs{
+    display:grid!important;
+    grid-template-columns:repeat(4,minmax(0,1fr))!important;
+    grid-auto-rows:28px!important;
+    gap:5px!important;
+    overflow:visible!important;
+    max-height:none!important;
+    margin-bottom:8px!important;
+    padding:0!important;
+  }
+  body.bk-v4.game-mode .filter-tabs .tab-btn,
+  body.portal-v3.game-mode .filter-tabs .tab-btn,
+  body.game-mode .filter-tabs .tab-btn{
+    min-width:0!important;
+    width:100%!important;
+    height:28px!important;
+    padding:4px 3px!important;
+    font-size:7px!important;
+    letter-spacing:.25px!important;
+    white-space:nowrap!important;
+    overflow:hidden!important;
+    text-overflow:ellipsis!important;
+  }
+  body.bk-v4.game-mode #statsRow .stat-card,
+  body.portal-v3.game-mode #statsRow .stat-card,
+  body.game-mode #statsRow .stat-card{
+    display:flex!important;
+  }
+  body.bk-v4.game-mode #statsRow,
+  body.portal-v3.game-mode #statsRow,
+  body.game-mode #statsRow{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:6px!important;
+  }
+  body.bk-v4.game-mode #statsRow .stat-card:nth-child(5),
+  body.portal-v3.game-mode #statsRow .stat-card:nth-child(5),
+  body.game-mode #statsRow .stat-card:nth-child(5){
+    display:flex!important;
+    grid-column:1 / -1!important;
+  }
+  body.bk-v4.game-mode #myGlobalScore,
+  body.bk-v4.game-mode #myEstPayout,
+  body.portal-v3.game-mode #myGlobalScore,
+  body.portal-v3.game-mode #myEstPayout,
+  body.game-mode #myGlobalScore,
+  body.game-mode #myEstPayout{
+    display:block!important;
+    font-size:16px!important;
+    line-height:1!important;
+  }
 }
 
 </style>
@@ -6376,7 +6428,7 @@ body.game-mode .slot-action-body .card-hover-note{
 
   <div class="portal-tabs" aria-label="Quest pages">
     <a class="portal-tab" href="./block-kickers-usa-quest-fullwidth-layout.html"><span>USA QUEST</span><b>1,500 CHZ</b></a>
-    <a class="portal-tab active" href="#"><span>WORLD CUP ALBUM</span><b>25,000 CHZ</b></a>
+    <a class="portal-tab active" href="#"><span>WORLD CUP ALBUM</span><b>ALBUM</b></a>
     <a class="portal-tab portal-tab-hot" href="./argentina-quest.html"><span>ARGENTINA XI</span><b>10,000 CHZ</b></a>
   </div>
 
@@ -6426,7 +6478,7 @@ body.game-mode .slot-action-body .card-hover-note{
     <div class="hero-main">
       <div class="badge"><span class="dot"></span>GLOBAL QUEST - 48 WC NATIONS</div>
       <span class="trophy">&#127942;</span>
-      <div class="hero-title"><span class="acc">WORLD CUP</span><br><span class="gold">DREAM XI</span></div>
+      <div class="hero-title"><span class="acc">WORLD CUP</span><br><span class="gold">ALBUM</span></div>
       <div class="hero-sub"><strong>FLOW TO EARN:</strong> mint or buy a card, score it when it enters your wallet, then sell it and hunt the next national upgrade.</div>
     </div>
 
@@ -6473,8 +6525,8 @@ body.game-mode .slot-action-body .card-hover-note{
     <div class="hero-side">
       <div class="stats-container">
         <div class="stat-card" style="background:rgba(255,201,64,0.05); border-color:rgba(255,201,64,0.28);">
-          <div class="stat-val gold">25,000</div>
-          <div class="stat-lbl">CHZ Sponsored Pool</div>
+          <div class="stat-val gold">TOP 10</div>
+          <div class="stat-lbl">Standing Contest</div>
         </div>
         <div class="stat-card">
           <div class="stat-val highlight">TOP 10</div>
@@ -6533,13 +6585,13 @@ body.game-mode .slot-action-body .card-hover-note{
       <div class="stat-lbl">Rank</div>
     </div>
     <div class="stat-card" style="background:rgba(0,255,135,0.03); border-color:rgba(0,255,135,0.2);">
-      <div class="stat-val" id="myEstPayout" style="color:#00ff87; font-size:24px; padding-top:6px;">???,??? CHZ</div>
+      <div class="stat-val" id="myEstPayout" style="color:#00ff87; font-size:24px; padding-top:6px;">0 CHZ</div>
       <div class="stat-lbl">Reward</div>
     </div>
   </div>
   <div class="dashboard-prize-strip" id="dashboardPrizeStrip" style="display:none;">
-    <div class="dash-prize-title">&#127942; WC ALBUM PRIZE POOL</div>
-    <div class="dash-prize-value">25,000 CHZ</div>
+    <div class="dash-prize-title">&#127942; WC ALBUM STANDING</div>
+    <div class="dash-prize-value">TOP 10</div>
     <div class="dash-deadline" aria-label="Quest countdown">
       <span id="dashCdD">--</span><small>D</small>:
       <span id="dashCdH">--</span><small>H</small>:
@@ -6564,10 +6616,10 @@ body.game-mode .slot-action-body .card-hover-note{
       </button>
       <div style="display:flex; gap:8px;">
         <button class="btn-share" onclick="toggleRulesModal(true)" style="border-color:#ffc940; color:#ffc940;">
-          đź“– RULES & INFO
+          RULES & INFO
         </button>
         <button class="btn-share" onclick="loadData()" style="border-color:rgba(99,102,241,0.3); color:#818cf8;">
-          â†» REFRESH DATA
+          REFRESH DATA
         </button>
       </div>
     </div>
@@ -6627,11 +6679,11 @@ body.game-mode .slot-action-body .card-hover-note{
     <div class="lb-section">
       <div class="lb-title-row">
         <div class="pitch-title" style="margin-bottom:0;">STANDINGS & CONTESTS</div>
-        <div class="lb-info" id="poolInfo">Sponsor Pool: calculating...</div>
+        <div class="lb-info" id="poolInfo">Standing Contest</div>
       </div>
       
       <div class="lb-toggle-container">
-        <button class="lb-toggle-btn active" id="btnToggleGlobal" onclick="switchLeaderboard('global')">GLOBAL TOP 10 (25,000 CHZ POOL)</button>
+        <button class="lb-toggle-btn active" id="btnToggleGlobal" onclick="switchLeaderboard('global')">GLOBAL TOP 10</button>
         <button class="lb-toggle-btn" id="btnToggleLocal" onclick="switchLeaderboard('local')">NATIONAL STANDINGS (SELECTED NATION)</button>
       </div>
 
@@ -6651,13 +6703,13 @@ body.game-mode .slot-action-body .card-hover-note{
     
     <!-- Flag Multi-Language Selector Tabs -->
     <div style="display:flex; gap:8px; margin-bottom:20px; flex-wrap:wrap; border-bottom:1px solid #1c2028; padding-bottom:12px;">
-      <button class="tab-btn active" id="lang-en" onclick="setRulesLanguage('en')">đź‡¬đź‡§ EN</button>
-      <button class="tab-btn" id="lang-pl" onclick="setRulesLanguage('pl')">đź‡µđź‡± PL</button>
-      <button class="tab-btn" id="lang-de" onclick="setRulesLanguage('de')">đź‡©đź‡Ş DE</button>
-      <button class="tab-btn" id="lang-fr" onclick="setRulesLanguage('fr')">đź‡«đź‡· FR</button>
-      <button class="tab-btn" id="lang-es" onclick="setRulesLanguage('es')">đź‡Şđź‡¸ ES</button>
-      <button class="tab-btn" id="lang-pt" onclick="setRulesLanguage('pt')">đź‡µđź‡ą PT</button>
-      <button class="tab-btn" id="lang-it" onclick="setRulesLanguage('it')">đź‡®đź‡ą IT</button>
+      <button class="tab-btn active" id="lang-en" onclick="setRulesLanguage('en')">EN</button>
+      <button class="tab-btn" id="lang-pl" onclick="setRulesLanguage('pl')">PL</button>
+      <button class="tab-btn" id="lang-de" onclick="setRulesLanguage('de')">DE</button>
+      <button class="tab-btn" id="lang-fr" onclick="setRulesLanguage('fr')">FR</button>
+      <button class="tab-btn" id="lang-es" onclick="setRulesLanguage('es')">ES</button>
+      <button class="tab-btn" id="lang-pt" onclick="setRulesLanguage('pt')">PT</button>
+      <button class="tab-btn" id="lang-it" onclick="setRulesLanguage('it')">IT</button>
     </div>
     
     <ul id="rulesContent" style="list-style:none; display:flex; flex-direction:column; gap:12px; font-family:'Barlow Condensed',sans-serif; font-size:16px; color:#dde4f0; line-height:1.4;">
@@ -7387,7 +7439,7 @@ function showMintResultModal(card, options = {}) {
     + '<div class="mint-result-stat"><b>' + position + '</b><span>Position</span></div>'
     + '<div class="mint-result-stat"><b style="color:' + scoreColor + '">' + rarity.toUpperCase() + '</b><span>Rarity</span></div>'
     + '<div class="mint-result-stat"><b style="color:' + scoreColor + '">' + card.weight + '</b><span>PTS</span></div>';
-  note.innerHTML = copy.note + '<br><span style="font-family:&quot;Share Tech Mono&quot;,monospace;color:#9fb1c7">' + (card.tokenId !== undefined ? 'Token #' + card.tokenId + ' Â· ' : '') + rarity + ' Â· ' + card.weight + ' PTS</span>' + bkMintSupplyHint(card);
+  note.innerHTML = copy.note + '<br><span style="font-family:&quot;Share Tech Mono&quot;,monospace;color:#9fb1c7">' + (card.tokenId !== undefined ? 'Token #' + card.tokenId + ' &middot; ' : '') + rarity + ' &middot; ' + card.weight + ' PTS</span>' + bkMintSupplyHint(card);
   modal.classList.add('show');
 }
 
@@ -7509,85 +7561,70 @@ const RULES_TRANSLATIONS = {
   en: {
     title: "How to Play & Rules",
     items: [
-      "đź”— Connect your Chiliz Wallet to activate your personal team hubs.",
-      "âš˝ Mint player cards or purchase on the marketplace for any of the 48 participating nations.",
-      "âš ď¸Ź Player cards count ONLY when minted or bought via the marketplace. You can list and sell them, but direct transfers/gifts DO NOT COUNT (no score assigned).",
-      "đź“ť Complete the 11-player lineup (tactical positions) for each nation to maximize that nation's total weight.",
-      "âšˇ Your Global Score is the sum of tactical weights achieved across all of your 48 national albums.",
-      "đźŹ† The Sponsored Prize Pool of 25,000 CHZ is shared strictly among the Global TOP 10 players.",
-      "đź“ Est. Payout card live-updates to display your currently projected prize based on your rank!"
+      "Connect your Chiliz Wallet to activate your personal team hubs.",
+      "Mint player cards or purchase on the marketplace for any of the 48 participating nations.",
+      "Player cards count ONLY when minted or bought via the marketplace. You can list and sell them, but direct transfers/gifts DO NOT COUNT.",
+      "Complete the 11-player lineup for each nation to maximize that nation's total weight.",
+      "Your Global Score is the sum of tactical weights achieved across all of your 48 national albums.",
+      "The standing contest ranks the Global TOP 10 players.",
+      "Estimated payout updates live based on your rank."
     ]
   },
   pl: {
-    title: "Zasady gry i wskazĂłwki",
+    title: "Zasady gry i wskazowki",
     items: [
-      "đź”— PoĹ‚Ä…cz swĂłj portfel Chiliz, aby aktywowaÄ‡ swĂłj osobisty panel druĹĽyn.",
-      "âš˝ Mintuj karty graczy lub kupuj je na rynku dla kaĹĽdego z 48 uczestniczÄ…cych krajĂłw.",
-      "âš ď¸Ź Karty sÄ… zaliczane do Twojego albumu i wyniku WYĹÄ„CZNIE, gdy zostanÄ… wymintowane lub zakupione na rynku wtĂłrnym. MoĹĽesz je wystawiÄ‡ i sprzedaÄ‡, lecz bezpoĹ›rednie transfery/podarunki pomiÄ™dzy portfelami NIE NALICZAJÄ„ PUNKTĂ“W (brak punktĂłw taktycznych).",
-      "đź“ť UkoĹ„cz 11-osobowy skĹ‚ad (pozycje taktyczne) dla kaĹĽdego kraju, aby zmaksymalizowaÄ‡ jego Ĺ‚Ä…cznÄ… wagÄ™.",
-      "âšˇ TwĂłj wynik globalny to suma wag taktycznych zdobytych we wszystkich Twoich 48 albumach narodowych.",
-      "đźŹ† Sponsorowana pula nagrĂłd 25 000 CHZ jest dzielona wyĹ‚Ä…cznie miÄ™dzy TOP 10 graczy o najwyĹĽszym wyniku.",
-      "đź“ Karta szacowanej wygranej aktualizuje siÄ™ na ĹĽywo, pokazujÄ…c TwojÄ… przewidywanÄ… nagrodÄ™ na podstawie Twojego miejsca!"
+      "Polacz portfel Chiliz, aby aktywowac osobisty panel druzyn.",
+      "Mintuj karty graczy lub kupuj je na rynku dla kazdego z 48 krajow.",
+      "Karty licza sie tylko po mincie albo zakupie na marketplace. Bezposrednie transfery nie naliczaja punktow.",
+      "Uzupelnij 11 pozycji dla kazdego kraju, aby zmaksymalizowac jego wage.",
+      "Wynik globalny to suma wag taktycznych ze wszystkich 48 albumow narodowych.",
+      "Standing contest klasyfikuje graczy w Global TOP 10.",
+      "Szacowana wygrana aktualizuje sie na zywo na podstawie miejsca."
     ]
   },
   de: {
-    title: "Spielregeln & Anleitung",
+    title: "Rules",
     items: [
-      "đź”— Verbinden Sie Ihre Chiliz Wallet, um Ihre persĂ¶nlichen Team-Hubs zu aktivieren.",
-      "âš˝ PrĂ¤gen Sie eine Spielerkarte oder kaufen Sie eine auf dem Marktplatz fĂĽr eines der 48 teilnehmenden LĂ¤nder.",
-      "âš ď¸Ź Spielerkarten zĂ¤hlen NUR, wenn sie geprĂ¤gt (mint) oder auf dem Marktplatz gekauft wurden. Sie kĂ¶nnen sie anbieten und verkaufen, aber direkte Transfers/Schenkungen ZĂ„HLEN NICHT (keine Punktevergabe).",
-      "đź“ť VervollstĂ¤ndigen Sie die 11-Spieler-Aufstellung fĂĽr jedes Land, um das Gesamtgewicht dieses Landes zu maximieren.",
-      "âšˇ Ihre globale Punktzahl ist die Summe der taktischen Gewichte, die in allen 48 Nationalalben erzielt wurden.",
-      "đźŹ† Der gesponserte Preispool von 25.000 CHZ wird streng unter den globalen TOP 10 Spielern aufgeteilt.",
-      "đź“ Die geschĂ¤tzte Auszahlung wird live aktualisiert, um Ihren derzeit prognostizierten Preis basierend auf Ihrem Rang anzuzeigen!"
+      "Connect your Chiliz Wallet to activate your personal team hubs.",
+      "Mint or buy marketplace cards to build national albums.",
+      "Only minted or marketplace-bought cards count for score.",
+      "The standing contest ranks the Global TOP 10 players."
     ]
   },
   fr: {
-    title: "RĂ¨gles et Comment Jouer",
+    title: "Rules",
     items: [
-      "đź”— Connectez votre portefeuille Chiliz pour activer vos hubs d'Ă©quipe personnels.",
-      "âš˝ Mintez une carte de joueur ou achetez-la sur le marchĂ© pour l'un des 48 pays participants.",
-      "âš ď¸Ź Les cartes de joueur comptent UNIQUEMENT si elles sont mintĂ©es ou achetĂ©es sur le marchĂ©. Vous pouvez les mettre en vente et les vendre, mais les transferts directs/cadeaux NE COMPTENT PAS (aucun point attribuĂ©).",
-      "đź“ť ComplĂ©tez l'alignement de 11 joueurs pour chaque nation afin de maximiser le poids total de cette nation.",
-      "âšˇ Votre score global est la somme des poids tactiques obtenus dans l'ensemble de vos 48 albums nationaux.",
-      "đźŹ† La cagnotte sponsorisĂ©e de 25 000 CHZ est strictement partagĂ©e entre les 10 meilleurs joueurs mondiaux.",
-      "đź“ Le paiement estimĂ© est mis Ă  jour en direct pour afficher votre prix actuellement projetĂ© en fonction de votre rang !"
+      "Connect your Chiliz Wallet to activate your personal team hubs.",
+      "Mint or buy marketplace cards to build national albums.",
+      "Only minted or marketplace-bought cards count for score.",
+      "The standing contest ranks the Global TOP 10 players."
     ]
   },
   es: {
-    title: "Reglas y CĂłmo Jugar",
+    title: "Rules",
     items: [
-      "đź”— Conecta tu billetera Chiliz para activar tus centros de equipo personales.",
-      "âš˝ Mintea tarjetas de jugador o cĂłmpralas en el mercado para cualquiera de los 48 paĂ­ses participantes.",
-      "âš ď¸Ź Las cartas de jugador cuentan SOLO cuando se acuĂ±an (mint) o se compran en el mercado. Puedes listarlas y venderlas, pero las transferencias directas/regalos NO CUENTAN (no se asignan puntos).",
-      "đź“ť Completa la alineaciĂłn de 11 jugadores para cada naciĂłn para maximizar el peso total de esa naciĂłn.",
-      "âšˇ Tu puntuaciĂłn global es la suma de los pesos tĂˇcticos logrados en tus 48 Ăˇlbumes nacionales.",
-      "đźŹ† El fondo de premios patrocinado de 25,000 CHZ se comparte estrictamente entre los 10 mejores jugadores mundiales.",
-      "đź“ El pago estimado se updatea en vivo para mostrar el premio proyectado segĂşn tu clasificaciĂłn."
+      "Connect your Chiliz Wallet to activate your personal team hubs.",
+      "Mint or buy marketplace cards to build national albums.",
+      "Only minted or marketplace-bought cards count for score.",
+      "The standing contest ranks the Global TOP 10 players."
     ]
   },
   pt: {
-    title: "Regras e Como Jogar",
+    title: "Rules",
     items: [
-      "đź”— Conecte sua carteira Chiliz para ativar os seus centros de equipa pessoais.",
-      "âš˝ Minte cartas de jogador ou compre-as no mercado para qualquer um dos 48 paĂ­ses participantes.",
-      "âš ď¸Ź As cartas de jogador contam APENAS quando sĂŁo mintadas ou compradas no mercado. Pode listĂˇ-las e vendĂŞ-las, mas transferĂŞncias diretas/ofertas NĂO CONTAM (nenhuma pontuaĂ§ĂŁo Ă© atribuĂ­da).",
-      "đź“ť Complete a escalaĂ§ĂŁo de 11 jogadores para cada naĂ§ĂŁo para maximizar o peso total dessa naĂ§ĂŁo.",
-      "âšˇ Sua pontuaĂ§ĂŁo global Ă© a soma dos pesos tĂˇticos obtidos em cada um dos seus 48 Ăˇlbuns nacionais.",
-      "đźŹ† O prĂŞmio patrocinado de 25.000 CHZ Ă© compartilhado estritamente entre os 10 melhores jogadores globais.",
-      "đź“ O pagamento estimado Ă© atualizado ao vivo para exibir o seu prĂŞmio projetado com base na sua classificaĂ§ĂŁo!"
+      "Connect your Chiliz Wallet to activate your personal team hubs.",
+      "Mint or buy marketplace cards to build national albums.",
+      "Only minted or marketplace-bought cards count for score.",
+      "The standing contest ranks the Global TOP 10 players."
     ]
   },
   it: {
-    title: "Regole e Come Giocare",
+    title: "Rules",
     items: [
-      "đź”— Collega il tuo wallet Chiliz per attivare i tuoi hub di squadra personali.",
-      "âš˝ Minta una carta giocatore o acquistala sul mercato per uno dei 48 partecipanti partecipanti.",
-      "âš ď¸Ź Le carte giocatore contano SOLO se mintate o acquistate sul mercato. Puoi metterle in vendita e venderle, ma i trasferimenti diretti/regali NON CONTANO (nessun punteggio assegnato).",
-      "đź“ť Completa la formazione di 11 giocatori per ogni nazione per massimizzare il peso totale di quella nazione.",
-      "âšˇ Il tuo punteggio globale Ă¨ la somma dei pesi tattici ottenuti in tutti e 48 i tuoi album nazionali.",
-      "đźŹ† Il montepremi sponsorizzato di 25.000 CHZ Ă¨ interamente diviso tra i TOP 10 giocatori globali.",
-      "đź“ Il pagamento stimato si aggiorna in tempo reale per mostrare il premio attualmente previsto in base al tuo posizionamento!"
+      "Connect your Chiliz Wallet to activate your personal team hubs.",
+      "Mint or buy marketplace cards to build national albums.",
+      "Only minted or marketplace-bought cards count for score.",
+      "The standing contest ranks the Global TOP 10 players."
     ]
   }
 };
@@ -8528,7 +8565,7 @@ async function loadData(options = {}){
   }catch(e){ console.warn('Market scan error:', e); }
 
   // Independent sponsored pool presentation (English local)
-  document.getElementById('poolInfo').textContent = `${SPONSORED_POOL.toLocaleString()} CHZ`;
+  document.getElementById('poolInfo').textContent = 'TOP 10 CONTEST';
 
     renderStats();
     renderCountryHub();
@@ -8604,7 +8641,7 @@ function renderStats() {
 
   // Resolving global position
   const players = getGlobalLeaderboardData();
-  let myGlobalRankVal = 'â€”';
+  let myGlobalRankVal = '-';
   let myEstPrizeVal = 0;
   let myGlobalScoreVal = 0;
   
@@ -8621,7 +8658,7 @@ function renderStats() {
   document.getElementById('myGlobalRank').textContent = myGlobalRankVal;
   document.getElementById('myEstPayout').textContent = myEstPrizeVal > 0
     ? `${myEstPrizeVal.toLocaleString()} CHZ`
-    : '???,??? CHZ';
+    : '0 CHZ';
 }
 
 function filterFederation(fed, btnEl) {
@@ -8656,6 +8693,11 @@ function getMarketListingsForSlot(teamId, pos) {
     .sort((a,b) => a.price - b.price || b.weight - a.weight);
 }
 
+function getUpgradeListings(listings, currentWeight = 0) {
+  const baseWeight = Number(currentWeight || 0);
+  return (listings || []).filter(item => Number(item.weight || 0) > baseWeight);
+}
+
 function getOwnedCardsForSlot(teamId, pos) {
   const myAddr = address?.toLowerCase();
   if (!myAddr) return [];
@@ -8672,16 +8714,16 @@ function getOwnedCardsForSlot(teamId, pos) {
 function renderMarketOfferButtons(listings, currentWeight = 0) {
   const rarityNames = ['Common','Rare','Epic','Legendary'];
   const rarityColors = ['#9aa4b2','#3b82f6','#c084fc','#ffc940'];
-  if (!listings.length) return '<div class="card-hover-note no-listing-note">NO LISTINGS</div>';
-  return listings.slice(0, 6).map(item => {
-    const isUpgrade = Number(item.weight || 0) > Number(currentWeight || 0);
-    const label = isUpgrade ? `BUY UPGRADE +${Number(item.weight) - Number(currentWeight || 0)}` : 'BUY CARD';
+  const upgradeListings = getUpgradeListings(listings, currentWeight);
+  if (!upgradeListings.length) return '<div class="card-hover-note no-listing-note">NO UPGRADES</div>';
+  return upgradeListings.slice(0, 6).map(item => {
+    const label = `BUY UPGRADE +${Number(item.weight) - Number(currentWeight || 0)}`;
     const rarity = Number.isFinite(Number(item.rarity)) ? Number(item.rarity) : 0;
     const color = rarityColors[rarity] || '#ffc940';
-    return `<button onclick="buyFromMarket(${item.listingId}, '${item.price}')" class="btn-card-action ${isUpgrade ? 'upgrade' : ''} market-offer-btn">
+    return `<button onclick="buyFromMarket(${item.listingId}, '${item.price}')" class="btn-card-action upgrade market-offer-btn">
       <span>${label}</span>
       <b style="color:${color}">${item.weight || '?'} PTS</b>
-      <small>${item.price} CHZ Â· ${rarityNames[rarity] || 'Card'}</small>
+      <small>${item.price} CHZ &middot; ${rarityNames[rarity] || 'Card'}</small>
     </button>`;
   }).join('');
 }
@@ -8718,16 +8760,16 @@ function renderSellActionButtons(cards, scoredTokenId) {
 function renderDesktopSlotOverlay(listings, currentWeight = 0, ownedCards = [], scoredTokenId = null) {
   const rarityNames = ['Common','Rare','Epic','Legendary'];
   const rarityColors = ['#9aa4b2','#3b82f6','#c084fc','#ffc940'];
-  const best = listings[0];
+  const upgradeListings = getUpgradeListings(listings, currentWeight);
+  const best = upgradeListings[0];
   let buyHtml = '<div class="slot-hover-empty">NO LISTINGS</div>';
   if (best) {
-    const isUpgrade = Number(best.weight || 0) > Number(currentWeight || 0);
     const rarity = Number.isFinite(Number(best.rarity)) ? Number(best.rarity) : 0;
     const color = rarityColors[rarity] || '#ffc940';
-    buyHtml = `<button onclick="buyFromMarket(${best.listingId}, '${best.price}')" class="slot-hover-buy ${isUpgrade ? 'upgrade' : ''}">
-      <span>${isUpgrade ? 'UPGRADE' : 'MARKET'}</span>
+    buyHtml = `<button onclick="buyFromMarket(${best.listingId}, '${best.price}')" class="slot-hover-buy upgrade">
+      <span>UPGRADE +${Number(best.weight || 0) - Number(currentWeight || 0)}</span>
       <b style="color:${color}">${best.weight || '?'} PTS</b>
-      <small>${best.price} CHZ Â· ${rarityNames[rarity] || 'Card'}</small>
+      <small>${best.price} CHZ &middot; ${rarityNames[rarity] || 'Card'}</small>
     </button>`;
   }
 
@@ -8825,7 +8867,8 @@ function renderPitch() {
       const floorTeam = marketFloorByTeamPosition[selectedTeamId] || {};
       const floor = floorTeam[pos];
       const listings = getMarketListingsForSlot(selectedTeamId, pos);
-      const marketHint = listings.length ? `<div class="slot-market-hint"><span>BUY</span><b>${listings[0].price} CHZ</b></div>` : '';
+      const upgradeListings = getUpgradeListings(listings, scored ? scored.weight : 0);
+      const marketHint = upgradeListings.length ? `<div class="slot-market-hint"><span>UPGRADE</span><b>${upgradeListings[0].price} CHZ</b></div>` : '';
       let sheetTitle = `${selectedTeam.name} ${POSITION_SHORT[pos]}`;
       let sheetActionsHtml = '';
 
@@ -8920,14 +8963,14 @@ function renderLeaderboard(){
       const rank = idx + 1;
       const isWinner = rank <= 10;
       const posClass = isWinner ? 'winner' : '';
-      const medal = rank === 1 ? 'đźĄ‡' : rank === 2 ? 'đźĄ' : rank === 3 ? 'đźĄ‰' : '';
+      const medal = rank === 1 ? '1' : rank === 2 ? '2' : rank === 3 ? '3' : '';
       const prizeAmount = getPrizeForRank(rank);
       const prizeDisplay = prizeAmount > 0 ? `<span class="lb-prize">${prizeAmount.toLocaleString()} CHZ</span>` : '<span class="lb-prize none">NO PRIZE</span>';
 
       return `
         <div class="lb-row global-row ${isMe ? 'me' : ''} ${prizeAmount > 0 ? 'prize-row' : ''}">
-          <div class="lb-pos ${posClass}">${medal || '#' + rank}</div>
-          <div class="lb-addr">${player.wallet.slice(0,6)}â€¦${player.wallet.slice(-4)} ${isMe ? '<span class="lb-you">YOU</span>' : ''}</div>
+          <div class="lb-pos ${posClass}">${medal ? '#' + medal : '#' + rank}</div>
+          <div class="lb-addr">${player.wallet.slice(0,6)}...${player.wallet.slice(-4)} ${isMe ? '<span class="lb-you">YOU</span>' : ''}</div>
           <div class="lb-completion">${player.cards || 0} CARDS</div>
           <div class="lb-completion prize-cell">${prizeDisplay}</div>
           <div class="lb-score">${player.score} PTS</div>
@@ -8942,14 +8985,14 @@ function renderLeaderboard(){
     if (includeMeRow) {
       html += `
         <div class="cutoff-line" style="margin: 16px 0 12px;">
-          âšˇ YOUR CURRENT STANDING POSITION âšˇ
+          YOUR CURRENT STANDING POSITION
         </div>
       `;
       html += renderRow(players[myIndex], myIndex);
     } else if (players.length > 10) {
       html += `
         <div class="cutoff-line">
-          đźš¨ SPONSORED PRIZE THRESHOLD (TOP 10) â€” PLAYERS BELOW DO NOT QUALIFY FOR SPONSOR PRIZES đźš¨
+          SPONSORED PRIZE THRESHOLD (TOP 10) - PLAYERS BELOW DO NOT QUALIFY FOR SPONSOR PRIZES
         </div>
       `;
     }
@@ -8970,7 +9013,7 @@ function renderLeaderboard(){
     });
 
     if (LocalCompetitors.length === 0) {
-      lb.innerHTML = `<div style="text-align:center;color:#3d4a5a;padding:20px;">No active contenders for ${selectedTeam.flag} ${selectedTeam.name} yet. Mint or buy cards to start dominating!</div>`;
+      lb.innerHTML = `<div style="text-align:center;color:#3d4a5a;padding:20px;">No active contenders for ${selectedTeam.name} yet. Mint or buy cards to start dominating!</div>`;
       return;
     }
 
@@ -8985,12 +9028,12 @@ function renderLeaderboard(){
       const rank = idx + 1;
       const isWinner = rank === 1;
       const posClass = isWinner ? 'winner' : '';
-      const medal = rank === 1 ? 'đź‘‘' : '';
+      const medal = rank === 1 ? '1' : '';
 
       return `
         <div class="lb-row local-row ${isMe ? 'me' : ''}">
-          <div class="lb-pos ${posClass}">${medal || '#' + rank}</div>
-          <div class="lb-addr">${player.wallet.slice(0,6)}â€¦${player.wallet.slice(-4)} ${isMe ? '<span class="lb-you">YOU</span>' : ''}</div>
+          <div class="lb-pos ${posClass}">${medal ? '#' + medal : '#' + rank}</div>
+          <div class="lb-addr">${player.wallet.slice(0,6)}...${player.wallet.slice(-4)} ${isMe ? '<span class="lb-you">YOU</span>' : ''}</div>
           <div class="lb-completion">Completed: ${player.completed}/11</div>
           <div class="lb-score" style="${isWinner ? 'color: #00ff87;' : ''}">${player.score} PTS</div>
         </div>
@@ -9004,7 +9047,7 @@ function renderLeaderboard(){
     if (includeMeRow) {
       html += `
         <div class="cutoff-line" style="margin: 16px 0 12px;">
-          âšˇ YOUR CURRENT STANDING POSITION âšˇ
+          YOUR CURRENT STANDING POSITION
         </div>
       `;
       html += renderLocalRow(LocalCompetitors[myIndex], myIndex);
@@ -9304,7 +9347,7 @@ function shareOnX(){
   const selectedTeam = TEAMS.find(t => t.id === selectedTeamId);
   const myAddr = address?.toLowerCase();
   const stats = getTeamDetails(myAddr, selectedTeamId);
-  const text = `đźŹ† Competing for the sponsored 25,000 CHZ prize pool in WORLD CUP ALBUM on @fan_tokens Block Kickers!\n\nMy ${selectedTeam.flag} ${selectedTeam.name} lineup has scored ${stats.score} PTS (${stats.completed}/11 positions finalized).\n\nBuild your squad and challenge me! âš˝đź”Ą\n\nblock-kickers.vercel.app/dream-xi`;
+  const text = `Competing in WORLD CUP ALBUM on @fan_tokens Block Kickers!\n\nMy ${selectedTeam.name} lineup has scored ${stats.score} PTS (${stats.completed}/11 positions finalized).\n\nBuild your squad and challenge me!\n\nblock-kickers.vercel.app/dream-xi`;
   window.open('https://twitter.com/intent/tweet?text='+encodeURIComponent(text),'_blank');
 }
 
@@ -9374,7 +9417,7 @@ function updateCountdown(){
   setDashCd('dashCdS', s);
   const navPriceCountdown = document.getElementById('navPriceCountdown');
   if (navPriceCountdown) navPriceCountdown.innerHTML = `<span>WC END IN</span><b>${String(d).padStart(2,'0')}:${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}</b>`;
-  document.getElementById('cdBlock').innerHTML = 'Deadline block: <a href="https://scan.chiliz.com/block/'+DEADLINE_BLOCK+'" target="_blank" style="color:#00ff87;text-decoration:none;">#'+DEADLINE_BLOCK.toLocaleString()+'</a> Â· Estimated Current: ~#'+estimated.toLocaleString()+' Â· '+blocksLeft.toLocaleString()+' blocks remaining';
+  document.getElementById('cdBlock').innerHTML = 'Deadline block: <a href="https://scan.chiliz.com/block/'+DEADLINE_BLOCK+'" target="_blank" style="color:#00ff87;text-decoration:none;">#'+DEADLINE_BLOCK.toLocaleString()+'</a> &middot; Estimated Current: ~#'+estimated.toLocaleString()+' &middot; '+blocksLeft.toLocaleString()+' blocks remaining';
 }
 
 fetchCurrentBlock();
@@ -9566,4 +9609,5 @@ window.addEventListener('load', async () => {
 
 </body>
 </html>
+
 
