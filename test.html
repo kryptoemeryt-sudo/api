@@ -6439,6 +6439,16 @@ body.portal-v3 .portal-tab b{
   font-weight:400!important;
   letter-spacing:.7px!important;
 }
+body.bk-v4 .wallet-bal,
+body.bk-v4 #walletBalance,
+body.portal-v3 .wallet-bal,
+body.portal-v3 #walletBalance{
+  font-family:'Black Ops One',sans-serif!important;
+  color:#ffc940!important;
+  font-size:clamp(9px,.72vw,12px)!important;
+  line-height:1.05!important;
+  letter-spacing:.7px!important;
+}
 .lb-info#poolInfo{
   display:none!important;
 }
@@ -6461,6 +6471,50 @@ body.portal-v3 .portal-tab b{
 #myEstPayout{
   color:#ffc940!important;
 }
+body.bk-v4.game-mode .country-card,
+body.portal-v3.game-mode .country-card,
+body.game-mode .country-card{
+  text-align:center!important;
+  justify-items:center!important;
+  align-items:center!important;
+}
+body.bk-v4.game-mode .country-card-main,
+body.bk-v4.game-mode .country-card-bottom,
+body.portal-v3.game-mode .country-card-main,
+body.portal-v3.game-mode .country-card-bottom,
+body.game-mode .country-card-main,
+body.game-mode .country-card-bottom{
+  width:100%!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:center!important;
+  text-align:center!important;
+}
+body.bk-v4.game-mode .country-card-flag,
+body.portal-v3.game-mode .country-card-flag,
+body.game-mode .country-card-flag,
+body.bk-v4.game-mode .country-card .flag-container,
+body.bk-v4.game-mode .country-card .portal-flag-container,
+body.portal-v3.game-mode .country-card .flag-container,
+body.portal-v3.game-mode .country-card .portal-flag-container,
+body.game-mode .country-card .flag-container,
+body.game-mode .country-card .portal-flag-container{
+  margin-left:auto!important;
+  margin-right:auto!important;
+  align-self:center!important;
+  justify-content:center!important;
+}
+body.bk-v4.game-mode .country-card .flag-img,
+body.bk-v4.game-mode .country-card .native-flag-img,
+body.portal-v3.game-mode .country-card .flag-img,
+body.portal-v3.game-mode .country-card .native-flag-img,
+body.game-mode .country-card .flag-img,
+body.game-mode .country-card .native-flag-img{
+  margin-left:auto!important;
+  margin-right:auto!important;
+  object-position:center center!important;
+}
 
 @media(max-width:760px){
   body.bk-v4 .portal-tab span,
@@ -6475,6 +6529,40 @@ body.portal-v3 .portal-tab b{
   body.portal-v3 .btn-connect,
   body.portal-v3 #connectBtn{
     font-size:10px!important;
+  }
+  body.bk-v4 .pricing-schedule,
+  body.portal-v3 .pricing-schedule,
+  .pricing-schedule{
+    display:grid!important;
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+    gap:6px!important;
+    overflow:visible!important;
+    width:100%!important;
+    max-width:100%!important;
+    padding:8px!important;
+  }
+  body.bk-v4 .pricing-schedule .schedule-item,
+  body.portal-v3 .pricing-schedule .schedule-item,
+  .pricing-schedule .schedule-item{
+    min-width:0!important;
+    padding:9px 5px!important;
+    overflow:hidden!important;
+  }
+  body.bk-v4 .pricing-schedule .schedule-date,
+  body.portal-v3 .pricing-schedule .schedule-date,
+  .pricing-schedule .schedule-date,
+  body.bk-v4 .pricing-schedule .price-label,
+  body.portal-v3 .pricing-schedule .price-label,
+  .pricing-schedule .price-label{
+    display:none!important;
+  }
+  body.bk-v4 .pricing-schedule .schedule-price,
+  body.portal-v3 .pricing-schedule .schedule-price,
+  .pricing-schedule .schedule-price{
+    font-size:14px!important;
+    line-height:1!important;
+    white-space:nowrap!important;
+    text-align:center!important;
   }
   body.bk-v4.game-mode #selectedCountryCompletion,
   body.portal-v3.game-mode #selectedCountryCompletion,
@@ -6608,15 +6696,15 @@ body.portal-v3 .portal-tab b{
       <div class="pricing-schedule">
         <div class="schedule-item active" id="p1">
           <div class="schedule-date">UNTIL MAY 31</div>
-          <div class="schedule-price">EARLY BIRDS: <span id="betaPriceText">10 CHZ</span></div>
+          <div class="schedule-price"><span class="price-label">EARLY BIRDS:</span> <span id="betaPriceText">10 CHZ</span></div>
         </div>
         <div class="schedule-item" id="p2">
           <div class="schedule-date">FROM JUNE 1</div>
-          <div class="schedule-price">PROMO: <span>50 CHZ</span></div>
+          <div class="schedule-price"><span class="price-label">PROMO:</span> <span>50 CHZ</span></div>
         </div>
         <div class="schedule-item" id="p3">
           <div class="schedule-date">FROM JUNE 11</div>
-          <div class="schedule-price">START: <span>100 CHZ</span></div>
+          <div class="schedule-price"><span class="price-label">START:</span> <span>100 CHZ</span></div>
         </div>
       </div>
     </div>
@@ -8249,6 +8337,13 @@ async function updateWalletBalance() {
     } catch(e) {}
   }
 }
+function updateConnectButtonLabel() {
+  const connectBtn = document.getElementById('connectBtn');
+  if (!connectBtn || !address) return;
+  const last4 = address.slice(-4);
+  connectBtn.textContent = window.matchMedia('(max-width: 760px)').matches ? last4 : address.slice(0,6)+'...'+last4;
+}
+window.addEventListener('resize', updateConnectButtonLabel);
 function openWalletChoice() { const modal = document.getElementById('walletChoiceModal'); if (modal) modal.classList.add('active'); }
 function closeWalletChoice(event) {
   if (event && event.target && event.currentTarget && event.target !== event.currentTarget) return;
@@ -8349,7 +8444,7 @@ async function finalizeWalletConnection(walletProvider, walletType='wallet') {
   contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
   marketContract = new ethers.Contract(MARKET_ADDRESS, MARKET_ABI, signer);
   const connectBtn = document.getElementById('connectBtn');
-  if (connectBtn) { connectBtn.textContent = address.slice(0,6)+'...'+address.slice(-4); connectBtn.classList.add('connected'); }
+  if (connectBtn) { connectBtn.classList.add('connected'); updateConnectButtonLabel(); }
   const walletAddressEl = document.getElementById('walletAddress');
   if (walletAddressEl) { walletAddressEl.textContent = ''; walletAddressEl.style.display = 'none'; }
   await updateWalletBalance();
