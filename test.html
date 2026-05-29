@@ -6697,6 +6697,57 @@ body.game-mode .country-card .native-flag-img{
     font-size:9px!important;
     white-space:nowrap!important;
   }
+  body.bk-v4.game-mode .portal-tab,
+  body.portal-v3.game-mode .portal-tab,
+  body.game-mode .portal-tab,
+  body.bk-v4.game-mode #connectBtn.connected,
+  body.portal-v3.game-mode #connectBtn.connected,
+  body.game-mode #connectBtn.connected{
+    height:36px!important;
+    min-height:36px!important;
+    max-height:36px!important;
+    align-self:center!important;
+    display:flex!important;
+    flex-direction:column!important;
+    align-items:center!important;
+    justify-content:center!important;
+    gap:2px!important;
+    padding:4px 4px!important;
+    line-height:1!important;
+  }
+  body.bk-v4.game-mode .wallet-actions,
+  body.bk-v4.game-mode .nav-right.wallet-actions,
+  body.portal-v3.game-mode .wallet-actions,
+  body.portal-v3.game-mode .nav-right.wallet-actions,
+  body.game-mode .wallet-actions,
+  body.game-mode .nav-right.wallet-actions{
+    height:36px!important;
+    min-height:36px!important;
+    align-items:center!important;
+    justify-content:center!important;
+  }
+  body.bk-v4.game-mode #connectBtn.connected,
+  body.portal-v3.game-mode #connectBtn.connected,
+  body.game-mode #connectBtn.connected{
+    font-size:10px!important;
+    letter-spacing:.5px!important;
+    color:#00ff87!important;
+    text-align:center!important;
+    overflow:hidden!important;
+  }
+  .mobile-wallet-balance-line{
+    display:block!important;
+    width:100%!important;
+    margin-top:1px!important;
+    font-family:'Black Ops One',sans-serif!important;
+    font-size:7px!important;
+    line-height:1!important;
+    color:#ffc940!important;
+    letter-spacing:.2px!important;
+    white-space:nowrap!important;
+    overflow:hidden!important;
+    text-overflow:ellipsis!important;
+  }
 }
 
 </style>
@@ -8430,16 +8481,42 @@ async function updateWalletBalance() {
       const p = new ethers.BrowserProvider(walletProvider);
       const bal = await p.getBalance(address);
       const el = document.getElementById('walletBalance');
-      if (el) { el.textContent = parseFloat(ethers.formatEther(bal)).toFixed(3)+' CHZ'; el.style.display='inline-block'; }
+      const rawBalance = parseFloat(ethers.formatEther(bal));
+      const fullBalance = rawBalance.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' CHZ';
+      window._walletBalanceShort = formatWalletBalanceShort(rawBalance);
+      if (el) { el.textContent = fullBalance; el.style.display='inline-block'; }
+      updateConnectButtonLabel();
     } catch(e) {}
   }
+}
+function formatWalletBalanceShort(value) {
+  const n = Number(value || 0);
+  if (!Number.isFinite(n)) return '0 CHZ';
+  if (n >= 1000000) {
+    const v = n / 1000000;
+    return (Number.isInteger(v) ? String(v) : v.toFixed(2).replace(/\.00$/, '').replace(/(\.\d)0$/, '$1')) + 'M CHZ';
+  }
+  if (n >= 1000) {
+    const v = n / 1000;
+    return (Number.isInteger(v) ? String(v) : v.toFixed(2).replace(/\.00$/, '').replace(/(\.\d)0$/, '$1')) + 'K CHZ';
+  }
+  return n.toFixed(2) + ' CHZ';
 }
 function updateConnectButtonLabel() {
   const connectBtn = document.getElementById('connectBtn');
   if (!connectBtn || !address) return;
   const last4 = address.slice(-4);
-  connectBtn.textContent = window.matchMedia('(max-width: 760px)').matches ? last4 : address.slice(0,6)+'...'+last4;
+  if (window.matchMedia('(max-width: 760px)').matches) {
+    const balanceLine = document.createElement('span');
+    balanceLine.className = 'mobile-wallet-balance-line';
+    balanceLine.textContent = window._walletBalanceShort || '';
+    connectBtn.replaceChildren(document.createTextNode(last4), balanceLine);
+  } else {
+    connectBtn.textContent = address.slice(0,6)+'...'+last4;
+  }
 }
+window.formatWalletBalanceShort = formatWalletBalanceShort;
+window.updateConnectButtonLabel = updateConnectButtonLabel;
 window.addEventListener('resize', updateConnectButtonLabel);
 function openWalletChoice() { const modal = document.getElementById('walletChoiceModal'); if (modal) modal.classList.add('active'); }
 function closeWalletChoice(event) {
