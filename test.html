@@ -1317,9 +1317,325 @@ body{background:linear-gradient(180deg,rgba(6,8,10,.88),rgba(5,7,10,.97)),repeat
 .slot.open .usa-poster-svg{filter:drop-shadow(0 8px 10px rgba(0,0,0,.42)) drop-shadow(0 0 14px rgba(255,201,64,.34))}
 .slot-fig-canvas,.market-fig-canvas,.card-fig-canvas{background:radial-gradient(circle at 50% 80%,rgba(0,255,135,.16),transparent 56%),linear-gradient(180deg,rgba(12,18,26,.90),rgba(5,8,12,.92))!important;overflow:hidden!important}
 .market-card.slot .market-fig-canvas svg,.market-card.slot .card-fig-canvas svg{width:84px!important;height:84px!important}
-.my-squad-panel .slot .slot-fig-canvas svg,.my-squad-panel .slot .card-fig-canvas svg{width:84px!important;height:84px!important}
-@media(min-width:1001px){.my-squad-panel .slot .slot-fig-canvas{height:92px!important;flex:0 0 92px!important}.my-squad-panel .slot{min-height:174px!important}.market-card.slot .market-fig-canvas{height:92px!important;flex-basis:92px!important}}
+.my-squad-panel .slot .slot-fig-canvas svg,.my-squad-panel .slot .card-fig-canvas svg{width:58px!important;height:58px!important}
+@media(min-width:1001px){.my-squad-panel .slot .slot-fig-canvas{height:62px!important;flex:0 0 62px!important}.my-squad-panel .slot{min-height:144px!important}.market-card.slot .market-fig-canvas{height:92px!important;flex-basis:92px!important}}
 @media(max-width:1000px){.my-squad-panel .slot .slot-fig-canvas svg,.my-squad-panel .slot .card-fig-canvas svg{width:42px!important;height:42px!important}.market-card.slot .market-fig-canvas svg,.market-card.slot .card-fig-canvas svg{width:60px!important;height:60px!important}}
+
+
+
+/* ==========================================================
+   BLOCK KICKERS - USA QUEST HYPE REDESIGN
+   Final visual/layout override. Keeps Black Ops One headline font.
+   ========================================================== */
+:root{
+  --h-bg:#020512;
+  --h-card:#07101d;
+  --h-card2:#0c182a;
+  --h-line:rgba(135,170,255,.22);
+  --h-line-hot:rgba(255,201,64,.48);
+  --h-text:#f4f8ff;
+  --h-muted:#91a6c8;
+  --h-green:#00ff87;
+  --h-gold:#ffc940;
+  --h-blue:#3b82f6;
+  --h-red:#ef4444;
+  --h-white:#ffffff;
+  --h-shadow:0 22px 70px rgba(0,0,0,.48),0 0 34px rgba(0,255,135,.075);
+}
+html,body{background:var(--h-bg)!important;color:var(--h-text)!important;min-height:100%!important;}
+body{position:relative!important;overflow-x:hidden!important;background:#020512!important;}
+body::before{
+  content:""!important;position:fixed!important;inset:0!important;z-index:-2!important;pointer-events:none!important;
+  background:
+    radial-gradient(circle at 14% 14%,rgba(239,68,68,.28),transparent 24%),
+    radial-gradient(circle at 84% 8%,rgba(59,130,246,.33),transparent 28%),
+    radial-gradient(circle at 50% -8%,rgba(0,255,135,.16),transparent 38%),
+    linear-gradient(180deg,#020512 0%,#050b17 48%,#020512 100%)!important;
+}
+body::after{
+  content:""!important;position:fixed!important;inset:0!important;z-index:-1!important;pointer-events:none!important;opacity:.45!important;
+  background:
+    linear-gradient(105deg,transparent 0 46%,rgba(255,255,255,.055) 47%,transparent 48% 100%),
+    repeating-linear-gradient(90deg,rgba(255,255,255,.045) 0 1px,transparent 1px 88px),
+    repeating-linear-gradient(0deg,rgba(255,255,255,.03) 0 1px,transparent 1px 88px)!important;
+  mask-image:linear-gradient(180deg,rgba(0,0,0,.8),rgba(0,0,0,.22),transparent)!important;
+}
+.page{
+  width:min(1560px,100%)!important;max-width:1560px!important;margin:0 auto!important;padding:16px!important;gap:16px!important;
+  display:grid!important;grid-template-rows:auto auto auto auto minmax(0,1fr)!important;background:transparent!important;
+}
+.topnav{
+  position:sticky!important;top:10px!important;z-index:200!important;height:68px!important;min-height:68px!important;
+  display:flex!important;align-items:center!important;justify-content:space-between!important;gap:16px!important;
+  padding:10px 18px!important;border:1px solid rgba(255,255,255,.10)!important;border-radius:18px!important;
+  background:linear-gradient(180deg,rgba(8,15,30,.88),rgba(4,8,17,.82))!important;backdrop-filter:blur(18px)!important;
+  box-shadow:0 18px 50px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.06)!important;
+}
+.logo,.brand{
+  display:flex!important;align-items:center!important;gap:8px!important;font-family:'Black Ops One',sans-serif!important;
+  font-size:20px!important;letter-spacing:1.2px!important;color:#fff!important;text-shadow:0 0 24px rgba(0,255,135,.28)!important;white-space:nowrap!important;text-decoration:none!important;
+}
+.logo span,.brand span,.brand b{color:var(--h-green)!important;}
+.nav-countdown{
+  position:static!important;transform:none!important;justify-self:center!important;min-width:170px!important;text-align:center!important;
+  font-family:'Black Ops One',sans-serif!important;font-size:15px!important;letter-spacing:1px!important;color:var(--h-gold)!important;
+  border:1px solid rgba(255,201,64,.28)!important;border-radius:999px!important;background:rgba(255,201,64,.08)!important;
+  padding:9px 13px!important;box-shadow:0 0 24px rgba(255,201,64,.08)!important;
+}
+.nav-countdown span{font-family:'Share Tech Mono',monospace!important;color:#fff!important;font-size:10px!important;margin-right:6px!important;letter-spacing:.8px!important;}
+.nav-right{display:flex!important;align-items:center!important;justify-content:flex-end!important;gap:8px!important;min-width:0!important;}
+.wallet-info{border-radius:999px!important;background:rgba(255,255,255,.055)!important;border:1px solid rgba(255,255,255,.10)!important;padding:7px 10px!important;}
+.btn-connect,.btn,.hero-primary,.hero-secondary,.slot-action,.mint-result-primary{
+  font-family:'Black Ops One',sans-serif!important;letter-spacing:1px!important;border-radius:12px!important;min-height:42px!important;
+  transition:transform .18s ease,filter .18s ease,box-shadow .18s ease,border-color .18s ease!important;
+}
+.btn-connect,.hero-primary,.mint-stat,.mint-result-primary{
+  color:#03130a!important;background:linear-gradient(135deg,var(--h-green),#89ffd1)!important;border:1px solid rgba(0,255,135,.82)!important;
+  box-shadow:0 0 26px rgba(0,255,135,.24),inset 0 1px 0 rgba(255,255,255,.55)!important;
+}
+.btn-connect:hover,.hero-primary:hover,.hero-secondary:hover,.slot-action:hover,.stat:hover{transform:translateY(-1px)!important;filter:brightness(1.08)!important;}
+.hero.hype-hero{display:block!important;min-height:0!important;}
+.hero.hype-hero .panel{
+  position:relative!important;overflow:hidden!important;min-height:360px!important;padding:30px!important;border-radius:28px!important;
+  display:grid!important;grid-template-columns:minmax(320px,.7fr) minmax(380px,1.05fr) minmax(330px,.72fr)!important;
+  grid-template-areas:"kicker title visual" "copy title visual" "actions prize visual"!important;
+  gap:18px 26px!important;align-items:center!important;
+  background:
+    radial-gradient(circle at 77% 22%,rgba(59,130,246,.32),transparent 30%),
+    radial-gradient(circle at 20% 18%,rgba(239,68,68,.24),transparent 28%),
+    linear-gradient(135deg,rgba(12,28,55,.94),rgba(4,8,17,.96) 52%,rgba(3,14,22,.94))!important;
+  border:1px solid rgba(255,255,255,.10)!important;box-shadow:var(--h-shadow)!important;
+}
+.hero.hype-hero .panel::before{
+  content:""!important;position:absolute!important;inset:-30% -10% auto 42%!important;height:160%!important;pointer-events:none!important;opacity:.8!important;
+  background:conic-gradient(from 210deg,transparent 0 18%,rgba(255,255,255,.14) 20%,transparent 26% 42%,rgba(255,201,64,.12) 44%,transparent 51% 100%)!important;
+  transform:rotate(-8deg)!important;
+}
+.hero.hype-hero .panel::after{
+  content:""!important;position:absolute!important;inset:auto 0 0 0!important;height:42%!important;pointer-events:none!important;opacity:.58!important;
+  background:linear-gradient(180deg,transparent,rgba(0,0,0,.32)),repeating-linear-gradient(90deg,rgba(0,255,135,.16) 0 1px,transparent 1px 36px)!important;
+  mask-image:linear-gradient(180deg,transparent,black)!important;
+}
+.quest-kicker{
+  grid-area:kicker!important;position:relative!important;z-index:2!important;justify-self:start!important;align-self:end!important;margin:0!important;
+  padding:9px 14px!important;border-radius:999px!important;border:1px solid rgba(0,255,135,.42)!important;background:rgba(0,255,135,.09)!important;
+  font-family:'Share Tech Mono',monospace!important;color:var(--h-green)!important;letter-spacing:2.2px!important;font-size:12px!important;text-transform:uppercase!important;
+}
+.dot{background:var(--h-red)!important;box-shadow:0 0 16px rgba(239,68,68,.7)!important;}
+.hero-title{
+  grid-area:title!important;position:relative!important;z-index:2!important;margin:0!important;font-family:'Black Ops One',sans-serif!important;
+  font-size:clamp(60px,6.4vw,112px)!important;line-height:.82!important;letter-spacing:1.5px!important;text-align:left!important;
+  color:#fff!important;text-shadow:0 12px 48px rgba(0,0,0,.45)!important;
+}
+.hero-title .title-line{display:block!important;color:#fff!important;line-height:.82!important;}
+.hero-title .usa-title-blue{display:inline!important;color:#fff!important;background:linear-gradient(90deg,#3b82f6 0 36%,#fff 38% 62%,#ef4444 64% 100%)!important;-webkit-background-clip:text!important;background-clip:text!important;color:transparent!important;text-shadow:none!important;}
+.hero-title .title-prize{display:block!important;margin-top:7px!important;color:var(--h-gold)!important;line-height:.88!important;text-shadow:0 0 28px rgba(255,201,64,.22),0 12px 44px rgba(0,0,0,.42)!important;}
+.hero-copy{
+  grid-area:copy!important;position:relative!important;z-index:2!important;margin:0!important;align-self:start!important;max-width:520px!important;
+  display:grid!important;gap:8px!important;color:#d6e4ff!important;font-size:23px!important;line-height:1.13!important;font-weight:600!important;
+}
+.hero-copy strong{color:var(--h-gold)!important;font-family:'Black Ops One',sans-serif!important;font-size:.88em!important;font-weight:400!important;letter-spacing:.6px!important;}
+.hero-actions{grid-area:actions!important;position:relative!important;z-index:3!important;display:flex!important;align-items:center!important;gap:10px!important;flex-wrap:wrap!important;}
+.hero-primary,.hero-secondary{cursor:pointer!important;padding:0 18px!important;border:0!important;font-size:13px!important;white-space:nowrap!important;}
+.hero-secondary{background:rgba(255,255,255,.075)!important;border:1px solid rgba(255,255,255,.14)!important;color:#fff!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.08)!important;}
+.hero-prize-card{
+  grid-area:prize!important;position:relative!important;z-index:3!important;align-self:center!important;justify-self:start!important;width:min(100%,330px)!important;
+  padding:16px!important;border-radius:18px!important;border:1px solid rgba(255,201,64,.40)!important;
+  background:linear-gradient(180deg,rgba(255,201,64,.16),rgba(7,16,29,.78))!important;box-shadow:0 0 34px rgba(255,201,64,.12),inset 0 1px 0 rgba(255,255,255,.08)!important;
+}
+.prize-eyebrow{font-family:'Share Tech Mono',monospace!important;text-transform:uppercase!important;letter-spacing:1.6px!important;color:#fff!important;font-size:11px!important;margin-bottom:3px!important;}
+.prize-big{font-family:'Black Ops One',sans-serif!important;font-size:42px!important;line-height:.95!important;color:var(--h-gold)!important;text-shadow:0 0 24px rgba(255,201,64,.18)!important;}
+.prize-big span{font-size:.44em!important;color:#fff!important;}
+.prize-mini-grid{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:6px!important;margin-top:12px!important;}
+.prize-mini-grid span{font-family:'Share Tech Mono',monospace!important;font-size:10px!important;color:#d7e5ff!important;border:1px solid rgba(255,255,255,.10)!important;background:rgba(255,255,255,.055)!important;border-radius:8px!important;padding:7px 5px!important;text-align:center!important;}
+.hero-visual{grid-area:visual!important;position:relative!important;z-index:2!important;height:300px!important;min-width:0!important;display:grid!important;place-items:center!important;}
+.stadium-ring{position:absolute!important;left:50%!important;bottom:28px!important;width:88%!important;height:92px!important;transform:translateX(-50%)!important;border-radius:50%!important;background:radial-gradient(ellipse at center,rgba(0,255,135,.19),rgba(0,255,135,.06) 48%,transparent 68%)!important;border:1px solid rgba(0,255,135,.18)!important;filter:blur(.3px)!important;}
+.hype-player{position:absolute!important;display:block!important;width:86px!important;height:156px!important;filter:drop-shadow(0 24px 20px rgba(0,0,0,.45));animation:hypeFloat 3.6s ease-in-out infinite!important;}
+.hype-player .head{position:absolute!important;left:23px!important;top:0!important;width:40px!important;height:40px!important;border-radius:10px!important;background:#e0ac69!important;box-shadow:inset 0 10px 0 rgba(40,22,12,.88)!important;}
+.hype-player .body{position:absolute!important;left:16px!important;top:44px!important;width:54px!important;height:60px!important;border-radius:10px 10px 8px 8px!important;background:#fff!important;border-bottom:10px solid #1d4ed8!important;display:grid!important;place-items:center!important;}
+.hype-player .body::before{content:""!important;position:absolute!important;left:0!important;right:0!important;top:9px!important;height:5px!important;background:var(--h-red)!important;opacity:.9!important;}
+.hype-player .body b{position:relative!important;z-index:2!important;font-family:'Black Ops One',sans-serif!important;color:#1d4ed8!important;font-size:20px!important;}
+.hype-player .legs{position:absolute!important;left:24px!important;top:105px!important;width:38px!important;height:48px!important;background:linear-gradient(90deg,#1d4ed8 0 43%,transparent 44% 56%,#1d4ed8 57% 100%)!important;border-bottom:12px solid #fff!important;}
+.hype-player .legs::before{content:""!important;position:absolute!important;left:-3px!important;right:-3px!important;bottom:-20px!important;height:14px!important;background:linear-gradient(90deg,#111 0 44%,transparent 45% 55%,#111 56% 100%)!important;border-radius:4px!important;}
+.player-a{left:20px!important;bottom:35px!important;transform:scale(.86) rotate(-7deg)!important;animation-delay:-.6s!important;opacity:.9!important;}
+.player-b{left:115px!important;bottom:52px!important;transform:scale(1.18)!important;animation-delay:-1.1s!important;}
+.player-c{right:24px!important;bottom:38px!important;transform:scale(.92) rotate(7deg)!important;animation-delay:-.2s!important;}
+.player-c .body{background:#16a34a!important;border-bottom-color:#064e3b!important}.player-c .body::before{background:#fff!important}.player-c .body b{color:#fff!important}.player-c .legs{background:linear-gradient(90deg,#064e3b 0 43%,transparent 44% 56%,#064e3b 57% 100%)!important;}
+.hero-ball{position:absolute!important;right:105px!important;bottom:28px!important;font-size:38px!important;filter:drop-shadow(0 12px 14px rgba(0,0,0,.45));animation:ballPulse 2.4s ease-in-out infinite!important;}
+@keyframes hypeFloat{0%,100%{translate:0 0}50%{translate:0 -8px}}
+@keyframes ballPulse{0%,100%{transform:scale(1) rotate(0)}50%{transform:scale(1.08) rotate(14deg)}}
+.quest-flow-strip{
+  display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:10px!important;margin:0!important;
+}
+.flow-card{
+  position:relative!important;overflow:hidden!important;border-radius:16px!important;border:1px solid rgba(255,255,255,.10)!important;
+  background:linear-gradient(135deg,rgba(9,21,39,.92),rgba(5,10,20,.94))!important;padding:13px 14px!important;
+  display:flex!important;align-items:center!important;gap:12px!important;min-height:70px!important;box-shadow:0 12px 34px rgba(0,0,0,.23)!important;
+}
+.flow-card::after{content:""!important;position:absolute!important;right:-28px!important;top:-28px!important;width:80px!important;height:80px!important;border-radius:50%!important;background:rgba(59,130,246,.15)!important;}
+.flow-card b{font-family:'Black Ops One',sans-serif!important;font-size:22px!important;color:var(--h-green)!important;min-width:44px!important;}
+.flow-card span{font-family:'Black Ops One',sans-serif!important;font-size:12px!important;letter-spacing:.7px!important;color:#fff!important;text-transform:uppercase!important;line-height:1.15!important;}
+.flow-card.hot{border-color:rgba(255,201,64,.34)!important;background:linear-gradient(135deg,rgba(255,201,64,.17),rgba(6,12,23,.94))!important;}
+.flow-card.hot b{color:var(--h-gold)!important;}
+.stats.hype-stats,.stats{
+  display:grid!important;grid-template-columns:repeat(6,minmax(0,1fr))!important;gap:10px!important;width:100%!important;
+}
+.stats .stat:nth-child(n){display:flex!important;}
+.stat{
+  position:relative!important;overflow:hidden!important;min-height:104px!important;padding:14px!important;border-radius:18px!important;
+  background:linear-gradient(180deg,rgba(9,21,39,.92),rgba(5,10,20,.96))!important;border:1px solid rgba(255,255,255,.10)!important;
+  box-shadow:0 12px 34px rgba(0,0,0,.24),inset 0 1px 0 rgba(255,255,255,.055)!important;text-align:left!important;
+  align-items:flex-start!important;justify-content:center!important;color:#fff!important;text-decoration:none!important;
+}
+.stat::after{content:""!important;position:absolute!important;right:-32px!important;bottom:-42px!important;width:94px!important;height:94px!important;border-radius:50%!important;background:rgba(0,255,135,.08)!important;}
+.stat-value{position:relative!important;z-index:2!important;font-family:'Black Ops One',sans-serif!important;font-size:clamp(23px,2.35vw,36px)!important;color:var(--h-green)!important;line-height:1!important;text-align:left!important;}
+.stat-value.gold{color:var(--h-gold)!important}.stat-value.blue{color:#75a7ff!important}.stat-value.red{color:var(--h-red)!important}
+.stat-label{position:relative!important;z-index:2!important;margin-top:9px!important;color:var(--h-muted)!important;font-size:11px!important;letter-spacing:.9px!important;text-align:left!important;}
+.arg-quest-stat{border-color:rgba(255,201,64,.28)!important;background:linear-gradient(135deg,rgba(116,172,223,.18),rgba(255,201,64,.08),rgba(5,10,20,.95))!important;}
+.arg-quest-flag{width:36px!important;height:24px!important;border-radius:4px!important;margin-bottom:8px!important;object-fit:cover!important;box-shadow:0 5px 14px rgba(0,0,0,.35)!important;}
+.mint-stat{cursor:pointer!important;border-color:rgba(0,255,135,.50)!important;}
+.main-grid{
+  display:grid!important;grid-template-columns:minmax(0,1fr) minmax(360px,420px)!important;grid-template-areas:"left side"!important;gap:16px!important;align-items:start!important;min-height:0!important;
+}
+.global-slots-panel{display:none!important;}
+.quest-left-column{grid-area:left!important;display:grid!important;gap:16px!important;min-width:0!important;}
+.quest-side-panel,.info-grid{grid-area:side!important;grid-column:auto!important;grid-row:auto!important;display:grid!important;gap:16px!important;align-content:start!important;position:sticky!important;top:94px!important;min-width:0!important;}
+.panel,.callout,.market-card,.slot,.rank-row,.feed-row,.modal-panel,.wallet-option{
+  border-radius:18px!important;background:linear-gradient(180deg,rgba(9,21,39,.92),rgba(5,10,20,.96))!important;border:1px solid rgba(255,255,255,.10)!important;
+  box-shadow:0 16px 42px rgba(0,0,0,.25),inset 0 1px 0 rgba(255,255,255,.055)!important;
+}
+.panel{padding:16px!important;}
+.my-squad-panel{border-color:rgba(0,255,135,.22)!important;background:linear-gradient(180deg,rgba(4,26,22,.72),rgba(5,10,20,.96))!important;}
+.market-section{border-color:rgba(59,130,246,.22)!important;background:linear-gradient(180deg,rgba(6,18,42,.78),rgba(5,10,20,.96))!important;}
+.section-title{
+  margin-bottom:14px!important;font-family:'Black Ops One',sans-serif!important;color:#fff!important;font-size:16px!important;letter-spacing:1.4px!important;text-transform:uppercase!important;
+}
+.section-title .live{font-family:'Share Tech Mono',monospace!important;color:var(--h-green)!important;font-size:11px!important;letter-spacing:1px!important;}
+.my-squad-panel .squad{
+  display:grid!important;grid-template-columns:repeat(11,minmax(0,1fr))!important;gap:8px!important;overflow:visible!important;width:100%!important;
+}
+.slot{
+  position:relative!important;min-height:168px!important;width:100%!important;min-width:0!important;padding:8px 5px!important;gap:6px!important;
+  display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:space-between!important;text-align:center!important;
+  transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease!important;
+}
+.slot:hover{transform:translateY(-2px)!important;border-color:rgba(0,255,135,.45)!important;box-shadow:0 20px 42px rgba(0,0,0,.32),0 0 20px rgba(0,255,135,.12)!important;}
+.slot.done{border-color:rgba(0,255,135,.48)!important;background:linear-gradient(180deg,rgba(0,255,135,.16),rgba(5,10,20,.96))!important;}
+.slot.open{border-color:rgba(255,201,64,.58)!important;background:linear-gradient(180deg,rgba(255,201,64,.18),rgba(5,10,20,.96))!important;box-shadow:0 0 28px rgba(255,201,64,.10),inset 0 1px 0 rgba(255,255,255,.06)!important;}
+.slot.rarity-1{border-color:rgba(59,130,246,.48)!important}.slot.rarity-2{border-color:rgba(192,132,252,.52)!important}.slot.rarity-3{border-color:rgba(255,201,64,.60)!important}
+.slot-fig-canvas,.card-fig-canvas,.market-fig-canvas{
+  border-radius:14px!important;border:1px solid rgba(255,255,255,.09)!important;background:radial-gradient(circle at 50% 88%,rgba(0,255,135,.19),transparent 55%),linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.015))!important;
+}
+.my-squad-panel .slot-fig-canvas{height:72px!important;flex:0 0 72px!important;}
+.my-squad-panel .slot-fig-canvas svg,.my-squad-panel .slot .card-fig-canvas svg{width:68px!important;height:68px!important;}
+.slot-fig-flag{border-radius:4px!important;box-shadow:0 0 0 1px rgba(255,255,255,.28),0 8px 14px rgba(0,0,0,.28)!important;}
+.my-squad-panel .slot-fig-flag{width:22px!important;height:15px!important;}
+.slot-fig-canvas .slot-pos,.card-pos{
+  background:rgba(2,5,12,.78)!important;border:1px solid rgba(255,255,255,.16)!important;border-radius:6px!important;color:#fff!important;font-size:8px!important;
+}
+.slot-count{font-family:'Black Ops One',sans-serif!important;font-size:15px!important;color:var(--h-green)!important;line-height:1!important;}
+.slot-count.legendary{color:var(--h-gold)!important}.slot-count.epic{color:#d8a5ff!important}.slot-count.rare{color:#75a7ff!important}
+.slot-status{font-family:'Share Tech Mono',monospace!important;color:var(--h-muted)!important;font-size:7px!important;line-height:1.05!important;}
+.slot-actions{position:static!important;display:grid!important;grid-template-columns:1fr!important;gap:4px!important;width:100%!important;opacity:1!important;transform:none!important;margin-top:2px!important;}
+.slot-action{width:100%!important;min-height:28px!important;padding:5px 4px!important;font-size:8px!important;color:var(--h-green)!important;background:rgba(0,255,135,.10)!important;border:1px solid rgba(0,255,135,.28)!important;}
+.slot-action.buy{color:var(--h-gold)!important;background:rgba(255,201,64,.10)!important;border-color:rgba(255,201,64,.32)!important;}
+.slot-action.sell{color:var(--h-red)!important;background:rgba(239,68,68,.10)!important;border-color:rgba(239,68,68,.32)!important;}
+.market-grid{
+  display:grid!important;grid-template-columns:repeat(auto-fill,minmax(170px,1fr))!important;gap:12px!important;max-height:560px!important;overflow:auto!important;padding-right:6px!important;
+  scrollbar-width:thin!important;scrollbar-color:rgba(0,255,135,.45) rgba(255,255,255,.06)!important;
+}
+.market-card{
+  min-height:240px!important;padding:10px!important;display:grid!important;grid-template-columns:1fr!important;grid-template-rows:auto auto auto!important;gap:8px!important;align-items:stretch!important;
+  transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease!important;
+}
+.market-card:hover{transform:translateY(-2px)!important;border-color:rgba(59,130,246,.45)!important;box-shadow:0 22px 44px rgba(0,0,0,.34),0 0 22px rgba(59,130,246,.12)!important;}
+.market-card.mine{border-color:rgba(0,255,135,.55)!important;}
+.market-card.rarity-3{border-color:rgba(255,201,64,.55)!important;}
+.market-fig-canvas{height:112px!important;flex:0 0 112px!important;}
+.market-card.slot .market-fig-canvas svg,.market-card.slot .card-fig-canvas svg{width:104px!important;height:104px!important;}
+.market-fig-flag{width:28px!important;height:19px!important;}
+.market-pos{position:absolute!important;right:7px!important;top:7px!important;background:rgba(2,5,12,.72)!important;border:1px solid rgba(255,255,255,.14)!important;border-radius:8px!important;color:#fff!important;}
+.market-meta{display:grid!important;gap:5px!important;min-width:0!important;}
+.market-name{font-family:'Black Ops One',sans-serif!important;color:#fff!important;font-size:13px!important;letter-spacing:.3px!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;}
+.market-sub{font-family:'Share Tech Mono',monospace!important;color:#b9c8df!important;font-size:10px!important;line-height:1.2!important;}
+.market-price{font-family:'Black Ops One',sans-serif!important;color:var(--h-gold)!important;font-size:18px!important;text-align:left!important;}
+.market-card .slot-action{width:100%!important;min-height:34px!important;font-size:10px!important;margin-top:2px!important;}
+.callout{padding:16px!important;}
+.callout h3{font-family:'Black Ops One',sans-serif!important;color:var(--h-green)!important;font-size:15px!important;letter-spacing:1px!important;margin-bottom:9px!important;}
+.callout p,.winner-box{color:#d7e5ff!important;font-size:15px!important;line-height:1.35!important;}
+.trading-tips{border-color:rgba(255,201,64,.26)!important;background:linear-gradient(180deg,rgba(255,201,64,.08),rgba(5,10,20,.96))!important;}
+.trading-tips ul{display:grid!important;gap:9px!important;margin:0!important;padding:0!important;list-style:none!important;}
+.trading-tips li{position:relative!important;padding-left:18px!important;color:#d7e5ff!important;font-size:14px!important;line-height:1.25!important;}
+.trading-tips li::before{content:"▶"!important;position:absolute!important;left:0!important;top:0!important;color:var(--h-gold)!important;font-size:10px!important;}
+.rank-list,.feed{max-height:280px!important;overflow:auto!important;padding-right:4px!important;display:grid!important;gap:8px!important;}
+.rank-row,.feed-row{padding:10px!important;border-radius:12px!important;}
+.feed-row{grid-template-columns:46px minmax(0,1fr) auto!important;}
+.feed-pos,.feed-token{font-family:'Black Ops One',sans-serif!important;color:#fff!important;}
+.feed-addr,.rank-wallet{font-family:'Share Tech Mono',monospace!important;color:#b9c8df!important;}
+.loading{color:#b9c8df!important;font-family:'Share Tech Mono',monospace!important;}
+.modal-panel{border-color:rgba(0,255,135,.28)!important;border-radius:20px!important;background:linear-gradient(180deg,rgba(8,17,34,.97),rgba(3,7,14,.98))!important;box-shadow:0 30px 90px rgba(0,0,0,.64),0 0 34px rgba(0,255,135,.10)!important;}
+.modal-title{font-family:'Black Ops One',sans-serif!important;color:var(--h-green)!important;}
+@media(max-width:1280px){
+  .hero.hype-hero .panel{grid-template-columns:minmax(260px,.8fr) minmax(330px,1fr)!important;grid-template-areas:"title visual" "copy visual" "actions prize"!important;min-height:330px!important;}
+  .quest-kicker{position:absolute!important;top:20px!important;left:20px!important;}
+  .stats.hype-stats,.stats{grid-template-columns:repeat(3,minmax(0,1fr))!important;}
+  .main-grid{grid-template-columns:1fr!important;grid-template-areas:"left" "side"!important;}
+  .quest-side-panel,.info-grid{position:static!important;grid-area:side!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;}
+}
+@media(max-width:1000px){
+  .page{padding:8px!important;gap:10px!important;max-width:100vw!important;}
+  .topnav{top:0!important;height:auto!important;min-height:54px!important;border-radius:0 0 14px 14px!important;padding:8px!important;display:grid!important;grid-template-columns:minmax(84px,auto) minmax(95px,1fr) auto!important;gap:6px!important;}
+  .logo,.brand{font-size:11px!important;letter-spacing:.4px!important;min-width:0!important;overflow:hidden!important;}
+  .nav-countdown{min-width:0!important;padding:7px 8px!important;font-size:10px!important;}
+  .nav-countdown span{display:none!important;}
+  .nav-right .wallet-info{display:none!important;}
+  .btn-connect{min-height:34px!important;padding:7px 9px!important;font-size:9px!important;}
+  .hero.hype-hero .panel{display:grid!important;grid-template-columns:1fr!important;grid-template-areas:"kicker" "title" "copy" "visual" "actions" "prize"!important;min-height:0!important;padding:16px!important;border-radius:20px!important;gap:12px!important;}
+  .quest-kicker{position:relative!important;top:auto!important;left:auto!important;align-self:start!important;font-size:10px!important;padding:7px 11px!important;}
+  .hero-title{font-size:clamp(42px,12vw,72px)!important;line-height:.85!important;}
+  .hero-copy{font-size:17px!important;line-height:1.18!important;}
+  .hero-actions{display:grid!important;grid-template-columns:1fr 1fr!important;width:100%!important;}
+  .hero-primary,.hero-secondary{width:100%!important;min-height:42px!important;font-size:11px!important;padding:0 8px!important;}
+  .hero-visual{height:190px!important;order:4!important;}
+  .hype-player{transform-origin:bottom center!important;}
+  .player-a{left:calc(50% - 130px)!important;bottom:20px!important;transform:scale(.68) rotate(-7deg)!important;}
+  .player-b{left:calc(50% - 43px)!important;bottom:28px!important;transform:scale(.88)!important;}
+  .player-c{right:calc(50% - 135px)!important;bottom:22px!important;transform:scale(.72) rotate(7deg)!important;}
+  .hero-ball{right:calc(50% - 92px)!important;bottom:16px!important;font-size:28px!important;}
+  .prize-mini-grid{grid-template-columns:1fr!important;}
+  .quest-flow-strip{grid-template-columns:1fr 1fr!important;gap:7px!important;}
+  .flow-card{min-height:62px!important;padding:10px!important;gap:8px!important;}
+  .flow-card b{font-size:18px!important;min-width:34px!important;}
+  .flow-card span{font-size:9px!important;}
+  .stats.hype-stats,.stats{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:7px!important;}
+  .stat{min-height:82px!important;padding:10px!important;}
+  .stat-value{font-size:20px!important;}
+  .stat-label{font-size:8px!important;margin-top:6px!important;}
+  .quest-side-panel,.info-grid{display:grid!important;grid-template-columns:1fr!important;gap:10px!important;}
+  .my-squad-panel,.market-section,.panel{padding:10px!important;border-radius:16px!important;}
+  .section-title{font-size:12px!important;margin-bottom:10px!important;}
+  .my-squad-panel{overflow:hidden!important;}
+  .my-squad-panel .squad{display:grid!important;grid-template-columns:repeat(11,82px)!important;gap:8px!important;overflow-x:auto!important;overflow-y:hidden!important;padding-bottom:7px!important;scrollbar-width:thin!important;}
+  .my-squad-panel .slot{width:82px!important;min-width:82px!important;max-width:82px!important;min-height:152px!important;padding:6px 4px!important;}
+  .my-squad-panel .slot-fig-canvas{height:62px!important;flex:0 0 62px!important;}
+  .my-squad-panel .slot-fig-canvas svg,.my-squad-panel .slot .card-fig-canvas svg{width:58px!important;height:58px!important;}
+  .slot-count{font-size:13px!important;}.slot-status{font-size:6px!important;}
+  .slot-action{font-size:7px!important;min-height:26px!important;}
+  .market-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important;max-height:420px!important;}
+  .market-card{min-height:210px!important;padding:8px!important;}
+  .market-fig-canvas{height:88px!important;flex-basis:88px!important;}
+  .market-card.slot .market-fig-canvas svg,.market-card.slot .card-fig-canvas svg{width:82px!important;height:82px!important;}
+  .market-name{font-size:10px!important;}.market-sub{font-size:8px!important;}.market-price{font-size:13px!important;}
+  .market-card .slot-action{font-size:8px!important;min-height:30px!important;}
+}
+@media(max-width:520px){
+  .hero-title{font-size:39px!important;}
+  .quest-flow-strip{grid-template-columns:1fr!important;}
+  .stats.hype-stats,.stats{grid-template-columns:1fr 1fr!important;}
+  .market-grid{grid-template-columns:1fr 1fr!important;}
+  .hero-prize-card{width:100%!important;}
+}
+@media(prefers-reduced-motion:reduce){.hype-player,.hero-ball,.dot{animation:none!important}.slot,.market-card,.stat,.btn-connect,.hero-primary,.hero-secondary{transition:none!important}}
 
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -1336,16 +1652,43 @@ body{background:linear-gradient(180deg,rgba(6,8,10,.88),rgba(5,7,10,.97)),repeat
     </div>
   </header>
 
-  <section class="hero">
+  <section class="hero hype-hero">
     <div class="panel">
-      <div class="quest-kicker"><span class="dot"></span> Open Nation Quest</div>
+      <div class="quest-kicker"><span class="dot"></span> Live Nation Quest</div>
       <h1 class="hero-title"><span class="title-line"><span class="usa-title-blue">USA</span> QUEST</span><span class="title-prize">1500 CHZ</span></h1>
-      <p class="hero-copy"><span>First wallet to complete <strong>11/11 USA positions wins 1500 CHZ</strong>.</span><span>Mint, buy, sell and upgrade directly on this quest page.</span></p>
+      <p class="hero-copy"><span>Build the first full <strong>USA XI</strong>, hold all 11 cards in your wallet and take the squad prize.</span><span>Mint cards, hunt missing positions on the market and use alerts when your card helps another player complete the quest.</span></p>
+      <div class="hero-actions">
+        <button class="hero-primary" type="button" onclick="directMint()">MINT CARD</button>
+        <button class="hero-secondary" type="button" onclick="document.querySelector('.market-section')?.scrollIntoView({behavior:'smooth',block:'start'})">HUNT MARKET</button>
+      </div>
+      <div class="hero-prize-card" aria-label="USA Quest Prize">
+        <div class="prize-eyebrow">First complete squad</div>
+        <div class="prize-big">1500 <span>CHZ</span></div>
+        <div class="prize-mini-grid">
+          <span>11 USA Cards</span>
+          <span>Hold to payout</span>
+          <span>Market hunt</span>
+        </div>
+      </div>
+      <div class="hero-visual" aria-hidden="true">
+        <div class="stadium-ring"></div>
+        <div class="hype-player player-a"><span class="head"></span><span class="body"><b>7</b></span><span class="legs"></span></div>
+        <div class="hype-player player-b"><span class="head"></span><span class="body"><b>10</b></span><span class="legs"></span></div>
+        <div class="hype-player player-c"><span class="head"></span><span class="body"><b>1</b></span><span class="legs"></span></div>
+        <div class="hero-ball">⚽</div>
+      </div>
     </div>
   </section>
   <div class="status-line" id="questStatus" style="display:none">Loading live quest status...</div>
 
-  <section class="stats">
+  <section class="quest-flow-strip" aria-label="How the USA Nation Quest works">
+    <div class="flow-card"><b>01</b><span>Mint or collect USA cards</span></div>
+    <div class="flow-card"><b>02</b><span>Buy missing positions on market</span></div>
+    <div class="flow-card"><b>03</b><span>Complete all 11 USA slots</span></div>
+    <div class="flow-card hot"><b>WIN</b><span>Hold squad until payout</span></div>
+  </section>
+
+  <section class="stats hype-stats">
     <div class="stat"><div class="stat-value" id="statCompleted">-</div><div class="stat-label">Players</div></div>
     <div class="stat"><div class="stat-value gold" id="statLeader">- / 11</div><div class="stat-label" id="statLeaderLabel">Quest Leader</div></div>
     <a class="stat arg-quest-stat" href="https://block-kickers.vercel.app/dream-xi">
