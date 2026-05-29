@@ -1637,6 +1637,390 @@ body::after{
 }
 @media(prefers-reduced-motion:reduce){.hype-player,.hero-ball,.dot{animation:none!important}.slot,.market-card,.stat,.btn-connect,.hero-primary,.hero-secondary{transition:none!important}}
 
+
+
+/* =========================================================
+   FINAL USER LAYOUT PASS: full-width squad + side panel below market
+   ========================================================= */
+:root{
+  --bk-final-bg:#020512;
+  --bk-final-panel:#07111f;
+  --bk-final-panel2:#0a1730;
+  --bk-final-line:rgba(255,255,255,.12);
+  --bk-final-green:#00ff87;
+  --bk-final-gold:#ffc940;
+  --bk-final-red:#ef4444;
+  --bk-final-blue:#3b82f6;
+}
+html,body{overflow-x:hidden!important;background:var(--bk-final-bg)!important;}
+.page{
+  width:min(1680px,100%)!important;
+  max-width:1680px!important;
+  margin:0 auto!important;
+  padding:14px!important;
+  gap:14px!important;
+  display:grid!important;
+  grid-template-rows:auto auto auto auto auto!important;
+  background:transparent!important;
+}
+.topnav{
+  position:sticky!important;
+  top:8px!important;
+  z-index:500!important;
+  min-height:62px!important;
+  height:auto!important;
+  display:grid!important;
+  grid-template-columns:minmax(170px,auto) minmax(180px,1fr) minmax(220px,auto)!important;
+  align-items:center!important;
+  gap:12px!important;
+  padding:10px 16px!important;
+  border-radius:18px!important;
+  border:1px solid rgba(255,255,255,.11)!important;
+  background:linear-gradient(180deg,rgba(8,15,30,.93),rgba(3,7,15,.88))!important;
+  box-shadow:0 18px 50px rgba(0,0,0,.42),inset 0 1px 0 rgba(255,255,255,.07)!important;
+  backdrop-filter:blur(16px)!important;
+}
+.logo,.topnav .brand{
+  min-width:0!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+  font-size:19px!important;
+  line-height:1!important;
+  white-space:nowrap!important;
+}
+.nav-countdown{
+  justify-self:center!important;
+  position:static!important;
+  transform:none!important;
+  width:min(100%,260px)!important;
+  min-width:0!important;
+  max-width:260px!important;
+  padding:9px 12px!important;
+  border-radius:999px!important;
+  text-align:center!important;
+  white-space:nowrap!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+  font-size:14px!important;
+}
+.nav-right{
+  justify-self:end!important;
+  min-width:0!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:flex-end!important;
+  gap:8px!important;
+  overflow:hidden!important;
+}
+.nav-right .wallet-info{max-width:128px!important;overflow:hidden!important;text-overflow:ellipsis!important;}
+.btn-connect{white-space:nowrap!important;min-height:38px!important;padding:0 14px!important;font-size:11px!important;}
+.hero.hype-hero .panel{
+  min-height:300px!important;
+  grid-template-columns:minmax(260px,.72fr) minmax(360px,1fr) minmax(300px,.68fr)!important;
+  grid-template-areas:"kicker title visual" "copy title visual" "actions prize visual"!important;
+  border-radius:26px!important;
+}
+.hero-title{font-size:clamp(54px,5.7vw,100px)!important;}
+.hero-copy{font-size:clamp(18px,1.6vw,22px)!important;}
+.quest-flow-strip{
+  display:grid!important;
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  gap:10px!important;
+}
+.flow-card{
+  min-width:0!important;
+  overflow:hidden!important;
+  border-radius:16px!important;
+}
+.stats.hype-stats,.stats{
+  display:grid!important;
+  grid-template-columns:repeat(6,minmax(0,1fr))!important;
+  gap:10px!important;
+  align-items:stretch!important;
+}
+.stat{
+  min-width:0!important;
+  min-height:96px!important;
+  border-radius:16px!important;
+  overflow:hidden!important;
+}
+.stat-value{font-size:clamp(21px,1.9vw,32px)!important;white-space:nowrap!important;}
+.stat-label{font-size:10px!important;line-height:1.08!important;}
+.arg-quest-stat{
+  position:relative!important;
+  display:grid!important;
+  grid-template-columns:auto 1fr!important;
+  align-items:center!important;
+  gap:12px!important;
+  border-color:rgba(255,201,64,.42)!important;
+  background:
+    radial-gradient(circle at 88% 15%,rgba(116,172,223,.32),transparent 33%),
+    linear-gradient(135deg,rgba(116,172,223,.23),rgba(255,255,255,.07),rgba(255,201,64,.12))!important;
+}
+.arg-quest-stat::before{
+  content:"ARG"!important;
+  position:absolute!important;
+  right:10px!important;
+  top:8px!important;
+  font-family:'Black Ops One',sans-serif!important;
+  font-size:10px!important;
+  letter-spacing:1px!important;
+  color:#fff!important;
+  opacity:.7!important;
+}
+.arg-quest-stat .arg-quest-flag{width:42px!important;height:28px!important;margin:0!important;}
+.arg-quest-stat .stat-value{font-size:clamp(24px,2.2vw,36px)!important;color:var(--bk-final-gold)!important;line-height:.9!important;}
+.arg-quest-stat .stat-label{color:#fff!important;font-size:10px!important;}
+.main-grid{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr)!important;
+  grid-template-areas:"left" "side"!important;
+  gap:14px!important;
+  align-items:start!important;
+  width:100%!important;
+}
+.global-slots-panel{display:none!important;}
+.quest-left-column{
+  grid-area:left!important;
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr)!important;
+  gap:14px!important;
+  width:100%!important;
+  min-width:0!important;
+}
+.my-squad-panel{
+  width:100%!important;
+  min-width:0!important;
+  padding:16px!important;
+  overflow:visible!important;
+  border-color:rgba(0,255,135,.28)!important;
+}
+.my-squad-panel .section-title{font-size:17px!important;margin-bottom:14px!important;}
+.my-squad-panel .squad{
+  width:100%!important;
+  display:grid!important;
+  grid-template-columns:repeat(11,minmax(82px,1fr))!important;
+  gap:10px!important;
+  overflow:visible!important;
+  padding:0!important;
+}
+.my-squad-panel .slot{
+  min-height:174px!important;
+  min-width:0!important;
+  width:100%!important;
+  padding:8px 5px!important;
+  border-radius:16px!important;
+}
+.my-squad-panel .slot-fig-canvas{height:74px!important;flex:0 0 74px!important;}
+.my-squad-panel .slot-fig-canvas svg,.my-squad-panel .slot .card-fig-canvas svg{width:70px!important;height:70px!important;}
+.market-section{
+  width:100%!important;
+  min-width:0!important;
+  padding:16px!important;
+  border-color:rgba(59,130,246,.30)!important;
+}
+.market-grid{
+  width:100%!important;
+  display:grid!important;
+  grid-template-columns:repeat(auto-fill,minmax(155px,1fr))!important;
+  gap:12px!important;
+  max-height:520px!important;
+  overflow:auto!important;
+}
+.market-card{min-height:228px!important;border-radius:16px!important;}
+.quest-side-panel,.info-grid{
+  grid-area:side!important;
+  position:static!important;
+  top:auto!important;
+  width:100%!important;
+  min-width:0!important;
+  display:grid!important;
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  gap:12px!important;
+  align-items:stretch!important;
+  align-content:start!important;
+}
+.quest-side-panel > *, .info-grid > *{min-width:0!important;}
+.quest-side-panel .callout,.quest-side-panel > .panel,.argentina-side-quest{
+  min-height:170px!important;
+  border-radius:18px!important;
+}
+.quest-side-panel > .panel:last-child{grid-column:span 2!important;}
+.quest-side-panel > .panel:nth-last-child(2){grid-column:span 1!important;}
+.argentina-side-quest{
+  position:relative!important;
+  display:grid!important;
+  align-content:space-between!important;
+  gap:10px!important;
+  padding:16px!important;
+  overflow:hidden!important;
+  text-decoration:none!important;
+  color:#fff!important;
+  border:1px solid rgba(255,201,64,.48)!important;
+  background:
+    radial-gradient(circle at 100% 0%,rgba(116,172,223,.45),transparent 38%),
+    radial-gradient(circle at 0% 100%,rgba(255,201,64,.24),transparent 40%),
+    linear-gradient(145deg,rgba(6,18,42,.96),rgba(5,10,20,.97))!important;
+  box-shadow:0 18px 44px rgba(0,0,0,.34),0 0 28px rgba(255,201,64,.10),inset 0 1px 0 rgba(255,255,255,.08)!important;
+}
+.argentina-side-quest::after{
+  content:"NEXT RACE"!important;
+  position:absolute!important;
+  right:-22px!important;
+  top:18px!important;
+  transform:rotate(28deg)!important;
+  font-family:'Black Ops One',sans-serif!important;
+  font-size:11px!important;
+  letter-spacing:1px!important;
+  color:#021024!important;
+  background:var(--bk-final-gold)!important;
+  padding:6px 26px!important;
+  box-shadow:0 8px 18px rgba(0,0,0,.26)!important;
+}
+.arg-side-top{display:flex!important;align-items:center!important;gap:10px!important;position:relative!important;z-index:2!important;}
+.arg-side-flag{width:46px!important;height:31px!important;object-fit:cover!important;border-radius:5px!important;box-shadow:0 8px 16px rgba(0,0,0,.35)!important;}
+.arg-side-kicker{font-family:'Share Tech Mono',monospace!important;color:#9cc8ff!important;font-size:10px!important;text-transform:uppercase!important;letter-spacing:1.2px!important;}
+.arg-side-title{font-family:'Black Ops One',sans-serif!important;color:#fff!important;font-size:15px!important;letter-spacing:.8px!important;line-height:1!important;margin-top:3px!important;}
+.arg-side-prize{position:relative!important;z-index:2!important;font-family:'Black Ops One',sans-serif!important;color:var(--bk-final-gold)!important;font-size:clamp(36px,3vw,52px)!important;line-height:.85!important;text-shadow:0 0 24px rgba(255,201,64,.22)!important;}
+.arg-side-prize span{font-size:.38em!important;color:#fff!important;}
+.arg-side-copy{position:relative!important;z-index:2!important;font-family:'Share Tech Mono',monospace!important;color:#d7e5ff!important;font-size:11px!important;line-height:1.25!important;max-width:220px!important;}
+.rank-list,.feed{max-height:240px!important;}
+.status-line{width:100%!important;}
+@media(max-width:1320px){
+  .stats.hype-stats,.stats{grid-template-columns:repeat(3,minmax(0,1fr))!important;}
+  .quest-side-panel,.info-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;}
+  .quest-side-panel > .panel:last-child{grid-column:span 1!important;}
+  .my-squad-panel .squad{grid-template-columns:repeat(11,96px)!important;overflow-x:auto!important;overflow-y:hidden!important;padding-bottom:8px!important;scrollbar-width:thin!important;}
+  .my-squad-panel .slot{width:96px!important;min-width:96px!important;max-width:96px!important;}
+}
+@media(max-width:1000px){
+  .page{width:100%!important;max-width:100vw!important;padding:8px!important;gap:10px!important;}
+  .topnav{
+    top:0!important;
+    grid-template-columns:minmax(92px,auto) minmax(78px,1fr) minmax(72px,auto)!important;
+    min-height:50px!important;
+    padding:7px 8px!important;
+    gap:6px!important;
+    border-radius:0 0 14px 14px!important;
+  }
+  .logo,.topnav .brand{font-size:10.5px!important;letter-spacing:.35px!important;max-width:124px!important;}
+  .nav-countdown{max-width:100%!important;padding:7px 6px!important;font-size:9px!important;letter-spacing:.4px!important;}
+  .nav-countdown span{display:none!important;}
+  .nav-right{gap:0!important;}
+  .nav-right .wallet-info{display:none!important;}
+  .btn-connect{min-height:32px!important;padding:0 8px!important;font-size:8px!important;border-radius:10px!important;}
+  .hero.hype-hero .panel{
+    display:grid!important;
+    grid-template-columns:1fr!important;
+    grid-template-areas:"kicker" "title" "copy" "visual" "actions" "prize"!important;
+    min-height:0!important;
+    padding:14px!important;
+    gap:11px!important;
+    border-radius:20px!important;
+  }
+  .hero-title{font-size:clamp(38px,11.6vw,68px)!important;}
+  .hero-copy{font-size:16px!important;line-height:1.18!important;}
+  .hero-actions{display:grid!important;grid-template-columns:1fr 1fr!important;width:100%!important;gap:8px!important;}
+  .hero-primary,.hero-secondary{min-height:40px!important;width:100%!important;font-size:10px!important;padding:0 6px!important;}
+  .hero-visual{height:176px!important;}
+  .hero-prize-card{width:100%!important;}
+  .quest-flow-strip{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:7px!important;}
+  .flow-card{min-height:58px!important;padding:9px!important;}
+  .flow-card b{font-size:17px!important;min-width:32px!important;}
+  .flow-card span{font-size:9px!important;}
+  .stats.hype-stats,.stats{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:7px!important;}
+  .stat{min-height:80px!important;padding:9px!important;}
+  .arg-quest-stat{grid-column:1 / -1!important;min-height:92px!important;}
+  .arg-quest-stat .stat-value{font-size:32px!important;}
+  .main-grid{gap:10px!important;}
+  .my-squad-panel,.market-section,.quest-side-panel .callout,.quest-side-panel > .panel,.argentina-side-quest{border-radius:16px!important;}
+  .my-squad-panel,.market-section{padding:10px!important;overflow:hidden!important;}
+  .my-squad-panel .section-title,.section-title{font-size:12px!important;margin-bottom:10px!important;}
+  .my-squad-panel .squad{
+    display:grid!important;
+    grid-template-columns:repeat(11,82px)!important;
+    gap:8px!important;
+    overflow-x:auto!important;
+    overflow-y:hidden!important;
+    padding-bottom:7px!important;
+    scrollbar-width:thin!important;
+  }
+  .my-squad-panel .slot{width:82px!important;min-width:82px!important;max-width:82px!important;min-height:150px!important;padding:6px 4px!important;}
+  .my-squad-panel .slot-fig-canvas{height:62px!important;flex:0 0 62px!important;}
+  .my-squad-panel .slot-fig-canvas svg,.my-squad-panel .slot .card-fig-canvas svg{width:58px!important;height:58px!important;}
+  .market-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important;max-height:420px!important;padding-right:2px!important;}
+  .market-card{min-height:204px!important;padding:8px!important;}
+  .market-fig-canvas{height:86px!important;flex-basis:86px!important;}
+  .market-card.slot .market-fig-canvas svg,.market-card.slot .card-fig-canvas svg{width:80px!important;height:80px!important;}
+  .market-name{font-size:10px!important;}.market-sub{font-size:8px!important;}.market-price{font-size:13px!important;}
+  .quest-side-panel,.info-grid{grid-template-columns:1fr!important;gap:10px!important;}
+  .quest-side-panel > .panel:last-child{grid-column:auto!important;}
+  .quest-side-panel .callout,.quest-side-panel > .panel,.argentina-side-quest{min-height:auto!important;padding:12px!important;}
+  .arg-side-prize{font-size:42px!important;}
+}
+@media(max-width:520px){
+  .page{padding:7px!important;}
+  .logo,.topnav .brand{font-size:9.5px!important;max-width:98px!important;}
+  .nav-countdown{font-size:8px!important;padding:7px 4px!important;}
+  .btn-connect{font-size:7.5px!important;padding:0 6px!important;}
+  .hero-title{font-size:38px!important;}
+  .hero-visual{height:158px!important;}
+  .stats.hype-stats,.stats{grid-template-columns:1fr 1fr!important;}
+  .stat-value{font-size:19px!important;}
+  .stat-label{font-size:7.5px!important;}
+  .market-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;}
+  .market-card{min-height:190px!important;}
+  .arg-side-prize{font-size:38px!important;}
+}
+
+
+
+/* Final small polish: no broken external Argentina flags, better mobile placeholders */
+.arg-quest-flag,.arg-side-flag{
+  display:inline-grid!important;
+  place-items:center!important;
+  font-size:24px!important;
+  line-height:1!important;
+  object-fit:initial!important;
+  background:linear-gradient(180deg,#74acdf 0 33%,#fff 33% 66%,#74acdf 66%)!important;
+  color:#111!important;
+}
+.arg-side-flag{font-size:27px!important;}
+.my-squad-panel .loading{
+  white-space:normal!important;
+  overflow-wrap:anywhere!important;
+  text-align:center!important;
+  line-height:1.35!important;
+  max-width:100%!important;
+  overflow:hidden!important;
+}
+@media(min-width:1001px){
+  .quest-side-panel > .panel:last-child{grid-column:1 / -1!important;}
+}
+@media(max-width:1000px){
+  .my-squad-panel .loading{font-size:12px!important;padding:14px 8px!important;}
+  .arg-quest-flag{font-size:23px!important;}
+  .arg-side-flag{font-size:26px!important;}
+}
+
+
+
+/* Loading-state fix: when squad has only a placeholder, don't use the 11-card scroll grid */
+.my-squad-panel .squad:has(> .loading){
+  display:block!important;
+  overflow:hidden!important;
+  padding:0!important;
+}
+.my-squad-panel .squad:has(> .loading) > .loading{
+  display:block!important;
+  width:100%!important;
+  max-width:100%!important;
+  padding:22px 10px!important;
+  text-align:center!important;
+  white-space:normal!important;
+  overflow-wrap:anywhere!important;
+}
+
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
@@ -1692,10 +2076,10 @@ body::after{
     <div class="stat"><div class="stat-value" id="statCompleted">-</div><div class="stat-label">Players</div></div>
     <div class="stat"><div class="stat-value gold" id="statLeader">- / 11</div><div class="stat-label" id="statLeaderLabel">Quest Leader</div></div>
     <a class="stat arg-quest-stat" href="https://block-kickers.vercel.app/dream-xi">
-      <img class="arg-quest-flag" src="https://flagcdn.com/w80/ar.png" alt="Argentina" loading="lazy">
+      <span class="arg-quest-flag" aria-hidden="true">🇦🇷</span>
       <div class="arg-quest-copy">
-        <div class="stat-value gold">ARGENTINA</div>
-        <div class="stat-label">Dream XI 10k CHZ</div>
+        <div class="stat-value gold">10,000</div>
+        <div class="stat-label">Argentina Quest CHZ</div>
       </div>
     </a>
     <button class="stat mint-stat" id="heroMintBtn" type="button" onclick="directMint()">
@@ -1727,6 +2111,17 @@ body::after{
 
     <aside class="info-grid quest-side-panel">
       <div id="cardWinnerBox" style="display:none"></div>
+      <a class="argentina-side-quest" href="https://block-kickers.vercel.app/dream-xi" aria-label="Argentina Dream XI Quest - 10000 CHZ">
+        <div class="arg-side-top">
+          <span class="arg-side-flag" aria-hidden="true">🇦🇷</span>
+          <div>
+            <div class="arg-side-kicker">Side Quest</div>
+            <div class="arg-side-title">Argentina Dream XI</div>
+          </div>
+        </div>
+        <div class="arg-side-prize">10,000 <span>CHZ</span></div>
+        <div class="arg-side-copy">Build the Argentina XI race while hunting USA cards.</div>
+      </a>
       <div class="callout">
         <h3>1500 CHZ Squad Prize</h3>
         <div class="winner-box" id="squadWinnerBox">First wallet to complete all 11 USA positions wins.</div>
