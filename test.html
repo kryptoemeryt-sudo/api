@@ -5858,6 +5858,79 @@ body.bk-v4.game-mode .pos-card-top{
   body.bk-v4 #connectBtn{max-width:76px!important;font-size:7px!important;padding:6px 5px!important;}
 }
 
+/* Final header/CTA cleanup */
+@media(min-width:761px){
+  body.bk-v4 .portal-topnav,
+  body.bk-v4.game-mode .portal-topnav,
+  body.bk-v4 .topnav,
+  body.bk-v4.game-mode .topnav{
+    display:grid!important;
+    grid-template-columns:minmax(230px,auto) minmax(150px,auto) minmax(520px,1fr) minmax(112px,auto)!important;
+    grid-template-areas:"brand count tabs wallet"!important;
+    align-items:center!important;
+    gap:12px!important;
+    min-height:68px!important;
+    height:68px!important;
+    padding:8px 20px!important;
+    overflow:hidden!important;
+  }
+  body.bk-v4 .portal-brand{
+    grid-area:brand!important;
+    align-self:center!important;
+  }
+  body.bk-v4 .nav-countdown,
+  body.bk-v4 .topnav .nav-countdown,
+  body.bk-v4 .nav-price-countdown{
+    grid-area:count!important;
+    position:static!important;
+    transform:none!important;
+    justify-self:start!important;
+    align-self:center!important;
+    width:auto!important;
+    max-width:170px!important;
+    height:42px!important;
+    padding:0 10px!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    white-space:nowrap!important;
+    overflow:hidden!important;
+    text-overflow:ellipsis!important;
+  }
+  body.bk-v4 .portal-tabs{
+    grid-area:tabs!important;
+    align-self:center!important;
+  }
+  body.bk-v4 .nav-right,
+  body.bk-v4 .wallet-actions{
+    grid-area:wallet!important;
+    align-self:center!important;
+    justify-self:end!important;
+  }
+}
+body.bk-v4 .wallet-addr,
+body.bk-v4 #walletAddress{
+  display:none!important;
+}
+body.bk-v4 .wallet-bal:empty,
+body.bk-v4 #walletBalance:empty{
+  display:none!important;
+}
+body.bk-v4 .hero-actions{
+  display:flex!important;
+  justify-content:flex-start!important;
+  align-items:center!important;
+}
+body.bk-v4 .hero-actions .btn-mint-hero{
+  min-width:220px!important;
+}
+@media(max-width:760px){
+  body.bk-v4 .hero-actions .btn-mint-hero{
+    width:100%!important;
+    min-width:0!important;
+  }
+}
+
 </style>
 
 </head>
@@ -5945,8 +6018,7 @@ body.bk-v4.game-mode .pos-card-top{
       </div>
 
       <div class="hero-actions">
-        <button class="btn-mint-hero" onclick="directMint()">MINT RANDOM WC CARD</button>
-        <button class="btn-mint-hero btn-outline-hero" onclick="document.getElementById('connectSection').scrollIntoView({behavior:'smooth', block:'center'})">OPEN DASHBOARD</button>
+        <button class="btn-mint-hero" onclick="openWalletChoice()">CHOOSE WALLET</button>
       </div>
 
       <!-- PRICING SCHEDULE -->
@@ -8344,7 +8416,6 @@ function renderPitch() {
           ${marketHint}
           <div class="pos-card-top">
             <div class="pos-name">${POSITION_SHORT[pos]}</div>
-            <div class="pos-card-flag">${getFlagHtml(selectedTeam)}</div>
             <span class="figure-mini">${makeFigureSVG(scored.dna, 80)}</span>
           </div>
           <div>
@@ -8362,7 +8433,6 @@ function renderPitch() {
           ${marketHint}
           <div class="pos-card-top">
             <div class="pos-name" style="color:#5a6a7a;">${POSITION_SHORT[pos]}</div>
-            <div class="pos-card-flag">${getFlagHtml(selectedTeam)}</div>
             <span class="pos-ball" style="opacity: 0.15">&#9917;</span>
           </div>
           <div>
