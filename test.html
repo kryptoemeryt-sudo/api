@@ -5990,6 +5990,22 @@ body.bk-v4.game-mode .pitch-title .flag-container img{
   box-shadow:none!important;
   border:1px solid rgba(255,255,255,.18)!important;
 }
+.flag-code-fallback,
+.portal-flag-fallback,
+.flag-emoji-fallback,
+body.bk-v4 .flag-code-fallback,
+body.bk-v4 .portal-flag-fallback,
+body.bk-v4 .flag-emoji-fallback{
+  display:none!important;
+  visibility:hidden!important;
+  width:0!important;
+  height:0!important;
+  min-width:0!important;
+  padding:0!important;
+  margin:0!important;
+  border:0!important;
+  overflow:hidden!important;
+}
 body.bk-v4 .country-card .flag-container,
 body.bk-v4.game-mode .country-card .flag-container,
 body.bk-v4 .country-card .portal-flag-container,
@@ -6110,8 +6126,17 @@ body.bk-v4.game-mode .pos-card.owned::after{
   }
   body.bk-v4 .nav-countdown,
   body.bk-v4 .topnav .nav-countdown,
-  body.bk-v4 .nav-price-countdown{
+  body.bk-v4 .nav-price-countdown,
+  body.bk-v4 #navPriceCountdown{
     display:none!important;
+    visibility:hidden!important;
+    width:0!important;
+    height:0!important;
+    min-width:0!important;
+    flex:0 0 0!important;
+    padding:0!important;
+    margin:0!important;
+    overflow:hidden!important;
   }
   body.bk-v4 .nav-right,
   body.bk-v4 .wallet-actions,
@@ -6190,6 +6215,49 @@ body.bk-v4.game-mode .pos-card.owned::after{
     font-size:9px!important;
     line-height:1!important;
     text-align:center!important;
+  }
+  body.bk-v4.game-mode .country-grid,
+  body.portal-v3.game-mode .country-grid,
+  body.game-mode .country-grid{
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+    grid-auto-rows:minmax(82px,auto)!important;
+    gap:6px!important;
+  }
+  body.bk-v4.game-mode .country-card,
+  body.portal-v3.game-mode .country-card,
+  body.game-mode .country-card{
+    min-height:82px!important;
+    padding:7px 5px!important;
+    border-radius:10px!important;
+  }
+  body.bk-v4.game-mode .country-card .flag-container,
+  body.portal-v3.game-mode .country-card .flag-container,
+  body.game-mode .country-card .flag-container{
+    width:36px!important;
+    height:24px!important;
+  }
+  body.bk-v4.game-mode .country-card .flag-img,
+  body.bk-v4.game-mode .country-card .native-flag-img,
+  body.portal-v3.game-mode .country-card .flag-img,
+  body.game-mode .country-card .flag-img{
+    width:36px!important;
+    height:24px!important;
+  }
+  body.bk-v4.game-mode .country-card-name,
+  body.portal-v3.game-mode .country-card-name,
+  body.game-mode .country-card-name{
+    font-size:10px!important;
+    line-height:1.05!important;
+  }
+  body.bk-v4.game-mode .country-card-score,
+  body.portal-v3.game-mode .country-card-score,
+  body.game-mode .country-card-score{
+    font-size:12px!important;
+  }
+  body.bk-v4.game-mode .country-card-completion,
+  body.portal-v3.game-mode .country-card-completion,
+  body.game-mode .country-card-completion{
+    font-size:8px!important;
   }
 }
 
@@ -9370,10 +9438,7 @@ window.addEventListener('load', async () => {
     const retinaWidth = isLarge ? 640 : 320;
     // Primary: flagcdn image (reliable, incl. gb-eng / gb-sct). Fallback: 3-letter code chip (always renders).
     const img = cc ? '<img src="https://flagcdn.com/w'+width+'/'+cc+'.png" srcset="https://flagcdn.com/w'+width+'/'+cc+'.png 1x, https://flagcdn.com/w'+retinaWidth+'/'+cc+'.png 2x" class="'+cls+' native-flag-img" alt="'+label+'" loading="lazy" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'inline-flex\';">' : '';
-    return '<span class="flag-container portal-flag-container native-flag '+(isLarge?'large':'')+'" title="'+label+'">'
-      + img
-      + '<span class="'+cls+' flag-code-fallback" style="'+(cc?'display:none;':'')+'align-items:center;justify-content:center;font-family:\'Black Ops One\',sans-serif;font-size:'+(isLarge?'13px':'9px')+';letter-spacing:.5px;color:#dde4f0;background:#16202c;border:1px solid rgba(255,255,255,.12);border-radius:3px;line-height:1;">'+code+'</span>'
-      + '</span>';
+    return '<span class="flag-container portal-flag-container native-flag '+(isLarge?'large':'')+'" title="'+label+'">' + img + '</span>';
   };
   try{ getFlagHtml = window.getFlagHtml; }catch(e){}
 
