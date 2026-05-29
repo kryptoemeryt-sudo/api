@@ -5528,6 +5528,8 @@ body.bk-v4.game-mode .lb-row{
 
 
 
+
+
 /* ═══════════════════════════════════════════════════════════════════════
    FINAL FIX LAYER — flags, tile gaps, one-row topbar, reward color
    ═══════════════════════════════════════════════════════════════════════ */
@@ -5537,13 +5539,19 @@ body.bk-v4.game-mode .lb-row{
   display:inline-block;
   background:#0f1318; /* shows a dark chip instead of blank if image is slow */
 }
-.flag-emoji-fallback, .portal-flag-fallback{
-  background:transparent!important;
+.flag-emoji-fallback, .portal-flag-fallback, .flag-code-fallback{
+  background:#16202c!important;
   box-shadow:none!important;
+  border-radius:3px!important;
+  text-align:center!important;
 }
 .flag-container{flex:0 0 auto;}
-/* keep portal flag wrappers from collapsing */
 .portal-flag-container{min-width:0;}
+/* native-flag (country grid) image + fallback sizing */
+.native-flag .native-flag-img{display:block;object-fit:cover;border-radius:3px;}
+.native-flag .flag-code-fallback{min-width:28px;height:18px;padding:0 4px;}
+body.game-mode .country-card .native-flag-img{width:clamp(24px,3.2vw,34px)!important;height:clamp(16px,2.1vw,23px)!important;}
+body.game-mode .country-card .flag-code-fallback{width:clamp(24px,3.2vw,34px)!important;height:clamp(16px,2.1vw,23px)!important;}
 
 /* ---------- ONE-ROW TOPBAR (desktop): hide the context strip that adds a 2nd band ---------- */
 body.portal-v3 .portal-context-strip,
@@ -5654,6 +5662,32 @@ body.bk-v4.game-mode .portal-context-strip{display:none!important;}
     width:auto!important;max-width:200px!important;
     white-space:nowrap!important;margin:0!important;
   }
+}
+
+/* ---------- DASHBOARD STATS: always compact row (never the huge auto-fit fallback) ---------- */
+#statsRow{
+  display:grid!important;
+  grid-template-columns:repeat(5,minmax(0,1fr))!important;
+  gap:10px!important;margin:0 0 10px!important;
+}
+#statsRow .stat-card{
+  min-height:0!important;padding:14px 10px!important;border-radius:10px!important;
+  display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;
+}
+#statsRow .stat-val{font-size:clamp(20px,1.8vw,28px)!important;line-height:1!important;}
+#statsRow #myEstPayout{font-size:clamp(18px,1.7vw,24px)!important;padding-top:0!important;}
+#statsRow .stat-lbl{font-size:10px!important;letter-spacing:.8px!important;margin-top:7px!important;}
+/* prize strip: no big gap, sits right under stats */
+#dashboardPrizeStrip{margin:0 0 12px!important;}
+
+@media(max-width:760px){
+  #statsRow{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:6px!important;}
+  #statsRow .stat-card{padding:10px 6px!important;border-radius:9px!important;}
+  #statsRow .stat-val{font-size:18px!important;}
+  #statsRow #myEstPayout{font-size:16px!important;}
+  #statsRow .stat-lbl{font-size:8px!important;margin-top:5px!important;}
+  /* 5th card (reward) spans full width on its own row so 2x2 + 1 is clean, no gap */
+  #statsRow .stat-card:nth-child(5){grid-column:1 / -1!important;}
 }
 
 </style>
@@ -6062,8 +6096,9 @@ function bkMintTeamShort(team){
   return special[team?.name] || String(team?.name || '---').replace(/[^A-Za-z]/g,'').slice(0,3).toUpperCase();
 }
 function bkMintTeamFlagHtml(team, size = 58){
-  if (team?.code) return '<img src="https://flagcdn.com/w80/' + team.code + '.png" alt="' + team.name + '" style="width:' + size + 'px;height:' + Math.round(size * 0.66) + 'px;object-fit:cover;border-radius:4px;box-shadow:0 2px 8px rgba(0,0,0,.45)" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'inline-block\';"><span style="display:none;font-size:' + Math.round(size * .55) + 'px">' + (team.flag || '🏳️') + '</span>';
-  return '<span style="font-size:' + Math.round(size * .55) + 'px">' + (team?.flag || '🏳️') + '</span>';
+  const code3 = bkMintTeamShort(team);
+  if (team?.code) return '<img src="https://flagcdn.com/w160/' + team.code + '.png" alt="' + team.name + '" style="width:' + size + 'px;height:' + Math.round(size * 0.66) + 'px;object-fit:cover;border-radius:4px;box-shadow:0 2px 8px rgba(0,0,0,.45)" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'inline-flex\';"><span style="display:none;align-items:center;justify-content:center;width:' + size + 'px;height:' + Math.round(size*0.66) + 'px;font-family:\'Black Ops One\',sans-serif;font-size:' + Math.round(size*.26) + 'px;color:#dde4f0;background:#16202c;border:1px solid rgba(255,255,255,.12);border-radius:4px">' + code3 + '</span>';
+  return '<span style="font-family:\'Black Ops One\',sans-serif;font-size:' + Math.round(size * .26) + 'px;color:#dde4f0">' + code3 + '</span>';
 }
 function bkMintPositionLabel(id){
   let label = '';
@@ -7249,14 +7284,15 @@ async function submitSellCard() {
   await sellFigure(activeSellTokenId, priceInput);
 }
 
-// Renders flag using flagcdn.com with fallback to native emoji
+// Renders flag using flagcdn.com with reliable text-code fallback (emoji subdivisions like ENG/SCO don't render on many devices)
 function getFlagHtml(team, isLarge = false) {
   const cls = isLarge ? 'flag-img-lg' : 'flag-img';
   const width = isLarge ? 160 : 80;
+  const code3 = (typeof bkMintTeamShort === 'function') ? bkMintTeamShort(team) : (team.name || '').slice(0,3).toUpperCase();
   return `
     <span class="flag-container" style="display: inline-flex; align-items: center; justify-content: center; margin-right: 6px; vertical-align: middle;">
       <img src="https://flagcdn.com/w${width}/${team.code}.png" class="${cls}" alt="${team.name}" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-flex';" />
-      <span class="${cls} flag-emoji-fallback" style="display: none; align-items:center; justify-content:center; font-size: ${isLarge ? '24px' : '15px'}; line-height:1;">${team.flag || '🏳️'}</span>
+      <span class="${cls} flag-code-fallback" style="display:none; align-items:center; justify-content:center; font-family:'Black Ops One',sans-serif; font-size:${isLarge ? '13px' : '9px'}; letter-spacing:.5px; color:#dde4f0; background:#16202c; border:1px solid rgba(255,255,255,.12);">${code3}</span>
     </span>
   `;
 }
@@ -8708,12 +8744,11 @@ window.addEventListener('load', async () => {
     const width = isLarge ? 160 : 120;
     const code = String(team.code || '').toLowerCase();
     const label = String(team.name || 'Nation');
-    const short = code ? code.toUpperCase() : 'WC';
+    const short = (typeof bkMintTeamShort === 'function') ? bkMintTeamShort(team) : (label.slice(0,3).toUpperCase());
     return `
       <span class="flag-container portal-flag-container ${isLarge ? 'large' : ''}" title="${label}">
         <img src="https://flagcdn.com/w${width}/${code}.png" class="${cls}" alt="${label}" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-flex';" />
-        <span class="portal-flag-fallback ${cls}" style="display:none; align-items:center; justify-content:center; font-size:${isLarge ? '24px' : '18px'}; line-height:1;">${team.flag || '🏳️'}</span>
-        <span class="portal-flag-code">${short}</span>
+        <span class="portal-flag-fallback ${cls}" style="display:none; align-items:center; justify-content:center; font-family:'Black Ops One',sans-serif; font-size:${isLarge ? '14px' : '10px'}; letter-spacing:.5px; color:#dde4f0; background:#16202c; border:1px solid rgba(255,255,255,.12); line-height:1;">${short}</span>
       </span>
     `;
   };
@@ -8826,11 +8861,15 @@ window.addEventListener('load', async () => {
   window.getFlagHtml = function(team, isLarge){
     team = team || {code:'wc',name:'Nation',flag:'🏳️'};
     const label = esc(team.name || 'Nation');
-    const emoji = esc(team.flag || '🏳️');
     const code = esc(teamCode(team));
+    const cc = String((team && team.code) || '').trim().toLowerCase();
+    const cls = isLarge ? 'flag-img-lg' : 'flag-img';
+    const width = isLarge ? 160 : 80;
+    // Primary: flagcdn image (reliable, incl. gb-eng / gb-sct). Fallback: 3-letter code chip (always renders).
+    const img = cc ? '<img src="https://flagcdn.com/w'+width+'/'+cc+'.png" class="'+cls+' native-flag-img" alt="'+label+'" loading="lazy" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'inline-flex\';">' : '';
     return '<span class="flag-container portal-flag-container native-flag '+(isLarge?'large':'')+'" title="'+label+'">'
-      + '<span class="flag-emoji portal-flag-fallback" aria-hidden="true">'+emoji+'</span>'
-      + '<span class="portal-flag-code">'+code+'</span>'
+      + img
+      + '<span class="'+cls+' flag-code-fallback" style="'+(cc?'display:none;':'')+'align-items:center;justify-content:center;font-family:\'Black Ops One\',sans-serif;font-size:'+(isLarge?'13px':'9px')+';letter-spacing:.5px;color:#dde4f0;background:#16202c;border:1px solid rgba(255,255,255,.12);border-radius:3px;line-height:1;">'+code+'</span>'
       + '</span>';
   };
   try{ getFlagHtml = window.getFlagHtml; }catch(e){}
