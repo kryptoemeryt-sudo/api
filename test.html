@@ -6261,6 +6261,108 @@ body.bk-v4.game-mode .pos-card.owned::after{
   }
 }
 
+/* Final mobile and action-popup tuning */
+.slot-action-panel{
+  background:linear-gradient(180deg,#111820,#090d12)!important;
+  border-color:rgba(116,172,223,.30)!important;
+  box-shadow:0 18px 70px rgba(0,0,0,.58),0 0 18px rgba(116,172,223,.08)!important;
+}
+.slot-action-title{
+  color:#dde4f0!important;
+}
+.slot-action-body .btn-card-action,
+body.game-mode .slot-action-body .btn-card-action.market-offer-btn,
+body.game-mode .slot-action-body .btn-card-action.sell-offer-btn{
+  background:linear-gradient(180deg,rgba(18,29,42,.98),rgba(10,15,22,.98))!important;
+  border-color:rgba(116,172,223,.34)!important;
+  color:#dde4f0!important;
+  box-shadow:none!important;
+}
+.slot-action-body .btn-card-action.upgrade,
+body.game-mode .slot-action-body .btn-card-action.upgrade{
+  background:linear-gradient(180deg,rgba(22,34,45,.98),rgba(11,17,24,.98))!important;
+  border-color:rgba(255,201,64,.38)!important;
+  color:#f3f7fb!important;
+}
+.slot-action-body .btn-card-action span,
+body.game-mode .slot-action-body .btn-card-action span{
+  color:#aebdd0!important;
+}
+.slot-action-body .btn-card-action b,
+body.game-mode .slot-action-body .btn-card-action b{
+  color:#ffc940!important;
+  text-shadow:none!important;
+}
+.slot-action-body .btn-card-action small,
+body.game-mode .slot-action-body .btn-card-action small{
+  color:#7f91a6!important;
+}
+.slot-action-body .card-hover-note,
+body.game-mode .slot-action-body .card-hover-note{
+  color:#ffc940!important;
+  background:rgba(255,201,64,.055)!important;
+  border-color:rgba(255,201,64,.22)!important;
+}
+@media(max-width:760px){
+  body.bk-v4 .portal-tab.active span{
+    font-size:0!important;
+    line-height:0!important;
+  }
+  body.bk-v4 .portal-tab.active span::after{
+    content:"ALBUM";
+    display:block;
+    font-family:'Black Ops One',sans-serif;
+    font-size:6px!important;
+    line-height:1!important;
+    letter-spacing:.25px!important;
+  }
+  body.bk-v4.game-mode .pitch-title-row{
+    min-height:42px!important;
+    margin-bottom:3px!important;
+    gap:0 7px!important;
+  }
+  body.bk-v4.game-mode .pitch-title #selectedCountryTitle{
+    gap:5px!important;
+    font-size:clamp(10px,3.1vw,13px)!important;
+    letter-spacing:.8px!important;
+  }
+  body.bk-v4.game-mode .pitch-title #selectedCountryTitle .flag-container{
+    width:32px!important;
+    height:21px!important;
+  }
+  body.bk-v4.game-mode .pitch-title #selectedCountryTitle .flag-container img{
+    width:32px!important;
+    height:21px!important;
+    border-radius:5px!important;
+  }
+  body.bk-v4.game-mode .pitch-title #selectedCountryTitle .squad-score{
+    font-size:9px!important;
+  }
+  body.bk-v4.game-mode #selectedCountryCompletion{
+    font-size:0!important;
+    line-height:1!important;
+    min-height:10px!important;
+    transform:translateY(-1px)!important;
+  }
+  body.bk-v4.game-mode #selectedCountryCompletion::before{
+    content:attr(data-short)!important;
+    display:block!important;
+    font-family:'Share Tech Mono',monospace!important;
+    font-size:9px!important;
+    line-height:1!important;
+    color:#9ea7ff!important;
+    letter-spacing:.6px!important;
+  }
+  body.bk-v4.game-mode .country-card-completion,
+  body.portal-v3.game-mode .country-card-completion,
+  body.game-mode .country-card-completion{
+    transform:translateY(-4px)!important;
+    margin-bottom:3px!important;
+    position:relative!important;
+    z-index:2!important;
+  }
+}
+
 </style>
 
 </head>
@@ -6427,7 +6529,7 @@ body.bk-v4.game-mode .pos-card.owned::after{
       <div class="stat-lbl">Score</div>
     </div>
     <div class="stat-card">
-      <div class="stat-val text-primary" id="myGlobalRank" style="color:#818cf8;">â€”</div>
+      <div class="stat-val text-primary" id="myGlobalRank" style="color:#818cf8;">-</div>
       <div class="stat-lbl">Rank</div>
     </div>
     <div class="stat-card" style="background:rgba(0,255,135,0.03); border-color:rgba(0,255,135,0.2);">
