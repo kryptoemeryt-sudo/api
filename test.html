@@ -6415,6 +6415,105 @@ body.game-mode .slot-action-body .card-hover-note{
   }
 }
 
+/* Final dashboard cleanup: no duplicate top timer, cleaner standings row, pending rewards. */
+body.bk-v4 #navPriceCountdown,
+body.bk-v4 .topnav #navPriceCountdown,
+body.portal-v3 #navPriceCountdown,
+body.portal-v3 .topnav #navPriceCountdown,
+#navPriceCountdown{
+  display:none!important;
+  visibility:hidden!important;
+  width:0!important;
+  min-width:0!important;
+  max-width:0!important;
+  height:0!important;
+  padding:0!important;
+  margin:0!important;
+  border:0!important;
+  overflow:hidden!important;
+}
+body.bk-v4 .portal-tab b,
+body.portal-v3 .portal-tab b{
+  font-family:'Black Ops One',sans-serif!important;
+  color:#ffc940!important;
+  font-weight:400!important;
+  letter-spacing:.7px!important;
+}
+.lb-info#poolInfo{
+  display:none!important;
+}
+.slot-market-hint{
+  display:flex!important;
+  flex-direction:row!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:5px!important;
+  white-space:nowrap!important;
+}
+.slot-market-hint span,
+.slot-market-hint b{
+  display:inline!important;
+  line-height:1!important;
+}
+.slot-market-hint span::after{
+  content:':'!important;
+}
+#myEstPayout{
+  color:#ffc940!important;
+}
+
+@media(max-width:760px){
+  body.bk-v4 .portal-tab span,
+  body.bk-v4 .portal-tab b,
+  body.portal-v3 .portal-tab span,
+  body.portal-v3 .portal-tab b{
+    font-size:6.8px!important;
+    letter-spacing:.25px!important;
+  }
+  body.bk-v4 .btn-connect,
+  body.bk-v4 #connectBtn,
+  body.portal-v3 .btn-connect,
+  body.portal-v3 #connectBtn{
+    font-size:10px!important;
+  }
+  body.bk-v4.game-mode #selectedCountryCompletion,
+  body.portal-v3.game-mode #selectedCountryCompletion,
+  body.game-mode #selectedCountryCompletion{
+    display:none!important;
+  }
+  body.bk-v4.game-mode .lb-row.global-row,
+  body.portal-v3.game-mode .lb-row.global-row,
+  body.game-mode .lb-row.global-row{
+    display:grid!important;
+    grid-template-columns:22px minmax(0,1fr) 42px 58px 42px!important;
+    gap:4px!important;
+    align-items:center!important;
+  }
+  body.bk-v4.game-mode .lb-row.global-row > :nth-child(4),
+  body.bk-v4.game-mode .lb-row.global-row > :nth-child(5),
+  body.portal-v3.game-mode .lb-row.global-row > :nth-child(4),
+  body.portal-v3.game-mode .lb-row.global-row > :nth-child(5),
+  body.game-mode .lb-row.global-row > :nth-child(4),
+  body.game-mode .lb-row.global-row > :nth-child(5){
+    display:block!important;
+  }
+  body.bk-v4.game-mode .global-row .lb-prize,
+  body.portal-v3.game-mode .global-row .lb-prize,
+  body.game-mode .global-row .lb-prize{
+    display:block!important;
+    font-size:8px!important;
+    color:#ffc940!important;
+    white-space:nowrap!important;
+  }
+  body.bk-v4.game-mode .global-row .lb-score,
+  body.portal-v3.game-mode .global-row .lb-score,
+  body.game-mode .global-row .lb-score{
+    display:block!important;
+    font-size:9px!important;
+    white-space:nowrap!important;
+  }
+}
+
 </style>
 
 </head>
@@ -6585,7 +6684,7 @@ body.game-mode .slot-action-body .card-hover-note{
       <div class="stat-lbl">Rank</div>
     </div>
     <div class="stat-card" style="background:rgba(0,255,135,0.03); border-color:rgba(0,255,135,0.2);">
-      <div class="stat-val" id="myEstPayout" style="color:#00ff87; font-size:24px; padding-top:6px;">0 CHZ</div>
+      <div class="stat-val" id="myEstPayout" style="color:#00ff87; font-size:24px; padding-top:6px;">??? CHZ</div>
       <div class="stat-lbl">Reward</div>
     </div>
   </div>
@@ -6679,7 +6778,7 @@ body.game-mode .slot-action-body .card-hover-note{
     <div class="lb-section">
       <div class="lb-title-row">
         <div class="pitch-title" style="margin-bottom:0;">STANDINGS & CONTESTS</div>
-        <div class="lb-info" id="poolInfo">Standing Contest</div>
+        <div class="lb-info" id="poolInfo"></div>
       </div>
       
       <div class="lb-toggle-container">
@@ -8564,8 +8663,8 @@ async function loadData(options = {}){
     });
   }catch(e){ console.warn('Market scan error:', e); }
 
-  // Independent sponsored pool presentation (English local)
-  document.getElementById('poolInfo').textContent = 'TOP 10 CONTEST';
+  const poolInfo = document.getElementById('poolInfo');
+  if (poolInfo) poolInfo.textContent = '';
 
     renderStats();
     renderCountryHub();
@@ -8642,23 +8741,19 @@ function renderStats() {
   // Resolving global position
   const players = getGlobalLeaderboardData();
   let myGlobalRankVal = '-';
-  let myEstPrizeVal = 0;
   let myGlobalScoreVal = 0;
   
   const myIndex = players.findIndex(p => p.wallet.toLowerCase() === myAddr);
   if (myIndex !== -1) {
     const rank = myIndex + 1;
     myGlobalRankVal = `#${rank}`;
-    myEstPrizeVal = getPrizeForRank(rank);
     myGlobalScoreVal = players[myIndex].score || 0;
   }
   
   const scoreEl = document.getElementById('myGlobalScore');
   if (scoreEl) scoreEl.textContent = myGlobalScoreVal;
   document.getElementById('myGlobalRank').textContent = myGlobalRankVal;
-  document.getElementById('myEstPayout').textContent = myEstPrizeVal > 0
-    ? `${myEstPrizeVal.toLocaleString()} CHZ`
-    : '0 CHZ';
+  document.getElementById('myEstPayout').textContent = '??? CHZ';
 }
 
 function filterFederation(fed, btnEl) {
@@ -8964,11 +9059,10 @@ function renderLeaderboard(){
       const isWinner = rank <= 10;
       const posClass = isWinner ? 'winner' : '';
       const medal = rank === 1 ? '1' : rank === 2 ? '2' : rank === 3 ? '3' : '';
-      const prizeAmount = getPrizeForRank(rank);
-      const prizeDisplay = prizeAmount > 0 ? `<span class="lb-prize">${prizeAmount.toLocaleString()} CHZ</span>` : '<span class="lb-prize none">NO PRIZE</span>';
+      const prizeDisplay = isWinner ? '<span class="lb-prize">??? CHZ</span>' : '<span class="lb-prize none">NO PRIZE</span>';
 
       return `
-        <div class="lb-row global-row ${isMe ? 'me' : ''} ${prizeAmount > 0 ? 'prize-row' : ''}">
+        <div class="lb-row global-row ${isMe ? 'me' : ''} ${isWinner ? 'prize-row' : ''}">
           <div class="lb-pos ${posClass}">${medal ? '#' + medal : '#' + rank}</div>
           <div class="lb-addr">${player.wallet.slice(0,6)}...${player.wallet.slice(-4)} ${isMe ? '<span class="lb-you">YOU</span>' : ''}</div>
           <div class="lb-completion">${player.cards || 0} CARDS</div>
