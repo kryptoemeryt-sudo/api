@@ -5524,6 +5524,138 @@ body.bk-v4.game-mode .lb-row{
   body.bk-v4 .portal-flag-container.large,
   body.bk-v4 .pitch-title .flag-container{width:46px!important;height:34px!important;}
 }
+
+
+
+
+/* ═══════════════════════════════════════════════════════════════════════
+   FINAL FIX LAYER — flags, tile gaps, one-row topbar, reward color
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* ---------- FLAGS: reliable display + reserved space (no blank gaps) ---------- */
+.flag-img, .flag-img-lg{
+  display:inline-block;
+  background:#0f1318; /* shows a dark chip instead of blank if image is slow */
+}
+.flag-emoji-fallback, .portal-flag-fallback{
+  background:transparent!important;
+  box-shadow:none!important;
+}
+.flag-container{flex:0 0 auto;}
+/* keep portal flag wrappers from collapsing */
+.portal-flag-container{min-width:0;}
+
+/* ---------- ONE-ROW TOPBAR (desktop): hide the context strip that adds a 2nd band ---------- */
+body.portal-v3 .portal-context-strip,
+body.bk-v4 .portal-context-strip,
+body.portal-v3.game-mode .portal-context-strip,
+body.bk-v4.game-mode .portal-context-strip{display:none!important;}
+
+/* ---------- ONE-ROW TOPBAR (mobile): brand + scrollable tabs + connect in a single row ---------- */
+@media(max-width:760px){
+  body.bk-v4 .portal-topnav,
+  body.bk-v4.game-mode .portal-topnav,
+  body.bk-v4 .topnav,
+  body.bk-v4.game-mode .topnav{
+    display:flex!important;
+    flex-wrap:nowrap!important;
+    align-items:center!important;
+    gap:8px!important;
+    grid-template-areas:none!important;
+    padding:7px 9px!important;
+    min-height:48px!important;
+    overflow:hidden!important;
+  }
+  body.bk-v4 .portal-brand{flex:0 0 auto!important;}
+  body.bk-v4 .portal-brand-copy small{display:none!important;}
+  body.bk-v4 .portal-tabs{
+    flex:1 1 auto!important;
+    min-width:0!important;
+    display:flex!important;
+    flex-wrap:nowrap!important;
+    overflow-x:auto!important;
+    gap:6px!important;
+    margin:0!important;
+    scrollbar-width:none!important;
+  }
+  body.bk-v4 .portal-tabs::-webkit-scrollbar{display:none!important;}
+  body.bk-v4 .portal-tab{
+    flex:0 0 auto!important;min-width:108px!important;max-width:140px!important;
+    min-height:36px!important;padding:5px 9px!important;
+  }
+  /* countdown moves out of the bar — show under or hide label to save the row */
+  body.bk-v4 .nav-countdown,
+  body.bk-v4 .topnav .nav-countdown{
+    position:static!important;flex:0 0 auto!important;width:auto!important;
+    transform:none!important;height:34px!important;padding:5px 7px!important;
+    display:none!important; /* hide on phone topbar to keep ONE clean row */
+  }
+  body.bk-v4 .nav-right.wallet-actions{flex:0 0 auto!important;margin-left:auto!important;}
+  body.bk-v4 #connectBtn,.btn-connect{flex:0 0 auto!important;}
+}
+
+/* ---------- COUNTRY TILE GRID: remove wasted space on phones, even fill ---------- */
+@media(max-width:760px){
+  body.game-mode .country-grid{
+    grid-template-columns:repeat(4,minmax(0,1fr))!important;
+    grid-auto-rows:1fr!important;
+    gap:6px!important;
+    align-content:start!important;
+    padding-right:2px!important;
+  }
+  body.game-mode .country-card{
+    min-height:0!important;
+    aspect-ratio:1/1!important;
+    display:flex!important;flex-direction:column!important;
+    align-items:center!important;justify-content:center!important;
+    padding:6px 4px!important;
+  }
+  body.game-mode .country-card .flag-container,
+  body.game-mode .country-card .flag-img{margin:0 auto!important;}
+  body.game-mode .country-card .flag-img{
+    width:30px!important;height:20px!important;
+  }
+}
+@media(max-width:430px){
+  body.game-mode .country-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;}
+}
+
+/* ---------- LEADERBOARD POOL CHIP (was the long text next to STANDINGS) ---------- */
+.lb-info#poolInfo{
+  font-family:'Black Ops One',sans-serif!important;
+  color:#ffc940!important;
+  background:rgba(255,201,64,.1)!important;
+  border:1px solid rgba(255,201,64,.34)!important;
+  border-radius:7px!important;
+  padding:5px 11px!important;
+  font-size:13px!important;
+  letter-spacing:.5px!important;
+  white-space:nowrap!important;
+}
+
+/* ---------- GLOBAL TOP rewards in a distinct color (gold gradient text) ---------- */
+.global-row .lb-prize{
+  color:#ffc940!important;
+  text-shadow:0 0 12px rgba(255,201,64,.28)!important;
+}
+.global-row.prize-row{
+  background:linear-gradient(90deg,rgba(255,201,64,.08),rgba(15,19,24,.6) 60%)!important;
+  border-color:rgba(255,201,64,.26)!important;
+}
+.global-row .lb-prize.none{color:#5a6a7a!important;text-shadow:none!important;}
+/* top 3 even brighter */
+.global-row:nth-child(1) .lb-prize{color:#ffd966!important;}
+
+/* ---------- DESKTOP: keep countdown compact inline, not a full-width band ---------- */
+@media(min-width:761px){
+  body.bk-v4 .nav-countdown,
+  body.bk-v4 .topnav .nav-countdown{
+    justify-self:end!important;align-self:center!important;
+    width:auto!important;max-width:200px!important;
+    white-space:nowrap!important;margin:0!important;
+  }
+}
+
 </style>
 
 </head>
@@ -7123,8 +7255,8 @@ function getFlagHtml(team, isLarge = false) {
   const width = isLarge ? 160 : 80;
   return `
     <span class="flag-container" style="display: inline-flex; align-items: center; justify-content: center; margin-right: 6px; vertical-align: middle;">
-      <img src="https://flagcdn.com/w${width}/${team.code}.png" class="${cls}" alt="${team.name}" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';" />
-      <span style="display: none; font-size: ${isLarge ? '28px' : '18px'};">${team.flag}</span>
+      <img src="https://flagcdn.com/w${width}/${team.code}.png" class="${cls}" alt="${team.name}" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-flex';" />
+      <span class="${cls} flag-emoji-fallback" style="display: none; align-items:center; justify-content:center; font-size: ${isLarge ? '24px' : '15px'}; line-height:1;">${team.flag || '🏳️'}</span>
     </span>
   `;
 }
@@ -7688,7 +7820,7 @@ async function loadData(options = {}){
   }catch(e){ console.warn('Market scan error:', e); }
 
   // Independent sponsored pool presentation (English local)
-  document.getElementById('poolInfo').textContent = `Quest Prize Pool: ${SPONSORED_POOL.toLocaleString()} CHZ (Sponsor Funded) · Global TOP 10 Share Rewards`;
+  document.getElementById('poolInfo').textContent = `${SPONSORED_POOL.toLocaleString()} CHZ`;
 
     renderStats();
     renderCountryHub();
@@ -8579,8 +8711,8 @@ window.addEventListener('load', async () => {
     const short = code ? code.toUpperCase() : 'WC';
     return `
       <span class="flag-container portal-flag-container ${isLarge ? 'large' : ''}" title="${label}">
-        <img src="https://flagcdn.com/w${width}/${code}.png" class="${cls}" alt="${label}" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';" />
-        <span class="portal-flag-fallback" style="display:none; font-size:${isLarge ? '28px' : '22px'};">${team.flag || '🏳️'}</span>
+        <img src="https://flagcdn.com/w${width}/${code}.png" class="${cls}" alt="${label}" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-flex';" />
+        <span class="portal-flag-fallback ${cls}" style="display:none; align-items:center; justify-content:center; font-size:${isLarge ? '24px' : '18px'}; line-height:1;">${team.flag || '🏳️'}</span>
         <span class="portal-flag-code">${short}</span>
       </span>
     `;
