@@ -11012,5 +11012,175 @@ window.addEventListener('load', async () => {
 })();
 </script>
 
+<script id="bk-demand-console-helper">
+(function(){
+  if(window.BKDemand) return;
+  const readVar = (name, fallback) => {
+    try {
+      const value = (0, eval)(name);
+      return value === undefined ? fallback : value;
+    } catch(e) {
+      return window[name] === undefined ? fallback : window[name];
+    }
+  };
+  const norm = value => String(value || '').toLowerCase();
+  const rarityNames = ['Common','Rare','Epic','Legendary'];
+  const short = addr => addr ? addr.slice(0,6) + '...' + addr.slice(-4) : '-';
+  const teams = () => readVar('TEAMS', []);
+  const posMap = () => readVar('POSITION_SHORT', {});
+  const teamName = id => (teams().find(t => Number(t.id) === Number(id)) || {}).name || ('Team #' + id);
+  const posName = id => posMap()[id] || String(id);
+
+  function getCards(){
+    return Object.entries(readVar('ownerMap', {}) || {}).map(([tokenId, fig]) => ({
+      tokenId:Number(tokenId),
+      owner:norm(fig.owner),
+      teamId:Number(fig.teamId),
+      country:teamName(fig.teamId),
+      position:Number(fig.position),
+      pos:posName(Number(fig.position)),
+      weight:Number(fig.weight || 0),
+      rarity:Number(fig.rarity || 0),
+      rarityName:rarityNames[Number(fig.rarity || 0)] || 'Common',
+      dna:fig.dna
+    })).filter(c => Number.isFinite(c.tokenId) && c.owner);
+  }
+
+  function countryStats(cards){
+    const map = new Map();
+    cards.forEach(card => {
+      const key = card.owner + ':' + card.teamId;
+      if(!map.has(key)) map.set(key, {wallet:card.owner, teamId:card.teamId, country:card.country, positions:new Set(), cards:0, best:new Map(), score:0});
+      const row = map.get(key);
+      row.cards++;
+      row.positions.add(card.position);
+      row.best.set(card.position, Math.max(row.best.get(card.position) || 0, card.weight));
+    });
+    map.forEach(row => {
+      row.completed = row.positions.size;
+      row.score = [...row.best.values()].reduce((sum, weight) => sum + weight, 0);
+    });
+    return [...map.values()];
+  }
+
+  function suggestedPrice(card, filled){
+    let price = filled >= 10 ? 500 : filled >= 9 ? 300 : filled >= 8 ? 150 : filled >= 6 ? 75 : 25;
+    if(card.rarity === 3) price += 250;
+    else if(card.rarity === 2) price += 90;
+    else if(card.rarity === 1) price += 30;
+    if(card.weight >= 80) price += 150;
+    else if(card.weight >= 50) price += 60;
+    else if(card.weight >= 30) price += 25;
+    return Math.round(price);
+  }
+
+  function scan(){
+    const my = norm(readVar('address', ''));
+    if(!my) throw new Error('Connect wallet first.');
+    const activeListingsByToken = readVar('activeListingsByToken', {}) || {};
+    const cards = getCards();
+    if(!cards.length) throw new Error('No ownerMap data yet. Wait until WC Album finishes loading.');
+    const stats = countryStats(cards);
+    const byCountry = new Map();
+    stats.forEach(row => {
+      if(!byCountry.has(row.teamId)) byCountry.set(row.teamId, []);
+      byCountry.get(row.teamId).push(row);
+    });
+    byCountry.forEach(rows => rows.sort((a,b) => b.completed - a.completed || b.score - a.score || b.cards - a.cards));
+
+    const myCards = cards.filter(c => c.owner === my);
+    const candidates = myCards.map(card => {
+      const sameSlotMine = myCards.filter(c => c.teamId === card.teamId && c.position === card.position);
+      const myBestWeight = Math.max(...sameSlotMine.map(c => c.weight));
+      const countryLeaders = (byCountry.get(card.teamId) || []).filter(row => row.wallet !== my);
+      const needers = countryLeaders.filter(row => !row.positions.has(card.position));
+      const topNeed = needers[0] || null;
+      const topNeedFilled = topNeed ? topNeed.completed : 0;
+      const listed = activeListingsByToken[card.tokenId];
+      return {
+        tokenId:card.tokenId,
+        country:card.country,
+        pos:card.pos,
+        weight:card.weight,
+        rarity:card.rarityName,
+        duplicateOrReserve:sameSlotMine.length > 1 || card.weight < myBestWeight,
+        alreadyListed:Boolean(listed),
+        listedPrice:listed ? Number(listed.price || 0) : '',
+        topNeedWallet:topNeed ? short(topNeed.wallet) : '',
+        topNeedFilled:topNeed ? topNeed.completed + '/11' : '',
+        topNeedScore:topNeed ? topNeed.score : '',
+        needers8Plus:needers.filter(row => row.completed >= 8).length,
+        suggestedChz:topNeed ? suggestedPrice(card, topNeedFilled) : '',
+        demandScore:topNeed ? topNeedFilled * 1000 + card.weight * 10 + card.rarity * 100 + needers.filter(row => row.completed >= 8).length * 60 : 0
+      };
+    }).filter(row => row.topNeedWallet).sort((a,b) => b.demandScore - a.demandScore || b.weight - a.weight);
+
+    const leaders = [...byCountry.values()].flatMap(rows => rows.slice(0,3)).sort((a,b) => b.completed - a.completed || b.score - a.score).map(row => ({
+      country:row.country,
+      wallet:short(row.wallet),
+      completed:row.completed + '/11',
+      cards:row.cards,
+      score:row.score
+    }));
+    console.log('Top collectors by country:');
+    console.table(leaders);
+    console.log('Your cards that another active collector may need:');
+    console.table(candidates.map(({demandScore, ...row}) => row));
+    return {leaders, candidates};
+  }
+
+  async function ensureApproval(){
+    const nft = readVar('contract');
+    const marketAddress = readVar('MARKET_ADDRESS');
+    const my = norm(readVar('address', ''));
+    if(!nft || !marketAddress || !my) throw new Error('Wallet/contract not ready.');
+    if(await nft.isApprovedForAll(my, marketAddress)) return true;
+    if(!confirm('Marketplace needs NFT approval before listing. Approve now?')) return false;
+    const tx = await nft.setApprovalForAll(marketAddress, true);
+    console.log('Approval tx sent:', tx.hash);
+    await tx.wait();
+    return true;
+  }
+
+  async function listOne(tokenId, priceChz){
+    const market = readVar('marketContract');
+    const ethersLib = readVar('ethers');
+    const activeListingsByToken = readVar('activeListingsByToken', {}) || {};
+    if(!market || !ethersLib) throw new Error('Market contract/ethers not ready.');
+    if(activeListingsByToken[Number(tokenId)]) throw new Error('Token #' + tokenId + ' is already listed.');
+    if(!priceChz || Number(priceChz) <= 0) throw new Error('Invalid price.');
+    if(!confirm('List token #' + tokenId + ' for ' + priceChz + ' CHZ?')) return null;
+    if(!(await ensureApproval())) return null;
+    const tx = await market.listFigure(Number(tokenId), ethersLib.parseEther(String(priceChz)), {gasLimit:220000});
+    console.log('Listing tx:', tx.hash);
+    await tx.wait();
+    console.log('Listed token #' + tokenId + '. Refresh data after confirmations.');
+    return tx.hash;
+  }
+
+  async function listTop(options = {}){
+    const minNeed = Number(options.minNeed || 9);
+    const max = Number(options.max || 1);
+    const multiplier = Number(options.multiplier || 1);
+    const picks = scan().candidates
+      .filter(row => !row.alreadyListed)
+      .filter(row => Number(String(row.topNeedFilled).split('/')[0] || 0) >= minNeed)
+      .slice(0, max);
+    if(!picks.length){ console.log('No unlisted candidates with topNeedFilled >= ' + minNeed + '/11.'); return []; }
+    console.table(picks.map(({demandScore, ...row}) => row));
+    const hashes = [];
+    for(const row of picks){
+      const price = Math.max(1, Math.round(Number(row.suggestedChz || 25) * multiplier));
+      const hash = await listOne(row.tokenId, price);
+      if(hash) hashes.push(hash);
+    }
+    return hashes;
+  }
+
+  window.BKDemand = {scan, listOne, listTop};
+  console.log('BKDemand ready. Use BKDemand.scan(), BKDemand.listOne(tokenId, priceChz), BKDemand.listTop({minNeed:9,max:2}).');
+})();
+</script>
+
 </body>
 </html>
