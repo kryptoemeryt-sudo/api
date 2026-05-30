@@ -9607,6 +9607,22 @@ function promptWalletConnectConfirmation(message = 'Confirm this request in your
   setWalletOpenButton(true);
   setTimeout(openWalletConnectApp, 350);
 }
+function resetDashboardScrollToTop(){
+  const reset = () => {
+    window.scrollTo({top:0, left:0, behavior:'auto'});
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    ['.page', '#gameSection', '.pitch-wrap', '.country-grid', '.leaderboard-list'].forEach(sel => {
+      document.querySelectorAll(sel).forEach(el => {
+        el.scrollTop = 0;
+        el.scrollLeft = 0;
+      });
+    });
+  };
+  reset();
+  requestAnimationFrame(reset);
+  setTimeout(reset, 120);
+}
 async function finalizeWalletConnection(walletProvider, walletType='wallet') {
   if (!walletProvider || typeof walletProvider.request !== 'function') throw new Error('Selected wallet did not return a compatible provider.');
   activeWalletProvider = walletProvider;
@@ -9632,8 +9648,10 @@ async function finalizeWalletConnection(walletProvider, walletType='wallet') {
   const prizeStrip = document.getElementById('dashboardPrizeStrip');
   if (prizeStrip) prizeStrip.style.display = 'grid';
   document.body.classList.add('game-mode');
+  resetDashboardScrollToTop();
   updatePriceUI();
   await loadData();
+  resetDashboardScrollToTop();
 }
 async function connectWallet(){
   const walletProvider = getInjectedWalletProvider();
