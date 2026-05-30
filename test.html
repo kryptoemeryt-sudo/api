@@ -7423,6 +7423,36 @@ body.game-mode .dash-deadline small,
   display:none!important;
 }
 @media(min-width:901px){
+  body.bk-v4.game-mode .dashboard-prize-strip,
+  body.portal-v3.game-mode .dashboard-prize-strip,
+  body.game-mode .dashboard-prize-strip{
+    position:relative!important;
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr) minmax(260px,auto) minmax(0,1fr)!important;
+    align-items:center!important;
+  }
+  body.bk-v4.game-mode .dash-prize-title,
+  body.portal-v3.game-mode .dash-prize-title,
+  body.game-mode .dash-prize-title{
+    grid-column:1!important;
+    justify-self:start!important;
+    text-align:left!important;
+  }
+  body.bk-v4.game-mode .dash-prize-value,
+  body.portal-v3.game-mode .dash-prize-value,
+  body.game-mode .dash-prize-value{
+    grid-column:2!important;
+    justify-self:center!important;
+    text-align:center!important;
+    width:max-content!important;
+  }
+  body.bk-v4.game-mode .dash-deadline,
+  body.portal-v3.game-mode .dash-deadline,
+  body.game-mode .dash-deadline{
+    grid-column:3!important;
+    justify-self:end!important;
+    text-align:right!important;
+  }
   body.bk-v4.game-mode .pitch-title-row,
   body.portal-v3.game-mode .pitch-title-row,
   body.game-mode .pitch-title-row{
@@ -9931,10 +9961,12 @@ function selectCountry(teamId) {
   renderCountryHub();
   renderPitch();
   renderLeaderboard();
-  setTimeout(() => {
-    const target = document.querySelector('.pitch-title-row') || document.querySelector('.pitch-container');
-    if (target) target.scrollIntoView({behavior:'smooth', block:'start', inline:'nearest'});
-  }, 40);
+  if (window.matchMedia('(max-width: 900px)').matches) {
+    setTimeout(() => {
+      const target = document.querySelector('.pitch-title-row') || document.querySelector('.pitch-container');
+      if (target) target.scrollIntoView({behavior:'smooth', block:'start', inline:'nearest'});
+    }, 40);
+  }
 }
 
 function getMarketListingsForSlot(teamId, pos) {
