@@ -9895,7 +9895,7 @@ async function loadData(options = {}){
     const rp = await getReadProvider();
     const rmk = new ethers.Contract(MARKET_ADDRESS, MARKET_ABI, rp);
     const nextId = Number(await rmk.nextListingId());
-    const from = Math.max(0, nextId - 150);
+    const from = 0;
     const ids = Array.from({length: nextId - from}, (_, idx) => from + idx);
     const listingResults = [];
     for(let start = 0; start < ids.length; start += 25){
@@ -11014,4 +11014,3 @@ window.addEventListener('load', async () => {
 
 </body>
 </html>
-
