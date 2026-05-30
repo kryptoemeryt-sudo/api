@@ -3608,7 +3608,7 @@ async function fetchActiveListings(tokenInfo) {
   const listings = [];
   try {
     const nextId = Number(await readMarket.nextListingId());
-    const from = Math.max(0, nextId - 400);
+    const from = 0;
     const listingIds = [];
     for (let i = from; i < nextId; i++) listingIds.push(i);
     const activeListings = await readListingsBatch(readMarket, listingIds, 36);
