@@ -7060,6 +7060,10 @@ body.game-mode .country-card .native-flag-img{
   cursor:pointer;
 }
 .stage1-secondary{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
   border:1px solid rgba(255,201,64,.38);
   border-radius:10px;
   min-height:46px;
@@ -7069,6 +7073,8 @@ body.game-mode .country-card .native-flag-img{
   font-family:'Black Ops One',sans-serif;
   font-size:11px;
   letter-spacing:1px;
+  line-height:1.05;
+  white-space:nowrap;
   cursor:pointer;
 }
 @media(max-width:760px){
@@ -7113,7 +7119,7 @@ body.game-mode .country-card .native-flag-img{
 
   <div class="portal-tabs" aria-label="Quest pages">
     <a class="portal-tab" href="./block-kickers-usa-quest-fullwidth-layout.html"><span>USA QUEST</span><b>1,500 CHZ</b></a>
-    <a class="portal-tab active" href="#"><span>WORLD CUP ALBUM</span><b>ALBUM</b></a>
+    <a class="portal-tab active" href="#"><span>WORLD CUP ALBUM</span><b>STAGE 1</b></a>
     <a class="portal-tab portal-tab-hot" href="./argentina-quest.html"><span>ARGENTINA XI</span><b>10,000 CHZ</b></a>
   </div>
 
@@ -7271,7 +7277,7 @@ body.game-mode .country-card .native-flag-img{
       <div class="stat-lbl">Global Rank</div>
     </div>
     <div class="stat-card" style="background:rgba(0,255,135,0.03); border-color:rgba(0,255,135,0.2);">
-      <div class="stat-val" id="myEstPayout" style="color:#00ff87; font-size:24px; padding-top:6px;">??? CHZ</div>
+      <div class="stat-val" id="myEstPayout" style="color:#00ff87; font-size:24px; padding-top:6px;">3 x 1,500 CHZ</div>
       <div class="stat-lbl">Reward</div>
     </div>
   </div>
@@ -9513,7 +9519,7 @@ function renderStats() {
   const scoreEl = document.getElementById('myGlobalScore');
   if (scoreEl) scoreEl.textContent = myGlobalScoreVal;
   document.getElementById('myGlobalRank').textContent = myGlobalRankVal;
-  document.getElementById('myEstPayout').textContent = '??? CHZ';
+  document.getElementById('myEstPayout').textContent = '3 x 1,500 CHZ';
 }
 
 function filterFederation(fed, btnEl) {
