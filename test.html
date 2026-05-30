@@ -7106,6 +7106,100 @@ body.game-mode .country-card .native-flag-img{
   }
 }
 
+/* Request polish: global rows match national spacing, no provisional reward column. */
+body.bk-v4.game-mode .lb-row.global-row,
+body.portal-v3.game-mode .lb-row.global-row,
+body.game-mode .lb-row.global-row{
+  display:grid!important;
+  grid-template-columns:42px minmax(130px,1fr) minmax(122px,auto) max-content!important;
+  align-items:center!important;
+  gap:10px!important;
+}
+body.bk-v4.game-mode .lb-row.global-row .lb-completion,
+body.portal-v3.game-mode .lb-row.global-row .lb-completion,
+body.game-mode .lb-row.global-row .lb-completion{
+  justify-self:start!important;
+  min-width:122px!important;
+  margin:0!important;
+  text-align:left!important;
+  white-space:nowrap!important;
+}
+body.bk-v4.game-mode .lb-row.global-row .lb-score,
+body.portal-v3.game-mode .lb-row.global-row .lb-score,
+body.game-mode .lb-row.global-row .lb-score{
+  justify-self:end!important;
+  text-align:right!important;
+  white-space:nowrap!important;
+}
+body.bk-v4.game-mode .lb-row.global-row .prize-cell,
+body.portal-v3.game-mode .lb-row.global-row .prize-cell,
+body.game-mode .lb-row.global-row .prize-cell,
+body.bk-v4.game-mode .global-row .lb-prize,
+body.portal-v3.game-mode .global-row .lb-prize,
+body.game-mode .global-row .lb-prize{
+  display:none!important;
+}
+@media(max-width:900px){
+  body.bk-v4.game-mode .lb-row.global-row,
+  body.portal-v3.game-mode .lb-row.global-row,
+  body.game-mode .lb-row.global-row{
+    grid-template-columns:32px minmax(92px,1fr) minmax(96px,auto) max-content!important;
+    gap:7px!important;
+  }
+  body.bk-v4.game-mode .lb-row.global-row .lb-completion,
+  body.portal-v3.game-mode .lb-row.global-row .lb-completion,
+  body.game-mode .lb-row.global-row .lb-completion{
+    min-width:96px!important;
+    font-size:10px!important;
+  }
+}
+
+/* Request polish: one desktop wallet CTA, consistent wallet buttons, larger RULES gap filler. */
+.btn-mint-hero,
+.btn-connect-big{
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  text-align:center!important;
+  min-height:48px!important;
+  background:linear-gradient(135deg,#00ff87,#00c96a)!important;
+  color:#06100b!important;
+  border:0!important;
+  border-radius:9px!important;
+  box-shadow:0 0 24px rgba(0,255,135,.22)!important;
+}
+.connect-prompt .btn-connect-big{
+  width:min(100%,340px)!important;
+  max-width:340px!important;
+  margin:0 auto!important;
+}
+@media(min-width:761px){
+  body:not(.game-mode) .hero-actions{
+    display:grid!important;
+    grid-template-columns:1fr!important;
+    width:100%!important;
+    max-width:100%!important;
+    margin:16px 0 18px!important;
+  }
+  body:not(.game-mode) .hero-actions .btn-mint-hero{
+    display:none!important;
+  }
+  body:not(.game-mode) .hero-actions .btn-stage-rules{
+    width:100%!important;
+    min-height:56px!important;
+    font-size:15px!important;
+    letter-spacing:1.6px!important;
+  }
+}
+@media(max-width:760px){
+  body:not(.game-mode) .hero-actions .btn-mint-hero,
+  body:not(.game-mode) .hero-actions .btn-stage-rules,
+  body:not(.game-mode) .connect-prompt .btn-connect-big{
+    width:100%!important;
+    max-width:none!important;
+  }
+}
+
 </style>
 
 </head>
@@ -9825,14 +9919,12 @@ function renderLeaderboard(){
       const isWinner = rank <= 10;
       const posClass = isWinner ? 'winner' : '';
       const medal = rank === 1 ? '1' : rank === 2 ? '2' : rank === 3 ? '3' : '';
-      const prizeDisplay = isWinner ? '<span class="lb-prize">??? CHZ</span>' : '<span class="lb-prize none">NO PRIZE</span>';
 
       return `
-        <div class="lb-row global-row ${isMe ? 'me' : ''} ${isWinner ? 'prize-row' : ''}">
+        <div class="lb-row global-row ${isMe ? 'me' : ''}">
           <div class="lb-pos ${posClass}">${medal ? '#' + medal : '#' + rank}</div>
           <div class="lb-addr">${player.wallet.slice(0,6)}...${player.wallet.slice(-4)} ${isMe ? '<span class="lb-you">YOU</span>' : ''}</div>
           <div class="lb-completion">${player.cards || 0} CARDS</div>
-          <div class="lb-completion prize-cell">${prizeDisplay}</div>
           <div class="lb-score">${player.score} PTS</div>
         </div>
       `;
