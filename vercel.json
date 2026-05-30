@@ -1,7 +1,7 @@
 {
   "rewrites": [
     { "source": "/", "destination": "/home.html" },
-    { "source": "/bkhome2", "destination": "/BlockKickers.html" },
+    { "source": "/wc-album", "destination": "/BlockKickers.html" },
     { "source": "/v2", "destination": "/home_v2.html" },
 
     { "source": "/dream-xi", "destination": "/dream-xi.html" },
