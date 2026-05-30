@@ -1656,6 +1656,314 @@ body{background:linear-gradient(180deg,rgba(6,8,10,.88),rgba(5,7,10,.97)),repeat
   .section-title{font-size:10px!important;margin-bottom:9px!important;padding-bottom:8px!important;}
 }
 
+/* ═══════════════ CODEX QUEST LAYOUT PATCH — full-width USA page ═══════════════ */
+.page{
+  max-width:none!important;
+  width:100%!important;
+  min-height:100vh!important;
+  margin:0!important;
+  padding:0 10px 12px!important;
+  gap:10px!important;
+}
+.topnav{
+  position:sticky!important;
+  top:0!important;
+  z-index:100!important;
+  width:100%!important;
+  height:60px!important;
+  min-height:60px!important;
+  padding:8px 10px!important;
+  display:grid!important;
+  grid-template-columns:auto minmax(420px,1fr) auto auto!important;
+  align-items:center!important;
+  gap:10px!important;
+  border:0!important;
+  border-bottom:1px solid rgba(0,255,135,.18)!important;
+  background:rgba(5,7,10,.96)!important;
+  backdrop-filter:blur(16px)!important;
+}
+.topnav .logo{
+  display:inline-flex!important;
+  align-items:center!important;
+  gap:8px!important;
+  min-width:190px!important;
+  font-family:'Black Ops One',sans-serif!important;
+  font-size:17px!important;
+  letter-spacing:1.8px!important;
+  line-height:1!important;
+  white-space:nowrap!important;
+  color:#dde4f0!important;
+  text-decoration:none!important;
+}
+.topnav .logo::first-letter{color:#dde4f0!important;}
+.portal-tabs{
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:8px!important;
+  width:min(760px,100%)!important;
+  justify-self:center!important;
+  min-width:0!important;
+}
+.portal-tab{
+  min-width:0!important;
+  height:44px!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:3px!important;
+  padding:6px 10px!important;
+  border:1px solid rgba(255,255,255,.12)!important;
+  border-radius:10px!important;
+  background:linear-gradient(180deg,rgba(17,22,30,.94),rgba(8,11,16,.98))!important;
+  color:#dce6f3!important;
+  text-decoration:none!important;
+  overflow:hidden!important;
+}
+.portal-tab span{
+  max-width:100%!important;
+  font-family:'Black Ops One',sans-serif!important;
+  font-size:11px!important;
+  letter-spacing:1.2px!important;
+  line-height:1!important;
+  white-space:nowrap!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+}
+.portal-tab b{
+  font-family:'Black Ops One',sans-serif!important;
+  font-size:10px!important;
+  letter-spacing:1px!important;
+  line-height:1!important;
+  color:#ffc940!important;
+  font-weight:400!important;
+  white-space:nowrap!important;
+}
+.portal-tab.active{
+  border-color:rgba(0,255,135,.75)!important;
+  background:linear-gradient(180deg,rgba(0,255,135,.15),rgba(9,14,18,.98))!important;
+  box-shadow:0 0 22px rgba(0,255,135,.12)!important;
+}
+.portal-tab.quest-host{border-color:rgba(255,201,64,.38)!important;}
+.topnav .nav-countdown{
+  position:static!important;
+  transform:none!important;
+  justify-self:end!important;
+  height:38px!important;
+  min-width:144px!important;
+  padding:6px 10px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:6px!important;
+  font-family:'Black Ops One',sans-serif!important;
+  font-size:11px!important;
+  letter-spacing:1px!important;
+  line-height:1!important;
+  white-space:nowrap!important;
+  color:#ffc940!important;
+  border:1px solid rgba(255,201,64,.30)!important;
+  border-radius:9px!important;
+  background:rgba(255,201,64,.055)!important;
+}
+.topnav .nav-countdown span{
+  color:#ef4444!important;
+  font-family:'Black Ops One',sans-serif!important;
+  font-size:9px!important;
+  letter-spacing:.8px!important;
+}
+.topnav .nav-right{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:flex-end!important;
+  gap:8px!important;
+  min-width:0!important;
+  margin:0!important;
+}
+.topnav .wallet-info{
+  height:34px!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  padding:0 9px!important;
+  border:1px solid rgba(255,255,255,.10)!important;
+  border-radius:8px!important;
+  background:rgba(255,255,255,.035)!important;
+}
+.topnav .wallet-info.addr{
+  max-width:104px!important;
+  font-family:'Share Tech Mono',monospace!important;
+  font-size:10px!important;
+  color:#7a8899!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+}
+.topnav .wallet-info.balance{
+  min-width:92px!important;
+  font-family:'Black Ops One',sans-serif!important;
+  font-size:10px!important;
+  color:#ffc940!important;
+}
+.topnav .btn-connect{
+  height:38px!important;
+  min-height:38px!important;
+  padding:0 16px!important;
+  border-radius:10px!important;
+  font-size:10px!important;
+  line-height:1!important;
+}
+.hero,.stats,.main-grid{width:100%!important;margin:0!important;}
+.hero .panel{border-radius:12px!important;}
+.main-grid{
+  display:grid!important;
+  grid-template-columns:1fr!important;
+  grid-template-areas:"quest" "side"!important;
+  gap:10px!important;
+  width:100%!important;
+  align-items:start!important;
+}
+.quest-left-column{
+  grid-area:quest!important;
+  display:grid!important;
+  grid-template-columns:1fr!important;
+  gap:10px!important;
+  width:100%!important;
+  min-width:0!important;
+}
+.my-squad-panel,.market-section{
+  grid-column:auto!important;
+  grid-row:auto!important;
+  width:100%!important;
+  min-width:0!important;
+}
+.my-squad-panel{padding:14px!important;}
+.market-section{padding:14px!important;}
+.squad{
+  grid-template-columns:repeat(11,minmax(0,1fr))!important;
+  gap:8px!important;
+  width:100%!important;
+}
+.slot{min-height:166px!important;}
+.market-grid{
+  grid-template-columns:repeat(auto-fill,minmax(132px,1fr))!important;
+  width:100%!important;
+  max-height:none!important;
+  overflow:visible!important;
+  padding-right:0!important;
+}
+.quest-side-panel{
+  grid-area:side!important;
+  grid-column:auto!important;
+  grid-row:auto!important;
+  width:100%!important;
+  display:grid!important;
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  gap:10px!important;
+}
+.quest-side-panel .callout,
+.quest-side-panel .panel{
+  min-width:0!important;
+  height:100%!important;
+}
+.quest-side-panel .rank-list,
+.quest-side-panel .feed{
+  max-height:230px!important;
+}
+
+@media(max-width:900px){
+  .page{
+    padding:0 6px 10px!important;
+    gap:7px!important;
+    min-height:100dvh!important;
+  }
+  .topnav{
+    height:50px!important;
+    min-height:50px!important;
+    padding:5px 6px!important;
+    grid-template-columns:34px minmax(0,1fr) auto!important;
+    gap:5px!important;
+  }
+  .topnav .logo{
+    min-width:34px!important;
+    width:34px!important;
+    height:38px!important;
+    justify-content:center!important;
+    overflow:hidden!important;
+    font-size:0!important;
+    letter-spacing:0!important;
+  }
+  .topnav .logo::before{
+    content:'\26BD'!important;
+    display:grid!important;
+    place-items:center!important;
+    width:32px!important;
+    height:32px!important;
+    border-radius:9px!important;
+    background:#eef6ff!important;
+    color:#06110b!important;
+    font-size:19px!important;
+    box-shadow:0 0 16px rgba(0,255,135,.24)!important;
+  }
+  .topnav .logo > *{display:none!important;}
+  .portal-tabs{
+    width:100%!important;
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+    gap:4px!important;
+    justify-self:stretch!important;
+  }
+  .portal-tab{
+    height:38px!important;
+    padding:4px 3px!important;
+    border-radius:8px!important;
+    gap:2px!important;
+  }
+  .portal-tab span{font-size:7.5px!important;letter-spacing:.35px!important;}
+  .portal-tab b{font-size:7px!important;letter-spacing:.35px!important;}
+  .topnav .nav-countdown{display:none!important;}
+  .topnav .nav-right{
+    gap:0!important;
+    justify-self:end!important;
+  }
+  .topnav .wallet-info{display:none!important;}
+  .topnav .btn-connect{
+    height:38px!important;
+    min-height:38px!important;
+    padding:0 8px!important;
+    border-radius:8px!important;
+    font-size:8px!important;
+    letter-spacing:.5px!important;
+  }
+  .hero .panel{
+    min-height:0!important;
+    padding:12px!important;
+    gap:12px!important;
+  }
+  .hero-title{font-size:32px!important;}
+  .main-grid{gap:7px!important;}
+  .quest-left-column{gap:7px!important;}
+  .my-squad-panel,.market-section{padding:8px!important;}
+  .squad{
+    grid-template-columns:repeat(11,54px)!important;
+    gap:5px!important;
+    overflow-x:auto!important;
+    overflow-y:hidden!important;
+    padding-bottom:4px!important;
+  }
+  .slot{
+    width:54px!important;
+    min-width:54px!important;
+    max-width:54px!important;
+    min-height:118px!important;
+  }
+  .market-grid{
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+    gap:6px!important;
+    max-height:260px!important;
+    overflow:auto!important;
+  }
+  .quest-side-panel{display:none!important;}
+}
+
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
@@ -1663,6 +1971,11 @@ body{background:linear-gradient(180deg,rgba(6,8,10,.88),rgba(5,7,10,.97)),repeat
 <div class="page">
   <header class="topnav">
     <a class="logo" href="/">&#9917; BLOCK <span>KICKERS</span></a>
+    <nav class="portal-tabs" aria-label="Block Kickers quests">
+      <a class="portal-tab active" href="https://block-kickers.vercel.app/nation-quest"><span>USA QUEST</span><b>1,500 CHZ</b></a>
+      <a class="portal-tab" href="https://block-kickers.vercel.app/dream-xi"><span>WORLD CUP ALBUM</span><b>STAGE 1</b></a>
+      <a class="portal-tab quest-host" href="https://block-kickers.vercel.app/host-nations-podium"><span>HOST QUEST</span><b>1,500 CHZ</b></a>
+    </nav>
     <div class="nav-countdown" id="navPriceCountdown"><span>50 CHZ IN</span>--:--:--:--</div>
     <div class="nav-right">
       <span id="walletAddress" class="wallet-info addr">0x0000...0000</span>
