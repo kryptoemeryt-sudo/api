@@ -10141,12 +10141,6 @@ function renderLeaderboard(){
         </div>
       `;
       html += renderRow(players[myIndex], myIndex);
-    } else if (players.length > 10) {
-      html += `
-        <div class="cutoff-line">
-          SPONSORED PRIZE THRESHOLD (TOP 10) - PLAYERS BELOW DO NOT QUALIFY FOR SPONSOR PRIZES
-        </div>
-      `;
     }
 
     lb.innerHTML = html;
