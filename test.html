@@ -7243,6 +7243,159 @@ body.game-mode .lb-row.local-row .lb-score{
   }
 }
 
+/* Request polish: mobile nation selector, squad jump target, rarity-colored PTS, aligned standings. */
+.pitch-title-row{
+  scroll-margin-top:64px!important;
+}
+body.bk-v4.game-mode .pos-card.rarity-0 .pos-weight,
+body.portal-v3.game-mode .pos-card.rarity-0 .pos-weight,
+body.game-mode .pos-card.rarity-0 .pos-weight{
+  color:#9aa4b2!important;
+}
+body.bk-v4.game-mode .pos-card.rarity-1 .pos-weight,
+body.portal-v3.game-mode .pos-card.rarity-1 .pos-weight,
+body.game-mode .pos-card.rarity-1 .pos-weight{
+  color:#3b82f6!important;
+}
+body.bk-v4.game-mode .pos-card.rarity-2 .pos-weight,
+body.portal-v3.game-mode .pos-card.rarity-2 .pos-weight,
+body.game-mode .pos-card.rarity-2 .pos-weight{
+  color:#c084fc!important;
+}
+body.bk-v4.game-mode .pos-card.rarity-3 .pos-weight,
+body.portal-v3.game-mode .pos-card.rarity-3 .pos-weight,
+body.game-mode .pos-card.rarity-3 .pos-weight{
+  color:#ffc940!important;
+}
+body.bk-v4.game-mode .lb-row.global-row,
+body.bk-v4.game-mode .lb-row.local-row,
+body.portal-v3.game-mode .lb-row.global-row,
+body.portal-v3.game-mode .lb-row.local-row,
+body.game-mode .lb-row.global-row,
+body.game-mode .lb-row.local-row{
+  grid-template-columns:42px minmax(0,1fr) 110px 86px!important;
+  gap:10px!important;
+}
+body.bk-v4.game-mode .lb-row.global-row .lb-addr,
+body.bk-v4.game-mode .lb-row.local-row .lb-addr,
+body.portal-v3.game-mode .lb-row.global-row .lb-addr,
+body.portal-v3.game-mode .lb-row.local-row .lb-addr,
+body.game-mode .lb-row.global-row .lb-addr,
+body.game-mode .lb-row.local-row .lb-addr{
+  min-width:0!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+  white-space:nowrap!important;
+}
+body.bk-v4.game-mode .lb-row.global-row .lb-completion,
+body.bk-v4.game-mode .lb-row.local-row .lb-completion,
+body.portal-v3.game-mode .lb-row.global-row .lb-completion,
+body.portal-v3.game-mode .lb-row.local-row .lb-completion,
+body.game-mode .lb-row.global-row .lb-completion,
+body.game-mode .lb-row.local-row .lb-completion{
+  min-width:0!important;
+  width:auto!important;
+  justify-self:start!important;
+  text-align:left!important;
+}
+body.bk-v4.game-mode .lb-row.global-row .lb-score,
+body.bk-v4.game-mode .lb-row.local-row .lb-score,
+body.portal-v3.game-mode .lb-row.global-row .lb-score,
+body.portal-v3.game-mode .lb-row.local-row .lb-score,
+body.game-mode .lb-row.global-row .lb-score,
+body.game-mode .lb-row.local-row .lb-score{
+  min-width:0!important;
+  justify-self:end!important;
+  text-align:right!important;
+  display:block!important;
+}
+.dash-deadline,
+body.bk-v4 .dash-deadline,
+body.portal-v3 .dash-deadline,
+body.game-mode .dash-deadline{
+  display:flex!important;
+  font-family:'Black Ops One',sans-serif!important;
+  color:#ffc940!important;
+  align-items:baseline!important;
+  gap:6px!important;
+}
+.dash-deadline .dash-block-count,
+body.bk-v4 .dash-deadline .dash-block-count,
+body.portal-v3 .dash-deadline .dash-block-count,
+body.game-mode .dash-deadline .dash-block-count{
+  color:#ffc940!important;
+  font:inherit!important;
+}
+.dash-deadline small,
+body.bk-v4 .dash-deadline small,
+body.portal-v3 .dash-deadline small,
+body.game-mode .dash-deadline small,
+#navPriceCountdown b small{
+  display:inline!important;
+  color:#fff!important;
+  font-family:'Black Ops One',sans-serif!important;
+  font-size:1em!important;
+  line-height:1!important;
+  letter-spacing:inherit!important;
+  margin-left:4px!important;
+}
+@media(max-width:900px){
+  body.bk-v4.game-mode .nation-selector-title,
+  body.portal-v3.game-mode .nation-selector-title,
+  body.game-mode .nation-selector-title{
+    display:grid!important;
+    grid-template-columns:1fr!important;
+    justify-items:start!important;
+    align-items:start!important;
+    text-align:left!important;
+    gap:8px!important;
+  }
+  body.bk-v4.game-mode .nation-selector-title > span:first-child,
+  body.portal-v3.game-mode .nation-selector-title > span:first-child,
+  body.game-mode .nation-selector-title > span:first-child{
+    justify-self:start!important;
+    text-align:left!important;
+  }
+  body.bk-v4.game-mode .nation-selector-title .filter-tabs,
+  body.portal-v3.game-mode .nation-selector-title .filter-tabs,
+  body.game-mode .nation-selector-title .filter-tabs{
+    justify-content:flex-start!important;
+    justify-self:stretch!important;
+    width:100%!important;
+  }
+  body.bk-v4.game-mode .album-title-tools,
+  body.portal-v3.game-mode .album-title-tools,
+  body.game-mode .album-title-tools{
+    justify-self:start!important;
+  }
+  body.bk-v4.game-mode .lb-row.global-row,
+  body.bk-v4.game-mode .lb-row.local-row,
+  body.portal-v3.game-mode .lb-row.global-row,
+  body.portal-v3.game-mode .lb-row.local-row,
+  body.game-mode .lb-row.global-row,
+  body.game-mode .lb-row.local-row{
+    grid-template-columns:30px minmax(0,1fr) 68px 52px!important;
+    gap:6px!important;
+  }
+  body.bk-v4.game-mode .lb-row.global-row .lb-completion,
+  body.bk-v4.game-mode .lb-row.local-row .lb-completion,
+  body.portal-v3.game-mode .lb-row.global-row .lb-completion,
+  body.portal-v3.game-mode .lb-row.local-row .lb-completion,
+  body.game-mode .lb-row.global-row .lb-completion,
+  body.game-mode .lb-row.local-row .lb-completion{
+    font-size:8px!important;
+    letter-spacing:.2px!important;
+  }
+  body.bk-v4.game-mode .lb-row.global-row .lb-score,
+  body.bk-v4.game-mode .lb-row.local-row .lb-score,
+  body.portal-v3.game-mode .lb-row.global-row .lb-score,
+  body.portal-v3.game-mode .lb-row.local-row .lb-score,
+  body.game-mode .lb-row.global-row .lb-score,
+  body.game-mode .lb-row.local-row .lb-score{
+    font-size:8.5px!important;
+  }
+}
+
 </style>
 
 </head>
@@ -9683,6 +9836,10 @@ function selectCountry(teamId) {
   renderCountryHub();
   renderPitch();
   renderLeaderboard();
+  setTimeout(() => {
+    const target = document.querySelector('.pitch-title-row') || document.querySelector('.pitch-container');
+    if (target) target.scrollIntoView({behavior:'smooth', block:'start', inline:'nearest'});
+  }, 40);
 }
 
 function getMarketListingsForSlot(teamId, pos) {
@@ -10400,7 +10557,7 @@ function updateCountdown(){
   setDashCd('dashCdM', m);
   setDashCd('dashCdS', s);
   const navPriceCountdown = document.getElementById('navPriceCountdown');
-  if (navPriceCountdown) navPriceCountdown.innerHTML = `<span>SNAPSHOT</span><b>${blocksLeft.toLocaleString()} BLKS</b>`;
+  if (navPriceCountdown) navPriceCountdown.innerHTML = `<span>SNAPSHOT</span><b>${blocksLeft.toLocaleString()} <small>BLOCKS</small></b>`;
   const dashDeadline = document.querySelector('.dash-deadline');
   if (dashDeadline) dashDeadline.innerHTML = `<span class="dash-block-count">${blocksLeft.toLocaleString()}</span><small>BLOCKS</small>`;
   const cdBlock = document.getElementById('cdBlock');
