@@ -6584,6 +6584,58 @@ body.portal-v3 .hero-actions .btn-mint-hero,
     text-rendering:geometricPrecision!important;
   }
 }
+@media(min-width:761px){
+  body.game-mode .slot-market-hint b,
+  body.bk-v4.game-mode .slot-market-hint b,
+  body.portal-v3.game-mode .slot-market-hint b{
+    font-family:'Black Ops One',sans-serif!important;
+    font-size:11px!important;
+    font-weight:400!important;
+    line-height:1!important;
+    color:#ffc940!important;
+    letter-spacing:.2px!important;
+    text-shadow:none!important;
+    filter:none!important;
+    transform:none!important;
+    -webkit-text-stroke:0 transparent!important;
+    -webkit-font-smoothing:antialiased!important;
+    font-smooth:always!important;
+  }
+}
+.privy-mail-icon{
+  position:relative!important;
+  display:inline-grid!important;
+  place-items:center!important;
+  width:28px!important;
+  height:22px!important;
+  border-radius:5px!important;
+  border:2px solid #ffc940!important;
+  background:linear-gradient(180deg,rgba(255,201,64,.16),rgba(255,201,64,.04))!important;
+  box-shadow:0 0 14px rgba(255,201,64,.18)!important;
+}
+.privy-mail-icon::before,
+.privy-mail-icon::after{
+  content:''!important;
+  position:absolute!important;
+  left:4px!important;
+  right:4px!important;
+  top:4px!important;
+  height:12px!important;
+  border-bottom:2px solid #ffc940!important;
+  transform-origin:center!important;
+}
+.privy-mail-icon::before{
+  transform:skewY(31deg)!important;
+}
+.privy-mail-icon::after{
+  transform:skewY(-31deg)!important;
+}
+@media(max-width:760px){
+  .privy-mail-icon{
+    width:30px!important;
+    height:23px!important;
+  }
+}
 body.bk-v4.game-mode .dash-prize-value,
 body.portal-v3.game-mode .dash-prize-value,
 body.game-mode .dash-prize-value{
@@ -7066,7 +7118,7 @@ body.game-mode .country-card .native-flag-img{
       <span class="wallet-option-tag">QR</span>
     </button>
     <button class="wallet-option" type="button" onclick="connectPrivyFromChoice()">
-      <span class="wallet-option-icon">&#9993;</span>
+      <span class="wallet-option-icon privy-mail-icon" aria-hidden="true"></span>
       <span><span class="wallet-option-name">Privy Email Wallet</span><span class="wallet-option-desc">Create or restore an embedded wallet by email code.</span></span>
       <span class="wallet-option-tag">NEW</span>
     </button>
