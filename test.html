@@ -7153,6 +7153,44 @@ body.game-mode .global-row .lb-prize{
     font-size:10px!important;
   }
 }
+body.bk-v4.game-mode .lb-row.local-row,
+body.portal-v3.game-mode .lb-row.local-row,
+body.game-mode .lb-row.local-row{
+  display:grid!important;
+  grid-template-columns:42px minmax(130px,1fr) minmax(122px,auto) max-content!important;
+  align-items:center!important;
+  gap:10px!important;
+}
+body.bk-v4.game-mode .lb-row.local-row .lb-completion,
+body.portal-v3.game-mode .lb-row.local-row .lb-completion,
+body.game-mode .lb-row.local-row .lb-completion{
+  justify-self:start!important;
+  min-width:122px!important;
+  margin:0!important;
+  text-align:left!important;
+  white-space:nowrap!important;
+}
+body.bk-v4.game-mode .lb-row.local-row .lb-score,
+body.portal-v3.game-mode .lb-row.local-row .lb-score,
+body.game-mode .lb-row.local-row .lb-score{
+  justify-self:end!important;
+  text-align:right!important;
+  white-space:nowrap!important;
+}
+@media(max-width:900px){
+  body.bk-v4.game-mode .lb-row.local-row,
+  body.portal-v3.game-mode .lb-row.local-row,
+  body.game-mode .lb-row.local-row{
+    grid-template-columns:32px minmax(92px,1fr) minmax(96px,auto) max-content!important;
+    gap:7px!important;
+  }
+  body.bk-v4.game-mode .lb-row.local-row .lb-completion,
+  body.portal-v3.game-mode .lb-row.local-row .lb-completion,
+  body.game-mode .lb-row.local-row .lb-completion{
+    min-width:96px!important;
+    font-size:10px!important;
+  }
+}
 
 /* Request polish: one desktop wallet CTA, consistent wallet buttons, larger RULES gap filler. */
 .btn-mint-hero,
@@ -7167,6 +7205,11 @@ body.game-mode .global-row .lb-prize{
   border:0!important;
   border-radius:9px!important;
   box-shadow:0 0 24px rgba(0,255,135,.22)!important;
+  font-family:'Black Ops One',sans-serif!important;
+  font-weight:400!important;
+  font-size:14px!important;
+  letter-spacing:2px!important;
+  line-height:1!important;
 }
 .connect-prompt .btn-connect-big{
   width:min(100%,340px)!important;
@@ -7217,7 +7260,7 @@ body.game-mode .global-row .lb-prize{
     <a class="portal-tab portal-tab-hot" href="./argentina-quest.html"><span>ARGENTINA XI</span><b>10,000 CHZ</b></a>
   </div>
 
-  <div class="nav-countdown" id="navPriceCountdown"><span>WC END IN</span>--:--:--:--</div>
+  <div class="nav-countdown" id="navPriceCountdown"><span>SNAPSHOT</span>-- BLOCKS</div>
 
   <div class="nav-right wallet-actions">
     <span id="walletAddress" class="wallet-addr" style="display:none;"></span>
@@ -7326,7 +7369,7 @@ body.game-mode .global-row .lb-prize{
     </div>
     <!-- DEADLINE COUNTDOWN -->
     <div class="countdown-wrap">
-      <div class="countdown-label">QUEST END DEADLINE (WORLD CUP FINAL BLOCK)</div>
+      <div class="countdown-label">STAGE 1 SNAPSHOT DEADLINE</div>
       <div class="countdown-timer">
         <div class="countdown-unit">
           <div class="countdown-num" id="cdD">--</div>
@@ -7348,7 +7391,7 @@ body.game-mode .global-row .lb-prize{
           <div class="countdown-sub">SEC</div>
         </div>
       </div>
-      <div class="countdown-block" id="cdBlock">Target block: 35,886,889</div>
+      <div class="countdown-block" id="cdBlock">Snapshot block: 34,785,400</div>
     </div>
   </div>
 
@@ -9266,7 +9309,7 @@ async function connectPrivyWallet(){
 function updatePriceUI() {
   const now = new Date();
   const d31May = new Date(2026, 4, 31, 23, 59, 59); 
-  const d10June = new Date(2026, 5, 10, 23, 59, 59); 
+  const d10June = new Date('2026-06-10T18:00:00+02:00'); 
 
   document.getElementById('p1').classList.remove('active');
   document.getElementById('p2').classList.remove('active');
@@ -9986,7 +10029,7 @@ function renderLeaderboard(){
         <div class="lb-row local-row ${isMe ? 'me' : ''}">
           <div class="lb-pos ${posClass}">${medal ? '#' + medal : '#' + rank}</div>
           <div class="lb-addr">${player.wallet.slice(0,6)}...${player.wallet.slice(-4)} ${isMe ? '<span class="lb-you">YOU</span>' : ''}</div>
-          <div class="lb-completion">Completed: ${player.completed}/11</div>
+          <div class="lb-completion">${player.completed}/11 CARDS</div>
           <div class="lb-score" style="${isWinner ? 'color: #00ff87;' : ''}">${player.score} PTS</div>
         </div>
       `;
@@ -10304,7 +10347,8 @@ function shareOnX(){
 }
 
 /* BLOCK TIMER & LOGIC */
-const DEADLINE_BLOCK = 35886889;
+const DEADLINE_BLOCK = 34785400;
+const SNAPSHOT_DEADLINE_MS = new Date('2026-06-10T18:00:00+02:00').getTime();
 const BLOCK_TIME_MS = 3000;
 let currentBlock = 34158889; 
 let lastBlockTime = Date.now();
@@ -10340,19 +10384,7 @@ function getEstimatedBlock(){
 function updateCountdown(){
   const estimated = getEstimatedBlock();
   const blocksLeft = Math.max(0, DEADLINE_BLOCK - estimated);
-  if(blocksLeft === 0){
-    document.getElementById('cdD').textContent = '00';
-    document.getElementById('cdH').textContent = '00';
-    document.getElementById('cdM').textContent = '00';
-    document.getElementById('cdS').textContent = '00';
-    ['dashCdD','dashCdH','dashCdM','dashCdS'].forEach(id => {
-      const el = document.getElementById(id);
-      if (el) el.textContent = '00';
-    });
-    document.getElementById('cdBlock').textContent = 'QUEST CONCLUDED AT BLOCK #'+DEADLINE_BLOCK.toLocaleString();
-    return;
-  }
-  const secsLeft = blocksLeft * 3;
+  const secsLeft = Math.max(0, Math.floor((SNAPSHOT_DEADLINE_MS - Date.now()) / 1000));
   const d = Math.floor(secsLeft / 86400);
   const h = Math.floor((secsLeft % 86400) / 3600);
   const m = Math.floor((secsLeft % 3600) / 60);
@@ -10368,8 +10400,15 @@ function updateCountdown(){
   setDashCd('dashCdM', m);
   setDashCd('dashCdS', s);
   const navPriceCountdown = document.getElementById('navPriceCountdown');
-  if (navPriceCountdown) navPriceCountdown.innerHTML = `<span>WC END IN</span><b>${String(d).padStart(2,'0')}:${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}</b>`;
-  document.getElementById('cdBlock').innerHTML = 'Deadline block: <a href="https://scan.chiliz.com/block/'+DEADLINE_BLOCK+'" target="_blank" style="color:#00ff87;text-decoration:none;">#'+DEADLINE_BLOCK.toLocaleString()+'</a> &middot; Estimated Current: ~#'+estimated.toLocaleString()+' &middot; '+blocksLeft.toLocaleString()+' blocks remaining';
+  if (navPriceCountdown) navPriceCountdown.innerHTML = `<span>SNAPSHOT</span><b>${blocksLeft.toLocaleString()} BLKS</b>`;
+  const dashDeadline = document.querySelector('.dash-deadline');
+  if (dashDeadline) dashDeadline.innerHTML = `<span class="dash-block-count">${blocksLeft.toLocaleString()}</span><small>BLOCKS</small>`;
+  const cdBlock = document.getElementById('cdBlock');
+  if (cdBlock) {
+    cdBlock.innerHTML = blocksLeft === 0
+      ? 'SNAPSHOT REACHED AT BLOCK <a href="https://scan.chiliz.com/block/'+DEADLINE_BLOCK+'" target="_blank" style="color:#00ff87;text-decoration:none;">#'+DEADLINE_BLOCK.toLocaleString()+'</a>'
+      : 'Snapshot block: <a href="https://scan.chiliz.com/block/'+DEADLINE_BLOCK+'" target="_blank" style="color:#00ff87;text-decoration:none;">#'+DEADLINE_BLOCK.toLocaleString()+'</a> &middot; Estimated Current: ~#'+estimated.toLocaleString()+' &middot; '+blocksLeft.toLocaleString()+' blocks remaining';
+  }
 }
 
 fetchCurrentBlock();
