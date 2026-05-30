@@ -11026,6 +11026,10 @@ window.addEventListener('load', async () => {
   const norm = value => String(value || '').toLowerCase();
   const rarityNames = ['Common','Rare','Epic','Legendary'];
   const short = addr => addr ? addr.slice(0,6) + '...' + addr.slice(-4) : '-';
+  const excludedDemandWallets = new Set([
+    '0xeda07814bbab6cdd8a086d174c8336c8e4ac86c3'
+  ]);
+  const isExcludedDemandWallet = wallet => excludedDemandWallets.has(norm(wallet));
   const teams = () => readVar('TEAMS', []);
   const posMap = () => readVar('POSITION_SHORT', {});
   const teamName = id => (teams().find(t => Number(t.id) === Number(id)) || {}).name || ('Team #' + id);
@@ -11082,7 +11086,7 @@ window.addEventListener('load', async () => {
     if(!cards.length) throw new Error('No ownerMap data yet. Wait until WC Album finishes loading.');
     const stats = countryStats(cards);
     const byCountry = new Map();
-    stats.forEach(row => {
+    stats.filter(row => !isExcludedDemandWallet(row.wallet)).forEach(row => {
       if(!byCountry.has(row.teamId)) byCountry.set(row.teamId, []);
       byCountry.get(row.teamId).push(row);
     });
