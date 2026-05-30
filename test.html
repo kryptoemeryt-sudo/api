@@ -6563,15 +6563,40 @@ body.portal-v3 .hero-actions .btn-mint-hero,
   body.game-mode .slot-market-hint b,
   body.bk-v4.game-mode .slot-market-hint b,
   body.portal-v3.game-mode .slot-market-hint b{
-    flex:0 0 auto!important;
-    color:#ffc940!important;
-    font-size:10px!important;
-    letter-spacing:.2px!important;
-    overflow:visible!important;
+    flex:0 1 auto!important;
+    max-width:54px!important;
+    min-width:0!important;
+    display:inline-flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    padding:2px 5px!important;
+    border-radius:999px!important;
+    border:1px solid rgba(255,201,64,.38)!important;
+    background:rgba(255,201,64,.12)!important;
+    color:#ffd35a!important;
+    font-size:8.5px!important;
+    letter-spacing:0!important;
+    overflow:hidden!important;
     text-overflow:clip!important;
-    text-shadow:0 0 8px rgba(255,201,64,.22)!important;
+    text-align:center!important;
+    text-shadow:none!important;
     -webkit-font-smoothing:antialiased!important;
     text-rendering:geometricPrecision!important;
+  }
+}
+body.bk-v4.game-mode .pitch-title #selectedCountryTitle .squad-score,
+body.portal-v3.game-mode .pitch-title #selectedCountryTitle .squad-score,
+body.game-mode .pitch-title #selectedCountryTitle .squad-score{
+  font-size:1em!important;
+  line-height:1!important;
+  letter-spacing:inherit!important;
+  vertical-align:baseline!important;
+}
+@media(max-width:760px){
+  body.bk-v4.game-mode .pitch-title #selectedCountryTitle .squad-score,
+  body.portal-v3.game-mode .pitch-title #selectedCountryTitle .squad-score,
+  body.game-mode .pitch-title #selectedCountryTitle .squad-score{
+    font-size:1em!important;
   }
 }
 .pos-card:hover .sell-offer-btn,
