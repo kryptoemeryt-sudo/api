@@ -6750,6 +6750,207 @@ body.game-mode .country-card .native-flag-img{
   }
 }
 
+.btn-stage-rules,
+.btn-stage-rules-inline{
+  border:1px solid rgba(255,201,64,.54)!important;
+  background:linear-gradient(135deg,rgba(255,201,64,.16),rgba(15,19,24,.96))!important;
+  color:#ffc940!important;
+  border-radius:9px!important;
+  font-family:'Black Ops One',sans-serif!important;
+  letter-spacing:1.4px!important;
+  cursor:pointer!important;
+  box-shadow:0 0 20px rgba(255,201,64,.08),inset 0 0 14px rgba(255,201,64,.035)!important;
+}
+.btn-stage-rules{
+  min-height:48px!important;
+  padding:14px 26px!important;
+  font-size:13px!important;
+}
+.btn-stage-rules:hover,
+.btn-stage-rules-inline:hover{
+  border-color:rgba(255,201,64,.82)!important;
+  background:rgba(255,201,64,.18)!important;
+  color:#fff!important;
+}
+.stage1-modal{
+  position:fixed;
+  inset:0;
+  z-index:7200;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+  background:rgba(2,6,8,.82);
+  backdrop-filter:blur(8px);
+}
+.stage1-modal.show{display:flex;}
+.stage1-panel{
+  width:min(760px,calc(100vw - 28px));
+  max-height:calc(100dvh - 28px);
+  overflow:auto;
+  border:1px solid rgba(255,201,64,.42);
+  border-radius:14px;
+  background:
+    radial-gradient(circle at 18% 0%,rgba(0,255,135,.12),transparent 32%),
+    linear-gradient(180deg,rgba(13,18,25,.98),rgba(5,8,12,.98));
+  box-shadow:0 30px 90px rgba(0,0,0,.68),0 0 34px rgba(255,201,64,.10);
+  color:#dde4f0;
+}
+.stage1-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:14px;
+  padding:18px 20px 14px;
+  border-bottom:1px solid rgba(255,255,255,.08);
+}
+.stage1-kicker{
+  font-family:'Share Tech Mono',monospace;
+  font-size:11px;
+  color:#00ff87;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  margin-bottom:7px;
+}
+.stage1-title{
+  font-family:'Black Ops One',sans-serif;
+  font-size:24px;
+  line-height:1;
+  color:#fff;
+  letter-spacing:.8px;
+}
+.stage1-close{
+  width:34px;
+  height:34px;
+  border-radius:8px;
+  border:1px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,.04);
+  color:#dde4f0;
+  cursor:pointer;
+  font-size:22px;
+  line-height:1;
+}
+.stage1-body{
+  padding:18px 20px 20px;
+  display:grid;
+  gap:14px;
+}
+.stage1-highlight{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:8px;
+}
+.stage1-stat{
+  border:1px solid rgba(255,201,64,.22);
+  border-radius:10px;
+  background:rgba(255,201,64,.055);
+  padding:10px 9px;
+}
+.stage1-stat b{
+  display:block;
+  font-family:'Black Ops One',sans-serif;
+  color:#ffc940;
+  font-size:16px;
+  line-height:1;
+}
+.stage1-stat span{
+  display:block;
+  margin-top:5px;
+  font-family:'Share Tech Mono',monospace;
+  font-size:9px;
+  color:#9fb1c7;
+  text-transform:uppercase;
+}
+.stage1-copy,
+.stage1-section p,
+.stage1-list{
+  font-size:15px;
+  line-height:1.42;
+  color:#c8d4e4;
+}
+.stage1-section{
+  border:1px solid rgba(255,255,255,.07);
+  border-radius:10px;
+  background:rgba(255,255,255,.025);
+  padding:12px 13px;
+}
+.stage1-section h3{
+  font-family:'Black Ops One',sans-serif;
+  font-size:13px;
+  color:#00ff87;
+  letter-spacing:1px;
+  margin-bottom:8px;
+}
+.stage1-list{
+  display:grid;
+  gap:5px;
+  padding-left:0;
+  list-style:none;
+}
+.stage1-warning{
+  border-color:rgba(239,68,68,.34);
+  background:rgba(239,68,68,.07);
+}
+.stage1-warning h3{color:#ff8a8a;}
+.stage1-actions{
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:10px;
+  align-items:center;
+  padding:0 20px 20px;
+}
+.stage1-accept{
+  border:0;
+  border-radius:10px;
+  min-height:46px;
+  background:linear-gradient(135deg,#00ff87,#00c96a);
+  color:#06100b;
+  font-family:'Black Ops One',sans-serif;
+  font-size:13px;
+  letter-spacing:1.2px;
+  cursor:pointer;
+}
+.stage1-secondary{
+  border:1px solid rgba(255,201,64,.38);
+  border-radius:10px;
+  min-height:46px;
+  padding:0 14px;
+  background:rgba(255,201,64,.07);
+  color:#ffc940;
+  font-family:'Black Ops One',sans-serif;
+  font-size:11px;
+  letter-spacing:1px;
+  cursor:pointer;
+}
+@media(max-width:760px){
+  .hero-actions{
+    display:grid!important;
+    grid-template-columns:1fr!important;
+  }
+  .btn-stage-rules{
+    width:100%!important;
+    min-height:44px!important;
+    padding:12px 14px!important;
+  }
+  .stage1-modal{padding:8px;}
+  .stage1-panel{
+    width:calc(100vw - 16px);
+    max-height:calc(100dvh - 16px);
+    border-radius:12px;
+  }
+  .stage1-head{padding:14px 14px 11px;}
+  .stage1-title{font-size:19px;}
+  .stage1-body{padding:13px 14px 15px;gap:10px;}
+  .stage1-highlight{grid-template-columns:repeat(2,minmax(0,1fr));}
+  .stage1-copy,
+  .stage1-section p,
+  .stage1-list{font-size:13px;line-height:1.34;}
+  .stage1-actions{
+    grid-template-columns:1fr;
+    padding:0 14px 14px;
+  }
+}
+
 </style>
 
 </head>
@@ -6838,6 +7039,7 @@ body.game-mode .country-card .native-flag-img{
 
       <div class="hero-actions">
         <button class="btn-mint-hero" onclick="openWalletChoice()">CHOOSE WALLET</button>
+        <button class="btn-stage-rules" onclick="openStage1RulesModal('rules')">RULES</button>
       </div>
 
       <!-- PRICING SCHEDULE -->
@@ -6950,8 +7152,8 @@ body.game-mode .country-card .native-flag-img{
         SHARE ALBUM PROGRESS ON X
       </button>
       <div style="display:flex; gap:8px;">
-        <button class="btn-share" onclick="toggleRulesModal(true)" style="border-color:#ffc940; color:#ffc940;">
-          RULES & INFO
+        <button class="btn-share btn-stage-rules-inline" onclick="openStage1RulesModal('rules')" style="border-color:#ffc940; color:#ffc940;">
+          RULES
         </button>
         <button class="btn-share" onclick="loadData()" style="border-color:rgba(99,102,241,0.3); color:#818cf8;">
           REFRESH DATA
@@ -7027,6 +7229,122 @@ body.game-mode .country-card .native-flag-img{
       </div>
     </div>
 
+  </div>
+</div>
+
+<!-- STAGE 1 RULES POPUP -->
+<div id="stage1RulesModal" class="stage1-modal" role="dialog" aria-modal="true" aria-labelledby="stage1RulesTitle">
+  <div class="stage1-panel">
+    <div class="stage1-head">
+      <div>
+        <div class="stage1-kicker">Sponsored Stage 1</div>
+        <div class="stage1-title" id="stage1RulesTitle">World Cup Album Stage 1</div>
+      </div>
+      <button class="stage1-close" type="button" onclick="closeStage1RulesModal()" aria-label="Close Stage 1 rules">&times;</button>
+    </div>
+
+    <div class="stage1-body" id="stage1IntroContent">
+      <p class="stage1-copy">Build the strongest country squad and compete for a sponsored Stage 1 bonus.</p>
+      <div class="stage1-highlight">
+        <div class="stage1-stat"><b>4,500 CHZ</b><span>Sponsored Bonus</span></div>
+        <div class="stage1-stat"><b>3 &times; 1,500</b><span>Rewards</span></div>
+        <div class="stage1-stat"><b>34,785,400</b><span>Snapshot Block</span></div>
+        <div class="stage1-stat"><b>Jun 10</b><span>Around 18:00 CEST</span></div>
+      </div>
+      <div class="stage1-section">
+        <h3>Eligibility</h3>
+        <ul class="stage1-list">
+          <li>All 48 countries are eligible.</li>
+          <li>The 3 highest country scores at snapshot win.</li>
+          <li>Existing cards count.</li>
+          <li>Minted cards count.</li>
+          <li>Cards bought through the official marketplace count.</li>
+        </ul>
+      </div>
+      <div class="stage1-section stage1-warning">
+        <h3>Important</h3>
+        <ul class="stage1-list">
+          <li>Direct wallet-to-wallet transfers, gifts or off-market deals do not count and may lead to exclusion from the game.</li>
+          <li>Project / owner wallets are excluded from rewards.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="stage1-body" id="stage1FullRulesContent" style="display:none;">
+      <div class="stage1-section">
+        <h3>Overview</h3>
+        <p>World Cup Album Stage 1 is a sponsored achievement challenge inside Block Kickers. Players compete by building the strongest country squads in the World Cup Album.</p>
+        <ul class="stage1-list">
+          <li>Sponsored bonus: 4,500 CHZ</li>
+          <li>Rewards: 3 &times; 1,500 CHZ</li>
+          <li>Snapshot block: 34,785,400</li>
+          <li>Estimated snapshot time: June 10, 2026, around 18:00 CEST</li>
+          <li>The block number is the official reference for the final snapshot.</li>
+        </ul>
+      </div>
+      <div class="stage1-section">
+        <h3>Goal</h3>
+        <ul class="stage1-list">
+          <li>Build the highest possible country score in the World Cup Album.</li>
+          <li>All 48 countries are eligible.</li>
+          <li>Each country has 11 positions.</li>
+          <li>At the snapshot block, the 3 highest country scores in the World Cup Album win 1,500 CHZ each.</li>
+        </ul>
+      </div>
+      <div class="stage1-section">
+        <h3>What Counts</h3>
+        <ul class="stage1-list">
+          <li>Existing cards count.</li>
+          <li>Newly minted cards count.</li>
+          <li>Cards bought through the official Block Kickers marketplace count.</li>
+          <li>Only cards obtained by mint or official marketplace purchase are valid for album scoring.</li>
+        </ul>
+      </div>
+      <div class="stage1-section stage1-warning">
+        <h3>What Does Not Count</h3>
+        <ul class="stage1-list">
+          <li>Direct wallet-to-wallet transfers do not count.</li>
+          <li>Gifts do not count.</li>
+          <li>Private deals do not count.</li>
+          <li>Off-market transfers do not count.</li>
+          <li>Any attempt to use direct transfers, gifts, private deals or off-market transfers to bypass the official marketplace, manipulate scoring, avoid marketplace fees or gain an unfair advantage may result in exclusion from Stage 1 and future rewards.</li>
+        </ul>
+      </div>
+      <div class="stage1-section">
+        <h3>Rewards</h3>
+        <ul class="stage1-list">
+          <li>There are 3 Stage 1 rewards.</li>
+          <li>Each reward is 1,500 CHZ.</li>
+          <li>One wallet can win one Stage 1 reward.</li>
+          <li>If one wallet has multiple winning country scores, only the highest eligible result for that wallet will receive a reward. The next eligible country score will move into the reward position.</li>
+        </ul>
+      </div>
+      <div class="stage1-section">
+        <h3>Project / Owner Wallets</h3>
+        <ul class="stage1-list">
+          <li>Project, owner, treasury, test and affiliated wallets are excluded from Stage 1 rewards.</li>
+          <li>Cards listed from project / owner wallets may be sold as marketplace liquidity.</li>
+          <li>If an eligible player buys those cards through the official marketplace, they count normally for the buyer.</li>
+        </ul>
+      </div>
+      <div class="stage1-section">
+        <h3>Snapshot</h3>
+        <ul class="stage1-list">
+          <li>The final result will be based on the state of the World Cup Album at block 34,785,400 on Chiliz Chain.</li>
+          <li>Estimated snapshot time: June 10, 2026, around 18:00 CEST.</li>
+          <li>The block number is official. The estimated time is only informational.</li>
+        </ul>
+      </div>
+      <div class="stage1-section">
+        <h3>Important Note</h3>
+        <p>Stage 1 rewards are sponsored achievement bonuses for World Cup Album performance. No reward or profit is guaranteed.</p>
+      </div>
+    </div>
+
+    <div class="stage1-actions">
+      <button class="stage1-accept" type="button" onclick="acceptStage1Rules()">I ACCEPT THE STAGE 1 RULES</button>
+      <button class="stage1-secondary" type="button" onclick="openStage1RulesModal('rules')">FULL RULES</button>
+    </div>
   </div>
 </div>
 
@@ -8062,6 +8380,30 @@ function toggleRulesModal(show) {
   const modal = document.getElementById('rulesModal');
   modal.style.display = show ? 'flex' : 'none';
   if (show) setRulesLanguage('en');
+}
+
+function openStage1RulesModal(mode = 'intro') {
+  const modal = document.getElementById('stage1RulesModal');
+  const title = document.getElementById('stage1RulesTitle');
+  const intro = document.getElementById('stage1IntroContent');
+  const full = document.getElementById('stage1FullRulesContent');
+  const secondary = modal ? modal.querySelector('.stage1-secondary') : null;
+  if (!modal || !title || !intro || !full) return;
+  const isRules = mode === 'rules';
+  title.textContent = isRules ? 'World Cup Album Stage 1 Rules' : 'World Cup Album Stage 1';
+  intro.style.display = isRules ? 'none' : 'grid';
+  full.style.display = isRules ? 'grid' : 'none';
+  if (secondary) secondary.style.display = isRules ? 'none' : 'inline-flex';
+  modal.classList.add('show');
+}
+
+function closeStage1RulesModal() {
+  document.getElementById('stage1RulesModal')?.classList.remove('show');
+}
+
+function acceptStage1Rules() {
+  try { localStorage.setItem('bkStage1RulesAccepted', '1'); } catch(e) {}
+  closeStage1RulesModal();
 }
 
 // Updates Rules content based on selected translation key
@@ -9789,6 +10131,13 @@ setInterval(fetchCurrentBlock, 30000);
 
 // Auto-reconnect
 window.addEventListener('load', async () => {
+  try {
+    if (localStorage.getItem('bkStage1RulesAccepted') !== '1') {
+      setTimeout(() => openStage1RulesModal('intro'), 500);
+    }
+  } catch(e) {
+    setTimeout(() => openStage1RulesModal('intro'), 500);
+  }
   const walletProvider = getInjectedWalletProvider();
   if(walletProvider){
     try{
