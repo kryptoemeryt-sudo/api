@@ -1526,6 +1526,13 @@ body{background:linear-gradient(180deg,rgba(6,8,10,.88),rgba(5,7,10,.97)),repeat
 }
 .hero-cta .hero-cta-guide:hover{border-color:rgba(59,130,246,.5)!important;color:#fff!important;background:rgba(59,130,246,.1)!important;}
 .hero-cta-note{font-family:'Share Tech Mono',monospace!important;color:#6b7c90!important;font-size:10px!important;text-align:center!important;letter-spacing:.5px!important;}
+.hero-cta-note .price{
+  font-family:'Black Ops One',sans-serif!important;
+  color:#ffc940!important;
+  font-size:14px!important;
+  letter-spacing:1px!important;
+  text-shadow:0 0 14px rgba(255,201,64,.26)!important;
+}
 
 /* ═══════════════ STATS — full clean strip of 5 ═══════════════ */
 .stats{
@@ -1802,7 +1809,7 @@ body{background:linear-gradient(180deg,rgba(6,8,10,.88),rgba(5,7,10,.97)),repeat
 .topnav .wallet-info.balance{
   min-width:92px!important;
   font-family:'Black Ops One',sans-serif!important;
-  font-size:10px!important;
+  font-size:11px!important;
   color:#ffc940!important;
 }
 .topnav .btn-connect{
@@ -1812,6 +1819,13 @@ body{background:linear-gradient(180deg,rgba(6,8,10,.88),rgba(5,7,10,.97)),repeat
   border-radius:10px!important;
   font-size:10px!important;
   line-height:1!important;
+}
+.topnav .btn-connect.connected{
+  min-width:62px!important;
+  background:rgba(0,255,135,.18)!important;
+  border-color:rgba(0,255,135,.72)!important;
+  color:#00ff87!important;
+  box-shadow:0 0 16px rgba(0,255,135,.12)!important;
 }
 .hero,.stats,.main-grid{width:100%!important;margin:0!important;}
 .hero .panel{border-radius:12px!important;}
@@ -1878,10 +1892,11 @@ body{background:linear-gradient(180deg,rgba(6,8,10,.88),rgba(5,7,10,.97)),repeat
     min-height:100dvh!important;
   }
   .topnav{
-    height:50px!important;
-    min-height:50px!important;
+    height:76px!important;
+    min-height:76px!important;
     padding:5px 6px!important;
     grid-template-columns:34px minmax(0,1fr) minmax(44px,auto)!important;
+    grid-template-rows:40px 24px!important;
     gap:4px!important;
   }
   .topnav .logo{
@@ -1908,54 +1923,85 @@ body{background:linear-gradient(180deg,rgba(6,8,10,.88),rgba(5,7,10,.97)),repeat
   }
   .topnav .logo > *{display:none!important;}
   .portal-tabs{
+    grid-column:2!important;
+    grid-row:1!important;
     width:100%!important;
     grid-template-columns:repeat(3,minmax(0,1fr))!important;
     gap:3px!important;
     justify-self:stretch!important;
   }
   .portal-tab{
-    height:39px!important;
+    height:36px!important;
     padding:4px 2px!important;
     border-radius:7px!important;
     gap:2px!important;
   }
-  .portal-tab span{font-size:7px!important;letter-spacing:.2px!important;}
-  .portal-tab b{font-size:6.7px!important;letter-spacing:.2px!important;}
-  .topnav .nav-countdown{display:none!important;}
+  .portal-tab span{font-size:6.8px!important;letter-spacing:.15px!important;}
+  .portal-tab b{font-size:6.5px!important;letter-spacing:.15px!important;}
+  .topnav .nav-countdown{
+    grid-column:1 / -1!important;
+    grid-row:2!important;
+    display:flex!important;
+    width:100%!important;
+    height:22px!important;
+    min-width:0!important;
+    padding:3px 8px!important;
+    border-radius:7px!important;
+    font-size:9px!important;
+    letter-spacing:.7px!important;
+    justify-self:stretch!important;
+  }
+  .topnav .nav-countdown span{
+    font-size:8px!important;
+    letter-spacing:.45px!important;
+  }
   .topnav .nav-right{
-    gap:0!important;
+    grid-column:3!important;
+    grid-row:1!important;
+    gap:3px!important;
     justify-self:end!important;
-    min-width:44px!important;
+    min-width:0!important;
   }
   .topnav .wallet-info{display:none!important;}
-  .topnav .wallet-info.addr{
-    order:3!important;
+  .topnav .wallet-info.addr{display:none!important;}
+  .topnav .wallet-info.balance{
+    order:1!important;
     display:inline-flex!important;
-    width:44px!important;
-    min-width:44px!important;
-    max-width:44px!important;
-    height:38px!important;
-    padding:0 4px!important;
+    width:48px!important;
+    min-width:48px!important;
+    max-width:48px!important;
+    height:36px!important;
+    padding:0 3px!important;
     border-radius:8px!important;
-    font-family:'Share Tech Mono',monospace!important;
-    font-size:8px!important;
-    color:#00ff87!important;
-    border:1px solid rgba(0,255,135,.34)!important;
-    background:rgba(0,255,135,.08)!important;
+    font-family:'Black Ops One',sans-serif!important;
+    font-size:7.2px!important;
+    color:#ffc940!important;
+    border:1px solid rgba(255,201,64,.30)!important;
+    background:rgba(255,201,64,.06)!important;
     overflow:hidden!important;
-    text-overflow:clip!important;
+    text-overflow:ellipsis!important;
   }
-  .topnav .wallet-info.addr[style*="none"]{display:none!important;}
+  .topnav .wallet-info.balance[style*="none"]{display:none!important;}
   .topnav .btn-connect{
-    height:38px!important;
-    min-height:38px!important;
+    order:2!important;
+    height:36px!important;
+    min-height:36px!important;
     padding:0 6px!important;
     border-radius:8px!important;
     font-size:7.5px!important;
     letter-spacing:.25px!important;
   }
   .topnav .btn-connect.connected{
-    display:none!important;
+    display:inline-flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    min-width:40px!important;
+    max-width:40px!important;
+    padding:0 4px!important;
+    font-size:8px!important;
+    color:#06110b!important;
+    background:linear-gradient(135deg,#00ff87,#00c96a)!important;
+    border-color:rgba(0,255,135,.76)!important;
   }
   .hero .panel{
     min-height:0!important;
@@ -2018,7 +2064,7 @@ body{background:linear-gradient(180deg,rgba(6,8,10,.88),rgba(5,7,10,.97)),repeat
       <div class="hero-cta">
         <button class="btn hero-cta-mint" type="button" onclick="directMint()">&#9917; MINT RANDOM CARD</button>
         <button class="btn hero-cta-guide" type="button" onclick="toggleNationGuide(true,false)">&#8505; HOW IT WORKS</button>
-        <div class="hero-cta-note">10 CHZ &middot; random WC card &middot; Chiliz Chain</div>
+        <div class="hero-cta-note"><span class="price">10 CHZ</span> &middot; random WC card &middot; Chiliz Chain</div>
       </div>
     </div>
   </section>
@@ -2275,6 +2321,16 @@ function parseDNA(dna) {
   return {teamId, position, rarity, weight, hasGoldenBoots, hasTattoo, hasEarring, hasBand, hasGloves, skinTone, hairStyle};
 }
 function shortAddr(addr){return addr ? `${addr.slice(0,6)}...${addr.slice(-4)}` : "0x...";}
+function shortTail(addr){return addr ? addr.slice(-4) : "";}
+function formatTopbarBalance(rawBalance) {
+  const value = Number(ethers.formatEther(rawBalance || 0n));
+  if (!Number.isFinite(value) || value <= 0) return "0 CHZ";
+  if (value >= 1000) {
+    const k = value / 1000;
+    return `${(k >= 10 ? k.toFixed(0) : k.toFixed(2)).replace(/\.?0+$/, "")}K`;
+  }
+  return `${(value >= 100 ? value.toFixed(0) : value.toFixed(2)).replace(/\.?0+$/, "")} CHZ`;
+}
 function rarityName(r){return ["Common","Rare","Epic","Legendary"][r] || "Common";}
 function rarityShort(r){return ["COM","RAR","EPI","LEG"][Number(r)] || "COM";}
 function posLabel(id){return POSITIONS.find(p => p.id === Number(id))?.label || String(id);}
@@ -3172,13 +3228,13 @@ async function finalizeWalletConnection(walletProvider, label) {
   const addrEl = document.getElementById("walletAddress");
   const balEl = document.getElementById("walletBalance");
   const connectBtn = document.getElementById("connectBtn");
-  if (addrEl) { addrEl.textContent = `...${address.slice(-4)}`; addrEl.style.display = "inline-flex"; }
+  if (addrEl) { addrEl.textContent = `...${shortTail(address)}`; addrEl.style.display = "none"; }
   if (balEl) {
     const bal = await browserProvider.getBalance(address).catch(() => 0n);
-    balEl.textContent = `${Number(ethers.formatEther(bal)).toFixed(3)} CHZ`;
+    balEl.textContent = formatTopbarBalance(bal);
     balEl.style.display = "inline-flex";
   }
-  if (connectBtn) { connectBtn.textContent = "WALLET"; connectBtn.classList.add("connected"); }
+  if (connectBtn) { connectBtn.textContent = shortTail(address); connectBtn.classList.add("connected"); }
   await loadQuest(true, true);
   maybeShowNationGuide();
 }
