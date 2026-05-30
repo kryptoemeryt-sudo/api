@@ -1797,6 +1797,7 @@ body{background:linear-gradient(180deg,rgba(6,8,10,.88),rgba(5,7,10,.97)),repeat
   color:#7a8899!important;
   overflow:hidden!important;
   text-overflow:ellipsis!important;
+  display:none!important;
 }
 .topnav .wallet-info.balance{
   min-width:92px!important;
@@ -1880,8 +1881,8 @@ body{background:linear-gradient(180deg,rgba(6,8,10,.88),rgba(5,7,10,.97)),repeat
     height:50px!important;
     min-height:50px!important;
     padding:5px 6px!important;
-    grid-template-columns:34px minmax(0,1fr) auto!important;
-    gap:5px!important;
+    grid-template-columns:34px minmax(0,1fr) minmax(44px,auto)!important;
+    gap:4px!important;
   }
   .topnav .logo{
     min-width:34px!important;
@@ -1899,39 +1900,62 @@ body{background:linear-gradient(180deg,rgba(6,8,10,.88),rgba(5,7,10,.97)),repeat
     width:32px!important;
     height:32px!important;
     border-radius:9px!important;
-    background:#eef6ff!important;
+    background:linear-gradient(135deg,#00ff87,#d7ffe9)!important;
     color:#06110b!important;
     font-size:19px!important;
-    box-shadow:0 0 16px rgba(0,255,135,.24)!important;
+    border:1px solid rgba(255,255,255,.26)!important;
+    box-shadow:0 0 18px rgba(0,255,135,.26)!important;
   }
   .topnav .logo > *{display:none!important;}
   .portal-tabs{
     width:100%!important;
     grid-template-columns:repeat(3,minmax(0,1fr))!important;
-    gap:4px!important;
+    gap:3px!important;
     justify-self:stretch!important;
   }
   .portal-tab{
-    height:38px!important;
-    padding:4px 3px!important;
-    border-radius:8px!important;
+    height:39px!important;
+    padding:4px 2px!important;
+    border-radius:7px!important;
     gap:2px!important;
   }
-  .portal-tab span{font-size:7.5px!important;letter-spacing:.35px!important;}
-  .portal-tab b{font-size:7px!important;letter-spacing:.35px!important;}
+  .portal-tab span{font-size:7px!important;letter-spacing:.2px!important;}
+  .portal-tab b{font-size:6.7px!important;letter-spacing:.2px!important;}
   .topnav .nav-countdown{display:none!important;}
   .topnav .nav-right{
     gap:0!important;
     justify-self:end!important;
+    min-width:44px!important;
   }
   .topnav .wallet-info{display:none!important;}
+  .topnav .wallet-info.addr{
+    order:3!important;
+    display:inline-flex!important;
+    width:44px!important;
+    min-width:44px!important;
+    max-width:44px!important;
+    height:38px!important;
+    padding:0 4px!important;
+    border-radius:8px!important;
+    font-family:'Share Tech Mono',monospace!important;
+    font-size:8px!important;
+    color:#00ff87!important;
+    border:1px solid rgba(0,255,135,.34)!important;
+    background:rgba(0,255,135,.08)!important;
+    overflow:hidden!important;
+    text-overflow:clip!important;
+  }
+  .topnav .wallet-info.addr[style*="none"]{display:none!important;}
   .topnav .btn-connect{
     height:38px!important;
     min-height:38px!important;
-    padding:0 8px!important;
+    padding:0 6px!important;
     border-radius:8px!important;
-    font-size:8px!important;
-    letter-spacing:.5px!important;
+    font-size:7.5px!important;
+    letter-spacing:.25px!important;
+  }
+  .topnav .btn-connect.connected{
+    display:none!important;
   }
   .hero .panel{
     min-height:0!important;
@@ -1973,7 +1997,7 @@ body{background:linear-gradient(180deg,rgba(6,8,10,.88),rgba(5,7,10,.97)),repeat
     <a class="logo" href="/">&#9917; BLOCK <span>KICKERS</span></a>
     <nav class="portal-tabs" aria-label="Block Kickers quests">
       <a class="portal-tab active" href="https://block-kickers.vercel.app/nation-quest"><span>USA QUEST</span><b>1,500 CHZ</b></a>
-      <a class="portal-tab" href="https://block-kickers.vercel.app/dream-xi"><span>WORLD CUP ALBUM</span><b>STAGE 1</b></a>
+      <a class="portal-tab" href="https://block-kickers.vercel.app/dream-xi"><span>ARGENTINA XI</span><b>10,000 CHZ</b></a>
       <a class="portal-tab quest-host" href="https://block-kickers.vercel.app/host-nations-podium"><span>HOST QUEST</span><b>1,500 CHZ</b></a>
     </nav>
     <div class="nav-countdown" id="navPriceCountdown"><span>50 CHZ IN</span>--:--:--:--</div>
@@ -3148,13 +3172,13 @@ async function finalizeWalletConnection(walletProvider, label) {
   const addrEl = document.getElementById("walletAddress");
   const balEl = document.getElementById("walletBalance");
   const connectBtn = document.getElementById("connectBtn");
-  if (addrEl) { addrEl.textContent = shortAddr(address); addrEl.style.display = "inline-flex"; }
+  if (addrEl) { addrEl.textContent = `...${address.slice(-4)}`; addrEl.style.display = "inline-flex"; }
   if (balEl) {
     const bal = await browserProvider.getBalance(address).catch(() => 0n);
     balEl.textContent = `${Number(ethers.formatEther(bal)).toFixed(3)} CHZ`;
     balEl.style.display = "inline-flex";
   }
-  if (connectBtn) { connectBtn.textContent = shortAddr(address); connectBtn.classList.add("connected"); }
+  if (connectBtn) { connectBtn.textContent = "WALLET"; connectBtn.classList.add("connected"); }
   await loadQuest(true, true);
   maybeShowNationGuide();
 }
