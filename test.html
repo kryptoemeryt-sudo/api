@@ -7422,6 +7422,35 @@ body.game-mode .dash-deadline small,
 .rules-prize-btn{
   display:none!important;
 }
+.dash-timers{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:flex-end!important;
+  gap:10px!important;
+  min-width:0!important;
+}
+.dash-price-deadline{
+  display:flex!important;
+  align-items:baseline!important;
+  justify-content:center!important;
+  gap:6px!important;
+  font-family:'Black Ops One',sans-serif!important;
+  line-height:1!important;
+  white-space:nowrap!important;
+}
+.dash-price-deadline span{
+  color:#fff!important;
+  font-family:'Black Ops One',sans-serif!important;
+  font-size:1em!important;
+  letter-spacing:inherit!important;
+}
+.dash-price-deadline b{
+  color:#ffc940!important;
+  font-family:'Black Ops One',sans-serif!important;
+  font-size:1em!important;
+  font-weight:400!important;
+  letter-spacing:inherit!important;
+}
 @media(min-width:901px){
   body.bk-v4.game-mode .dashboard-prize-strip,
   body.portal-v3.game-mode .dashboard-prize-strip,
@@ -7449,9 +7478,15 @@ body.game-mode .dash-deadline small,
   body.bk-v4.game-mode .dash-deadline,
   body.portal-v3.game-mode .dash-deadline,
   body.game-mode .dash-deadline{
+    text-align:right!important;
+  }
+  body.bk-v4.game-mode .dash-timers,
+  body.portal-v3.game-mode .dash-timers,
+  body.game-mode .dash-timers{
     grid-column:3!important;
     justify-self:end!important;
-    text-align:right!important;
+    font-size:15px!important;
+    letter-spacing:1px!important;
   }
   body.bk-v4.game-mode .pitch-title-row,
   body.portal-v3.game-mode .pitch-title-row,
@@ -7497,11 +7532,11 @@ body.game-mode .dash-deadline small,
     text-align:center!important;
   }
   body.bk-v4.game-mode .dash-prize-title,
-  body.bk-v4.game-mode .dash-deadline,
+  body.bk-v4.game-mode .dash-timers,
   body.portal-v3.game-mode .dash-prize-title,
-  body.portal-v3.game-mode .dash-deadline,
+  body.portal-v3.game-mode .dash-timers,
   body.game-mode .dash-prize-title,
-  body.game-mode .dash-deadline{
+  body.game-mode .dash-timers{
     grid-column:1 / -1!important;
   }
   body.bk-v4.game-mode .dash-prize-value,
@@ -7516,6 +7551,25 @@ body.game-mode .dash-deadline small,
     min-height:34px!important;
     padding:7px 12px!important;
     font-size:10px!important;
+  }
+  body.bk-v4.game-mode .dash-timers,
+  body.portal-v3.game-mode .dash-timers,
+  body.game-mode .dash-timers{
+    justify-self:center!important;
+    justify-content:center!important;
+    flex-wrap:nowrap!important;
+    gap:8px!important;
+    width:100%!important;
+    font-size:10px!important;
+    letter-spacing:.35px!important;
+  }
+  body.bk-v4.game-mode .dash-deadline,
+  body.bk-v4.game-mode .dash-price-deadline,
+  body.portal-v3.game-mode .dash-deadline,
+  body.portal-v3.game-mode .dash-price-deadline,
+  body.game-mode .dash-deadline,
+  body.game-mode .dash-price-deadline{
+    gap:4px!important;
   }
 }
 
@@ -7698,11 +7752,16 @@ body.game-mode .dash-deadline small,
     <div class="dash-prize-title">&#127942; WC ALBUM STAGE 1</div>
     <div class="dash-prize-value">3 x 1,500 CHZ</div>
     <button class="dash-rules-btn rules-prize-btn" type="button" onclick="openStage1RulesModal('rules')">RULES</button>
-    <div class="dash-deadline" aria-label="Quest countdown">
-      <span id="dashCdD">--</span><small>D</small>:
-      <span id="dashCdH">--</span><small>H</small>:
-      <span id="dashCdM">--</span><small>M</small>:
-      <span id="dashCdS">--</span><small>S</small>
+    <div class="dash-timers">
+      <div class="dash-deadline" aria-label="Quest countdown">
+        <span id="dashCdD">--</span><small>D</small>:
+        <span id="dashCdH">--</span><small>H</small>:
+        <span id="dashCdM">--</span><small>M</small>:
+        <span id="dashCdS">--</span><small>S</small>
+      </div>
+      <div class="dash-price-deadline" aria-label="Price countdown">
+        <span>50 CHZ IN</span><b id="price50Timer">--:--:--:--</b>
+      </div>
     </div>
   </div>
 
@@ -10627,6 +10686,7 @@ function shareOnX(){
 /* BLOCK TIMER & LOGIC */
 const DEADLINE_BLOCK = 34785400;
 const SNAPSHOT_DEADLINE_MS = new Date('2026-06-10T18:00:00+02:00').getTime();
+const PRICE_50_START_MS = new Date('2026-06-01T00:00:00+02:00').getTime();
 const BLOCK_TIME_MS = 3000;
 let currentBlock = 34158889; 
 let lastBlockTime = Date.now();
@@ -10663,10 +10723,15 @@ function updateCountdown(){
   const estimated = getEstimatedBlock();
   const blocksLeft = Math.max(0, DEADLINE_BLOCK - estimated);
   const secsLeft = Math.max(0, Math.floor((SNAPSHOT_DEADLINE_MS - Date.now()) / 1000));
+  const priceSecsLeft = Math.max(0, Math.floor((PRICE_50_START_MS - Date.now()) / 1000));
   const d = Math.floor(secsLeft / 86400);
   const h = Math.floor((secsLeft % 86400) / 3600);
   const m = Math.floor((secsLeft % 3600) / 60);
   const s = secsLeft % 60;
+  const pd = Math.floor(priceSecsLeft / 86400);
+  const ph = Math.floor((priceSecsLeft % 86400) / 3600);
+  const pm = Math.floor((priceSecsLeft % 3600) / 60);
+  const ps = priceSecsLeft % 60;
   
   document.getElementById('cdD').textContent = String(d).padStart(2,'0');
   document.getElementById('cdH').textContent = String(h).padStart(2,'0');
@@ -10681,6 +10746,10 @@ function updateCountdown(){
   if (navPriceCountdown) navPriceCountdown.innerHTML = `<span>SNAPSHOT</span><b>${blocksLeft.toLocaleString()} <small>BLOCKS</small></b>`;
   const dashDeadline = document.querySelector('.dash-deadline');
   if (dashDeadline) dashDeadline.innerHTML = `<span class="dash-block-count">${blocksLeft.toLocaleString()}</span><small>BLOCKS</small>`;
+  const price50Timer = document.getElementById('price50Timer');
+  if (price50Timer) price50Timer.textContent = priceSecsLeft === 0
+    ? 'NOW'
+    : `${String(pd).padStart(2,'0')}:${String(ph).padStart(2,'0')}:${String(pm).padStart(2,'0')}:${String(ps).padStart(2,'0')}`;
   const cdBlock = document.getElementById('cdBlock');
   if (cdBlock) {
     cdBlock.innerHTML = blocksLeft === 0
