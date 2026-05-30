@@ -8968,6 +8968,14 @@ let activeListingsByToken = {}; // tokenId -> { listingId, seller, price, priceW
 let activeListingsById = {}; // listingId -> { tokenId, seller, price, priceWei, teamId, position, weight, rarity, dna }
 let currentMintPrice = ethers.parseEther("10"); 
 let dynamicVaultBalance = 0;
+const EXCLUDED_LEADERBOARD_WALLETS = new Set([
+  "0xeda07814bbab6cdd8a086d174c8336c8e4ac86c3",
+  "0xa3e634c4dc11ad36afec59f81e6287df1f3cdfa0"
+]);
+
+function isExcludedLeaderboardWallet(wallet) {
+  return EXCLUDED_LEADERBOARD_WALLETS.has(String(wallet || "").toLowerCase());
+}
 
 function showToast(message, isError = false) {
   const toast = document.getElementById('toast');
@@ -9980,6 +9988,7 @@ function getCountryLeader(teamId) {
   let topComp = 0;
   
   Object.entries(window.dreamScores).forEach(([wallet, teamObj]) => {
+    if (isExcludedLeaderboardWallet(wallet)) return;
     const nationPositions = teamObj[teamId] || {};
     const score = Object.values(nationPositions).reduce((s,v) => s + v.weight, 0);
     const completed = Object.keys(nationPositions).length;
@@ -9996,7 +10005,7 @@ function getCountryLeader(teamId) {
 
 // Calculates global leaderboard aggregated data
 function getGlobalLeaderboardData() {
-  return Object.entries(window.dreamScores).map(([wallet, countryData]) => {
+  return Object.entries(window.dreamScores).filter(([wallet]) => !isExcludedLeaderboardWallet(wallet)).map(([wallet, countryData]) => {
     let totalScore = 0;
     let activeCountriesCount = 0;
     let cardsOwned = 0;
@@ -10390,7 +10399,7 @@ function renderLeaderboard(){
       const score = Object.values(data).reduce((s, v) => s + v.weight, 0);
       const completed = Object.keys(data).length;
       return { wallet, score, completed };
-    }).filter(c => c.score > 0).sort((a,b) => {
+    }).filter(c => !isExcludedLeaderboardWallet(c.wallet)).filter(c => c.score > 0).sort((a,b) => {
       if (b.score !== a.score) return b.score - a.score;
       return b.completed - a.completed;
     });
@@ -11005,5 +11014,4 @@ window.addEventListener('load', async () => {
 
 </body>
 </html>
-
 
