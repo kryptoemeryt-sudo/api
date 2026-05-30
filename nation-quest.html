@@ -1242,6 +1242,420 @@ button.stat.mint-stat,
     border-width:3px!important;
   }
 }
+/* Host Nations Podium visual skin - final layer */
+:root{--bk-bg:#05070a;--bk-panel:#111923;--bk-panel-deep:#080c11;--bk-line:#243141;--bk-text:#edf4ff;--bk-muted:#8ea1b5;--bk-gold:#ffc940;--bk-green:#00ff87;--bk-red:#ef4444;--bk-blue:#58a6ff}
+html,body{background:var(--bk-bg)!important;color:var(--bk-text)!important;font-family:'Barlow Condensed',Arial,sans-serif!important}
+body{background:linear-gradient(180deg,rgba(6,8,10,.88),rgba(5,7,10,.97)),repeating-linear-gradient(90deg,rgba(255,255,255,.035) 0 1px,transparent 1px 80px),radial-gradient(ellipse at 50% 0%,rgba(0,255,135,.16),transparent 42%)!important}
+.page{width:min(1560px,100%)!important;margin:0 auto!important;padding:12px!important;gap:10px!important;background:transparent!important}
+.topnav{position:sticky!important;top:0!important;left:auto!important;right:auto!important;height:58px!important;padding:9px 18px!important;background:rgba(5,7,10,.94)!important;border:1px solid transparent!important;border-bottom-color:var(--bk-line)!important;backdrop-filter:blur(12px)!important}
+.logo,.brand{font-size:17px!important;letter-spacing:1px!important;color:#fff!important;text-decoration:none!important}.logo span,.brand span,.brand b{color:var(--bk-green)!important}
+.nav-countdown{position:static!important;top:auto!important;left:auto!important;transform:none!important;font-family:'Share Tech Mono',monospace!important;color:var(--bk-muted)!important;border:0!important;background:transparent!important}.nav-countdown b,.nav-countdown strong{color:var(--bk-gold)!important}
+.btn,.btn-connect,.slot-action,.mint-result-primary{border:1px solid rgba(0,255,135,.45)!important;background:rgba(0,255,135,.11)!important;color:var(--bk-green)!important;border-radius:7px!important;box-shadow:none!important;min-height:36px!important}
+.btn:hover:not(:disabled),.btn-connect:hover:not(:disabled),.slot-action:hover:not(:disabled){filter:brightness(1.12)!important}.slot-action.buy{border-color:rgba(255,201,64,.46)!important;background:rgba(255,201,64,.12)!important;color:var(--bk-gold)!important}.slot-action.sell{border-color:rgba(239,68,68,.48)!important;background:rgba(239,68,68,.12)!important;color:var(--bk-red)!important}
+.panel,.callout,.stat,.market-card,.slot,.rank-row,.feed-row,.modal-panel,.wallet-option{background:linear-gradient(180deg,rgba(17,25,35,.92),rgba(8,12,17,.95))!important;border-color:var(--bk-line)!important;border-radius:8px!important}
+.panel{padding:13px!important;box-shadow:none!important}.panel.gold,.hero .panel{border-color:rgba(255,201,64,.38)!important;box-shadow:0 0 26px rgba(255,201,64,.08)!important;background:linear-gradient(180deg,rgba(17,25,35,.94),rgba(8,12,17,.95))!important}
+.hero{display:grid!important;grid-template-columns:minmax(0,1fr)!important;gap:10px!important;min-height:0!important}
+.hero .panel{display:grid!important;grid-template-columns:minmax(280px,.72fr) minmax(360px,1fr) minmax(220px,.45fr)!important;grid-template-areas:"kicker title copy"!important;align-items:center!important;gap:16px!important;min-height:148px!important}
+.quest-kicker{grid-area:kicker!important;align-self:center!important;border-color:rgba(0,255,135,.35)!important;background:rgba(0,255,135,.08)!important;color:var(--bk-green)!important;border-radius:5px!important;margin:0!important;font-family:'Share Tech Mono',monospace!important}
+.hero-title{grid-area:title!important;font-size:clamp(38px,5.2vw,76px)!important;line-height:.9!important;letter-spacing:1px!important;color:#fff!important;text-align:left!important;margin:0!important}.hero-title span,.usa-title-blue{color:var(--bk-green)!important;text-shadow:none!important}.title-prize{color:var(--bk-gold)!important}
+.hero-copy{grid-area:copy!important;margin:0!important;max-width:440px!important;color:#c8d5e6!important;font-size:20px!important;line-height:1.18!important}.hero-copy strong{color:#fff!important}
+.stats{width:100%!important;display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:8px!important}.stats .stat:nth-child(n){display:flex!important}
+.stat{min-height:74px!important;padding:11px!important}.stat-value{font-size:25px!important;line-height:1!important;color:var(--bk-green)!important}.stat-value.gold{color:var(--bk-gold)!important}.stat-value.blue{color:var(--bk-blue)!important}.stat-label{font-family:'Share Tech Mono',monospace!important;color:var(--bk-muted)!important;font-size:10px!important;letter-spacing:1px!important}
+.main-grid{display:grid!important;grid-template-columns:minmax(0,1fr) minmax(320px,370px)!important;gap:10px!important;align-items:start!important}.quest-left-column{display:grid!important;gap:10px!important;min-width:0!important}.quest-side-panel,.info-grid{display:grid!important;gap:10px!important;grid-column:2!important;grid-row:1 / span 2!important}.global-slots-panel{display:none!important}.my-squad-panel,.market-section{grid-column:1!important;grid-row:auto!important}
+.section-title{font-size:14px!important;letter-spacing:1px!important;color:#fff!important;margin-bottom:9px!important}.section-title .live{font-family:'Share Tech Mono',monospace!important;color:var(--bk-muted)!important;font-size:10px!important}
+.squad{grid-template-columns:repeat(11,minmax(72px,1fr))!important;gap:8px!important}.slot{min-height:150px!important;padding:7px!important;gap:4px!important;justify-content:stretch!important}.slot.done{border-color:rgba(0,255,135,.55)!important;background:linear-gradient(180deg,rgba(0,255,135,.14),rgba(8,12,17,.95))!important}.slot.rarity-3{border-color:rgba(255,201,64,.62)!important;box-shadow:0 0 18px rgba(255,201,64,.09)!important}
+.slot-fig-canvas,.market-fig-canvas,.card-fig-canvas{background:radial-gradient(circle at 50% 85%,rgba(0,255,135,.13),transparent 56%)!important;border:1px solid rgba(255,255,255,.08)!important;border-radius:6px!important}
+.slot-count{color:var(--bk-green)!important}.slot-count.legendary{color:var(--bk-gold)!important}.slot-status{color:var(--bk-muted)!important}
+.market-grid{grid-template-columns:repeat(auto-fill,minmax(138px,1fr))!important;gap:8px!important;max-height:382px!important;overflow:auto!important;padding-right:5px!important;scrollbar-width:thin;scrollbar-color:rgba(0,255,135,.45) rgba(255,255,255,.045)}
+.market-grid::-webkit-scrollbar,.feed::-webkit-scrollbar,.rank-list::-webkit-scrollbar{width:8px;height:8px}.market-grid::-webkit-scrollbar-track,.feed::-webkit-scrollbar-track,.rank-list::-webkit-scrollbar-track{background:rgba(255,255,255,.045);border-radius:8px}.market-grid::-webkit-scrollbar-thumb,.feed::-webkit-scrollbar-thumb,.rank-list::-webkit-scrollbar-thumb{background:rgba(0,255,135,.38);border-radius:8px;border:2px solid rgba(5,7,10,.92)}
+.market-card{min-height:198px!important;padding:8px!important;display:grid!important;grid-template-rows:82px auto auto!important;gap:6px!important}.market-price{color:var(--bk-gold)!important;font-size:16px!important}.market-sub,.winner-box,.feed-addr,.rank-wallet,.loading{color:#dbe6f4!important}
+.callout h3{color:var(--bk-green)!important}.callout.gold h3{color:var(--bk-gold)!important}
+/* Host skin fit fixes */
+.hero .panel{grid-template-columns:minmax(220px,.55fr) minmax(320px,.95fr) minmax(240px,.55fr)!important;min-height:168px!important;padding:18px!important;overflow:hidden!important}
+.hero-title{font-size:clamp(32px,3.45vw,52px)!important;line-height:1!important;align-self:center!important}
+.hero-title .title-line,.hero-title .title-prize{display:block!important;line-height:1!important}
+.hero-copy{font-size:19px!important;line-height:1.18!important}
+.my-squad-panel .squad{grid-template-columns:repeat(11,minmax(0,1fr))!important;gap:5px!important;overflow:visible!important}
+.my-squad-panel .slot{width:auto!important;min-width:0!important;max-width:none!important;min-height:124px!important;padding:5px 3px!important}
+.my-squad-panel .slot-fig-canvas{height:54px!important;flex:0 0 54px!important}
+.my-squad-panel .slot-fig-canvas svg{width:50px!important;height:50px!important}
+.my-squad-panel .slot-fig-flag{width:18px!important;height:12px!important}
+.my-squad-panel .slot-fig-canvas .slot-pos{font-size:7px!important;left:3px!important;bottom:3px!important;padding:2px 4px!important}
+.my-squad-panel .slot-count{font-size:13px!important}
+.my-squad-panel .slot-status{font-size:6px!important}
+.my-squad-panel .slot-action{min-height:25px!important;font-size:7px!important;padding:5px 2px!important}
+@media(max-width:1000px){html,body{width:100%!important;max-width:100%!important;overflow-x:hidden!important}.page{width:100%!important;max-width:100vw!important;padding:7px!important;overflow-x:hidden!important}.topnav{position:sticky!important;display:grid!important;grid-template-columns:minmax(92px,auto) minmax(112px,1fr) minmax(78px,auto)!important;gap:6px!important;height:48px!important;padding:7px 8px!important}.logo{font-size:10px!important;letter-spacing:.5px!important;white-space:nowrap!important}.nav-countdown{grid-column:2!important;grid-row:1!important;align-self:center!important;justify-self:center!important;font-size:9px!important;min-width:0!important}.nav-countdown span{display:none!important}.nav-right{grid-column:3!important;grid-row:1!important;display:flex!important;justify-content:flex-end!important;min-width:0!important}.nav-right .wallet-info{display:none!important}.btn-connect{min-height:31px!important;padding:6px 8px!important;font-size:8px!important}.hero .panel{display:block!important;min-height:0!important}.hero-title{font-size:34px!important}.hero-copy{font-size:16px!important;margin-top:8px!important}.stats{grid-template-columns:repeat(2,minmax(0,1fr))!important}.main-grid{grid-template-columns:1fr!important}.quest-side-panel,.info-grid,.my-squad-panel,.market-section{grid-column:auto!important;grid-row:auto!important}.info-grid{display:none!important}.my-squad-panel{overflow:hidden!important}.my-squad-panel .squad{grid-template-columns:repeat(11,54px)!important;gap:5px!important;overflow-x:auto!important;overflow-y:hidden!important;padding-bottom:4px!important;scrollbar-width:thin}.my-squad-panel .slot{width:54px!important;min-width:54px!important;max-width:54px!important;min-height:118px!important;padding:3px 2px!important}.my-squad-panel .slot-fig-canvas{height:42px!important;flex:0 0 42px!important}.my-squad-panel .slot-fig-canvas svg{width:38px!important;height:38px!important}.my-squad-panel .slot-fig-flag{width:14px!important;height:9px!important}.my-squad-panel .slot-fig-canvas .slot-pos{font-size:5px!important;left:2px!important;bottom:2px!important;padding:1px 3px!important}.my-squad-panel .slot-action{min-height:24px!important;font-size:6px!important;padding:4px 1px!important}.market-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;max-height:260px!important;gap:6px!important;overflow-x:hidden!important}.market-card{min-height:142px!important;grid-template-rows:auto!important}.market-fig-canvas{height:62px!important}.market-fig-canvas svg{width:56px!important;height:56px!important}}
+@media(min-width:1001px){
+  .my-squad-panel{overflow:visible!important}
+  .my-squad-panel .squad{
+    width:100%!important;
+    max-width:100%!important;
+    grid-template-columns:repeat(11,minmax(0,1fr))!important;
+    gap:clamp(3px,.35vw,5px)!important;
+    overflow:visible!important;
+  }
+  .my-squad-panel .slot{
+    box-sizing:border-box!important;
+    width:100%!important;
+    min-width:0!important;
+    max-width:none!important;
+  }
+}
+@media(min-width:1001px) and (max-width:1280px){
+  .main-grid{grid-template-columns:1fr!important}
+  .quest-left-column,
+  .quest-side-panel,
+  .info-grid,
+  .my-squad-panel,
+  .market-section{grid-column:1!important;grid-row:auto!important}
+}
+
+
+/* Poster-style USA voxel figures */
+.usa-poster-svg{display:block;filter:drop-shadow(0 8px 10px rgba(0,0,0,.42)) drop-shadow(0 0 10px rgba(0,255,135,.10));transform:translateY(1px)}
+.slot.done .usa-poster-svg,.market-card.mine .usa-poster-svg{filter:drop-shadow(0 8px 10px rgba(0,0,0,.42)) drop-shadow(0 0 12px rgba(0,255,135,.22))}
+.slot.open .usa-poster-svg{filter:drop-shadow(0 8px 10px rgba(0,0,0,.42)) drop-shadow(0 0 14px rgba(255,201,64,.34))}
+.slot-fig-canvas,.market-fig-canvas,.card-fig-canvas{background:radial-gradient(circle at 50% 80%,rgba(0,255,135,.16),transparent 56%),linear-gradient(180deg,rgba(12,18,26,.90),rgba(5,8,12,.92))!important;overflow:hidden!important}
+.market-card.slot .market-fig-canvas svg,.market-card.slot .card-fig-canvas svg{width:84px!important;height:84px!important}
+.my-squad-panel .slot .slot-fig-canvas svg,.my-squad-panel .slot .card-fig-canvas svg{width:84px!important;height:84px!important}
+@media(min-width:1001px){.my-squad-panel .slot .slot-fig-canvas{height:92px!important;flex:0 0 92px!important}.my-squad-panel .slot{min-height:174px!important}.market-card.slot .market-fig-canvas{height:92px!important;flex-basis:92px!important}}
+@media(max-width:1000px){.my-squad-panel .slot .slot-fig-canvas svg,.my-squad-panel .slot .card-fig-canvas svg{width:42px!important;height:42px!important}.market-card.slot .market-fig-canvas svg,.market-card.slot .card-fig-canvas svg{width:60px!important;height:60px!important}}
+
+/* Final top bar fit: desktop timer label matches digits, mobile avoids overlap */
+.topnav .nav-countdown{
+  font-family:'Black Ops One',sans-serif!important;
+  font-size:13px!important;
+  letter-spacing:2px!important;
+  color:#ffc940!important;
+  line-height:1!important;
+}
+.topnav .nav-countdown span{
+  display:inline!important;
+  font:inherit!important;
+  font-size:1em!important;
+  line-height:1!important;
+  letter-spacing:inherit!important;
+  margin-right:7px!important;
+  color:#dde4f0!important;
+}
+@media(max-width:900px){
+  .topnav{
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr) auto!important;
+    grid-template-areas:
+      "brand wallet"
+      "timer timer"!important;
+    align-items:center!important;
+    gap:5px 8px!important;
+    height:auto!important;
+    min-height:0!important;
+    padding:7px 8px!important;
+    overflow:visible!important;
+  }
+  .topnav .logo{
+    grid-area:brand!important;
+    min-width:0!important;
+    overflow:hidden!important;
+    text-overflow:ellipsis!important;
+    white-space:nowrap!important;
+    font-size:10px!important;
+    letter-spacing:.7px!important;
+  }
+  .topnav .nav-right{
+    grid-area:wallet!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:flex-end!important;
+    gap:5px!important;
+    min-width:0!important;
+    margin:0!important;
+  }
+  .topnav #walletAddress{
+    display:none!important;
+  }
+  .topnav #walletBalance{
+    display:inline-flex!important;
+    max-width:68px!important;
+    overflow:hidden!important;
+    text-overflow:ellipsis!important;
+    white-space:nowrap!important;
+    font-size:9px!important;
+    line-height:1!important;
+  }
+  .topnav #connectBtn{
+    min-height:30px!important;
+    padding:6px 8px!important;
+    font-size:8px!important;
+    line-height:1!important;
+    white-space:nowrap!important;
+  }
+  .topnav .nav-countdown{
+    grid-area:timer!important;
+    position:static!important;
+    transform:none!important;
+    justify-self:stretch!important;
+    width:100%!important;
+    max-width:100%!important;
+    text-align:center!important;
+    overflow:hidden!important;
+    text-overflow:ellipsis!important;
+    white-space:nowrap!important;
+    font-size:10px!important;
+    letter-spacing:1px!important;
+    padding:5px 8px!important;
+  }
+  .topnav .nav-countdown span{
+    font-size:1em!important;
+    margin-right:5px!important;
+    letter-spacing:inherit!important;
+  }
+}
+@media(max-width:430px){
+  .topnav #walletBalance{
+    display:none!important;
+  }
+  .topnav .nav-countdown{
+    font-size:9px!important;
+    letter-spacing:.6px!important;
+  }
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════
+   FINAL REDESIGN LAYER — clean hype-game layout
+   Highest priority (last in cascade). Keeps Black Ops One, refreshes layout.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* ---------- Page shell: more air, cleaner backdrop ---------- */
+.page{
+  max-width:1340px!important;
+  margin:0 auto!important;
+  padding:74px 20px 28px!important;
+  gap:14px!important;
+  background:
+    radial-gradient(circle at 12% -4%,rgba(37,99,235,.18),transparent 34%),
+    radial-gradient(circle at 88% 4%,rgba(239,68,68,.12),transparent 34%),
+    radial-gradient(ellipse 70% 50% at 50% 120%,rgba(0,255,135,.07),transparent 60%),
+    linear-gradient(180deg,#05070b,#070b12 42%,#06080a)!important;
+}
+
+/* ---------- Topnav: tighter, premium ---------- */
+.topnav{
+  height:56px!important;min-height:56px!important;padding:0 24px!important;
+  background:rgba(5,7,10,.92)!important;
+  border-bottom:1px solid rgba(255,255,255,.07)!important;
+  backdrop-filter:blur(16px)!important;
+}
+.brand{font-size:17px!important;letter-spacing:2.5px!important;}
+.nav-countdown{
+  font-family:'Share Tech Mono',monospace!important;
+  border:1px solid rgba(255,201,64,.30)!important;
+  background:rgba(255,201,64,.07)!important;
+  color:#ffc940!important;border-radius:7px!important;
+  padding:7px 12px!important;font-size:12px!important;letter-spacing:1px!important;
+  display:flex!important;align-items:center!important;gap:7px!important;
+}
+.nav-countdown span{color:#7a8899!important;font-size:10px!important;letter-spacing:1.5px!important;}
+
+/* ═══════════════ HERO — big poster band ═══════════════ */
+.hero{grid-template-columns:1fr!important;min-height:0!important;}
+.hero .panel{
+  display:grid!important;
+  grid-template-columns:minmax(0,1.25fr) auto!important;
+  grid-template-areas:"headline cta"!important;
+  align-items:center!important;
+  gap:26px!important;
+  padding:26px 30px!important;
+  min-height:150px!important;
+  border:1px solid rgba(37,99,235,.42)!important;
+  border-radius:16px!important;
+  background:
+    radial-gradient(circle at 0% 0%,rgba(37,99,235,.22),transparent 50%),
+    radial-gradient(circle at 100% 100%,rgba(239,68,68,.16),transparent 55%),
+    linear-gradient(115deg,rgba(11,26,60,.96),rgba(8,13,24,.97) 55%,rgba(60,12,20,.55))!important;
+  box-shadow:0 0 50px rgba(37,99,235,.12),inset 0 1px 0 rgba(255,255,255,.05)!important;
+  position:relative!important;overflow:hidden!important;
+}
+.hero .panel::before{
+  content:''!important;position:absolute!important;inset:0!important;
+  background:repeating-linear-gradient(90deg,rgba(255,255,255,.025) 0 1px,transparent 1px 92px)!important;
+  pointer-events:none!important;
+}
+.hero-headline-wrap{grid-area:headline!important;min-width:0!important;position:relative!important;z-index:1!important;}
+.quest-kicker{
+  margin:0 0 14px!important;display:inline-flex!important;
+  border-color:rgba(248,250,252,.28)!important;
+  background:linear-gradient(90deg,rgba(37,99,235,.30),rgba(239,68,68,.14))!important;
+  color:#fff!important;font-size:11px!important;letter-spacing:3px!important;padding:7px 13px!important;
+}
+.hero-title{
+  font-size:clamp(40px,4.6vw,68px)!important;line-height:.86!important;margin:0!important;
+  display:flex!important;flex-direction:column!important;gap:2px!important;
+}
+.hero-title .title-line{display:flex!important;align-items:baseline!important;gap:14px!important;flex-wrap:wrap!important;}
+.hero-title .usa-title-blue{color:#3b82f6!important;text-shadow:0 0 26px rgba(59,130,246,.4)!important;}
+.hero-title .title-prize{
+  color:#ffc940!important;font-size:.62em!important;
+  text-shadow:0 0 30px rgba(255,201,64,.32)!important;
+  letter-spacing:1px!important;
+}
+.hero-copy{
+  margin:16px 0 0!important;max-width:680px!important;
+  font-size:clamp(16px,1.5vw,20px)!important;line-height:1.4!important;
+  display:flex!important;flex-direction:column!important;gap:4px!important;color:#c5d2e6!important;
+}
+.hero-copy strong{color:#ffc940!important;}
+
+/* Hero CTA cluster (right side) */
+.hero-cta{
+  grid-area:cta!important;display:grid!important;gap:10px!important;
+  justify-items:stretch!important;align-content:center!important;
+  min-width:240px!important;position:relative!important;z-index:1!important;
+}
+.hero-cta .btn{
+  min-height:52px!important;font-size:14px!important;letter-spacing:1.5px!important;
+  border-radius:11px!important;width:100%!important;
+}
+.hero-cta .hero-cta-mint{
+  background:linear-gradient(135deg,#00ff87,#00c96a)!important;color:#04130b!important;
+  border-color:rgba(0,255,135,.6)!important;box-shadow:0 0 28px rgba(0,255,135,.22)!important;
+}
+.hero-cta .hero-cta-guide{
+  background:rgba(255,255,255,.045)!important;color:#dbe6f4!important;
+  border-color:rgba(255,255,255,.12)!important;box-shadow:none!important;min-height:42px!important;font-size:11px!important;
+}
+.hero-cta .hero-cta-guide:hover{border-color:rgba(59,130,246,.5)!important;color:#fff!important;background:rgba(59,130,246,.1)!important;}
+.hero-cta-note{font-family:'Share Tech Mono',monospace!important;color:#6b7c90!important;font-size:10px!important;text-align:center!important;letter-spacing:.5px!important;}
+
+/* ═══════════════ STATS — full clean strip of 5 ═══════════════ */
+.stats{
+  display:grid!important;
+  grid-template-columns:repeat(5,minmax(0,1fr))!important;
+  width:100%!important;gap:12px!important;align-self:auto!important;
+}
+.stats .stat{
+  display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;
+  min-height:84px!important;padding:16px 10px!important;border-radius:13px!important;
+  border:1px solid rgba(255,255,255,.08)!important;
+  background:linear-gradient(180deg,rgba(17,25,38,.9),rgba(8,12,18,.95))!important;
+  transition:transform .15s,border-color .15s!important;
+}
+.stats .stat:nth-child(n+3){display:flex!important;} /* show all again */
+.stats .stat:nth-child(1){border-color:rgba(0,255,135,.34)!important;}
+.stats .stat:nth-child(2){border-color:rgba(255,201,64,.34)!important;}
+.stats .stat:nth-child(3){border-color:rgba(59,130,246,.34)!important;}
+.stats .stat:nth-child(4){border-color:rgba(192,132,252,.3)!important;}
+.stats .stat:nth-child(5){border-color:rgba(239,68,68,.3)!important;}
+.stat-value{font-size:clamp(24px,2.6vw,34px)!important;line-height:1!important;}
+.stat-label{
+  color:#8ea1b5!important;font-family:'Share Tech Mono',monospace!important;
+  font-size:10px!important;letter-spacing:1.4px!important;margin-top:8px!important;text-transform:uppercase!important;
+}
+/* mint stat → make it pop as a button */
+.mint-stat{cursor:pointer!important;border-color:rgba(0,255,135,.5)!important;
+  background:linear-gradient(180deg,rgba(0,255,135,.14),rgba(8,12,18,.95))!important;}
+.mint-stat:hover{transform:translateY(-2px)!important;border-color:#00ff87!important;}
+.mint-stat .stat-value{color:#00ff87!important;}
+
+/* ═══════════════ MAIN GRID — squad left, side right ═══════════════ */
+.main-grid{
+  grid-template-columns:minmax(0,1fr) minmax(300px,360px)!important;
+  gap:14px!important;align-items:start!important;grid-auto-rows:auto!important;
+}
+.global-slots-panel{display:none!important;}
+.quest-left-column{display:grid!important;gap:14px!important;grid-column:1/2!important;grid-row:1!important;min-width:0!important;}
+.my-squad-panel{grid-column:auto!important;grid-row:auto!important;min-height:0!important;}
+.market-section{grid-column:auto!important;grid-row:auto!important;}
+.quest-side-panel{grid-column:2/3!important;grid-row:1!important;}
+
+/* Panels: unified card style */
+.panel{
+  border:1px solid rgba(255,255,255,.08)!important;border-radius:14px!important;padding:16px!important;
+  background:linear-gradient(180deg,rgba(13,20,33,.94),rgba(8,12,19,.97))!important;
+}
+.my-squad-panel,.market-section,.quest-side-panel .panel,.quest-side-panel .callout{
+  border-color:rgba(37,99,235,.26)!important;
+}
+.section-title{
+  font-size:12px!important;letter-spacing:2px!important;color:#fff!important;
+  margin-bottom:13px!important;padding-bottom:11px!important;
+  border-bottom:1px solid rgba(255,255,255,.07)!important;
+}
+.section-title .live{color:#00ff87!important;font-size:11px!important;}
+
+/* ═══════════════ SQUAD SLOTS — cleaner cards ═══════════════ */
+.squad{grid-template-columns:repeat(11,minmax(0,1fr))!important;gap:9px!important;}
+.slot{
+  min-height:158px!important;border-radius:11px!important;padding:8px!important;gap:5px!important;
+  border:1px solid rgba(255,255,255,.09)!important;
+  background:linear-gradient(180deg,rgba(16,22,33,.96),rgba(9,12,18,.96))!important;
+  transition:transform .15s,box-shadow .15s!important;
+}
+.slot.done{
+  border-color:rgba(37,99,235,.7)!important;
+  background:linear-gradient(180deg,rgba(37,99,235,.22),rgba(12,16,24,.96))!important;
+  box-shadow:0 0 20px rgba(37,99,235,.16),inset 0 0 18px rgba(37,99,235,.08)!important;
+}
+.slot.rarity-3{border-color:rgba(255,201,64,.8)!important;box-shadow:0 0 22px rgba(255,201,64,.16)!important;}
+.slot.open{
+  border-color:rgba(239,68,68,.62)!important;
+  background:linear-gradient(180deg,rgba(239,68,68,.16),rgba(12,16,24,.96))!important;
+}
+.slot:hover{transform:translateY(-2px)!important;}
+.slot-action{border-radius:8px!important;min-height:30px!important;font-size:9px!important;letter-spacing:.5px!important;}
+
+/* ═══════════════ MARKET — gallery cards ═══════════════ */
+.market-grid{
+  grid-template-columns:repeat(auto-fill,minmax(128px,1fr))!important;
+  gap:11px!important;max-height:420px!important;padding-right:6px!important;
+}
+.market-card.slot{min-height:196px!important;border-radius:12px!important;}
+
+/* ═══════════════ SIDE PANEL ═══════════════ */
+.quest-side-panel{display:grid!important;gap:14px!important;}
+.callout{border-radius:14px!important;padding:15px!important;}
+.callout h3{font-size:14px!important;letter-spacing:1px!important;margin-bottom:9px!important;}
+.callout.trading-tips{
+  border-color:rgba(255,201,64,.34)!important;
+  background:linear-gradient(180deg,rgba(255,201,64,.1),rgba(10,16,26,.96))!important;
+}
+.squadWinnerBox,.winner-box{font-size:13px!important;line-height:1.5!important;}
+#squadWinnerBox{
+  border:1px solid rgba(255,201,64,.3)!important;background:rgba(255,201,64,.06)!important;
+  border-radius:10px!important;padding:11px!important;margin-top:4px!important;
+}
+
+/* Rank + feed lists tighter */
+.rank-list,.feed{max-height:240px!important;}
+.feed-row{border-radius:9px!important;border-color:rgba(255,255,255,.07)!important;}
+
+/* ═══════════════ RESPONSIVE ═══════════════ */
+@media(max-width:1080px){
+  .main-grid{grid-template-columns:1fr!important;}
+  .quest-left-column{grid-column:auto!important;grid-row:auto!important;}
+  .quest-side-panel{grid-column:auto!important;grid-row:auto!important;}
+  .hero .panel{grid-template-columns:1fr!important;grid-template-areas:"headline" "cta"!important;gap:18px!important;}
+  .hero-cta{min-width:0!important;}
+  .stats{grid-template-columns:repeat(5,minmax(0,1fr))!important;}
+}
+@media(max-width:760px){
+  .page{padding:64px 10px 22px!important;gap:10px!important;}
+  .hero .panel{padding:18px!important;border-radius:13px!important;}
+  .hero-title{font-size:38px!important;}
+  .hero-title .title-line{gap:9px!important;}
+  .hero-copy{font-size:15px!important;}
+  .hero-cta .btn{min-height:46px!important;}
+  .stats{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:7px!important;}
+  .stats .stat{min-height:64px!important;padding:11px 6px!important;border-radius:10px!important;}
+  .stats .stat:nth-child(n+5){display:none!important;}
+  .stat-value{font-size:19px!important;}.stat-label{font-size:8px!important;}
+  .squad{grid-template-columns:repeat(11,minmax(0,1fr))!important;gap:3px!important;}
+  .slot{min-height:74px!important;padding:3px 2px!important;border-radius:7px!important;}
+  .market-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;}
+  .quest-side-panel{display:none!important;}
+  .section-title{font-size:10px!important;margin-bottom:9px!important;padding-bottom:8px!important;}
+}
+
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
@@ -1259,9 +1673,16 @@ button.stat.mint-stat,
 
   <section class="hero">
     <div class="panel">
-      <div class="quest-kicker"><span class="dot"></span> Open Nation Quest</div>
-      <h1 class="hero-title"><span class="title-line"><span class="usa-title-blue">USA</span> QUEST</span><span class="title-prize">1500 CHZ</span></h1>
-      <p class="hero-copy"><span>First wallet to complete <strong>11/11 USA positions wins 1500 CHZ</strong>.</span><span>Mint, buy, sell and upgrade directly on this quest page.</span></p>
+      <div class="hero-headline-wrap">
+        <div class="quest-kicker"><span class="dot"></span> Open Nation Quest</div>
+        <h1 class="hero-title"><span class="title-line"><span class="usa-title-blue">USA</span> QUEST</span><span class="title-prize">1500 CHZ</span></h1>
+        <p class="hero-copy"><span>First wallet to complete <strong>11/11 USA positions wins 1500 CHZ</strong>.</span><span>Mint, buy, sell and upgrade directly on this quest page.</span></p>
+      </div>
+      <div class="hero-cta">
+        <button class="btn hero-cta-mint" type="button" onclick="directMint()">&#9917; MINT RANDOM CARD</button>
+        <button class="btn hero-cta-guide" type="button" onclick="toggleNationGuide(true,false)">&#8505; HOW IT WORKS</button>
+        <div class="hero-cta-note">10 CHZ &middot; random WC card &middot; Chiliz Chain</div>
+      </div>
     </div>
   </section>
   <div class="status-line" id="questStatus" style="display:none">Loading live quest status...</div>
@@ -1499,13 +1920,14 @@ function parseDNA(dna) {
   const hasBand = Number((n >> 28n) % 100n) < 25;
   const hasGloves = Number((n >> 29n) % 100n) < 20;
   const skinTone = Number((n >> 32n) % 6n);
+  const hairStyle = Number((n >> 34n) % 8n);
   let weight = [10,18,36,82][rarity];
   if (hasGoldenBoots) weight += 8;
   if (hasTattoo) weight += 5;
   if (hasEarring) weight += 3;
   if (hasBand) weight += 2;
   if (hasGloves && position === 1) weight += 2;
-  return {teamId, position, rarity, weight, hasGoldenBoots, hasTattoo, hasEarring, hasBand, hasGloves, skinTone};
+  return {teamId, position, rarity, weight, hasGoldenBoots, hasTattoo, hasEarring, hasBand, hasGloves, skinTone, hairStyle};
 }
 function shortAddr(addr){return addr ? `${addr.slice(0,6)}...${addr.slice(-4)}` : "0x...";}
 function rarityName(r){return ["Common","Rare","Epic","Legendary"][r] || "Common";}
@@ -1577,68 +1999,142 @@ function formatChzPrice(value) {
 }
 function makeQuestFigureSVG(dna, size = 72, faded = false) {
   const t = parseDNA(dna || 0n);
+  const safeDna = (() => { try { return typeof dna === "bigint" ? dna : BigInt(String(dna || 0)); } catch(e) { return 0n; } })();
+
   const skinColors = ['#FDBCB4','#F1C27D','#E0AC69','#C68642','#8D5524','#4A2912'];
+  const hairColors = ['#2b1d14','#5a3825','#111827','#caa26a','#080808','#7c3f19'];
   const rarityGlow = ['#6b7280','#3b82f6','#a855f7','#f59e0b'];
-  const shirt = '#002868';
-  const skin = skinColors[Math.min(t.skinTone || 2, 5)];
-  const rar = rarityGlow[t.rarity] || '#6b7280';
-  const pos = t.position || 10;
-  const numC = '#fff';
-  const bootC = t.hasGoldenBoots ? '#FFD700' : '#111';
+
+  const skin = skinColors[Math.min(Number(t.skinTone || 2), 5)] || skinColors[2];
+  const hair = hairColors[Number((safeDna >> 20n) % BigInt(hairColors.length))] || hairColors[0];
+  const rar = rarityGlow[Number(t.rarity || 0)] || rarityGlow[0];
+  const pos = Number(t.position || 10);
+  const isGoalkeeper = pos === 1;
   const opacity = faded ? .34 : 1;
-  const s = size, cx = s / 2;
-  const headY = s * 0.12, headW = s * 0.30, headH = s * 0.28;
-  const bodyY = headY + headH * 0.85, bodyW = s * 0.40, bodyH = s * 0.28;
-  const legW = s * 0.10, legH = s * 0.22, legGap = s * 0.04;
-  const legY = bodyY + bodyH * 0.85;
-  const armW = s * 0.09, armH = s * 0.20, armY = bodyY + s * 0.02;
-  const bootH = s * 0.09, handR = s * 0.06;
+
+  // Poster-style USA kit: white shirt + navy shorts. GK uses green kit.
+  const shirt = isGoalkeeper ? '#16a34a' : '#ffffff';
+  const shirtShade = isGoalkeeper ? '#0f7a38' : '#dbeafe';
+  const shorts = isGoalkeeper ? '#15803d' : '#1e3a8a';
+  const shortsShade = isGoalkeeper ? '#0b5b2b' : '#10255f';
+  const numColor = isGoalkeeper ? '#ffffff' : '#1e3a8a';
+  const accentRed = '#dc2626';
+  const accentBlue = '#2563eb';
+  const bootC = t.hasGoldenBoots ? '#FFD700' : '#111111';
+
+  const s = size;
+  const cx = s / 2;
   const p = [];
-  p.push('<ellipse cx="'+cx+'" cy="'+(legY+legH+bootH+s*0.03)+'" rx="'+(bodyW*0.55)+'" ry="'+(s*0.04)+'" fill="'+rar+'" opacity="0.2"/>');
-  p.push('<rect x="'+(cx-legW-legGap)+'" y="'+legY+'" width="'+legW+'" height="'+legH+'" rx="3" fill="'+shirt+'"/>');
-  p.push('<rect x="'+(cx+legGap)+'" y="'+legY+'" width="'+legW+'" height="'+legH+'" rx="3" fill="'+shirt+'"/>');
-  const sockY = legY + legH * 0.65;
-  p.push('<rect x="'+(cx-legW-legGap)+'" y="'+sockY+'" width="'+legW+'" height="'+(legH*0.38)+'" rx="2" fill="white"/>');
-  p.push('<rect x="'+(cx+legGap)+'" y="'+sockY+'" width="'+legW+'" height="'+(legH*0.38)+'" rx="2" fill="white"/>');
-  const bootY = legY + legH;
-  p.push('<rect x="'+(cx-legW-legGap-2)+'" y="'+bootY+'" width="'+(legW+4)+'" height="'+bootH+'" rx="3" fill="'+bootC+'"/>');
-  p.push('<rect x="'+(cx+legGap-2)+'" y="'+bootY+'" width="'+(legW+4)+'" height="'+bootH+'" rx="3" fill="'+bootC+'"/>');
-  p.push('<rect x="'+(cx-bodyW/2)+'" y="'+(bodyY+bodyH*0.78)+'" width="'+bodyW+'" height="'+(s*0.09)+'" rx="3" fill="'+shirt+'cc"/>');
-  p.push('<rect x="'+(cx-bodyW/2)+'" y="'+bodyY+'" width="'+bodyW+'" height="'+(bodyH*0.85)+'" rx="5" fill="'+shirt+'"/>');
-  p.push('<text x="'+cx+'" y="'+(bodyY+bodyH*0.55)+'" text-anchor="middle" font-family="Arial Black" font-size="'+(s*0.13)+'" font-weight="900" fill="'+numC+'" opacity="0.9">'+pos+'</text>');
-  p.push('<rect x="'+(cx-bodyW/2-armW+2)+'" y="'+armY+'" width="'+armW+'" height="'+armH+'" rx="3" fill="'+shirt+'" transform="rotate(7,'+(cx-bodyW/2)+','+armY+')"/>');
-  p.push('<rect x="'+(cx+bodyW/2-2)+'" y="'+armY+'" width="'+armW+'" height="'+armH+'" rx="3" fill="'+shirt+'" transform="rotate(-7,'+(cx+bodyW/2)+','+armY+')"/>');
-  p.push('<circle cx="'+(cx-bodyW/2-s*0.04)+'" cy="'+(armY+armH)+'" r="'+handR+'" fill="'+skin+'"/>');
-  p.push('<circle cx="'+(cx+bodyW/2+s*0.04)+'" cy="'+(armY+armH)+'" r="'+handR+'" fill="'+skin+'"/>');
-  if (t.hasGloves) {
-    p.push('<circle cx="'+(cx-bodyW/2-s*0.04)+'" cy="'+(armY+armH)+'" r="'+(handR+2)+'" fill="none" stroke="#FFD700" stroke-width="2"/>');
-    p.push('<circle cx="'+(cx+bodyW/2+s*0.04)+'" cy="'+(armY+armH)+'" r="'+(handR+2)+'" fill="none" stroke="#FFD700" stroke-width="2"/>');
+
+  const headY = s * 0.095;
+  const headW = s * 0.30;
+  const headH = s * 0.265;
+  const bodyY = headY + headH * 0.88;
+  const bodyW = s * 0.42;
+  const bodyH = s * 0.31;
+  const legY = bodyY + bodyH * 0.86;
+  const legW = s * 0.105;
+  const legH = s * 0.205;
+  const legGap = s * 0.045;
+  const armW = s * 0.088;
+  const armH = s * 0.19;
+  const armY = bodyY + s * 0.014;
+  const bootH = s * 0.078;
+
+  // glow and small podium, like the promo poster
+  p.push(`<ellipse cx="${cx}" cy="${legY + legH + bootH + s*0.06}" rx="${bodyW*0.78}" ry="${s*0.052}" fill="${rar}" opacity="0.28"/>`);
+  p.push(`<ellipse cx="${cx}" cy="${legY + legH + bootH + s*0.036}" rx="${bodyW*0.63}" ry="${s*0.030}" fill="#050a0f" opacity="0.95"/>`);
+  p.push(`<ellipse cx="${cx}" cy="${legY + legH + bootH + s*0.030}" rx="${bodyW*0.53}" ry="${s*0.018}" fill="${rar}" opacity="0.32"/>`);
+
+  // Legs and shorts
+  p.push(`<rect x="${cx-legW-legGap}" y="${legY}" width="${legW}" height="${legH}" rx="${s*0.025}" fill="${shorts}"/>`);
+  p.push(`<rect x="${cx+legGap}" y="${legY}" width="${legW}" height="${legH}" rx="${s*0.025}" fill="${shorts}"/>`);
+  p.push(`<rect x="${cx-legW-legGap}" y="${legY}" width="${legW*0.34}" height="${legH}" rx="${s*0.015}" fill="${shortsShade}" opacity="0.55"/>`);
+  p.push(`<rect x="${cx+legGap}" y="${legY}" width="${legW*0.34}" height="${legH}" rx="${s*0.015}" fill="${shortsShade}" opacity="0.55"/>`);
+
+  // Socks, USA stripes and boots
+  const sockY = legY + legH * 0.58;
+  p.push(`<rect x="${cx-legW-legGap}" y="${sockY}" width="${legW}" height="${legH*0.43}" rx="${s*0.020}" fill="#ffffff"/>`);
+  p.push(`<rect x="${cx+legGap}" y="${sockY}" width="${legW}" height="${legH*0.43}" rx="${s*0.020}" fill="#ffffff"/>`);
+  if (!isGoalkeeper) {
+    p.push(`<rect x="${cx-legW-legGap}" y="${sockY + legH*0.08}" width="${legW}" height="${s*0.012}" fill="${accentRed}" opacity="0.9"/>`);
+    p.push(`<rect x="${cx+legGap}" y="${sockY + legH*0.08}" width="${legW}" height="${s*0.012}" fill="${accentRed}" opacity="0.9"/>`);
+    p.push(`<rect x="${cx-legW-legGap}" y="${sockY + legH*0.16}" width="${legW}" height="${s*0.012}" fill="${accentBlue}" opacity="0.9"/>`);
+    p.push(`<rect x="${cx+legGap}" y="${sockY + legH*0.16}" width="${legW}" height="${s*0.012}" fill="${accentBlue}" opacity="0.9"/>`);
   }
-  p.push('<rect x="'+(cx-s*0.04)+'" y="'+(bodyY-s*0.05)+'" width="'+(s*0.08)+'" height="'+(s*0.07)+'" rx="2" fill="'+skin+'"/>');
-  p.push('<rect x="'+(cx-headW/2)+'" y="'+headY+'" width="'+headW+'" height="'+headH+'" rx="6" fill="'+skin+'"/>');
-  p.push('<rect x="'+(cx-headW/2-s*0.03)+'" y="'+(headY+headH*0.25)+'" width="'+(s*0.04)+'" height="'+(s*0.08)+'" rx="2" fill="'+skin+'"/>');
-  p.push('<rect x="'+(cx+headW/2-s*0.01)+'" y="'+(headY+headH*0.25)+'" width="'+(s*0.04)+'" height="'+(s*0.08)+'" rx="2" fill="'+skin+'"/>');
-  if (t.hasEarring) p.push('<circle cx="'+(cx-headW/2-1)+'" cy="'+(headY+headH*0.38)+'" r="'+(s*0.025)+'" fill="#FFD700"/>');
-  const eyeY = headY + headH * 0.32, eyeW = s * 0.07, eyeH = s * 0.05;
-  p.push('<rect x="'+(cx-headW*0.36)+'" y="'+eyeY+'" width="'+eyeW+'" height="'+eyeH+'" rx="2" fill="white"/>');
-  p.push('<rect x="'+(cx+headW*0.08)+'" y="'+eyeY+'" width="'+eyeW+'" height="'+eyeH+'" rx="2" fill="white"/>');
-  p.push('<rect x="'+(cx-headW*0.33)+'" y="'+(eyeY+1)+'" width="'+(eyeW*0.6)+'" height="'+(eyeH*0.7)+'" rx="1" fill="#0a0a14"/>');
-  p.push('<rect x="'+(cx+headW*0.11)+'" y="'+(eyeY+1)+'" width="'+(eyeW*0.6)+'" height="'+(eyeH*0.7)+'" rx="1" fill="#0a0a14"/>');
-  p.push('<rect x="'+(cx-headW*0.38)+'" y="'+(eyeY-s*0.04)+'" width="'+(eyeW+2)+'" height="'+(s*0.025)+'" rx="1" fill="#1a0800" opacity="0.8"/>');
-  p.push('<rect x="'+(cx+headW*0.06)+'" y="'+(eyeY-s*0.04)+'" width="'+(eyeW+2)+'" height="'+(s*0.025)+'" rx="1" fill="#1a0800" opacity="0.8"/>');
-  p.push('<rect x="'+(cx-s*0.02)+'" y="'+(eyeY+eyeH+s*0.02)+'" width="'+(s*0.04)+'" height="'+(s*0.05)+'" rx="2" fill="'+skin+'" opacity="0.7"/>');
-  p.push('<rect x="'+(cx-s*0.07)+'" y="'+(headY+headH*0.72)+'" width="'+(s*0.14)+'" height="'+(s*0.03)+'" rx="2" fill="#8b1a00" opacity="0.8"/>');
-  if (t.hasBand) p.push('<rect x="'+(cx-headW/2-2)+'" y="'+(headY+headH*0.18)+'" width="'+(headW+4)+'" height="'+(s*0.06)+'" rx="3" fill="white" opacity="0.85"/>');
-  if (t.hasTattoo) {
-    p.push('<line x1="'+(cx-bodyW/2-armW/2)+'" y1="'+(armY+armH*0.3)+'" x2="'+(cx-bodyW/2-armW/2+s*0.04)+'" y2="'+(armY+armH*0.5)+'" stroke="#000" stroke-width="1.5" opacity="0.5"/>');
-    p.push('<line x1="'+(cx-bodyW/2-armW/2+s*0.04)+'" y1="'+(armY+armH*0.3)+'" x2="'+(cx-bodyW/2-armW/2)+'" y2="'+(armY+armH*0.5)+'" stroke="#000" stroke-width="1.5" opacity="0.5"/>');
+  p.push(`<rect x="${cx-legW-legGap-2}" y="${legY+legH}" width="${legW+4}" height="${bootH}" rx="${s*0.024}" fill="${bootC}"/>`);
+  p.push(`<rect x="${cx+legGap-2}" y="${legY+legH}" width="${legW+4}" height="${bootH}" rx="${s*0.024}" fill="${bootC}"/>`);
+
+  // Arms with blocky pose
+  p.push(`<rect x="${cx-bodyW/2-armW+2}" y="${armY}" width="${armW}" height="${armH}" rx="${s*0.024}" fill="${shirt}" transform="rotate(9 ${cx-bodyW/2} ${armY})"/>`);
+  p.push(`<rect x="${cx+bodyW/2-2}" y="${armY}" width="${armW}" height="${armH}" rx="${s*0.024}" fill="${shirt}" transform="rotate(-9 ${cx+bodyW/2} ${armY})"/>`);
+  p.push(`<rect x="${cx-bodyW/2-armW+2}" y="${armY}" width="${armW*0.34}" height="${armH}" rx="${s*0.015}" fill="${shirtShade}" opacity="0.62" transform="rotate(9 ${cx-bodyW/2} ${armY})"/>`);
+  p.push(`<rect x="${cx+bodyW/2-2}" y="${armY}" width="${armW*0.34}" height="${armH}" rx="${s*0.015}" fill="${shirtShade}" opacity="0.62" transform="rotate(-9 ${cx+bodyW/2} ${armY})"/>`);
+  const handSize = s * 0.07;
+  const handLx = cx-bodyW/2-armW+s*0.006;
+  const handRx = cx+bodyW/2+s*0.015;
+  const handY = armY + armH - s*0.018;
+  p.push(`<rect x="${handLx}" y="${handY}" width="${handSize}" height="${handSize}" rx="${s*0.021}" fill="${skin}"/>`);
+  p.push(`<rect x="${handRx}" y="${handY}" width="${handSize}" height="${handSize}" rx="${s*0.021}" fill="${skin}"/>`);
+  if (t.hasGloves || isGoalkeeper) {
+    p.push(`<rect x="${handLx-1}" y="${handY-1}" width="${handSize+2}" height="${handSize+2}" rx="${s*0.022}" fill="none" stroke="#FFD700" stroke-width="${Math.max(1, s*0.025)}" opacity="0.95"/>`);
+    p.push(`<rect x="${handRx-1}" y="${handY-1}" width="${handSize+2}" height="${handSize+2}" rx="${s*0.022}" fill="none" stroke="#FFD700" stroke-width="${Math.max(1, s*0.025)}" opacity="0.95"/>`);
   }
-  return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 '+s+' '+s+'" width="'+s+'" height="'+s+'" style="opacity:'+opacity+'">'+p.join('')+'</svg>';
+
+  // Neck and torso
+  p.push(`<rect x="${cx-s*0.040}" y="${bodyY-s*0.045}" width="${s*0.080}" height="${s*0.063}" rx="${s*0.018}" fill="${skin}"/>`);
+  p.push(`<rect x="${cx-bodyW/2}" y="${bodyY}" width="${bodyW}" height="${bodyH}" rx="${s*0.055}" fill="${shirt}"/>`);
+  p.push(`<rect x="${cx-bodyW/2}" y="${bodyY}" width="${bodyW*0.27}" height="${bodyH}" rx="${s*0.030}" fill="${shirtShade}" opacity="0.62"/>`);
+  p.push(`<rect x="${cx-bodyW/2}" y="${bodyY+bodyH*0.80}" width="${bodyW}" height="${s*0.046}" rx="${s*0.018}" fill="${shorts}" opacity="0.98"/>`);
+  if (!isGoalkeeper) {
+    p.push(`<rect x="${cx-bodyW/2}" y="${bodyY+bodyH*0.10}" width="${bodyW}" height="${s*0.020}" rx="${s*0.008}" fill="${accentRed}" opacity="0.94"/>`);
+    p.push(`<rect x="${cx-bodyW/2}" y="${bodyY+bodyH*0.18}" width="${bodyW}" height="${s*0.014}" rx="${s*0.007}" fill="${accentBlue}" opacity="0.86"/>`);
+  }
+
+  // Tiny USA badge
+  const badgeX = cx + bodyW*0.17;
+  const badgeY = bodyY + bodyH*0.20;
+  p.push(`<rect x="${badgeX}" y="${badgeY}" width="${s*0.055}" height="${s*0.070}" rx="${s*0.006}" fill="#1d4ed8"/>`);
+  p.push(`<rect x="${badgeX}" y="${badgeY}" width="${s*0.055}" height="${s*0.020}" rx="${s*0.004}" fill="#dc2626"/>`);
+  p.push(`<rect x="${badgeX+s*0.007}" y="${badgeY+s*0.030}" width="${s*0.041}" height="${s*0.008}" fill="#ffffff" opacity="0.9"/>`);
+  p.push(`<rect x="${badgeX+s*0.007}" y="${badgeY+s*0.046}" width="${s*0.041}" height="${s*0.008}" fill="#ffffff" opacity="0.9"/>`);
+
+  // Shirt number
+  p.push(`<text x="${cx}" y="${bodyY+bodyH*0.62}" text-anchor="middle" dominant-baseline="middle" font-family="Arial Black,Arial,sans-serif" font-size="${s*0.145}" font-weight="900" fill="${numColor}" stroke="${isGoalkeeper ? '#0b5b2b' : '#ffffff'}" stroke-width="${s*0.008}" paint-order="stroke">${pos}</text>`);
+
+  // Head, ears, hair
+  p.push(`<rect x="${cx-headW/2-s*0.020}" y="${headY+headH*0.28}" width="${s*0.040}" height="${s*0.080}" rx="${s*0.015}" fill="${skin}"/>`);
+  p.push(`<rect x="${cx+headW/2-s*0.020}" y="${headY+headH*0.28}" width="${s*0.040}" height="${s*0.080}" rx="${s*0.015}" fill="${skin}"/>`);
+  p.push(`<rect x="${cx-headW/2}" y="${headY}" width="${headW}" height="${headH}" rx="${s*0.065}" fill="${skin}"/>`);
+  p.push(`<rect x="${cx-headW/2-s*0.015}" y="${headY-s*0.012}" width="${headW+s*0.030}" height="${headH*0.34}" rx="${s*0.045}" fill="${hair}"/>`);
+  p.push(`<rect x="${cx-headW/2-s*0.010}" y="${headY+headH*0.02}" width="${headW*0.42}" height="${headH*0.40}" rx="${s*0.030}" fill="${hair}"/>`);
+
+  // Optional headband, earring and tattoo from DNA
+  if (t.hasBand) p.push(`<rect x="${cx-headW/2-1}" y="${headY+headH*0.19}" width="${headW+2}" height="${s*0.044}" rx="${s*0.018}" fill="#ffffff" opacity="0.96"/>`);
+  if (t.hasEarring) p.push(`<circle cx="${cx-headW/2-1}" cy="${headY+headH*0.45}" r="${s*0.020}" fill="#FFD700"/>`);
+  if (t.hasTattoo) p.push(`<path d="M${cx-bodyW/2-armW/2} ${armY+armH*0.35} l${s*0.040} ${s*0.040} m0 -${s*0.040} l-${s*0.040} ${s*0.040}" stroke="#111827" stroke-width="${Math.max(1, s*0.018)}" opacity="0.60"/>`);
+
+  // Face, poster-style square eyes
+  const eyeY = headY + headH * 0.40;
+  p.push(`<rect x="${cx-headW*0.34}" y="${eyeY}" width="${s*0.060}" height="${s*0.048}" rx="${s*0.010}" fill="#ffffff"/>`);
+  p.push(`<rect x="${cx+headW*0.09}" y="${eyeY}" width="${s*0.060}" height="${s*0.048}" rx="${s*0.010}" fill="#ffffff"/>`);
+  p.push(`<rect x="${cx-headW*0.31}" y="${eyeY+s*0.008}" width="${s*0.033}" height="${s*0.033}" rx="${s*0.006}" fill="#0f172a"/>`);
+  p.push(`<rect x="${cx+headW*0.12}" y="${eyeY+s*0.008}" width="${s*0.033}" height="${s*0.033}" rx="${s*0.006}" fill="#0f172a"/>`);
+  p.push(`<rect x="${cx-headW*0.38}" y="${eyeY-s*0.040}" width="${s*0.083}" height="${s*0.020}" rx="${s*0.007}" fill="${hair}" opacity="0.85"/>`);
+  p.push(`<rect x="${cx+headW*0.06}" y="${eyeY-s*0.040}" width="${s*0.083}" height="${s*0.020}" rx="${s*0.007}" fill="${hair}" opacity="0.85"/>`);
+  p.push(`<rect x="${cx-s*0.055}" y="${headY+headH*0.73}" width="${s*0.110}" height="${s*0.020}" rx="${s*0.010}" fill="#7c2d12" opacity="0.88"/>`);
+
+  // Rarity micro-stars for epic/legendary
+  if (Number(t.rarity) >= 2) {
+    p.push(`<path d="M${s*0.82} ${s*0.18} l${s*0.018} ${s*0.045} l${s*0.045} ${s*0.018} l-${s*0.045} ${s*0.018} l-${s*0.018} ${s*0.045} l-${s*0.018} -${s*0.045} l-${s*0.045} -${s*0.018} l${s*0.045} -${s*0.018}z" fill="${rar}" opacity="0.9"/>`);
+  }
+
+  return `<svg class="usa-poster-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${s} ${s}" width="${s}" height="${s}" style="opacity:${opacity}">${p.join('')}</svg>`;
 }
 const QUEST_CARD_LAYOUT = {
   flag: "https://flagcdn.com/w40/us.png",
   flagAlt: "USA",
-  figureSize: {slot: 72, market: 72}
+  figureSize: {slot: 92, market: 96}
 };
 function figureCanvas(card, faded = false, cls = "slot", posLabelText = "") {
   const dna = card?.dna || card?.tokenId || 0;
@@ -1926,7 +2422,10 @@ class Figure3D {
   build() {
     const t=this.t, r=t.rarity;
     const fig = new THREE.Group();
-    const teamCol = new THREE.Color(TEAM_COLORS[t.teamId % TEAM_COLORS.length]);
+    const isUsaFigure = Number(t.teamId) === USA_TEAM_ID;
+    const isGkFigure = Number(t.position) === 1;
+    const teamCol = isUsaFigure ? new THREE.Color(isGkFigure ? 0x16a34a : 0xffffff) : new THREE.Color(TEAM_COLORS[t.teamId % TEAM_COLORS.length]);
+    const usaShortsCol = isUsaFigure ? new THREE.Color(isGkFigure ? 0x15803d : 0x1e3a8a) : null;
     const skinCol = new THREE.Color(skinColor(t.skinTone));
     const kitMat  = this.m(teamCol, r);
     const skinMat = this.m(skinCol, 0);
@@ -1947,7 +2446,7 @@ class Figure3D {
     });
 
     // SHORTS - darker version of kit color
-    const shortsCol = new THREE.Color(teamCol).multiplyScalar(0.4);
+    const shortsCol = usaShortsCol || new THREE.Color(teamCol).multiplyScalar(0.4);
     const shortsMat = new THREE.MeshStandardMaterial({color:shortsCol,roughness:0.8});
 
     // SOCKS - white or team color
@@ -1979,12 +2478,22 @@ class Figure3D {
 
     // TORSO (slightly tapered - wider shoulders)
     fig.add(this.bx(0.62,0.65,0.34,kitMat,0,Y_TORSO,0));
+    if (isUsaFigure) {
+      const stripeRedMat = new THREE.MeshStandardMaterial({color:0xdc2626,roughness:0.55});
+      const stripeBlueMat = new THREE.MeshStandardMaterial({color:0x2563eb,roughness:0.55});
+      const crestMat = new THREE.MeshStandardMaterial({color:0x1d4ed8,roughness:0.45});
+      if (!isGkFigure) {
+        fig.add(this.bx(0.64,0.045,0.02,stripeRedMat,0,Y_TORSO+0.20,0.185));
+        fig.add(this.bx(0.64,0.035,0.02,stripeBlueMat,0,Y_TORSO+0.14,0.188));
+      }
+      fig.add(this.bx(0.10,0.12,0.022,crestMat,0.18,Y_TORSO+0.12,0.190));
+    }
 
     // Shirt number
     const nc=document.createElement('canvas');nc.width=64;nc.height=64;
     const cx=nc.getContext('2d');
     cx.clearRect(0,0,64,64);
-    cx.fillStyle='rgba(255,255,255,0.9)';
+    cx.fillStyle = (isUsaFigure && !isGkFigure) ? '#1e3a8a' : 'rgba(255,255,255,0.95)';
     cx.font='bold 36px Arial Black';cx.textAlign='center';cx.textBaseline='middle';
     cx.fillText(String(t.position),32,32);
     const np=new THREE.Mesh(
@@ -2136,55 +2645,7 @@ class Figure3D {
 }
 
 function bkUnifiedMintFigureSVG(dna, size = 92) {
-  const t = parseDNA(dna || 0n);
-  const teams = (typeof TEAMS !== 'undefined' && Array.isArray(TEAMS)) ? TEAMS : [];
-  const teamRaw = teams[t.teamId % Math.max(teams.length, 1)] || {};
-  const teamName = typeof teamRaw === 'string' ? teamRaw : (teamRaw.name || (Number(t.teamId) === 24 ? 'USA' : ''));
-  const SHIRT = {'Australia':'#FFD700','Iran':'#239F40','Iraq':'#CC0001','Japan':'#BC002D','Jordan':'#007A3D','Qatar':'#8D153A','Saudi Arabia':'#006C35','South Korea':'#CD2E3A','Uzbekistan':'#1EB53A','Algeria':'#006233','Cape Verde':'#003893','DR Congo':'#007FFF','Egypt':'#CE1126','Ghana':'#006B3F','Ivory Coast':'#F77F00','Morocco':'#C1272D','Senegal':'#00853F','South Africa':'#007749','Tunisia':'#E70013','Canada':'#FF0000','Curacao':'#002B7F','Haiti':'#00209F','Mexico':'#006847','Panama':'#DA121A','United States':'#002868','USA':'#002868','Argentina':'#74ACDF','Brazil':'#009C3B','Colombia':'#FCD116','Ecuador':'#FFD100','Paraguay':'#D52B1E','Uruguay':'#5EB6E4','New Zealand':'#00247D','Austria':'#ED2939','Belgium':'#111111','Bosnia':'#002395','Croatia':'#FF0000','Czech Rep.':'#D7141A','England':'#EEEEEE','France':'#002395','Germany':'#111111','Netherlands':'#FF6600','Norway':'#EF2B2D','Portugal':'#006600','Scotland':'#003087','Spain':'#AA151B','Sweden':'#006AA7','Switzerland':'#FF0000','Turkey':'#E30A17'};
-  const SKIN = ['#FDBCB4','#F1C27D','#E0AC69','#C68642','#8D5524','#4A2912'];
-  const RARC = ['#6b7280','#3b82f6','#a855f7','#f59e0b'];
-  const shirt = SHIRT[teamName] || '#1d4ed8';
-  const skin = SKIN[Math.min(Number(t.skinTone || 2), 5)] || SKIN[2];
-  const rar = RARC[Number(t.rarity || 0)] || RARC[0];
-  const pos = Number(t.position || 10);
-  const isLight = ['#FFD700','#FCD116','#FFD100','#EEEEEE'].includes(shirt);
-  const numC = isLight ? '#06100b' : '#fff';
-  const bootC = t.hasGoldenBoots ? '#FFD700' : '#111';
-  const hair = ['#3b1f12','#6b3a16','#f5d08a','#111827'][Number((BigInt(String(dna || 0)) >> 20n) % 4n)] || '#3b1f12';
-  const s = size, cx = s / 2;
-  const headY = s * .13, headW = s * .30, headH = s * .27;
-  const bodyY = headY + headH * .86, bodyW = s * .40, bodyH = s * .29;
-  const legW = s * .10, legH = s * .22, legGap = s * .04, legY = bodyY + bodyH * .83;
-  const armW = s * .09, armH = s * .20, armY = bodyY + s * .02, handR = s * .06;
-  const p = [];
-  p.push('<ellipse cx="'+cx+'" cy="'+(legY+legH+s*.12)+'" rx="'+(bodyW*.62)+'" ry="'+(s*.045)+'" fill="'+rar+'" opacity=".22"/>');
-  p.push('<rect x="'+(cx-legW-legGap)+'" y="'+legY+'" width="'+legW+'" height="'+legH+'" rx="3" fill="'+shirt+'"/>');
-  p.push('<rect x="'+(cx+legGap)+'" y="'+legY+'" width="'+legW+'" height="'+legH+'" rx="3" fill="'+shirt+'"/>');
-  p.push('<rect x="'+(cx-legW-legGap)+'" y="'+(legY+legH*.64)+'" width="'+legW+'" height="'+(legH*.38)+'" rx="2" fill="#fff"/>');
-  p.push('<rect x="'+(cx+legGap)+'" y="'+(legY+legH*.64)+'" width="'+legW+'" height="'+(legH*.38)+'" rx="2" fill="#fff"/>');
-  p.push('<rect x="'+(cx-legW-legGap-2)+'" y="'+(legY+legH)+'" width="'+(legW+4)+'" height="'+(s*.085)+'" rx="3" fill="'+bootC+'"/>');
-  p.push('<rect x="'+(cx+legGap-2)+'" y="'+(legY+legH)+'" width="'+(legW+4)+'" height="'+(s*.085)+'" rx="3" fill="'+bootC+'"/>');
-  p.push('<rect x="'+(cx-bodyW/2-armW+2)+'" y="'+armY+'" width="'+armW+'" height="'+armH+'" rx="3" fill="'+shirt+'" transform="rotate(7 '+(cx-bodyW/2)+' '+armY+')"/>');
-  p.push('<rect x="'+(cx+bodyW/2-2)+'" y="'+armY+'" width="'+armW+'" height="'+armH+'" rx="3" fill="'+shirt+'" transform="rotate(-7 '+(cx+bodyW/2)+' '+armY+')"/>');
-  p.push('<circle cx="'+(cx-bodyW/2-s*.04)+'" cy="'+(armY+armH)+'" r="'+handR+'" fill="'+skin+'"/>');
-  p.push('<circle cx="'+(cx+bodyW/2+s*.04)+'" cy="'+(armY+armH)+'" r="'+handR+'" fill="'+skin+'"/>');
-  if (t.hasGloves) { p.push('<circle cx="'+(cx-bodyW/2-s*.04)+'" cy="'+(armY+armH)+'" r="'+(handR+2)+'" fill="none" stroke="#FFD700" stroke-width="2"/>'); p.push('<circle cx="'+(cx+bodyW/2+s*.04)+'" cy="'+(armY+armH)+'" r="'+(handR+2)+'" fill="none" stroke="#FFD700" stroke-width="2"/>'); }
-  p.push('<rect x="'+(cx-bodyW/2)+'" y="'+bodyY+'" width="'+bodyW+'" height="'+bodyH+'" rx="6" fill="'+shirt+'"/>');
-  p.push('<text x="'+cx+'" y="'+(bodyY+bodyH*.58)+'" text-anchor="middle" font-family="Arial Black,Arial,sans-serif" font-size="'+(s*.14)+'" font-weight="900" fill="'+numC+'">'+pos+'</text>');
-  p.push('<rect x="'+(cx-s*.04)+'" y="'+(bodyY-s*.05)+'" width="'+(s*.08)+'" height="'+(s*.07)+'" rx="2" fill="'+skin+'"/>');
-  p.push('<rect x="'+(cx-headW/2-s*.02)+'" y="'+(headY-s*.015)+'" width="'+(headW+s*.04)+'" height="'+(headH*.32)+'" rx="6" fill="'+hair+'"/>');
-  p.push('<rect x="'+(cx-headW/2)+'" y="'+headY+'" width="'+headW+'" height="'+headH+'" rx="7" fill="'+skin+'"/>');
-  p.push('<rect x="'+(cx-headW/2-s*.03)+'" y="'+(headY+headH*.25)+'" width="'+(s*.04)+'" height="'+(s*.08)+'" rx="2" fill="'+skin+'"/>');
-  p.push('<rect x="'+(cx+headW/2-s*.01)+'" y="'+(headY+headH*.25)+'" width="'+(s*.04)+'" height="'+(s*.08)+'" rx="2" fill="'+skin+'"/>');
-  if (t.hasEarring) p.push('<circle cx="'+(cx-headW/2-1)+'" cy="'+(headY+headH*.40)+'" r="'+(s*.025)+'" fill="#FFD700"/>');
-  p.push('<rect x="'+(cx-headW*.36)+'" y="'+(headY+headH*.34)+'" width="'+(s*.07)+'" height="'+(s*.05)+'" rx="2" fill="#fff"/>');
-  p.push('<rect x="'+(cx+headW*.08)+'" y="'+(headY+headH*.34)+'" width="'+(s*.07)+'" height="'+(s*.05)+'" rx="2" fill="#fff"/>');
-  p.push('<rect x="'+(cx-headW*.33)+'" y="'+(headY+headH*.35)+'" width="'+(s*.045)+'" height="'+(s*.035)+'" rx="1" fill="#0a0a14"/>');
-  p.push('<rect x="'+(cx+headW*.11)+'" y="'+(headY+headH*.35)+'" width="'+(s*.045)+'" height="'+(s*.035)+'" rx="1" fill="#0a0a14"/>');
-  p.push('<rect x="'+(cx-s*.07)+'" y="'+(headY+headH*.72)+'" width="'+(s*.14)+'" height="'+(s*.03)+'" rx="2" fill="#7c2d12" opacity=".85"/>');
-  if (t.hasBand) p.push('<rect x="'+(cx-headW/2-2)+'" y="'+(headY+headH*.18)+'" width="'+(headW+4)+'" height="'+(s*.055)+'" rx="3" fill="#fff" opacity=".9"/>');
-  if (t.hasTattoo) p.push('<path d="M'+(cx-bodyW/2-armW/2)+' '+(armY+armH*.35)+' l'+(s*.04)+' '+(s*.04)+' m0 -'+(s*.04)+' l-'+(s*.04)+' '+(s*.04)+'" stroke="#111" stroke-width="1.5" opacity=".55"/>');
-  return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 '+s+' '+s+'" width="'+s+'" height="'+s+'">'+p.join('')+'</svg>';
+  return makeQuestFigureSVG(dna || 0n, size, false);
 }
 function bkMintFigureHtml(card){
   const dna = card?.dna || 0n;
@@ -2215,7 +2676,9 @@ function bkRenderMintFigure3D(visual, card){
     const shirtMap = {'Australia':0xFFD700,'Iran':0x239F40,'Iraq':0xCC0001,'Japan':0xBC002D,'Jordan':0x007A3D,'Qatar':0x8D153A,'Saudi Arabia':0x006C35,'South Korea':0xCD2E3A,'Uzbekistan':0x1EB53A,'Algeria':0x006233,'Cape Verde':0x003893,'DR Congo':0x007FFF,'Egypt':0xCE1126,'Ghana':0x006B3F,'Ivory Coast':0xF77F00,'Morocco':0xC1272D,'Senegal':0x00853F,'South Africa':0x007749,'Tunisia':0xE70013,'Canada':0xFF0000,'Curacao':0x002B7F,'Haiti':0x00209F,'Mexico':0x006847,'Panama':0xDA121A,'United States':0x002868,'USA':0x002868,'Argentina':0x74ACDF,'Brazil':0x009C3B,'Colombia':0xFCD116,'Ecuador':0xFFD100,'Paraguay':0xD52B1E,'Uruguay':0x5EB6E4,'New Zealand':0x00247D,'Austria':0xED2939,'Belgium':0x111111,'Bosnia':0x002395,'Croatia':0xFF0000,'Czech Rep.':0xD7141A,'England':0xEEEEEE,'France':0x002395,'Germany':0x111111,'Netherlands':0xFF6600,'Norway':0xEF2B2D,'Portugal':0x006600,'Scotland':0x003087,'Spain':0xAA151B,'Sweden':0x006AA7,'Switzerland':0xFF0000,'Turkey':0xE30A17};
     const skinMap = [0xFDBCB4,0xF1C27D,0xE0AC69,0xC68642,0x8D5524,0x4A2912];
     const rarityMap = [0x6b7280,0x3b82f6,0xa855f7,0xffc940];
-    const shirt = shirtMap[teamName] || 0x1d4ed8;
+    const isUsaMintFigure = teamName === "USA" || teamName === "United States" || Number(t.teamId) === USA_TEAM_ID;
+    const isGkMintFigure = Number(t.position) === 1;
+    const shirt = isUsaMintFigure ? (isGkMintFigure ? 0x16a34a : 0xffffff) : (shirtMap[teamName] || 0x1d4ed8);
     const skin = skinMap[Math.min(Number(t.skinTone || 2), 5)] || skinMap[2];
     const rarity = rarityMap[Number(t.rarity || 0)] || rarityMap[0];
     const hairColors = [0x3b1f12,0x6b3a16,0xf5d08a,0x111827];
