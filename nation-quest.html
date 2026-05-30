@@ -2220,6 +2220,14 @@ let latestState = {usaCards:[], usaEvents:[], cardWinner:null, squadWinner:null,
 let localListings = [];
 const REFRESH_COOLDOWN_MS = 15000;
 const REFRESH_KEY = "bkNationQuestLastRefresh";
+const EXCLUDED_LEADERBOARD_WALLETS = new Set([
+  "0xeda07814bbab6cdd8a086d174c8336c8e4ac86c3",
+  "0xa3e634c4dc11ad36afec59f81e6287df1f3cdfa0"
+]);
+
+function isExcludedLeaderboardWallet(wallet) {
+  return EXCLUDED_LEADERBOARD_WALLETS.has(String(wallet || "").toLowerCase());
+}
 
 function parseDNA(dna) {
   const n = typeof dna === "bigint" ? dna : BigInt(String(dna));
@@ -3544,6 +3552,7 @@ async function buildState() {
   const walletPositions = new Map();
   let squadWinner = null;
   events.forEach(e => {
+    if (isExcludedLeaderboardWallet(e.wallet)) return;
     if (!walletPositions.has(e.wallet)) walletPositions.set(e.wallet, new Set());
     const set = walletPositions.get(e.wallet);
     set.add(e.position);
@@ -3735,6 +3744,7 @@ function renderRank(state) {
   if (!list) return;
   const rows = [...(state.walletPositions || new Map()).entries()]
     .map(([wallet, set]) => ({wallet, count: set.size}))
+    .filter(row => !isExcludedLeaderboardWallet(row.wallet))
     .filter(row => row.count > 0)
     .sort((a,b) => b.count - a.count || a.wallet.localeCompare(b.wallet));
   if (count) count.textContent = `${rows.length} PLAYERS`;
