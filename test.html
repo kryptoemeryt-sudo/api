@@ -7396,6 +7396,99 @@ body.game-mode .dash-deadline small,
   }
 }
 
+/* Request polish: logged-in rules CTA beside mint on PC, beside prize on mobile. */
+.dash-rules-btn{
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  min-height:34px!important;
+  padding:8px 12px!important;
+  border-radius:8px!important;
+  border:1px solid rgba(255,201,64,.58)!important;
+  background:linear-gradient(135deg,rgba(255,201,64,.16),rgba(15,19,24,.94))!important;
+  color:#ffc940!important;
+  font-family:'Black Ops One',sans-serif!important;
+  font-size:10px!important;
+  line-height:1!important;
+  letter-spacing:1.1px!important;
+  white-space:nowrap!important;
+  cursor:pointer!important;
+  box-shadow:0 0 16px rgba(255,201,64,.10)!important;
+}
+.dash-rules-btn:hover{
+  border-color:rgba(255,201,64,.82)!important;
+  filter:brightness(1.08)!important;
+}
+.rules-prize-btn{
+  display:none!important;
+}
+@media(min-width:901px){
+  body.bk-v4.game-mode .pitch-title-row,
+  body.portal-v3.game-mode .pitch-title-row,
+  body.game-mode .pitch-title-row{
+    grid-template-columns:minmax(0,1fr) auto auto minmax(0,1fr)!important;
+    gap:8px!important;
+  }
+  body.bk-v4.game-mode .rules-mint-btn,
+  body.portal-v3.game-mode .rules-mint-btn,
+  body.game-mode .rules-mint-btn{
+    min-height:46px!important;
+    padding:8px 14px!important;
+    font-size:12px!important;
+  }
+}
+@media(max-width:900px){
+  .rules-mint-btn{
+    display:none!important;
+  }
+  .rules-prize-btn{
+    display:inline-flex!important;
+  }
+  body.bk-v4.game-mode .dashboard-prize-strip,
+  body.portal-v3.game-mode .dashboard-prize-strip,
+  body.game-mode .dashboard-prize-strip{
+    display:grid!important;
+    grid-template-columns:auto auto!important;
+    justify-items:center!important;
+    align-items:center!important;
+    text-align:center!important;
+    gap:7px!important;
+  }
+  body.bk-v4.game-mode .dash-prize-title,
+  body.bk-v4.game-mode .dash-prize-value,
+  body.bk-v4.game-mode .dash-deadline,
+  body.portal-v3.game-mode .dash-prize-title,
+  body.portal-v3.game-mode .dash-prize-value,
+  body.portal-v3.game-mode .dash-deadline,
+  body.game-mode .dash-prize-title,
+  body.game-mode .dash-prize-value,
+  body.game-mode .dash-deadline{
+    justify-self:center!important;
+    text-align:center!important;
+  }
+  body.bk-v4.game-mode .dash-prize-title,
+  body.bk-v4.game-mode .dash-deadline,
+  body.portal-v3.game-mode .dash-prize-title,
+  body.portal-v3.game-mode .dash-deadline,
+  body.game-mode .dash-prize-title,
+  body.game-mode .dash-deadline{
+    grid-column:1 / -1!important;
+  }
+  body.bk-v4.game-mode .dash-prize-value,
+  body.portal-v3.game-mode .dash-prize-value,
+  body.game-mode .dash-prize-value{
+    justify-self:end!important;
+    grid-column:1!important;
+  }
+  .rules-prize-btn{
+    justify-self:start!important;
+    grid-column:2!important;
+    min-height:34px!important;
+    padding:7px 12px!important;
+    font-size:10px!important;
+  }
+}
+
 </style>
 
 </head>
@@ -7574,6 +7667,7 @@ body.game-mode .dash-deadline small,
   <div class="dashboard-prize-strip" id="dashboardPrizeStrip" style="display:none;">
     <div class="dash-prize-title">&#127942; WC ALBUM STAGE 1</div>
     <div class="dash-prize-value">3 x 1,500 CHZ</div>
+    <button class="dash-rules-btn rules-prize-btn" type="button" onclick="openStage1RulesModal('rules')">RULES</button>
     <div class="dash-deadline" aria-label="Quest countdown">
       <span id="dashCdD">--</span><small>D</small>:
       <span id="dashCdH">--</span><small>H</small>:
@@ -7640,6 +7734,7 @@ body.game-mode .dash-deadline small,
             <span id="selectedCountryTitle">TACTICAL PITCH</span>
           </div>
           <button class="dash-mint-btn" onclick="directMint()">MINT</button>
+          <button class="dash-rules-btn rules-mint-btn" type="button" onclick="openStage1RulesModal('rules')">RULES</button>
           <span class="completion-label" id="selectedCountryCompletion">0/11 COMPLETED</span>
         </div>
 
