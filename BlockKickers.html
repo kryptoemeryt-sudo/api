@@ -7699,12 +7699,8 @@ body.game-mode .dash-deadline small,
 
       <!-- PRICING SCHEDULE -->
       <div class="pricing-schedule">
-        <div class="schedule-item active" id="p1">
-          <div class="schedule-date">UNTIL MAY 31</div>
-          <div class="schedule-price"><span class="price-label">EARLY BIRDS:</span> <span id="betaPriceText">10 CHZ</span></div>
-        </div>
-        <div class="schedule-item" id="p2">
-          <div class="schedule-date">FROM JUNE 1</div>
+        <div class="schedule-item active" id="p2">
+          <div class="schedule-date">LIVE NOW</div>
           <div class="schedule-price"><span class="price-label">PROMO:</span> <span>50 CHZ</span></div>
         </div>
         <div class="schedule-item" id="p3">
@@ -7793,7 +7789,7 @@ body.game-mode .dash-deadline small,
         <span id="dashCdS">--</span><small>S</small>
       </div>
       <div class="dash-price-deadline" aria-label="Price countdown">
-        <span>50 CHZ IN</span><b id="price50Timer">--:--:--:--</b>
+        <span>100 CHZ IN</span><b id="price50Timer">--:--:--:--</b>
       </div>
     </div>
   </div>
@@ -9704,19 +9700,17 @@ async function connectPrivyWallet(){
 
 function updatePriceUI() {
   const now = new Date();
-  const d31May = new Date(2026, 4, 31, 23, 59, 59); 
   const d10June = new Date('2026-06-10T18:00:00+02:00'); 
 
-  document.getElementById('p1').classList.remove('active');
-  document.getElementById('p2').classList.remove('active');
-  document.getElementById('p3').classList.remove('active');
+  const p2 = document.getElementById('p2');
+  const p3 = document.getElementById('p3');
+  if (p2) p2.classList.remove('active');
+  if (p3) p3.classList.remove('active');
 
-  if (now <= d31May) {
-    document.getElementById('p1').classList.add('active');
-  } else if (now <= d10June) {
-    document.getElementById('p2').classList.add('active');
+  if (now <= d10June) {
+    if (p2) p2.classList.add('active');
   } else {
-    document.getElementById('p3').classList.add('active');
+    if (p3) p3.classList.add('active');
   }
 }
 
@@ -9841,7 +9835,8 @@ async function loadData(options = {}){
       const p = await contract.mintPrice();
       currentMintPrice = p;
       const formattedPrice = ethers.formatEther(p);
-      document.getElementById('betaPriceText').textContent = `${parseFloat(formattedPrice).toLocaleString()} CHZ`;
+      const betaEl = document.getElementById('betaPriceText');
+      if (betaEl) betaEl.textContent = `${parseFloat(formattedPrice).toLocaleString()} CHZ`;
     } catch(e) {
       console.warn("Could not query dynamic mint price:", e);
     }
@@ -10746,7 +10741,7 @@ function shareOnX(){
 /* BLOCK TIMER & LOGIC */
 const DEADLINE_BLOCK = 34785400;
 const SNAPSHOT_DEADLINE_MS = new Date('2026-06-10T18:00:00+02:00').getTime();
-const PRICE_50_START_MS = new Date('2026-06-01T00:00:00+02:00').getTime();
+const PRICE_50_START_MS = new Date('2026-06-11T00:00:00+02:00').getTime();
 const BLOCK_TIME_MS = 3000;
 let currentBlock = 34158889; 
 let lastBlockTime = Date.now();
