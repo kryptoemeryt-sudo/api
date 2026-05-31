@@ -3136,7 +3136,7 @@ body.game-mode .snipe-weight .pts-label{color:var(--rar,#fff)!important;}
 
 <nav class="topnav">
   <a href="https://block-kickers.vercel.app" class="topnav-logo logo" style="text-decoration:none;">&#9917; BLOCK <span>KICKERS</span></a>
-  <div class="nav-countdown" id="navPriceCountdown"><span>50 CHZ IN</span>--:--:--:--</div>
+  <div class="nav-countdown" id="navPriceCountdown"><span>100 CHZ IN</span>--:--:--:--</div>
   <div class="nav-right wallet-actions">
     <span id="walletAddress" class="wallet-addr" style="display:none;"></span>
     <span id="walletBalance" class="wallet-bal" style="display:none;"></span>
@@ -6924,17 +6924,17 @@ function updatePriceCountdowns() {
   setText('price50Countdown', to50Short);
   setText('price100Countdown', formatShortCountdown(PRICE_STEP_100_AT));
   const nav = document.getElementById('navPriceCountdown');
-  const diff = PRICE_STEP_50_AT - Date.now();
+  const diff = PRICE_STEP_100_AT - Date.now();
   if (nav) {
     if (diff <= 0) {
-      nav.innerHTML = '<span>PRICE</span><b>50 CHZ LIVE</b>';
+      nav.innerHTML = '<span>PRICE</span><b>100 CHZ LIVE</b>';
     } else {
       const d = Math.floor(diff / 86400000);
       const h = Math.floor((diff % 86400000) / 3600000);
       const m = Math.floor((diff % 3600000) / 60000);
       const sec = Math.floor((diff % 60000) / 1000);
       const pad = n => String(n).padStart(2, '0');
-      nav.innerHTML = `<span>50 CHZ IN</span><b>${pad(d)}:${pad(h)}:${pad(m)}:${pad(sec)}</b>`;
+      nav.innerHTML = `<span>100 CHZ IN</span><b>${pad(d)}:${pad(h)}:${pad(m)}:${pad(sec)}</b>`;
     }
   }
 }
