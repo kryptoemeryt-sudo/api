@@ -1099,20 +1099,20 @@ body.dash-active .quest-label{font-size:8px !important;margin-top:3px !important
 /* QUEST TILE MOBILE STACK */
 @media (max-width:768px){
   .quest-launcher{
-    grid-template-columns:1fr !important;
+    grid-template-columns:1fr 1fr !important;
     gap:8px !important;
   }
   .quest-link{
-    grid-template-columns:44px minmax(0,1fr) !important;
+    grid-template-columns:40px minmax(0,1fr) !important;
     min-height:74px !important;
-    padding:10px 12px !important;
+    padding:10px 10px !important;
   }
-  .quest-icon-cell{width:44px !important;min-width:44px !important;height:48px !important;}
-  .quest-icon{font-size:29px !important;}
-  .quest-flag-us{width:34px !important;height:24px !important;}
-  .quest-title{font-size:11px !important;white-space:nowrap !important;}
+  .quest-icon-cell{width:40px !important;min-width:40px !important;height:48px !important;}
+  .quest-icon{font-size:26px !important;}
+  .quest-flag-us{width:30px !important;height:21px !important;}
+  .quest-title{font-size:10px !important;white-space:normal !important;line-height:1.05 !important;}
   .quest-prize{margin-top:6px !important;}
-  .quest-amount{font-size:18px !important;}
+  .quest-amount{font-size:16px !important;}
   .quest-amount span{font-size:8px !important;}
   .quest-label{font-size:9px !important;}
 }
@@ -2047,7 +2047,22 @@ body.dash-active .quest-label{font-size:8px !important;margin-top:3px !important
   display:none !important;
 }
 .quest-launcher{
-  grid-template-columns:repeat(3,minmax(0,1fr)) !important;
+  grid-template-columns:repeat(4,minmax(0,1fr)) !important;
+}
+.quest-link.quest-album{
+  border-color:rgba(168,85,247,0.42) !important;
+  box-shadow:0 0 24px rgba(168,85,247,0.12), inset 0 0 18px rgba(168,85,247,0.05) !important;
+}
+.quest-link.quest-album::before{
+  background:radial-gradient(circle at 20% 20%,rgba(168,85,247,0.32),transparent 48%) !important;
+}
+.quest-album .quest-icon{
+  filter:drop-shadow(0 0 12px rgba(168,85,247,.42)) drop-shadow(0 8px 10px rgba(0,0,0,.45)) !important;
+}
+.quest-album .quest-amount,
+.quest-album .quest-label{
+  color:#c084fc !important;
+  text-shadow:0 0 14px rgba(168,85,247,.42) !important;
 }
 .quest-link.quest-host{
   border-color:rgba(0,255,135,0.38) !important;
@@ -2079,7 +2094,7 @@ body.dash-active .quest-label{font-size:8px !important;margin-top:3px !important
   text-shadow:0 0 14px rgba(0,255,135,.38) !important;
 }
 body.dash-active #mint .quest-launcher{
-  grid-template-columns:repeat(3,minmax(0,1fr)) !important;
+  grid-template-columns:repeat(4,minmax(0,1fr)) !important;
 }
 body.dash-active #mint .quest-host-flags{
   width:54px !important;
@@ -2097,7 +2112,7 @@ body.dash-active #mint .quest-title{
 }
 @media (max-width:768px){
   .quest-launcher{
-    grid-template-columns:1fr !important;
+    grid-template-columns:1fr 1fr !important;
   }
   .quest-host-flags{
     width:48px;
@@ -2475,7 +2490,7 @@ body.dash-active #squadFilters{flex-wrap:nowrap!important;overflow-x:auto!import
 
 <nav>
   <div class="logo">&#9917; BLOCK <span>KICKERS</span></div>
-  <div class="nav-countdown" id="navPriceCountdown"><span>50 CHZ IN</span>--:--:--:--</div>
+  <div class="nav-countdown" id="navPriceCountdown"><span>100 CHZ IN</span>--:--:--:--</div>
   <div class="nav-right">
     <button class="btn-updates" onclick="openChangelog()" style="background:none;border:1px solid rgba(255,255,255,0.1);color:var(--text3);padding:5px 10px;border-radius:6px;font-family:'Black Ops One',sans-serif;font-size:10px;letter-spacing:1px;cursor:pointer;transition:all 0.2s;white-space:nowrap;" onmouseover="this.style.borderColor='rgba(0,255,135,0.4)';this.style.color='var(--green)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.1)';this.style.color='var(--text3)'">UPDATES</button>
     <span class="wallet-addr" id="navAddr" style="display:none"></span>
@@ -2493,7 +2508,7 @@ body.dash-active #squadFilters{flex-wrap:nowrap!important;overflow-x:auto!import
 <div id="mobileDrawer" style="display:none;position:fixed;top:48px;left:0;right:0;bottom:0;background:rgba(6,8,10,0.98);z-index:95;overflow-y:auto;padding:16px;">
   <div style="display:flex;flex-direction:column;gap:4px;">
     <div id="drawerBanner" style="background:linear-gradient(90deg,rgba(255,201,64,0.15),rgba(255,201,64,0.05));border:1px solid rgba(255,201,64,0.3);border-radius:8px;padding:10px 14px;margin-bottom:12px;font-size:12px;color:var(--text2);">
-      &#128038; <span style="color:var(--gold);font-family:'Black Ops One',sans-serif;">EARLY BIRDS</span> &mdash; Price increases to <span style="color:var(--gold);">50 CHZ</span> Jun 1 &middot; <span id="drawerCountdown" style="color:var(--gold);font-family:'Share Tech Mono',monospace;">&mdash;</span>
+      &#128038; <span style="color:var(--gold);font-family:'Black Ops One',sans-serif;">EARLY BIRDS</span> &mdash; Price increases to <span style="color:var(--gold);">100 CHZ</span> Jun 11 &middot; <span id="drawerCountdown" style="color:var(--gold);font-family:'Share Tech Mono',monospace;">&mdash;</span>
     </div>
   </div>
   <div style="display:flex;flex-direction:column;gap:2px;">
@@ -2638,12 +2653,7 @@ document.addEventListener('DOMContentLoaded', setupDesktopDashboardLayout);
 <!-- HERO -->
 
 <!-- BETA BANNER -->
-<div id="betaBanner" style="background:linear-gradient(90deg,rgba(255,201,64,0.15),rgba(255,201,64,0.05));border-bottom:1px solid rgba(255,201,64,0.3);padding:8px 32px;display:flex;align-items:center;justify-content:center;gap:12px;font-size:13px;">
-  <span style="color:var(--gold);font-family:'Black Ops One',sans-serif;letter-spacing:1px;">&#128038; EARLY BIRDS</span>
-  <span style="color:var(--text2);">Price increases to <span style="color:var(--gold);font-weight:700;">50 CHZ</span> on June 1</span>
-  <span style="color:var(--text3);">&middot;</span>
-  <span style="color:var(--text2);">Time left: <span style="color:var(--gold);font-family:'Share Tech Mono',monospace;" id="betaCountdown">&mdash;</span></span>
-</div>
+<div id="betaBanner" style="display:none!important;"></div>
 
 <!-- STATS TICKER -->
 <div id="statsTicker" style="background:rgba(0,0,0,0.4);border-bottom:1px solid var(--border);padding:6px 32px;display:flex;align-items:center;justify-content:center;gap:24px;font-size:11px;font-family:'Share Tech Mono',monospace;overflow-x:auto;white-space:nowrap;">
@@ -2721,6 +2731,13 @@ document.addEventListener('DOMContentLoaded', setupDesktopDashboardLayout);
           <span class="quest-prize" id="questHostPrize"><span class="quest-amount">1,500 <span>CHZ</span></span><span class="quest-label">TOP 5</span></span>
         </span>
       </a>
+      <a class="quest-link quest-album" href="https://block-kickers.vercel.app/wc-album">
+        <span class="quest-icon-cell"><span class="quest-icon">&#128214;</span></span>
+        <span style="min-width:0;">
+          <span class="quest-title">WC-ALBUM QUEST</span>
+          <span class="quest-prize" id="questAlbumPrize"><span class="quest-amount">4,500 <span>CHZ</span></span><span class="quest-label">COMPLETE</span></span>
+        </span>
+      </a>
     </div>
   </div>
   <div class="hero-center" style="padding:32px 16px;z-index:2;width:340px;flex-shrink:0;">
@@ -2748,12 +2765,8 @@ document.addEventListener('DOMContentLoaded', setupDesktopDashboardLayout);
         <div style="font-size:11px;color:var(--gold);letter-spacing:2px;font-family:'Black Ops One',sans-serif;margin-bottom:8px;">&#128293; PRICE INCREASES SOON</div>
         <div style="display:flex;flex-direction:column;gap:4px;">
           <div style="display:flex;justify-content:space-between;font-size:13px;">
-            <span style="color:var(--green);font-weight:700;">&#9654; Now (Early Birds)</span>
-            <span style="color:var(--green);font-family:'Black Ops One',sans-serif;">10 CHZ</span>
-          </div>
-          <div style="display:flex;justify-content:space-between;font-size:13px;">
-            <span style="color:var(--text2);">Jun 1</span>
-            <span style="color:var(--text2);">50 CHZ</span>
+            <span style="color:var(--green);font-weight:700;">&#9654; Now (live)</span>
+            <span style="color:var(--green);font-family:'Black Ops One',sans-serif;">50 CHZ</span>
           </div>
           <div style="display:flex;justify-content:space-between;font-size:13px;">
             <span style="color:var(--text2);">Jun 11 (WC Start)</span>
@@ -2761,7 +2774,7 @@ document.addEventListener('DOMContentLoaded', setupDesktopDashboardLayout);
           </div>
           <div class="price-end-row" style="grid-column:1/-1;font-size:12px;color:var(--text2);text-align:center;line-height:1.18;white-space:normal;min-width:0;">END 20.07 (WC End)</div>
           <div class="mobile-price-countdown-row" style="display:none;text-align:center;font-size:13px;color:var(--gold);padding-top:6px;border-top:1px solid rgba(255,201,64,0.16);">
-            <span style="display:block;color:var(--text2);font-size:10px;margin-bottom:2px;">50 CHZ IN</span>
+            <span style="display:block;color:var(--text2);font-size:10px;margin-bottom:2px;">100 CHZ IN</span>
             <strong id="mobilePriceCountdown">--:--:--:--</strong>
           </div>
         </div>
@@ -2908,7 +2921,7 @@ document.addEventListener('DOMContentLoaded', setupDesktopDashboardLayout);
     </div>
     <div class="strategy-example">
       <div class="strategy-example-title">Reward stack</div>
-      <p>The current best card in a country is already near <strong>8x</strong> from a 10 CHZ mint. Legendary cards split their own pool and can still become country champion. <strong>One card can hit multiple lanes.</strong></p>
+      <p>The current best card in a country is already worth several times a 50 CHZ mint. Legendary cards split their own pool and can still become country champion. <strong>One card can hit multiple lanes.</strong></p>
     </div>
     <div class="strategy-actions">
       <button class="strategy-btn" onclick="closeStrategyIntro(); openWalletChoice()">CONNECT WALLET</button>
@@ -2932,7 +2945,7 @@ document.addEventListener('DOMContentLoaded', setupDesktopDashboardLayout);
     <div style="background:#0a0d10;border:1px solid #1c2028;border-radius:8px;padding:14px;margin-bottom:16px;font-size:14px;color:#7a8899;line-height:1.7;">
       Collect all <span style="color:#dde4f0;font-weight:700;">11 United States positions</span> in your wallet.<br>
       First wallet to complete wins <span style="color:#ffc940;font-weight:700;">1,500 CHZ</span>.<br><br>
-      <span style="color:#00ff87;">&rarr;</span> Mint for 10 CHZ &mdash; land a USA card<br>
+      <span style="color:#00ff87;">&rarr;</span> Mint for 50 CHZ &mdash; land a USA card<br>
       <span style="color:#00ff87;">&rarr;</span> Buy missing positions on the market<br>
       <span style="color:#00ff87;">&rarr;</span> Track progress in the <span style="color:#dde4f0;">Album</span> section
     </div>
@@ -4497,7 +4510,7 @@ function updateRewardPreview(vaultWeiOrChz, legendaryCount = null){
   const countryEach = vaultChz * 0.25 / 48;
   const legendaryPool = vaultChz * 0.10;
   const legendaryEach = knownLegendaryCount > 0 ? legendaryPool / knownLegendaryCount : legendaryPool;
-  const mintAnchor = 10;
+  const mintAnchor = 50;
   const countryRoi = mintAnchor > 0 ? countryEach / mintAnchor : 0;
 
   const g = document.getElementById('rewardGlobal');
@@ -4961,7 +4974,7 @@ function drawerGo(id){
 }
 // Aktualizuj countdown w drawerze
 function updateDrawerCountdown(){
-  const target = new Date('2026-06-01T00:00:00Z').getTime();
+  const target = new Date('2026-06-11T00:00:00Z').getTime();
   const diff = target - Date.now();
   if(diff <= 0){ const el=document.getElementById('drawerCountdown'); if(el) el.textContent='ENDED'; return; }
   const d=Math.floor(diff/86400000), h=Math.floor((diff%86400000)/3600000), m=Math.floor((diff%3600000)/60000);
@@ -4971,14 +4984,14 @@ updateDrawerCountdown();
 setInterval(updateDrawerCountdown, 60000);
 
 function updateNavPriceCountdown(){
-  // 2026-06-01 00:00 Berlin/Warsaw time = 2026-05-31 22:00 UTC.
+  // 2026-06-11 00:00 Berlin/Warsaw time = 2026-06-10 22:00 UTC (WC start, 100 CHZ).
   const el = document.getElementById('navPriceCountdown');
   const mobileEl = document.getElementById('mobilePriceCountdown');
-  const target = Date.UTC(2026, 4, 31, 22, 0, 0);
+  const target = Date.UTC(2026, 5, 10, 22, 0, 0);
   const diff = target - Date.now();
   if(diff <= 0){
-    if(el) el.innerHTML = '<span>PRICE</span>50 CHZ LIVE';
-    if(mobileEl) mobileEl.textContent = '50 CHZ LIVE';
+    if(el) el.innerHTML = '<span>PRICE</span>100 CHZ LIVE';
+    if(mobileEl) mobileEl.textContent = '100 CHZ LIVE';
     return;
   }
   const d = Math.floor(diff / 86400000);
@@ -4987,21 +5000,23 @@ function updateNavPriceCountdown(){
   const s = Math.floor((diff % 60000) / 1000);
   const pad = n => String(n).padStart(2,'0');
   const value = `${pad(d)}:${pad(h)}:${pad(m)}:${pad(s)}`;
-  if(el) el.innerHTML = `<span>50 CHZ IN</span>${value}`;
+  if(el) el.innerHTML = `<span>100 CHZ IN</span>${value}`;
   if(mobileEl) mobileEl.textContent = value;
 }
 updateNavPriceCountdown();
 setInterval(updateNavPriceCountdown, 1000);
 
 function updateCountdown(){
-  const target = new Date('2026-06-01T00:00:00Z').getTime();
+  const elBeta = document.getElementById('betaCountdown');
+  if(!elBeta) return;
+  const target = new Date('2026-06-11T00:00:00Z').getTime();
   const now = Date.now();
   const diff = target - now;
-  if(diff <= 0){ document.getElementById('betaCountdown').textContent = 'ENDED'; return; }
+  if(diff <= 0){ elBeta.textContent = 'ENDED'; return; }
   const d = Math.floor(diff/86400000);
   const h = Math.floor((diff%86400000)/3600000);
   const m = Math.floor((diff%3600000)/60000);
-  document.getElementById('betaCountdown').textContent = `${d}d ${h}h ${m}m`;
+  elBeta.textContent = `${d}d ${h}h ${m}m`;
 }
 updateCountdown();
 setInterval(updateCountdown, 60000);
@@ -6138,7 +6153,7 @@ async function loadAlbum(){
           '<div style="font-family:\'Black Ops One\',sans-serif;font-size:16px;flex:1;">NATION QUEST &mdash; <span style="color:#ffc940;">UNITED STATES</span></div>' +
           '<div style="font-family:\'Black Ops One\',sans-serif;font-size:18px;color:#ffc940;">1500 CHZ</div>' +
         '</div>' +
-        '<div style="font-size:13px;color:var(--text2);margin-bottom:10px;line-height:1.5;">First wallet to collect all <strong style="color:#dde4f0;">11 USA positions</strong> wins 1500 CHZ. Mint for 10 CHZ &mdash; if you land a rare position, list it for 500 CHZ. The collector racing to win will buy it.</div>' +
+        '<div style="font-size:13px;color:var(--text2);margin-bottom:10px;line-height:1.5;">First wallet to collect all <strong style="color:#dde4f0;">11 USA positions</strong> wins 1500 CHZ. Mint for 50 CHZ &mdash; if you land a rare position, list it for 500 CHZ. The collector racing to win will buy it.</div>' +
         '<div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">' +
           '<div style="font-size:12px;color:var(--text3);">&#127942; Leader: <span style="color:var(--text2);">' + nqLeader + '</span></div>' +
           (nqMyCount > 0 ? '<div style="font-size:12px;color:var(--green);">You: ' + nqMyCount + '/11</div>' : '') +
